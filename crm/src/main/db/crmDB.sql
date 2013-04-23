@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS crmdb;
+CREATE DATABASE crmdb CHARSET utf8 COLLATE utf8_general_ci;

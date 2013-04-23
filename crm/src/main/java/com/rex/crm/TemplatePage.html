@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org" dir="ltr" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title wicket:id="title">title comes here</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="template/style.css" />
+<link href="jquery/css/redmond/jquery-ui-1.10.2.custom.css" rel="stylesheet" />
+<script src='jquery/js/jquery-1.9.1.js'></script>
+<script src='jquery/js/jquery-ui-1.10.2.custom.js'></script>
+<link href="treetable/stylesheets/jquery.treetable.css" rel="stylesheet" type="text/css" />
+<script src="treetable/js/jquery.treetable.js"></script>
+<link href="bartree/css/buttonPro.css" rel="stylesheet" type="text/css" />
+<link href="bartree/css/example-style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/common.css" />
+<script type="text/javascript" language="javascript" src="datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/common.js"></script>
+<link rel='stylesheet' type='text/css' href='dynatree/skin/ui.dynatree.css'>
+<script src='dynatree/jquery.dynatree.js' type="text/javascript"></script>
+<link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.css' />
+<script type='text/javascript' src='fullcalendar/fullcalendar.js'></script>
+<script>
+	$(document).ready(function() {
+		$("#dialog-form").dialog({
+			autoOpen : false,
+			height : 200,
+			width : 400,
+			modal : true,
+			buttons : {
+				"确定" : function() {
+					onDialogOKClicked();
+				},
+				"取消" : function() {
+					$(this).dialog("close");
+				}
+			},
+			close : function() {
+				console.log("closed");
+			}
+		});//dialog end
+
+		prepareAutoComplete();
+	});
+</script>
+</head>
+<body>
+	<div id="header" class="borderedBlock">
+		<div id="topCont" class="LF">
+			<!--页面顶端top_bar容器-->
+			<div id="left_rc_div" class="LF"></div>
+			<div id="mid_cont" class="LF">
+				<!-- <a href="#" id="company_logo">Mundi CRM管理控制台</a> -->
+			</div>
+			<div id="right_rc_div" class="LF"></div>
+		</div><br/><br/>
+		<div id="navcontainer" class="ui-widget ui-corner-all ui-dialog-titlebar">
+			<ul id="navlist">
+				<li wicket:id="menu"  >
+				    <a href="#"  wicket:id="link"><span wicket:id="caption"></span></a> |
+				</li>
+			</ul>
+		</div>
+	</div>
+   <div class="borderedBlock">
+	<table style="width:100%">
+		<tr>
+			<td id="content" class="borderedBlock" colspan=2><wicket:child /></td>
+		</tr>
+	</table>
+	</div>
+	<div id="footer" class="clear">Copyright © 2011 XXX Inc.Allrights reserved.</div>
+</body>
+</html>

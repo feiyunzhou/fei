@@ -1,0 +1,20 @@
+<TABLE style="width:100%">
+<thead>
+          <tr>
+			<th>名称</th>
+			<th>地址</th>
+			<th>电话</th>
+			<th>类别</th>
+		 </tr>
+</thead>
+<tbody>
+         #foreach( $acct in $accountList )
+          <TR>
+            <TD>$acct.name</TD>
+            <TD>$acct.address</TD>
+            <TD>$acct.tele</TD>
+            <TD>$acct.classification</TD>
+           </TR>
+         #end
+</tbody>      
+</TABLE>
