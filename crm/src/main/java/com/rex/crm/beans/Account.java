@@ -160,9 +160,9 @@ public class Account {
 
 	public static Map<String,String> getMappingOfField2ColumnName(){
 	    Map<String,String> list = new HashMap<String,String>();
-	    list.put("name", "姓名");
+	    list.put("name", "名称");
 	    list.put("address", "地址");
-	    list.put("classification", "级别");
+	    list.put("classification", "类型");
 	    list.put("tele", "电话");
 	    return list;
 	}

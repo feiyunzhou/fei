@@ -3,202 +3,34 @@
 	xmlns:wicket="http://wicket.apache.org">
 <body>
 	<wicket:extend>
-		<script>
-		    var selected_account_id;
-		    var selected_user;
-			$(document).ready(function() {	
-				$("#dialog-add-account").dialog({
-					autoOpen : false,
-					height : 250,
-					width : 300,
-					modal : true,
-					buttons : {
-						"确定" : function() {
-						},
-						"取消" : function() {
-							$(this).dialog("close");
-						}
-					},
-					close : function() {
-						console.log("closed");
-					}
-				});
-				
-				$("#topButtonset .add").button().click(function(event) {
-					//console.log("add button clicked");
-					$("#dialog-add-account").dialog("open");
-				});
-                
-                $("#topButtonset .delete").button().click(function(event) {
-					//console.log("add button clicked");
-					if(confirm("确定删除此帐号？")){
-						console.log("delete this user");
-					}
-					
-				});
-				
-				
-				$( "#accordion" ).accordion({
-				      collapsible: true,
-				      heightStyle: "content",
-				      active: false
-				});
-				
-                $( "#accordion" ).on( "accordionactivate", function( event, ui ) {	
-					if($( "#accordion" ).accordion('option', 'active') == 0){
-						renderTeamTable();
-					}
-					
-				} );
-				
-                $("#team-buttonset .add").button().click(function(event) {
-					//console.log("add button clicked");
-					$("#dialog-form").dialog("open");
-				});
-				
-				
-				    $( ".toolbar .add" ).button({
-				        text: false,
-				        icons: {
-				          primary: "ui-icon-plus"
-				        }
-				      });
-				    
-				    $( ".toolbar .delete" ).button({
-				        text: false,
-				        icons: {
-				          primary: "ui-icon-minus"
-				        }
-				      });
-				       
-				      
-
-			});// end onDomReady function
-            
-			//auto complete callback for user name input
-			function onUserNameAutoCompleted(data){
-				selected_user = data;
+	<script>
+	$(document).ready(function(){
+		$( "#accordion" ).accordion({
+		      collapsible: true,
+		      heightStyle: "content",
+		      active: false
+		});
+		
+	  $( "#accordion" ).on( "accordionactivate", function( event, ui ) {	
+			if($( "#accordion" ).accordion('option', 'active') == 0){
 			}
 			
-			//auto complete callback for account name input
-			function onAccountNameAutoComplete(data){
-				onTreeNodeActivate("act",data.id);
-			}
-			
-			/*
-			 *  When node is activated, this function be invoked.
-			 */
-			function onTreeNodeActivate(type,key) {
-				//console.log("account.html:" + node.data);
-				
-				//if click one of accounts
-				if (type == "act") {
-					console.log("account node clicked");
-					selected_account_id = key;
-					renderAccountInfo();
-				}
-			}
-			
-			function renderAccountInfo(){
-				var args = {};
-				args.f = "getAccountDetailsByIdHtmlOutput";
-				args.p = [ selected_account_id ];
-				ajaxPost(args, function onAjaxComplete(data) {
-					//console.log(data);
-					
-					$("#accountInfo").hide('slide', {
-						"direction" : "right"
-					}, 500);
-					
-					$("#accountInfo-team").hide("slide", {
-						"direction" : "up"
-					}, 0);
-					
-					var ul = $('#accountInfo ul');
-					ul.empty();
-					ul.append(data);
-
-					renderTeamTable();
-					
-					$("#accountInfo").show('slide', {
-						"direction" : "left"
-					}, 500);
-				});
-			}
-			
-			function renderTeamTable(){
-				//render team table
-				args = {};
-				args.f = "getUsersByAccountIdHtmlOutput";
-				args.p = [ selected_account_id ];
-				ajaxPost(args, function onAjaxComplete(data) {
-					//append team table
-					if(!jQuery.isEmptyObject(data)){
-						var table = $("#team-div");
-						table.empty();
-						table.append(data);
-						
-						$(".team-member-action-button").on("click",function(event) {
-							if(confirm("Sure to delete user?") == true){
-								$(this).parent().parent().remove();
-							}
-					     }); 
-						
-					}//end if
-					
-				});//end of render team table
-			}
-			
-			function onDialogOKClicked(){
-				//dialog
-				var name = $( "#newuser" );
-				//var allFields = $( [] ).add(name);
-				console.log("DialogOK,clicked");
-				var bValid = true;
-				bValid =  bValid && (name.val().length > 0)
-				if(bValid){
-					var userid = selected_user.id;
-					var args = {};
-					args.f = "addUserOfTeam";
-					args.p = [ selected_account_id,userid ];
-					ajaxPost(args, function onAjaxComplete(data) {
-						if(data.code == 0){
-						var table = $("#team-div table tbody");
-						table.append("<tr><td>"+selected_user.name+"</td>"+
-						        "<td>"+selected_user.cellPhone+"</td>"+
-						        "<td>"+selected_user.division+"</td>"+ 
-						        "<td>"+selected_user.jobTitle+"</td>"+ 
-						        "<td><a class=\"team-member-action-button\" userid=\""+ selected_user.id +"\">删除</a></td>" +
-						       "</tr>"); 
-						$(".team-member-action-button").on("click",function(event) {
-							if(confirm("Sure to delete user?") == true){
-								$(this).parent().parent().remove();
-							}
-						});
-						}
-					});
-					
-					
-					$( this ).dialog( "close" );
-				}
-			}
-		</script>
+		} );
+	});
+	
+	</script>
 		<div class="content">
 			<div class="page">
-			    查找：<input class="accountnameAutoComplete" id="accountname" />
-				<div id="topButtonset" class="ui-buttonset toolbar">
-					<button class = "add">增加</button>&nbsp;
-					<button class = "delete">删除</button>
-				</div>
+			   
                 
                 <br/>
-				<div id="accountInfo" style="display: none"
+				<div id="accountInfo" 
 					class="ui-widget ui-widget-content ui-corner-all">
 					<div
 						class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 						<span id="ui-id-8" class="ui-dialog-title">&nbsp;&nbsp;医院信息</span>
 					</div>
-					<ul></ul>
+					<ul><li wicket:id="entityDetail"><span wicket:id="caption"></span></li></ul>
 					<div style="width:90%; margin: 0px auto">	
 					<div id="accordion" style="width: 100%; margin: 0px auto">
 						<h4>团队</h4>
@@ -216,28 +48,6 @@
                    <br/><br/>
 				</div>
 			</div>
-		</div>
-		<div id="dialog-form" title="增加团队人员">
-			<form>
-				<div>
-					团队人员：<input class="userNameAutoComplete" id="newuser" /> <input type="hidden" id="newuser-id" />
-				</div>
-				<div>
-				</div>
-			</form>
-		</div>
-		
-		<div id="dialog-add-account" title="增加">
-			<form>
-				<div>
-					名称：<input id="name" /><br/> 
-					地址：<input id="adress" /><br/> 
-					电话：<input id="tele" /> <br/>
-					类型：<input id="classification" /><br/> 
-				</div>
-				<div>
-				</div>
-			</form>
 		</div>
 		
 	</wicket:extend>
