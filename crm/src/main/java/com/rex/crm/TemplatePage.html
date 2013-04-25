@@ -2,16 +2,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org" dir="ltr" lang="zh-CN">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title wicket:id="title">CRM</title>
-<link rel="stylesheet" type="text/css" href="style.css" />
-<link rel="stylesheet" type="text/css" href="template/style.css" />
-<link href="jquery/css/redmond/jquery-ui-1.10.2.custom.css" rel="stylesheet" />
+<!-- <link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="template/style.css" /> -->
 <script src='jquery/js/jquery-1.9.1.js'></script>
 <script src='jquery/js/jquery-ui-1.10.2.custom.js'></script>
-<link rel="stylesheet" type="text/css" href="css/common.css" />
-<script type="text/javascript"  src="js/common.js"></script>
-<link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.css' />
-<script type='text/javascript' src='fullcalendar/fullcalendar.js'></script>
+<script src='fullcalendar/fullcalendar.js'></script>
+<script src="js/common.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+<link href="css/common.css" rel="stylesheet" />
+<link href='fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<!-- <link  href="css/template.css" rel="stylesheet"/> -->
 <script>
 	$(document).ready(function() {
 		$("#dialog-form").dialog({
@@ -37,32 +62,50 @@
 </script>
 </head>
 <body>
-	<div id="header" class="borderedBlock">
-<!-- 		<div id="topCont" class="LF">
-			页面顶端top_bar容器
-			<div id="left_rc_div" class="LF"></div>
-			<div id="mid_cont" class="LF">
-				<a href="#" id="company_logo">Mundi CRM管理控制台</a>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="brand" href="#">CRM</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li wicket:id="menu"><a href="#" wicket:id="link"><span wicket:id="caption"></span></a></li>
+					</ul>
+					<p class="navbar-text pull-right">
+						Logged in as <a href="#" class="navbar-link">Username</a>
+					</p>
+				</div>
 			</div>
-			<div id="right_rc_div" class="LF"></div>
-		</div> 		<br/><br/>-->
-		
-
-		<div id="navcontainer" class="ui-widget ui-corner-all ui-dialog-titlebar">
-			<ul id="navlist">
-				<li wicket:id="menu"  >
-				    <a href="#"  wicket:id="link"><span wicket:id="caption"></span></a> |
-				</li>
-			</ul>
 		</div>
 	</div>
-   <div class="borderedBlock">
-	<table style="width:100%">
-		<tr>
-			<td id="content" class="borderedBlock" colspan=2><wicket:child /></td>
-		</tr>
-	</table>
+
+
+	<div class="container-fluid">
+
+		<div class="row-fluid">
+			<div class="span2">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						<li class="nav-header">Sidebar</li>
+						<li class="active"><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="span10">
+				<div class="row-fluid">
+					<div class="span10">
+						<wicket:child />
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="footer">
+			<p>© Company 2013</p>
+		</div>
 	</div>
-	<div id="footer" class="clear">Copyright © 2011 XXX Inc.Allrights reserved.</div>
+
 </body>
 </html>
