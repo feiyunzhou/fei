@@ -1,5 +1,7 @@
 package com.rex.crm.account;
 
+import java.util.EnumSet;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -9,6 +11,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.rex.crm.beans.Account;
+import com.rex.crm.common.CRUDPanel;
 
 public class AccountListPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
@@ -30,12 +33,14 @@ public class AccountListPanel extends Panel {
         };
         dataView.setItemsPerPage(10000L);
         add(dataView);
+        
+        //TODO Get permission info of user from database.
+        add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.EDIT)));
 
     }
 
     public AccountListPanel(String id, IModel<?> model) {
         super(id, model);
-        // TODO Auto-generated constructor stub
     }
     
     class ActionPanel extends Panel

@@ -1,6 +1,9 @@
 package com.rex.crm.beans;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -135,4 +138,25 @@ public class CRMUser {
 		map.put("photo", photo);
 		return map;
 	}
+	
+	
+	   public static Map<String,String> getMappingOfField2ColumnName(){
+	        Map<String,String> list = new HashMap<String,String>();
+	        list.put("name", "名称");
+	        list.put("cellPhone", "电话");
+	        list.put("email", "邮箱");
+	        list.put("jobTitle", "职位");
+	        list.put("division", "部门");
+	        return list;
+	    }
+	    
+	    public static List<String> getFieldNames(){
+	        List<String> list = new ArrayList<String>();
+	        Field[] fields = CRMUser.class.getDeclaredFields(); 
+	        for(Field f:fields){
+	            list.add(f.getName());
+	        }
+	        return list;
+	    }
+	
 }

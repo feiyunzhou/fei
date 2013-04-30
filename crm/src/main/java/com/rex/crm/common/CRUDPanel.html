@@ -1,0 +1,16 @@
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<div class="btn-group">
+		<span wicket:id="addCon"></span> <span wicket:id="delCon"></span> <span wicket:id="editCon"></span>
+	</div>
+
+	<wicket:fragment wicket:id="addFragment">
+		<a href="#myModal" class="btn" data-toggle="modal"><i class="icon-plus"></i></a>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="delFragment">
+		<a class="btn"><i class="icon-minus"></i></a>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="editFragment">
+		<a class="btn"><i class="icon-edit"></i></a>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="emptyFragment"></wicket:fragment>
+</wicket:panel>

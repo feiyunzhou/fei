@@ -35,11 +35,13 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.TextRequestHandler;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.util.template.PackageTextTemplate;
+import org.apache.wicket.behavior.AttributeAppender;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -65,11 +67,13 @@ public abstract class TemplatePage extends WebPage {
         MenuItem item = new MenuItem();
         item.setCaption("主页");
         item.setDestination(HomePage.class);
+        item.setId("navitem-homepage");
         builder.put("home", item);
         
         item = new MenuItem();
         item.setCaption("客户");
         item.setDestination(AccountPage.class);
+        item.setId("navitem-account");
         builder.put("account", item);
         pageMenuMap = builder.build();
     	 
@@ -89,6 +93,7 @@ public abstract class TemplatePage extends WebPage {
 	        menu.add(pageMenuMap.get(key));
 	    }
         
+        //@SuppressWarnings("unchecked")
         ListView lv = new ListView("menu", menu) {
             @Override
             protected void populateItem(ListItem item) {
@@ -96,10 +101,13 @@ public abstract class TemplatePage extends WebPage {
                 BookmarkablePageLink link = new BookmarkablePageLink("link", menuitem.getDestination());
                 link.add(new Label("caption", menuitem.getCaption()));
                 item.add(link);
+                item.add(new AttributeAppender("id", Model.of(menuitem.getId())));
+               // item.add(new SimpleAttributeModifier("class", "my-css-class"));
                 
             }
         };  
         add(lv);
+        
         //end of populate menu items
 		
 		AbstractAjaxBehavior ajaxBehaviour = new AbstractAjaxBehavior() {

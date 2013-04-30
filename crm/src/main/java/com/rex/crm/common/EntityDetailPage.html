@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<body>
+	<wicket:extend>
+		<script>
+			$(document).ready(function() {
+				$("#navitem-account").addClass("active");
+				$("#accordion").accordion({
+					collapsible : true,
+					heightStyle : "content",
+					active : false
+				});
+
+			});
+		</script>
+		<div class="well well-large">
+			<div>
+				<div class="pull-right">
+					<span wicket:id="operationBar">[operation bar]</span>
+				</div>
+				<table>
+					<tbody>
+						<tr wicket:id="dataRowRepeater">
+							<td style="width:200px" wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</wicket:extend>
+</body>
+</html>

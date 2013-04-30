@@ -1,4 +1,4 @@
-<wicket:panel xmlns:wicket="http://wicket.apache.org">
+<wicket:panel>
 	<div>
 		<div>
 			<span wicket:id="operationBar" class="pull-right navbar-static-top">[operation bar]</span>
@@ -7,20 +7,18 @@
 			<table style="width: 100%" class="table table-hover table-striped table-condensed">
 				<thead>
 					<tr>
-						<th>名称</th>
-						<th>地址</th>
-						<th>电话</th>
-						<th>级别</th>
+					   <th wicket:id="columnNameRepeater"><span wicket:id="columnName"></span></th>
+						<!-- <th>actions</th> -->
 					</tr>
 				</thead>
-				<tr wicket:id="pageable">
-					<!-- <td><span wicket:id="actions">[actions]</span></td> -->
-					<td><span wicket:id="name"></span></td>
-					<td><span wicket:id="address"></span></td>
-					<td><span wicket:id="tele"></span></td>
-					<td><span wicket:id="classification"></span></td>
+				<tr wicket:id="dataRowRepeater">
+					<td wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+					<!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
 				</tr>
 			</table>
+			<wicket:fragment wicket:id="detailFragment">
+				<a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
+			</wicket:fragment>
 		</div>
 	</div>
 

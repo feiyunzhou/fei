@@ -1,6 +1,7 @@
 package com.rex.crm;
 
 import com.rex.crm.account.AccountListPanel;
+import com.rex.crm.common.TableDataPanel;
 
 
 /**
@@ -17,7 +18,7 @@ public class AccountPage extends TemplatePage
 		
 		//add(new TreePanel("accounTreePanel",DataProvider.categorizeAccountsByProvinceAndCity()));
 		
-		add(new AccountListPanel("accountList"));
+		add(new TableDataPanel("accountList","account"));
 		
 	}
 }

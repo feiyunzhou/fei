@@ -10,11 +10,11 @@
 <script src='jquery/js/jquery-ui-1.10.2.custom.js'></script>
 <script src='fullcalendar/fullcalendar.js'></script>
 <script src="js/common.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
 <link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
 <link href="css/common.css" rel="stylesheet" />
 <link href='fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -57,6 +57,12 @@ body {
 			}
 		});//dialog end
 
+		
+		
+		$(".nav-item").on("click",function(event){
+			console.log("item click");
+			$(this).removeClass("active");
+		});
 		//prepareAutoComplete();
 	});
 </script>
@@ -67,11 +73,12 @@ body {
 			<div class="container-fluid">
 				<a class="brand" href="#">CRM</a>
 				<div class="nav-collapse collapse">
-					<ul class="nav">
-						<li wicket:id="menu"><a href="#" wicket:id="link"><span wicket:id="caption"></span></a></li>
-					</ul>
+
 					<p class="navbar-text pull-right">
 						Logged in as <a href="#" class="navbar-link">Username</a>
+					</p>
+					<p class="navbar-text pull-right">
+						<a href="#"><i class="icon-cog"></i></a>
 					</p>
 				</div>
 			</div>
@@ -83,19 +90,33 @@ body {
 
 		<div class="row-fluid">
 			<div class="span2">
-				<div class="well sidebar-nav">
-					<ul class="nav nav-list">
+				<div class="well sidebar-nav " style="position:fixed;width:200px;">
+                    <form class="form-search" >
+					<div class="input-append" style="margin: 0 auto;">
+						&nbsp;&nbsp;&nbsp;<input type="text" class="span6 search-query">
+						<button type="submit" class="btn">查找</button>
+					</div>
+					</form>
+					<ul class="nav nav-list" >
 						<li class="nav-header">Sidebar</li>
 						<li class="active"><a href="#">Link</a></li>
 						<li><a href="#">Link</a></li>
-						<li><a href="#">Link</a></li>
-						<li><a href="#">Link</a></li>
+
 					</ul>
 				</div>
 			</div>
 			<div class="span10">
 				<div class="row-fluid">
-					<div class="span10">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<ul class="nav">
+							   <li class="divider-vertical"></li>
+								<li wicket:id="menu" class="nav-item"><a href="#" wicket:id="link"><span wicket:id="caption"></span>
+									<li class="divider-vertical"></li></a></li>
+							</ul>
+						</div>
+					</div>
+					<div>
 						<wicket:child />
 					</div>
 				</div>

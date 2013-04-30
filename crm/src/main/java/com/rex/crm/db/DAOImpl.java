@@ -18,8 +18,10 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.log4j.Logger;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
@@ -83,6 +85,23 @@ public class DAOImpl {
             QueryRunner run = new QueryRunner();
             conn = DBHelper.getConnection();
             Map<String, Object> map = run.query(conn, "select count(*) as ct from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?", new MapHandler(),userId);
+            size = (long)map.get("ct");
+        } catch (Exception e) {
+            logger.error("failed to get size of account", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+    
+        return size;
+    }
+    
+    public static long getSizeOfUsersByAccountId(int accountId){
+        long size  =0;
+        Connection conn = null;
+        try {
+            QueryRunner run = new QueryRunner();
+            conn = DBHelper.getConnection();
+            Map<String, Object> map = run.query(conn, "select count(*) as ct from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?", new MapHandler(),accountId);
             size = (long)map.get("ct");
         } catch (Exception e) {
             logger.error("failed to get size of account", e);
@@ -318,5 +337,46 @@ public class DAOImpl {
     }
 	
 
+	public static List getTableData(String tableName, List<String> colunmNames,int first , int count ){
+	    String queryColunm = Joiner.on(",").join(colunmNames);
+	    String query = "select " + queryColunm + " from "+ tableName + " limit " + first + ", " + count;
+	    
+	    Connection conn = null;
+	    List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, query, new MapListHandler());
+            
+        } catch (SQLException e) {
+            logger.error("failed to get user",e);
+        }finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return lMap;
+	    
+	}
 	
+	   public static Map getEntityData(String tableName, List<String> colunmNames,long id){
+	        String queryColunm = Joiner.on(",").join(colunmNames);
+	        String query = "select " + queryColunm + " from "+ tableName + " where id= " + id;
+	        
+	        Connection conn = null;
+	        Map map = null;
+	        try {
+	            conn = DBHelper.getConnection();
+	            QueryRunner run = new QueryRunner();
+	            map = (Map) run.query(conn, query, new MapHandler());
+	            
+	        } catch (SQLException e) {
+	            logger.error("failed to get user",e);
+	        }finally {
+	            DBHelper.closeConnection(conn);
+	        }
+	        
+	        return map;
+	        
+	    }
+    
 }

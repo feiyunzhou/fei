@@ -6,7 +6,7 @@
 	<wicket:extend>
 	<script>
 	    $(document).ready(function() {
-				
+	    	$("#navitem-homepage").addClass("active");
 				
 	    });
 	</script>
@@ -14,9 +14,7 @@
 			<div class="menu"></div>
 
 			<div class="page">
-			Current time: <span wicket:id="clock"></span> <br />
-    <a href="#" wicket:id="refresh">refresh</a>
-			
+			时间: <span wicket:id="clock"></span>
 			</div>
 
 		</div>

@@ -7,6 +7,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
 
+import com.rex.crm.account.AccountListPanel;
+import com.rex.crm.common.TableDataPanel;
+
 public class HomePage extends TemplatePage {
 	private static final long serialVersionUID = 1L;
 
@@ -25,9 +28,6 @@ public class HomePage extends TemplatePage {
 	    
 	    add(new Label("clock", clock));
 	    
-	    add(
-	            new Link("refresh"){ public void onClick() {   
-	            }}
-	    );
+	   
     }
 }

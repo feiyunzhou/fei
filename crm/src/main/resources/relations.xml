@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<relations>
+	<relation>
+		<for>account</for>
+		<name>account2crmuser</name>
+		<display>客户管理团队</display>
+		<query>select a.* from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?</query>
+		<query-result-reference>crmuser</query-result-reference>
+	</relation>
+</relations>
