@@ -2,6 +2,7 @@ package com.rex.crm.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -14,196 +15,27 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.velocity.app.VelocityEngine;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.rex.crm.beans.City;
 import com.rex.crm.beans.Province;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
+import com.rex.crm.common.Relation;
 
 public class Configuration {
-
-    private static ImmutableMap<Integer, City> cityTable = null;
-    private static ImmutableMap<Integer, Province> provinceTable = null;
     private static VelocityEngine ve;
     private static Map<String,Entity> entities = null;
+    private static Multimap<String,Relation> relations = null;
 
-    // public static List<City> getAllCities(){
-    // List<City> cities = new ArrayList<>();
-    // try {
-    // XMLConfiguration config = new XMLConfiguration("country.xml");
-    // List<HierarchicalConfiguration> hp = config
-    // .configurationsAt("provinces.province.cities.city");
-    //
-    // for (HierarchicalConfiguration sub : hp) {
-    // City city = new City();
-    // cities.add(city);
-    //
-    // city.setName(sub.getString("name"));
-    // city.setId(sub.getString("id"));
-    // city.setProvinceId((String)sub.getRoot().getParent().getParent().getChildren("id").get(0).getValue());
-    //
-    // }
-    //
-    // }catch (ConfigurationException cex) {
-    // cex.printStackTrace();
-    // }
-    //
-    // return cities;
-    // }
 
-    // public static ImmutableMap<Integer,City> getCityTable(){
-    // if(cityTable == null || cityTable.size() == 0){
-    // synchronized (Configuration.class){
-    // cityTable = categorizeCitiesByIds();
-    // }
-    // }
-    // return cityTable;
-    // }
-
-    // public static ImmutableMap<String,Province> getProvinceTable(){
-    // if(provinceTable == null || provinceTable.size() == 0){
-    // synchronized (Configuration.class){
-    // provinceTable = categorizeProvincesByIds();
-    // }
-    // }
-    // return provinceTable;
-    // }
-    //
-
-    // public static ImmutableMap<Integer,Province> categorizeProvincesByIds(){
-    // Builder<Integer, Province> mapBuilder =
-    // ImmutableMap.<Integer,Province>builder();
-    // try {
-    // XMLConfiguration config = new XMLConfiguration("country.xml");
-    // List<HierarchicalConfiguration> hp = config
-    // .configurationsAt("provinces.province");
-    //
-    // for (HierarchicalConfiguration sub : hp) {
-    // Province prv = new Province();
-    // mapBuilder.put(sub.getString("id"),prv);
-    //
-    // prv.setName(sub.getString("name"));
-    // prv.setId(sub.getString("id"));
-    //
-    // }
-    //
-    // }catch (ConfigurationException cex) {
-    // cex.printStackTrace();
-    // }
-    //
-    // return mapBuilder.build();
-    // }
-
-    // public static ImmutableMap<String,City> categorizeCitiesByIds(){
-    // Builder<String, City> mapBuilder = ImmutableMap.<String,City>builder();
-    // try {
-    // XMLConfiguration config = new XMLConfiguration("country.xml");
-    // List<HierarchicalConfiguration> hp = config
-    // .configurationsAt("provinces.province.cities.city");
-    //
-    // for (HierarchicalConfiguration sub : hp) {
-    // City city = new City();
-    // mapBuilder.put(sub.getString("id"),city);
-    //
-    // city.setName(sub.getString("name"));
-    // city.setId(sub.getString("id"));
-    // city.setProvinceId((String)sub.getRoot().getParent().getParent().getChildren("id").get(0).getValue());
-    //
-    // }
-    //
-    // }catch (ConfigurationException cex) {
-    // cex.printStackTrace();
-    // }
-    //
-    // return mapBuilder.build();
-    // }
-
-    // public static ImmutableMap<String, Province> getAllProvincesByIds(){
-    //
-    // Builder<String, Province> mapBuilder =
-    // ImmutableMap.<String,Province>builder();
-    //
-    // try {
-    // XMLConfiguration config = new XMLConfiguration("country.xml");
-    // List<HierarchicalConfiguration> hp = config
-    // .configurationsAt("provinces.province");
-    //
-    // for (HierarchicalConfiguration sub : hp) {
-    // Province province = new Province();
-    // mapBuilder.put(sub.getString("id"), province);
-    //
-    // province.setName(sub.getString("name"));
-    // province.setId(sub.getString("id"));
-    //
-    // }
-    //
-    // }catch (ConfigurationException cex) {
-    // cex.printStackTrace();
-    // }
-    //
-    // return mapBuilder.build();
-    //
-    // }
-
-    // public static ImmutableListMultimap<String, City>
-    // getAllCitiesByProvinceIds() {
-    // Function<City, String> idFunction = new Function<City, String>() {
-    // public String apply(City city) {
-    // return city.getProvinceId();
-    // }
-    // };
-    //
-    // List<City> cities = getAllCities();
-    // ImmutableListMultimap<String, City> citiesByProvinceId = Multimaps
-    // .index(cities, idFunction);
-    // return citiesByProvinceId;
-    // }
-
-    // public static List<Province> getProvinceData() {
-    // List<Province> provinces = new ArrayList<>();
-    //
-    // try {
-    // XMLConfiguration config = new XMLConfiguration("country.xml");
-    // // do something with config
-    //
-    // List<HierarchicalConfiguration> hp = config
-    // .configurationsAt("provinces.province");
-    // for (HierarchicalConfiguration sub : hp) {
-    // Province p = new Province();
-    // provinces.add(p);
-    //
-    // p.setName(sub.getString("name"));
-    // p.setId(sub.getString("id"));
-    // List<HierarchicalConfiguration> cities =
-    // sub.configurationsAt("cities.city");
-    //
-    // if (cities != null) {
-    // p.setCities(new City[cities.size()]);
-    // int i = 0;
-    // for(HierarchicalConfiguration sub2:cities){
-    // City c = new City();
-    // p.getCities()[i] = c;
-    // c.setName(sub2.getString("name"));
-    // c.setId(sub2.getString("id"));
-    // c.setProvinceId(p.getId());
-    // i++;
-    // }
-    // }
-    //
-    // }
-    // } catch (ConfigurationException cex) {
-    // cex.printStackTrace();
-    // }
-    //
-    // return provinces;
-    //
-    // }
 
     public static VelocityEngine getVelocityEngine() {
 
@@ -225,7 +57,14 @@ public class Configuration {
 
     }
 
-    
+   public static Entity getEntityByName(String name){
+       Entity entity = null;
+       Map<String,Entity> ents = getEntityTable();
+       if(ents!=null && ents.size()!=0){
+           entity = ents.get(name);
+       }
+       return entity;
+   } 
     public static Map<String,Entity> getEntityTable(){
         if (entities == null || entities.size() == 0) {
             synchronized (Configuration.class) {
@@ -252,7 +91,52 @@ public class Configuration {
         }
     }
     
+    public static List<Relation> getRelationsByName(String name){
+        List<Relation> list = Lists.newArrayList();
+        Multimap<String, Relation> rel = getRelationTable();
+        if(rel != null){
+            Collection<Relation> alist = rel.get(name);
+            list.addAll(alist);
+        }
+        return list;
+    }
+    
+    public static Multimap<String,Relation> getRelationTable(){
+        if (relations == null || relations.size() == 0) {
+            synchronized (Configuration.class) {
+                List<Relation> list = getRelations();
+                relations = ArrayListMultimap.create();   
+                for(Relation r:list){
+                    relations.put(r.getFrom(), r);
+                }
+            }
+         }   
+        return relations;
+    }
 
+    public static List<Relation> getRelations(){
+        List<Relation> relations = new ArrayList<>();
+        try {
+            XMLConfiguration config = new XMLConfiguration("relations.xml");
+            List<HierarchicalConfiguration> hp = config.configurationsAt("relation");
+
+            for (HierarchicalConfiguration sub : hp) {
+                Relation relation = new Relation();
+                relations.add(relation);
+                relation.setName( sub.getString("name"));
+                relation.setDisplay(sub.getString("display"));
+                relation.setFrom(sub.getString("from"));
+                relation.setTo(sub.getString("to"));
+                relation.setSql(sub.getString("sql"));
+            }
+
+        } catch (ConfigurationException cex) {
+            cex.printStackTrace();
+        }
+
+        return relations;
+    }
+    
     public static List<Entity> getEntities() {
         List<Entity> enitites = new ArrayList<>();
         try {
@@ -264,6 +148,7 @@ public class Configuration {
                 enitites.add(entity);
                 entity.setName( sub.getString("name"));
                 entity.setDisplay(sub.getString("display"));
+                entity.setSql(sub.getString("sql"));
                 List<Field> fields = Lists.newArrayList();
                 entity.setFields(fields);
                 List<HierarchicalConfiguration> hp2 = sub.configurationsAt("fields.field");

@@ -333,6 +333,8 @@ public class DAOImpl {
         List<String> menulist = Lists.newArrayList();
         menulist.add("home");
         menulist.add("account");
+        menulist.add("contact");
+        menulist.add("user");
         return menulist;
     }
 	
@@ -357,6 +359,64 @@ public class DAOImpl {
         return lMap;
 	    
 	}
+	
+	
+	   public static List queryEntityRelationList(String sql,String... params ){
+	        Connection conn = null;
+	        List lMap = Lists.newArrayList();
+	        try {
+	            conn = DBHelper.getConnection();
+	            QueryRunner run = new QueryRunner();
+	            lMap = (List) run.query(conn, sql, new MapListHandler(),params);
+	            
+	        } catch (SQLException e) {
+	            logger.error("failed to get user",e);
+	        }finally {
+	            DBHelper.closeConnection(conn);
+	        }
+	        
+	        return lMap;
+	        
+	    }
+	
+	public static List queryEntityList(String sql,int first , int count ){
+        String query = sql + " limit " + first + ", " + count;
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, query, new MapListHandler());
+            
+        } catch (SQLException e) {
+            logger.error("failed to get user",e);
+        }finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return lMap;
+        
+    }
+	
+	public static Map queryEntityById(String sql,String id){
+        String query = sql.replace("?", id);
+        
+        Connection conn = null;
+        Map map = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            map = (Map) run.query(conn, query, new MapHandler());
+            
+        } catch (SQLException e) {
+            logger.error("failed to get user",e);
+        }finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return map;
+        
+    }
 	
 	   public static Map getEntityData(String tableName, List<String> colunmNames,long id){
 	        String queryColunm = Joiner.on(",").join(colunmNames);

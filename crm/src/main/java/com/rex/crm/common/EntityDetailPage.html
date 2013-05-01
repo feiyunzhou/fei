@@ -4,7 +4,6 @@
 	<wicket:extend>
 		<script>
 			$(document).ready(function() {
-				$("#navitem-account").addClass("active");
 				$("#accordion").accordion({
 					collapsible : true,
 					heightStyle : "content",
@@ -13,18 +12,32 @@
 
 			});
 		</script>
-		<div class="well well-large">
-			<div>
-				<div class="pull-right">
-					<span wicket:id="operationBar">[operation bar]</span>
+		<div class="accordion" id="accordion2">
+			<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#detailinfo">详细信息</a>
 				</div>
-				<table>
-					<tbody>
-						<tr wicket:id="dataRowRepeater">
-							<td style="width:200px" wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
-						</tr>
-					</tbody>
-				</table>
+
+				<div id="detailinfo" class="accordion-body collapse in">
+					<div class="accordion-inner">
+						<div class="pull-right">
+							<span wicket:id="operationBar">[operation bar]</span>
+						</div>
+						<table>
+							<tbody>
+								<tr wicket:id="dataRowRepeater">
+									<td style="width: 200px" wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div wicket:id="relationRepeater" class="accordion-group">
+				<span wicket:id="relationPanel"></span>
 			</div>
 		</div>
 

@@ -14,6 +14,8 @@ public class Entity {
     private String display;
     @Expose
     private List<Field> fields;
+    @Expose
+    private String sql;
 
     public String getName() {
         return name;
@@ -74,5 +76,13 @@ public class Entity {
             }
         }
         return fd;
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public void setSql(String sql) {
+        this.sql = sql;
     }
 }

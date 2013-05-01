@@ -3,7 +3,8 @@
 <entities>
 	<entity>
 		<name>account</name>
-		<display>客户</display>
+		<display>医院</display>
+		<sql>select * from account</sql>
 		<fields>
 			<field>
 				<name>id</name>
@@ -58,7 +59,8 @@
 
 	<entity>
 		<name>contact</name>
-		<display>联系人</display>
+		<display>医生</display>
+		<sql>select * from contact</sql>
 		<fields>
 			<field>
 				<name>id</name>
@@ -114,6 +116,7 @@
 	<entity>
 		<name>crmuser</name>
 		<display>用户</display>
+		<sql>select * from crmuser</sql>
 		<fields>
 			<field>
 				<name>id</name>

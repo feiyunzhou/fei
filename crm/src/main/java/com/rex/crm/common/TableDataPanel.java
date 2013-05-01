@@ -1,9 +1,11 @@
 package com.rex.crm.common;
 
+import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -21,17 +23,17 @@ import com.rex.crm.util.Configuration;
 
 public class TableDataPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
+    private static final Logger logger = Logger.getLogger(TableDataPanel.class);
 
-    public TableDataPanel(String id,String tableName) {
+    public TableDataPanel(String id,Entity entity, List mapList) {
         super(id);
   
-        //TODO Get the table definition from database or configuration   
-        Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get(tableName);
+        //TODO Get the table definition from database or configuration
         String primaryKeyName = entity.getPrimaryKeyName();
         List<Field> fields = entity.getFields();
         List<String> fn = entity.getFieldNames();
- 
+        final String entityName = entity.getName();
+        
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
         add(columnNameRepeater);
@@ -43,7 +45,6 @@ public class TableDataPanel extends Panel {
         }
         //end of set column name
         
-        List mapList = DAOImpl.getTableData(entity.getName(), fn , 0, 1000);
         RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
         add(dataRowRepeater);
 
@@ -54,9 +55,21 @@ public class TableDataPanel extends Panel {
             dataRowRepeater.add(item);
             RepeatingView columnRepeater = new RepeatingView("columnRepeater");
             item.add(columnRepeater);
+            final String rowId =  String.valueOf(map.get(primaryKeyName));
             for(Field f:fields){
                 if(!f.isVisible()) continue;
-                AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(map.get(primaryKeyName))));
+                //AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(map.get(primaryKeyName))));
+                AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(){
+
+                    @Override
+                    public Serializable getObject() {
+                        Param p = new Param();
+                        p.setId(rowId);
+                        p.setEntityName(entityName);
+                        return p;
+                    }
+                    
+                });
                 if(f.isDetailLink()){
                     columnitem.add(new DetailLinkFragment("celldata","detailFragment",this,String.valueOf(map.get(f.getName()))));
                 }else{
@@ -101,8 +114,9 @@ public class TableDataPanel extends Panel {
                     //System.out.println(getParent().getId());
                    // System.out.println("this link is clicked!"+this.getParent().getParent().getDefaultModelObject());
                     //Account selected = (Account)getParent().getDefaultModelObject();
-                    String id = (String)getParent().getParent().getDefaultModelObject();
-                    setResponsePage(new EntityDetailPage("account",id));
+                    Param p = (Param)getParent().getParent().getDefaultModelObject();
+                    logger.debug(p+ " id:"+p.getId() + " name:"+p.getEntityName());
+                    setResponsePage(new EntityDetailPage(p.getEntityName(),p.getId()));
                     
                     //setResponsePage(new AccountDetailPage(id));
                 }

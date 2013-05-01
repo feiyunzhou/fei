@@ -71,10 +71,24 @@ public abstract class TemplatePage extends WebPage {
         builder.put("home", item);
         
         item = new MenuItem();
-        item.setCaption("客户");
+        item.setCaption("医院");
         item.setDestination(AccountPage.class);
         item.setId("navitem-account");
         builder.put("account", item);
+        
+        item = new MenuItem();
+        item.setCaption("医生");
+        item.setDestination(ContactPage.class);
+        item.setId("navitem-contact");
+        builder.put("contact", item);
+        
+        item = new MenuItem();
+        item.setCaption("用户");
+        item.setDestination(UserPage.class);
+        item.setId("navitem-user");
+        builder.put("user", item);
+        
+        
         pageMenuMap = builder.build();
     	 
     }

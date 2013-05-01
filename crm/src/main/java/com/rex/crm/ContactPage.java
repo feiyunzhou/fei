@@ -13,15 +13,15 @@ import com.rex.crm.util.Configuration;
 /**
  * @author Feiyun Zhou 
  */
-public class AccountPage extends TemplatePage
+public class ContactPage extends TemplatePage
 {
 	/**
 	 * Constructor
 	 */
-	public AccountPage()
+	public ContactPage()
 	{
 		Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get("account");
+        Entity entity = entities.get("contact");
         setPageTitle(entity.getDisplay());
         List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
 		add(new TableDataPanel("datalist",entity,mapList));
