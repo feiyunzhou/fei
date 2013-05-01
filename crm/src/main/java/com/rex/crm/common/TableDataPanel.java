@@ -81,7 +81,7 @@ public class TableDataPanel extends Panel {
         }
         
         //TODO Get permission info of user from database.
-        add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.EDIT)));
+        add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.ADD)));
 
     }
 

@@ -39,24 +39,6 @@ body {
 <!-- <link  href="css/template.css" rel="stylesheet"/> -->
 <script>
 	$(document).ready(function() {
-		$("#dialog-form").dialog({
-			autoOpen : false,
-			height : 200,
-			width : 400,
-			modal : true,
-			buttons : {
-				"确定" : function() {
-					onDialogOKClicked();
-				},
-				"取消" : function() {
-					$(this).dialog("close");
-				}
-			},
-			close : function() {
-				console.log("closed");
-			}
-		});//dialog end
-
 		
 		
 		$(".nav-item").on("click",function(event){

@@ -4,6 +4,10 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.AbstractAjaxBehavior;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -18,7 +22,7 @@ public class EntityDetailPage extends TemplatePage {
 
     private static int NUM_OF_COLUMN  = 1;
     
-    public EntityDetailPage(String entityName, String id){
+    public EntityDetailPage(final String entityName, String id){
         //TODO Get permission info of user from database.
         add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
         
@@ -76,6 +80,20 @@ public class EntityDetailPage extends TemplatePage {
            item.add(new RelationDataPanel("relationPanel",r,list));
            
          }
+
+         add(new AbstractAjaxBehavior(){
+
+            @Override
+            public void onRequest() {
+            }
+
+            @Override
+            public void renderHead(Component component, IHeaderResponse response) {
+                super.renderHead(component, response);
+                response.render(OnDomReadyHeaderItem.forScript("$(\"#navitem-"+entityName+"\").addClass(\"active\");"));
+            }  
+             
+         });
          
         
     }

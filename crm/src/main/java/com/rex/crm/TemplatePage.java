@@ -85,7 +85,7 @@ public abstract class TemplatePage extends WebPage {
         item = new MenuItem();
         item.setCaption("用户");
         item.setDestination(UserPage.class);
-        item.setId("navitem-user");
+        item.setId("navitem-crmuser");
         builder.put("user", item);
         
         

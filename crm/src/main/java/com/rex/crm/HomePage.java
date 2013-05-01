@@ -20,6 +20,7 @@ public class HomePage extends TemplatePage {
 
 	public HomePage() {
 	    super();
+	    setPageTitle("主页");
 	    Model<String> clock = new Model<String>() {
             private static final long serialVersionUID = 6765223786331155854L;
 
