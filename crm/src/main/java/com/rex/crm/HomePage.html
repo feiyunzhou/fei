@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:wicket="http://wicket.apache.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <body>
 	<wicket:extend>
-	<script>
+		<script>
 	    $(document).ready(function() {
 	    	$("#navitem-homepage").addClass("active");
 				
 	    });
 	</script>
-		<div class="content">
-			<div class="menu"></div>
-
-			<div class="page">
-			时间: <span wicket:id="clock"></span>
+			<div class="row-fluid">
+				<ul class="thumbnails">
+					<li class="span1"><a href="#" class="thumbnail"><i class="icon-home icon-4x"></i></a></li>
+					<li class="span1"><a href="#" class="thumbnail"><i class="icon-hospital icon-4x"></i></a></li>
+					<li class="span1"><a href="#" class="thumbnail"><i class="icon-user-md icon-4x"></i></a></li>
+					<li class="span1"><a href="#" class="thumbnail"><i class="icon-calendar icon-4x"></i></a></li>
+				</ul>
 			</div>
-
-
-        <span wicket:id="testpanel"></span>
-		</div>
+		<span wicket:id="testpanel"></span>
 	</wicket:extend>
 </body>
 </html>

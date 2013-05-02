@@ -17,31 +17,18 @@ import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 
 public class HomePage extends TemplatePage {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public HomePage() {
-	    super();
-	    setPageTitle("主页");
-	    Model<String> clock = new Model<String>() {
-            private static final long serialVersionUID = 6765223786331155854L;
+    public HomePage() {
+        super();
+        setPageTitle("主页");
+        List<Relation> relations = Configuration.getRelationsByName("account");
 
-            @Override
-            public String getObject() {
-                SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss");
-                String time = df.format(new Date());
-                 return time;
-            }
-       };
-	    
-	    add(new Label("clock", clock));
-	    
-    List<Relation> relations = Configuration.getRelationsByName("account");
-   
-    Relation relation =  relations.get(0);
-    System.out.println(relation);
-    List list = DAOImpl.queryEntityRelationList(relation.getSql(), "20");
-    
-    add(new RelationDataPanel("testpanel",relation,list));
-   // add(new CalendarPanel("testpanel"));
+        Relation relation = relations.get(0);
+        System.out.println(relation);
+        List list = DAOImpl.queryEntityRelationList(relation.getSql(), "20");
+
+        add(new RelationDataPanel("testpanel", relation, list));
+        // add(new CalendarPanel("testpanel"));
     }
 }

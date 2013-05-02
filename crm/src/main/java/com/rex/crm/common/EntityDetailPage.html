@@ -7,17 +7,14 @@
 
 			});
 		</script>
-		<div class="accordion" id="accordion2">
-			<div class="accordion-group">
-				<div class="accordion-heading">
-					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#detailinfo">详细信息</a>
-				</div>
-
-				<div id="detailinfo" class="accordion-body collapse in">
-					<div class="accordion-inner">
-						<div class="pull-right">
+		
+			<div>
+                <div class="pull-right">
 							<span wicket:id="operationBar">[operation bar]</span>
-						</div>
+				</div>
+                <h4>详细信息</h4>
+				<div id="detailinfo">
+					<hr/>
 						<table>
 							<tbody>
 								<tr wicket:id="dataRowRepeater">
@@ -27,10 +24,9 @@
 						</table>
 					</div>
 				</div>
-			</div>
 
-
-
+        <br/><br/>
+        <div class="accordion" id="accordion2">
 			<div wicket:id="relationRepeater" class="accordion-group">
 				<span wicket:id="relationPanel"></span>
 			</div>
