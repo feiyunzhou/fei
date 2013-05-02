@@ -12,7 +12,7 @@
 				<data-type>Long</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 			</field>
 			<field>
 				<name>name</name>
@@ -64,11 +64,11 @@
 		<fields>
 			<field>
 				<name>id</name>
-				<display>id</display>
+				<display>ID</display>
 				<data-type>Long</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 			</field>
 			<field>
 				<name>name</name>
@@ -120,11 +120,11 @@
 		<fields>
 			<field>
 				<name>id</name>
-				<display>id</display>
+				<display>ID</display>
 				<data-type>Long</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 			</field>
 			<field>
 				<name>name</name>
@@ -172,7 +172,7 @@
 				<data-type>Long</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 			</field>
 			<field>
 				<name>title</name>

@@ -65,31 +65,31 @@ public abstract class TemplatePage extends WebPage {
         //TODO Load them from configuration
         ImmutableMap.Builder<String, MenuItem> builder = new ImmutableMap.Builder<String,MenuItem>();
         MenuItem item = new MenuItem();
-        item.setCaption("主页");
+        item.setCaption("<i class=\"icon-home icon-large\"></i>主页");
         item.setDestination(HomePage.class);
         item.setId("navitem-homepage");
         builder.put("home", item);
         
         item = new MenuItem();
-        item.setCaption("医院");
+        item.setCaption("<i class=\"icon-hospital icon-large\"></i>医院");
         item.setDestination(AccountPage.class);
         item.setId("navitem-account");
         builder.put("account", item);
         
         item = new MenuItem();
-        item.setCaption("医生");
+        item.setCaption("<i class=\"icon-user-md icon-large\"></i>医生");
         item.setDestination(ContactPage.class);
         item.setId("navitem-contact");
         builder.put("contact", item);
         
         item = new MenuItem();
-        item.setCaption("用户");
+        item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
         item.setDestination(UserPage.class);
         item.setId("navitem-crmuser");
         builder.put("user", item);
         
         item = new MenuItem();
-        item.setCaption("活动");
+        item.setCaption("<i class=\"icon-calendar icon-large\"></i>活动");
         item.setDestination(ActivityPage.class);
         item.setId("navitem-activity");
         builder.put("activity", item);
@@ -118,7 +118,7 @@ public abstract class TemplatePage extends WebPage {
             protected void populateItem(ListItem item) {
                 MenuItem menuitem = (MenuItem) item.getModelObject();
                 BookmarkablePageLink link = new BookmarkablePageLink("link", menuitem.getDestination());
-                link.add(new Label("caption", menuitem.getCaption()));
+                link.add(new Label("caption", menuitem.getCaption()).setEscapeModelStrings(false));
                 item.add(link);
                 item.add(new AttributeAppender("id", Model.of(menuitem.getId())));
                // item.add(new SimpleAttributeModifier("class", "my-css-class"));

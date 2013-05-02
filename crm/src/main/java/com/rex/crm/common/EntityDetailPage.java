@@ -25,6 +25,7 @@ public class EntityDetailPage extends TemplatePage {
     private static int NUM_OF_COLUMN  = 1;
     
     public EntityDetailPage(final String entityName, String id){
+        this.setPageTitle("详细信息");
         //TODO Get permission info of user from database.
         add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
         

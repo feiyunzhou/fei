@@ -334,8 +334,8 @@ public class DAOImpl {
         menulist.add("home");
         menulist.add("account");
         menulist.add("contact");
-        menulist.add("user");
         menulist.add("activity");
+        menulist.add("user");
         return menulist;
     }
 	
