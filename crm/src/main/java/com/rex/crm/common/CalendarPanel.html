@@ -1,0 +1,30 @@
+<wicket:panel>
+	<script>
+	$(document).ready(function() {
+		$('#calendar').fullCalendar({
+			// put your options and callbacks here
+			header : {
+				left : 'prev,next today',
+				center : 'title',
+				right : 'month,agendaWeek,agendaDay'
+			},
+
+			height:500,
+			selectable : true,
+			selectHelper : true,
+			editable : true,
+			events:JSON.parse(user_event_data)
+
+		});
+	});
+	</script>
+	<div>
+		<div>
+			<span wicket:id="operationBar" class="pull-right navbar-static-top">[operation bar]</span>
+		</div>
+		<br/><br/>
+		<div>
+			<div id="calendar"></div>
+		</div>
+	</div>
+</wicket:panel>

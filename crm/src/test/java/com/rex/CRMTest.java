@@ -22,9 +22,9 @@ public class CRMTest {
     
     @Test
     public void testRelation(){
-        Collection<Relation> list = Configuration.getRelationsByName("account");
+        Collection<Relation> list = Configuration.getRelationsByName("contact");
         for(Relation r:list){
-            System.out.println(r);
+            System.out.println(r.getSql());
         }
     }
 }

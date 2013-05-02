@@ -160,4 +160,44 @@
 			</field>
 		</fields>
 	</entity>
+	
+	<entity>
+		<name>activity</name>
+		<display>日历</display>
+		<sql>select * from activity where crmuserId=?</sql>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+			</field>
+			<field>
+				<name>title</name>
+				<display>标题</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+			</field>
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+			</field>
+		</fields>
+	</entity>
 </entities>

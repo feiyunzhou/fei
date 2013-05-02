@@ -16,4 +16,21 @@
 		<sql>select a.* from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?</sql>
 		<to>account</to>
 	</relation>
+	
+	<relation>
+		<from>account</from>
+		<name>contactlistOfaccount</name>
+		<display>医生列表</display>
+		<sql>select a.* from contact as a where a.accountId=?</sql>
+		<to>contact</to>
+	</relation>
+	
+	<relation>
+		<from>contact</from>
+		<name>accountOfContact</name>
+		<display>所属医院</display>
+		<sql>select b.* from contact as a\,account as b where a.id=? AND b.id=a.accountId</sql>
+		<to>account</to>
+	</relation>
+	
 </relations>

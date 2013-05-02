@@ -88,6 +88,11 @@ public abstract class TemplatePage extends WebPage {
         item.setId("navitem-crmuser");
         builder.put("user", item);
         
+        item = new MenuItem();
+        item.setCaption("活动");
+        item.setDestination(ActivityPage.class);
+        item.setId("navitem-activity");
+        builder.put("activity", item);
         
         pageMenuMap = builder.build();
     	 

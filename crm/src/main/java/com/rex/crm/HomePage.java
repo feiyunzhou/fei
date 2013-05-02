@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
 
 import com.rex.crm.account.AccountListPanel;
+import com.rex.crm.common.CalendarPanel;
 import com.rex.crm.common.Relation;
 import com.rex.crm.common.RelationDataPanel;
 import com.rex.crm.common.TableDataPanel;
@@ -39,6 +40,8 @@ public class HomePage extends TemplatePage {
     Relation relation =  relations.get(0);
     System.out.println(relation);
     List list = DAOImpl.queryEntityRelationList(relation.getSql(), "20");
+    
     add(new RelationDataPanel("testpanel",relation,list));
+   // add(new CalendarPanel("testpanel"));
     }
 }

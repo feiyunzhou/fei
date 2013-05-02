@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -18,6 +19,7 @@ import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 
 public class EntityDetailPage extends TemplatePage {
+    private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
     private static final long serialVersionUID = -2613412283023068638L;
 
     private static int NUM_OF_COLUMN  = 1;
@@ -75,7 +77,8 @@ public class EntityDetailPage extends TemplatePage {
          for(Relation r:relations){
            AbstractItem item = new AbstractItem(relationRepeater.newChildId());
            relationRepeater.add(item);
-           
+           logger.debug(r.getSql());
+           logger.debug("parms:"+id);
            List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
            item.add(new RelationDataPanel("relationPanel",r,list));
            

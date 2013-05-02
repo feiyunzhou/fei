@@ -335,6 +335,7 @@ public class DAOImpl {
         menulist.add("account");
         menulist.add("contact");
         menulist.add("user");
+        menulist.add("activity");
         return menulist;
     }
 	
@@ -362,6 +363,7 @@ public class DAOImpl {
 	
 	
 	   public static List queryEntityRelationList(String sql,String... params ){
+	        logger.debug(sql);
 	        Connection conn = null;
 	        List lMap = Lists.newArrayList();
 	        try {
