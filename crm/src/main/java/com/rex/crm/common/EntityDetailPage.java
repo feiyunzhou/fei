@@ -1,5 +1,6 @@
 package com.rex.crm.common;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class EntityDetailPage extends TemplatePage {
     private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
     private static final long serialVersionUID = -2613412283023068638L;
 
-    private static int NUM_OF_COLUMN  = 1;
+    private static int NUM_OF_COLUMN  = 3;
     
     public EntityDetailPage(final String entityName, String id){
         this.setPageTitle("详细信息");
@@ -42,14 +43,17 @@ public class EntityDetailPage extends TemplatePage {
         add(dataRowRepeater);
         
        int numOfField = 0;
+       List<Field> visibleFields = new ArrayList();
        for(Field f:fields){
            if(!f.isVisible()) continue;
            numOfField++;
+           visibleFields.add(f);
        }
         
-        
+        logger.debug("numOfField:"+numOfField);
        //set the detailed info
         int num_of_row = (numOfField/NUM_OF_COLUMN) + 1;
+        logger.debug("num_of_row:"+num_of_row);
         
         for(int i=0;i<num_of_row;i++){
             AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
@@ -58,11 +62,20 @@ public class EntityDetailPage extends TemplatePage {
             item.add(columnRepeater);
             
             for(int j=0;j<NUM_OF_COLUMN;j++){
-              if((i*NUM_OF_COLUMN+j)>=fields.size()) break;
-              Field currentField = fields.get(i*NUM_OF_COLUMN+j);
-              if(!currentField.isVisible()) continue;
+              if((i*NUM_OF_COLUMN+j)>=visibleFields.size()) break;
+              Field currentField = visibleFields.get(i*NUM_OF_COLUMN+j);
               AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(map.get(primaryKeyName))));
-              columnitem.add(new Label("celldata",currentField.getDisplay()+": "+String.valueOf(map.get(currentField.getName()))));
+              
+              if(currentField.getPicklist()!=null){
+                  
+                  String value = DAOImpl.queryPickListById(currentField.getPicklist(), String.valueOf(map.get(currentField.getName())));
+                  columnitem.add(new Label("celldata",currentField.getDisplay()+": "+value));
+              }else{
+                  
+                  columnitem.add(new Label("celldata",currentField.getDisplay()+": "+String.valueOf(map.get(currentField.getName()))));
+              }
+              
+              
               columnRepeater.add(columnitem);
             }
       

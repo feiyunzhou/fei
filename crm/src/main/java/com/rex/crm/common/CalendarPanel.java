@@ -38,7 +38,7 @@ public class CalendarPanel extends Panel {
         map.put("user_event_data", com.rex.crm.ajax.DataProvider.getEventsByUserId(new String[]{userId}));
  
         PackageTextTemplate ptt = new PackageTextTemplate(getClass(),"calendar.js");
-        logger.debug(ptt.asString(map));
+        //logger.debug(ptt.asString(map));
         response.render(JavaScriptHeaderItem.forScript(ptt.asString(map), null));
         try {
             ptt.close();

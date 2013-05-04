@@ -23,7 +23,10 @@ public class AccountPage extends TemplatePage
 		Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("account");
         setPageTitle(entity.getDisplay());
-        List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
+        //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
+        //TODO get userId from request's session
+        String userId = "20";
+        List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
 		add(new TableDataPanel("datalist",entity,mapList));
 		
 	}

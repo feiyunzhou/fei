@@ -4,7 +4,7 @@
 	<entity>
 		<name>account</name>
 		<display>医院</display>
-		<sql>select * from account</sql>
+		<sql>SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?;</sql>
 		<fields>
 			<field>
 				<name>id</name>
@@ -13,6 +13,7 @@
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 			</field>
 			<field>
 				<name>name</name>
@@ -21,6 +22,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>address</name>
@@ -29,6 +31,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>classification</name>
@@ -37,6 +40,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>isKeyAccount</name>
@@ -45,6 +49,16 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			<field>
+				<name>cityId</name>
+				<display>所在城市</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>tele</name>
@@ -53,7 +67,74 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
+			<field>
+				<name>pl1</name>
+				<display>状态</display>
+				<data-type>String</data-type>
+				<picklist>account_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl2</name>
+				<display>医院分级</display>
+				<data-type>String</data-type>
+				<picklist>account_pl2</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl3</name>
+				<display>重点医院</display>
+				<data-type>String</data-type>
+				<picklist>account_pl3</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl4</name>
+				<display>市场分类</display>
+				<data-type>String</data-type>
+				<picklist>account_pl4</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl5</name>
+				<display>客户中国区域</display>
+				<data-type>String</data-type>
+				<picklist>account_pl5</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl6</name>
+				<display>医院类型</display>
+				<data-type>String</data-type>
+				<picklist>account_pl6</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+					
 		</fields>
 	</entity>
 
@@ -69,6 +150,7 @@
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 			</field>
 			<field>
 				<name>name</name>
@@ -77,6 +159,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>gender</name>
@@ -84,7 +167,8 @@
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>flase</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>mobilephone</name>
@@ -93,6 +177,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>tel_work</name>
@@ -101,6 +186,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>title</name>
@@ -109,7 +195,74 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
+			
+			<field>
+				<name>sex</name>
+				<display>性别</display>
+				<data-type>String</data-type>
+				<picklist>sex_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl1</name>
+				<display>科室</display>
+				<data-type>String</data-type>
+				<picklist>contact_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl2</name>
+				<display>职务</display>
+				<data-type>String</data-type>
+				<picklist>contact_pl2</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl3</name>
+				<display>职称</display>
+				<data-type>String</data-type>
+				<picklist>contact_pl3</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+			</field>
+			
+			<field>
+				<name>pl4</name>
+				<display>主要产品</display>
+				<data-type>String</data-type>
+				<picklist>contact_pl4</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl5</name>
+				<display>状态</display>
+				<data-type>String</data-type>
+				<picklist>contact_pl5</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
 		</fields>
 	</entity>
 
@@ -125,6 +278,7 @@
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 			</field>
 			<field>
 				<name>name</name>
@@ -133,14 +287,16 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>cellPhone</name>
-				<display>手机</display>
+				<display>手机号码</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>email</name>
@@ -149,6 +305,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>jobTitle</name>
@@ -157,10 +314,99 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
+			
+			<field>
+				<name>pl1</name>
+				<display>状态</display>
+				<data-type>String</data-type>
+				<picklist>crmuser_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl2</name>
+				<display>产品线</display>
+				<data-type>String</data-type>
+				<picklist>crmuser_pl2</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>role</name>
+				<display>角色</display>
+				<data-type>String</data-type>
+				<picklist>role</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl4</name>
+				<display>一级区域</display>
+				<data-type>String</data-type>
+				<picklist>region_level1_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl5</name>
+				<display>二级区域</display>
+				<data-type>String</data-type>
+				<picklist>region_level2_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
 		</fields>
 	</entity>
-	
+	<entity>
+	    <name>city</name>
+	    <display>城市</display>
+	    <fields>
+	       <field>
+	          <name>id</name>
+				<display>ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+	       </field>
+	       <field>
+	          <name>name</name>
+				<display>城市</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+	       </field>
+	       <field>
+	          <name>provinceId</name>
+				<display>ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+	       </field>
+	    </fields>
+	</entity>
 	<entity>
 		<name>activity</name>
 		<display>日历</display>
@@ -173,6 +419,7 @@
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 			</field>
 			<field>
 				<name>title</name>
@@ -181,6 +428,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>endtime</name>
@@ -189,6 +437,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 			<field>
 				<name>starttime</name>
@@ -197,6 +446,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 			</field>
 		</fields>
 	</entity>

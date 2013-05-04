@@ -73,7 +73,15 @@ public class TableDataPanel extends Panel {
                 if(f.isDetailLink()){
                     columnitem.add(new DetailLinkFragment("celldata","detailFragment",this,String.valueOf(map.get(f.getName()))));
                 }else{
-                   columnitem.add(new Label("celldata",String.valueOf(map.get(f.getName()))));
+                   if(f.getPicklist()!=null){
+                      //get option from picklist 
+                      String value = DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName())));
+                      columnitem.add(new Label("celldata",value));
+                       
+                   }else{
+                    
+                      columnitem.add(new Label("celldata",String.valueOf(map.get(f.getName()))));
+                   }
                 }
                 //columnitem.add(new Label("celldata",String.valueOf(fn.get(j).getClass().cast(map.get(fn.get(j))))));
                 columnRepeater.add(columnitem);
@@ -82,6 +90,9 @@ public class TableDataPanel extends Panel {
         
         //TODO Get permission info of user from database.
         add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.ADD)));
+        
+        
+        add(new NewDataFormPanel("formPanel",entity.getFields()));
 
     }
 

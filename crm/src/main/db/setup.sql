@@ -16,8 +16,70 @@ CREATE TABLE account
     tele VARCHAR(255),
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+ALTER table account ADD pl1 MEDIUMINT;
+ALTER table account ADD pl2 MEDIUMINT;
+ALTER table account ADD pl3 MEDIUMINT;
+ALTER table account ADD pl4 MEDIUMINT;
+ALTER table account ADD pl5 MEDIUMINT;
+ALTER table account ADD pl6 MEDIUMINT;
+
+--picklist for account
+--状态;
+drop table if exists account_pl1;
+CREATE TABLE account_pl1 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--医院分级;
+drop table if exists account_pl2;
+CREATE TABLE account_pl2 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
 
 
+--重点医院;
+drop table if exists account_pl3;
+CREATE TABLE account_pl3 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--市场分类;
+drop table if exists account_pl4;
+CREATE TABLE account_pl4 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--客户区域;
+drop table if exists account_pl5;
+CREATE TABLE account_pl5 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--医院类型;
+drop table if exists account_pl6;
+CREATE TABLE account_pl6 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+-- end of piklist for account
 
 drop table if exists accountcrmuser;
 CREATE TABLE accountcrmuser 
@@ -56,6 +118,68 @@ CREATE TABLE contact
     accountId MEDIUMINT  NOT NULL,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+ALTER TABLE contact ADD sex MEDIUMINT;
+ALTER table contact ADD pl1 MEDIUMINT;
+ALTER table contact ADD pl2 MEDIUMINT;
+ALTER table contact ADD pl3 MEDIUMINT;
+ALTER table contact ADD pl4 MEDIUMINT;
+ALTER table contact ADD pl5 MEDIUMINT;
+
+--picklist for contact;
+--性别;
+drop table if exists sex_pl;
+CREATE TABLE sex_pl
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--科室;
+drop table if exists contact_pl1;
+CREATE TABLE contact_pl1 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--职务;
+drop table if exists contact_pl2;
+CREATE TABLE contact_pl2 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--职称;
+drop table if exists contact_pl3;
+CREATE TABLE contact_pl3 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--主要产品;
+drop table if exists contact_pl4;
+CREATE TABLE contact_pl4 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--状态;
+drop table if exists contact_pl5;
+CREATE TABLE contact_pl5 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+--end of picklist for contact;
 
 drop table if exists crmuser;
 CREATE TABLE crmuser 
@@ -72,6 +196,59 @@ CREATE TABLE crmuser
     cityId MEDIUMINT  NOT NULL,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+ALTER table crmuser ADD pl1 MEDIUMINT;
+ALTER table crmuser ADD pl2 MEDIUMINT;
+ALTER table crmuser ADD role MEDIUMINT;
+ALTER table crmuser ADD pl4 MEDIUMINT;
+ALTER table crmuser ADD pl5 MEDIUMINT;
+
+-- pick list for crmuser
+--状态;
+drop table if exists crmuser_pl1;
+CREATE TABLE crmuser_pl1 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--产品线;
+drop table if exists crmuser_pl2;
+CREATE TABLE crmuser_pl2 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--角色;
+drop table if exists role;
+CREATE TABLE role 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--一级区域;
+drop table if exists region_level1_pl;
+CREATE TABLE region_level1_pl 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+--二级区域;
+drop table if exists region_level2_pl;
+CREATE TABLE region_level2_pl 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+-- END of pick list for crmuser
 
 drop table if exists city;
 CREATE TABLE city 

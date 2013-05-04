@@ -1,0 +1,29 @@
+<wicket:panel>
+	<script>
+		$(document).ready(function() {
+
+		});
+	</script>
+	<div>
+		<form wicket:id="form" class="form-horizontal">
+			<fieldset>
+
+				<div class="control-group" wicket:id="repeater">
+					<label class="control-label" wicket:id="fieldlabel"></label>
+					<div class="controls">
+						<span wicket:id="inputField"></span>
+					</div>
+				</div>
+
+			</fieldset>
+			<div class="pull-right"> <input type="button" wicket:id="save" value="保存" /></div>
+		</form>
+	</div>
+	<wicket:fragment wicket:id="textInputFragment">
+		<input wicket:id="input" type="text" />
+	</wicket:fragment>
+	<wicket:fragment wicket:id="dropDownFragment">
+		<select wicket:id="dropDownInput"></select>
+	</wicket:fragment>
+
+</wicket:panel>

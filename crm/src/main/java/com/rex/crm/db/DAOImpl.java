@@ -17,6 +17,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.KeyedHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.log4j.Logger;
@@ -28,7 +29,9 @@ import com.google.common.collect.Lists;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
+import com.rex.crm.beans.Choice;
 import com.rex.crm.beans.City;
+import com.rex.crm.beans.Contact;
 import com.rex.crm.beans.Province;
 
 public class DAOImpl {
@@ -212,6 +215,30 @@ public class DAOImpl {
 
 		return accounts;
 	}
+	
+	   public static List<Contact> getAllContacts() {
+	        List<Contact> contacts  = Lists.newArrayList();
+	        Connection conn = null;
+	        try {
+	            conn = DBHelper.getConnection();
+	            QueryRunner run = new QueryRunner();
+	            ResultSetHandler<List<Contact>> h = new BeanListHandler<Contact>(Contact.class);
+	            
+	            contacts = run.query(conn,"SELECT * FROM contact", h);
+	            
+	        } catch (SQLException e) {
+	            logger.error("failed to get all accounts",e);
+	        }finally {
+	            try {
+	                DbUtils.close(conn);
+	            } catch (SQLException e) {
+	                // TODO Auto-generated catch block
+	                logger.error("failed to close connection",e);
+	            }
+	        }
+
+	        return contacts;
+	    }
 	
 //     public static List<Account> getAllAccountsByUserId(String crm_user_id){    	
 //    	return fakeAccounts;
@@ -423,7 +450,7 @@ public class DAOImpl {
 	   public static Map getEntityData(String tableName, List<String> colunmNames,long id){
 	        String queryColunm = Joiner.on(",").join(colunmNames);
 	        String query = "select " + queryColunm + " from "+ tableName + " where id= " + id;
-	        
+	        logger.debug("query entity:"+query);
 	        Connection conn = null;
 	        Map map = null;
 	        try {
@@ -440,5 +467,53 @@ public class DAOImpl {
 	        return map;
 	        
 	    }
+	   
+       public static String queryPickListById(String picklist,String id){
+           String query = "select id, val from "+ picklist +" where id=? ";
+           String result = "";
+           Connection conn = null;
+           Map map = null;
+           try {
+               conn = DBHelper.getConnection();
+               QueryRunner run = new QueryRunner();
+               map = (Map) run.query(conn, query, new MapHandler(),id);
+               if(map !=null){
+                Object value = map.get("val");
+                if(value !=null){
+                    result = (String) value;
+                }
+               }
+               
+           } catch (SQLException e) {
+               logger.error("failed to get queryPickListById",e);
+           }finally {
+               DBHelper.closeConnection(conn);
+           }
+           
+           return result;
+           
+       }
+       
+       
+       public static List<Choice> queryPickList(String picklist){
+           String query = "select id, val from "+ picklist;
+           List<Choice> choices = Lists.newArrayList();
+           Connection conn = null;
+           try {
+               conn = DBHelper.getConnection();
+               QueryRunner run = new QueryRunner();
+               ResultSetHandler<List<Choice>> h = new BeanListHandler<Choice>(Choice.class);
+               choices = run.query(conn,"SELECT * FROM " +picklist,h);
+               
+           } catch (SQLException e) {
+               logger.error("failed to get queryPickListById",e);
+           }finally {
+               DBHelper.closeConnection(conn);
+           }
+           
+           return choices;
+           
+       }
+       
     
 }

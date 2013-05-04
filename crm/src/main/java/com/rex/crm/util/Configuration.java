@@ -158,10 +158,20 @@ public class Configuration {
                     fields.add(field);
                     field.setDataType(convert2Clazz(sub2.getString("data-type")));
                     field.setDisplay(sub2.getString("display"));
-                    field.setName(sub2.getString("name")); 
+                    field.setName(sub2.getString("name"));
+                    
+                    String picklist = sub2.getString("picklist");
+                    if(picklist!=null && picklist.trim().length()!=0){
+                        field.setPicklist(picklist);
+                    }else{
+                        field.setPicklist(null);
+                    }
+                    
                     field.setPrimaryKey(Boolean.parseBoolean(sub2.getString("isPrimaryKey")));
                     field.setDetailLink(Boolean.parseBoolean(sub2.getString("isDetailLink"))); 
-                    field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible"))); 
+                    field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible")));
+                    field.setEditable(Boolean.parseBoolean(sub2.getString("isEditable"))); 
+               
                 }
                 
             }

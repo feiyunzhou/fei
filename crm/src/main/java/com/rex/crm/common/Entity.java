@@ -17,6 +17,7 @@ public class Entity {
     @Expose
     private String sql;
 
+
     public String getName() {
         return name;
     }
@@ -85,4 +86,5 @@ public class Entity {
     public void setSql(String sql) {
         this.sql = sql;
     }
+
 }

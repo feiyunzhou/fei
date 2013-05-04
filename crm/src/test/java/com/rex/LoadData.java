@@ -17,6 +17,10 @@ import org.junit.Test;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.rex.crm.beans.Account;
+import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.Contact;
+import com.rex.crm.db.DAOImpl;
 import com.rex.crm.db.DBHelper;
 
 public class LoadData {
@@ -44,5 +48,105 @@ public class LoadData {
 		DbUtils.close(conn);
 	}
 	
+	@Test
+	public void modifyAccountTable() throws SQLException {
+
+	    
+        List<Account> ats = DAOImpl.getAllAccounts();
+	    
+	    String sql =  "UPDATE account SET pl1=?,pl2=?,pl3=?,pl4=?,pl5=?,pl6=? where id=?";
+        
+        Connection conn = DBHelper.getConnection();
+        QueryRunner run = new QueryRunner();
+        int res =0;
+        
+        for(Account a:ats){
+            try {
+                int r1 = (int)(Math.random()*3+1);
+                int r2 = (int)(Math.random()*3+1);
+                int r3 = (int)(Math.random()*2+1);
+                int r4 = (int)(Math.random()*3+1);
+                int r5 = (int)(Math.random()*3+1);
+                int r6 = (int)(Math.random()*3+1);
+                res += run.update(conn, sql, r1,r2,r3,r4,r5,r6,a.getId());
+                
+            } finally {
+                // Use this helper method so we don't have to check for null
+                //DbUtils.close(conn);
+                System.out.println("result:"+res);
+            }
+        }
+        
+        DbUtils.close(conn);
+    }
+	
+	   @Test
+	    public void modifyContactTable() throws SQLException {
+
+	        
+	        List<Contact> ats = DAOImpl.getAllContacts();
+	        
+	        String sql =  "UPDATE contact SET sex=?,pl1=?,pl2=?,pl3=?,pl4=?,pl5=? where id=?";
+	        
+	        Connection conn = DBHelper.getConnection();
+	        QueryRunner run = new QueryRunner();
+	        int res =0;
+	        
+	        for(Contact a:ats){
+	            try {
+	                int sex1 =  (int)(Math.random()*1+1);
+	                int r1 = (int)(Math.random()*12+1);
+	                int r2 = (int)(Math.random()*7+1);
+	                int r3 = (int)(Math.random()*7+1);
+	                int r4 = (int)(Math.random()*5+1);
+	                int r5 = (int)(Math.random()*1+1);
+	                
+	                res += run.update(conn, sql, sex1,r1,r2,r3,r4,r5,a.getId());
+	                
+	            } finally {
+	                // Use this helper method so we don't have to check for null
+	                //DbUtils.close(conn);
+	               
+	            }
+	        }
+	        System.out.println("result:"+res);
+	        
+	        DbUtils.close(conn);
+	    }
+	
+       @Test
+       public void modifyUserTable() throws SQLException {
+
+           
+           List<CRMUser> staff = DAOImpl.getAllCRMUsers();
+           
+           String sql =  "UPDATE crmuser SET pl1=?,pl2=?,role=?,pl4=?,pl5=? where id=?";
+           
+           Connection conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int res =0;
+           
+           for(CRMUser a:staff){
+               try {
+                   
+                   int r1 = (int)(Math.random()*1+1);
+                   int r2 = (int)(Math.random()*2+1);
+                   int role = (int)(Math.random()*4+1);
+                   int r4 = (int)(Math.random()*2+1);
+                   int r5 = (int)(Math.random()*6+1);
+                   
+                   res += run.update(conn, sql, r1,r2,role,r4,r5,a.getId());
+                   
+               } finally {
+                   // Use this helper method so we don't have to check for null
+                   //DbUtils.close(conn);
+                  
+               }
+           }
+           System.out.println("result:"+res);
+           
+           DbUtils.close(conn);
+       }
+   
 	
 }

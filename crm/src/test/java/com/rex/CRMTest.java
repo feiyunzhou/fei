@@ -25,6 +25,7 @@ public class CRMTest {
         Collection<Relation> list = Configuration.getRelationsByName("contact");
         for(Relation r:list){
             System.out.println(r.getSql());
+            
         }
     }
 }

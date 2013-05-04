@@ -18,6 +18,10 @@ public class Field {
     private boolean isDetailLink;
     @Expose
     private boolean isVisible;
+    @Expose
+    private String picklist = null;
+    @Expose
+    private boolean isEditable;
     
 
     public boolean isPrimaryKey() {
@@ -81,6 +85,22 @@ public class Field {
 
     public void setVisible(boolean isVisible) {
         this.isVisible = isVisible;
+    }
+
+    public String getPicklist() {
+        return picklist;
+    }
+
+    public void setPicklist(String picklist) {
+        this.picklist = picklist;
+    }
+
+    public boolean isEditable() {
+        return isEditable;
+    }
+
+    public void setEditable(boolean isEditable) {
+        this.isEditable = isEditable;
     }
     
     
