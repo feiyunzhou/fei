@@ -450,4 +450,150 @@
 			</field>
 		</fields>
 	</entity>
+	
+		<entity>
+		<name>dealerAccount</name>
+		<display>经销商</display>
+		<sql>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL</sql>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+			</field>
+			<field>
+				<name>name</name>
+				<display>名称</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			<field>
+				<name>address</name>
+				<display>地址</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			<field>
+				<name>tele</name>
+				<display>电话</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>String</data-type>
+				<picklist>account_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl1</name>
+				<display>一级区域</display>
+				<data-type>String</data-type>
+				<picklist>region_level1_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl2</name>
+				<display>二级区域</display>
+				<data-type>String</data-type>
+				<picklist>region_level2_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>	
+		</fields>
+	</entity>
+	
+		<entity>
+		<name>dealerContact</name>
+		<display>经销商联系人</display>
+		<sql>select * from dealerContact</sql>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+			</field>
+			<field>
+				<name>name</name>
+				<display>姓名</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			<field>
+				<name>tel_work</name>
+				<display>电话</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>sex</name>
+				<display>性别</display>
+				<data-type>String</data-type>
+				<picklist>sex_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>String</data-type>
+				<picklist>account_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+			<field>
+				<name>pl1</name>
+				<display>主要产品</display>
+				<data-type>String</data-type>
+				<picklist>contact_pl4</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
+			
+		</fields>
+	</entity>
+	
 </entities>

@@ -18,6 +18,14 @@
 	</relation>
 	
 	<relation>
+		<from>crmuser</from>
+		<name>crmuser2activity</name>
+		<display>拜访</display>
+		<sql>select a.* from activity as a inner join crmuser as b on a.crmuserId=b.id where b.id=?</sql>
+		<to>activity</to>
+	</relation>
+	
+	<relation>
 		<from>account</from>
 		<name>contactlistOfaccount</name>
 		<display>医生列表</display>
@@ -31,6 +39,22 @@
 		<display>所属医院</display>
 		<sql>select b.* from contact as a\,account as b where a.id=? AND b.id=a.accountId</sql>
 		<to>account</to>
+	</relation>
+	
+	<relation>
+		<from>dealerAccount</from>
+		<name>dealerContactlistOfdealerAccount</name>
+		<display>联系人列表</display>
+		<sql>select a.* from dealerContact as a where a.dealerAccountId=?</sql>
+		<to>dealerContact</to>
+	</relation>
+	
+	<relation>
+		<from>dealerContact</from>
+		<name>dealerAccountOfdealerContact</name>
+		<display>所属经销商</display>
+		<sql>select b.* from dealerContact as a\,dealerAccount as b where a.id=? AND b.id=a.dealerAccountId</sql>
+		<to>dealerAccount</to>
 	</relation>
 	
 </relations>

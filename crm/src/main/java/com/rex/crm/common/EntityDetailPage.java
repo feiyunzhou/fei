@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
@@ -23,7 +24,7 @@ public class EntityDetailPage extends TemplatePage {
     private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
     private static final long serialVersionUID = -2613412283023068638L;
 
-    private static int NUM_OF_COLUMN  = 3;
+    private static int NUM_OF_COLUMN  = 2;
     
     public EntityDetailPage(final String entityName, String id){
         this.setPageTitle("详细信息");
@@ -61,20 +62,34 @@ public class EntityDetailPage extends TemplatePage {
             RepeatingView columnRepeater = new RepeatingView("columnRepeater");
             item.add(columnRepeater);
             
-            for(int j=0;j<NUM_OF_COLUMN;j++){
-              if((i*NUM_OF_COLUMN+j)>=visibleFields.size()) break;
-              Field currentField = visibleFields.get(i*NUM_OF_COLUMN+j);
-              AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(map.get(primaryKeyName))));
-              
+            for(int j=0;j<2*NUM_OF_COLUMN;j++){
+               AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(map.get(primaryKeyName))));
+               
+                
+              if((i*NUM_OF_COLUMN+j/2)>=visibleFields.size()) {
+                  columnitem.add(new Label("celldata","&nbsp;").setEscapeModelStrings(false));
+                  columnRepeater.add(columnitem);
+                  continue;
+              }
+              Field currentField = visibleFields.get(i*NUM_OF_COLUMN+j/2);
+
               if(currentField.getPicklist()!=null){
                   
-                  String value = DAOImpl.queryPickListById(currentField.getPicklist(), String.valueOf(map.get(currentField.getName())));
-                  columnitem.add(new Label("celldata",currentField.getDisplay()+": "+value));
+                  if(j%2 == 0){
+                      columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
+                      columnitem.add(new AttributeAppender("style", new Model("white-space: nowrap;"), ";"));
+                  }else{
+                      String value = DAOImpl.queryPickListById(currentField.getPicklist(), String.valueOf(map.get(currentField.getName())));
+                      columnitem.add(new Label("celldata",value+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").setEscapeModelStrings(false));
+                  }     
               }else{
-                  
-                  columnitem.add(new Label("celldata",currentField.getDisplay()+": "+String.valueOf(map.get(currentField.getName()))));
+                  if(j%2 == 0){
+                      columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
+                      columnitem.add(new AttributeAppender("style", new Model("white-space: nowrap;"), ";"));
+                  }else{
+                      columnitem.add(new Label("celldata",String.valueOf(map.get(currentField.getName()))+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").setEscapeModelStrings(false));
+                  } 
               }
-              
               
               columnRepeater.add(columnitem);
             }

@@ -269,7 +269,32 @@ CREATE TABLE province
 
 
 
+drop table if exists dealerAccount;
+CREATE TABLE dealerAccount 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    tele VARCHAR(255),
+    status MEDIUMINT,
+    pl1 MEDIUMINT,
+    pl2 MEDIUMINT,
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
 
 
+
+drop table if exists dealerContact;
+CREATE TABLE dealerContact 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    sex MEDIUMINT,
+    tel_work VARCHAR(255),
+    dealerAccountId MEDIUMINT  NOT NULL,
+    status MEDIUMINT,
+    pl1 MEDIUMINT,
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
 
 

@@ -361,7 +361,9 @@ public class DAOImpl {
         menulist.add("home");
         menulist.add("account");
         menulist.add("contact");
-        menulist.add("activity");
+        menulist.add("calendar");
+        menulist.add("dealerAccount");
+        menulist.add("dealerContact");
         menulist.add("user");
         return menulist;
     }

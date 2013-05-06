@@ -148,5 +148,51 @@ public class LoadData {
            DbUtils.close(conn);
        }
    
+    
+       
+       @Test
+       public void loadDealerAccount2DB() throws SQLException {
+           String sql =  "INSERT INTO dealerAccount (name,address,tele,status,pl1,pl2) VALUES (?,?,?,?,?,?)";
+           
+           Connection conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int res =0;
+           for (int i=0;i<88;i++) {
+               try {
+                   res = run.update(conn, sql, "经销商"+i,"北京市朝阳区望京东路"+i+"号","138119926"+i,(i%2)+1,(i%3)+1,(i%7)+1)+1;
+                   
+               } finally {
+                   // Use this helper method so we don't have to check for null
+                   //DbUtils.close(conn);
+                   System.out.println("result:"+res);
+               }
+           }
+           DbUtils.close(conn);
+       }
+       
+       @Test
+       public void loadDealerContact2DB() throws SQLException {
+           String sql =  "INSERT INTO dealerContact (name,sex,tel_work,dealerAccountId,status,pl1) VALUES (?,?,?,?,?,?)";
+           
+           Connection conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int res =0;
+           for (int i=0;i<80;i++) {
+               try {
+                   int sex = (int) (Math.random() * 1 + 1);
+                   int dealerAccountId = (int) (Math.random() * 80 + 1);
+                   int pl1 = (int) (Math.random() * 3 + 1);
+                   
+                   int random = (int) (Math.random() * 96 + 1);
+                   res = run.update(conn, sql, "张历历"+i,(i%2)+1,"138119926"+i,dealerAccountId,(i%2)+1,pl1)+1;
+                   
+               } finally {
+                   // Use this helper method so we don't have to check for null
+                   //DbUtils.close(conn);
+                   System.out.println("result:"+res);
+               }
+           }
+           DbUtils.close(conn);
+       }
 	
 }

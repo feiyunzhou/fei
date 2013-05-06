@@ -83,16 +83,35 @@ public abstract class TemplatePage extends WebPage {
         builder.put("contact", item);
         
         item = new MenuItem();
+        item.setCaption("<i class=\"icon-calendar icon-large\"></i>日历");
+        item.setDestination(CalendarPage.class);
+        item.setId("navitem-calendar");
+        builder.put("calendar", item);
+
+        
+        item = new MenuItem();
+        item.setCaption("<i class=\"icon-bolt icon-large\"></i>活动");
+        item.setDestination(ContactPage.class);
+        item.setId("navitem-contact");
+        builder.put("activity", item);
+        
+        item = new MenuItem();
+        item.setCaption("<i class=\"icon-truck icon-large\"></i>经销商");
+        item.setDestination(DealerAccountPage.class);
+        item.setId("navitem-dealerAccount");
+        builder.put("dealerAccount", item);
+        
+        item = new MenuItem();
+        item.setCaption("<i class=\"icon-umbrella icon-large\"></i>经销商联系人");
+        item.setDestination(DealerContactPage.class);
+        item.setId("navitem-dealerContact");
+        builder.put("dealerContact", item);
+        
+        item = new MenuItem();
         item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
         item.setDestination(UserPage.class);
         item.setId("navitem-crmuser");
         builder.put("user", item);
-        
-        item = new MenuItem();
-        item.setCaption("<i class=\"icon-calendar icon-large\"></i>活动");
-        item.setDestination(ActivityPage.class);
-        item.setId("navitem-activity");
-        builder.put("activity", item);
         
         pageMenuMap = builder.build();
     	 
