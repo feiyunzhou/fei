@@ -14,12 +14,12 @@
 <script src="datatable/js/jquery.dataTables.js"></script>
 <script src="datatable/js/dataTables.bootstrap.js"></script>
 <link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
-<link href="css/common.css" rel="stylesheet" />
 <link href='fullcalendar/fullcalendar.css' rel='stylesheet' />
- <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- <link href="flat/css/flat-ui.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="FortAwesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="datatable/css/dataTables.bootstrap.css">
+<link href="css/common.css" rel="stylesheet" />
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -44,9 +44,8 @@ body {
 <!-- <link  href="css/template.css" rel="stylesheet"/> -->
 <script>
 	$(document).ready(function() {
-		
-		
-		$(".nav-item").on("click",function(event){
+
+		$(".nav-item").on("click", function(event) {
 			console.log("item click");
 			$(this).removeClass("active");
 		});
@@ -64,8 +63,7 @@ body {
 					<p class="navbar-text pull-right">
 						Logged in as <a href="#" class="navbar-link">Username</a>
 					</p>
-					<p class="navbar-text pull-right">
-					 &nbsp;&nbsp;&nbsp;&nbsp;
+					<p class="navbar-text pull-right">&nbsp;&nbsp;&nbsp;&nbsp;
 					<p class="navbar-text pull-right">
 					<p class="navbar-text pull-right">
 						<a href="#"><i class="icon-cogs"></i></a>
@@ -76,10 +74,10 @@ body {
 	</div>
 
 
-	<div class="container-fluid">
+	<!-- <div class="container-fluid">
 
 		<div class="row-fluid">
-			<div class="span2">
+					<div class="span2">
 				<div class="well sidebar-nav ">
                     <form class="form-search" >
 					<div class="input-append" style="margin: 0 auto;">
@@ -95,8 +93,8 @@ body {
 					</ul>
 				</div>
 			</div>
-			<div class="span10">
-				<div class="row-fluid">
+			<div class="span12">
+				 <div class="row-fluid">
 					<div class="navbar">
 						<div class="navbar-inner">
 							<ul class="nav">
@@ -109,12 +107,26 @@ body {
 					<div>
 						<wicket:child />
 					</div>
-				</div>
+				</div> 
+             </div>
+             </div> 
+             </div>
+             -->
+
+	<div class="container-fluid">
+
+		<div class="row-fluid">
+			<div>
+				<ul class="nav nav-tabs">
+					<li wicket:id="menu" class="nav-item"><a href="#" wicket:id="link"><span wicket:id="caption"></span> </a></li>
+				</ul>
 			</div>
-		</div>
-		<hr>
-		<div class="footer">
-			<p>© Company 2013</p>
+
+			<wicket:child />
+			<hr>
+			<div class="footer">
+				<p>© Company 2013</p>
+			</div>
 		</div>
 	</div>
 
