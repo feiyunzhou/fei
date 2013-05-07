@@ -431,18 +431,20 @@
 				<isEditable>true</isEditable>
 			</field>
 			<field>
-				<name>endtime</name>
-				<display>结束时间</display>
+				<name>starttime</name>
+				<display>开始时间</display>
 				<data-type>Long</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 			</field>
 			<field>
-				<name>starttime</name>
-				<display>开始时间</display>
+				<name>endtime</name>
+				<display>结束时间</display>
 				<data-type>Long</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>

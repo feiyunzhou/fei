@@ -18,6 +18,7 @@ import org.apache.wicket.model.Model;
 
 import com.rex.crm.TemplatePage;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
 public class EntityDetailPage extends TemplatePage {
@@ -76,18 +77,19 @@ public class EntityDetailPage extends TemplatePage {
               if(currentField.getPicklist()!=null){
                   
                   if(j%2 == 0){
-                      columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
-                      columnitem.add(new AttributeAppender("style", new Model("white-space: nowrap;"), ";"));
+                      columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                      columnitem.add(new AttributeAppender("style", new Model("text-align:right;"), ";"));
                   }else{
-                      String value = DAOImpl.queryPickListById(currentField.getPicklist(), String.valueOf(map.get(currentField.getName())));
-                      columnitem.add(new Label("celldata",value+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").setEscapeModelStrings(false));
+                      String value = CRMUtility.formatValue(currentField.getFormatter(),DAOImpl.queryPickListById(currentField.getPicklist(), String.valueOf(map.get(currentField.getName()))));
+                      columnitem.add(new Label("celldata",value).setEscapeModelStrings(false));
                   }     
               }else{
                   if(j%2 == 0){
-                      columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
-                      columnitem.add(new AttributeAppender("style", new Model("white-space: nowrap;"), ";"));
+                      columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                      columnitem.add(new AttributeAppender("style", new Model("text-align:right;"), ";"));
                   }else{
-                      columnitem.add(new Label("celldata",String.valueOf(map.get(currentField.getName()))+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").setEscapeModelStrings(false));
+                      String value = CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(map.get(currentField.getName())));
+                      columnitem.add(new Label("celldata",value).setEscapeModelStrings(false));
                   } 
               }
               

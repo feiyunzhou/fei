@@ -3,6 +3,8 @@ package com.rex.crm.util;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ArrayListMultimap;
@@ -16,10 +18,12 @@ import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
 import com.rex.crm.beans.City;
+import com.rex.crm.common.IFormatter;
 
 public class CRMUtility {
 
-	
+    private static final Logger logger = Logger.getLogger(CRMUtility.class);
+    
 	   public static ImmutableListMultimap<Integer, Account> categorizeAccountsByCityIds(List<Account> accounts){
 	    	Function<Account, Integer> idFunction = new Function<Account, Integer>() {
 				public Integer apply(Account account) {
@@ -123,6 +127,21 @@ public class CRMUtility {
 				  }
 				};
 			return Lists.newArrayList(Maps.filterValues(idMappingTable, filters).values());
+	    }
+	    
+	    public static String formatValue(String formatter, String value) {
+	        String res = value;
+	        try {
+	            if (formatter != null) {
+	                Class clazz = Class.forName(formatter);
+	                IFormatter formatterImplement = (IFormatter) clazz.newInstance();
+	                res = formatterImplement.format(value);
+	            }
+	        } catch (Exception e) {
+	            logger.error("failed to format value",e);
+	        }
+	        return res;
+
 	    }
 	    
 }

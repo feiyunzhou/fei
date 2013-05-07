@@ -19,6 +19,7 @@ import org.apache.wicket.model.Model;
 import com.rex.crm.account.AccountDetailPage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
 public class TableDataPanel extends Panel {
@@ -71,16 +72,17 @@ public class TableDataPanel extends Panel {
                     
                 });
                 if(f.isDetailLink()){
-                    columnitem.add(new DetailLinkFragment("celldata","detailFragment",this,String.valueOf(map.get(f.getName()))));
+                    String value = CRMUtility.formatValue(f.getFormatter(),String.valueOf(map.get(f.getName())));
+                    columnitem.add(new DetailLinkFragment("celldata","detailFragment",this,value));
                 }else{
                    if(f.getPicklist()!=null){
                       //get option from picklist 
-                      String value = DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName())));
+                      String value = CRMUtility.formatValue(f.getFormatter(),DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName()))));
                       columnitem.add(new Label("celldata",value));
                        
                    }else{
-                    
-                      columnitem.add(new Label("celldata",String.valueOf(map.get(f.getName()))));
+                       String value = CRMUtility.formatValue(f.getFormatter(),String.valueOf(map.get(f.getName())));
+                      columnitem.add(new Label("celldata",value));
                    }
                 }
                 //columnitem.add(new Label("celldata",String.valueOf(fn.get(j).getClass().cast(map.get(fn.get(j))))));
@@ -95,6 +97,7 @@ public class TableDataPanel extends Panel {
         add(new NewDataFormPanel("formPanel",entity.getFields()));
 
     }
+
 
     public TableDataPanel(String id, IModel<?> model) {
         super(id, model);

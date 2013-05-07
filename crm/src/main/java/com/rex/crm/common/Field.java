@@ -22,6 +22,8 @@ public class Field {
     private String picklist = null;
     @Expose
     private boolean isEditable;
+    @Expose
+    private String formatter;
     
 
     public boolean isPrimaryKey() {
@@ -101,6 +103,14 @@ public class Field {
 
     public void setEditable(boolean isEditable) {
         this.isEditable = isEditable;
+    }
+
+    public String getFormatter() {
+        return formatter;
+    }
+
+    public void setFormatter(String formatter) {
+        this.formatter = formatter;
     }
     
     

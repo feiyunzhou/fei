@@ -167,6 +167,11 @@ public class Configuration {
                         field.setPicklist(null);
                     }
                     
+                    String formatter = sub2.getString("formatter");
+                    if(formatter !=null){
+                        field.setFormatter(formatter);
+                    }
+                    
                     field.setPrimaryKey(Boolean.parseBoolean(sub2.getString("isPrimaryKey")));
                     field.setDetailLink(Boolean.parseBoolean(sub2.getString("isDetailLink"))); 
                     field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible")));

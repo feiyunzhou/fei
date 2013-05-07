@@ -359,9 +359,10 @@ public class DAOImpl {
     public static List<String> getMenuByUserId(String id) {
         List<String> menulist = Lists.newArrayList();
         menulist.add("home");
+        menulist.add("calendar");
         menulist.add("account");
         menulist.add("contact");
-        menulist.add("calendar");
+        menulist.add("activity");
         menulist.add("dealerAccount");
         menulist.add("dealerContact");
         menulist.add("user");

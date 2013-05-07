@@ -91,8 +91,8 @@ public abstract class TemplatePage extends WebPage {
         
         item = new MenuItem();
         item.setCaption("<i class=\"icon-bolt icon-large\"></i>活动");
-        item.setDestination(ContactPage.class);
-        item.setId("navitem-contact");
+        item.setDestination(ActivityPage.class);
+        item.setId("navitem-activity");
         builder.put("activity", item);
         
         item = new MenuItem();

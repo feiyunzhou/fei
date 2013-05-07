@@ -57,4 +57,12 @@
 		<to>dealerAccount</to>
 	</relation>
 	
+    <relation>
+		<from>activity</from>
+		<name>crmuser2activity</name>
+		<display>参与此次拜访的销售代表</display>
+		<sql>select crmuser.* from crmuser\,activity where activity.crmuserId=crmuser.Id AND activity.Id=?</sql>
+		<to>crmuser</to>
+	</relation>
+	
 </relations>
