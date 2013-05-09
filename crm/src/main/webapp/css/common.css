@@ -272,6 +272,13 @@ background-color: #369;
 -webkit-box-shadow: 2px 2px 8px */
 }
 
+.sidebarbox{
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+-moz-box-shadow: 2px 2px 8px #bbb,-2px 0px 8px #bbb;
+-webkit-box-shadow: 2px 2px 8px 
+}
+
 .box-header{
 /* border:none;
 padding-top:5px;

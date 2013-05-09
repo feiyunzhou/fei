@@ -15,17 +15,20 @@ import java.util.Map;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.KeyedHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -239,15 +242,32 @@ public class DAOImpl {
 
 	        return contacts;
 	    }
-	
-//     public static List<Account> getAllAccountsByUserId(String crm_user_id){    	
-//    	return fakeAccounts;
-//     }
-//     
-//     public static List<Province> getAllRegionData(String crm_user_id){
-//    	 return fakeRegionData;
-//     }
-     
+	 public static Map<String,Pair<String,String>> getNumberOfTypeOfAccount(String user_id){
+	     String query = "select b.id,b.val,sum(a.id) as sum from (SELECT account.* FROM account,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as a, account_pl6 as b where a.pl6=b.id group by b.id order by sum DESC";
+	     Map<String,Pair<String,String>> res = Maps.newHashMap();
+	        Connection conn = null;
+	        List<Map<String,Object>> lMap = Lists.newArrayList();
+	        try {
+	            conn = DBHelper.getConnection();
+	            QueryRunner run = new QueryRunner();
+	            lMap =  run.query(conn, query, new MapListHandler(),user_id);
+	            if(lMap!=null){
+	                for(Map<String,Object> map:lMap){
+	                    Pair<String,String> value = Pair.of(String.valueOf(map.get("val")), String.valueOf(map.get("sum")));
+	        
+	                    res.put(String.valueOf(map.get("id")), value);
+	                }
+	            }
+	            
+	        } catch (SQLException e) {
+	            logger.error("failed to get list from picklist",e);
+	        }finally {
+	            DBHelper.closeConnection(conn);
+	        }
+	        
+	        return res;
+	 }
+	   
      public static Account getAccountById(int id){
          Connection conn = null;
          Account account = null;
