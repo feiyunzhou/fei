@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.Entity;
+import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.TableDataPanel;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
@@ -27,7 +28,7 @@ public class AccountPage extends TemplatePage
         //TODO get userId from request's session
         String userId = "20";
         List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
-		add(new TableDataPanel("datalist",entity,mapList));
+		add(new PageableTablePanel("datalist",entity,mapList));
 		
 	}
 }

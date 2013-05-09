@@ -1,9 +1,11 @@
 package com.rex.crm.common;
 
+import java.io.Serializable;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
-public class Field {
+public class Field implements Serializable {
 
     @Expose
     private boolean isPrimaryKey;

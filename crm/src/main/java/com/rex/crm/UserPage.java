@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.Entity;
+import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.TableDataPanel;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
@@ -24,7 +25,7 @@ public class UserPage extends TemplatePage
         Entity entity = entities.get("crmuser");
         setPageTitle(entity.getDisplay());
         List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
-		add(new TableDataPanel("datalist",entity,mapList));
+		add(new PageableTablePanel("datalist",entity,mapList));
 		
 	}
 }

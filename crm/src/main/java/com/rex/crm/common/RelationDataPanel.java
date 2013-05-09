@@ -38,7 +38,7 @@ public class RelationDataPanel extends Panel {
         add(linkC);
         linkC.add(new Label("caption",relation.getDisplay()));
         Entity entity = Configuration.getEntityByName(relation.getTo());
-        divC.add(new TableDataPanel("tableData",entity,list));
+        divC.add(new PageableTablePanel("tableData",entity,list));
     }
 
 }
