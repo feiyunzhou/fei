@@ -3,30 +3,40 @@
 <body>
 	<wicket:extend>
 		<script>
-			$(document).ready(function() {	
-				$("#navitem-account").addClass("active");      
+			$(document).ready(function() {
+				$("#navitem-account").addClass("active");
 
 			});// end onDomReady function
 		</script>
 		<div class="row-fluid">
-		   <div class="span2">
+			<div class="span2">
 				<div class="well sidebar-nav sidebarbox">
-				<p class="text-center">医院分类</p>
-				<div wicket:id="group">
-					  <table class="table table-condensed">
-					  <tbody>
-					     <tr wicket:id="rowRepeater">
-					        <td><input type="checkbox" wicket:id="type"/></td>
-					        <td><span wicket:id="name"></span></td>
-					        <td><span wicket:id="num"></span></td>
-					     </tr>
-					  </tbody>
-					</table>
+					<div class="container-fluid">
+						<div class="row-fluid">
+							<div class="span12">
+								<p class="text-left">
+									<strong>医院分类</strong>
+								</p>
+								<form wicket:id="side_bar_form" id="form" action="">
+								<div wicket:id="group">
+									<table class="table table-condensed">
+										<tbody>
+											<tr wicket:id="rowRepeater">
+												<td><input type="checkbox" wicket:id="type" /></td>
+												<td><span wicket:id="name"></span></td>
+												<td><span wicket:id="num"></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								</form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="span10 box">
-			<div class="box-header"></div>
+				<div class="box-header"></div>
 				<div>
 					<span wicket:id="datalist">data table</span>
 				</div>

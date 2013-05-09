@@ -68,7 +68,6 @@ public class PageableTablePanel extends Panel {
             item.add(new Label("columnName", f.getDisplay()));
         }
         // end of set column name
-
         PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 15) {
             @Override
             protected void populateItem(ListItem<String> item) {
@@ -76,7 +75,6 @@ public class PageableTablePanel extends Panel {
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 Map map = tableData.get(key);
                 item.add(columnRepeater);
-
                 final String rowId = String.valueOf(map.get(primaryKeyName));
                 for (Field f : fields) {
                     if (!f.isVisible())
@@ -110,7 +108,7 @@ public class PageableTablePanel extends Panel {
                 
             }
         };
-
+        
         datacontainer.add(listview);
         datacontainer.add(new AjaxPagingNavigator("navigator", listview));
         datacontainer.setVersioned(false);
