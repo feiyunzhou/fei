@@ -9,28 +9,38 @@
 		</script>
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="span12 pull-right">
-					<span wicket:id="operationBar">[operation bar]</span>
-				</div>
-				<h4>详细信息</h4>
-				<div id="span12 detailinfo">
-					<hr />
-					<table class="table table-striped table-condensed" style="">
-						<tbody>
-							<tr wicket:id="dataRowRepeater">
-								<td wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			
 
-			<br />
-			<div class="accordion" id="accordion2">
-				<div wicket:id="relationRepeater" class="accordion-group">
-					<span wicket:id="relationPanel"></span>
+				<!-- side bar -->
+				<div class="span3">
+					<div class="sidebar-nav sidebarbox well" wicket:id="detailed"></div>
 				</div>
-			</div>
+				<!-- end of side bar -->
+
+				<!-- right container -->
+				<div class="span9">
+					<div class="title">
+						<span wicket:id="name">我的</span>
+					</div>
+					<ul class="thumbnails" style="margin-top:15px">
+						<li class="span12">
+							<div class="thumbnail">
+								<div class="controls">
+									<div class="input-prepend">
+										<span class="add-on">^_^</span> <input class="span12" placeholder="说点什么..." id="prependedInput" type="text"></input>
+									</div>
+									
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div class="accordion" id="accordion2">
+						<div wicket:id="relationRepeater" class="accordion-group">
+							<span wicket:id="relationPanel"></span>
+						</div>
+					</div>
+				</div>
+				<!-- end of right container -->
+
 			</div>
 		</div>
 	</wicket:extend>

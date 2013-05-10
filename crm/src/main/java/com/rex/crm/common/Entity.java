@@ -1,5 +1,6 @@
 package com.rex.crm.common;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.google.common.base.Joiner;
@@ -7,7 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
-public class Entity {
+public class Entity implements Serializable{
     @Expose
     private String name;
     @Expose

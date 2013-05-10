@@ -36,6 +36,7 @@ public class PageableTablePanel extends Panel {
     public PageableTablePanel(String id, Entity entity, List mapList) {
         super(id);
 
+        add(new Label("table_title",entity.getDisplay()));
         // TODO Get the table definition from database or configuration
         final String primaryKeyName = entity.getPrimaryKeyName();
         final List<Field> fields = entity.getFields();

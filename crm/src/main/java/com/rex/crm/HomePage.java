@@ -11,6 +11,7 @@ import org.apache.wicket.model.Model;
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.CalendarPanel;
 import com.rex.crm.common.Entity;
+import com.rex.crm.common.EntityDetailPanel;
 import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.common.Relation;
 import com.rex.crm.common.RelationDataPanel;
@@ -34,6 +35,7 @@ public class HomePage extends TemplatePage {
 
         add(new RelationDataPanel("testpanel", relation, list));
         // add(new CalendarPanel("testpanel"));
+        //add(new EntityDetailPanel("testpanel","account","20"));
         
         //add(new NewDataFormPanel("testpanel",accountEntity.getFields()));
     }

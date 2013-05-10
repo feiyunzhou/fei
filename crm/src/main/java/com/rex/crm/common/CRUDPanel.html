@@ -1,16 +1,36 @@
+
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
-	<div class="btn-group">
-		<span wicket:id="addCon"></span> <span wicket:id="delCon"></span> <span wicket:id="editCon"></span>
-	</div>
+	<script>
+
+
+$(document).ready(function() {
+	$('.dropdown-toggle').dropdown();
+
+			});
+</script>
+
+    <div class="fat-menu dropdown">
+	<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+	   <i class="icon-cog"></i> 
+	   <b class="caret"></b>
+	</a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+			<li role="presentation" wicket:id="addCon"></li>
+			<li role="presentation" wicket:id="delCon"></li>
+			<li role="presentation"  wicket:id="editCon"></li>
+		</ul>
+	
+</div>
+
 
 	<wicket:fragment wicket:id="addFragment">
-		<a href="#myModal" class="btn btn-mini" data-toggle="modal"><i class="icon-plus-sign"></i></a>
+		<a href="#myModal" role="menuitem" data-toggle="modal">增加</a>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="delFragment">
-		<a class="btn btn-mini"><i class="icon-trash"></i></a>
+		<a  role="menuitem"><i class="icon-trash"></i></a>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="editFragment">
-		<a class="btn btn-mini"><i class="icon-edit"></i></a>
+		<a role="menuitem"><i class="icon-edit"></i></a>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="emptyFragment"></wicket:fragment>
 </wicket:panel>
