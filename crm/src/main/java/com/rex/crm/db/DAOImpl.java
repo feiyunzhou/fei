@@ -242,9 +242,9 @@ public class DAOImpl {
 
 	        return contacts;
 	    }
-	 public static Map<String,Pair<String,String>> getNumberOfTypeOfAccount(String user_id){
-	     String query = "select b.id,b.val,sum(a.id) as sum from (SELECT account.* FROM account,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as a, account_pl6 as b where a.pl6=b.id group by b.id order by sum DESC";
-	     Map<String,Pair<String,String>> res = Maps.newHashMap();
+	 public static List<Pair<String,Map<String,Object>>> getNumberOfTypeOfAccount(String user_id){
+	     String query = "select b.id as id,b.val as val,sum(a.id) as sum from (SELECT account.* FROM account,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as a, account_pl6 as b where a.pl6=b.id group by b.id order by sum DESC";
+	     List<Pair<String,Map<String,Object>>> res = Lists.newArrayList();
 	        Connection conn = null;
 	        List<Map<String,Object>> lMap = Lists.newArrayList();
 	        try {
@@ -253,9 +253,8 @@ public class DAOImpl {
 	            lMap =  run.query(conn, query, new MapListHandler(),user_id);
 	            if(lMap!=null){
 	                for(Map<String,Object> map:lMap){
-	                    Pair<String,String> value = Pair.of(String.valueOf(map.get("val")), String.valueOf(map.get("sum")));
-	        
-	                    res.put(String.valueOf(map.get("id")), value);
+	                    Pair<String,Map<String,Object>> value = Pair.of(String.valueOf(map.get("id")), map);
+	                    res.add(value);
 	                }
 	            }
 	            
@@ -431,6 +430,39 @@ public class DAOImpl {
 	        
 	    }
 	
+	   
+       public static List queryEntityWithFilter(String sql,String filterField, List<String> filters,String... params ){
+           
+           List<String> joinedFilter = Lists.newArrayList();
+           if(filters.size()>0){
+             for(String f:filters){
+                 joinedFilter.add(filterField + " = " + f);
+             }
+             
+             sql = sql + " AND (" + Joiner.on(" OR ").join(joinedFilter) + ")";
+           }else{
+               sql = sql + " AND "+filterField + " = -1"; 
+           }
+           
+           logger.debug(sql);
+           Connection conn = null;
+           List lMap = Lists.newArrayList();
+           try {
+               conn = DBHelper.getConnection();
+               QueryRunner run = new QueryRunner();
+               lMap = (List) run.query(conn, sql, new MapListHandler(),params);
+               
+           } catch (SQLException e) {
+               logger.error("failed to get entity",e);
+           }finally {
+               DBHelper.closeConnection(conn);
+           }
+           
+           return lMap;
+           
+       }
+	   
+	   
 	public static List queryEntityList(String sql,int first , int count ){
         String query = sql + " limit " + first + ", " + count;
         Connection conn = null;

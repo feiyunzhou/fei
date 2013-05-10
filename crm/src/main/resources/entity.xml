@@ -4,7 +4,8 @@
 	<entity>
 		<name>account</name>
 		<display>医院</display>
-		<sql>SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?;</sql>
+		<sql>SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?</sql>
+		<filterField>pl6</filterField>
 		<fields>
 			<field>
 				<name>id</name>
@@ -142,6 +143,7 @@
 		<name>contact</name>
 		<display>医生</display>
 		<sql>select * from contact</sql>
+		<filterField>pl4</filterField>
 		<fields>
 			<field>
 				<name>id</name>
@@ -270,6 +272,7 @@
 		<name>crmuser</name>
 		<display>用户</display>
 		<sql>select * from crmuser</sql>
+		<filterField>pl2</filterField>
 		<fields>
 			<field>
 				<name>id</name>
@@ -457,6 +460,7 @@
 		<name>dealerAccount</name>
 		<display>经销商</display>
 		<sql>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL</sql>
+		<filterField>status</filterField>
 		<fields>
 			<field>
 				<name>id</name>
@@ -533,6 +537,7 @@
 		<name>dealerContact</name>
 		<display>经销商联系人</display>
 		<sql>select * from dealerContact</sql>
+		<filterField>pl1</filterField>
 		<fields>
 			<field>
 				<name>id</name>

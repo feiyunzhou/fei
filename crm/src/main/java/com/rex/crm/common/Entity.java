@@ -16,6 +16,8 @@ public class Entity {
     private List<Field> fields;
     @Expose
     private String sql;
+    @Expose
+    private String filterField;
 
 
     public String getName() {
@@ -85,6 +87,14 @@ public class Entity {
 
     public void setSql(String sql) {
         this.sql = sql;
+    }
+
+    public String getFilterField() {
+        return filterField;
+    }
+
+    public void setFilterField(String filterField) {
+        this.filterField = filterField;
     }
 
 }

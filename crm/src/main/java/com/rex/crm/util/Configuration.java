@@ -149,6 +149,12 @@ public class Configuration {
                 entity.setName( sub.getString("name"));
                 entity.setDisplay(sub.getString("display"));
                 entity.setSql(sub.getString("sql"));
+                
+                String filterField = sub.getString("filterField");
+                if(filterField !=null){
+                    entity.setFilterField(filterField);
+                }
+                
                 List<Field> fields = Lists.newArrayList();
                 entity.setFields(fields);
                 List<HierarchicalConfiguration> hp2 = sub.configurationsAt("fields.field");

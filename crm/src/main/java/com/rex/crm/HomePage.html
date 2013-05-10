@@ -4,22 +4,62 @@
 <body>
 	<wicket:extend>
 		<script>
-	    $(document).ready(function() {
-	    	$("#navitem-homepage").addClass("active");
-				
-	    });
-	</script>
+			$(document).ready(function() {
+				$("#navitem-homepage").addClass("active");
+
+			});
+		</script>
 		<div class="row-fluid">
-			<div class="span2">
-				<div class="well sidebar-nav sidebarbox">
-					<ul class="nav nav-list">
-						<li class="nav-header">Sidebar</li>
-						<li class="active"><a href="#">Link</a></li>
-						<li><a href="#">Link</a></li>
-					</ul>
+			<div class="span3">
+				<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<table width="100%">
+								<tr>
+									<td>
+										<div class="well sidebar-nav sidebarbox">
+											<ul class="nav nav-list">
+												<li class="nav-header">快速查找</li>
+												<li class="active"><a href="#">Link</a></li>
+												<li><a href="#">Link</a></li>
+											</ul>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td>
+										<div class="well sidebar-nav sidebarbox">
+											<ul class="nav nav-list">
+												<li class="nav-header">业务概览</li>
+												<li class="active"><a href="#">Link</a></li>
+												<li><a href="#">Link</a></li>
+											</ul>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td>
+										<div class="well sidebar-nav sidebarbox">
+											<ul class="nav nav-list">
+												<li class="nav-header">快速创建</li>
+												<li class="active"><a href="#">Link</a></li>
+												<li><a href="#">Link</a></li>
+											</ul>
+										</div>
+									</td>
+								</tr>
+
+							</table>
+
+
+						</div>
+
+					</div>
 				</div>
 			</div>
-			<div class="span10 box">
+			<div class="span9 box">
 				<!-- 			<ul class="thumbnails">
 				<li class="span1"><a href="#" class="thumbnail"><i class="icon-home icon-4x"></i></a></li>
 				<li class="span1"><a href="#" class="thumbnail"><i class="icon-hospital icon-4x"></i></a></li>
