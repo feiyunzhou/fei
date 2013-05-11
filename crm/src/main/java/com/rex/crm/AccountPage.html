@@ -11,29 +11,7 @@
 		<div class="row-fluid">
 			<div class="span2">
 				<div class="well sidebar-nav sidebarbox">
-					<div class="container-fluid">
-						<div class="row-fluid">
-							<div class="span12">
-								<p class="text-left">
-									<strong>医院分类</strong>
-								</p>
-								<form wicket:id="side_bar_form" id="form" action="">
-								<div wicket:id="group">
-									<table class="table table-condensed">
-										<tbody>
-											<tr wicket:id="rowRepeater">
-												<td><input type="checkbox" wicket:id="type" /></td>
-												<td><span wicket:id="name"></span></td>
-												<td><span wicket:id="num"></span></td>
-											</tr>
-											<tr><td colspan="2">总计</td><td><span wicket:id="total"></span></td></tr>
-										</tbody>
-									</table>
-								</div>
-								</form>
-							</div>
-						</div>
-					</div>
+					<div wicket:id="filterPanel"></div>
 				</div>
 			</div>
 			<div class="span10 box">

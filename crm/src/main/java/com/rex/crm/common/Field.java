@@ -115,6 +115,5 @@ public class Field implements Serializable {
         this.formatter = formatter;
     }
     
-    
 
 }

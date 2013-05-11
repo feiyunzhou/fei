@@ -142,7 +142,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from contact</sql>
+		<sql>select * from contact where ? IS NOT NULL</sql>
 		<filterField>pl4</filterField>
 		<fields>
 			<field>
@@ -460,7 +460,7 @@
 		<name>dealerAccount</name>
 		<display>经销商</display>
 		<sql>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL</sql>
-		<filterField>status</filterField>
+		<filterField>pl1</filterField>
 		<fields>
 			<field>
 				<name>id</name>
@@ -536,7 +536,7 @@
 		<entity>
 		<name>dealerContact</name>
 		<display>经销商联系人</display>
-		<sql>select * from dealerContact</sql>
+		<sql>select * from dealerContact where ? IS NOT NULL</sql>
 		<filterField>pl1</filterField>
 		<fields>
 			<field>

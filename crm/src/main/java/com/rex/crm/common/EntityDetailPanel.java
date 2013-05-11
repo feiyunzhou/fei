@@ -120,7 +120,7 @@ public class EntityDetailPanel extends Panel {
              
          });
          
-         add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.EDIT)));
+         add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DEL)));
     }
 
 }

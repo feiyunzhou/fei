@@ -97,5 +97,17 @@ public class Entity implements Serializable{
     public void setFilterField(String filterField) {
         this.filterField = filterField;
     }
+    
+    public Field getFieldByName(String name){
+        if(fields!=null){
+            for(Field f:fields){
+                if(f.getName().equalsIgnoreCase(name)){
+                    return f;
+                }
+            }
+        }
+        
+        return null;
+    }
 
 }

@@ -570,5 +570,34 @@ public class DAOImpl {
            
        }
        
+       
+    public static List<Pair<String, Map<String, Object>>> queryFilters(String sourceTableSQL, String filterField, String filterbyTable, String user_id) {
+        List<Choice> choices = queryPickList(filterbyTable);
+        List<Pair<String, Map<String, Object>>> res = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            for (Choice ch : choices) {
+                String query = "select sum(a.id) as sum from (" + sourceTableSQL + " AND " + filterField + " = " + ch.getId() + ") as a";
+                logger.debug("query is:" + query);
+
+                conn = DBHelper.getConnection();
+                QueryRunner run = new QueryRunner();
+                Map<String, Object> map = run.query(conn, query, new MapHandler(), user_id);
+                if(map.get("sum") == null){
+                    map.put("sum", new java.math.BigDecimal(0));
+                }
+                map.put("val", ch.getVal());          
+                res.add(Pair.of(String.valueOf(ch.getId()), map));  
+                
+            }
+
+        } catch (Exception e) {
+            logger.error("failed to queryFilters", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return res;
+    }
     
 }
