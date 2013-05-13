@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<link href="../jquery/css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+<script src='../jquery/js/jquery-1.9.1.js'></script>
+<script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
+<script src='../fullcalendar/fullcalendar.min.js'></script>
+<script src='../js/dataclient.js'></script>
+<script type="text/javascript" src="../timepicker/jquery.ui.timepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="../timepicker/jquery.ui.timepicker.css" />
+<script src="../bootstrap/js/bootstrap.js"></script>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
+<script>
+    $(document).ready(function() {
+        if (window.applicationCache) {
+            applicationCache.addEventListener('updateready', function() {
+                if (confirm('An update is available. Reload now?')) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        window.applicationCache.addEventListener('checking', logEvent, false);
+        window.applicationCache.addEventListener('noupdate', logEvent, false);
+        window.applicationCache.addEventListener('downloading', logEvent, false);
+        window.applicationCache.addEventListener('progress', logEvent, false);
+        window.applicationCache.addEventListener('cached', logEvent, false);
+        window.applicationCache.addEventListener('updateready', logEvent, false);
+        window.applicationCache.addEventListener('obsolete', logEvent, false);
+        window.applicationCache.addEventListener('error', logEvent, false);
+
+        function logEvent(event) {
+            console.log(event.type);
+        }
+
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+          });
+        
+        $('#from, #to').timepicker();
+
+        $("#dialog").dialog({
+            width : 400,
+            height : 300,
+            buttons : [ {
+                text : "Ok",
+                click : function() {
+                    var starttime = $("#datestr").val() + " " + $("#from").val() + ":00";
+                    var endtime = $("#datestr").val() + " " + $("#to").val() + ":00";
+                    console.log("from:" + starttime + " to:" + endtime);
+                    var event = {};
+                    event.title = "拜访";
+                    event.start = starttime;
+                    event.end = endtime;
+                    $('#calendar').fullCalendar('renderEvent', event, true);
+                    $('#calendar').fullCalendar('rerenderEvents');
+                    $('#calendar').fullCalendar('refetchEvents');
+                    $(this).dialog("close");
+
+                    var type = "拜访";
+
+                    var userEvent = {
+                        title : "拜访",
+                        crmUserId : "20",
+                        start : starttime,
+                        end : endtime,
+                        allDay : false
+                    };
+
+                    if (navigator.onLine) {
+                        //save event to the server
+                        var code = postEvent(userEvent);
+                        if (code === 0) {
+                            getRemoteEvents();
+                        }
+
+                    } else {
+
+                        var ed = localStorage["events"];
+                        ed = JSON.parse(ed);
+                        ed.push(userEvent);
+                        setLocalStorage(ed);
+
+                    }
+                }
+            }, {
+                text : "Cancel",
+                click : function() {
+                    $(this).dialog("close");
+                }
+            } ],
+            autoOpen : false
+        });
+
+        function postEvent(userEvent) {
+            var args = {};
+            args.f = "setEvent";
+            args.p = [ userEvent.crmUserId, "visit", userEvent.title, userEvent.start, userEvent.end ];
+            ajaxPost(args, function onAjaxComplete(resp) {
+                console.log(resp);
+                if (resp.code == 0) {
+                    console.log("set event successfully");
+
+                } else {
+                    console.log("failed to set event");
+                }
+
+                return resp.code;
+            });
+        }
+        /* initialize the calendar
+        -----------------------------------------------------------------*/
+
+        $('#calendar').fullCalendar({
+            header : {
+                left : 'prev,next today',
+                center : 'title',
+                right : 'month,agendaWeek,agendaDay'
+            },
+            editable : true,
+            droppable : true, // this allows things to be dropped onto the calendar !!!
+            drop : function(date, allDay) { // this function is called when something is dropped
+
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+                console.log("get view:" + ($(this).fullCalendar('getView')).title);
+
+                $("#dialog").dialog("open");
+
+            },
+
+            dayClick : function(date, allDay, jsEvent, view) {
+
+                if (allDay) {
+                    console.log('Clicked on the entire day: ' + date);
+                } else {
+                    console.log('Clicked on the slot: ' + date);
+                }
+
+                console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+                console.log('Current view: ' + view.name);
+
+                // change the day's background color just for fun
+                // $(this).css('background-color', 'red');
+
+                var clickdate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
+                $("#datestr").val(clickdate);
+                $("#datestr").text(clickdate);
+                $("#dialog").attr("title", clickdate);
+                $("#dialog").dialog('open');
+
+            }
+        });
+
+        if (navigator.onLine) {
+            console.log("online");
+
+            //query localstorage to get the local event which not send to the serve when offline
+            var localevents = localStorage["events"];
+            if (localevents != null) {
+                localevents = JSON.parse(localevents);
+                var eventswithoutid = [];
+                if ((localevents != null) && (localevents.length > 0)) {
+                    for ( var i = 0; i < localevents.length; i++) {
+                        if ((typeof localevents[i].id === 'undefined') || localevents[i].id == null) {
+                            eventswithoutid.push(localevents[i]);
+                        }
+                    }
+                }
+                console.log("eventswithoutid");
+                console.log(eventswithoutid);
+                if (eventswithoutid.length > 0) {
+                    var resp = -1;
+                    for ( var i = 0; i < eventswithoutid.length; i++) {
+                        resp = postEvent(eventswithoutid[i]);
+                    }
+                    if (resp === 0) {
+                        localStorage["events"] == [];
+                    }
+                }
+            }
+
+            getRemoteEvents();
+
+        } else {
+            console.log("Offline");
+            var ed = localStorage["events"];
+            console.log(ed);
+            if (jQuery.isEmptyObject(ed) === false) {
+                console.log("here it is");
+                var neweventdata = JSON.parse(ed);
+                console.log(neweventdata);
+                renderCalendar(neweventdata);
+
+            }
+
+        }
+
+        function getRemoteEvents() {
+            var args = {};
+            args.f = "getEventsByUserId";
+            args.p = [ "20" ];
+            ajaxPost(args, function onAjaxComplete(eventData) {
+                console.log(eventData);
+                if (eventData.length > 0) {
+                    setLocalStorage(eventData);
+                    renderCalendar(eventData);
+                }
+            });
+        }
+
+        function setLocalStorage(etData) {
+            var dupData = [];
+            for ( var i = 0; i < etData.length; i++) {
+                var tmpEv = {
+                    title : etData[i].title,
+                    id : etData[i].id,
+                    start : etData[i].start,
+                    end : etData[i].end,
+                    crmUserId : etData[i].crmUserId
+
+                };
+                dupData.push(tmpEv);
+            }
+            localStorage["events"] = JSON.stringify(dupData);
+        }
+
+        function renderCalendar(eventdata) {
+            //$('#calendar').fullCalendar( 'render' );
+            //remove all events on calendar
+            $('#calendar').fullCalendar('removeEvents', function filter(event) {
+                //console.log("remove" + event.id);
+                return true;
+            });
+
+            for ( var i = 0; i < eventdata.length; i++) {
+                //console.log(data[i]);
+                $('#calendar').fullCalendar('renderEvent', eventdata[i], true);
+            }
+            $('#calendar').fullCalendar('render');
+
+            /*  $('#calendar').fullCalendar({
+                events:eventdata
+             });  */
+        }
+
+        $("#testbut").on("click", function(event) {
+            console.log("but clicked");
+            alert(navigator.onLine);
+        });
+
+        $("#refreshbt").on("click", function(event) {
+            window.location.reload();
+        });
+    });
+</script>
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="brand" href="#">CRM Offline</a>
+				<div class="nav-collapse collapse">
+					<p class="navbar-text pull-right">
+						<a href="#" class="navbar-link">杰伦，你好！</a>
+					</p>
+
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="pull-right">
+					<button class="btn btn-mini" id="refreshbt">刷新</button>
+				</div>
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active"><a href="#home">日历</a></li>
+					<li><a href="#profile">医院</a></li>
+					<li><a href="#messages">医生</a></li>
+				</ul>
+
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="home">
+						<div id='calendar'></div>
+					</div>
+					<div class="tab-pane" id="profile">医院</div>
+					<div class="tab-pane" id="messages">医生</div>
+				</div>
+
+
+
+
+
+			</div>
+
+		</div>
+		<!--/row-->
+
+		<hr>
+
+		<footer>
+			<p>&copy; Company 2013</p>
+		</footer>
+
+	</div>
+	<!--/.fluid-container-->
+
+	<div id="dialog" style="display: none">
+		<label id="datestr"></label><br> <label for="from">开始时间：</label> <input type="text" id="from" name="from" /> <br /> <label for="to">结束时间：</label> <input type="text" id="to" name="to" />
+	</div>
+	<a id="testbut" href="#">Loading...</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+CACHE MANIFEST
+# Ver 1.43
+
+NETWORK:
+*
+
+
+CACHE:
+main.html
+../fullcalendar/fullcalendar.css
+../fullcalendar/fullcalendar.print.css
+../jquery/css/smoothness/jquery-ui-1.10.2.custom.css
+../jquery/js/jquery-1.9.1.js
+../jquery/js/jquery-ui-1.10.2.custom.min.js
+../timepicker/jquery.ui.timepicker.js
+../timepicker/jquery.ui.timepicker.css
+../js/dataclient.js
+../fullcalendar/fullcalendar.min.js
+
+FALLBACK:
