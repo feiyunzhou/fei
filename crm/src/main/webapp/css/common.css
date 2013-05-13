@@ -425,11 +425,11 @@ img {
 }
 
 .sidebarbox {
-	-moz-border-radius: 4px;
+/*	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
 	-webkit-box-shadow: 2px 2px 8px;
-/* 	-webkit-transform: rotate(-3deg);
+ 	-webkit-transform: rotate(-3deg);
 -moz-transform: rotate(-3deg);
 -ms-transform: rotate(-3deg);
 transform: rotate(-3deg); */

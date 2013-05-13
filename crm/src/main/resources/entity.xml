@@ -143,7 +143,7 @@
 		<name>contact</name>
 		<display>医生</display>
 		<sql>select * from contact where ? IS NOT NULL</sql>
-		<filterField>pl4</filterField>
+		<filterField>pl1</filterField>
 		<fields>
 			<field>
 				<name>id</name>
