@@ -603,4 +603,23 @@ public class DAOImpl {
         return res;
     }
     
+    
+    public static void setEvent(int crmuserId, String type, String title, String start, String end) throws Exception {
+
+        String sql = "INSERT INTO activity (crmuserId,endtime,starttime,title) VALUES (?,?,?,?)";
+        Connection conn = DBHelper.getConnection();
+        QueryRunner run = new QueryRunner();
+        int inserts = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        CalendarEvent e = new CalendarEvent();
+        e.setTitle("拜访");
+        e.setStarttime(sdf.parse(start).getTime());
+        e.setEndtime(sdf.parse(end).getTime());
+        e.setCrmUserId(crmuserId);
+
+        inserts += run.update(conn, sql, e.getCrmUserId(), e.getEndtime(), e.getStarttime(), e.getTitle());
+
+        System.out.println("inserted:"+inserts);
+        
+    }
 }

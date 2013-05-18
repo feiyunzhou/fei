@@ -462,5 +462,31 @@ public class DataProvider {
    }
    
    
+   public static String setEvent(String[] args){
+       Resp resp = new Resp();
+       int crmuserId = Integer.parseInt(args[0]);
+       String type = args[1];
+       String title = args[2];
+       String start = args[3];
+       String end = args[4];
+       resp.setCode(0);
+       
+       try {
+           DAOImpl.setEvent(crmuserId,type,title,start,end);
+       } catch (Exception e) {
+           // TODO Auto-generated catch block
+           e.printStackTrace();
+           resp.setCode(-1);
+           resp.setMessage(e.getMessage());
+       }
+       
+       
+       Gson gson = new Gson();
+       String jsonString = gson.toJson(resp,Resp.class);
+       return jsonString;
+       
+   }
+   
+   
 }
 

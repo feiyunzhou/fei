@@ -86,18 +86,12 @@
                     };
 
                     if (navigator.onLine) {
-                        //save event to the server
-                        var code = postEvent(userEvent);
-                        if (code === 0) {
-                            getRemoteEvents();
-                        }
+                        //save event to the server, and query remote event after post event
+                        postEvent(userEvent,false);
 
                     } else {
 
-                        var ed = localStorage["events"];
-                        ed = JSON.parse(ed);
-                        ed.push(userEvent);
-                        setLocalStorage(ed);
+                        saveEventLocally(userEvent); 
 
                     }
                 }
@@ -110,22 +104,68 @@
             autoOpen : false
         });
 
-        function postEvent(userEvent) {
+        function saveEventLocally(userEvent){
+            var ed = localStorage["events"];
+            ed = JSON.parse(ed);
+            ed.push(userEvent);
+            setLocalStorage(ed);
+        }
+        
+        function postEvent(userEvent,isEventInLocalStorage) {
             var args = {};
             args.f = "setEvent";
             args.p = [ userEvent.crmUserId, "visit", userEvent.title, userEvent.start, userEvent.end ];
-            ajaxPost(args, function onAjaxComplete(resp) {
+            ajaxPost2(args, function onAjaxComplete(resp) {
+                isOnline = true;
                 console.log(resp);
                 if (resp.code == 0) {
-                    console.log("set event successfully");
+                    //query all events and set it to localStorage
+                    getRemoteEvents();
 
                 } else {
                     console.log("failed to set event");
                 }
 
                 return resp.code;
+            },function onError(status){
+                isOnline = false;
+                if(!isEventInLocalStorage)
+                   saveEventLocally(userEvent);
             });
         }
+        
+        function postEvents(userEvents,isEventInLocalStorage) {
+            for ( var i = 0; i < userEvents.length-1; i++){
+                postEvent(userEvents[i],isEventInLocalStorage);
+            }
+            
+            
+            var args = {};
+            args.f = "setEvent";
+            var userEvent = userEvents[userEvents.length-1];
+            args.p = [ userEvent.crmUserId, "visit", userEvent.title, userEvent.start, userEvent.end ];
+            ajaxPost2(args, function onAjaxComplete(resp) {
+                console.log(resp);
+                isOnline = true;
+                if (resp.code == 0) {
+                    console.log("set event successfully");
+                    
+                    //query all events and set it to localStorage
+                    getRemoteEvents();
+                    
+                } else {
+                    console.log("failed to set event");
+                }
+                
+                return resp.code;
+            },function onError(status){
+                isOnline=false;
+                if(!isEventInLocalStorage)
+                    saveEventLocally(userEvent);
+                renderEventsWithDataLocal();
+            });
+        }
+        
         /* initialize the calendar
         -----------------------------------------------------------------*/
 
@@ -160,7 +200,9 @@
                 }
                 console.log("get view:" + ($(this).fullCalendar('getView')).title);
 
-                $("#dialog").dialog("open");
+                //$("#dialog").dialog("open");
+                
+                
 
             },
 
@@ -185,6 +227,8 @@
                 //$("#dialog").attr("title", clickdate);
                 $("#dialog").dialog('open');
                 //$('#myModal').modal();
+                //$("#event_editor_container").show();
+                
 
             }
         });
@@ -221,21 +265,42 @@
                 console.log(eventswithoutid);
                 if (eventswithoutid.length > 0) {
                     var resp = -1;
-                    for ( var i = 0; i < eventswithoutid.length; i++) {
-                        resp = postEvent(eventswithoutid[i]);
-                    }
-                    if (resp === 0) {
-                        localStorage["events"] == [];
-                    }
+                    postEvents(eventswithoutid,true);
+                }else{
+                    getRemoteEvents();
                 }
-            }
+            }else{
 
-            getRemoteEvents();
+                getRemoteEvents();
+            }
 
         } else {
             console.log("Offline");
+            renderEventsWithDataLocal();
+
+        }
+
+        
+        function getRemoteEvents() {
+            var args = {};
+            args.f = "getEventsByUserId";
+            args.p = [ "20" ];
+            ajaxPost2(args, function onAjaxComplete(eventData) {
+                isOnline= true;
+                console.log(eventData);
+                if (eventData.length > 0) {
+                    setLocalStorage(eventData);
+                    renderCalendar(eventData);
+                }
+            },function onError(status){
+                isOnline=false;
+                renderEventsWithDataLocal();
+            });
+        }
+
+        function renderEventsWithDataLocal(){
             var ed = localStorage["events"];
-            console.log(ed);
+            console.log("render event with data locally");
             if (jQuery.isEmptyObject(ed) === false) {
                 console.log("here it is");
                 var neweventdata = JSON.parse(ed);
@@ -243,22 +308,8 @@
                 renderCalendar(neweventdata);
 
             }
-
         }
-
-        function getRemoteEvents() {
-            var args = {};
-            args.f = "getEventsByUserId";
-            args.p = [ "20" ];
-            ajaxPost(args, function onAjaxComplete(eventData) {
-                console.log(eventData);
-                if (eventData.length > 0) {
-                    setLocalStorage(eventData);
-                    renderCalendar(eventData);
-                }
-            });
-        }
-
+        
         function setLocalStorage(etData) {
             var dupData = [];
             for ( var i = 0; i < etData.length; i++) {
@@ -519,6 +570,12 @@ body {
 				<div class="tab-content">
 					<div class="tab-pane active" id="home">
 						<div id='calendar'></div>
+						
+						<!-- Start of Editor -->
+						<div id="event_editor_container" style="display: none">
+							
+						</div>
+						<!-- End of Editor -->
 					</div>
 					<div class="tab-pane" id="profile">
 						<table wicket:id="data" id="dt_account" class="table table-hover table-striped table-bordered table-condensed">

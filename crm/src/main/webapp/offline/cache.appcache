@@ -1,12 +1,12 @@
 CACHE MANIFEST
-# Ver 1.43
+# Ver 1.52
 
 NETWORK:
 *
 
 
 CACHE:
-main2.html
+main.html
 ../fullcalendar/fullcalendar.css
 ../fullcalendar/fullcalendar.print.css
 ../jquery/css/smoothness/jquery-ui-1.10.2.custom.css
