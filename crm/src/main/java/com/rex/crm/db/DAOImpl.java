@@ -465,12 +465,15 @@ public class DAOImpl {
 	   
 	public static List queryEntityList(String sql,int first , int count ){
         String query = sql + " limit " + first + ", " + count;
+        logger.debug(query);
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, query, new MapListHandler());
+            List<Map> maplist = (List<Map>) lMap;
+            logger.debug(maplist.get(0).keySet());
             
         } catch (SQLException e) {
             logger.error("failed to get user",e);

@@ -6,15 +6,27 @@ NETWORK:
 
 
 CACHE:
-main.html
+main2.html
 ../fullcalendar/fullcalendar.css
 ../fullcalendar/fullcalendar.print.css
 ../jquery/css/smoothness/jquery-ui-1.10.2.custom.css
 ../jquery/js/jquery-1.9.1.js
 ../jquery/js/jquery-ui-1.10.2.custom.min.js
-../timepicker/jquery.ui.timepicker.js
-../timepicker/jquery.ui.timepicker.css
-../js/dataclient.js
 ../fullcalendar/fullcalendar.min.js
+../js/dataclient.js
+../bootstrap/js/bootstrap.js
+../bootstrap/css/bootstrap.css
+../bootstrap-timepicker/js/bootstrap-timepicker.js
+../bootstrap-timepicker/css/bootstrap-timepicker.css
+../bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js
+../bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css
+../datatable/js/jquery.dataTables.min.js
+../datatable/css/jquery.dataTables.css
+../datatable/js/dataTables.bootstrap.js
+../datatable/css/dataTables.bootstrap.css
+../image/bootstrap-mdo-sfmoma-01.jpg
+../image/bootstrap-mdo-sfmoma-02.jpg
+../image/bootstrap-mdo-sfmoma-03.jpg
+
 
 FALLBACK:

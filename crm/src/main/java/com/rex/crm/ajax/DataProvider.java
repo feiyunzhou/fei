@@ -31,8 +31,11 @@ import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
 import com.rex.crm.beans.City;
+import com.rex.crm.beans.Contact;
 import com.rex.crm.beans.Province;
 import com.rex.crm.beans.Resp;
+import com.rex.crm.common.Entity;
+import com.rex.crm.common.Field;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.html.Node;
 import com.rex.crm.util.CRMUtility;
@@ -384,8 +387,80 @@ public class DataProvider {
     
     public static String getEventsByUserId(String[] userId){
     	List<CalendarEvent> events = DAOImpl.getEventsByUserId(Integer.parseInt(userId[0]));
-    	 Gson gson = new Gson();
+    	Gson gson = new Gson();
      	String jsonString = gson.toJson(events.toArray(new CalendarEvent[0]),CalendarEvent[].class);
      	return jsonString;
     }
+
+   public static String ping(String[] args){
+       return "ok";
+   }
+   
+   public static String getContactData(String[] args){
+       String id = args[0];
+       String sql = "select * from (select a.name as contactName,a.id,b.name as accountName from contact as a,account as b where a.accountId = b.id) as c";
+       List list = DAOImpl.queryEntityList(sql, 1, 1000);
+       
+       List<Contact> contacts = Lists.newArrayList();
+       for(Map map:(List<Map>)list){
+           String contactName = String.valueOf(map.get("contactName"));
+           String contactId = String.valueOf(map.get("id"));
+           String accountName = String.valueOf(map.get("accountName"));
+           
+           Contact contact = new Contact();
+           contact.setId(Integer.parseInt(contactId));
+           contact.setName(contactName);
+           contact.setAccountBelongTo(accountName);
+           contacts.add(contact);
+       }
+       
+       Gson gson = new Gson();
+       String jsonString = gson.toJson(contacts.toArray(new Contact[0]),Contact[].class);
+       return jsonString;
+   }
+   
+   
+   public String getAccountTable(String[] args) {
+       return getEntityTable("account",args[0]);
+       
+   }
+   
+   public String getContactTable(String[] args){
+       return getEntityTable("contact",args[0]);
+   }
+   
+   private String getEntityTable(String entityName,String userId){
+       DataTable dt = new DataTable();
+       Map<String, Entity> entities = Configuration.getEntityTable();
+       Entity entity = entities.get(entityName);
+       
+       List<Field> fields = entity.getFields();
+       for(Field f:fields){
+           if(!f.isVisible()) continue;
+           ColumnDescription cd1 = new ColumnDescription(f.getDisplay());
+           dt.addColumn(cd1);
+       }
+       
+       List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
+       for(Map map:(List<Map>)mapList){
+           TableRow tr = new TableRow();
+           for(Field f:fields){
+               if(!f.isVisible()) continue;
+               String fieldValue = "";
+               if(f.getPicklist() !=null){
+                   fieldValue = DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName())));
+               }else{
+                   fieldValue = String.valueOf(map.get(f.getName()));
+               }
+               
+               tr.addCell(fieldValue);
+           }
+           
+           dt.addRow(tr);
+       }
+       return dt.stringify();
+   }
+   
+   
 }
+
