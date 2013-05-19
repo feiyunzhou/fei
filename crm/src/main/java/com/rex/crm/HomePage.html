@@ -4,11 +4,50 @@
 <body>
 	<wicket:extend>
 		<script>
-			$(document).ready(function() {
-				$("#navitem-homepage").addClass("active");
+            $(document).ready(function() {
+                $("#navitem-homepage").addClass("active");
+                
+                
+                var barChartData = {
+            			labels : ["一月","二月","三月","四月","五月","六月","七月"],
+            			datasets : [
+            				{
+            					fillColor : "rgba(220,220,220,0.5)",
+            					strokeColor : "rgba(220,220,220,1)",
+            					data : [65,59,90,81,56,55,40]
+            				},
+            				{
+            					fillColor : "rgba(151,187,205,0.5)",
+            					strokeColor : "rgba(151,187,205,1)",
+            					data : [28,48,40,19,96,27,100]
+            				}
+            			]
+            			
+            		}
 
-			});
-		</script>
+            	var myLine = new Chart(document.getElementById("canvas").getContext("2d")).Bar(barChartData);
+                
+                
+                var pieData = [
+               				{
+               					value: 30,
+               					color:"#F38630"
+               				},
+               				{
+               					value : 50,
+               					color : "#E0E4CC"
+               				},
+               				{
+               					value : 100,
+               					color : "#69D2E7"
+               				}
+               			
+               			];
+
+               	var myPie = new Chart(document.getElementById("canvas2").getContext("2d")).Pie(pieData);
+
+            });
+        </script>
 		<div class="row-fluid">
 			<div class="span3">
 				<div class="container-fluid">
@@ -20,8 +59,11 @@
 										<div class="well sidebar-nav sidebarbox">
 											<ul class="nav nav-list">
 												<li class="nav-header">快速查找</li>
-												<li class="active"><a href="#">Link</a></li>
-												<li><a href="#">Link</a></li>
+												<li><a href="#">医院</a></li>
+												<li><a href="#">医生</a></li>
+												<li><a href="#">活动</a></li>
+												<li><a href="#">经销商</a></li>
+												<li><a href="#">经销商联系人</a></li>
 											</ul>
 										</div>
 									</td>
@@ -32,8 +74,30 @@
 										<div class="well sidebar-nav sidebarbox">
 											<ul class="nav nav-list">
 												<li class="nav-header">业务概览</li>
-												<li class="active"><a href="#">Link</a></li>
-												<li><a href="#">Link</a></li>
+												<div>
+													<table style="width: 100%">
+														<tr>
+															<td><a href="#">医院</a></td>
+															<td>100</td>
+														</tr>
+														<tr>
+															<td><a href="#">医生</a></td>
+															<td>120</td>
+														</tr>
+														<tr>
+															<td><a href="#">活动</a></td>
+															<td>45</td>
+														</tr>
+														<tr>
+															<td><a href="#">经销商</a></td>
+															<td>26</td>
+														</tr>
+														<tr>
+															<td><a href="#">经销商联系人</a></td>
+															<td>160</td>
+														</tr>
+													</table>
+												</div>
 											</ul>
 										</div>
 									</td>
@@ -44,8 +108,11 @@
 										<div class="well sidebar-nav sidebarbox">
 											<ul class="nav nav-list">
 												<li class="nav-header">快速创建</li>
-												<li class="active"><a href="#">Link</a></li>
-												<li><a href="#">Link</a></li>
+												<li><a href="#">医院</a></li>
+												<li><a href="#">医生</a></li>
+												<li><a href="#">活动</a></li>
+												<li><a href="#">经销商</a></li>
+												<li><a href="#">经销商联系人</a></li>
 											</ul>
 										</div>
 									</td>
@@ -60,13 +127,493 @@
 				</div>
 			</div>
 			<div class="span8 box">
-			
+
 				<!-- 			<ul class="thumbnails">
 				<li class="span1"><a href="#" class="thumbnail"><i class="icon-home icon-4x"></i></a></li>
 				<li class="span1"><a href="#" class="thumbnail"><i class="icon-hospital icon-4x"></i></a></li>
 				<li class="span1"><a href="#" class="thumbnail"><i class="icon-user-md icon-4x"></i></a></li>
 				<li class="span1"><a href="#" class="thumbnail"><i class="icon-calendar icon-4x"></i></a></li>
 			</ul> -->
+				<ul class="thumbnails">
+			     <li class=""><div class="thumbnail">
+			     <h5>拜访达成率</h5>
+					  <canvas id="canvas"></canvas>
+					</div></li>
+					
+					<li class=""><div class="thumbnail">
+			     <h5>活动类型分布</h5>
+					  <canvas id="canvas2"></canvas>
+					</div></li>
+				
+					<li class=""><div href="#" class="thumbnail">
+					<h5>最近工作状态</h5>
+							<div id="contribution">
+
+								<div class="" data-url="/users/steveyken/contributions_calendar_data">
+									<svg width="667" height="107" id="calendar-graph">
+						<g transform="translate(20, 20)">
+						<g transform="translate(0, 0)">
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(12, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(24, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(36, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(48, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(60, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(72, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #8cc665;"></rect></g>
+						<g transform="translate(84, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(96, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(108, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(120, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #1e6823;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(132, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(144, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #8cc665;"></rect></g>
+						<g transform="translate(156, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(168, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(180, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(192, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(204, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(216, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(228, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(240, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(252, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(264, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(276, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(288, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(300, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(312, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(324, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #1e6823;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #44a340;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(336, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(348, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #44a340;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(360, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(372, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #1e6823;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(384, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #44a340;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #8cc665;"></rect></g>
+						<g transform="translate(396, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(396, 0)">
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(408, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(420, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(432, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(444, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(456, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(468, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(480, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(492, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #44a340;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(504, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(516, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(528, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(540, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(552, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(564, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(576, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(588, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(600, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(612, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #8cc665;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #d6e685;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #d6e685;"></rect></g>
+						<g transform="translate(624, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="12" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="24" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="36" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="48" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="60" style="fill: #eeeeee;"></rect>
+						<rect class="day" width="10" height="10" y="72" style="fill: #eeeeee;"></rect></g>
+						<g transform="translate(636, 0)">
+						<rect class="day" width="10" height="10" y="0" style="fill: #eeeeee;"></rect></g>
+						<text x="0" y="-5" class="month">May</text>
+						<text x="36" y="-5" class="month">Jun</text>
+						<text x="84" y="-5" class="month">Jul</text>
+						<text x="144" y="-5" class="month">Aug</text>
+						<text x="192" y="-5" class="month">Sep</text>
+						<text x="252" y="-5" class="month">Oct</text>
+						<text x="300" y="-5" class="month">Nov</text>
+						<text x="348" y="-5" class="month">Dec</text>
+						<text x="408" y="-5" class="month">Jan</text>
+						<text x="468" y="-5" class="month">Feb</text>
+						<text x="516" y="-5" class="month">Mar</text>
+						<text x="576" y="-5" class="month">Apr</text>
+						<text x="624" y="-5" class="month">May</text>
+						<text text-anchor="middle" class="wday" dx="-10" dy="10" style="display: none;">S</text>
+						<text text-anchor="middle" class="wday" dx="-10" dy="22">M</text>
+						<text text-anchor="middle" class="wday" dx="-10" dy="34" style="display: none;">T</text>
+						<text text-anchor="middle" class="wday" dx="-10" dy="46">W</text>
+						<text text-anchor="middle" class="wday" dx="-10" dy="58" style="display: none;">T</text>
+						<text text-anchor="middle" class="wday" dx="-10" dy="70">F</text>
+						<text text-anchor="middle" class="wday" dx="-10" dy="82" style="display: none;">S</text></g></svg>
+								</div>
+								<div class="contrib-footer clearfix">
+									<div class="contrib-info">
+										<span class="octicon octicon-question"></span>
+									</div>
+									<div class="contrib-legend" title="A summary of pull requests, issues opened, and commits to the default and gh-pages branches.">
+										<span>Less</span>
+										<ul class="legend">
+											<li style="background-color: #eee"></li>
+											<li style="background-color: #d6e685"></li>
+											<li style="background-color: #8cc665"></li>
+											<li style="background-color: #44a340"></li>
+											<li style="background-color: #1e6823"></li>
+										</ul>
+										<span>More</span>
+									</div>
+								</div>
+							</div>
+					</div></li>
+
+				</ul>
 				<span wicket:id="testpanel"></span>
 			</div>
 		</div>
