@@ -79,7 +79,7 @@ CREATE TABLE account_pl6
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
--- end of piklist for account
+-- end of piklist for account;
 
 drop table if exists accountcrmuser;
 CREATE TABLE accountcrmuser 
@@ -100,6 +100,15 @@ CREATE TABLE activity
     starttime BIGINT NOT NULL DEFAULT 0,
     title VARCHAR(128),
     PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+ALTER table activity ADD activity_type MEDIUMINT;
+
+drop table if exists activity_types;
+CREATE TABLE activity_types 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
 
@@ -125,8 +134,8 @@ ALTER table contact ADD pl3 MEDIUMINT;
 ALTER table contact ADD pl4 MEDIUMINT;
 ALTER table contact ADD pl5 MEDIUMINT;
 
---picklist for contact;
---性别;
+-- picklist for contact;
+-- 性别;
 drop table if exists sex_pl;
 CREATE TABLE sex_pl
 (
@@ -135,7 +144,7 @@ CREATE TABLE sex_pl
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---科室;
+-- 科室;
 drop table if exists contact_pl1;
 CREATE TABLE contact_pl1 
 (
@@ -144,7 +153,7 @@ CREATE TABLE contact_pl1
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---职务;
+-- 职务;
 drop table if exists contact_pl2;
 CREATE TABLE contact_pl2 
 (
@@ -153,7 +162,7 @@ CREATE TABLE contact_pl2
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---职称;
+-- 职称;
 drop table if exists contact_pl3;
 CREATE TABLE contact_pl3 
 (
@@ -162,7 +171,7 @@ CREATE TABLE contact_pl3
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---主要产品;
+-- 主要产品;
 drop table if exists contact_pl4;
 CREATE TABLE contact_pl4 
 (
@@ -171,7 +180,7 @@ CREATE TABLE contact_pl4
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---状态;
+-- 状态;
 drop table if exists contact_pl5;
 CREATE TABLE contact_pl5 
 (
@@ -179,7 +188,7 @@ CREATE TABLE contact_pl5
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
---end of picklist for contact;
+-- end of picklist for contact;
 
 drop table if exists crmuser;
 CREATE TABLE crmuser 
@@ -203,7 +212,7 @@ ALTER table crmuser ADD pl4 MEDIUMINT;
 ALTER table crmuser ADD pl5 MEDIUMINT;
 
 -- pick list for crmuser
---状态;
+-- 状态;
 drop table if exists crmuser_pl1;
 CREATE TABLE crmuser_pl1 
 (
@@ -212,7 +221,7 @@ CREATE TABLE crmuser_pl1
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---产品线;
+-- 产品线;
 drop table if exists crmuser_pl2;
 CREATE TABLE crmuser_pl2 
 (
@@ -221,7 +230,7 @@ CREATE TABLE crmuser_pl2
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---角色;
+-- 角色;
 drop table if exists role;
 CREATE TABLE role 
 (
@@ -230,7 +239,7 @@ CREATE TABLE role
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---一级区域;
+-- 一级区域;
 drop table if exists region_level1_pl;
 CREATE TABLE region_level1_pl 
 (
@@ -239,7 +248,7 @@ CREATE TABLE region_level1_pl
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
---二级区域;
+-- 二级区域;
 drop table if exists region_level2_pl;
 CREATE TABLE region_level2_pl 
 (

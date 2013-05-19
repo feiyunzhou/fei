@@ -528,6 +528,7 @@ public class DAOImpl {
 	   
        public static String queryPickListById(String picklist,String id){
            String query = "select id, val from "+ picklist +" where id=? ";
+           //logger.debug(query);
            String result = "";
            Connection conn = null;
            Map map = null;
@@ -605,8 +606,8 @@ public class DAOImpl {
     
     
     public static void setEvent(int crmuserId, String type, String title, String start, String end) throws Exception {
-
-        String sql = "INSERT INTO activity (crmuserId,endtime,starttime,title) VALUES (?,?,?,?)";
+        int type_id = Integer.parseInt(type);
+        String sql = "INSERT INTO activity (crmuserId,endtime,starttime,title,activity_type) VALUES (?,?,?,?,?)";
         Connection conn = DBHelper.getConnection();
         QueryRunner run = new QueryRunner();
         int inserts = 0;
@@ -616,8 +617,8 @@ public class DAOImpl {
         e.setStarttime(sdf.parse(start).getTime());
         e.setEndtime(sdf.parse(end).getTime());
         e.setCrmUserId(crmuserId);
-
-        inserts += run.update(conn, sql, e.getCrmUserId(), e.getEndtime(), e.getStarttime(), e.getTitle());
+        e.setActivity_type(type_id);
+        inserts += run.update(conn, sql, e.getCrmUserId(), e.getEndtime(), e.getStarttime(), e.getTitle(),e.getActivity_type());
 
         System.out.println("inserted:"+inserts);
         

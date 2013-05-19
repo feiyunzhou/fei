@@ -453,6 +453,16 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 			</field>
+			<field>
+				<name>activity_type</name>
+				<display>类型</display>
+				<data-type>String</data-type>
+				<picklist>activity_types</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+			</field>
 		</fields>
 	</entity>
 	

@@ -12,6 +12,7 @@ public class CalendarEvent {
     private long starttime;
     private long endtime;
 	private int crmUserId;
+	private int activity_type;
 
 	public int getId() {
 		return id;
@@ -82,6 +83,14 @@ public class CalendarEvent {
 
         public void setEndtime(long endtime) {
             this.endtime = endtime;
+        }
+
+        public int getActivity_type() {
+            return activity_type;
+        }
+
+        public void setActivity_type(int activity_type) {
+            this.activity_type = activity_type;
         }
 
 }
