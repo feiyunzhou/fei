@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 1.72
+# Ver 2.12
 
 NETWORK:
 *
@@ -27,6 +27,9 @@ main.html
 ../image/bootstrap-mdo-sfmoma-01.jpg
 ../image/bootstrap-mdo-sfmoma-02.jpg
 ../image/bootstrap-mdo-sfmoma-03.jpg
+../select2/select2.js
+../select2/select2_locale_zh-CN.js
+../select2/select2.css
 
 
 FALLBACK:

@@ -15,7 +15,7 @@ public class Contact {
 	private String tel_work;
 	private String mobilephone;
 	private String accountBelongTo;
-	private String accountId;
+	private int accountId;
 
 	public int getId() {
 		return id;
@@ -105,11 +105,11 @@ public class Contact {
 		this.accountBelongTo = accountBelongTo;
 	}
 
-	public String getAccountId() {
+	public int getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(String accountId) {
+	public void setAccountId(int accountId) {
 		this.accountId = accountId;
 	}
 

@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Relation;
 import com.rex.crm.util.Configuration;
@@ -27,5 +29,11 @@ public class CRMTest {
             System.out.println(r.getSql());
             
         }
+    }
+    
+    @Test
+    public void testjson(){
+       System.out.println(DataProvider.queryContactsByUserId(new String[]{"20"}));
+   
     }
 }

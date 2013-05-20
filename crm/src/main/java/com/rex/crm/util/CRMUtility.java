@@ -18,6 +18,7 @@ import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
 import com.rex.crm.beans.City;
+import com.rex.crm.beans.Contact;
 import com.rex.crm.common.IFormatter;
 
 public class CRMUtility {
@@ -60,6 +61,19 @@ public class CRMUtility {
 			ImmutableListMultimap<Integer, City> citiesByProvinceId = Multimaps
 					.index(cities, idFunction);
 			return citiesByProvinceId;
+	    }
+	    
+	    
+	    public static ImmutableListMultimap<Integer,Contact> categorizeContactsByAccountId(List<Contact> contacts){
+	            Function<Contact, Integer> idFunction = new Function<Contact, Integer>() {
+	                public Integer apply(Contact contact) {
+	                    return contact.getAccountId();
+	                }
+	            };
+
+	            
+	            ImmutableListMultimap<Integer, Contact> contactsByAccountId = Multimaps.index(contacts, idFunction);
+	            return contactsByAccountId;
 	    }
 	    
 	    

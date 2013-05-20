@@ -2,6 +2,7 @@ package com.rex.crm.ajax;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,8 +26,13 @@ import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -396,26 +402,89 @@ public class DataProvider {
        return "ok";
    }
    
+   public static String queryContactsByUserId(String[] args){
+       String id = args[0];
+       Map<String, Entity> entities = Configuration.getEntityTable();
+       Entity entity = entities.get("contact");
+       List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), id);
+       List<Contact> contacts = Lists.newArrayList();
+       
+       for(Map map:(List<Map>)mapList){
+           Contact ct = new Contact();
+           ct.setId(Integer.parseInt(String.valueOf(map.get("id"))));
+           ct.setName(String.valueOf(map.get("name")));
+           ct.setAccountId(Integer.parseInt(String.valueOf(map.get("accountId"))));
+           contacts.add(ct);
+       }
+       
+       ImmutableListMultimap<Integer, Contact> accountId2ContactsMap = CRMUtility.categorizeContactsByAccountId(contacts);
+       
+       Gson gson = new Gson();
+       
+       JsonObject ja = new JsonObject();
+       
+       ImmutableSet<Integer> keys = accountId2ContactsMap.keySet();
+       
+       for(Integer key:keys){
+           List<Contact> cts = accountId2ContactsMap.get(key);
+           
+           if(cts!=null && cts.size()!=0){
+               ja.add(String.valueOf(key), gson.toJsonTree(cts));
+               
+           }
+       }
+       
+      
+       return ja.toString();
+   }
+   
+   
    public static String getContactData(String[] args){
        String id = args[0];
-       String sql = "select * from (select a.name as contactName,a.id,b.name as accountName from contact as a,account as b where a.accountId = b.id) as c";
-       List list = DAOImpl.queryEntityList(sql, 1, 1000);
+       //String sql = "select * from (select a.name as contactName,a.id,b.name as accountName from contact as a,account as b where a.accountId = b.id) as c";
+       
+       Map<String, Entity> entities = Configuration.getEntityTable();
+       Entity entity = entities.get("contact");
+       List list = DAOImpl.queryEntityRelationList(entity.getSql(), id);
        
        List<Contact> contacts = Lists.newArrayList();
        for(Map map:(List<Map>)list){
-           String contactName = String.valueOf(map.get("contactName"));
+           String contactName = String.valueOf(map.get("name"));
            String contactId = String.valueOf(map.get("id"));
-           String accountName = String.valueOf(map.get("accountName"));
            
            Contact contact = new Contact();
            contact.setId(Integer.parseInt(contactId));
            contact.setName(contactName);
-           contact.setAccountBelongTo(accountName);
            contacts.add(contact);
        }
        
        Gson gson = new Gson();
        String jsonString = gson.toJson(contacts.toArray(new Contact[0]),Contact[].class);
+       return jsonString;
+   }
+   
+   
+   public static String queryAccountsOfUser(String[] args){
+       String uid = args[0];
+       //String sql = "select * from (select a.name as contactName,a.id,b.name as accountName from contact as a,account as b where a.accountId = b.id) as c";
+       
+       Map<String, Entity> entities = Configuration.getEntityTable();
+       Entity entity = entities.get("account");
+       List list = DAOImpl.queryEntityRelationList(entity.getSql(), uid);
+       
+       List<Account> accounts = Lists.newArrayList();
+       for(Map map:(List<Map>)list){
+           String name = String.valueOf(map.get("name"));
+           String id = String.valueOf(map.get("id"));
+           
+           Account acct = new Account();
+           acct.setId(Integer.parseInt(id));
+           acct.setName(name);
+           accounts.add(acct);
+       }
+       
+       Gson gson = new Gson();
+       String jsonString = gson.toJson(accounts.toArray(new Account[0]),Account[].class);
        return jsonString;
    }
    
