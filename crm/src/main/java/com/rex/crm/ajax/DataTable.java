@@ -42,8 +42,9 @@ public class DataTable {
         jo.add("aoColumns", columns);
         jo.addProperty("sPaginationType", "bootstrap");
         //jo.addProperty("sDom", "<'row-fluid'<'span8'l><'span4'f>r>t<'row-fluid'<'span8'i><'span4'p>>");
-        jo.addProperty("sDom", "<'row-fluid'<'span8'f>r>t<'row-fluid'<'span4'i><'span8'p>>");
+        jo.addProperty("sDom", "<'row-fluid'<'span12'f>r>t<'row-fluid'<'span12'p>>");
         jo.add("oLanguage", getChineseConfig());
+        jo.addProperty("bSort", false);
 
         return jo.toString();
     }
