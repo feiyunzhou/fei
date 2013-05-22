@@ -11,7 +11,7 @@
 <script src='../jquery/js/jquery-1.9.1.js'></script>
 <script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
 <!-- <script src='../jquery-ui-bootstrap/js/jquery-ui-1.9.2.custom.min.js'></script> -->
-<script src='../fullcalendar/fullcalendar.min.js'></script>
+<script src='../fullcalendar/fullcalendar.js'></script>
 <script src='../js/dataclient.js'></script>
 <script src="../bootstrap/js/bootstrap.js"></script>
 <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
@@ -32,10 +32,17 @@
 <script src="../select2/select2.js"></script>
 <script src="../select2/select2_locale_zh-CN.js"></script>
 
+<link rel="stylesheet" href="../bootstrap_datetimepicker/css/datetimepicker.css" />
+<script src="../bootstrap_datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="../bootstrap_datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script src="../js/timeselector.js"></script>
+
+<link href="../css/common.css" rel="stylesheet" />
 
 <script>
     var isOnline;
-    var contacts_by_accountId={};
+    var contacts_by_accountId = {};
     $(document).ready(function() {
         if (window.applicationCache) {
             applicationCache.addEventListener('updateready', function() {
@@ -70,14 +77,14 @@
                 text : "Ok",
                 click : function() {
                     var starttime = $("#datestr").val() + " " + $("#from").val() + ":00";
-                    var endtime = $("#datestr").val() + " " + $("#to").val()+":00";
+                    var endtime = $("#datestr").val() + " " + $("#to").val() + ":00";
                     console.log("from:" + starttime + " to:" + endtime);
                     var event = {};
                     var event_type = parseInt($("#visit_type_input").val());
                     event.title = "拜访";
                     event.start = starttime;
                     event.end = endtime;
-                    event.activity_type =event_type;
+                    event.activity_type = event_type;
                     //$('#calendar').fullCalendar('renderEvent', event, true);
                     //$('#calendar').fullCalendar('rerenderEvents');
                     //$('#calendar').fullCalendar('refetchEvents');
@@ -91,23 +98,23 @@
                         start : starttime,
                         end : endtime,
                         allDay : false,
-                        activity_type: event_type
+                        activity_type : event_type
                     };
 
                     if (navigator.onLine) {
                         //save event to the server, and query remote event after post event
-                        postEvent(userEvent,false);
+                        postEvent(userEvent, false);
 
                     } else {
 
-                        saveEventLocally(userEvent); 
-                        
+                        saveEventLocally(userEvent);
+
                         setEventColor(event);
-                        
+
                         $('#calendar').fullCalendar('renderEvent', event, true);
                         $('#calendar').fullCalendar('rerenderEvents');
                         $('#calendar').fullCalendar('refetchEvents');
-                         
+
                     }
                 }
             }, {
@@ -119,29 +126,29 @@
             autoOpen : false
         });
 
-        function setEventColor(event){
-            if(event.activity_type === 1){
+        function setEventColor(event) {
+            if (event.activity_type === 1) {
                 //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
-                    event.color = "#5484ed";
-                    event.title = "常规拜访"
-                }else if(event.activity_type === 2){
-                    event.color = "#D06B64";
-                    event.title = "会议拜访"
-                }else{
-                    event.color = "#a4bdfc";
-                    event.title = "其他拜访"
-                }
+                event.color = "#5484ed";
+                event.title = "常规拜访"
+            } else if (event.activity_type === 2) {
+                event.color = "#D06B64";
+                event.title = "会议拜访"
+            } else {
+                event.color = "#a4bdfc";
+                event.title = "其他拜访"
+            }
             return event;
         }
-         
-        function saveEventLocally(userEvent){
+
+        function saveEventLocally(userEvent) {
             var ed = localStorage["events"];
             ed = JSON.parse(ed);
             ed.push(userEvent);
             setLocalStorage(ed);
         }
-        
-        function postEvent(userEvent,isEventInLocalStorage) {
+
+        function postEvent(userEvent, isEventInLocalStorage) {
             var args = {};
             args.f = "setEvent";
             args.p = [ userEvent.crmUserId, userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
@@ -157,45 +164,44 @@
                 }
 
                 return resp.code;
-            },function onError(status){
+            }, function onError(status) {
                 isOnline = false;
-                if(!isEventInLocalStorage)
-                   saveEventLocally(userEvent);
+                if (!isEventInLocalStorage)
+                    saveEventLocally(userEvent);
             });
         }
-        
-        function postEvents(userEvents,isEventInLocalStorage) {
-            for ( var i = 0; i < userEvents.length-1; i++){
-                postEvent(userEvents[i],isEventInLocalStorage);
+
+        function postEvents(userEvents, isEventInLocalStorage) {
+            for ( var i = 0; i < userEvents.length - 1; i++) {
+                postEvent(userEvents[i], isEventInLocalStorage);
             }
-            
-            
+
             var args = {};
             args.f = "setEvent";
-            var userEvent = userEvents[userEvents.length-1];
-            args.p = [ userEvent.crmUserId, userEvent.activity_type , userEvent.title, userEvent.start, userEvent.end ];
+            var userEvent = userEvents[userEvents.length - 1];
+            args.p = [ userEvent.crmUserId, userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
             ajaxPost2(args, function onAjaxComplete(resp) {
                 console.log(resp);
                 isOnline = true;
                 if (resp.code == 0) {
                     console.log("set event successfully");
-                    
+
                     //query all events and set it to localStorage
                     getRemoteEvents();
-                    
+
                 } else {
                     console.log("failed to set event");
                 }
-                
+
                 return resp.code;
-            },function onError(status){
-                isOnline=false;
-                if(!isEventInLocalStorage)
+            }, function onError(status) {
+                isOnline = false;
+                if (!isEventInLocalStorage)
                     saveEventLocally(userEvent);
                 renderEventsWithDataLocal();
             });
         }
-        
+
         /* initialize the calendar
         -----------------------------------------------------------------*/
 
@@ -205,8 +211,36 @@
                 center : 'title',
                 right : 'month,agendaWeek,agendaDay'
             },
-            height: 500,
-            editable : true,
+            height : 500,
+            editable : false,
+            monthNames : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+            monthNamesShort : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+            dayNames : [ '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天' ],
+            dayNamesShort : [ '周一', '周二', '周三', '周四', '周五', '周六', '周日' ],
+            columnFormat : {
+                month : 'ddd',
+                week : 'M/d ddd',
+                day : 'M/d dddd'
+            },
+            titleFormat : {
+                month : 'yyyy年MMMM',
+                week : "yyyy年MMMd日 '&#8212;' yyyy年MMMd日",
+                day : 'yyyy年MMMd, dddd'
+            },
+            buttonText : {
+                prev : '&lsaquo;', // <
+                next:     '&rsaquo;', // >
+                prevYear : '&laquo;', // <<
+                nextYear: '&raquo;',  // >>
+                today : '今天',
+                month : '月',
+                week : '周',
+                day : '日'
+            },
+            dayRender : function(date, cell) {
+                cell.prepend('<span class=\"newEventSpan pull-left\" style="display:none"><a class="newEventLink" href="#">新建</a></span>');
+                cell.css("min-height", "");
+            },
             dayClick : function(date, allDay, jsEvent, view) {
 
                 if (allDay) {
@@ -225,14 +259,21 @@
                 var clickdate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
                 $("#datestr").val(clickdate);
                 //$("#datestr").text(clickdate);
-                $("#dialog").dialog("option","title", clickdate + " 拜访活动");
-                $("#dialog").dialog('open');
+                $("#dialog").dialog("option", "title", clickdate + " 拜访活动");
+                //$("#dialog").dialog('open');
                 $("#visit_type_input").focus();
+                $(".newEventSpan").hide();
                 //$('#myModal').modal();
                 //$("#event_editor_container").show();
-                
+                $(this).find(".newEventSpan").show();
+                //$(this).find(".newEventSpan").fadeOut(10000);
 
             }
+        });
+
+        $(".newEventLink").on("click", function(event) {
+            $("#main_container").toggle();
+            $("#event_editor_container").toggle();
         });
 
         function checkOnline() {
@@ -267,11 +308,11 @@
                 console.log(eventswithoutid);
                 if (eventswithoutid.length > 0) {
                     var resp = -1;
-                    postEvents(eventswithoutid,true);
-                }else{
+                    postEvents(eventswithoutid, true);
+                } else {
                     getRemoteEvents();
                 }
-            }else{
+            } else {
 
                 getRemoteEvents();
             }
@@ -282,25 +323,24 @@
 
         }
 
-        
         function getRemoteEvents() {
             var args = {};
             args.f = "getEventsByUserId";
             args.p = [ "20" ];
             ajaxPost2(args, function onAjaxComplete(eventData) {
-                isOnline= true;
+                isOnline = true;
                 console.log(eventData);
                 if (eventData.length > 0) {
                     setLocalStorage(eventData);
                     renderCalendar(eventData);
                 }
-            },function onError(status){
-                isOnline=false;
+            }, function onError(status) {
+                isOnline = false;
                 renderEventsWithDataLocal();
             });
         }
 
-        function renderEventsWithDataLocal(){
+        function renderEventsWithDataLocal() {
             var ed = localStorage["events"];
             console.log("render event with data locally");
             if (jQuery.isEmptyObject(ed) === false) {
@@ -311,7 +351,7 @@
 
             }
         }
-        
+
         function setLocalStorage(etData) {
             var dupData = [];
             for ( var i = 0; i < etData.length; i++) {
@@ -328,8 +368,7 @@
             }
             localStorage["events"] = JSON.stringify(dupData);
         }
-        
-        
+
         function renderCalendar(eventdata) {
             //$('#calendar').fullCalendar( 'render' );
             //remove all events on calendar
@@ -340,15 +379,15 @@
 
             for ( var i = 0; i < eventdata.length; i++) {
                 //console.log(data[i]);
-                
-                if(eventdata[i].activity_type === 1){
-                //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
+
+                if (eventdata[i].activity_type === 1) {
+                    //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
                     eventdata[i].color = "#5484ed";
                     eventdata[i].title = "常规拜访"
-                }else if(eventdata[i].activity_type === 2){
+                } else if (eventdata[i].activity_type === 2) {
                     eventdata[i].color = "#D06B64";
                     eventdata[i].title = "会议拜访"
-                }else{
+                } else {
                     eventdata[i].color = "#a4bdfc";
                     eventdata[i].title = "其他拜访"
                 }
@@ -370,16 +409,15 @@
             window.location.reload();
         });
 
-        
         // Begin of contact typeahead 
         function setContact2LocalStorage(data) {
             localStorage["crmcontacts"] = JSON.stringify(data);
         }
-        
+
         function getContactsFromLocalStorage(data) {
             return JSON.parse(localStorage["crmcontacts"]);
         }
-        
+
         var selected_contact_id;
         function renderContactTypeaheadWithDataRemote() {
             var args = {};
@@ -394,17 +432,15 @@
                 renderContactTypeaheadWithDataLocal();
             });
         }
-         
+
         function renderContactTypeaheadWithDataLocal() {
             var contacts = getContactsFromLocalStorage();
-            if(jQuery.isEmptyObject(contacts) === false){
-            renderContactTypeahead(contacts);
+            if (jQuery.isEmptyObject(contacts) === false) {
+                renderContactTypeahead(contacts);
             }
         }
-        
-        
-        
-        function renderContactTypeahead(contacts_data){
+
+        function renderContactTypeahead(contacts_data) {
             //set type ahead
             var contacts = [];
             var map = {};
@@ -427,25 +463,23 @@
                 },
             });
         }
-        
 
         if (navigator.onLine) {
             renderContactTypeaheadWithDataRemote();
-            
-        }else{
+
+        } else {
             renderContactTypeaheadWithDataLocal();
         }
-        
+
         //END of contact typeahead 
-         
-        
+
         //Start to render account table
-        function renderAccountTableWithDataRemote(){
+        function renderAccountTableWithDataRemote() {
             var args = {};
             args.f = "getAccountTable";
-            args.p = ['20'];
+            args.p = [ '20' ];
             ajaxPost2(args, function onComplete(data) {
-                if(jQuery.isEmptyObject(data) === false){
+                if (jQuery.isEmptyObject(data) === false) {
                     setAccountTable2Localstorage(data);
                     $('#dt_account').dataTable(data);
                 }
@@ -454,195 +488,258 @@
                 renderAccountTableWithDataLocal();
             });
         }
-        
-        function renderAccountTableWithDataLocal(){
+
+        function renderAccountTableWithDataLocal() {
             var accountTableData = getAccountTableFromLocalstorage();
-            if(jQuery.isEmptyObject(accountTableData) === false){
+            if (jQuery.isEmptyObject(accountTableData) === false) {
                 $('#dt_account').dataTable(accountTableData);
             }
         }
-        
-        function setAccountTable2Localstorage(data){
+
+        function setAccountTable2Localstorage(data) {
             localStorage["accounttable"] = JSON.stringify(data);
         }
-        
-        function getAccountTableFromLocalstorage(){
+
+        function getAccountTableFromLocalstorage() {
             return JSON.parse(localStorage["accounttable"]);
         }
-        
+
         if (navigator.onLine) {
             renderAccountTableWithDataRemote();
-        }else{
+        } else {
             renderAccountTableWithDataLocal();
         }
         // END of render account table
-        
-        
+
         //Start to render contact table
-        function renderContactTableWithDataRemote(){
+        function renderContactTableWithDataRemote() {
             var args = {};
             args.f = "getContactTable";
-            args.p = ['20'];
+            args.p = [ '20' ];
             ajaxPost2(args, function onComplete(data) {
-              if(jQuery.isEmptyObject(data) === false){
-                  setContactTable2Localstorage(data);
-                  $('#dt_contact').dataTable(data);
-              }
+                if (jQuery.isEmptyObject(data) === false) {
+                    setContactTable2Localstorage(data);
+                    $('#dt_contact').dataTable(data);
+                }
             }, function onError(status) {
                 isOnline = false;
                 renderContactTableWithDataLocal();
             });
         }
-        
-        function renderContactTableWithDataLocal(){
+
+        function renderContactTableWithDataLocal() {
             var contactTableData = getContactTableFromLocalstorage();
-            if(jQuery.isEmptyObject(contactTableData) === false){
+            if (jQuery.isEmptyObject(contactTableData) === false) {
                 $('#dt_contact').dataTable(contactTableData);
             }
         }
-        
-        function setContactTable2Localstorage(data){
+
+        function setContactTable2Localstorage(data) {
             localStorage["contacttable"] = JSON.stringify(data);
         }
-        
-        function getContactTableFromLocalstorage(){
+
+        function getContactTableFromLocalstorage() {
             return JSON.parse(localStorage["contacttable"]);
         }
-        
+
         if (navigator.onLine) {
             renderContactTableWithDataRemote();
-        }else{
+        } else {
             renderContactTableWithDataLocal();
         }
         // END of render contact table
-        
-                           
+
         // Begin of timepicker
         $('#from,#to').timepicker({
-            minuteStep: 30,
-            disableFocus: true,
-            showSeconds: false,
-            showMeridian: false,
-            showInputs:false
+            minuteStep : 30,
+            disableFocus : true,
+            showSeconds : false,
+            showMeridian : false,
+            showInputs : false,
+            template: 'modal'
         });
         // End of timepicker
-        
-        
+
         //Start of rendering account selector
         if (navigator.onLine) {
             renderAccountSelectorWithDataRemote();
             getContactsOfUserRemotely();
-        }else{
+        } else {
             renderAccountSelectorWithDataLocal();
             getContactsOfUserLocally();
         }
-        
-        function selectformat(item) { return item.name; };
-       
-        function renderAccountSelect2(optionsData){    
+
+        function selectformat(item) {
+            return item.name;
+        }
+        ;
+
+        function renderAccountSelect2(optionsData) {
             $('#account_select').select2({
-                data:{ results: optionsData, text: 'name' },
-                formatSelection: selectformat,
-                formatResult: selectformat
+                data : {
+                    results : optionsData,
+                    text : 'name'
+                },
+                formatSelection : selectformat,
+                formatResult : selectformat
             });
-            
-            $("#account_select").on("change", function(e) { 
-                console.log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed})); 
+
+            $("#account_select").on("change", function(e) {
+                console.log("change " + JSON.stringify({
+                    val : e.val,
+                    added : e.added,
+                    removed : e.removed
+                }));
                 $('#contact_label').show();
                 var cts = getContactsByAccountId(e.val);
-                console.log(e.val+"'s contacts:"+JSON.stringify(cts));
+                console.log(e.val + "'s contacts:" + JSON.stringify(cts));
                 $("#contact_select").select2({
-                    data:{ results: cts, text: 'name' },
-                    formatSelection: selectformat,
-                    formatResult: selectformat
+                    data : {
+                        results : cts,
+                        text : 'name'
+                    },
+                    formatSelection : selectformat,
+                    formatResult : selectformat
                 });
-                 
+
             });
         }
-        
-        function getContactsOfUserLocally(){
+
+        function getContactsOfUserLocally() {
             contacts_by_accountId = getContactsOfUserFromLocalstorage();
         }
-        
-        function getContactsOfUserRemotely(){
-          //Start of ajax query for the contacts
+
+        function getContactsOfUserRemotely() {
+            //Start of ajax query for the contacts
             var args = {};
             args.f = "queryContactsByUserId";
-            args.p = ['20'];
+            args.p = [ '20' ];
             ajaxPost2(args, function onComplete(data) {
                 isOnline = true;
-              if(jQuery.isEmptyObject(data) === false){
-                  setContactsOfUser2Localstorage(data);
-                  console.log(data);
-                  contacts_by_accountId = data;
-              }
+                if (jQuery.isEmptyObject(data) === false) {
+                    setContactsOfUser2Localstorage(data);
+                    console.log(data);
+                    contacts_by_accountId = data;
+                }
             }, function onError(status) {
                 isOnline = false;
                 getContactsOfUserLocally();
             });
             //End of ajax query
         }
-        
-        
-        function getContactsByAccountId(accountId){
-            console.log(accountId+" contacts_by_accountId:"+JSON.stringify(contacts_by_accountId));
-            if(accountId in contacts_by_accountId){
+
+        function getContactsByAccountId(accountId) {
+            console.log(accountId + " contacts_by_accountId:" + JSON.stringify(contacts_by_accountId));
+            if (accountId in contacts_by_accountId) {
                 return contacts_by_accountId[accountId];
             }
             return [];
         }
-        
-        function renderAccountSelectorWithDataRemote(){
+
+        function renderAccountSelectorWithDataRemote() {
             var args = {};
             args.f = "queryAccountsOfUser";
-            args.p = ['20'];
+            args.p = [ '20' ];
             ajaxPost2(args, function onComplete(data) {
                 isOnline = true;
-              if(jQuery.isEmptyObject(data) === false){
-                  setAccountsOfUser2Localstorage(data);
-                  console.log(data);
-                  renderAccountSelect2(data);
-              }
+                if (jQuery.isEmptyObject(data) === false) {
+                    setAccountsOfUser2Localstorage(data);
+                    console.log(data);
+                    renderAccountSelect2(data);
+                }
             }, function onError(status) {
                 isOnline = false;
                 renderAccountSelectorWithDataLocal();
             });
         }
-        
-        function renderAccountSelectorWithDataLocal(){
+
+        function renderAccountSelectorWithDataLocal() {
             var data = getAccountsOfUserFromLocalstorage();
-            if(jQuery.isEmptyObject(data) === false){
+            if (jQuery.isEmptyObject(data) === false) {
                 renderAccountSelect2(data);
             }
         }
-        
-        
-        function setAccountsOfUser2Localstorage(data){
+
+        function setAccountsOfUser2Localstorage(data) {
             localStorage["accountofuser"] = JSON.stringify(data);
         }
-        
-        function getAccountsOfUserFromLocalstorage(){
+
+        function getAccountsOfUserFromLocalstorage() {
             return JSON.parse(localStorage["accountofuser"]);
         }
-        
-        
-        function setContactsOfUser2Localstorage(data){
+
+        function setContactsOfUser2Localstorage(data) {
             localStorage["contactofuser"] = JSON.stringify(data);
         }
-        
-        function getContactsOfUserFromLocalstorage(){
+
+        function getContactsOfUserFromLocalstorage() {
             return JSON.parse(localStorage["contactofuser"]);
         }
-        
+
         //END of rendering account selector
+
+        /******START of event editor*****/
+        $("#event_ret_bt").on("click", function(event) {
+            $("#event_editor_container").toggle();
+            $("#main_container").toggle();
+        });
+
+        $("#event_ok_bt").on("click", function(event) {
+            
+            var starttime = $("#datestr").val() + " " + $("#select_time_from").val() + ":00";
+            var endtime = $("#datestr").val() + " " + $("#select_time_to").val() + ":00";
+            console.log("from:" + starttime + " to:" + endtime);
+            var event = {};
+            var event_type = parseInt($("#visit_type_input").val());
+            event.title = "拜访";
+            event.start = starttime;
+            event.end = endtime;
+            event.activity_type = event_type;
+            //$('#calendar').fullCalendar('renderEvent', event, true);
+            //$('#calendar').fullCalendar('rerenderEvents');
+            //$('#calendar').fullCalendar('refetchEvents');
+
+            var type = "拜访";
+
+            var userEvent = {
+                title : "拜访",
+                crmUserId : "20",
+                start : starttime,
+                end : endtime,
+                allDay : false,
+                activity_type : event_type
+            };
+
+            if (navigator.onLine) {
+                //save event to the server, and query remote event after post event
+                postEvent(userEvent, false);
+
+            } else {
+
+                saveEventLocally(userEvent);
+
+                setEventColor(event);
+
+                $('#calendar').fullCalendar('renderEvent', event, true);
+                $('#calendar').fullCalendar('rerenderEvents');
+                $('#calendar').fullCalendar('refetchEvents');
+
+            }
+            
+            $("#event_editor_container").toggle();
+            $("#main_container").toggle();
+            
+        });
         
-        
+        $("#select_time_from").timeselector();
+        $("#select_time_to").timeselector();
+        /******END of event editor*****/
 
     });
 </script>
 <style type="text/css">
 body {
-/* 	padding-top: 60px; */
+	/* 	padding-top: 60px; */
 	padding-bottom: 40px;
 }
 
@@ -662,7 +759,7 @@ body {
 <title>CRM</title>
 </head>
 <body>
- 	<div class="navbar">
+	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -678,7 +775,7 @@ body {
 		</div>
 	</div>
 
-	<div class="container-fluid">
+	<div id="main_container" class="container-fluid">
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="pull-right">
@@ -693,20 +790,17 @@ body {
 
 				<div class="tab-content">
 					<div class="tab-pane active" id="home">
-						<div id='calendar'></div>
-						
-						<!-- Start of Editor -->
-						<div id="event_editor_container" style="display: none">
-							
+						<div id="calendar_container">
+							<div id='calendar'></div>
 						</div>
-						<!-- End of Editor -->
+
 					</div>
 					<div class="tab-pane" id="profile">
 						<table id="dt_account" class="table table-hover table-striped table-bordered table-condensed">
 						</table>
 					</div>
 					<div class="tab-pane" id="messages">
-					    <table id="dt_contact" class="table table-hover table-striped table-bordered table-condensed">
+						<table id="dt_contact" class="table table-hover table-striped table-bordered table-condensed">
 						</table>
 					</div>
 					<div class="tab-pane" id="intro">
@@ -763,7 +857,7 @@ body {
 	</div>
 	<!--/.fluid-container-->
 
-	<div id="dialog" title="活动">
+	<!-- 	<div id="dialog" title="活动">
 		<div>
 			<label id="datestr"></label>
 			<div class="control-group">
@@ -803,13 +897,82 @@ body {
 				</table>
 			</div>
 			
-			
-
-
-
-			
-			
 		</div>
+	</div> -->
+
+	<!-- Start of Editor -->
+	<div id="event_editor_container" style="display: none" class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div title="活动">
+                   <label id="datestr"></label>
+					<div>
+						
+						<div class="control-group">
+							<div class="controls">
+								<button id="event_ret_bt" class="btn btn-info">返回</button>
+								&nbsp;&nbsp;
+								<button id="event_ok_bt" class="btn btn-primary">保存</button>
+							</div>
+						</div>
+						<hr />
+						<div class="control-group">
+							<label class="control-label" for="from">开始时间：</label>
+							<div class="controls">
+							  <!--  <div id="datetimepickerfrom" class="input-append bootstrap-timepicker">
+								 <input id="from" name="from" type="text" class="input-small" disabled></input> <span class="add-on"><i class="icon-time"></i></span>
+							    </div> -->
+							    <select id="select_time_from" class="input input-small"></select>
+                            </div>
+                         </div>
+                         <div class="control-group">
+							<label class="control-label" for="to">结束时间：</label>
+							<div class="controls">
+							   <!-- <div id="datetimepickerto" class="input-append bootstrap-timepicker">
+								<input id="to" name="to" type="text" class="input-small" disabled></input> <span class="add-on"> <i class="icon-time"></i>
+								</span>
+							    </div> -->
+							    <select id="select_time_to" class="input input-small"></select>
+						   </div>
+						   
+						</div>
+                          
+
+						<div class="control-group">
+							<label class="control-label">拜访类型</label>
+							<div class="controls">
+								<select id="visit_type_input" class="input input-small">
+									<option value="1">拜访</option>
+									<option value="2">会议</option>
+								</select>
+							</div>
+						</div>
+
+
+
+						<div class="control-group">
+							<label class="control-label" for="account">医院：</label>
+							<div class="controls">
+								<input type="hidden" id="account_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+							</div>
+							<label id="contact_label" style="display: none" class="control-label" for="contact">医生：</label>
+							<div class="controls">
+								<input type="hidden" id="contact_select" data-placeholder="请选择" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<hr>
+
+		<footer>
+			<p>&copy; Company 2013</p>
+		</footer>
 	</div>
+	<!-- End of Editor -->
+
 </body>
 </html>
