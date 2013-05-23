@@ -110,8 +110,8 @@
                         saveEventLocally(userEvent);
 
                         setEventColor(event);
-
-                        $('#calendar').fullCalendar('renderEvent', event, true);
+                        //console.log(event);
+                        $('#calendar').fullCalendar('renderEvent', {title: "拜访", allDay: false, start: "2013-05-20 03:00:00", end: "2013-05-20 05:00:00"}, true);
                         $('#calendar').fullCalendar('rerenderEvents');
                         $('#calendar').fullCalendar('refetchEvents');
 
@@ -154,7 +154,7 @@
             args.p = [ userEvent.crmUserId, userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
             ajaxPost2(args, function onAjaxComplete(resp) {
                 isOnline = true;
-                console.log(resp);
+                //console.log(resp);
                 if (resp.code == 0) {
                     //query all events and set it to localStorage
                     getRemoteEvents();
@@ -329,7 +329,7 @@
             args.p = [ "20" ];
             ajaxPost2(args, function onAjaxComplete(eventData) {
                 isOnline = true;
-                console.log(eventData);
+                //console.log(eventData);
                 if (eventData.length > 0) {
                     setLocalStorage(eventData);
                     renderCalendar(eventData);
@@ -377,8 +377,9 @@
                 return true;
             });
 
-            for ( var i = 0; i < eventdata.length; i++) {
-                //console.log(data[i]);
+            var eventLength = eventdata.length;
+            for ( var i = 0; i < eventLength; i++) {
+                //console.log(eventdata[i]);
 
                 if (eventdata[i].activity_type === 1) {
                     //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
@@ -589,10 +590,10 @@
                     val : e.val,
                     added : e.added,
                     removed : e.removed
-                }));
+                })); 
                 $('#contact_label').show();
                 var cts = getContactsByAccountId(e.val);
-                console.log(e.val + "'s contacts:" + JSON.stringify(cts));
+                //console.log(e.val + "'s contacts:" + JSON.stringify(cts));
                 $("#contact_select").select2({
                     data : {
                         results : cts,
@@ -618,7 +619,7 @@
                 isOnline = true;
                 if (jQuery.isEmptyObject(data) === false) {
                     setContactsOfUser2Localstorage(data);
-                    console.log(data);
+                    //console.log(data);
                     contacts_by_accountId = data;
                 }
             }, function onError(status) {
@@ -629,7 +630,7 @@
         }
 
         function getContactsByAccountId(accountId) {
-            console.log(accountId + " contacts_by_accountId:" + JSON.stringify(contacts_by_accountId));
+            //console.log(accountId + " contacts_by_accountId:" + JSON.stringify(contacts_by_accountId));
             if (accountId in contacts_by_accountId) {
                 return contacts_by_accountId[accountId];
             }
@@ -644,7 +645,7 @@
                 isOnline = true;
                 if (jQuery.isEmptyObject(data) === false) {
                     setAccountsOfUser2Localstorage(data);
-                    console.log(data);
+                    //console.log(data);
                     renderAccountSelect2(data);
                 }
             }, function onError(status) {
@@ -709,6 +710,9 @@
                 allDay : false,
                 activity_type : event_type
             };
+            
+            $("#event_editor_container").toggle();
+            $("#main_container").toggle();
 
             if (navigator.onLine) {
                 //save event to the server, and query remote event after post event
@@ -718,16 +722,14 @@
 
                 saveEventLocally(userEvent);
 
-                setEventColor(event);
-
-                $('#calendar').fullCalendar('renderEvent', event, true);
+                setEventColor(userEvent);
+                console.log(userEvent);
+                //$('#calendar').fullCalendar('renderEvent', userEvent, true);
+                $('#calendar').fullCalendar('renderEvent', userEvent, true);
                 $('#calendar').fullCalendar('rerenderEvents');
                 $('#calendar').fullCalendar('refetchEvents');
 
             }
-            
-            $("#event_editor_container").toggle();
-            $("#main_container").toggle();
             
         });
         
