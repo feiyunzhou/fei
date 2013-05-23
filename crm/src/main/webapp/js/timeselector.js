@@ -12,7 +12,14 @@
       // build element specific options;
       var optionHtml = "";
       for(var i=0;i<24;i++){
-          optionHtml += "<option value=\""+i+":00\">" + i + ":00</option>";
+          
+          var value = "";
+          if(i<10) {
+              value = "0"+i + ":00";
+              }else{
+                  value = i+ ":00";
+              }
+          optionHtml += "<option value=\""+value+"\">" + value + "</option>";
       }
       
       $this.append(optionHtml);

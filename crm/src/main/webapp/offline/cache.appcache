@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 2.50
+# Ver 2.62
 
 NETWORK:
 *
@@ -32,7 +32,6 @@ main.html
 ../bootstrap_datetimepicker/js/bootstrap-datetimepicker.js
 ../bootstrap_datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js
 ../js/timeselector.js
-../css/common.css
 
 
 FALLBACK:

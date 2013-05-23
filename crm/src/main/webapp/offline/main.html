@@ -38,7 +38,7 @@
 
 <script src="../js/timeselector.js"></script>
 
-<link href="../css/common.css" rel="stylesheet" />
+<!-- <link href="../css/common.css" rel="stylesheet" /> -->
 
 <script>
     var isOnline;
@@ -70,14 +70,14 @@
             $(this).tab('show');
         });
 
-        $("#dialog").dialog({
-            width : 400,
+        $("#event_editor_container").dialog({
+            width : 300,
             height : 500,
             buttons : [ {
                 text : "Ok",
                 click : function() {
-                    var starttime = $("#datestr").val() + " " + $("#from").val() + ":00";
-                    var endtime = $("#datestr").val() + " " + $("#to").val() + ":00";
+                    var starttime = $("#datestr").val() + " " + $("#select_time_from").val() + ":00";
+                    var endtime = $("#datestr").val() + " " + $("#select_time_to").val() + ":00";
                     console.log("from:" + starttime + " to:" + endtime);
                     var event = {};
                     var event_type = parseInt($("#visit_type_input").val());
@@ -88,7 +88,7 @@
                     //$('#calendar').fullCalendar('renderEvent', event, true);
                     //$('#calendar').fullCalendar('rerenderEvents');
                     //$('#calendar').fullCalendar('refetchEvents');
-                    $(this).dialog("close");
+                    
 
                     var type = "拜访";
 
@@ -112,8 +112,11 @@
                         setEventColor(userEvent);
                         //console.log(event);
                         renderAndRefreshEvent(userEvent);
+                        //renderEventsWithDataLocal();
 
                     }
+                    
+                    $(this).dialog("close");
                 }
             }, {
                 text : "Cancel",
@@ -125,7 +128,7 @@
         });
         
         function renderAndRefreshEvent(event){
-            $('#calendar').fullCalendar('renderEvent', userEvent, true);
+            $('#calendar').fullCalendar('renderEvent', event, true);
             $('#calendar').fullCalendar('rerenderEvents');
             $('#calendar').fullCalendar('refetchEvents');
         }
@@ -147,6 +150,9 @@
 
         function saveEventLocally(userEvent) {
             var ed = localStorage["events"];
+            if(jQuery.isEmptyObject(ed) === true){
+                ed = '[]';
+            }
             ed = JSON.parse(ed);
             ed.push(userEvent);
             setLocalStorage(ed);
@@ -263,13 +269,13 @@
                 var clickdate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
                 $("#datestr").val(clickdate);
                 //$("#datestr").text(clickdate);
-                $("#dialog").dialog("option", "title", clickdate + " 拜访活动");
-                //$("#dialog").dialog('open');
-                $("#visit_type_input").focus();
-                $(".newEventSpan").hide();
+                $("#event_editor_container").dialog("option", "title", clickdate + " 拜访活动");
+                $("#event_editor_container").dialog('open');
+                //$("#visit_type_input").focus();
+                //$(".newEventSpan").hide();
                 //$('#myModal').modal();
                 //$("#event_editor_container").show();
-                $(this).find(".newEventSpan").show();
+                //$(this).find(".newEventSpan").show();
                 //$(this).find(".newEventSpan").fadeOut(10000);
 
             }
@@ -358,7 +364,26 @@
 
         function setLocalStorage(etData) {
             var dupData = [];
-            for ( var i = 0; i < etData.length; i++) {
+            var lengthOfdata = etData.length
+            for ( var i = 0; i < lengthOfdata; i++) {
+                var tmpEv = {
+                    title : etData[i].title,
+                    id : etData[i].id,
+                    start : etData[i].start,
+                    end : etData[i].end,
+                    crmUserId : etData[i].crmUserId,
+                    activity_type : etData[i].activity_type
+
+                };
+                dupData.push(tmpEv);
+            }
+            localStorage["events"] = JSON.stringify(dupData);
+        }
+        
+        function setEvent2LocalStorage(event) {
+            var dupData = [];
+            var lengthOfdata = etData.length
+            for ( var i = 0; i < lengthOfdata; i++) {
                 var tmpEv = {
                     title : etData[i].title,
                     id : etData[i].id,
@@ -396,6 +421,7 @@
                     eventdata[i].color = "#a4bdfc";
                     eventdata[i].title = "其他拜访"
                 }
+                eventdata[i].allDay = false
                 $('#calendar').fullCalendar('renderEvent', eventdata[i], true);
             }
             $('#calendar').fullCalendar('render');
@@ -700,9 +726,9 @@
             event.start = starttime;
             event.end = endtime;
             event.activity_type = event_type;
-            //$('#calendar').fullCalendar('renderEvent', event, true);
-            //$('#calendar').fullCalendar('rerenderEvents');
-            //$('#calendar').fullCalendar('refetchEvents');
+            $('#calendar').fullCalendar('renderEvent', event, true);
+            $('#calendar').fullCalendar('rerenderEvents');
+            $('#calendar').fullCalendar('refetchEvents');
 
             var type = "拜访";
 
@@ -741,6 +767,8 @@
         $("#select_time_to").timeselector();
         /******END of event editor*****/
 
+        $('#myCarousel').carousel()
+        
     });
 </script>
 <style type="text/css">
@@ -916,13 +944,13 @@ body {
                    <label id="datestr"></label>
 					<div>
 						
-						<div class="control-group">
+<!-- 						<div class="control-group">
 							<div class="controls">
 								<button id="event_ret_bt" class="btn btn-info">返回</button>
 								&nbsp;&nbsp;
 								<button id="event_ok_bt" class="btn btn-primary">保存</button>
 							</div>
-						</div>
+						</div> -->
 						<hr />
 						<div class="control-group">
 							<label class="control-label" for="from">开始时间：</label>
@@ -976,11 +1004,11 @@ body {
 				</table>
 			</div>
 		</div>
-		<hr>
+<!-- 		<hr>
 
 		<footer>
 			<p>&copy; Company 2013</p>
-		</footer>
+		</footer> -->
 	</div>
 	<!-- End of Editor -->
 
