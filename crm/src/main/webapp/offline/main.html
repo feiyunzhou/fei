@@ -38,6 +38,14 @@
 
 <script src="../js/timeselector.js"></script>
 
+<script src="../js/nicetable.js"></script>
+<link href="../FooTable/css/footable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="../FooTable/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="../FooTable/css/footable.paginate.css" rel="stylesheet" type="text/css" />
+<script src="../FooTable/js/footable.js" type="text/javascript"></script>
+<script src="../FooTable/js/footable.paginate.js" type="text/javascript"></script>
+
+
 <!-- <link href="../css/common.css" rel="stylesheet" /> -->
 
 <script>
@@ -512,7 +520,9 @@
             ajaxPost2(args, function onComplete(data) {
                 if (jQuery.isEmptyObject(data) === false) {
                     setAccountTable2Localstorage(data);
-                    $('#dt_account').dataTable(data);
+                    //$('#dt_account').dataTable(data);
+                    $('#dt_account').nicetable({tData: data});
+                    $('#dt_account').footable();
                 }
             }, function onError(status) {
                 isOnline = false;
@@ -521,9 +531,11 @@
         }
 
         function renderAccountTableWithDataLocal() {
-            var accountTableData = getAccountTableFromLocalstorage();
-            if (jQuery.isEmptyObject(accountTableData) === false) {
-                $('#dt_account').dataTable(accountTableData);
+            var data = getAccountTableFromLocalstorage();
+            if (jQuery.isEmptyObject(data) === false) {
+                //$('#dt_account').dataTable(accountTableData);
+                $('#dt_account').nicetable({tData: data});
+                $('#dt_account').footable();
             }
         }
 
@@ -550,7 +562,9 @@
             ajaxPost2(args, function onComplete(data) {
                 if (jQuery.isEmptyObject(data) === false) {
                     setContactTable2Localstorage(data);
-                    $('#dt_contact').dataTable(data);
+                    //$('#dt_contact').dataTable(data);
+                    $('#dt_contact').nicetable({tData: data});
+                    $('#dt_contact').footable();
                 }
             }, function onError(status) {
                 isOnline = false;
@@ -559,9 +573,11 @@
         }
 
         function renderContactTableWithDataLocal() {
-            var contactTableData = getContactTableFromLocalstorage();
-            if (jQuery.isEmptyObject(contactTableData) === false) {
-                $('#dt_contact').dataTable(contactTableData);
+            var data = getContactTableFromLocalstorage();
+            if (jQuery.isEmptyObject(data) === false) {
+                //$('#dt_contact').dataTable(contactTableData);
+                $('#dt_contact').nicetable({tData: data});
+                $('#dt_contact').footable();
             }
         }
 
@@ -769,6 +785,13 @@
 
         $('#myCarousel').carousel()
         
+        $('#myTab a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+		}).on('shown', function (e) {	
+			$('.tab-pane.active table').trigger('footable_resize');
+		});
+        
     });
 </script>
 <style type="text/css">
@@ -831,12 +854,14 @@ body {
 
 					</div>
 					<div class="tab-pane" id="profile">
-						<table id="dt_account" class="table table-hover table-striped table-bordered table-condensed">
+						<table id="dt_account" class="footable table table-hover table-striped table-bordered table-condensed"  data-page-navigation="#pagination_account" data-page-size="10">
 						</table>
+						<ul id="pagination_account" class="footable-nav"><span></span></ul>
 					</div>
 					<div class="tab-pane" id="messages">
-						<table id="dt_contact" class="table table-hover table-striped table-bordered table-condensed">
+						<table id="dt_contact" class="footable table table-hover table-striped table-bordered table-condensed"  data-page-navigation="#pagination_contact" data-page-size="10">
 						</table>
+						<ul id="pagination_contact" class="footable-nav"><span></span></ul>
 					</div>
 					<div class="tab-pane" id="intro">
 						<div class="row-fluid">
