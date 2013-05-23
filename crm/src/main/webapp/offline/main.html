@@ -109,11 +109,9 @@
 
                         saveEventLocally(userEvent);
 
-                        setEventColor(event);
+                        setEventColor(userEvent);
                         //console.log(event);
-                        $('#calendar').fullCalendar('renderEvent', {title: "拜访", allDay: false, start: "2013-05-20 03:00:00", end: "2013-05-20 05:00:00"}, true);
-                        $('#calendar').fullCalendar('rerenderEvents');
-                        $('#calendar').fullCalendar('refetchEvents');
+                        renderAndRefreshEvent(userEvent);
 
                     }
                 }
@@ -125,7 +123,13 @@
             } ],
             autoOpen : false
         });
-
+        
+        function renderAndRefreshEvent(event){
+            $('#calendar').fullCalendar('renderEvent', userEvent, true);
+            $('#calendar').fullCalendar('rerenderEvents');
+            $('#calendar').fullCalendar('refetchEvents');
+        }
+        
         function setEventColor(event) {
             if (event.activity_type === 1) {
                 //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
