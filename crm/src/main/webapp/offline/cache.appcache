@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 2.49
+# Ver 2.44
 
 NETWORK:
 *
@@ -12,7 +12,7 @@ main.html
 ../jquery/css/smoothness/jquery-ui-1.10.2.custom.css
 ../jquery/js/jquery-1.9.1.js
 ../jquery/js/jquery-ui-1.10.2.custom.min.js
-../fullcalendar/fullcalendar.min.js
+../fullcalendar/fullcalendar.js
 ../js/dataclient.js
 ../bootstrap/js/bootstrap.js
 ../bootstrap/css/bootstrap.css
