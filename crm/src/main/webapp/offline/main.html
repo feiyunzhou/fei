@@ -16,12 +16,6 @@
 <script src="../bootstrap/js/bootstrap.js"></script>
 <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 
-<script type="text/javascript" src="../bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-<link rel="stylesheet" href="../bootstrap-timepicker/css/bootstrap-timepicker.css" />
-
-<!-- <script type="text/javascript" src="../bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-<link rel="stylesheet" href="../bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" /> -->
-
 <script src="../datatable/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="../datatable/css/jquery.dataTables.css" />
 
@@ -31,10 +25,6 @@
 <link rel="stylesheet" href="../select2/select2.css" />
 <script src="../select2/select2.js"></script>
 <script src="../select2/select2_locale_zh-CN.js"></script>
-
-<link rel="stylesheet" href="../bootstrap_datetimepicker/css/datetimepicker.css" />
-<script src="../bootstrap_datetimepicker/js/bootstrap-datetimepicker.js"></script>
-<script src="../bootstrap_datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
 <script src="../js/timeselector.js"></script>
 
@@ -46,6 +36,9 @@
 <script src="../FooTable/js/footable.filter.js" type="text/javascript"></script>
 <script src="../FooTable/js/footable.paginate.js" type="text/javascript"></script>
 
+<script type="text/javascript" src="../bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="../bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="../bootstrap-datepicker/css/datepicker.css" />
 
 <!-- <link href="../css/common.css" rel="stylesheet" /> -->
 
@@ -79,14 +72,24 @@
             $(this).tab('show');
         });
 
-        $("#event_editor_container").dialog({
+/*         $("#event_editor_container").modal({
+            show:false
+        }).css(
+                {
+                    'margin-left': function () {
+                        return -($(this).width() / 2);
+                    }
+                }); */
+         $("#event_editor_container").dialog({
             width : 300,
             height : 500,
             buttons : [ {
                 text : "Ok",
                 click : function() {
-                    var starttime = $("#datestr").val() + " " + $("#select_time_from").val() + ":00";
-                    var endtime = $("#datestr").val() + " " + $("#select_time_to").val() + ":00";
+                    var dt =   $('#datepicker_from input').val();
+                    console.log(dt);
+                    var starttime = dt + " " + $("#select_time_from").val() + ":00";
+                    var endtime = dt + " " + $("#select_time_to").val() + ":00";
                     console.log("from:" + starttime + " to:" + endtime);
                     var event = {};
                     var event_type = parseInt($("#visit_type_input").val());
@@ -97,7 +100,6 @@
                     //$('#calendar').fullCalendar('renderEvent', event, true);
                     //$('#calendar').fullCalendar('rerenderEvents');
                     //$('#calendar').fullCalendar('refetchEvents');
-                    
 
                     var type = "拜访";
 
@@ -124,7 +126,7 @@
                         //renderEventsWithDataLocal();
 
                     }
-                    
+
                     $(this).dialog("close");
                 }
             }, {
@@ -135,13 +137,13 @@
             } ],
             autoOpen : false
         });
-        
-        function renderAndRefreshEvent(event){
+
+        function renderAndRefreshEvent(event) {
             $('#calendar').fullCalendar('renderEvent', event, true);
             $('#calendar').fullCalendar('rerenderEvents');
             $('#calendar').fullCalendar('refetchEvents');
         }
-        
+
         function setEventColor(event) {
             if (event.activity_type === 1) {
                 //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
@@ -159,7 +161,7 @@
 
         function saveEventLocally(userEvent) {
             var ed = localStorage["events"];
-            if(jQuery.isEmptyObject(ed) === true){
+            if (jQuery.isEmptyObject(ed) === true) {
                 ed = '[]';
             }
             ed = JSON.parse(ed);
@@ -278,6 +280,11 @@
                 var clickdate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
                 $("#datestr").val(clickdate);
                 //$("#datestr").text(clickdate);
+                console.log(clickdate);
+                //$('#datepicker_from').datepicker('setValue', date);
+               // $('#datepicker_to').datepicker('setValue', date);
+                $('#datepicker_from input').val(clickdate);
+                $('#datepicker_to input').val(clickdate);
                 $("#event_editor_container").dialog("option", "title", clickdate + " 拜访活动");
                 $("#event_editor_container").dialog('open');
                 //$("#visit_type_input").focus();
@@ -286,9 +293,12 @@
                 //$("#event_editor_container").show();
                 //$(this).find(".newEventSpan").show();
                 //$(this).find(".newEventSpan").fadeOut(10000);
+                
+               // $("#event_editor_container").modal('show')
 
             }
         });
+        
 
         $(".newEventLink").on("click", function(event) {
             $("#main_container").toggle();
@@ -388,7 +398,7 @@
             }
             localStorage["events"] = JSON.stringify(dupData);
         }
-        
+
         function setEvent2LocalStorage(event) {
             var dupData = [];
             var lengthOfdata = etData.length
@@ -522,8 +532,11 @@
                 if (jQuery.isEmptyObject(data) === false) {
                     setAccountTable2Localstorage(data);
                     //$('#dt_account').dataTable(data);
-                    $('#dt_account').nicetable({tData: data});
+                    $('#dt_account').nicetable({
+                        tData : data
+                    });
                     $('#dt_account').footable();
+
                 }
             }, function onError(status) {
                 isOnline = false;
@@ -535,7 +548,9 @@
             var data = getAccountTableFromLocalstorage();
             if (jQuery.isEmptyObject(data) === false) {
                 //$('#dt_account').dataTable(accountTableData);
-                $('#dt_account').nicetable({tData: data});
+                $('#dt_account').nicetable({
+                    tData : data
+                });
                 $('#dt_account').footable();
             }
         }
@@ -564,8 +579,8 @@
                 if (jQuery.isEmptyObject(data) === false) {
                     setContactTable2Localstorage(data);
                     //$('#dt_contact').dataTable(data);
-                    $('#dt_contact').nicetable({tData: data});
-                    $('#dt_contact').footable();
+                    renderContactTable(data);
+
                 }
             }, function onError(status) {
                 isOnline = false;
@@ -573,12 +588,36 @@
             });
         }
 
+        function renderContactTable(data) {
+            $('#dt_contact').nicetable({
+                tData : data
+            });
+            $('#dt_contact').footable();
+            $('#dt_contact').on("click", ".visit_link", function(event) {
+                //console.log(event);
+                var currentdate = new Date();
+                var strDate = $.fullCalendar.formatDate(currentdate, "yyyy-MM-dd");
+                $('#datepicker_from input').val(strDate);
+                $('#datepicker_to input').val(strDate);
+                var actId =parseInt($(this).data("account-id"));
+                var ctId =  parseInt($(this).data("contact-id"));
+                console.log(actId+ ": "+ ctId);
+                
+                
+                $('#account_select').select2("val",actId)
+                var e = jQuery.Event("change", { val: actId, defaultContact:ctId});
+                $('#account_select').trigger(e);
+                //$('#contact_select')
+                $("#event_editor_container").dialog('open');
+            });
+
+        }
+
         function renderContactTableWithDataLocal() {
             var data = getContactTableFromLocalstorage();
             if (jQuery.isEmptyObject(data) === false) {
                 //$('#dt_contact').dataTable(contactTableData);
-                $('#dt_contact').nicetable({tData: data});
-                $('#dt_contact').footable();
+                renderContactTable(data);
             }
         }
 
@@ -597,17 +636,6 @@
         }
         // END of render contact table
 
-        // Begin of timepicker
-        $('#from,#to').timepicker({
-            minuteStep : 30,
-            disableFocus : true,
-            showSeconds : false,
-            showMeridian : false,
-            showInputs : false,
-            template: 'modal'
-        });
-        // End of timepicker
-
         //Start of rendering account selector
         if (navigator.onLine) {
             renderAccountSelectorWithDataRemote();
@@ -620,9 +648,10 @@
         function selectformat(item) {
             return item.name;
         }
-        ;
+        
 
         function renderAccountSelect2(optionsData) {
+            //console.log(optionsData);
             $('#account_select').select2({
                 data : {
                     results : optionsData,
@@ -636,8 +665,9 @@
                 console.log("change " + JSON.stringify({
                     val : e.val,
                     added : e.added,
-                    removed : e.removed
-                })); 
+                    removed : e.removed,
+                    defaultContact: e.defaultContact
+                }));
                 $('#contact_label').show();
                 var cts = getContactsByAccountId(e.val);
                 //console.log(e.val + "'s contacts:" + JSON.stringify(cts));
@@ -649,6 +679,10 @@
                     formatSelection : selectformat,
                     formatResult : selectformat
                 });
+                
+                if(e.defaultContact != 'undefined'){
+                    $("#contact_select").select2('val',e.defaultContact);
+                }
 
             });
         }
@@ -733,7 +767,7 @@
         });
 
         $("#event_ok_bt").on("click", function(event) {
-            
+
             var starttime = $("#datestr").val() + " " + $("#select_time_from").val() + ":00";
             var endtime = $("#datestr").val() + " " + $("#select_time_to").val() + ":00";
             console.log("from:" + starttime + " to:" + endtime);
@@ -757,7 +791,7 @@
                 allDay : false,
                 activity_type : event_type
             };
-            
+
             $("#event_editor_container").toggle();
             $("#main_container").toggle();
 
@@ -777,22 +811,37 @@
                 $('#calendar').fullCalendar('refetchEvents');
 
             }
-            
+
         });
-        
+
+        $('#datepicker_from').datepicker({
+            format : 'yyyy-mm-dd',
+            language : 'zh-CN',
+            autoclose : true
+        });
+        $('#datepicker_to').datepicker({
+            format : 'yyyy-mm-dd',
+            language : 'zh-CN',
+            autoclose : true
+        });
+
         $("#select_time_from").timeselector();
         $("#select_time_to").timeselector();
         /******END of event editor*****/
 
         $('#myCarousel').carousel()
-        
-        $('#myTab a').click(function (e) {
-			e.preventDefault();
-			$(this).tab('show');
-		}).on('shown', function (e) {	
-			$('.tab-pane.active table').trigger('footable_resize');
-		});
-        
+
+        $('#myTab a').click(function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+            
+            $('#calendar').fullCalendar('rerenderEvents');
+            $('#calendar').fullCalendar('refetchEvents');
+            
+        }).on('shown', function(e) {
+            $('.tab-pane.active table').trigger('footable_resize');
+        });
+
     });
 </script>
 <style type="text/css">
@@ -836,7 +885,7 @@ body {
 	<div id="main_container" class="container-fluid">
 		<div class="row-fluid">
 			<div class="span12">
-			
+
 				<div class="pull-right">
 					<button class="btn btn-mini" id="refreshbt">刷新</button>
 				</div>
@@ -855,16 +904,22 @@ body {
 
 					</div>
 					<div class="tab-pane" id="profile">
-					    查找:&nbsp;<input id="filter" type="text" />
-						<table id="dt_account" data-filter-minimum=1  data-filter="#filter" class="footable table table-hover table-striped table-bordered table-condensed"  data-page-navigation="#pagination_account" data-page-size="10">
+						查找:&nbsp;<input id="filter" type="text" />
+						<table id="dt_account" data-filter-minimum=1 data-filter="#filter" class="footable table table-hover table-striped table-bordered table-condensed" data-page-navigation="#pagination_account"
+							data-page-size="10">
 						</table>
-						<ul id="pagination_account" class="footable-nav"><span></span></ul>
+						<ul id="pagination_account" class="footable-nav">
+							<span></span>
+						</ul>
 					</div>
 					<div class="tab-pane" id="messages">
-					    查找:&nbsp;<input id="filter_contact" type="text" />
-						<table id="dt_contact" data-filter-minimum=1 data-filter="#filter_contact"  class="footable table table-hover table-striped table-bordered table-condensed"  data-page-navigation="#pagination_contact" data-page-size="10">
+						查找:&nbsp;<input id="filter_contact" type="text" />
+						<table id="dt_contact" data-filter-minimum=1 data-filter="#filter_contact" class="footable table table-hover table-striped table-bordered table-condensed"
+							data-page-navigation="#pagination_contact" data-page-size="10">
 						</table>
-						<ul id="pagination_contact" class="footable-nav"><span></span></ul>
+						<ul id="pagination_contact" class="footable-nav">
+							<span></span>
+						</ul>
 					</div>
 					<div class="tab-pane" id="intro">
 						<div class="row-fluid">
@@ -918,125 +973,79 @@ body {
 		</footer>
 
 	</div>
-	<!--/.fluid-container-->
-
-	<!-- 	<div id="dialog" title="活动">
-		<div>
-			<label id="datestr"></label>
-			<div class="control-group">
-				<label class="control-label">拜访类型</label>
-				<div class="controls">
-					<select id="visit_type_input" class="input">
-						<option value="1">拜访</option>
-						<option value="2">会议</option>
-					</select>
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" for="account">医院：</label>
-				<div class="controls">
-					<input type="hidden" id="account_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
-				</div>
-				<label id="contact_label" style="display:none" class="control-label" for="contact">医生：</label>
-				<div class="controls">
-					<input type="hidden" id="contact_select" data-placeholder="请选择" style="width: 200px" tabindex="-1" class="select2-offscreen input">
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<table>
-					<tr>
-						<td><label class="control-label" for="from">开始时间：</label>
-							<div id="datetimepickerfrom" class="input-append bootstrap-timepicker">
-								<input id="from" name="from" type="text" class="input-small"></input> <span class="add-on"><i class="icon-time"></i></span>
-							</div></td><td>&nbsp;&nbsp;&nbsp;</td>
-						<td><label class="control-label" for="to">结束时间：</label>
-							<div id="datetimepickerto" class="input-append bootstrap-timepicker">
-								<input id="to" name="to" type="text" class="input-small"></input> <span class="add-on"> <i class="icon-time"></i>
-								</span>
-							</div></td>
-					</tr>
-				</table>
-			</div>
-			
-		</div>
-	</div> -->
 
 	<!-- Start of Editor -->
-	<div id="event_editor_container" style="display: none" class="container-fluid">
-		<div class="row-fluid">
-			<div class="span4 offset1">
-			<table style="width:100%;"><tr><td>
-				<div title="活动">
-                   <label id="datestr"></label>
-					<div>
-						
-<!-- 						<div class="control-group">
-							<div class="controls">
-								<button id="event_ret_bt" class="btn btn-info">返回</button>
-								&nbsp;&nbsp;
-								<button id="event_ok_bt" class="btn btn-primary">保存</button>
+	<div id="event_editor_container" style="display: none;">
+		<div>
+			<table style="width: 100%;">
+				<tr>
+					<td>
+						<div title="活动">
+							<label id="datestr"></label>
+							<div>
+							
+							  <div class="control-group">
+									<label class="control-label">拜访类型：</label>
+									<div class="controls">
+										<select id="visit_type_input" class="input input-small">
+											<option value="1">拜访</option>
+											<option value="2">会议</option>
+										</select>
+									</div>
+								</div>
+							
+								<div class="control-group">
+									<label class="control-label" for="from">开始时间：</label>
+									<div class="controls">
+										<table>
+											<tr>
+												<td><div class="input-append date datepicker" id="datepicker_from" data-date-format="yyyy-mm-dd">
+														<input class="input input-small" type="text" readonly><span class="add-on"><i class="icon-th"></i></span>
+													</div></td>
+												<td>&nbsp; &nbsp;</td>
+												<td><select id="select_time_from" class="input input-small"></select></td>
+											</tr>
+										</table>
+									</div>
+									<label class="control-label" for="to">结束时间：</label>
+									<div class="controls">
+										<table>
+											<tr>
+												<td>
+													<div class="input-append date datepicker" id="datepicker_to" data-date-format="yyyy-mm-dd">
+														<input class="input input-small" type="text" readonly><span class="add-on"><i class="icon-th"></i></span>
+													</div>
+												</td>
+												<td>&nbsp;&nbsp;</td>
+												<td><select id="select_time_to" class="input input-small"></select></td>
+											</tr>
+										</table>
+
+
+
+									</div>
+
+								</div>
+
+
+								<div class="control-group">
+									<label class="control-label" for="account">医院：</label>
+									<div class="controls">
+										<input type="hidden" id="account_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+									</div>
+									<label id="contact_label" style="display: none" class="control-label" for="contact">医生：</label>
+									<div class="controls">
+										<input type="hidden" id="contact_select" data-placeholder="请选择" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+									</div>
+								</div>
+
 							</div>
-						</div> -->
-						<hr />
-						<div class="control-group">
-							<label class="control-label" for="from">开始时间：</label>
-							<div class="controls">
-							  <!--  <div id="datetimepickerfrom" class="input-append bootstrap-timepicker">
-								 <input id="from" name="from" type="text" class="input-small" disabled></input> <span class="add-on"><i class="icon-time"></i></span>
-							    </div> -->
-							    <select id="select_time_from" class="input input-small"></select>
-                            </div>
-                         </div>
-                         <div class="control-group">
-							<label class="control-label" for="to">结束时间：</label>
-							<div class="controls">
-							   <!-- <div id="datetimepickerto" class="input-append bootstrap-timepicker">
-								<input id="to" name="to" type="text" class="input-small" disabled></input> <span class="add-on"> <i class="icon-time"></i>
-								</span>
-							    </div> -->
-							    <select id="select_time_to" class="input input-small"></select>
-						   </div>
-						   
+
 						</div>
-                          
-
-						<div class="control-group">
-							<label class="control-label">拜访类型</label>
-							<div class="controls">
-								<select id="visit_type_input" class="input input-small">
-									<option value="1">拜访</option>
-									<option value="2">会议</option>
-								</select>
-							</div>
-						</div>
-
-
-
-						<div class="control-group">
-							<label class="control-label" for="account">医院：</label>
-							<div class="controls">
-								<input type="hidden" id="account_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
-							</div>
-							<label id="contact_label" style="display: none" class="control-label" for="contact">医生：</label>
-							<div class="controls">
-								<input type="hidden" id="contact_select" data-placeholder="请选择" style="width: 200px" tabindex="-1" class="select2-offscreen input">
-							</div>
-						</div>
-
-					</div>
-
-				</div>
-				</td></tr>
-				</table>
-			</div>
+					</td>
+				</tr>
+			</table>
 		</div>
-<!-- 		<hr>
-
-		<footer>
-			<p>&copy; Company 2013</p>
-		</footer> -->
 	</div>
 	<!-- End of Editor -->
 

@@ -142,7 +142,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from contact where ? IS NOT NULL</sql>
+		<sql>select * from (select contact.*\,account.name as accountName from contact\,account where contact.accountId=account.id AND ? IS NOT NULL) as a</sql>
 		<filterField>pl1</filterField>
 		<fields>
 			<field>
@@ -164,12 +164,12 @@
 				<isEditable>true</isEditable>
 			</field>
 			<field>
-				<name>gender</name>
-				<display>性别</display>
+				<name>accountName</name>
+				<display>医院</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>flase</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 			</field>
 			<field>
@@ -199,7 +199,15 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 			</field>
-			
+			<field>
+				<name>gender</name>
+				<display>性别</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>flase</isVisible>
+				<isEditable>true</isEditable>
+			</field>
 			<field>
 				<name>sex</name>
 				<display>性别</display>

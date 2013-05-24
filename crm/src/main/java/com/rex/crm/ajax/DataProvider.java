@@ -466,11 +466,11 @@ public class DataProvider {
    
    public static String queryAccountsOfUser(String[] args){
        String uid = args[0];
-       //String sql = "select * from (select a.name as contactName,a.id,b.name as accountName from contact as a,account as b where a.accountId = b.id) as c";
+       String sql = "select * from (select b.id as id,b.name from contact as a,account as b where a.accountId = b.id AND ? is not NULL) as c group by name";
        
        Map<String, Entity> entities = Configuration.getEntityTable();
        Entity entity = entities.get("account");
-       List list = DAOImpl.queryEntityRelationList(entity.getSql(), uid);
+       List list = DAOImpl.queryEntityRelationList(sql, uid);
        
        List<Account> accounts = Lists.newArrayList();
        for(Map map:(List<Map>)list){
@@ -495,7 +495,42 @@ public class DataProvider {
    }
    
    public String getContactTable(String[] args){
-       return getEntityTable("contact",args[0]);
+       String userId = args[0];
+       DataTable dt = new DataTable();
+       Map<String, Entity> entities = Configuration.getEntityTable();
+       Entity entity = entities.get("contact");
+       
+       List<Field> fields = entity.getFields();
+       for(Field f:fields){
+           if(!f.isVisible()) continue;
+           ColumnDescription cd1 = new ColumnDescription(f.getDisplay());
+           dt.addColumn(cd1);
+       }
+       dt.addColumn( new ColumnDescription("拜访操作"));
+       
+       List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
+       for(Map map:(List<Map>)mapList){
+           TableRow tr = new TableRow();
+           for(Field f:fields){
+               if(!f.isVisible()) continue;
+               String fieldValue = "";
+               if(f.getPicklist() !=null){
+                   fieldValue = DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName())));
+               }else{
+                   fieldValue = String.valueOf(map.get(f.getName()));
+               }
+               
+               tr.addCell(fieldValue);
+           }
+           
+           String id = String.valueOf(map.get("id"));
+           String accountId = String.valueOf(map.get("accountId"));
+           
+           tr.addCell("<a data-contact-id=\""+id+"\" data-account-id=\""+accountId+"\" class=\"btn btn-small visit_link\" herf=\"#\">拜访</a>");
+           
+           dt.addRow(tr);
+       }
+       return dt.stringify();
    }
    
    private String getEntityTable(String entityName,String userId){
