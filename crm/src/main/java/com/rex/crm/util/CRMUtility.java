@@ -3,6 +3,7 @@ package com.rex.crm.util;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 
 import com.google.common.base.Function;
@@ -75,6 +76,19 @@ public class CRMUtility {
 	            ImmutableListMultimap<Integer, Contact> contactsByAccountId = Multimaps.index(contacts, idFunction);
 	            return contactsByAccountId;
 	    }
+	    
+	    
+	  public static ImmutableListMultimap<Integer,Pair<Integer,Integer>> categorizeEntitiesByExternalId(List<Pair<Integer,Integer>> pairs){
+               Function<Pair<Integer,Integer>, Integer> idFunction = new Function<Pair<Integer,Integer>, Integer>() {
+                   public Integer apply(Pair<Integer,Integer> pair) {
+                       return pair.getRight();
+                   }
+               };
+
+               
+               ImmutableListMultimap<Integer, Pair<Integer,Integer>> entitiesByExternalId = Multimaps.index(pairs, idFunction);
+               return entitiesByExternalId;
+       }
 	    
 	    
 	    

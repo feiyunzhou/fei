@@ -23,7 +23,7 @@ public class DataTable {
         columnsDes.add(column);
     }
 
-    public String stringify() {
+    protected String stringify() {
         JsonObject jo = new JsonObject();
 
         //populate table data

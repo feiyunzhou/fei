@@ -11,38 +11,65 @@
       $this = $(this);
       // build element specific options;
       var tableString = "";
-      var tData = opts.tData;
-      if(tData.aoColumns != 'undefined'){
+      var table = opts.tData;
+      if(!jQuery.isEmptyObject(table.cols) && table.cols !=null && table.cols != 'undefined'){
           var tableColumn = "<thead><tr>";
-          var columnWidth = tData.aoColumns.length;
+          var columnWidth = table.cols.length;
           var column = "";
+          var cols = table.cols;
+          var num =0;
           for(var i=0;i<columnWidth;i++){
-              if(i==0){
-                  column +="<th data-class=\"expand\" >"+tData.aoColumns[i].sTitle+"</th>";
+              if(cols[i].isVisible === false) continue;
+              if(num==0){
+                  column +="<th data-class=\"expand\" >"+cols[i].display+"</th>";
               }else{
-                  column +="<th data-hide=\"phone\">"+tData.aoColumns[i].sTitle+"</th>";
+                  column +="<th data-hide=\"phone\">"+cols[i].display+"</th>";
+            
+              
               }
+              num++;
+          }
+         if (opts.extraCols.length > 0) {
+                    var len = opts.extraCols.length;
+                    var ec = opts.extraCols;
+                    for ( var k = 0; k < len; k++) {
+                        column += "<th data-hide=\"phone\">" + ec[k].display + "</th>";
+                    }
           }
           tableColumn = tableColumn + column+ "</tr></thead>";
           tableString += tableColumn;
           
-          if(tData.aaData != 'undefined'){
-             
-              var rowLength = tData.aaData.length;
-              var tr = "";
-              for(var i=0;i<rowLength;i++){
-                  
-                  var tds="";
-                  for(var j=0;j<columnWidth;j++){
-                      tds = tds+ "<td>" +tData.aaData[i][j]+ "</td>";
-                  }
-                  tr = tr + "<tr>"+tds+"</tr>";
-              }
-              
-              var tableRows = "<tbody>"+tr+"</tbody>";
-              
-              tableString = tableString + tableRows;
-             
+
+           if (table.tData != undefined) {
+                    var tableData = table.tData;
+                    var tr = "";
+                    $.each(tableData, function(key, value) {
+                        if (value.length > 0) {
+                            var rowdata = value[0];
+                            var tds = "";
+                            for ( var j = 0; j < columnWidth; j++) {
+                                
+                               if(cols[j].isVisible === false) continue;
+
+                                tds = tds + "<td>" + rowdata[j] + "</td>";
+                            }
+                            if (opts.extraCols.length > 0) {
+                                var len = opts.extraCols.length;
+                                var ec = opts.extraCols;
+                                for ( var k = 0; k < len; k++) {
+
+                                    tds = tds + "<td>" + ec[k].renderCol(rowdata) + "</td>";
+                                }
+                            }
+
+                            tr = tr + "<tr>" + tds + "</tr>";
+                        }
+                    });
+
+                    var tableRows = "<tbody>" + tr + "</tbody>";
+
+                    tableString = tableString + tableRows;
+
           }
           
           $this.append(tableString);
@@ -66,7 +93,8 @@
   // plugin defaults
   //
   $.fn.nicetable.defaults = {
-          tData:{}
+          tData:{},
+          extraCols:[]
   };
 //
 // end of closure

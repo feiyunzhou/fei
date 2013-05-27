@@ -26,9 +26,11 @@ import org.apache.log4j.Logger;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -242,6 +244,9 @@ public class DAOImpl {
 
 	        return contacts;
 	    }
+	 
+	 
+	   
 	 public static List<Pair<String,Map<String,Object>>> getNumberOfTypeOfAccount(String user_id){
 	     String query = "select b.id as id,b.val as val,sum(a.id) as sum from (SELECT account.* FROM account,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as a, account_pl6 as b where a.pl6=b.id group by b.id order by sum DESC";
 	     List<Pair<String,Map<String,Object>>> res = Lists.newArrayList();
@@ -266,7 +271,7 @@ public class DAOImpl {
 	        
 	        return res;
 	 }
-	   
+	 
      public static Account getAccountById(int id){
          Connection conn = null;
          Account account = null;
@@ -439,9 +444,9 @@ public class DAOImpl {
                  joinedFilter.add(filterField + " = " + f);
              }
              
-             sql = sql + " AND (" + Joiner.on(" OR ").join(joinedFilter) + ")";
+             sql = sql + " where (" + Joiner.on(" OR ").join(joinedFilter) + ")";
            }else{
-               sql = sql + " AND "+filterField + " = -1"; 
+               sql = sql + " where "+filterField + " = -1"; 
            }
            
            logger.debug(sql);
@@ -507,7 +512,7 @@ public class DAOImpl {
 	
 	   public static Map getEntityData(String tableName, List<String> colunmNames,long id){
 	        String queryColunm = Joiner.on(",").join(colunmNames);
-	        String query = "select " + queryColunm + " from "+ tableName + " where id= " + id;
+	        String query = "select * from "+ tableName + " where id= " + id;
 	        logger.debug("query entity:"+query);
 	        Connection conn = null;
 	        Map map = null;
@@ -580,11 +585,12 @@ public class DAOImpl {
         List<Pair<String, Map<String, Object>>> res = Lists.newArrayList();
         Connection conn = null;
         try {
+            conn = DBHelper.getConnection();
             for (Choice ch : choices) {
-                String query = "select sum(a.id) as sum from (" + sourceTableSQL + " AND " + filterField + " = " + ch.getId() + ") as a";
+                String query = "select sum(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
                 logger.debug("query is:" + query);
 
-                conn = DBHelper.getConnection();
+                
                 QueryRunner run = new QueryRunner();
                 Map<String, Object> map = run.query(conn, query, new MapHandler(), user_id);
                 if(map.get("sum") == null){

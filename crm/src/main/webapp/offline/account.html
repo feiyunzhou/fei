@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>医院详情</title>
+<script>
+    $(document).ready(function() {
+        $('#back_btn').click(function(e) {
+            $('#main_container').toggle();
+            $('#account_container').toggle();
+            //$('#myTab').tab();
+            $('.tab-pane.active table').trigger('footable_resize');
+        });
+
+    });
+    function renderAccountTableOnAccountPage(id) {
+        console.log("Start to render account detaile page now");
+        console.log("account id is:" + id);
+        
+        //get accountTable from local storage
+        var table = JSON.parse(localStorage["accounttable"]); 
+        console.log(table);
+        var tbobj = $("#account_detail_tb");
+        tbobj.empty();
+        if(table != null && table.cols != 'undefined' && table.tData != 'undefined'){
+            
+            if(table.cols.length>0 && table.tData[id] != null){
+                
+                var cols = table.cols;
+                var colWidth = table.cols.length;
+                var trs = "";
+                var rowData = table.tData[id][0];
+                $('#detail_title').append("<span>"+rowData[1]+"</span>");
+                for(var i=1;i<colWidth;i++){
+                    if(cols[i].isVisible === false) continue;
+                    trs = trs +"<tr>" + "<td style=\"text-align:left;font-weight:bold\">"+cols[i].display+"</td>"+"<td style=\"text-align:right\">"+rowData[i]+"</td>" +"</tr>"
+                }
+               
+                tbobj.append("<tbody>"+trs+"</tbody>");
+            }
+        }
+        
+        //render the contact list
+        
+        var contactIdsByAccountId = JSON.parse(localStorage["contactIdsByAccountId"]); 
+        var  contactofuser = JSON.parse(localStorage["contacttable"]);
+        console.log(contactofuser);
+        if(!jQuery.isEmptyObject(contactIdsByAccountId) && !jQuery.isEmptyObject(contactofuser)){
+            var contacts = contactIdsByAccountId[id];
+            if(contacts != null && contacts.length > 0){
+                console.log(contacts);
+                var contactTableData = {};
+                contactTableData.cols = contactofuser.cols;
+                contactTableData.tData = {};
+                var len = contacts.length;
+                console.log(len);
+                for(var i=0;i < len;i++){
+                    var contactId = contacts[i];
+                    console.log(contactId);
+                    if(contactofuser.tData[contactId] != null && contactofuser.tData[contactId].length>0){
+                        contactTableData.tData[contactId] = [];
+                        contactTableData.tData[contactId].push(contactofuser.tData[contactId][0]);
+                    }
+                }
+                console.log(contactTableData);
+                $('#contactList').empty();
+                renderContactList($('#contactList'),contactTableData);
+            }
+        }
+        
+        
+        console.log("END of render account detaile page now");
+    }
+    
+    
+    function renderContactList(table,data) {
+        table.nicetable({
+            tData : data,
+            extraCols:[
+                       {
+                           display:'拜访',
+                           renderCol:function(rd){
+                               return "<a class=\"btn btn-small btn-primary visit_link\" data-account-id="+rd[2]+" data-contact-id="+rd[0]+" href=\"#\">拜访</a>"
+                           }
+                       }
+                      ]
+        });
+        table.footable({
+            pageNavigation: '.contact_footable-nav'
+        });
+        table.on("click", ".visit_link", function(event) {
+            //console.log(event);
+            var currentdate = new Date();
+            var strDate = $.fullCalendar.formatDate(currentdate, "yyyy-MM-dd");
+            $('#datepicker_from input').val(strDate);
+            $('#datepicker_to input').val(strDate);
+            var actId =parseInt($(this).data("account-id"));
+            var ctId =  parseInt($(this).data("contact-id"));
+            console.log(actId+ ": "+ ctId);
+            
+            
+            $('#account_select').select2("val",actId)
+            var e = jQuery.Event("change", { val: actId, defaultContact:ctId});
+            $('#account_select').trigger(e);
+            //$('#contact_select')
+            $("#event_editor_container").dialog('open');
+        });
+
+    }
+    
+</script>
+<style type="text/css">
+body {
+	/* 	padding-top: 60px; */
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<a href="#" class="btn btn-primary" id="back_btn">返回</a>
+				<hr />
+			</div>
+
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3 well">
+				<h5 id="detail_title"></h5>
+				<table id="account_detail_tb" class="table table-condensed" style="">
+
+				</table>
+			</div>
+			<div class="span9">
+				<h4>医生</h4>
+				<table id="contactList" class="table table-hover table-striped table-bordered table-condensed"
+				data-page-navigation="#pagination_contactList" data-page-size="10" >
+				</table>
+				<ul id="pagination_contactList" class="contact_footable-nav footable-nav">
+							<span></span>
+				</ul>
+
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -40,12 +40,16 @@
 <script type="text/javascript" src="../bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
 <link rel="stylesheet" href="../bootstrap-datepicker/css/datepicker.css" />
 
+<script src='../urlparser/purl.js'></script>
 <!-- <link href="../css/common.css" rel="stylesheet" /> -->
-
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 <script>
+    
     var isOnline;
     var contacts_by_accountId = {};
     $(document).ready(function() {
+        "use strict";
+        noBack();
         if (window.applicationCache) {
             applicationCache.addEventListener('updateready', function() {
                 if (confirm('An update is available. Reload now?')) {
@@ -66,11 +70,6 @@
         function logEvent(event) {
             console.log(event.type);
         }
-
-        $('#myTab a').click(function(e) {
-            e.preventDefault();
-            $(this).tab('show');
-        });
 
 /*         $("#event_editor_container").modal({
             show:false
@@ -465,7 +464,9 @@
         }
 
         function getContactsFromLocalStorage(data) {
-            return JSON.parse(localStorage["crmcontacts"]);
+            var data = localStorage["crmcontacts"];
+            if(data == null || data === 'undefined') data ='[]';
+            return JSON.parse(data);
         }
 
         var selected_contact_id;
@@ -526,16 +527,13 @@
         //Start to render account table
         function renderAccountTableWithDataRemote() {
             var args = {};
-            args.f = "getAccountTable";
+            args.f = "getAccountIndexTable";
             args.p = [ '20' ];
             ajaxPost2(args, function onComplete(data) {
                 if (jQuery.isEmptyObject(data) === false) {
                     setAccountTable2Localstorage(data);
                     //$('#dt_account').dataTable(data);
-                    $('#dt_account').nicetable({
-                        tData : data
-                    });
-                    $('#dt_account').footable();
+                    renderAccountTable(data);
 
                 }
             }, function onError(status) {
@@ -544,14 +542,29 @@
             });
         }
 
+        function renderAccountTable(data){
+            $('#dt_account').nicetable({
+                tData : data,
+                extraCols:[
+                            {
+                                display:'详细信息',
+                                renderCol:function(rd){
+                                    return "<a class=\"btn btn-small btn-primary account_detail_link\" data-account-id="+rd[0]+" href=\"#\">详细</a>"
+                                }
+                            }
+                           ]
+            });
+            $('#dt_account').footable();
+            
+            renderDetaileLink4Account();
+        }
+        
+        
         function renderAccountTableWithDataLocal() {
             var data = getAccountTableFromLocalstorage();
             if (jQuery.isEmptyObject(data) === false) {
                 //$('#dt_account').dataTable(accountTableData);
-                $('#dt_account').nicetable({
-                    tData : data
-                });
-                $('#dt_account').footable();
+                renderAccountTable(data);
             }
         }
 
@@ -560,7 +573,9 @@
         }
 
         function getAccountTableFromLocalstorage() {
-            return JSON.parse(localStorage["accounttable"]);
+            var data = localStorage["accounttable"];
+            if(data === 'undefined' || data == null) data = '{}';
+            return JSON.parse(data);
         }
 
         if (navigator.onLine) {
@@ -572,14 +587,16 @@
 
         //Start to render contact table
         function renderContactTableWithDataRemote() {
+            console.log("renderContactTableWithDataRemote");
             var args = {};
-            args.f = "getContactTable";
+            args.f = "getContactIndexTable";
             args.p = [ '20' ];
             ajaxPost2(args, function onComplete(data) {
                 if (jQuery.isEmptyObject(data) === false) {
                     setContactTable2Localstorage(data);
                     //$('#dt_contact').dataTable(data);
-                    renderContactTable(data);
+                    
+                    renderContactTable($("#dt_contact"),data);
 
                 }
             }, function onError(status) {
@@ -588,36 +605,13 @@
             });
         }
 
-        function renderContactTable(data) {
-            $('#dt_contact').nicetable({
-                tData : data
-            });
-            $('#dt_contact').footable();
-            $('#dt_contact').on("click", ".visit_link", function(event) {
-                //console.log(event);
-                var currentdate = new Date();
-                var strDate = $.fullCalendar.formatDate(currentdate, "yyyy-MM-dd");
-                $('#datepicker_from input').val(strDate);
-                $('#datepicker_to input').val(strDate);
-                var actId =parseInt($(this).data("account-id"));
-                var ctId =  parseInt($(this).data("contact-id"));
-                console.log(actId+ ": "+ ctId);
-                
-                
-                $('#account_select').select2("val",actId)
-                var e = jQuery.Event("change", { val: actId, defaultContact:ctId});
-                $('#account_select').trigger(e);
-                //$('#contact_select')
-                $("#event_editor_container").dialog('open');
-            });
 
-        }
 
         function renderContactTableWithDataLocal() {
             var data = getContactTableFromLocalstorage();
             if (jQuery.isEmptyObject(data) === false) {
                 //$('#dt_contact').dataTable(contactTableData);
-                renderContactTable(data);
+                renderContactTable($("#dt_contact"),data);
             }
         }
 
@@ -626,7 +620,7 @@
         }
 
         function getContactTableFromLocalstorage() {
-            return JSON.parse(localStorage["contacttable"]);
+            return JSON.parse(localStorage["contacttable"] || '{}');
         }
 
         if (navigator.onLine) {
@@ -709,6 +703,7 @@
             });
             //End of ajax query
         }
+        
 
         function getContactsByAccountId(accountId) {
             //console.log(accountId + " contacts_by_accountId:" + JSON.stringify(contacts_by_accountId));
@@ -747,7 +742,7 @@
         }
 
         function getAccountsOfUserFromLocalstorage() {
-            return JSON.parse(localStorage["accountofuser"]);
+            return JSON.parse(localStorage["accountofuser"]||'[]');
         }
 
         function setContactsOfUser2Localstorage(data) {
@@ -755,11 +750,37 @@
         }
 
         function getContactsOfUserFromLocalstorage() {
-            return JSON.parse(localStorage["contactofuser"]);
+            return JSON.parse(localStorage["contactofuser"]||'{}');
         }
 
         //END of rendering account selector
-
+        if (navigator.onLine) {
+            getContactIdsByAccountId();
+        } else {
+            
+        }
+       
+        // Start of getting
+       function getContactIdsByAccountId() {
+            //Start of ajax query for the contacts
+            var args = {};
+            args.f = "getContactIdsOfAccountIdByUserId";
+            args.p = [ '20' ];
+            ajaxPost2(args, function onComplete(data) {
+                isOnline = true;
+                if (jQuery.isEmptyObject(data) === false) {
+                    setContactIdsOfAccountId2Local(data);
+                }
+            }, function onError(status) {
+                isOnline = false;
+            });
+            //End of ajax query
+        }
+        
+        function setContactIdsOfAccountId2Local(data){
+            localStorage["contactIdsByAccountId"] = JSON.stringify(data);
+        }
+        
         /******START of event editor*****/
         $("#event_ret_bt").on("click", function(event) {
             $("#event_editor_container").toggle();
@@ -829,8 +850,8 @@
         $("#select_time_to").timeselector();
         /******END of event editor*****/
 
-        $('#myCarousel').carousel()
-
+        $('#myCarousel').carousel();
+        $('#myTab').tab();
         $('#myTab a').click(function(e) {
             e.preventDefault();
             $(this).tab('show');
@@ -841,8 +862,64 @@
         }).on('shown', function(e) {
             $('.tab-pane.active table').trigger('footable_resize');
         });
+        
+        
+        /******Account detailed page**************/
+        
+       function renderDetaileLink4Account() {
+            $('#dt_account').on('click', '.account_detail_link', function(e) {
+                var id = $(this).data('account-id');
+                $('#main_container').toggle();
+                $('#account_container').load("../offline/account.html", function() {
+                    console.log("loading completed.");
+                    $('#account_container').toggle(); 
+                    renderAccountTableOnAccountPage(id);
+                     
+                });
+            });
+        }
+
+        /******END of Account detailed page*************/
 
     });
+    /*******End of jquery ready**********/
+    
+    function noBack() {
+        window.history.forward(1);
+    }
+    
+    function renderContactTable(table,data) {
+        table.nicetable({
+            tData : data,
+            extraCols:[
+                       {
+                           display:'拜访',
+                           renderCol:function(rd){
+                               return "<a class=\"btn btn-small btn-primary visit_link\" data-account-id="+rd[2]+" data-contact-id="+rd[0]+" href=\"#\">拜访</a>"
+                           }
+                       }
+                      ]
+        });
+        table.footable();
+        table.on("click", ".visit_link", function(event) {
+            //console.log(event);
+            var currentdate = new Date();
+            var strDate = $.fullCalendar.formatDate(currentdate, "yyyy-MM-dd");
+            $('#datepicker_from input').val(strDate);
+            $('#datepicker_to input').val(strDate);
+            var actId =parseInt($(this).data("account-id"));
+            var ctId =  parseInt($(this).data("contact-id"));
+            console.log(actId+ ": "+ ctId);
+            
+            
+            $('#account_select').select2("val",actId)
+            var e = jQuery.Event("change", { val: actId, defaultContact:ctId});
+            $('#account_select').trigger(e);
+            //$('#contact_select')
+            $("#event_editor_container").dialog('open');
+        });
+
+    }
 </script>
 <style type="text/css">
 body {
@@ -904,7 +981,7 @@ body {
 
 					</div>
 					<div class="tab-pane" id="profile">
-						查找:&nbsp;<input id="filter" type="text" />
+						查找:&nbsp;<input id="filter" placeholder="例如：'张三 135010'" type="text" />
 						<table id="dt_account" data-filter-minimum=1 data-filter="#filter" class="footable table table-hover table-striped table-bordered table-condensed" data-page-navigation="#pagination_account"
 							data-page-size="10">
 						</table>
@@ -1048,6 +1125,9 @@ body {
 		</div>
 	</div>
 	<!-- End of Editor -->
-
+    <!-- Start of account container -->
+    <div id="account_container" style="display: none;">
+    </div>
+    <!-- End of account container -->
 </body>
 </html>

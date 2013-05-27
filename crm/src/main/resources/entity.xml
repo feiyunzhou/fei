@@ -4,7 +4,7 @@
 	<entity>
 		<name>account</name>
 		<display>医院</display>
-		<sql>SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?</sql>
+		<sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as aAccount</sql>
 		<filterField>pl6</filterField>
 		<fields>
 			<field>
@@ -41,24 +41,6 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-			</field>
-			<field>
-				<name>isKeyAccount</name>
-				<display>重点客户</display>
-				<data-type>Boolean</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>true</isEditable>
-			</field>
-			<field>
-				<name>cityId</name>
-				<display>所在城市</display>
-				<data-type>String</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 			</field>
 			<field>
@@ -142,7 +124,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from (select contact.*\,account.name as accountName from contact\,account where contact.accountId=account.id AND ? IS NOT NULL) as a</sql>
+		<sql>select * from (select contact.*\,account.name as accountName from contact\,account where contact.accountId=account.id AND ? IS NOT NULL) as aContact</sql>
 		<filterField>pl1</filterField>
 		<fields>
 			<field>
@@ -162,6 +144,15 @@
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+			</field>
+			<field>
+				<name>accountId</name>
+				<display>医院ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 			</field>
 			<field>
 				<name>accountName</name>
@@ -197,15 +188,6 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-			</field>
-			<field>
-				<name>gender</name>
-				<display>性别</display>
-				<data-type>String</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>flase</isVisible>
 				<isEditable>true</isEditable>
 			</field>
 			<field>

@@ -33,7 +33,9 @@ public class CRMTest {
     
     @Test
     public void testjson(){
-       System.out.println(DataProvider.queryContactsByUserId(new String[]{"20"}));
+       System.out.println(DataProvider.getAccountIndexTable(new String[]{"20"}));
    
     }
+    
+ 
 }

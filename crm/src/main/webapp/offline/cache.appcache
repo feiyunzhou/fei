@@ -1,12 +1,13 @@
 CACHE MANIFEST
-# Ver 1.20
+# Ver 1.30
 
 NETWORK:
 *
 
 
 CACHE:
-main.html
+../offline/main.html
+../offline/account.html
 ../fullcalendar/fullcalendar.css
 ../fullcalendar/fullcalendar.print.css
 ../jquery/css/smoothness/jquery-ui-1.10.2.custom.css
@@ -38,5 +39,7 @@ main.html
 ../FooTable/css/footable.paginate.css
 ../FooTable/js/footable.js
 ../FooTable/js/footable.paginate.js
+../urlparser/purl.js
+../bootstrap/css/bootstrap-responsive.css
 
 FALLBACK:
