@@ -244,8 +244,8 @@
             },
             titleFormat : {
                 month : 'yyyy年MMMM',
-                week : "yyyy年MMMd日 '&#8212;' yyyy年MMMd日",
-                day : 'yyyy年MMMd, dddd'
+                week : "yyyy年",
+                day : 'yyyy年'
             },
             buttonText : {
                 prev : '&lsaquo;', // <
@@ -981,7 +981,7 @@ body {
 
 					</div>
 					<div class="tab-pane" id="profile">
-						查找:&nbsp;<input id="filter" placeholder="例如：'张三 135010'" type="text" />
+						 <strong>查找:&nbsp;</strong><input id="filter" placeholder="例如：'张三 135010'" type="text" />
 						<table id="dt_account" data-filter-minimum=1 data-filter="#filter" class="footable table table-hover table-striped table-bordered table-condensed" data-page-navigation="#pagination_account"
 							data-page-size="10">
 						</table>
@@ -990,7 +990,7 @@ body {
 						</ul>
 					</div>
 					<div class="tab-pane" id="messages">
-						查找:&nbsp;<input id="filter_contact" type="text" />
+						<strong>查找:&nbsp;</strong><input id="filter_contact" placeholder="例如：'张三 135010'" type="text" />
 						<table id="dt_contact" data-filter-minimum=1 data-filter="#filter_contact" class="footable table table-hover table-striped table-bordered table-condensed"
 							data-page-navigation="#pagination_contact" data-page-size="10">
 						</table>
