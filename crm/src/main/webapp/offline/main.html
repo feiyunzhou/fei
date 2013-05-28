@@ -82,8 +82,8 @@
                 click : function() {
                     var dt =   $('#datepicker_from input').val();
                     console.log(dt);
-                    var starttime = (new Date(dt + " " + $("#select_time_from").val() + ":00")).getTime()/1000;
-                    var endtime = (new Date(dt + " " + $("#select_time_to").val() + ":00")).getTime()/1000;
+                    var starttime = ($.fullCalendar.parseDate(dt + " " + $("#select_time_from").val() + ":00")).getTime()/1000;
+                    var endtime = ($.fullCalendar.parseDate(dt + " " + $("#select_time_to").val() + ":00")).getTime()/1000;
                     console.log("from:" + starttime + " to:" + endtime);
                     var event = {};
                     var event_type = parseInt($("#visit_type_input").val());
