@@ -165,6 +165,7 @@ public class Configuration {
                     field.setDataType(convert2Clazz(sub2.getString("data-type")));
                     field.setDisplay(sub2.getString("display"));
                     field.setName(sub2.getString("name"));
+                    field.setPriority(sub2.getString("priority"));
                     
                     String picklist = sub2.getString("picklist");
                     if(picklist!=null && picklist.trim().length()!=0){

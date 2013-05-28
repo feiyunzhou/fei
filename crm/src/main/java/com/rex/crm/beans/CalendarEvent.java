@@ -13,6 +13,7 @@ public class CalendarEvent {
     private long endtime;
 	private int crmUserId;
 	private int activity_type;
+	private int contactId;
 
 	public int getId() {
 		return id;
@@ -91,6 +92,14 @@ public class CalendarEvent {
 
         public void setActivity_type(int activity_type) {
             this.activity_type = activity_type;
+        }
+
+        public int getContactId() {
+            return contactId;
+        }
+
+        public void setContactId(int contactId) {
+            this.contactId = contactId;
         }
 
 }

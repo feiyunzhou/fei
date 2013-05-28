@@ -82,6 +82,11 @@ INSERT INTO contact_pl4 (val) VALUES('慢痛');
 INSERT INTO contact_pl5 (val) VALUES('有效');
 INSERT INTO contact_pl5 (val) VALUES('无效');
 
+-- 医生分级
+INSERT INTO contact_pl6 (val) VALUES('A');
+INSERT INTO contact_pl6 (val) VALUES('B');
+INSERT INTO contact_pl6 (val) VALUES('C');
+INSERT INTO contact_pl6 (val) VALUES('D');
 
 -- 状态;
 INSERT INTO crmuser_pl1 (val) VALUES('有效');
@@ -117,6 +122,10 @@ INSERT INTO region_level2_pl (val) VALUES('华东');
 --  拜访类型
 INSERT INTO activity_types (val) VALUES('拜访');
 INSERT INTO activity_types (val) VALUES('会议');
+
+
+-- ramdom update table
+UPDATE activity SET contactId = FLOOR(78* RAND()+1);
 
 
 

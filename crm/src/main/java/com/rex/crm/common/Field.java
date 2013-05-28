@@ -26,6 +26,8 @@ public class Field implements Serializable {
     private boolean isEditable;
     @Expose
     private String formatter;
+    @Expose
+    private String priority;
     
 
     public boolean isPrimaryKey() {
@@ -113,6 +115,14 @@ public class Field implements Serializable {
 
     public void setFormatter(String formatter) {
         this.formatter = formatter;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
     
 

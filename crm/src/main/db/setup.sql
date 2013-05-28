@@ -102,6 +102,7 @@ CREATE TABLE activity
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 ALTER table activity ADD activity_type MEDIUMINT;
+ALTER table activity ADD contactId MEDIUMINT;
 
 drop table if exists activity_types;
 CREATE TABLE activity_types 
@@ -133,6 +134,8 @@ ALTER table contact ADD pl2 MEDIUMINT;
 ALTER table contact ADD pl3 MEDIUMINT;
 ALTER table contact ADD pl4 MEDIUMINT;
 ALTER table contact ADD pl5 MEDIUMINT;
+ALTER table contact ADD pl6 MEDIUMINT;
+ALTER table contact ADD visiting_target MEDIUMINT;
 
 -- picklist for contact;
 -- 性别;
@@ -183,6 +186,15 @@ CREATE TABLE contact_pl4
 -- 状态;
 drop table if exists contact_pl5;
 CREATE TABLE contact_pl5 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+-- 医生级别
+drop table if exists contact_pl6;
+CREATE TABLE contact_pl6 
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),

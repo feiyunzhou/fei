@@ -71,14 +71,6 @@
             console.log(event.type);
         }
 
-/*         $("#event_editor_container").modal({
-            show:false
-        }).css(
-                {
-                    'margin-left': function () {
-                        return -($(this).width() / 2);
-                    }
-                }); */
          $("#event_editor_container").dialog({
             width : 300,
             height : 500,
@@ -99,7 +91,12 @@
                     //$('#calendar').fullCalendar('renderEvent', event, true);
                     //$('#calendar').fullCalendar('rerenderEvents');
                     //$('#calendar').fullCalendar('refetchEvents');
-
+                    var contactIdval = $('#contact_select').val();
+                    if(contactIdval ==='undefined' || jQuery.isEmptyObject(contactIdval)){
+                        alert("医生信息不能为空");
+                        return;
+                    }
+                    
                     var type = "拜访";
 
                     var userEvent = {
@@ -108,7 +105,8 @@
                         start : starttime,
                         end : endtime,
                         allDay : false,
-                        activity_type : event_type
+                        activity_type : event_type,
+                        contactId: contactIdval
                     };
 
                     if (navigator.onLine) {
@@ -157,6 +155,13 @@
             }
             return event;
         }
+        
+        
+        function getRemoteEvents(){
+            
+        }
+        
+        
 
         function saveEventLocally(userEvent) {
             var ed = localStorage["events"];
@@ -171,7 +176,7 @@
         function postEvent(userEvent, isEventInLocalStorage) {
             var args = {};
             args.f = "setEvent";
-            args.p = [ userEvent.crmUserId, userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
+            args.p = [ userEvent.crmUserId,userEvent.contactId, userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
             ajaxPost2(args, function onAjaxComplete(resp) {
                 isOnline = true;
                 //console.log(resp);
@@ -199,7 +204,7 @@
             var args = {};
             args.f = "setEvent";
             var userEvent = userEvents[userEvents.length - 1];
-            args.p = [ userEvent.crmUserId, userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
+            args.p = [ userEvent.crmUserId,userEvent.contactId,userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
             ajaxPost2(args, function onAjaxComplete(resp) {
                 console.log(resp);
                 isOnline = true;
@@ -390,7 +395,8 @@
                     start : etData[i].start,
                     end : etData[i].end,
                     crmUserId : etData[i].crmUserId,
-                    activity_type : etData[i].activity_type
+                    activity_type : etData[i].activity_type,
+                    contactId:etData[i].contactId
 
                 };
                 dupData.push(tmpEv);
@@ -801,7 +807,12 @@
             $('#calendar').fullCalendar('renderEvent', event, true);
             $('#calendar').fullCalendar('rerenderEvents');
             $('#calendar').fullCalendar('refetchEvents');
+            
 
+            if(contactIdval ==='undefined' || jQuery.isEmptyObject(contactIdval)){
+                alert("医生信息不能为空");
+                return;
+            }
             var type = "拜访";
 
             var userEvent = {
@@ -810,7 +821,8 @@
                 start : starttime,
                 end : endtime,
                 allDay : false,
-                activity_type : event_type
+                activity_type : event_type,
+                contactId: contactId
             };
 
             $("#event_editor_container").toggle();

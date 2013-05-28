@@ -611,9 +611,9 @@ public class DAOImpl {
     }
     
     
-    public static void setEvent(int crmuserId, String type, String title, String start, String end) throws Exception {
+    public static void setEvent(int crmuserId, int contactId,String type, String title, String start, String end) throws Exception {
         int type_id = Integer.parseInt(type);
-        String sql = "INSERT INTO activity (crmuserId,endtime,starttime,title,activity_type) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type) VALUES (?,?,?,?,?,?)";
         Connection conn = DBHelper.getConnection();
         QueryRunner run = new QueryRunner();
         int inserts = 0;
@@ -624,7 +624,8 @@ public class DAOImpl {
         e.setEndtime(sdf.parse(end).getTime());
         e.setCrmUserId(crmuserId);
         e.setActivity_type(type_id);
-        inserts += run.update(conn, sql, e.getCrmUserId(), e.getEndtime(), e.getStarttime(), e.getTitle(),e.getActivity_type());
+        e.setContactId(contactId);
+        inserts += run.update(conn, sql, e.getCrmUserId(),e.getContactId(), e.getEndtime(), e.getStarttime(), e.getTitle(),e.getActivity_type());
 
         System.out.println("inserted:"+inserts);
         

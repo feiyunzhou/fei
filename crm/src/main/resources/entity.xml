@@ -15,6 +15,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<priority>0</priority>
 			</field>
 			<field>
 				<name>name</name>
@@ -24,6 +25,7 @@
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>address</name>
@@ -33,6 +35,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>classification</name>
@@ -42,6 +45,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>tele</name>
@@ -51,6 +55,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>pl1</name>
@@ -61,6 +66,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -72,6 +78,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -83,6 +90,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -94,6 +102,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -105,6 +114,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -116,6 +126,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 					
 		</fields>
@@ -135,6 +146,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<priority>0</priority>
 			</field>
 			<field>
 				<name>name</name>
@@ -144,6 +156,7 @@
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>accountId</name>
@@ -153,6 +166,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>accountName</name>
@@ -162,6 +176,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>mobilephone</name>
@@ -171,6 +186,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>tel_work</name>
@@ -180,6 +196,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>title</name>
@@ -189,6 +206,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>2</priority>
 			</field>
 			<field>
 				<name>sex</name>
@@ -197,8 +215,9 @@
 				<picklist>sex_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
+				<priority>2</priority>
 			</field>
 			
 			<field>
@@ -210,6 +229,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -221,6 +241,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -231,6 +252,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -242,6 +264,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -251,8 +274,32 @@
 				<picklist>contact_pl5</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			
+			<field>
+				<name>pl6</name>
+				<display>医生分级</display>
+				<data-type>String</data-type>
+				<picklist>contact_pl6</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			
+			<field>
+				<name>visiting_target</name>
+				<display>拜访目标</display>
+				<data-type>Integer</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 		</fields>
@@ -272,6 +319,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<priority>0</priority>
 			</field>
 			<field>
 				<name>name</name>
@@ -281,6 +329,7 @@
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>cellPhone</name>
@@ -290,6 +339,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>email</name>
@@ -299,6 +349,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>jobTitle</name>
@@ -308,6 +359,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -319,6 +371,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>2</priority>
 			</field>
 			
 			<field>
@@ -330,6 +383,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -341,6 +395,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -352,6 +407,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>2</priority>
 			</field>
 			
 			<field>
@@ -363,6 +419,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>2</priority>
 			</field>
 			
 		</fields>
@@ -379,6 +436,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<priority>0</priority>
 	       </field>
 	       <field>
 	          <name>name</name>
@@ -388,6 +446,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 	       </field>
 	       <field>
 	          <name>provinceId</name>
@@ -397,13 +456,14 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 	       </field>
 	    </fields>
 	</entity>
 	<entity>
 		<name>activity</name>
 		<display>日历</display>
-		<sql>select * from activity where crmuserId=?</sql>
+		<sql>select * from (select *\,activity_type as act_type from activity where crmuserId=?) as aActivity</sql>
 		<fields>
 			<field>
 				<name>id</name>
@@ -413,6 +473,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<priority>0</priority>
 			</field>
 			<field>
 				<name>title</name>
@@ -422,6 +483,7 @@
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>starttime</name>
@@ -432,6 +494,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>endtime</name>
@@ -442,6 +505,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>activity_type</name>
@@ -452,6 +516,27 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>contactId</name>
+				<display>类型</display>
+				<data-type>Integer</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>act_type</name>
+				<display>拜访类型</display>
+				<data-type>Integer</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 		</fields>
 	</entity>
@@ -470,6 +555,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<priority>0</priority>
 			</field>
 			<field>
 				<name>name</name>
@@ -479,6 +565,7 @@
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>address</name>
@@ -488,6 +575,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>tele</name>
@@ -497,6 +585,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>status</name>
@@ -507,6 +596,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -518,6 +608,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -529,6 +620,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>	
 		</fields>
 	</entity>
@@ -547,6 +639,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<priority>0</priority>
 			</field>
 			<field>
 				<name>name</name>
@@ -556,6 +649,7 @@
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			<field>
 				<name>tel_work</name>
@@ -565,6 +659,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+                                <priority>1</priority>
 			</field>
 			
 			<field>
@@ -576,6 +671,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -587,6 +683,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 			<field>
@@ -598,6 +695,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
 			</field>
 			
 		</fields>

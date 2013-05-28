@@ -1,24 +1,15 @@
 package com.rex.crm.ajax;
 
-import java.io.IOException;
 import java.io.StringWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
@@ -36,7 +27,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.reflect.TypeToken;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -634,14 +624,15 @@ public class DataProvider {
     public static String setEvent(String[] args) {
         Resp resp = new Resp();
         int crmuserId = Integer.parseInt(args[0]);
-        String type = args[1];
-        String title = args[2];
-        String start = args[3];
-        String end = args[4];
+        int contactId = Integer.parseInt(args[1]);
+        String type = args[2];
+        String title = args[3];
+        String start = args[4];
+        String end = args[5];
         resp.setCode(0);
 
         try {
-            DAOImpl.setEvent(crmuserId, type, title, start, end);
+            DAOImpl.setEvent(crmuserId,contactId, type, title, start, end);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -655,6 +646,15 @@ public class DataProvider {
 
     }
 
+    public static String getActivitieTableDataByUserId(String[] args){
+        String id = args[0];
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        Entity entity = entities.get("activity");
+        Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),id);
+        
+        return getIndexTable(entity,multiMap,id);
+    }
+    
     public static String getAccountIndexTable(String[] args){
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -687,6 +687,8 @@ public class DataProvider {
             JsonObject js_field = new JsonObject();
             js_field.addProperty("display", f.getDisplay());
             js_field.addProperty("isVisible", f.isVisible());
+            js_field.addProperty("priority", f.getPriority());
+            js_field.addProperty("name", f.getName());
             js_cols.add(js_field);
         }
       
