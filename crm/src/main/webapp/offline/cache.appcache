@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 1.59
+# Ver 1.60
 
 NETWORK:
 *
@@ -42,5 +42,6 @@ CACHE:
 ../urlparser/purl.js
 ../bootstrap/css/bootstrap-responsive.css
 ../js/activityutil.js
+../offline/offline.css
 
 FALLBACK:

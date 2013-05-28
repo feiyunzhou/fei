@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>拜访详情</title>
+<script>
+    $(document).ready(function() {
+        $('#back_btn').click(function(e) {
+            $('#main_container').toggle();
+            $('#activity_container').toggle();
+            
+        });
+
+    });
+    function renderActivityTableOnPage(id) {
+        console.log("Start to render account detaile page now");
+        console.log("activity id is:" + id);
+        
+        //get accountTable from local storage
+        var table = ACTIVITY_UTIL.getRemoteActivitesFromLocalStorage();
+        console.log(table);
+        var tbobj = $("#detail_tb");
+        tbobj.empty();
+        if(table != null && table.cols != 'undefined' && table.tData != 'undefined'){
+            
+            if(table.cols.length>0 && table.tData[id] != null){
+                
+                var cols = table.cols;
+                var colWidth = table.cols.length;
+                var trs = "";
+                var rowData = table.tData[id][0];
+                $('#detail_title').append("<span>"+rowData[1]+"</span>");
+                for(var i=1;i<colWidth;i++){
+                    if(cols[i].isVisible === false) continue;
+                    if(i==2 || i==3){
+                        var date = new Date(parseInt(rowData[i]));
+                        console.log(date);
+                        var str_date = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm:ss");
+                        trs = trs +"<tr>" + "<td style=\"text-align:left;font-weight:bold\">"+cols[i].display+"</td>"+"<td style=\"text-align:right\">"+str_date+"</td>" +"</tr>"
+                    }else{
+                       trs = trs +"<tr>" + "<td style=\"text-align:left;font-weight:bold\">"+cols[i].display+"</td>"+"<td style=\"text-align:right\">"+rowData[i]+"</td>" +"</tr>"
+                    }
+                }
+               
+                tbobj.append("<tbody>"+trs+"</tbody>");
+            }
+        }
+        
+     
+        
+        console.log("END of render activity detaile page now");
+    }
+    
+    
+</script>
+<style type="text/css">
+body {
+	/* 	padding-top: 60px; */
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<a href="#" class="btn btn-primary" id="back_btn">返回</a>
+				<hr />
+			</div>
+
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3 well">
+				<h5 id="detail_title"></h5>
+				<table id="detail_tb" class="table table-condensed" style="">
+
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

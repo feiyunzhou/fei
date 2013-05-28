@@ -1,0 +1,11 @@
+.footable {
+border-collapse: separate;
+border-spacing: 0;
+font-family: 'trebuchet MS' , 'Lucida sans' , Arial;
+font-size: 12px;
+color: #444;
+}
+
+.footable > tbody > tr > td, .footable > thead > tr > th {
+  padding: 4px 5px;
+}

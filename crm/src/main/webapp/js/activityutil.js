@@ -169,20 +169,20 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     
     
     return {
-        queryRemoteActivities: queryRemoteActivities,
-        convertActivityTableData2CallendarEvents:convertActivityTableData2CallendarEvents,
-        getRemoteActivitesFromLocalStorage:getRemoteActivitesFromLocalStorage,
-        getCalendarEventFromLocalStorage:getCalendarEventFromLocalStorage,
-        postCalendarEvents:postCalendarEvents,
-        getEventColor:getEventColor,
-        getEventTitle:getEventTitle,
-        setCalendarEvent2LocalStorage:setCalendarEvent2LocalStorage,
-        postCalendarEvent:postCalendarEvent,
-        parseDate:parseDate,
-        resetCalendarEventFromLocalStroage:resetCalendarEventFromLocalStroage,
-        getActivityIdsOfContactId:getActivityIdsOfContactId,
-        setActivityIdsOfContactId2LocalStorage:setActivityIdsOfContactId2LocalStorage,
-        getActivityIdsOfContactIdFromLocalStorage:getActivityIdsOfContactIdFromLocalStorage
+        queryRemoteActivities : queryRemoteActivities,
+        convertActivityTableData2CallendarEvents : convertActivityTableData2CallendarEvents,
+        getRemoteActivitesFromLocalStorage : getRemoteActivitesFromLocalStorage,
+        getCalendarEventFromLocalStorage : getCalendarEventFromLocalStorage,
+        postCalendarEvents : postCalendarEvents,
+        getEventColor : getEventColor,
+        getEventTitle : getEventTitle,
+        setCalendarEvent2LocalStorage : setCalendarEvent2LocalStorage,
+        postCalendarEvent : postCalendarEvent,
+        parseDate : parseDate,
+        resetCalendarEventFromLocalStroage : resetCalendarEventFromLocalStroage,
+        getActivityIdsOfContactId : getActivityIdsOfContactId,
+        setActivityIdsOfContactId2LocalStorage : setActivityIdsOfContactId2LocalStorage,
+        getActivityIdsOfContactIdFromLocalStorage : getActivityIdsOfContactIdFromLocalStorage
         
     };
     

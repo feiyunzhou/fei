@@ -45,7 +45,7 @@
 <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
 <script src="../js/activityutil.js"></script>
-<link href="../css/template.css" rel="stylesheet">
+<link href="../offline/offline.css" rel="stylesheet">
 <script>
     
     var isOnline;
@@ -180,6 +180,18 @@
             dayRender : function(date, cell) {
                 cell.prepend('<span class=\"newEventSpan pull-left\" style="display:none"><a class="newEventLink" href="#">新建</a></span>');
                 cell.css("min-height", "");
+            },
+            eventClick: function(calEvent, jsEvent, view) {
+
+                //alert('Event: ' + calEvent.id);
+                $('#main_container').toggle();
+                $('#activity_container').load("../offline/activity.html", function() {
+                    console.log("loading completed.");
+                    $('#activity_container').toggle();
+                    renderActivityTableOnPage(calEvent.id);
+
+                });
+
             },
             dayClick : function(date, allDay, jsEvent, view) {
 
@@ -966,6 +978,8 @@ body {
 	<!-- End of Editor -->
     <!-- Start of account container -->
     <div id="account_container" style="display: none;">
+    </div>
+    <div id="activity_container" style="display: none;">
     </div>
     <!-- End of account container -->
 </body>
