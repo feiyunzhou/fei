@@ -617,11 +617,11 @@ public class DAOImpl {
         Connection conn = DBHelper.getConnection();
         QueryRunner run = new QueryRunner();
         int inserts = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         CalendarEvent e = new CalendarEvent();
         e.setTitle("拜访");
-        e.setStarttime(sdf.parse(start).getTime());
-        e.setEndtime(sdf.parse(end).getTime());
+        e.setStarttime(Long.parseLong(start)*1000L);
+        e.setEndtime(Long.parseLong(end)*1000L);
         e.setCrmUserId(crmuserId);
         e.setActivity_type(type_id);
         e.setContactId(contactId);

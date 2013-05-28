@@ -43,6 +43,8 @@
 <script src='../urlparser/purl.js'></script>
 <!-- <link href="../css/common.css" rel="stylesheet" /> -->
 <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<script src="../js/activityutil.js"></script>
 <script>
     
     var isOnline;
@@ -79,8 +81,8 @@
                 click : function() {
                     var dt =   $('#datepicker_from input').val();
                     console.log(dt);
-                    var starttime = dt + " " + $("#select_time_from").val() + ":00";
-                    var endtime = dt + " " + $("#select_time_to").val() + ":00";
+                    var starttime = (new Date(dt + " " + $("#select_time_from").val() + ":00")).getTime()/1000;
+                    var endtime = (new Date(dt + " " + $("#select_time_to").val() + ":00")).getTime()/1000;
                     console.log("from:" + starttime + " to:" + endtime);
                     var event = {};
                     var event_type = parseInt($("#visit_type_input").val());
@@ -88,9 +90,6 @@
                     event.start = starttime;
                     event.end = endtime;
                     event.activity_type = event_type;
-                    //$('#calendar').fullCalendar('renderEvent', event, true);
-                    //$('#calendar').fullCalendar('rerenderEvents');
-                    //$('#calendar').fullCalendar('refetchEvents');
                     var contactIdval = $('#contact_select').val();
                     if(contactIdval ==='undefined' || jQuery.isEmptyObject(contactIdval)){
                         alert("医生信息不能为空");
@@ -100,30 +99,37 @@
                     var type = "拜访";
 
                     var userEvent = {
-                        title : "拜访",
+                        title : ACTIVITY_UTIL.getEventTitle(event_type),
                         crmUserId : "20",
-                        start : starttime,
-                        end : endtime,
+                        startt : starttime,
+                        start:starttime,
+                        endt : endtime,
+                        end:endtime,
                         allDay : false,
                         activity_type : event_type,
-                        contactId: contactIdval
+                        contactId: contactIdval,
+                        color: ACTIVITY_UTIL.getEventColor(event_type)
                     };
-
+                    console.log(userEvent);
                     if (navigator.onLine) {
-                        //save event to the server, and query remote event after post event
-                        postEvent(userEvent, false);
+                         
+                         ACTIVITY_UTIL.postCalendarEvent(userEvent, false,function done(data){
+                             
+                         },function onError(status){
+                             ACTIVITY_UTIL.setCalendarEvent2LocalStorage(userEvent);
+                         });
 
                     } else {
 
-                        saveEventLocally(userEvent);
-
-                        setEventColor(userEvent);
+                        ACTIVITY_UTIL.setCalendarEvent2LocalStorage(userEvent);
                         //console.log(event);
-                        renderAndRefreshEvent(userEvent);
-                        //renderEventsWithDataLocal();
+                        
 
                     }
 
+                    //renderAndRefreshEvent(userEvent);
+                    
+                    appendCalendarEvent([userEvent]);
                     $(this).dialog("close");
                 }
             }, {
@@ -133,99 +139,7 @@
                 }
             } ],
             autoOpen : false
-        });
-
-        function renderAndRefreshEvent(event) {
-            $('#calendar').fullCalendar('renderEvent', event, true);
-            $('#calendar').fullCalendar('rerenderEvents');
-            $('#calendar').fullCalendar('refetchEvents');
-        }
-
-        function setEventColor(event) {
-            if (event.activity_type === 1) {
-                //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
-                event.color = "#5484ed";
-                event.title = "常规拜访"
-            } else if (event.activity_type === 2) {
-                event.color = "#D06B64";
-                event.title = "会议拜访"
-            } else {
-                event.color = "#a4bdfc";
-                event.title = "其他拜访"
-            }
-            return event;
-        }
-        
-        
-        function getRemoteEvents(){
-            
-        }
-        
-        
-
-        function saveEventLocally(userEvent) {
-            var ed = localStorage["events"];
-            if (jQuery.isEmptyObject(ed) === true) {
-                ed = '[]';
-            }
-            ed = JSON.parse(ed);
-            ed.push(userEvent);
-            setLocalStorage(ed);
-        }
-
-        function postEvent(userEvent, isEventInLocalStorage) {
-            var args = {};
-            args.f = "setEvent";
-            args.p = [ userEvent.crmUserId,userEvent.contactId, userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
-            ajaxPost2(args, function onAjaxComplete(resp) {
-                isOnline = true;
-                //console.log(resp);
-                if (resp.code == 0) {
-                    //query all events and set it to localStorage
-                    getRemoteEvents();
-
-                } else {
-                    console.log("failed to set event");
-                }
-
-                return resp.code;
-            }, function onError(status) {
-                isOnline = false;
-                if (!isEventInLocalStorage)
-                    saveEventLocally(userEvent);
-            });
-        }
-
-        function postEvents(userEvents, isEventInLocalStorage) {
-            for ( var i = 0; i < userEvents.length - 1; i++) {
-                postEvent(userEvents[i], isEventInLocalStorage);
-            }
-
-            var args = {};
-            args.f = "setEvent";
-            var userEvent = userEvents[userEvents.length - 1];
-            args.p = [ userEvent.crmUserId,userEvent.contactId,userEvent.activity_type, userEvent.title, userEvent.start, userEvent.end ];
-            ajaxPost2(args, function onAjaxComplete(resp) {
-                console.log(resp);
-                isOnline = true;
-                if (resp.code == 0) {
-                    console.log("set event successfully");
-
-                    //query all events and set it to localStorage
-                    getRemoteEvents();
-
-                } else {
-                    console.log("failed to set event");
-                }
-
-                return resp.code;
-            }, function onError(status) {
-                isOnline = false;
-                if (!isEventInLocalStorage)
-                    saveEventLocally(userEvent);
-                renderEventsWithDataLocal();
-            });
-        }
+        });        
 
         /* initialize the calendar
         -----------------------------------------------------------------*/
@@ -285,20 +199,10 @@
                 $("#datestr").val(clickdate);
                 //$("#datestr").text(clickdate);
                 console.log(clickdate);
-                //$('#datepicker_from').datepicker('setValue', date);
-               // $('#datepicker_to').datepicker('setValue', date);
                 $('#datepicker_from input').val(clickdate);
                 $('#datepicker_to input').val(clickdate);
                 $("#event_editor_container").dialog("option", "title", clickdate + " 拜访活动");
                 $("#event_editor_container").dialog('open');
-                //$("#visit_type_input").focus();
-                //$(".newEventSpan").hide();
-                //$('#myModal').modal();
-                //$("#event_editor_container").show();
-                //$(this).find(".newEventSpan").show();
-                //$(this).find(".newEventSpan").fadeOut(10000);
-                
-               // $("#event_editor_container").modal('show')
 
             }
         });
@@ -309,117 +213,61 @@
             $("#event_editor_container").toggle();
         });
 
-        function checkOnline() {
-            var args = {};
-            args.f = "ping";
-            args.p = [];
-            ajaxPost2(args, function onComplete(resp) {
-                isOnline = true;
-            }, function onError(status) {
-                isOnline = false;
-            });
-
-            return (navigator.onLine && isOnline);
-        }
-
         if (navigator.onLine) {
             console.log("online");
+            //get activity IDs which by contactId
+            ACTIVITY_UTIL.getActivityIdsOfContactId();
+            //get local events and post them to the server
+            var localevents = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
+            //console.log(localevents[0].start);
+            if (localevents.length != 0) {
+                appendCalendarEvent(localevents);
+                console.log(localevents);
+                ACTIVITY_UTIL.postCalendarEvents(localevents, true, function onComplete(data) {
+                    
+                    ACTIVITY_UTIL.resetCalendarEventFromLocalStroage();
+                    renderCalendarWithDataRemotely();
+                }, function onError(status) {
 
-            //query localstorage to get the local event which not send to the serve when offline
-            var localevents = localStorage["events"];
-            if (localevents != null) {
-                localevents = JSON.parse(localevents);
-                var eventswithoutid = [];
-                if ((localevents != null) && (localevents.length > 0)) {
-                    for ( var i = 0; i < localevents.length; i++) {
-                        if ((typeof localevents[i].id === 'undefined') || localevents[i].id == null) {
-                            eventswithoutid.push(localevents[i]);
-                        }
-                    }
-                }
-                console.log("eventswithoutid");
-                console.log(eventswithoutid);
-                if (eventswithoutid.length > 0) {
-                    var resp = -1;
-                    postEvents(eventswithoutid, true);
-                } else {
-                    getRemoteEvents();
-                }
-            } else {
-
-                getRemoteEvents();
+                }); //End of post calendar events to the server
+            }else{
+                renderCalendarWithDataRemotely();
             }
 
         } else {
             console.log("Offline");
-            renderEventsWithDataLocal();
-
+            renderCalendarWithDataLocally();
         }
 
-        function getRemoteEvents() {
-            var args = {};
-            args.f = "getEventsByUserId";
-            args.p = [ "20" ];
-            ajaxPost2(args, function onAjaxComplete(eventData) {
-                isOnline = true;
-                //console.log(eventData);
-                if (eventData.length > 0) {
-                    setLocalStorage(eventData);
-                    renderCalendar(eventData);
-                }
+        function renderCalendarWithDataRemotely() {
+            ACTIVITY_UTIL.queryRemoteActivities(function onCompleted(data) {
+                var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
+                //console.log(JSON.stringify(calendarEvents));
+                renderCalendar(calendarEvents);
             }, function onError(status) {
-                isOnline = false;
-                renderEventsWithDataLocal();
-            });
+                renderCalendarWithDataLocally();
+            });//END of queryRemoteActivities
         }
 
-        function renderEventsWithDataLocal() {
-            var ed = localStorage["events"];
-            console.log("render event with data locally");
-            if (jQuery.isEmptyObject(ed) === false) {
-                console.log("here it is");
-                var neweventdata = JSON.parse(ed);
-                console.log(neweventdata);
-                renderCalendar(neweventdata);
+        function renderCalendarWithDataLocally() {
+            //renderEventsWithDataLocal();
+            var localActivites = ACTIVITY_UTIL.getRemoteActivitesFromLocalStorage();
+            console.log(localActivites);
+            var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(localActivites);
+            console.log(JSON.stringify(calendarEvents));
+            renderCalendar(calendarEvents);
 
-            }
+            //get local events which not send to the server
+            var localEvents = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
+            appendCalendarEvent(localEvents);
         }
 
-        function setLocalStorage(etData) {
-            var dupData = [];
-            var lengthOfdata = etData.length
-            for ( var i = 0; i < lengthOfdata; i++) {
-                var tmpEv = {
-                    title : etData[i].title,
-                    id : etData[i].id,
-                    start : etData[i].start,
-                    end : etData[i].end,
-                    crmUserId : etData[i].crmUserId,
-                    activity_type : etData[i].activity_type,
-                    contactId:etData[i].contactId
-
-                };
-                dupData.push(tmpEv);
+        function appendCalendarEvent(event) {
+            var eventlen = event.length;
+            for ( var i = 0; i < eventlen; i++) {
+                $('#calendar').fullCalendar('renderEvent', event[i], true);
             }
-            localStorage["events"] = JSON.stringify(dupData);
-        }
-
-        function setEvent2LocalStorage(event) {
-            var dupData = [];
-            var lengthOfdata = etData.length
-            for ( var i = 0; i < lengthOfdata; i++) {
-                var tmpEv = {
-                    title : etData[i].title,
-                    id : etData[i].id,
-                    start : etData[i].start,
-                    end : etData[i].end,
-                    crmUserId : etData[i].crmUserId,
-                    activity_type : etData[i].activity_type
-
-                };
-                dupData.push(tmpEv);
-            }
-            localStorage["events"] = JSON.stringify(dupData);
+            $('#calendar').fullCalendar('render');
         }
 
         function renderCalendar(eventdata) {
@@ -430,35 +278,8 @@
                 return true;
             });
 
-            var eventLength = eventdata.length;
-            for ( var i = 0; i < eventLength; i++) {
-                //console.log(eventdata[i]);
-
-                if (eventdata[i].activity_type === 1) {
-                    //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
-                    eventdata[i].color = "#5484ed";
-                    eventdata[i].title = "常规拜访"
-                } else if (eventdata[i].activity_type === 2) {
-                    eventdata[i].color = "#D06B64";
-                    eventdata[i].title = "会议拜访"
-                } else {
-                    eventdata[i].color = "#a4bdfc";
-                    eventdata[i].title = "其他拜访"
-                }
-                eventdata[i].allDay = false
-                $('#calendar').fullCalendar('renderEvent', eventdata[i], true);
-            }
-            $('#calendar').fullCalendar('render');
-
-            /*  $('#calendar').fullCalendar({
-                events:eventdata
-             });  */
+            appendCalendarEvent(eventdata);
         }
-
-        $("#testbut").on("click", function(event) {
-            console.log("but clicked");
-            alert(navigator.onLine);
-        });
 
         $("#refreshbt").on("click", function(event) {
             window.location.reload();
@@ -471,7 +292,8 @@
 
         function getContactsFromLocalStorage(data) {
             var data = localStorage["crmcontacts"];
-            if(data == null || data === 'undefined') data ='[]';
+            if (data == null || data === 'undefined')
+                data = '[]';
             return JSON.parse(data);
         }
 
@@ -548,24 +370,21 @@
             });
         }
 
-        function renderAccountTable(data){
+        function renderAccountTable(data) {
             $('#dt_account').nicetable({
                 tData : data,
-                extraCols:[
-                            {
-                                display:'详细信息',
-                                renderCol:function(rd){
-                                    return "<a class=\"btn btn-small btn-primary account_detail_link\" data-account-id="+rd[0]+" href=\"#\">详细</a>"
-                                }
-                            }
-                           ]
+                extraCols : [ {
+                    display : '详细信息',
+                    renderCol : function(rd) {
+                        return "<a class=\"btn btn-small btn-primary account_detail_link\" data-account-id="+rd[0]+" href=\"#\">详细</a>";
+                    }
+                }]
             });
             $('#dt_account').footable();
-            
+
             renderDetaileLink4Account();
         }
-        
-        
+
         function renderAccountTableWithDataLocal() {
             var data = getAccountTableFromLocalstorage();
             if (jQuery.isEmptyObject(data) === false) {
@@ -580,7 +399,8 @@
 
         function getAccountTableFromLocalstorage() {
             var data = localStorage["accounttable"];
-            if(data === 'undefined' || data == null) data = '{}';
+            if (data === 'undefined' || data == null)
+                data = '{}';
             return JSON.parse(data);
         }
 
@@ -601,8 +421,8 @@
                 if (jQuery.isEmptyObject(data) === false) {
                     setContactTable2Localstorage(data);
                     //$('#dt_contact').dataTable(data);
-                    
-                    renderContactTable($("#dt_contact"),data);
+
+                    renderContactTable($("#dt_contact"), data);
 
                 }
             }, function onError(status) {
@@ -611,13 +431,11 @@
             });
         }
 
-
-
         function renderContactTableWithDataLocal() {
             var data = getContactTableFromLocalstorage();
             if (jQuery.isEmptyObject(data) === false) {
                 //$('#dt_contact').dataTable(contactTableData);
-                renderContactTable($("#dt_contact"),data);
+                renderContactTable($("#dt_contact"), data);
             }
         }
 
@@ -648,7 +466,6 @@
         function selectformat(item) {
             return item.name;
         }
-        
 
         function renderAccountSelect2(optionsData) {
             //console.log(optionsData);
@@ -666,7 +483,7 @@
                     val : e.val,
                     added : e.added,
                     removed : e.removed,
-                    defaultContact: e.defaultContact
+                    defaultContact : e.defaultContact
                 }));
                 $('#contact_label').show();
                 var cts = getContactsByAccountId(e.val);
@@ -679,9 +496,9 @@
                     formatSelection : selectformat,
                     formatResult : selectformat
                 });
-                
-                if(e.defaultContact != 'undefined'){
-                    $("#contact_select").select2('val',e.defaultContact);
+
+                if (e.defaultContact != 'undefined') {
+                    $("#contact_select").select2('val', e.defaultContact);
                 }
 
             });
@@ -709,7 +526,6 @@
             });
             //End of ajax query
         }
-        
 
         function getContactsByAccountId(accountId) {
             //console.log(accountId + " contacts_by_accountId:" + JSON.stringify(contacts_by_accountId));
@@ -748,7 +564,7 @@
         }
 
         function getAccountsOfUserFromLocalstorage() {
-            return JSON.parse(localStorage["accountofuser"]||'[]');
+            return JSON.parse(localStorage["accountofuser"] || '[]');
         }
 
         function setContactsOfUser2Localstorage(data) {
@@ -756,18 +572,18 @@
         }
 
         function getContactsOfUserFromLocalstorage() {
-            return JSON.parse(localStorage["contactofuser"]||'{}');
+            return JSON.parse(localStorage["contactofuser"] || '{}');
         }
 
         //END of rendering account selector
         if (navigator.onLine) {
             getContactIdsByAccountId();
         } else {
-            
+
         }
-       
+
         // Start of getting
-       function getContactIdsByAccountId() {
+        function getContactIdsByAccountId() {
             //Start of ajax query for the contacts
             var args = {};
             args.f = "getContactIdsOfAccountIdByUserId";
@@ -782,11 +598,11 @@
             });
             //End of ajax query
         }
-        
-        function setContactIdsOfAccountId2Local(data){
+
+        function setContactIdsOfAccountId2Local(data) {
             localStorage["contactIdsByAccountId"] = JSON.stringify(data);
         }
-        
+
         /******START of event editor*****/
         $("#event_ret_bt").on("click", function(event) {
             $("#event_editor_container").toggle();
@@ -807,9 +623,8 @@
             $('#calendar').fullCalendar('renderEvent', event, true);
             $('#calendar').fullCalendar('rerenderEvents');
             $('#calendar').fullCalendar('refetchEvents');
-            
 
-            if(contactIdval ==='undefined' || jQuery.isEmptyObject(contactIdval)){
+            if (contactIdval === 'undefined' || jQuery.isEmptyObject(contactIdval)) {
                 alert("医生信息不能为空");
                 return;
             }
@@ -822,7 +637,7 @@
                 end : endtime,
                 allDay : false,
                 activity_type : event_type,
-                contactId: contactId
+                contactId : contactId
             };
 
             $("#event_editor_container").toggle();
@@ -867,26 +682,25 @@
         $('#myTab a').click(function(e) {
             e.preventDefault();
             $(this).tab('show');
-            
+
             $('#calendar').fullCalendar('rerenderEvents');
             $('#calendar').fullCalendar('refetchEvents');
-            
+
         }).on('shown', function(e) {
             $('.tab-pane.active table').trigger('footable_resize');
         });
-        
-        
+
         /******Account detailed page**************/
-        
-       function renderDetaileLink4Account() {
+
+        function renderDetaileLink4Account() {
             $('#dt_account').on('click', '.account_detail_link', function(e) {
                 var id = $(this).data('account-id');
                 $('#main_container').toggle();
                 $('#account_container').load("../offline/account.html", function() {
                     console.log("loading completed.");
-                    $('#account_container').toggle(); 
+                    $('#account_container').toggle();
                     renderAccountTableOnAccountPage(id);
-                     
+
                 });
             });
         }
@@ -895,22 +709,32 @@
 
     });
     /*******End of jquery ready**********/
-    
+
     function noBack() {
         window.history.forward(1);
     }
-    
-    function renderContactTable(table,data) {
+
+    function renderContactTable(table, data) {
+        var activityIdsByContactId = ACTIVITY_UTIL.getActivityIdsOfContactIdFromLocalStorage();
         table.nicetable({
             tData : data,
-            extraCols:[
-                       {
-                           display:'拜访',
-                           renderCol:function(rd){
-                               return "<a class=\"btn btn-small btn-primary visit_link\" data-account-id="+rd[2]+" data-contact-id="+rd[0]+" href=\"#\">拜访</a>"
-                           }
-                       }
-                      ]
+            extraCols : [ {
+                display : '拜访次数',
+                renderCol : function(rd) {
+                    var times  = 0;
+                    if(activityIdsByContactId[rd[0]] != undefined && activityIdsByContactId[rd[0]] != null){
+                        times = activityIdsByContactId[rd[0]].length;
+                    }
+                    return times+"次";
+                }
+            },
+            {
+                display : '拜访',
+                renderCol : function(rd) {
+                    return "<a class=\"btn btn-small btn-primary visit_link\" data-account-id="+rd[2]+" data-contact-id="+rd[0]+" href=\"#\">拜访</a>";
+                }
+            }
+            ]
         });
         table.footable();
         table.on("click", ".visit_link", function(event) {
@@ -919,13 +743,15 @@
             var strDate = $.fullCalendar.formatDate(currentdate, "yyyy-MM-dd");
             $('#datepicker_from input').val(strDate);
             $('#datepicker_to input').val(strDate);
-            var actId =parseInt($(this).data("account-id"));
-            var ctId =  parseInt($(this).data("contact-id"));
-            console.log(actId+ ": "+ ctId);
-            
-            
-            $('#account_select').select2("val",actId)
-            var e = jQuery.Event("change", { val: actId, defaultContact:ctId});
+            var actId = parseInt($(this).data("account-id"));
+            var ctId = parseInt($(this).data("contact-id"));
+            console.log(actId + ": " + ctId);
+
+            $('#account_select').select2("val", actId)
+            var e = jQuery.Event("change", {
+                val : actId,
+                defaultContact : ctId
+            });
             $('#account_select').trigger(e);
             //$('#contact_select')
             $("#event_editor_container").dialog('open');

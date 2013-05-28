@@ -4,7 +4,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     
     var queryRemoteActivities = function (onCompleted,onError) {
         var args = {};
-        args.f = "getActivitieTableDataByUserId";
+        args.f = "getActivitiesTableDataByUserId";
         args.p = [ "20" ];
         ajaxPost2(args, function onAjaxComplete(data) {
            /* var event = jQuery.Event("on_activities_received");
@@ -18,6 +18,32 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         
     },
     
+    getActivityIdsOfContactId = function (onCompleted,onError) {
+        var args = {};
+        args.f = "getActivityIdsOfContactIdByUserId";
+        args.p = [ "20" ];
+        ajaxPost2(args, function onAjaxComplete(data) {
+            if( onCompleted != undefined){
+               onCompleted(data);
+            }
+            setActivityIdsOfContactId2LocalStorage(data);
+        }, function onError(status) {
+            if(onError != undefined){
+              onError(status);
+            }
+        });
+        
+    },
+    
+    setActivityIdsOfContactId2LocalStorage = function(data){
+        localStorage["activityIdsOfcontactId"] = JSON.stringify(data);
+    },
+    
+    getActivityIdsOfContactIdFromLocalStorage = function(data){
+        var acts =  localStorage["activityIdsOfcontactId"] || '{}';
+        return JSON.parse(acts);
+    },
+    
     convertActivityTableData2CallendarEvents = function(data){
         var events = [];
         if(!$.isEmptyObject(data) &&  data.tData != undefined && data.tData != null){
@@ -26,8 +52,8 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                     var event = {};
                         event.id = value[0][0];
                         event.title = getEventTitle(value[0][6]);
-                        event.start = value[0][2];
-                        event.end = value[0][3];
+                        event.start = parseInt(value[0][2])/1000;
+                        event.end = parseInt(value[0][3])/1000;
                         event.color = getEventColor(value[0][6]);
                         event.allDay = false;
                     
@@ -68,23 +94,96 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     
     setCalendarEvent2LocalStorage = function(event){
         var ed = localStorage["localevents"];
-        ed = JSON.parse(ed||[]);
+        ed = JSON.parse(ed||'[]');
         ed.push(event);
-        localStorage["localevents"] = JSON.stringify(dupData);
+        localStorage["localevents"] = JSON.stringify(ed);
     },
     
     getRemoteActivitesFromLocalStorage = function(){
-        
+        var acts =  localStorage["remoteactivities"] || '{}';
+        return JSON.parse(acts);
     },
     
     getCalendarEventFromLocalStorage = function(){
-        localStorage["localevents"] = JSON.stringify(dupData);
-    };
+        var ed = localStorage["localevents"];
+        ed = ed||'[]';
+        var obj = JSON.parse(ed);
+        
+        return obj;
+    },
+    
+    resetCalendarEventFromLocalStroage = function(){
+        localStorage["localevents"] = [];
+    },
+   
+    postCalendarEvent = function (userEvent, isEventInLocalStorage,onComplete,onError) {
+        var args = {};
+        args.f = "setEvent";
+        args.p = [ userEvent.crmUserId,userEvent.contactId, userEvent.activity_type, userEvent.title,userEvent.startt, userEvent.endt ];
+        ajaxPost2(args, function onAjaxComplete(resp) {
+            isOnline = true;
+            //console.log(resp);
+            if (resp.code == 0) { 
+                console.log("post calendar event successfully");
+                onComplete();
+            } else {
+                console.log("failed to set event");
+            }
+
+            return resp.code;
+        }, function onError(status) {
+            onError(status);
+            if (!isEventInLocalStorage){
+                
+            }
+            
+                
+        });
+    },
+
+     postCalendarEvents = function(userEvents, isEventInLocalStorage, onComplete, onError) {
+        if (userEvents.length === 0)
+            return;
+        for ( var i = 0; i < userEvents.length; i += 1) {
+            if (i == (userEvents.length - 1)) {
+                postCalendarEvent(userEvents[i], isEventInLocalStorage, function ok(data) {
+                    onComplete(data);
+                }, function error(status) {
+                    console.log("post error"+status);
+                    onError(status);
+                });
+            } else {
+                postCalendarEvent(userEvents[i], isEventInLocalStorage, function ok(data) {
+
+                }, function error(status) {
+                    
+                });
+            }
+        }
+
+    },
+    parseDate = function (input) {
+        var parts = input.match(/(\d+)/g);
+        return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+      };
     
     
     return {
         queryRemoteActivities: queryRemoteActivities,
-        convertActivityTableData2CallendarEvents:convertActivityTableData2CallendarEvents
+        convertActivityTableData2CallendarEvents:convertActivityTableData2CallendarEvents,
+        getRemoteActivitesFromLocalStorage:getRemoteActivitesFromLocalStorage,
+        getCalendarEventFromLocalStorage:getCalendarEventFromLocalStorage,
+        postCalendarEvents:postCalendarEvents,
+        getEventColor:getEventColor,
+        getEventTitle:getEventTitle,
+        setCalendarEvent2LocalStorage:setCalendarEvent2LocalStorage,
+        postCalendarEvent:postCalendarEvent,
+        parseDate:parseDate,
+        resetCalendarEventFromLocalStroage:resetCalendarEventFromLocalStroage,
+        getActivityIdsOfContactId:getActivityIdsOfContactId,
+        setActivityIdsOfContactId2LocalStorage:setActivityIdsOfContactId2LocalStorage,
+        getActivityIdsOfContactIdFromLocalStorage:getActivityIdsOfContactIdFromLocalStorage
+        
     };
     
     

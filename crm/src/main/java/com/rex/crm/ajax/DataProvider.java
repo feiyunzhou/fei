@@ -424,6 +424,39 @@ public class DataProvider {
     }
     
     
+    public static String getActivityIdsOfContactIdByUserId(String[] args){
+        String id= args[0];
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        Entity entity = entities.get("activity");
+        List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), id);
+        List<Pair<Integer,Integer>> pairs = Lists.newArrayList();
+
+        for (Map map : (List<Map>) mapList) {
+            Pair<Integer,Integer> pair = Pair.of(Integer.parseInt(String.valueOf(map.get("id"))), Integer.parseInt(String.valueOf(map.get("contactId"))));
+            pairs.add(pair);
+        }
+
+        ImmutableListMultimap<Integer, Pair<Integer, Integer>> entityIdsByExternalId = CRMUtility.categorizeEntitiesByExternalId(pairs);
+        
+        JsonObject jsTableData = new JsonObject();
+   
+        Gson gson = new Gson();
+       // Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),userId);
+        for(Integer key:entityIdsByExternalId.keySet()){
+             ImmutableList<Pair<Integer, Integer>> collection = entityIdsByExternalId.get(key);
+            JsonArray js_rows = new JsonArray();
+            for(Pair<Integer, Integer> p:collection){
+                js_rows.add( new JsonPrimitive(p.getLeft()));  
+            }
+            jsTableData.add(String.valueOf(key), js_rows);
+        }
+        
+        return jsTableData.toString();
+        
+    }
+    
+    
+    
     public static String queryContactsByUserId(String[] args) {
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -630,7 +663,7 @@ public class DataProvider {
         String start = args[4];
         String end = args[5];
         resp.setCode(0);
-
+        logger.debug("time:"+start+"   :"+end);
         try {
             DAOImpl.setEvent(crmuserId,contactId, type, title, start, end);
         } catch (Exception e) {
@@ -646,7 +679,7 @@ public class DataProvider {
 
     }
 
-    public static String getActivitieTableDataByUserId(String[] args){
+    public static String getActivitiesTableDataByUserId(String[] args){
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
