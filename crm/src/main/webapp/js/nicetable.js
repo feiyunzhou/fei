@@ -18,7 +18,6 @@
           var column = "";
           var cols = table.cols;
           var num =0;
-          console.log(cols);
           for(var i=0;i<columnWidth;i++){
               if(cols[i].isVisible === false) continue;
               if(cols[i].priority != 1) continue;

@@ -94,8 +94,8 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     
     setCalendarEvent2LocalStorage = function(event){
         var ed = localStorage["localevents"];
-        ed = JSON.parse(ed||'[]');
-        ed.push(event);
+        ed = JSON.parse(ed||'{}');
+        ed[event.id] = event;
         localStorage["localevents"] = JSON.stringify(ed);
     },
     
@@ -106,14 +106,14 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     
     getCalendarEventFromLocalStorage = function(){
         var ed = localStorage["localevents"];
-        ed = ed||'[]';
+        ed = ed||'{}';
         var obj = JSON.parse(ed);
         
         return obj;
     },
     
     resetCalendarEventFromLocalStroage = function(){
-        localStorage["localevents"] = [];
+        localStorage["localevents"] = JSON.stringify({});
     },
    
     postCalendarEvent = function (userEvent, isEventInLocalStorage,onComplete,onError) {

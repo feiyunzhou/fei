@@ -100,6 +100,7 @@
                     var type = "拜访";
 
                     var userEvent = {
+                        id: Date.now(),
                         title : ACTIVITY_UTIL.getEventTitle(event_type),
                         crmUserId : "20",
                         startt : starttime,
@@ -115,9 +116,10 @@
                     if (navigator.onLine) {
                          
                          ACTIVITY_UTIL.postCalendarEvent(userEvent, false,function done(data){
-                             
+                             renderCalendarWithDataRemotely();
                          },function onError(status){
                              ACTIVITY_UTIL.setCalendarEvent2LocalStorage(userEvent);
+                             appendCalendarEvent([userEvent]);
                          });
 
                     } else {
@@ -125,12 +127,12 @@
                         ACTIVITY_UTIL.setCalendarEvent2LocalStorage(userEvent);
                         //console.log(event);
                         
-
+                        appendCalendarEvent([userEvent]);
                     }
 
                     //renderAndRefreshEvent(userEvent);
                     
-                    appendCalendarEvent([userEvent]);
+                    
                     $(this).dialog("close");
                 }
             }, {
@@ -232,11 +234,16 @@
             ACTIVITY_UTIL.getActivityIdsOfContactId();
             //get local events and post them to the server
             var localevents = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
+            var ets = [];
+            $.each(localevents,function(key,value){
+                ets.push(value);
+            });
+            
             //console.log(localevents[0].start);
-            if (localevents.length != 0) {
-                appendCalendarEvent(localevents);
-                console.log(localevents);
-                ACTIVITY_UTIL.postCalendarEvents(localevents, true, function onComplete(data) {
+            if (ets.length > 0) {
+                appendCalendarEvent(ets);
+                console.log(ets);
+                ACTIVITY_UTIL.postCalendarEvents(ets, true, function onComplete(data) {
                     
                     ACTIVITY_UTIL.resetCalendarEventFromLocalStroage();
                     renderCalendarWithDataRemotely();
@@ -255,7 +262,7 @@
         function renderCalendarWithDataRemotely() {
             ACTIVITY_UTIL.queryRemoteActivities(function onCompleted(data) {
                 var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
-                //console.log(JSON.stringify(calendarEvents));
+                console.log(JSON.stringify(calendarEvents));
                 renderCalendar(calendarEvents);
             }, function onError(status) {
                 renderCalendarWithDataLocally();
@@ -272,7 +279,11 @@
 
             //get local events which not send to the server
             var localEvents = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
-            appendCalendarEvent(localEvents);
+            var evs =[];
+            $.each(localEvents, function(i,n){
+                evs.push(n);
+            });
+            appendCalendarEvent(evs);
         }
 
         function appendCalendarEvent(event) {
