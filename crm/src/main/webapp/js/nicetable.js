@@ -18,8 +18,10 @@
           var column = "";
           var cols = table.cols;
           var num =0;
+          console.log(cols);
           for(var i=0;i<columnWidth;i++){
               if(cols[i].isVisible === false) continue;
+              if(cols[i].priority != 1) continue;
               if(num==0){
                   column +="<th data-class=\"expand\" >"+cols[i].display+"</th>";
               }else{
@@ -50,7 +52,7 @@
                             for ( var j = 0; j < columnWidth; j++) {
                                 
                                if(cols[j].isVisible === false) continue;
-
+                               if(cols[j].priority != 1) continue;
                                 tds = tds + "<td>" + rowdata[j] + "</td>";
                             }
                             if (opts.extraCols.length > 0) {

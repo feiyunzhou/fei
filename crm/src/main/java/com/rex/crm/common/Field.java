@@ -27,7 +27,7 @@ public class Field implements Serializable {
     @Expose
     private String formatter;
     @Expose
-    private String priority;
+    private int priority;
     
 
     public boolean isPrimaryKey() {
@@ -117,11 +117,11 @@ public class Field implements Serializable {
         this.formatter = formatter;
     }
 
-    public String getPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
     

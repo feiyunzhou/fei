@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 1.60
+# Ver 1.63
 
 NETWORK:
 *
@@ -8,6 +8,7 @@ NETWORK:
 CACHE:
 ../offline/main.html
 ../offline/account.html
+../offline/activity.html
 ../fullcalendar/fullcalendar.css
 ../fullcalendar/fullcalendar.print.css
 ../jquery/css/smoothness/jquery-ui-1.10.2.custom.css
@@ -17,8 +18,6 @@ CACHE:
 ../js/dataclient.js
 ../bootstrap/js/bootstrap.js
 ../bootstrap/css/bootstrap.css
-../bootstrap-timepicker/js/bootstrap-timepicker.js
-../bootstrap-timepicker/css/bootstrap-timepicker.css
 ../datatable/js/jquery.dataTables.min.js
 ../datatable/css/jquery.dataTables.css
 ../datatable/js/dataTables.bootstrap.js
@@ -29,9 +28,6 @@ CACHE:
 ../select2/select2.js
 ../select2/select2_locale_zh-CN.js
 ../select2/select2.css
-../bootstrap_datetimepicker/css/datetimepicker.css
-../bootstrap_datetimepicker/js/bootstrap-datetimepicker.js
-../bootstrap_datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js
 ../js/timeselector.js
 ../js/nicetable.js
 ../FooTable/css/footable-0.1.css
@@ -39,6 +35,9 @@ CACHE:
 ../FooTable/css/footable.paginate.css
 ../FooTable/js/footable.js
 ../FooTable/js/footable.paginate.js
+../bootstrap-datepicker/js/bootstrap-datepicker.js
+../bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js
+../bootstrap-datepicker/css/datepicker.css
 ../urlparser/purl.js
 ../bootstrap/css/bootstrap-responsive.css
 ../js/activityutil.js
