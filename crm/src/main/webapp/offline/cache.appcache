@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 1.81
+# Ver 1.82
 
 NETWORK:
 *
@@ -36,6 +36,11 @@ CACHE:
 ../FooTable/js/footable.js
 ../FooTable/js/footable.paginate.js
 ../FooTable/js/footable.filter.js
+../FooTable/css/img/down.png
+../FooTable/css/img/minus.png
+../FooTable/css/img/plus.png
+../FooTable/css/img/sorting_sprite.png
+../FooTable/css/img/up.png
 ../bootstrap-datepicker/js/bootstrap-datepicker.js
 ../bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js
 ../bootstrap-datepicker/css/datepicker.css

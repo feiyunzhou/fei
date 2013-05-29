@@ -262,7 +262,6 @@
         function renderCalendarWithDataRemotely() {
             ACTIVITY_UTIL.queryRemoteActivities(function onCompleted(data) {
                 var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
-                console.log(JSON.stringify(calendarEvents));
                 renderCalendar(calendarEvents);
             }, function onError(status) {
                 renderCalendarWithDataLocally();
