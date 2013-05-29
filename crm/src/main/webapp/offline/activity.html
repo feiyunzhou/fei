@@ -4,7 +4,7 @@
 <title>拜访详情</title>
 <script>
     $(document).ready(function() {
-        $('#back_btn').click(function(e) {
+        $('#active_back_btn').click(function(e) {
             $('#main_container').toggle();
             $('#activity_container').toggle();
             
@@ -50,8 +50,6 @@
         if(!isEventLocated){
             var events = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
             if(events[id] != undefined){
-                console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                console.log(events['testtest']);
                 var evt = events[id];
                 var date = new Date(evt.startt);
                 var starttime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm:ss");
@@ -99,7 +97,7 @@ body {
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span12">
-				<a href="#" class="btn btn-primary" id="back_btn">返回</a>
+				<a href="#" class="btn btn-primary" id="active_back_btn">返回</a>
 				<hr />
 			</div>
 
