@@ -8,7 +8,6 @@ NETWORK:
 CACHE:
 ../offline/main.html
 ../offline/account.html
-../offline/activity.html
 ../fullcalendar/fullcalendar.css
 ../fullcalendar/fullcalendar.print.css
 ../jquery/css/smoothness/jquery-ui-1.10.2.custom.css
@@ -47,6 +46,7 @@ CACHE:
 ../urlparser/purl.js
 ../bootstrap/css/bootstrap-responsive.css
 ../js/activityutil.js
+../js/activityUI.js
 ../offline/offline.css
 
 FALLBACK:

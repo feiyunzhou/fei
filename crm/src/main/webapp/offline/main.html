@@ -45,6 +45,7 @@
 <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
 <script src="../js/activityutil.js"></script>
+<script src="../js/activityUI.js"></script>
 <link href="../offline/offline.css" rel="stylesheet">
 <script>
     
@@ -184,15 +185,9 @@
                 cell.css("min-height", "");
             },
             eventClick: function(calEvent, jsEvent, view) {
-
-                //alert('Event: ' + calEvent.id);
                 $('#main_container').toggle();
-                $('#activity_container').load("../offline/activity.html", function() {
-                    console.log("loading completed.");
-                    $('#activity_container').toggle();
-                    renderActivityTableOnPage(calEvent.id);
-
-                });
+                $('#activity_container').toggle();
+                renderActivityTableOnPage(calEvent.id);
 
             },
             dayClick : function(date, allDay, jsEvent, view) {
@@ -989,8 +984,27 @@ body {
     <!-- Start of account container -->
     <div id="account_container" style="display: none;">
     </div>
-    <div id="activity_container" style="display: none;">
-    </div>
-    <!-- End of account container -->
+	<div id="activity_container" style="display: none;">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span12">
+					<a href="#" class="btn btn-primary" id="active_back_btn">返回</a>
+					<hr />
+				</div>
+
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span3 well">
+					<h5 id="detail_title"></h5>
+					<table id="detail_tb" class="table table-condensed" style="">
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of account container -->
 </body>
 </html>
