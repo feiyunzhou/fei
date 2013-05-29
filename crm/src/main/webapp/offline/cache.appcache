@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 1.82
+# Ver 1.90
 
 NETWORK:
 *
@@ -47,6 +47,8 @@ CACHE:
 ../bootstrap/css/bootstrap-responsive.css
 ../js/activityutil.js
 ../js/activityUI.js
+../js/accountutil.js
+../js/contactutil.js
 ../offline/offline.css
 
 FALLBACK:

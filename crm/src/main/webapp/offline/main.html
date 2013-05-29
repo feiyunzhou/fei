@@ -46,6 +46,8 @@
 
 <script src="../js/activityutil.js"></script>
 <script src="../js/activityUI.js"></script>
+<script src="../js/accountutil.js"></script>
+<script src="../js/contactutil.js"></script>
 <link href="../offline/offline.css" rel="stylesheet">
 <script>
     
@@ -73,6 +75,10 @@
 
         function logEvent(event) {
             console.log(event.type);
+        }
+        
+        function getUserId(){
+            return "20";
         }
 
          $("#event_editor_container").dialog({
@@ -303,89 +309,16 @@
             window.location.reload();
         });
 
-        // Begin of contact typeahead 
-        function setContact2LocalStorage(data) {
-            localStorage["crmcontacts"] = JSON.stringify(data);
-        }
-
-        function getContactsFromLocalStorage(data) {
-            var data = localStorage["crmcontacts"];
-            if (data == null || data === 'undefined')
-                data = '[]';
-            return JSON.parse(data);
-        }
-
-        var selected_contact_id;
-        function renderContactTypeaheadWithDataRemote() {
-            var args = {};
-            args.f = "getContactData";
-            args.p = [ '20' ];
-            ajaxPost2(args, function onComplete(resp) {
-                isOnline = true;
-                setContact2LocalStorage(resp);
-                renderContactTypeahead(resp);
-            }, function onError(status) {
-                isOnline = false;
-                renderContactTypeaheadWithDataLocal();
-            });
-        }
-
-        function renderContactTypeaheadWithDataLocal() {
-            var contacts = getContactsFromLocalStorage();
-            if (jQuery.isEmptyObject(contacts) === false) {
-                renderContactTypeahead(contacts);
-            }
-        }
-
-        function renderContactTypeahead(contacts_data) {
-            //set type ahead
-            var contacts = [];
-            var map = {};
-            $('#contact_search').typeahead({
-                source : function(query, process) {
-                    $.each(contacts_data, function(i, contact) {
-                        map[contact.name] = contact;
-                        contacts.push(contact.name);
-                    });
-                    process(contacts);
-                },
-                updater : function(item) {
-                    selected_contact_id = map[item].id;
-                    console.log("selected id:" + selected_contact_id);
-                    return item;
-                },
-
-                highlighter : function(item) {
-                    return item + " - " + map[item].accountBelongTo;
-                },
-            });
-        }
-
-        if (navigator.onLine) {
-            renderContactTypeaheadWithDataRemote();
-
-        } else {
-            renderContactTypeaheadWithDataLocal();
-        }
-
-        //END of contact typeahead 
 
         //Start to render account table
         function renderAccountTableWithDataRemote() {
-            var args = {};
-            args.f = "getAccountIndexTable";
-            args.p = [ '20' ];
-            ajaxPost2(args, function onComplete(data) {
-                if (jQuery.isEmptyObject(data) === false) {
-                    setAccountTable2Localstorage(data);
-                    //$('#dt_account').dataTable(data);
-                    renderAccountTable(data);
-
-                }
-            }, function onError(status) {
-                isOnline = false;
+            var userId = getUserId();
+            ACCOUNT_UTIL.getAccountTableDataRemotely(userId,function onCmp(data){
+                renderAccountTable(data);
+            },function onError(stats){
                 renderAccountTableWithDataLocal();
             });
+            
         }
 
         function renderAccountTable(data) {
@@ -402,24 +335,25 @@
 
             renderDetaileLink4Account();
         }
+        
+        function renderDetaileLink4Account() {
+            $('#dt_account').on('click', '.account_detail_link', function(e) {
+                var id = $(this).data('account-id');
+                $('#main_container').toggle();
+                $('#account_container').load("../offline/account.html", function() {
+                    console.log("loading completed.");
+                    $('#account_container').toggle();
+                    renderAccountTableOnAccountPage(id);
+
+                });
+            });
+        }
 
         function renderAccountTableWithDataLocal() {
-            var data = getAccountTableFromLocalstorage();
-            if (jQuery.isEmptyObject(data) === false) {
-                //$('#dt_account').dataTable(accountTableData);
+            var data = ACCOUNT_UTIL.getAccountTableFromLocalstorage();
+            if (!jQuery.isEmptyObject(data)) {
                 renderAccountTable(data);
             }
-        }
-
-        function setAccountTable2Localstorage(data) {
-            localStorage["accounttable"] = JSON.stringify(data);
-        }
-
-        function getAccountTableFromLocalstorage() {
-            var data = localStorage["accounttable"];
-            if (data === 'undefined' || data == null)
-                data = '{}';
-            return JSON.parse(data);
         }
 
         if (navigator.onLine) {
@@ -431,38 +365,19 @@
 
         //Start to render contact table
         function renderContactTableWithDataRemote() {
-            console.log("renderContactTableWithDataRemote");
-            var args = {};
-            args.f = "getContactIndexTable";
-            args.p = [ '20' ];
-            ajaxPost2(args, function onComplete(data) {
-                if (jQuery.isEmptyObject(data) === false) {
-                    setContactTable2Localstorage(data);
-                    //$('#dt_contact').dataTable(data);
-
-                    renderContactTable($("#dt_contact"), data);
-
-                }
-            }, function onError(status) {
-                isOnline = false;
+            var userId = getUserId();
+            CONTACT_UTIL.getContactTableDataRemotely(userId,function onCmp(data){
+                renderContactTable($("#dt_contact"), data);
+            },function onError(status){
                 renderContactTableWithDataLocal();
             });
         }
 
         function renderContactTableWithDataLocal() {
-            var data = getContactTableFromLocalstorage();
+            var data = CONTACT_UTIL.getContactTableFromLocalstorage();
             if (jQuery.isEmptyObject(data) === false) {
-                //$('#dt_contact').dataTable(contactTableData);
                 renderContactTable($("#dt_contact"), data);
             }
-        }
-
-        function setContactTable2Localstorage(data) {
-            localStorage["contacttable"] = JSON.stringify(data);
-        }
-
-        function getContactTableFromLocalstorage() {
-            return JSON.parse(localStorage["contacttable"] || '{}');
         }
 
         if (navigator.onLine) {
@@ -710,18 +625,7 @@
 
         /******Account detailed page**************/
 
-        function renderDetaileLink4Account() {
-            $('#dt_account').on('click', '.account_detail_link', function(e) {
-                var id = $(this).data('account-id');
-                $('#main_container').toggle();
-                $('#account_container').load("../offline/account.html", function() {
-                    console.log("loading completed.");
-                    $('#account_container').toggle();
-                    renderAccountTableOnAccountPage(id);
 
-                });
-            });
-        }
 
         /******END of Account detailed page*************/
 
