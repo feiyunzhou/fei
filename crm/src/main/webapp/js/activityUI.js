@@ -25,7 +25,7 @@ function renderActivityTableOnPage(id) {
             var colWidth = table.cols.length;
             var trs = "";
             var rowData = table.tData[id][0];
-            $('#detail_title').append("<span>" + rowData[1] + "</span>");
+            $('#detail_title').html(rowData[1]);
             for ( var i = 1; i < colWidth; i++) {
                 if (cols[i].isVisible === false)
                     continue;
@@ -52,7 +52,7 @@ function renderActivityTableOnPage(id) {
             var starttime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
             date = new Date(evt.endt*1000);
             var endtime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
-            $('#detail_title').append("<span>拜访</span>");
+            $('#detail_title').html("拜访");
             var trs = "<tbody>" + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">开始时间:</td>" + "<td style=\"text-align:right\" >" + starttime + "</td></tr>" + "<tr>"
                     + "<td style=\"text-align:left;font-weight:bold\">结束时间:</td>" + "<td style=\"text-align:right\">" + endtime + "</td></tr>" + "<tr>"
                     + "<td style=\"text-align:left;font-weight:bold\">拜访类型:</td>" + "<td style=\"text-align:right\">" + ACTIVITY_UTIL.getEventTitle(evt.activity_type) + "</td></tr>" + "</tbody>";
