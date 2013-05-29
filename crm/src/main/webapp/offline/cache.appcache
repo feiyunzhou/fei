@@ -35,6 +35,7 @@ CACHE:
 ../FooTable/css/footable.paginate.css
 ../FooTable/js/footable.js
 ../FooTable/js/footable.paginate.js
+../FooTable/js/footable.filter.js
 ../bootstrap-datepicker/js/bootstrap-datepicker.js
 ../bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js
 ../bootstrap-datepicker/css/datepicker.css
