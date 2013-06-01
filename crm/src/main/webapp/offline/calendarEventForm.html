@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html manifest="cache.appcache" dir="ltr" lang="zh-CN">
+<head>
+<title>拜访</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<!-- <link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
+<link href="../jquery/css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+<script src='../jquery/js/jquery-1.9.1.js'></script>
+<script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
+<!-- <script src='../jquery-ui-bootstrap/js/jquery-ui-1.9.2.custom.min.js'></script> -->
+<script src='../fullcalendar/fullcalendar.js'></script>
+<script src='../js/dataclient.js'></script>
+<script src="../bootstrap/js/bootstrap.js"></script>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
+<script src="../datatable/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../datatable/css/jquery.dataTables.css" />
+
+<script src="../datatable/js/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="../datatable/css/dataTables.bootstrap.css" />
+
+<link rel="stylesheet" href="../select2/select2.css" />
+<script src="../select2/select2.js"></script>
+<script src="../select2/select2_locale_zh-CN.js"></script>
+
+<script src="../js/timeselector.js"></script>
+
+<script src="../js/nicetable.js"></script>
+<link href="../FooTable/css/footable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="../FooTable/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="../FooTable/css/footable.paginate.css" rel="stylesheet" type="text/css" />
+<script src="../FooTable/js/footable.js" type="text/javascript"></script>
+<script src="../FooTable/js/footable.filter.js" type="text/javascript"></script>
+<script src="../FooTable/js/footable.paginate.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="../bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="../bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="../bootstrap-datepicker/css/datepicker.css" />
+
+<script src='../urlparser/purl.js'></script>
+<!-- <link href="../css/common.css" rel="stylesheet" /> -->
+
+
+<script src="../js/activityutil.js"></script>
+<script src="../js/activityUI.js"></script>
+<script src="../js/accountutil.js"></script>
+<script src="../js/contactutil.js"></script>
+<link href="../offline/offline.css" rel="stylesheet">
+
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+</style>
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<script>
+    $(document).ready(function() {
+        
+        var startdate = $.url().param('startdate');
+        var enddate = $.url().param('enddate');
+        var accountId = $.url().param('accountId');
+        var contactId = $.url().param('contactId');
+        var parentpage = $.url().param('parentpage');
+        console.log(startdate);
+        console.log(enddate);
+        
+        var userId = "20";
+        //initialize
+        if (navigator.onLine) {
+            CONTACT_UTIL.getContactIdsOfAccountIdRemotely(userId);
+        }
+        
+        
+        var accounts = ACCOUNT_UTIL.getAllAccountsLocally(); 
+        console.log(accounts);
+        renderAccountSelect2(accounts);
+        
+        function renderAccountSelect2(optionsData) {
+            //console.log(optionsData);
+            $('#account_select').select2({
+                data : {
+                    results : optionsData,
+                    text : 'name'
+                },
+                formatSelection : selectformat,
+                formatResult : selectformat
+            });
+        
+            $("#account_select").on("change", function(e) {
+                console.log("change " + JSON.stringify({
+                    val : e.val,
+                    added : e.added,
+                    removed : e.removed,
+                    defaultContact : e.defaultContact
+                }));
+                $('#contact_label').show();
+                var cts = CONTACT_UTIL.getContactsByAccountIdLocally(e.val);
+                //console.log(e.val + "'s contacts:" + JSON.stringify(cts));
+                $("#contact_select").select2({
+                    data : {
+                        results : cts,
+                        text : 'name'
+                    },
+                    formatSelection : selectformat,
+                    formatResult : selectformat
+                });
+
+                if (e.defaultContact != 'undefined') {
+                    $("#contact_select").select2('val', e.defaultContact);
+                }
+
+            });
+            
+            
+            console.log("contactId:"+contactId+" accountId:"+accountId);
+            if (accountId != 'undefined' && contactId != 'undefined') {
+                console.log("set account_select value");
+                $('#account_select').select2("val", accountId)
+                var e = jQuery.Event("change", {
+                    val : accountId,
+                    defaultContact : contactId
+                });
+                $('#account_select').trigger(e);
+            } 
+        }
+
+        function selectformat(item) {
+            return item.name;
+        }
+
+        
+        $('#datepicker_from input').val(startdate);
+        $('#datepicker_to input').val(startdate);
+        $("#select_time_from").timeselector();
+        $("#select_time_to").timeselector(); 
+        
+        
+        $('#save_btn').on("click", function(e) {
+            e.preventDefault();
+            saveCalendarEventAndBackward();
+
+        });
+
+        function backto(page) {
+            location.href = page;
+        }
+
+        function saveCalendarEventAndBackward() {
+            var dt = $('#datepicker_from input').val();
+            console.log(dt);
+            var starttime = ($.fullCalendar.parseDate(dt + " " + $("#select_time_from").val() + ":00")).getTime() / 1000;
+            var endtime = ($.fullCalendar.parseDate(dt + " " + $("#select_time_to").val() + ":00")).getTime() / 1000;
+            console.log("from:" + starttime + " to:" + endtime);
+            var event = {};
+            var event_type = parseInt($("#visit_type_input").val());
+            event.title = "拜访";
+            event.start = starttime;
+            event.end = endtime;
+            event.activity_type = event_type;
+            var contactIdval = $('#contact_select').val();
+            if (contactIdval === 'undefined' || jQuery.isEmptyObject(contactIdval)) {
+                alert("医生信息不能为空");
+                return;
+            }
+
+            var type = "拜访";
+
+            var userEvent = {
+                id : Date.now(),
+                title : ACTIVITY_UTIL.getEventTitle(event_type),
+                crmUserId : "20",
+                startt : starttime,
+                start : starttime,
+                endt : endtime,
+                end : endtime,
+                allDay : false,
+                activity_type : event_type,
+                contactId : contactIdval,
+                color : ACTIVITY_UTIL.getEventColor(event_type)
+            };
+            console.log(userEvent);
+            if (navigator.onLine) {
+
+                ACTIVITY_UTIL.postCalendarEvent(userEvent, false, function done(data) {
+                    //renderCalendarWithDataRemotely();
+                    backto(parentpage);
+                }, function onError(status) {
+                    ACTIVITY_UTIL.setCalendarEvent2LocalStorage(userEvent);
+                    //appendCalendarEvent([userEvent]);
+                    backto(parentpage);
+                });
+
+            } else {
+
+                ACTIVITY_UTIL.setCalendarEvent2LocalStorage(userEvent);
+                //console.log(event);
+                backto(parentpage);
+                //appendCalendarEvent([userEvent]);
+            }
+
+        }
+
+    });
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    function renderCalendarEventForm(default_start_date, default_start_time, default_account_id, default_contact_id) {
+
+    }
+</script>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="brand" href="/">离线版CRM</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+					    <li class=""><a href="home.html" class="bootstro" data-bootstro-title="主页" data-bootstro-placement="bottom" data-bootstro-step="0">主页</a></li>
+						<li class=""><a href="calendarPage.html" class="bootstro" data-bootstro-title="日历" data-bootstro-placement="bottom" data-bootstro-step="0">日历</a></li>
+						<li class=""><a href="accountPage.html" class="bootstro" data-bootstro-title="医院" data-bootstro-placement="bottom" data-bootstro-step="1">医院</a></li>
+						<li class=""><a href="contactPage.html" class="bootstro" data-bootstro-title="医生" data-bootstro-placement="bottom" data-bootstro-step="2">医生</a></li>
+						<li class=""><a href="pptPage.html" class="bootstro" data-bootstro-title="展示" data-bootstro-placement="bottom" data-bootstro-step="3">展示</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="container">
+		<table>
+			<tr>
+				<td>
+					<div title="活动">
+						<label id="datestr"></label>
+						<div>
+
+							<div class="control-group">
+								<label class="control-label">拜访类型：</label>
+								<div class="controls">
+									<select id="visit_type_input" class="input input-small">
+										<option value="1">拜访</option>
+										<option value="2">会议</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label" for="from">开始时间：</label>
+								<div class="controls">
+									<table>
+										<tr>
+											<td><div  id="datepicker_from" ><input  style="width: 150px" type="date" /></div></td>
+											<td>&nbsp;</td>
+											<td><select id="select_time_from" class="input input-small"></select></td>
+										</tr>
+									</table>
+								</div>
+								<label class="control-label" for="to">结束时间：</label>
+								<div class="controls">
+									<table>
+										<tr>
+											<td><div  id="datepicker_to" ><input  style="width: 150px" type="date" /></div></td>
+											<td>&nbsp;</td>
+											<td><select id="select_time_to" class="input input-small"></select></td>
+										</tr>
+									</table>
+
+
+
+								</div>
+
+							</div>
+
+
+							<div class="control-group">
+								<label class="control-label" for="account">医院：</label>
+								<div class="controls">
+									<input type="hidden" id="account_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+								</div>
+								<label id="contact_label" style="display: none" class="control-label" for="contact">医生：</label>
+								<div class="controls">
+									<input type="hidden" id="contact_select" data-placeholder="请选择" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</td>
+			</tr>
+		</table>
+	<hr/>
+		<div class="btn-toolbar">
+		   <div class="btn-group">
+			<a href="#" onclick="window.history.back(); return false;" class="btn">取消</a> 
+			</div>
+			<div class="btn-group">
+			<a id="save_btn" href="#" class="btn btn-primary">保存&返回</a>
+			</div>
+			</div>
+	
+
+	</div>
+
+</body>
+</html>

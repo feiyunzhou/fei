@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html manifest="cache.appcache" dir="ltr" lang="zh-CN">
+<head>
+<title>医院详情</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../jquery/css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+<script src='../jquery/js/jquery-1.9.1.js'></script>
+<script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
+<script src='../js/dataclient.js'></script>
+<script src="../bootstrap/js/bootstrap.js"></script>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
+<script src="../js/nicetable.js"></script>
+<link href="../FooTable/css/footable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="../FooTable/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="../FooTable/css/footable.paginate.css" rel="stylesheet" type="text/css" />
+<script src="../FooTable/js/footable.js" type="text/javascript"></script>
+<script src="../FooTable/js/footable.filter.js" type="text/javascript"></script>
+<script src="../FooTable/js/footable.paginate.js" type="text/javascript"></script>
+
+<script src='../urlparser/purl.js'></script>
+
+<script src="../js/activityutil.js"></script>
+<script src="../js/activityUI.js"></script>
+<script src="../js/accountutil.js"></script>
+<script src="../js/contactutil.js"></script>
+<link href="../offline/offline.css" rel="stylesheet">
+<script src="../js/offline_common.js"></script>
+
+<style type="text/css">
+body {
+	padding-top: 80px;
+	padding-bottom: 40px;
+}
+</style>
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<script>
+    $(document).ready(function() {
+        var accountId = $.url().param('accountId');
+        renderAccountTableOnAccountPage(accountId);
+        
+        
+        function renderAccountTableOnAccountPage(id) {
+            console.log("Start to render account detaile page now");
+            console.log("account id is:" + id);
+            
+            //get accountTable from local storage
+            var table = ACCOUNT_UTIL.getAccountTableFromLocalstorage(); 
+            var tbobj = $("#account_detail_tb");
+            tbobj.empty();
+            if(table != null && table.cols != 'undefined' && table.tData != 'undefined'){
+                
+                if(table.cols.length>0 && table.tData[id] != null){
+                    
+                    var cols = table.cols;
+                    var colWidth = table.cols.length;
+                    var trs = "";
+                    var rowData = table.tData[id][0];
+                    $('#detail_title').append("<span>"+rowData[1]+"</span>");
+                    for(var i=1;i<colWidth;i++){
+                        if(cols[i].isVisible === false) continue;
+                        trs = trs +"<tr>" + "<td style=\"text-align:left;font-weight:bold\">"+cols[i].display+"</td>"+"<td style=\"text-align:right\">"+rowData[i]+"</td>" +"</tr>"
+                    }
+                   
+                    tbobj.append("<tbody>"+trs+"</tbody>");
+                }
+            }
+            
+            //render the contact list
+            
+            var contactIdsByAccountId = JSON.parse(localStorage["contactIdsByAccountId"]); 
+            var  contactofuser = CONTACT_UTIL.getContactTableFromLocalstorage();
+            console.log(contactofuser);
+            if(!jQuery.isEmptyObject(contactIdsByAccountId) && !jQuery.isEmptyObject(contactofuser)){
+                var contacts = contactIdsByAccountId[id];
+                if(contacts != null && contacts.length > 0){
+                    console.log(contacts);
+                    var contactTableData = {};
+                    contactTableData.cols = contactofuser.cols;
+                    contactTableData.tData = {};
+                    var len = contacts.length;
+                    console.log(len);
+                    for(var i=0;i < len;i++){
+                        var contactId = contacts[i];
+                        console.log(contactId);
+                        if(contactofuser.tData[contactId] != null && contactofuser.tData[contactId].length>0){
+                            contactTableData.tData[contactId] = [];
+                            contactTableData.tData[contactId].push(contactofuser.tData[contactId][0]);
+                        }
+                    }
+                    console.log(contactTableData);
+                    $('#contactList').empty();
+                    renderContactList($('#contactList'),contactTableData);
+                }
+            }
+            
+            
+            console.log("END of render account detaile page now");
+        }
+        
+
+    function renderContactList(table, data) {
+            var activityIdsByContactId = ACTIVITY_UTIL.getActivityIdsOfContactIdFromLocalStorage();
+            table.nicetable({
+                tData : data,
+                extraCols : [ {
+                    display : '拜访次数',
+                    renderCol : function(rd) {
+                        var times = 0;
+                        if (activityIdsByContactId[rd[0]] != undefined && activityIdsByContactId[rd[0]] != null) {
+                            times = activityIdsByContactId[rd[0]].length;
+                        }
+                        return times + "次";
+                    }
+                }, 
+                {
+                    display : '拜访',
+                    renderCol : function(rd) {
+                        return "<a class=\"btn btn-small btn-primary visit_link\" data-account-id="+rd[2]+" data-contact-id="+rd[0]+" href=\"calendarEventForm.html?accountId="+rd[2]+"&contactId="+rd[0]+"\">拜访</a>";
+                    }
+                } ]
+            });
+            table.footable({
+                pageNavigation : '.contact_footable-nav'
+            });
+            table.on("click", ".visit_link", function(event) {
+                //console.log(event);
+                var currentdate = new Date();
+                var strDate = $.fullCalendar.formatDate(currentdate, "yyyy-MM-dd");
+                $('#datepicker_from input').val(strDate);
+                $('#datepicker_to input').val(strDate);
+                var actId = parseInt($(this).data("account-id"));
+                var ctId = parseInt($(this).data("contact-id"));
+                console.log(actId + ": " + ctId);
+
+                $('#account_select').select2("val", actId)
+                var e = jQuery.Event("change", {
+                    val : actId,
+                    defaultContact : ctId
+                });
+                $('#account_select').trigger(e);
+                //$('#contact_select')
+                $("#event_editor_container").dialog('open');
+            });
+
+        }
+
+    });
+</script>
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="brand" href="/">离线版CRM</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+					    <li class=""><a href="home.html" class="bootstro" data-bootstro-title="主页" data-bootstro-placement="bottom" data-bootstro-step="0">主页</a></li>
+						<li class=""><a href="calendarPage.html" class="bootstro" data-bootstro-title="日历" data-bootstro-placement="bottom" data-bootstro-step="0">日历</a></li>
+						<li class=""><a href="accountPage.html" class="bootstro" data-bootstro-title="医院" data-bootstro-placement="bottom" data-bootstro-step="1">医院</a></li>
+						<li class=""><a href="contactPage.html" class="bootstro" data-bootstro-title="医生" data-bootstro-placement="bottom" data-bootstro-step="2">医生</a></li>
+						<li class=""><a href="pptPage.html" class="bootstro" data-bootstro-title="展示" data-bootstro-placement="bottom" data-bootstro-step="3">展示</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3 well">
+				<h5 id="detail_title"></h5>
+				<table id="account_detail_tb" class="table table-condensed" style="">
+
+				</table>
+			</div>
+			<div class="span9">
+				<h4>医生</h4>
+				<table id="contactList" class="table table-hover table-striped table-bordered table-condensed"
+				data-page-navigation="#pagination_contactList" data-page-size="10" >
+				</table>
+				<ul id="pagination_contactList" class="contact_footable-nav footable-nav">
+							<span></span>
+				</ul>
+
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html manifest="cache.appcache" dir="ltr" lang="zh-CN">
+<head>
+<title>医院</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<!-- <link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
+<link href="../jquery/css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+<script src='../jquery/js/jquery-1.9.1.js'></script>
+<script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
+<!-- <script src='../jquery-ui-bootstrap/js/jquery-ui-1.9.2.custom.min.js'></script> -->
+<script src='../fullcalendar/fullcalendar.js'></script>
+<script src='../js/dataclient.js'></script>
+<script src="../bootstrap/js/bootstrap.js"></script>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
+<script src="../datatable/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../datatable/css/jquery.dataTables.css" />
+
+<script src="../datatable/js/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="../datatable/css/dataTables.bootstrap.css" />
+
+<link rel="stylesheet" href="../select2/select2.css" />
+<script src="../select2/select2.js"></script>
+<script src="../select2/select2_locale_zh-CN.js"></script>
+
+<script src="../js/timeselector.js"></script>
+
+<script src="../js/nicetable.js"></script>
+<link href="../FooTable/css/footable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="../FooTable/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="../FooTable/css/footable.paginate.css" rel="stylesheet" type="text/css" />
+<script src="../FooTable/js/footable.js" type="text/javascript"></script>
+<script src="../FooTable/js/footable.filter.js" type="text/javascript"></script>
+<script src="../FooTable/js/footable.paginate.js" type="text/javascript"></script>
+
+<script src='../urlparser/purl.js'></script>
+
+<script src="../js/activityutil.js"></script>
+<script src="../js/activityUI.js"></script>
+<script src="../js/accountutil.js"></script>
+<script src="../js/contactutil.js"></script>
+<link href="../offline/offline.css" rel="stylesheet">
+<script src="../js/offline_common.js"></script>
+
+<style type="text/css">
+body {
+	padding-top: 80px;
+	padding-bottom: 40px;
+}
+</style>
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<script>
+  $(document).ready(function(){
+      //Start to render account table
+      var userId = CRM_OFFLINE.getUserId();
+      CRM_OFFLINE.init();
+      function renderAccountTableWithDataRemote() {
+          
+          ACCOUNT_UTIL.getAccountTableDataRemotely(userId,function onCmp(data){
+              renderAccountTable(data);
+          },function onError(stats){
+              renderAccountTableWithDataLocal();
+          });
+          
+      }
+
+      function renderAccountTable(data) {
+          $('#dt_account').nicetable({
+              tData : data,
+              extraCols : [ {
+                  display : '详细信息',
+                  renderCol : function(rd) {
+                      return "<a class=\"btn btn-small btn-primary account_detail_link\" data-account-id="+rd[0]+" href=\"accountDetailPage.html?accountId="+rd[0]+"\">详细</a>";
+                  }
+              }]
+          });
+          $('#dt_account').footable();
+      }
+      
+
+      function renderAccountTableWithDataLocal() {
+          var data = ACCOUNT_UTIL.getAccountTableFromLocalstorage();
+          if (!jQuery.isEmptyObject(data)) {
+              renderAccountTable(data);
+          }
+      }
+
+      if (navigator.onLine) {
+          renderAccountTableWithDataRemote();
+      } else {
+          renderAccountTableWithDataLocal();
+      }
+  });
+</script>
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="brand" href="/">离线版CRM</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+					    <li class=""><a href="home.html" class="bootstro" data-bootstro-title="主页" data-bootstro-placement="bottom" data-bootstro-step="0">主页</a></li>
+						<li class=""><a href="calendarPage.html" class="bootstro" data-bootstro-title="日历" data-bootstro-placement="bottom" data-bootstro-step="0">日历</a></li>
+						<li class="active"><a href="accountPage.html" class="bootstro" data-bootstro-title="医院" data-bootstro-placement="bottom" data-bootstro-step="1">医院</a></li>
+						<li class=""><a href="contactPage.html" class="bootstro" data-bootstro-title="医生" data-bootstro-placement="bottom" data-bootstro-step="2">医生</a></li>
+						<li class=""><a href="pptPage.html" class="bootstro" data-bootstro-title="展示" data-bootstro-placement="bottom" data-bootstro-step="3">展示</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="account_main_container" class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<strong>查找:&nbsp;</strong><input id="filter" placeholder="例如：'张三 135010'" type="text" />
+				<table id="dt_account" data-filter-minimum=1 data-filter="#filter" class="footable table table-hover table-striped table-bordered table-condensed" data-page-navigation="#pagination_account"
+					data-page-size="10">
+				</table>
+				<ul id="pagination_account" class="footable-nav">
+					<span></span>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

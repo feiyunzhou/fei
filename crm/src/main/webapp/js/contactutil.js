@@ -11,11 +11,68 @@ var CONTACT_UTIL = (function($, w, undefined) {
                     onComp(data);
             }
         }, function onError(status) {
-            isOnline = false;
-            renderContactTableWithDataLocal();
+            if(onError != undefined){
+                onError(status);
+            }
+        });
+    },
+    
+    getContactIdsOfAccountIdRemotely = function(userId,onComp,onError){
+        var args = {};        
+        args.f = "getContactIdsOfAccountIdByUserId";
+        args.p = [ userId ];
+        ajaxPost2(args, function onComplete(data) {
+            if (jQuery.isEmptyObject(data) === false) {
+                setContactIdsOfAccountId2Localstorage(data);
+                if (onComp != undefined)
+                    onComp(data);
+            }
+        }, function onError(status) {
+            if(onError != undefined){
+                onError(status);
+            }
         });
     },
 
+    setContactIdsOfAccountId2Localstorage = function(data) {
+        localStorage["contactIdsofaccountId"] = JSON.stringify(data);
+    },
+
+    getContactIdsOfAccountIdFromLocalstorage = function() {
+        return JSON.parse(localStorage["contactIdsofaccountId"] || '{}');
+    },
+    
+
+    getContactsByAccountIdLocally = function(id) {
+        var contacts = [];
+
+        var contactIds_by_accountId = getContactIdsOfAccountIdFromLocalstorage();
+        var contactIds = contactIds_by_accountId[id];
+
+        if (contactIds != undefined) {
+            for ( var i = 0; i < contactIds.length; i += 1) {
+                var ct = getContactByIdLocally(contactIds[i]);
+                contacts.push(ct);
+            }
+        }
+        return contacts;
+    },
+    
+    getContactByIdLocally = function(contactId){
+        var ct = {};
+        var table = getContactTableFromLocalstorage();
+        if(!$.isEmptyObject(table)){
+            if(table.cols != undefined && table.tData != undefined && table.tData[contactId] != undefined && table.tData[contactId][0] != undefined){
+                var length = table.cols.length;
+                var row =  table.tData[contactId][0];
+                for(var i=0;i<length;i += 1){
+                    ct[table.cols[i].name] = row[i];
+                }
+            }
+        }
+        return ct;
+    },
+    
     setContactTable2Localstorage = function(data) {
         localStorage["contacttable"] = JSON.stringify(data);
     },
@@ -27,7 +84,12 @@ var CONTACT_UTIL = (function($, w, undefined) {
     return {
         getContactTableDataRemotely : getContactTableDataRemotely,
         setContactTable2Localstorage : setContactTable2Localstorage,
-        getContactTableFromLocalstorage : getContactTableFromLocalstorage
+        getContactTableFromLocalstorage : getContactTableFromLocalstorage,
+        getContactIdsOfAccountIdRemotely:getContactIdsOfAccountIdRemotely,
+        setContactIdsOfAccountId2Localstorage: setContactIdsOfAccountId2Localstorage,
+        getContactIdsOfAccountIdFromLocalstorage:getContactIdsOfAccountIdFromLocalstorage,
+        getContactsByAccountIdLocally : getContactsByAccountIdLocally,
+        getContactByIdLocally:getContactByIdLocally
 
     };
 }(jQuery, window));

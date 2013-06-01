@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<!-- <link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
 <link href="../jquery/css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
 <script src='../jquery/js/jquery-1.9.1.js'></script>
 <script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
@@ -211,14 +211,16 @@
                 // change the day's background color just for fun
                 // $(this).css('background-color', 'red');
 
-                var clickdate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
-                $("#datestr").val(clickdate);
+                var selecteddate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
+                $("#datestr").val(selecteddate);
                 //$("#datestr").text(clickdate);
-                console.log(clickdate);
-                $('#datepicker_from input').val(clickdate);
-                $('#datepicker_to input').val(clickdate);
-                $("#event_editor_container").dialog("option", "title", clickdate + " 拜访活动");
-                $("#event_editor_container").dialog('open');
+                console.log(selecteddate);
+                //$('#datepicker_from input').val(clickdate);
+                //$('#datepicker_to input').val(clickdate);
+                //$("#event_editor_container").dialog("option", "title", clickdate + " 拜访活动");
+                //$("#event_editor_container").dialog('open');
+                var url = $.url();
+                location.href = '../offline/calendarEventForm.html?startdate='+selecteddate+"&parentpage="+url.attr("relative");;
 
             }
         });
@@ -272,9 +274,9 @@
         function renderCalendarWithDataLocally() {
             //renderEventsWithDataLocal();
             var localActivites = ACTIVITY_UTIL.getRemoteActivitesFromLocalStorage();
-            console.log(localActivites);
+            //console.log(localActivites);
             var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(localActivites);
-            console.log(JSON.stringify(calendarEvents));
+            //console.log(JSON.stringify(calendarEvents));
             renderCalendar(calendarEvents);
 
             //get local events which not send to the server
@@ -595,7 +597,7 @@
 
         });
 
-        $('#datepicker_from').datepicker({
+/*         $('#datepicker_from').datepicker({
             format : 'yyyy-mm-dd',
             language : 'zh-CN',
             autoclose : true
@@ -604,7 +606,7 @@
             format : 'yyyy-mm-dd',
             language : 'zh-CN',
             autoclose : true
-        });
+        }); */
 
         $("#select_time_from").timeselector();
         $("#select_time_to").timeselector();
@@ -633,7 +635,7 @@
     /*******End of jquery ready**********/
 
     function noBack() {
-        window.history.forward(1);
+        //window.history.forward(1);
     }
 
     function renderContactTable(table, data) {
@@ -836,10 +838,11 @@ body {
 									<div class="controls">
 										<table>
 											<tr>
-												<td><div class="input-append date datepicker" id="datepicker_from" data-date-format="yyyy-mm-dd">
+												<!-- <td><div class="input-append date datepicker" id="datepicker_from" data-date-format="yyyy-mm-dd">
 														<input class="input input-small" style="width: 90px" type="text" readonly><span class="add-on"><i class="icon-th"></i></span>
-													</div></td>
-												<td>&nbsp; &nbsp;</td>
+													</div></td> -->
+												<td><div  id="datepicker_from" ><input  style="width: 150px" type="date" /></div></td>
+												<td>&nbsp;</td>
 												<td><select id="select_time_from" class="input input-small"></select></td>
 											</tr>
 										</table>
@@ -848,11 +851,12 @@ body {
 									<div class="controls">
 										<table>
 											<tr>
-												<td>
+												<!-- <td>
 													<div class="input-append date datepicker" id="datepicker_to" data-date-format="yyyy-mm-dd">
 														<input class="input input-small" style="width: 90px" type="text" readonly><span class="add-on"><i class="icon-th"></i></span>
 													</div>
-												</td>
+												</td> -->
+												<td><div  id="datepicker_to" ><input  style="width: 150px" type="date" /></div></td>
 												<td>&nbsp;&nbsp;</td>
 												<td><select id="select_time_to" class="input input-small"></select></td>
 											</tr>

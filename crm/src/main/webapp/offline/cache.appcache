@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 1.90
+# Ver 1.91
 
 NETWORK:
 *
@@ -7,9 +7,15 @@ NETWORK:
 
 CACHE:
 ../offline/main.html
-../offline/account.html
+../offline/accountDetailPage.html
+../offline/accountPage.html
+../offline/activityDetailPage.html
+../offline/calendarEventForm.html
+../offline/calendarPage.html
+../offline/contactPage.html
+../offline/home.html
+../offline/pptPage.html
 ../fullcalendar/fullcalendar.css
-../fullcalendar/fullcalendar.print.css
 ../jquery/css/smoothness/jquery-ui-1.10.2.custom.css
 ../jquery/js/jquery-1.9.1.js
 ../jquery/js/jquery-ui-1.10.2.custom.min.js

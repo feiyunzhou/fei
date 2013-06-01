@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html manifest="cache.appcache" dir="ltr" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<!-- <link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
+<link href="../jquery/css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+<script src='../jquery/js/jquery-1.9.1.js'></script>
+<script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
+<!-- <script src='../jquery-ui-bootstrap/js/jquery-ui-1.9.2.custom.min.js'></script> -->
+<script src='../fullcalendar/fullcalendar.js'></script>
+<script src='../js/dataclient.js'></script>
+<script src="../bootstrap/js/bootstrap.js"></script>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
+<script src='../urlparser/purl.js'></script>
+<!-- <link href="../css/common.css" rel="stylesheet" /> -->
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<script src="../js/activityutil.js"></script>
+<script src="../js/activityUI.js"></script>
+
+<script src="../js/offline_common.js"></script>
+<link href="../offline/offline.css" rel="stylesheet">
+
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+</style>
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<script>
+  $(document).ready(function(){
+      CRM_OFFLINE.init();
+      
+      $('#calendar').fullCalendar({
+          header : {
+              left : 'prev,next today',
+              center : 'title',
+              right : 'month,agendaWeek,agendaDay'
+          },
+          height : 500,
+          editable : false,
+          monthNames : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+          monthNamesShort : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+          dayNames : [ '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天' ],
+          dayNamesShort : [ '周一', '周二', '周三', '周四', '周五', '周六', '周日' ],
+          columnFormat : {
+              month : 'ddd',
+              week : 'M/d ddd',
+              day : 'M/d dddd'
+          },
+          titleFormat : {
+              month : 'yyyy年MMMM',
+              week : "yyyy年",
+              day : 'yyyy年'
+          },
+          buttonText : {
+              prev : '&lsaquo;', // <
+              next:     '&rsaquo;', // >
+              prevYear : '&laquo;', // <<
+              nextYear: '&raquo;',  // >>
+              today : '今天',
+              month : '月',
+              week : '周',
+              day : '日'
+          },
+          dayRender : function(date, cell) {
+              cell.prepend('<span class=\"newEventSpan pull-left\" style="display:none"><a class="newEventLink" href="#">新建</a></span>');
+              cell.css("min-height", "");
+          },
+          eventClick: function(calEvent, jsEvent, view) {
+             
+              location.href = "activityDetailPage.html?activityId="+calEvent.id;
+
+          },
+          dayClick : function(date, allDay, jsEvent, view) {
+
+              if (allDay) {
+                  console.log('Clicked on the entire day: ' + date);
+              } else {
+                  console.log('Clicked on the slot: ' + date);
+              }
+
+              console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+              console.log('Current view: ' + view.name);
+
+              // change the day's background color just for fun
+              // $(this).css('background-color', 'red');
+
+              var selecteddate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
+              $("#datestr").val(selecteddate);
+              //$("#datestr").text(clickdate);
+              console.log(selecteddate);
+              var url = $.url();
+              location.href = '../offline/calendarEventForm.html?startdate='+selecteddate+"&parentpage="+url.attr("relative");
+
+          }
+      });
+      
+      if (navigator.onLine) {
+          console.log("online");
+          //get activity IDs which by contactId
+          ACTIVITY_UTIL.getActivityIdsOfContactId();
+          //get local events and post them to the server
+          var localevents = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
+          var ets = [];
+          $.each(localevents,function(key,value){
+              ets.push(value);
+          });
+          
+          //console.log(localevents[0].start);
+          if (ets.length > 0) {
+              appendCalendarEvent(ets);
+              console.log(ets);
+              ACTIVITY_UTIL.postCalendarEvents(ets, true, function onComplete(data) {
+                  
+                  ACTIVITY_UTIL.resetCalendarEventFromLocalStroage();
+                  renderCalendarWithDataRemotely();
+              }, function onError(status) {
+
+              }); //End of post calendar events to the server
+          }else{
+              renderCalendarWithDataRemotely();
+          }
+
+      } else {
+          console.log("Offline");
+          renderCalendarWithDataLocally();
+      }
+
+      function renderCalendarWithDataRemotely() {
+          ACTIVITY_UTIL.queryRemoteActivities(function onCompleted(data) {
+              var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
+              renderCalendar(calendarEvents);
+          }, function onError(status) {
+              renderCalendarWithDataLocally();
+          });//END of queryRemoteActivities
+      }
+
+      function renderCalendarWithDataLocally() {
+          //renderEventsWithDataLocal();
+          var localActivites = ACTIVITY_UTIL.getRemoteActivitesFromLocalStorage();
+          //console.log(localActivites);
+          var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(localActivites);
+          //console.log(JSON.stringify(calendarEvents));
+          renderCalendar(calendarEvents);
+
+          //get local events which not send to the server
+          var localEvents = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
+          var evs =[];
+          $.each(localEvents, function(i,n){
+              evs.push(n);
+          });
+          appendCalendarEvent(evs);
+      }
+
+      function appendCalendarEvent(event) {
+          var eventlen = event.length;
+          for ( var i = 0; i < eventlen; i++) {
+              $('#calendar').fullCalendar('renderEvent', event[i], true);
+          }
+          $('#calendar').fullCalendar('render');
+      }
+
+      function renderCalendar(eventdata) {
+          //$('#calendar').fullCalendar( 'render' );
+          //remove all events on calendar
+          $('#calendar').fullCalendar('removeEvents', function filter(event) {
+              //console.log("remove" + event.id);
+              return true;
+          });
+
+          appendCalendarEvent(eventdata);
+      }
+      
+  });
+</script>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="brand" href="/">离线版CRM</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+					    <li class=""><a href="home.html" class="bootstro" data-bootstro-title="主页" data-bootstro-placement="bottom" data-bootstro-step="0">主页</a></li>
+						<li class="active"><a href="calendarPage.html" class="bootstro" data-bootstro-title="日历" data-bootstro-placement="bottom" data-bootstro-step="0">日历</a></li>
+						<li class=""><a href="accountPage.html" class="bootstro" data-bootstro-title="医院" data-bootstro-placement="bottom" data-bootstro-step="1">医院</a></li>
+						<li class=""><a href="contactPage.html" class="bootstro" data-bootstro-title="医生" data-bootstro-placement="bottom" data-bootstro-step="2">医生</a></li>
+						<li class=""><a href="pptPage.html" class="bootstro" data-bootstro-title="展示" data-bootstro-placement="bottom" data-bootstro-step="3">展示</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="calendar_main_container" class="container-fluid">
+		<div class="row-fluid">
+		<div class="span12">
+		   <div id="calendar_container">
+			  <div id='calendar'></div>
+		   </div>
+		</div>
+		</div>
+	</div>
+
+</body>
+</html>

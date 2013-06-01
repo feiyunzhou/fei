@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html manifest="cache.appcache" dir="ltr" lang="zh-CN">
+<head>
+<title>拜访详细</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<!-- <link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
+<link href="../jquery/css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+<script src='../jquery/js/jquery-1.9.1.js'></script>
+<script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
+<!-- <script src='../jquery-ui-bootstrap/js/jquery-ui-1.9.2.custom.min.js'></script> -->
+<script src='../fullcalendar/fullcalendar.js'></script>
+<script src='../js/dataclient.js'></script>
+<script src="../bootstrap/js/bootstrap.js"></script>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
+
+<script src='../urlparser/purl.js'></script>
+<!-- <link href="../css/common.css" rel="stylesheet" /> -->
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<script src="../js/activityutil.js"></script>
+<script src="../js/accountutil.js"></script>
+<script src="../js/contactutil.js"></script>
+<link href="../offline/offline.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 80px;
+	padding-bottom: 40px;
+}
+</style>
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<script>
+$(document).ready(function() {
+    console.log("Start to render account detaile page now");
+    var activityId = $.url().param('activityId');
+    console.log("activity id is:" + activityId);
+
+    //get accountTable from local storage
+    var table = ACTIVITY_UTIL.getRemoteActivitesFromLocalStorage();
+    console.log(table);
+    var tbobj = $("#detail_tb");
+    tbobj.empty();
+    var isEventLocated = false;
+    if (table != null && table.cols != undefined && table.tData != undefined) {
+
+        if (table.cols.length > 0 && (table.tData[activityId] != undefined) && (table.tData[activityId] != null)) {
+            isEventLocated = true;
+            var cols = table.cols;
+            var colWidth = table.cols.length;
+            var trs = "";
+            var rowData = table.tData[activityId][0];
+            $('#detail_title').html(rowData[1]);
+            for ( var i = 1; i < colWidth; i++) {
+                if (cols[i].isVisible === false)
+                    continue;
+                if (i == 2 || i == 3) {
+                    var date = new Date(parseInt(rowData[i]));
+                    console.log(date);
+                    var str_date = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm:ss");
+                    trs = trs + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">" + cols[i].display + "</td>" + "<td style=\"text-align:right\">" + str_date + "</td>" + "</tr>";
+                } else {
+                    trs = trs + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">" + cols[i].display + "</td>" + "<td style=\"text-align:right\">" + rowData[i] + "</td>" + "</tr>";
+                }
+            }
+
+            tbobj.append("<tbody>" + trs + "</tbody>");
+        }
+    }
+
+    //if we can't find the event in the remote data
+    if (!isEventLocated) {
+        var events = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
+        if (events[id] != undefined) {
+            var evt = events[id];
+            var date = new Date(evt.startt*1000);
+            var starttime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
+            date = new Date(evt.endt*1000);
+            var endtime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
+            $('#detail_title').html("拜访");
+            var trs = "<tbody>" + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">开始时间:</td>" + "<td style=\"text-align:right\" >" + starttime + "</td></tr>" + "<tr>"
+                    + "<td style=\"text-align:left;font-weight:bold\">结束时间:</td>" + "<td style=\"text-align:right\">" + endtime + "</td></tr>" + "<tr>"
+                    + "<td style=\"text-align:left;font-weight:bold\">拜访类型:</td>" + "<td style=\"text-align:right\">" + ACTIVITY_UTIL.getEventTitle(evt.activity_type) + "</td></tr>" + "</tbody>";
+
+            tbobj.append(trs);
+
+        }
+    }
+
+    console.log("END of render activity detaile page now");
+
+});
+
+</script>
+
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="brand" href="/">离线版CRM</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+					    <li class=""><a href="home.html" class="bootstro" data-bootstro-title="主页" data-bootstro-placement="bottom" data-bootstro-step="0">主页</a></li>
+						<li class=""><a href="calendarPage.html" class="bootstro" data-bootstro-title="日历" data-bootstro-placement="bottom" data-bootstro-step="0">日历</a></li>
+						<li class=""><a href="accountPage.html" class="bootstro" data-bootstro-title="医院" data-bootstro-placement="bottom" data-bootstro-step="1">医院</a></li>
+						<li class=""><a href="contactPage.html" class="bootstro" data-bootstro-title="医生" data-bootstro-placement="bottom" data-bootstro-step="2">医生</a></li>
+						<li class=""><a href="pptPage.html" class="bootstro" data-bootstro-title="展示" data-bootstro-placement="bottom" data-bootstro-step="3">展示</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="activity_container" >
+		<div class="container">
+			<div class="row">
+				<div class="span3 well">
+					<h5 id="detail_title"></h5>
+					<table id="detail_tb" class="table table-condensed" style="">
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
