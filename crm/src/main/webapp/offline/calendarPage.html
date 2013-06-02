@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html manifest="cache.appcache" dir="ltr" lang="zh-CN">
 <head>
+<title>日历</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -36,7 +37,9 @@ body {
 <script>
   $(document).ready(function(){
       CRM_OFFLINE.init();
+      var userId = "20";   
       
+      var url = $.url();
       $('#calendar').fullCalendar({
           header : {
               left : 'prev,next today',
@@ -69,13 +72,14 @@ body {
               week : '周',
               day : '日'
           },
-          dayRender : function(date, cell) {
-              cell.prepend('<span class=\"newEventSpan pull-left\" style="display:none"><a class="newEventLink" href="#">新建</a></span>');
-              cell.css("min-height", "");
+          eventAfterRender : function( event, element, view ) {
+              //cell.prepend('<span class=\"newEventSpan pull-left\" style="display:none"><a class="newEventLink" href="#">新建</a></span>');
+              //cell.css("min-height", "");
+              //element.children().first().append("<i class=\"icon-tasks pull-right\"></i>");
           },
           eventClick: function(calEvent, jsEvent, view) {
              
-              location.href = "activityDetailPage.html?activityId="+calEvent.id;
+              location.href = "activityDetailPage.html?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
 
           },
           dayClick : function(date, allDay, jsEvent, view) {
@@ -97,7 +101,6 @@ body {
               $("#datestr").val(selecteddate);
               //$("#datestr").text(clickdate);
               console.log(selecteddate);
-              var url = $.url();
               location.href = '../offline/calendarEventForm.html?startdate='+selecteddate+"&parentpage="+url.attr("relative");
 
           }
@@ -133,7 +136,7 @@ body {
       }
 
       function renderCalendarWithDataRemotely() {
-          ACTIVITY_UTIL.queryRemoteActivities(function(data) {
+          ACTIVITY_UTIL.queryRemoteActivities("20",function(data) {
               var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
               renderCalendar(calendarEvents);
           }, function(status) {

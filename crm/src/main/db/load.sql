@@ -123,6 +123,9 @@ INSERT INTO region_level2_pl (val) VALUES('华东');
 INSERT INTO activity_types (val) VALUES('拜访');
 INSERT INTO activity_types (val) VALUES('会议');
 
+-- 拜访状态
+INSERT INTO activity_status (val) VALUES('计划');
+INSERT INTO activity_status (val) VALUES('完成');
 
 -- ramdom update table
 UPDATE activity SET contactId = FLOOR(78* RAND()+1);

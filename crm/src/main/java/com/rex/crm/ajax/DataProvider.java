@@ -654,7 +654,7 @@ public class DataProvider {
         return dt.stringify();
     }
 
-    public static String setEvent(String[] args) {
+    public static String addCalendarEvent(String[] args) {
         Resp resp = new Resp();
         int crmuserId = Integer.parseInt(args[0]);
         int contactId = Integer.parseInt(args[1]);
@@ -662,10 +662,11 @@ public class DataProvider {
         String title = args[3];
         String start = args[4];
         String end = args[5];
+        int status = Integer.parseInt(args[6]);
         resp.setCode(0);
         logger.debug("time:"+start+"   :"+end);
         try {
-            DAOImpl.setEvent(crmuserId,contactId, type, title, start, end);
+            DAOImpl.addCalendarEvent(crmuserId,contactId, type, title, start, end,status);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -679,6 +680,26 @@ public class DataProvider {
 
     }
 
+    public static String updateStatusOfCalendarEvent(String[] args){
+        Resp resp = new Resp();
+        resp.setCode(0);
+        int eventId = Integer.parseInt(args[0]);
+        int status = Integer.parseInt(args[1]);
+        
+        try {
+            DAOImpl.updateStatusOfCalendarEvent(eventId, status);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            resp.setCode(-1);
+            resp.setMessage(e.getMessage());
+        }
+        
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(resp, Resp.class);
+        return jsonString; 
+    }
+    
     public static String getActivitiesTableDataByUserId(String[] args){
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();

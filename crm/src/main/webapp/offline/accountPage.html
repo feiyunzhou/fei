@@ -57,8 +57,9 @@ body {
 <script>
   $(document).ready(function(){
       //Start to render account table
-      var userId = CRM_OFFLINE.getUserId();
       CRM_OFFLINE.init();
+      var userId = CRM_OFFLINE.getUserId();
+      
       function renderAccountTableWithDataRemote() {
           
           ACCOUNT_UTIL.getAccountTableDataRemotely(userId,function(data){

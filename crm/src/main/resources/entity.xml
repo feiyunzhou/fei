@@ -463,7 +463,7 @@
 	<entity>
 		<name>activity</name>
 		<display>日历</display>
-		<sql>select * from (select *\,activity_type as act_type from activity where crmuserId=?) as aActivity</sql>
+		<sql>select * from (select *\,activity_type as act_type\,status as act_status from activity where crmuserId=?) as aActivity</sql>
 		<fields>
 			<field>
 				<name>id</name>
@@ -531,6 +531,27 @@
 			<field>
 				<name>act_type</name>
 				<display>拜访类型</display>
+				<data-type>Integer</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_status</picklist>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>act_status</name>
+				<display>状态</display>
 				<data-type>Integer</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>

@@ -22,14 +22,20 @@ var CRM_OFFLINE = (function($, w, undefined) {
     logEvent = function(){
         console.log(event.type);
     },
+    backto = function (page) {
+        location.href = page;
+    },
     getUserId = function(){
         return "20";
     };
     
     return{
         init:init,
-        getUserId:getUserId
+        getUserId:getUserId,
+        backto:backto
     };
     
     
 })(jQuery,window);
+
+

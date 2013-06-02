@@ -611,23 +611,48 @@ public class DAOImpl {
     }
     
     
-    public static void setEvent(int crmuserId, int contactId,String type, String title, String start, String end) throws Exception {
+    public static void addCalendarEvent(int crmuserId, int contactId,String type, String title, String start, String end,int status) throws Exception {
         int type_id = Integer.parseInt(type);
-        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type) VALUES (?,?,?,?,?,?)";
-        Connection conn = DBHelper.getConnection();
-        QueryRunner run = new QueryRunner();
-        int inserts = 0;
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        CalendarEvent e = new CalendarEvent();
-        e.setTitle("拜访");
-        e.setStarttime(Long.parseLong(start)*1000L);
-        e.setEndtime(Long.parseLong(end)*1000L);
-        e.setCrmUserId(crmuserId);
-        e.setActivity_type(type_id);
-        e.setContactId(contactId);
-        inserts += run.update(conn, sql, e.getCrmUserId(),e.getContactId(), e.getEndtime(), e.getStarttime(), e.getTitle(),e.getActivity_type());
+        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type,status) VALUES (?,?,?,?,?,?,?)";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            CalendarEvent e = new CalendarEvent();
+            e.setTitle("拜访");
+            e.setStarttime(Long.parseLong(start) * 1000L);
+            e.setEndtime(Long.parseLong(end) * 1000L);
+            e.setCrmUserId(crmuserId);
+            e.setActivity_type(type_id);
+            e.setContactId(contactId);
+            e.setStatus(status);
+            inserts += run.update(conn, sql, e.getCrmUserId(), e.getContactId(), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getActivity_type(), e.getStatus());
 
-        System.out.println("inserted:"+inserts);
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to add new calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
+
+    public static void updateStatusOfCalendarEvent(int eventId, int status) {
+        String sql = "UPDATE activity SET status=? where id=?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql, status,eventId);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to add new calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
         
     }
 }

@@ -22,7 +22,18 @@ body {
 }
 </style>
 <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
+<script>
+  $(document).ready(function(){
+      CRM_OFFLINE.init();
+      if (navigator.onLine) {
+          ACTIVITY_UTIL.queryRemoteActivities();
+          CONTACT_UTIL.getContactIdsOfAccountIdRemotely(userId);
+          ACCOUNT_UTIL.getAccountTableDataRemotely(userId);
+          CONTACT_UTIL.getContactTableDataRemotely(userId);
+      }
+      
+  });
+</script>
 </head>
 <body>
 

@@ -50,6 +50,7 @@
 <script src="../js/accountutil.js"></script>
 <script src="../js/contactutil.js"></script>
 <link href="../offline/offline.css" rel="stylesheet">
+<script src="../js/offline_common.js"></script>
 
 <style type="text/css">
 body {
@@ -60,6 +61,7 @@ body {
 <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 <script>
     $(document).ready(function() {
+        CRM_OFFLINE.init();
         
         var startdate = $.url().param('startdate');
         var enddate = $.url().param('enddate');
@@ -146,9 +148,6 @@ body {
 
         });
 
-        function backto(page) {
-            location.href = page;
-        }
 
         function saveCalendarEventAndBackward() {
             var dt = $('#datepicker_from input').val();
@@ -181,25 +180,26 @@ body {
                 allDay : false,
                 activity_type : event_type,
                 contactId : contactIdval,
-                color : ACTIVITY_UTIL.getEventColor(event_type)
+                color : ACTIVITY_UTIL.getEventColor(event_type),
+                status: "1"
             };
             console.log(userEvent);
             if (navigator.onLine) {
 
-                ACTIVITY_UTIL.postCalendarEvent(userEvent, false, function done(data) {
+                ACTIVITY_UTIL.postCalendarEvent(userEvent, false, function(data) {
                     //renderCalendarWithDataRemotely();
-                    backto(parentpage);
-                }, function onError(status) {
+                    CRM_OFFLINE.backto(parentpage);
+                }, function(status) {
                     ACTIVITY_UTIL.setCalendarEvent2LocalStorage(userEvent);
                     //appendCalendarEvent([userEvent]);
-                    backto(parentpage);
+                    CRM_OFFLINE.backto(parentpage);
                 });
 
             } else {
 
                 ACTIVITY_UTIL.setCalendarEvent2LocalStorage(userEvent);
                 //console.log(event);
-                backto(parentpage);
+                CRM_OFFLINE.backto(parentpage);
                 //appendCalendarEvent([userEvent]);
             }
 
@@ -306,14 +306,14 @@ body {
 		</table>
 	<hr/>
 		<div class="btn-toolbar">
-		   <div class="btn-group">
-			<a href="#" onclick="window.history.back(); return false;" class="btn">取消</a> 
+			<div class="btn-group">
+				<a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
 			</div>
 			<div class="btn-group">
-			<a id="save_btn" href="#" class="btn btn-primary">保存&返回</a>
+				<a id="save_btn" href="#" class="btn btn-primary">保存&返回</a>
 			</div>
-			</div>
-	
+		</div>
+
 
 	</div>
 

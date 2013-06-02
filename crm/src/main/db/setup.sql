@@ -103,6 +103,16 @@ CREATE TABLE activity
 ) ENGINE InnoDB;
 ALTER table activity ADD activity_type MEDIUMINT;
 ALTER table activity ADD contactId MEDIUMINT;
+ALTER table activity ADD status MEDIUMINT;
+
+-- 活动状态;
+drop table if exists activity_status;
+CREATE TABLE activity_status 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
 
 drop table if exists activity_types;
 CREATE TABLE activity_types 
