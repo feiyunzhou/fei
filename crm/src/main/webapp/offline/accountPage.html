@@ -61,9 +61,9 @@ body {
       CRM_OFFLINE.init();
       function renderAccountTableWithDataRemote() {
           
-          ACCOUNT_UTIL.getAccountTableDataRemotely(userId,function onCmp(data){
+          ACCOUNT_UTIL.getAccountTableDataRemotely(userId,function(data){
               renderAccountTable(data);
-          },function onError(stats){
+          },function(stats){
               renderAccountTableWithDataLocal();
           });
           

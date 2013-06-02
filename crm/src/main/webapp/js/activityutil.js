@@ -6,13 +6,13 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         var args = {};
         args.f = "getActivitiesTableDataByUserId";
         args.p = [ "20" ];
-        ajaxPost2(args, function onAjaxComplete(data) {
+        ajaxPost2(args, function(data) {
            /* var event = jQuery.Event("on_activities_received");
             event.received_data =data;
             $(document).trigger(event);*/
             onCompleted(data);
             setRemoteActivities2LocalStorage(data);
-        }, function onError(status) {
+        }, function(status) {
             onError(status);
         });
         
@@ -22,12 +22,12 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         var args = {};
         args.f = "getActivityIdsOfContactIdByUserId";
         args.p = [ "20" ];
-        ajaxPost2(args, function onAjaxComplete(data) {
+        ajaxPost2(args, function(data) {
             if( onCompleted != undefined){
                onCompleted(data);
             }
             setActivityIdsOfContactId2LocalStorage(data);
-        }, function onError(status) {
+        }, function(status) {
             if(onError != undefined){
               onError(status);
             }
@@ -120,7 +120,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         var args = {};
         args.f = "setEvent";
         args.p = [ userEvent.crmUserId,userEvent.contactId, userEvent.activity_type, userEvent.title,userEvent.startt, userEvent.endt ];
-        ajaxPost2(args, function onAjaxComplete(resp) {
+        ajaxPost2(args, function(resp) {
             isOnline = true;
             //console.log(resp);
             if (resp.code == 0) { 
@@ -131,7 +131,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
             }
 
             return resp.code;
-        }, function onError(status) {
+        }, function(status) {
             onError(status);
             if (!isEventInLocalStorage){
                 
@@ -146,16 +146,16 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
             return;
         for ( var i = 0; i < userEvents.length; i += 1) {
             if (i == (userEvents.length - 1)) {
-                postCalendarEvent(userEvents[i], isEventInLocalStorage, function ok(data) {
+                postCalendarEvent(userEvents[i], isEventInLocalStorage, function(data) {
                     onComplete(data);
-                }, function error(status) {
+                }, function(status) {
                     console.log("post error"+status);
                     onError(status);
                 });
             } else {
-                postCalendarEvent(userEvents[i], isEventInLocalStorage, function ok(data) {
+                postCalendarEvent(userEvents[i], isEventInLocalStorage, function(data) {
 
-                }, function error(status) {
+                }, function(status) {
                     
                 });
             }

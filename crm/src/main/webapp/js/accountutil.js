@@ -4,13 +4,13 @@ var ACCOUNT_UTIL = (function($, w, undefined) {
         var args = {};
         args.f = "getAccountIndexTable";
         args.p = [ userId ];
-        ajaxPost2(args, function onComplete(data) {
+        ajaxPost2(args, function(data) {
             if (jQuery.isEmptyObject(data) === false) {
                 setAccountTable2Localstorage(data);
                 if (onCmpl != undefined){onCmpl(data);}
                     
             }
-        }, function onError(status) {
+        }, function(status) {
             if (onError != undefined){onError(status);}
                 
         });

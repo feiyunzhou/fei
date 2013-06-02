@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 1.91
+# Ver 1.94
 
 NETWORK:
 *
@@ -56,5 +56,6 @@ CACHE:
 ../js/accountutil.js
 ../js/contactutil.js
 ../offline/offline.css
+../js/offline_common.js
 
 FALLBACK:

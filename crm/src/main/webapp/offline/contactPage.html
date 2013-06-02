@@ -110,9 +110,10 @@ body {
       
       function renderContactTableWithDataRemote() {
           
-          CONTACT_UTIL.getContactTableDataRemotely(userId,function onCmp(data){
+          CONTACT_UTIL.getContactTableDataRemotely(userId,function(data){
               renderContactTable($("#dt_contact"), data);
-          },function onError(status){
+          },function(status){
+              console.log("error");
               renderContactTableWithDataLocal();
           });
       }

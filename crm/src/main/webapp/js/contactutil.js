@@ -4,13 +4,13 @@ var CONTACT_UTIL = (function($, w, undefined) {
         var args = {};
         args.f = "getContactIndexTable";
         args.p = [ userId ];
-        ajaxPost2(args, function onComplete(data) {
+        ajaxPost2(args, function(data) {
             if (jQuery.isEmptyObject(data) === false) {
                 setContactTable2Localstorage(data);
                 if (onComp != undefined)
                     onComp(data);
             }
-        }, function onError(status) {
+        }, function(status) {
             if(onError != undefined){
                 onError(status);
             }
@@ -21,13 +21,13 @@ var CONTACT_UTIL = (function($, w, undefined) {
         var args = {};        
         args.f = "getContactIdsOfAccountIdByUserId";
         args.p = [ userId ];
-        ajaxPost2(args, function onComplete(data) {
+        ajaxPost2(args, function(data) {
             if (jQuery.isEmptyObject(data) === false) {
                 setContactIdsOfAccountId2Localstorage(data);
                 if (onComp != undefined)
                     onComp(data);
             }
-        }, function onError(status) {
+        }, function(status) {
             if(onError != undefined){
                 onError(status);
             }

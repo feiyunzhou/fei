@@ -118,12 +118,10 @@ body {
           if (ets.length > 0) {
               appendCalendarEvent(ets);
               console.log(ets);
-              ACTIVITY_UTIL.postCalendarEvents(ets, true, function onComplete(data) {
+              ACTIVITY_UTIL.postCalendarEvents(ets, true, function(data) {
                   
                   ACTIVITY_UTIL.resetCalendarEventFromLocalStroage();
                   renderCalendarWithDataRemotely();
-              }, function onError(status) {
-
               }); //End of post calendar events to the server
           }else{
               renderCalendarWithDataRemotely();
@@ -135,10 +133,10 @@ body {
       }
 
       function renderCalendarWithDataRemotely() {
-          ACTIVITY_UTIL.queryRemoteActivities(function onCompleted(data) {
+          ACTIVITY_UTIL.queryRemoteActivities(function(data) {
               var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
               renderCalendar(calendarEvents);
-          }, function onError(status) {
+          }, function(status) {
               renderCalendarWithDataLocally();
           });//END of queryRemoteActivities
       }
