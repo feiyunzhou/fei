@@ -39,6 +39,7 @@ body {
 <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 <script>
     $(document).ready(function() {
+        CRM_OFFLINE.init();
         var accountId = $.url().param('accountId');
         renderAccountTableOnAccountPage(accountId);
         
@@ -48,7 +49,7 @@ body {
             console.log("account id is:" + id);
             
             //get accountTable from local storage
-            var table = ACCOUNT_UTIL.getAccountTableFromLocalstorage(); 
+            var table = ACCOUNT_UTIL.getAccountTableFromLocalstorage();
             var tbobj = $("#account_detail_tb");
             tbobj.empty();
             if(table != null && table.cols != 'undefined' && table.tData != 'undefined'){
@@ -71,11 +72,13 @@ body {
             
             //render the contact list
             
-            var contactIdsByAccountId = JSON.parse(localStorage["contactIdsByAccountId"]); 
+            var contactIdsByAccountId = CONTACT_UTIL.getContactIdsOfAccountIdFromLocalstorage();
+            console.log(contactIdsByAccountId);
             var  contactofuser = CONTACT_UTIL.getContactTableFromLocalstorage();
             console.log(contactofuser);
             if(!jQuery.isEmptyObject(contactIdsByAccountId) && !jQuery.isEmptyObject(contactofuser)){
                 var contacts = contactIdsByAccountId[id];
+                console.log(contacts);
                 if(contacts != null && contacts.length > 0){
                     console.log(contacts);
                     var contactTableData = {};
