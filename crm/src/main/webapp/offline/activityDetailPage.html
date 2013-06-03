@@ -81,8 +81,8 @@ body {
                         //if we can't find the event in the remote data
                         if (!isEventLocated) {
                             var events = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
-                            if (events[id] != undefined) {
-                                var evt = events[id];
+                            if (events[activityId] != undefined) {
+                                var evt = events[activityId];
                                 var date = new Date(evt.startt * 1000);
                                 var starttime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
                                 date = new Date(evt.endt * 1000);
