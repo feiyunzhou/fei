@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Ver 2.21
+# Ver 2.25
 
 NETWORK:
 *
@@ -30,6 +30,10 @@ CACHE:
 ../image/bootstrap-mdo-sfmoma-01.jpg
 ../image/bootstrap-mdo-sfmoma-02.jpg
 ../image/bootstrap-mdo-sfmoma-03.jpg
+../image/presentation1-icon.png
+../image/doctor-icon.png
+../image/hospital-icon.png
+../image/calendar-icon.png
 ../select2/select2.js
 ../select2/select2_locale_zh-CN.js
 ../select2/select2.css
@@ -57,5 +61,6 @@ CACHE:
 ../js/contactutil.js
 ../offline/offline.css
 ../js/offline_common.js
+
 
 FALLBACK:
