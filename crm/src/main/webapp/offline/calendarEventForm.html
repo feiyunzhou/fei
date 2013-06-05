@@ -62,12 +62,14 @@ body {
 <script>
     $(document).ready(function() {
         CRM_OFFLINE.init();
+        var st = 
+        console.log("starttime:"+st);
         
-        var startdate = $.url().param('startdate');
-        var enddate = $.url().param('enddate');
-        var accountId = $.url().param('accountId');
-        var contactId = $.url().param('contactId');
-        var parentpage = $.url().param('parentpage');
+        var startdate =CRM_OFFLINE.getParameterByName('startdate');
+        var enddate = CRM_OFFLINE.getParameterByName('enddate');
+        var accountId = CRM_OFFLINE.getParameterByName('accountId');
+        var contactId = CRM_OFFLINE.getParameterByName('contactId');
+        var parentpage = CRM_OFFLINE.getParameterByName('parentpage');
         console.log(startdate);
         console.log(enddate);
         
@@ -207,11 +209,7 @@ body {
 
     });
 
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
+
 
     function renderCalendarEventForm(default_start_date, default_start_time, default_account_id, default_contact_id) {
 
@@ -225,7 +223,7 @@ body {
 				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="brand" href="/">离线版CRM</a>
+				<a class="brand" href="/">E3</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 					    <li class=""><a href="home.html" class="bootstro" data-bootstro-title="主页" data-bootstro-placement="bottom" data-bootstro-step="0">主页</a></li>

@@ -27,12 +27,20 @@ var CRM_OFFLINE = (function($, w, undefined) {
     },
     getUserId = function(){
         return "20";
+    },
+     getParameterByName = function(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var url = window.location.toString();
+        var regex = new RegExp("#.*[\\?&]" + name + "=([^&#]*)"), results = regex.exec(url);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     };
+    
     
     return{
         init:init,
         getUserId:getUserId,
-        backto:backto
+        backto:backto,
+        getParameterByName: getParameterByName
     };
     
     
