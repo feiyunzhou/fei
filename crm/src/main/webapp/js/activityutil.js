@@ -67,7 +67,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                       event.title = act.status;
                       event.start =  parseInt(act.starttime)/1000;
                       event.end = parseInt(act.endtime)/1000;
-                      event.color = getEventColor(act.act_status);
+                      event.color = getEventByStatusAndType(act.act_status,act.act_type);
                       event.allDay = false;
                       events.push(event);
                 }
@@ -76,7 +76,20 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         
         return events;
     },
-    
+    getEventByStatusAndType = function(status,type){
+        if(status ==1){
+            if(type==1){
+                return "#2B60DE";
+            }else if(type == 2){
+                return "#E18B6B";
+            }else{
+                return "#6698FF";
+            }
+            
+        }else{
+            return "#659EC7";
+        }
+    },
     getEventColor = function(type) {
         if (type == 1) {
             //#5484e, #D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
@@ -258,7 +271,8 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         isRemoteActivityInLocalstorage: isRemoteActivityInLocalstorage,
         setStatusChangesInLocalstorage: setStatusChangesInLocalstorage,
         getStatusChangesFromLocalstorage: getStatusChangesFromLocalstorage,
-        resetStatusChangesInLocalstorage: resetStatusChangesInLocalstorage
+        resetStatusChangesInLocalstorage: resetStatusChangesInLocalstorage,
+        getEventByStatusAndType : getEventByStatusAndType
         
     };
     

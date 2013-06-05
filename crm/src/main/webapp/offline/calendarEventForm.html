@@ -182,7 +182,7 @@ body {
                 allDay : false,
                 activity_type : event_type,
                 contactId : contactIdval,
-                color : ACTIVITY_UTIL.getEventColor(event_type),
+                color : ACTIVITY_UTIL.getEventByStatusAndType(1,event_type),
                 status: "1"
             };
             console.log(userEvent);
