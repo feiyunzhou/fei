@@ -212,6 +212,17 @@ CREATE TABLE contact_pl6
 ) ENGINE InnoDB;
 -- end of picklist for contact;
 
+drop table if exists contactcrmuser;
+CREATE TABLE contactcrmuser 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    contactId MEDIUMINT NOT NULL,
+    crmuserId MEDIUMINT NOT NULL,
+    UNIQUE KEY(contactId,crmuserId), 
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+
 drop table if exists crmuser;
 CREATE TABLE crmuser 
 (

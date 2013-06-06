@@ -131,5 +131,8 @@ INSERT INTO activity_status (val) VALUES('完成');
 UPDATE activity SET contactId = FLOOR(78* RAND()+1);
 
 
+INSERT INTO contactcrmuser (contactId,crmuserId) VALUES(FLOOR(78* RAND()+1),20);
+
+
 
 

@@ -4,7 +4,8 @@
 	<entity>
 		<name>account</name>
 		<display>医院</display>
-		<sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as aAccount</sql>
+		<!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as aAccount</sql> -->
+		<sql>SELECT * from (select account.* from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId group by account.id) as aAccount</sql>
 		<filterField>pl6</filterField>
 		<fields>
 			<field>
@@ -135,7 +136,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from (select contact.*\,account.name as accountName from contact\,account where contact.accountId=account.id AND ? IS NOT NULL) as aContact</sql>
+		<sql>select * from (select contact.*\,account.name as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId) as aContact</sql>
 		<filterField>pl1</filterField>
 		<fields>
 			<field>
