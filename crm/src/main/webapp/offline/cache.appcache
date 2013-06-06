@@ -34,6 +34,12 @@ CACHE:
 ../image/doctor-icon.png
 ../image/hospital-icon.png
 ../image/calendar-icon.png
+../image/account.jpg
+../image/activity.jpg
+../image/baseball.jpg
+../image/contact.jpg
+../image/cycling.jpg
+../image/surfing.jpg
 ../select2/select2.js
 ../select2/select2_locale_zh-CN.js
 ../select2/select2.css
