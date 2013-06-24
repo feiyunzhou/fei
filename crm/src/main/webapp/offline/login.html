@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html manifest="cache.appcache" dir="ltr" lang="zh-CN">
+<head>
+    <title>登录页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- <link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' /> -->
+    <link href="../jquery/css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+    <script src='../jquery/js/jquery-1.9.1.js'></script>
+    <script src='../jquery/js/jquery-ui-1.10.2.custom.min.js'></script>
+        <script src='../js/dataclient.js'></script>
+    <script src="../bootstrap/js/bootstrap.js"></script>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <script src="../js/loginutil.js"></script>
+    <script src="../js/offline_common.js"></script>
+    <script src="../cryptoJS/core.js"></script>
+    <script src="../cryptoJS/md5.js"></script>
+    <script src="../js/loginutil.js"></script>
+    <link href="../offline/offline.css" rel="stylesheet">
+
+
+    <style type="text/css">
+        body {
+            padding-top: 80px;
+            padding-bottom: 40px;
+        }
+    </style>
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <script>
+        $(document).ready(function(){
+            $("#alertMsg").hide();
+            CRM_OFFLINE.init();
+           
+            //login button clicked
+            $("#login_btn").on("click",function(event){
+                var loginName =  $("#inputAccount").val();
+                var password = $("#inputPassword").val();
+                LOGIN_UTIL.login(loginName,password,function(data){
+                    CRM_OFFLINE.gotoPage("home.html#");
+                },function(status){
+                    console.log("ERROR");
+                    $("#alertMsg").text("登录失败，输入密码或是帐号有错误");
+                    $("#alertMsg").show();
+                    $("#alertMsg").fadeOut(5000);
+                }) ;
+            });
+            //END of login button clicked
+
+        });
+    </script>
+
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="/">E3</a>
+        </div>
+    </div>
+</div>
+
+<div id="site-container" class="container" data-pjax-container="">
+
+    <div class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">帐号</label>
+            <div class="controls">
+                <input type="text" id="inputAccount" placeholder="帐号">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword">密码</label>
+            <div class="controls">
+                <input type="password" id="inputPassword" placeholder="密码">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button id="login_btn" type="submit" class="btn">登录</button>
+            </div>
+        </div>
+    </div>
+    <div id="alertMsg" class="alert alert-error">
+    </div>
+
+</div>
+
+</body>
+</html>

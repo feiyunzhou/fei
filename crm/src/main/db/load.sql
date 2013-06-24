@@ -134,5 +134,9 @@ UPDATE activity SET contactId = FLOOR(78* RAND()+1);
 INSERT INTO contactcrmuser (contactId,crmuserId) VALUES(FLOOR(78* RAND()+1),20);
 
 
+UPDATE crmuser SET loginName = FLOOR(1000000* RAND()+1000);
+UPDATE crmuser SET password = FLOOR(1000000* RAND()+1000);
+UPDATE crmuser SET sessionKey = FLOOR(1000000* RAND()+1000);
+
 
 

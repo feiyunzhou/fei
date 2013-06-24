@@ -26,21 +26,36 @@ var CRM_OFFLINE = (function($, w, undefined) {
         location.href = page;
     },
     getUserId = function(){
-        return "20";
+        var userinfo =       LOGIN_UTIL.getLoginInfoFromLocalstorage();
+        return userinfo.id+"";
     },
      getParameterByName = function(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
         var url = window.location.toString();
         var regex = new RegExp("#.*[\\?&]" + name + "=([^&#]*)"), results = regex.exec(url);
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    };
+    },
+    isLogined = function(){
+            var userinfo = LOGIN_UTIL.getLoginInfoFromLocalstorage();
+             return (userinfo.name != undefined && userinfo.id != undefined && userinfo.password != undefined);
+
+    },
+    getUserInfo = function(){
+                   return LOGIN_UTIL.getLoginInfoFromLocalstorage();
+    },
+    gotoPage = function(page){
+        location.href = page;
+     };
     
     
     return{
         init:init,
         getUserId:getUserId,
         backto:backto,
-        getParameterByName: getParameterByName
+        getParameterByName: getParameterByName,
+        isLogined: isLogined,
+        getUserInfo: getUserInfo,
+        gotoPage:gotoPage
     };
     
     

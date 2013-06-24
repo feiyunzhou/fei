@@ -20,6 +20,7 @@
 <script src="../js/contactutil.js"></script>
 
 <link href="../offline/offline.css" rel="stylesheet">
+    <script src="../js/loginutil.js"></script>
 <script src="../js/offline_common.js"></script>
 <link rel="stylesheet" href="../FortAwesome/css/font-awesome.min.css">
 <style type="text/css">
@@ -32,7 +33,10 @@ body {
 <script>
   $(document).ready(function(){
       CRM_OFFLINE.init();
-      var userId = "20";
+      if(CRM_OFFLINE.isLogined() === false){
+          CRM_OFFLINE.gotoPage("login.html");
+      }
+      var userId = CRM_OFFLINE.getUserId();
       if (navigator.onLine) {
           ACTIVITY_UTIL.queryRemoteActivities();
           CONTACT_UTIL.getContactIdsOfAccountIdRemotely(userId);

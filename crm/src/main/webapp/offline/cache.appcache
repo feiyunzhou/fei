@@ -1,11 +1,12 @@
 CACHE MANIFEST
-# Ver 2.41
+# Ver 2.56
 
 NETWORK:
 *
 
 
 CACHE:
+../offline/login.html
 ../offline/main.html
 ../offline/accountDetailPage.html
 ../offline/accountPage.html
@@ -67,6 +68,9 @@ CACHE:
 ../js/contactutil.js
 ../offline/offline.css
 ../js/offline_common.js
+../js/loginutil.js
+../cryptoJS/core.js
+../cryptoJS/md5.js
 
 
 FALLBACK:

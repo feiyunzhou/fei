@@ -3,6 +3,7 @@ package com.rex.crm.util;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 
@@ -170,6 +171,35 @@ public class CRMUtility {
 	        }
 	        return res;
 
+	    }
+	    
+	    
+	    public static String MD5Base64(String src) {
+	        if (src == null || src.isEmpty())
+	            return null;
+
+	        java.security.MessageDigest digest = null;
+	        try {
+	            digest = java.security.MessageDigest.getInstance("MD5");
+	        } catch (Throwable ex) {
+	            logger.fatal("Exception", ex);
+	        }
+	        if (null == digest) {
+	            logger.fatal("No MD5 digest");
+	            return src;
+	        }
+	        // Convert
+	        digest.update(src.getBytes());
+	        final byte[] in = digest.digest();
+	        if (in == null || in.length <= 0) {
+	            logger.fatal("MD5 returned empty digest");
+	            return src;
+	        }
+
+	        // encode with Base64
+	        final String hash = new String(Base64.encodeBase64(in));
+
+	        return hash;
 	    }
 	    
 }

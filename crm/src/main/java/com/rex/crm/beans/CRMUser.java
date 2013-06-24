@@ -22,6 +22,10 @@ public class CRMUser {
 	private String email;
 	private int cityId;
 	private String photo;
+	private String password;
+	private String loginName;
+	private String sessionKey;
+	private long lastLoginTime;
 
 	public String getName() {
 		return name;
@@ -158,5 +162,37 @@ public class CRMUser {
 	        }
 	        return list;
 	    }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getLoginName() {
+            return loginName;
+        }
+
+        public void setLoginName(String loginName) {
+            this.loginName = loginName;
+        }
+
+        public String getSessionKey() {
+            return sessionKey;
+        }
+
+        public void setSessionKey(String sessionKey) {
+            this.sessionKey = sessionKey;
+        }
+
+        public long getLastLoginTime() {
+            return lastLoginTime;
+        }
+
+        public void setLastLoginTime(long lastLoginTime) {
+            this.lastLoginTime = lastLoginTime;
+        }
 	
 }

@@ -776,6 +776,20 @@ public class DataProvider {
         return jo.toString();
     }
     
+    public static String login(String[] args){
+        String loginName = args[0];
+        String password = args[1];
+        CRMUser user = DAOImpl.login(loginName,password);
+        if(user != null){
+           Gson gson = new Gson();
+           return gson.toJson(user, CRMUser.class);
+        }else{
+            return "{}";
+        }
+        
+        
+    }
+    
     private static Multimap<Integer,Map> getEntityListByIdOfUserId(String sql, String userId){
         Multimap<Integer,Map> multimap =  LinkedHashMultimap.create();
         List maplist = DAOImpl.queryEntityRelationList(sql, userId);

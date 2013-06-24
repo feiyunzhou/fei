@@ -3,6 +3,7 @@ package com.rex;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
@@ -10,6 +11,7 @@ import com.google.common.collect.Multimap;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Relation;
+import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 
 public class CRMTest {
@@ -37,5 +39,14 @@ public class CRMTest {
    
     }
     
+    @Test
+    public void md5test(){
+        String password =  DigestUtils.md5Hex("12345");
+        System.out.println("MD5 password is:"+password);
+    }
  
+    @Test
+    public void loginTest(){
+        System.out.println(DAOImpl.login("tig", "1"));
+    }
 }
