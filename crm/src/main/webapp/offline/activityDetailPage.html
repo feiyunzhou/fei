@@ -27,6 +27,7 @@
 <script src="../js/contactutil.js"></script>
 <link href="../offline/offline.css" rel="stylesheet">
 <script src="../js/offline_common.js"></script>
+  <script src="../js/loginutil.js"></script>
 <style type="text/css">
 body {
 	padding-top: 80px;
@@ -39,6 +40,7 @@ body {
     $(document).ready(function() {
         console.log("start");
         CRM_OFFLINE.init();
+        var userInfo = CRM_OFFLINE.getUserInfo();
 
                         var activityId = CRM_OFFLINE.getParameterByName('activityId');
                         var parentpage = CRM_OFFLINE.getParameterByName('parentpage');
@@ -100,7 +102,7 @@ body {
 
                         $(".completebtn").click(function(e) {
                             if (navigator.onLine) {
-                               ACTIVITY_UTIL.updateStatusOfCalendarEventRemotely(activityId,"2",function(data){
+                               ACTIVITY_UTIL.updateStatusOfCalendarEventRemotely(userInfo,activityId,"2",function(data){
                                    CRM_OFFLINE.backto(parentpage);
                                 },function(status){
                                    ACTIVITY_UTIL.updateStatusOfCalendarEventLocally(activityId,"2");

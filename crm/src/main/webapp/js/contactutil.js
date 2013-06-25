@@ -1,9 +1,11 @@
 var CONTACT_UTIL = (function($, w, undefined) {
 
-    var getContactTableDataRemotely = function(userId, onComp, onError) {
+    var getContactTableDataRemotely = function(userInfo, onComp, onError) {
         var args = {};
         args.f = "getContactIndexTable";
+        var userId = userInfo.id+"";
         args.p = [ userId ];
+        args.s = {id:userId,key: userInfo.password};
         ajaxPost2(args, function(data) {
             if (jQuery.isEmptyObject(data) === false) {
                 setContactTable2Localstorage(data);
@@ -17,10 +19,12 @@ var CONTACT_UTIL = (function($, w, undefined) {
         });
     },
     
-    getContactIdsOfAccountIdRemotely = function(userId,onComp,onError){
+    getContactIdsOfAccountIdRemotely = function(userInfo,onComp,onError){
         var args = {};        
         args.f = "getContactIdsOfAccountIdByUserId";
+        var userId = userInfo.id+"";
         args.p = [ userId ];
+        args.s = {id:userId,key: userInfo.password};
         ajaxPost2(args, function(data) {
             if (jQuery.isEmptyObject(data) === false) {
                 setContactIdsOfAccountId2Localstorage(data);

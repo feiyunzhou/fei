@@ -13,6 +13,7 @@ import java.util.List;
 public class FunctionClass {
     private String f;
     private String[] p;
+    private SessionInfo s;
     
     public String getF() {
         return f;
@@ -36,8 +37,21 @@ public class FunctionClass {
             for (String pa : p) {
                 sb.append("," + pa);
             }
+            
+            if(s!=null){
+                sb.append(" session id:"+s.getId());
+                sb.append(" session key:"+s.getKey());
+            }
         }
         return String.format("function:%s params:%s", f,sb);
+    }
+
+    public SessionInfo getS() {
+        return s;
+    }
+
+    public void setS(SessionInfo s) {
+        this.s = s;
     }
     
 }

@@ -37,11 +37,12 @@ body {
           CRM_OFFLINE.gotoPage("login.html");
       }
       var userId = CRM_OFFLINE.getUserId();
+      var userInfo =       CRM_OFFLINE.getUserInfo();
       if (navigator.onLine) {
-          ACTIVITY_UTIL.queryRemoteActivities();
-          CONTACT_UTIL.getContactIdsOfAccountIdRemotely(userId);
-          ACCOUNT_UTIL.getAccountTableDataRemotely(userId);
-          CONTACT_UTIL.getContactTableDataRemotely(userId);
+          ACTIVITY_UTIL.queryRemoteActivities(userInfo);
+          CONTACT_UTIL.getContactIdsOfAccountIdRemotely(userInfo);
+          ACCOUNT_UTIL.getAccountTableDataRemotely(userInfo);
+          CONTACT_UTIL.getContactTableDataRemotely(userInfo);
       }
       
   });

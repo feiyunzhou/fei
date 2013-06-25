@@ -2,10 +2,12 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     
     
     
-    var queryRemoteActivities = function (userId,onCompleted,onError) {
+    var queryRemoteActivities = function (userInfo,onCompleted,onError) {
         var args = {};
         args.f = "getActivitiesTableDataByUserId";
+        var userId = userInfo.id+"";
         args.p = [ userId ];
+        args.s = {id:userId,key: userInfo.password};
         ajaxPost2(args, function(data) {
            /* var event = jQuery.Event("on_activities_received");
             event.received_data =data;
@@ -18,10 +20,12 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         
     },
     
-    getActivityIdsOfContactId = function (onCompleted,onError) {
+    getActivityIdsOfContactId = function (userInfo,onCompleted,onError) {
         var args = {};
         args.f = "getActivityIdsOfContactIdByUserId";
-        args.p = [ "20" ];
+        var userId = userInfo.id+"";
+        args.p = [ userId ];
+        args.s = {id:userId,key: userInfo.password};
         ajaxPost2(args, function(data) {
             if( onCompleted != undefined){
                onCompleted(data);
@@ -142,9 +146,11 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         localStorage["localevents"] = JSON.stringify({});
     },
    
-    postCalendarEvent = function (userEvent, isEventInLocalStorage,onComplete,onError) {
+    postCalendarEvent = function (userInfo,userEvent, isEventInLocalStorage,onComplete,onError) {
         var args = {};
         args.f = "addCalendarEvent";
+        var userId = userInfo.id+"";
+        args.s = {id:userId,key: userInfo.password};
         args.p = [ userEvent.crmUserId,userEvent.contactId, userEvent.activity_type, userEvent.title,userEvent.startt, userEvent.endt,userEvent.status ];
         ajaxPost2(args, function(resp) {
             isOnline = true;
@@ -167,19 +173,19 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         });
     },
 
-     postCalendarEvents = function(userEvents, isEventInLocalStorage, onComplete, onError) {
+     postCalendarEvents = function(userInfo, userEvents, isEventInLocalStorage, onComplete, onError) {
         if (userEvents.length === 0)
             return;
         for ( var i = 0; i < userEvents.length; i += 1) {
             if (i == (userEvents.length - 1)) {
-                postCalendarEvent(userEvents[i], isEventInLocalStorage, function(data) {
+                postCalendarEvent(userInfo,userEvents[i], isEventInLocalStorage, function(data) {
                     onComplete(data);
                 }, function(status) {
                     console.log("post error"+status);
                     onError(status);
                 });
             } else {
-                postCalendarEvent(userEvents[i], isEventInLocalStorage, function(data) {
+                postCalendarEvent(userInfo,userEvents[i], isEventInLocalStorage, function(data) {
 
                 }, function(status) {
                     
@@ -188,10 +194,13 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         }
 
     },
-    updateStatusOfCalendarEventRemotely = function(eventId, status, onComplete, onError){
+    updateStatusOfCalendarEventRemotely = function(userInfo,eventId, status, onComplete, onError){
         var args = {};
         args.f = "updateStatusOfCalendarEvent";
+        var userId = userInfo.id+"";
+        args.s = {id:userId,key: userInfo.password};
         args.p = [eventId,status];
+
         ajaxPost2(args, function(resp) {
             isOnline = true;
             //console.log(resp);

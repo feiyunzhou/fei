@@ -45,7 +45,7 @@
 <script src="../js/contactutil.js"></script>
 <link href="../offline/offline.css" rel="stylesheet">
 <script src="../js/offline_common.js"></script>
-
+  <script src="../js/loginutil.js"></script>
 <style type="text/css">
 body {
 	padding-top: 80px;
@@ -56,7 +56,11 @@ body {
 
 <script>
   $(document).ready(function(){
+      if(CRM_OFFLINE.isLogined() === false){
+          CRM_OFFLINE.gotoPage("login.html");
+      }
       var userId = CRM_OFFLINE.getUserId();
+      var userInfo =    CRM_OFFLINE.getUserInfo();
       var url = $.url();
       var thispage = url.attr("relative");
       //location.href = '../offline/calendarEventForm.html?startdate='+selecteddate+"&parentpage="+url.attr("relative");
@@ -110,7 +114,7 @@ body {
       
       function renderContactTableWithDataRemote() {
           
-          CONTACT_UTIL.getContactTableDataRemotely(userId,function(data){
+          CONTACT_UTIL.getContactTableDataRemotely(userInfo,function(data){
               renderContactTable($("#dt_contact"), data);
           },function(status){
               console.log("error");

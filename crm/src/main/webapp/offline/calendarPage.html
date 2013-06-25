@@ -25,6 +25,7 @@
 <script src="../js/activityUI.js"></script>
 
 <script src="../js/offline_common.js"></script>
+  <script src="../js/loginutil.js"></script>
 <link href="../offline/offline.css" rel="stylesheet">
 
 <style type="text/css">
@@ -37,8 +38,11 @@ body {
 <script>
   $(document).ready(function(){
       CRM_OFFLINE.init();
-      var userId = "20";   
-      
+      if(CRM_OFFLINE.isLogined() === false){
+          CRM_OFFLINE.gotoPage("login.html");
+      }
+      var userId = CRM_OFFLINE.getUserId();  
+      var userInfo =   CRM_OFFLINE.getUserInfo();
       var url = $.url();
       $('#calendar').fullCalendar({
           header : {
@@ -105,7 +109,7 @@ body {
       if (navigator.onLine) {
           console.log("online");
           //get activity IDs which by contactId
-          ACTIVITY_UTIL.getActivityIdsOfContactId();
+          ACTIVITY_UTIL.getActivityIdsOfContactId(userInfo);
           //get local events and post them to the server
           var localevents = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
           var ets = [];
@@ -117,7 +121,7 @@ body {
           if (ets.length > 0) {
               appendCalendarEvent(ets);
               console.log(ets);
-              ACTIVITY_UTIL.postCalendarEvents(ets, true, function(data) {
+              ACTIVITY_UTIL.postCalendarEvents(userInfo,ets, true, function(data) {
                   
                   ACTIVITY_UTIL.resetCalendarEventFromLocalStroage();
                   renderCalendarWithDataRemotely();
@@ -132,7 +136,7 @@ body {
       }
 
       function renderCalendarWithDataRemotely() {
-          ACTIVITY_UTIL.queryRemoteActivities("20",function(data) {
+          ACTIVITY_UTIL.queryRemoteActivities(userInfo,function(data) {
               var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
               renderCalendar(calendarEvents);
           }, function(status) {

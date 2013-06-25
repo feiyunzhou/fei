@@ -664,4 +664,25 @@ public class DAOImpl {
 
         return user;
     }
+
+    public static boolean isSessionValid(String sessionId, String sessionKey) {      
+        boolean res = false;
+        Connection conn = null;
+        CRMUser user = new CRMUser();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            user = run.query(conn, "SELECT * FROM crmuser where id=? AND password=?", h, sessionId, sessionKey);
+            if(user !=null && user.getName() != null){
+               res = true;
+            }
+            
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        } 
+        return res;
+    }
 }

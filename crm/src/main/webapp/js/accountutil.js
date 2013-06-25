@@ -1,9 +1,11 @@
 var ACCOUNT_UTIL = (function($, w, undefined) {
 
-    var getAccountTableDataRemotely = function(userId, onCmpl, onError) {
+    var getAccountTableDataRemotely = function(userInfo, onCmpl, onError) {
         var args = {};
         args.f = "getAccountIndexTable";
+        var userId = userInfo.id+"";
         args.p = [ userId ];
+        args.s = {id:userId,key: userInfo.password};
         ajaxPost2(args, function(data) {
             if (jQuery.isEmptyObject(data) === false) {
                 setAccountTable2Localstorage(data);
