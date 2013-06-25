@@ -43,20 +43,21 @@ public class DataProviderServlet extends HttpServlet {
                 System.out.println(" json  is :" + jsonString);
             }
             FunctionClass method = new Gson().fromJson(jsonString, FunctionClass.class);
-            if(method.getS() == null){ 
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                out.write("session information not provided");
-                return;
-             }
-            
-             String sessionId = method.getS().getId();
-             String sessionKey = method.getS().getKey();
-             if(sessionId == null || sessionKey == null || !DAOImpl.isSessionValid(sessionId,sessionKey)){
-                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                 out.write("session is not valid");
-                 return;
-             }
-            
+//            if(method.getS() == null){ 
+//                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//                out.write("session information not provided");
+//                return;
+//             }
+//            
+//             String sessionId = method.getS().getId();
+//             String sessionKey = method.getS().getKey();
+//             System.out.println("TTTTTTTTT:"+DAOImpl.isSessionValid(sessionId,sessionKey));
+//             if(sessionId == null || sessionKey == null || !DAOImpl.isSessionValid(sessionId,sessionKey)){
+//                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//                 out.write("session is not valid");
+//                 return;
+//             }
+//            
 
             FunctionInvoker invoker = new FunctionInvoker(DataProvider.class);
             System.out.println(" method:" + method);

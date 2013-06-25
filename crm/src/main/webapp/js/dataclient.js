@@ -43,6 +43,13 @@ function ajaxPost2(args, onComplete,onError) {
             onComplete(json);
 
         },
+        statusCode:{
+            403: function (response) {
+                console.log("auth error");
+                alert("密码已更改或过期！请重新登录！");
+                CRM_OFFLINE.gotoPage("login.html");
+             }
+        },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("error :"+textStatus);
             onError(textStatus);

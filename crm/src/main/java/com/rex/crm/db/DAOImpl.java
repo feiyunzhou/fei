@@ -674,7 +674,7 @@ public class DAOImpl {
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
             user = run.query(conn, "SELECT * FROM crmuser where id=? AND password=?", h, sessionId, sessionKey);
-            if(user !=null && user.getName() != null){
+            if(user !=null){
                res = true;
             }
             

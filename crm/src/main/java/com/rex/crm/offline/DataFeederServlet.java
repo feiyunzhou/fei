@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
 import com.rex.crm.ajax.FunctionInvoker;
+import com.rex.crm.db.DAOImpl;
 
 /**
  * Servlet implementation class DataFeederServlet
@@ -52,7 +53,27 @@ public class DataFeederServlet extends HttpServlet {
             }
             FunctionClass method = new Gson().fromJson(jsonString, FunctionClass.class);
 
+            if (!method.getF().equalsIgnoreCase("login")) {
+                if (method.getS() == null) {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    br.close();
+                    out.print("session information not provided");
+                    out.flush();
+                    return;
+                }
 
+                String sessionId = method.getS().getId();
+                String sessionKey = method.getS().getKey();
+                if (sessionId == null || sessionKey == null || !DAOImpl.isSessionValid(sessionId, sessionKey)) {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    br.close();
+                    out.print("session is not valid");
+                    out.flush();
+                    return;
+                }
+            }
+            
+            
             FunctionInvoker invoker = new FunctionInvoker(DataProvider.class);
             System.out.println(" method:" + method);
             String repTxt = (String) invoker.invoke(method.getF(), method.getP());
