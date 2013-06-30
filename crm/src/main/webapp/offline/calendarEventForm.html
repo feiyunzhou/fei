@@ -105,7 +105,7 @@ body {
                 }));
                 $('#contact_label').show();
                 var cts = CONTACT_UTIL.getContactsByAccountIdLocally(e.val);
-                //console.log(e.val + "'s contacts:" + JSON.stringify(cts));
+                console.log(e.val + "'s contacts:" + JSON.stringify(cts));
                 $("#contact_select").select2({
                     data : {
                         results : cts,
@@ -116,11 +116,11 @@ body {
                 });
 
                 if (e.defaultContact != 'undefined') {
+                    console.log("TEST defaultContact:"+e.defaultContact);
                     $("#contact_select").select2('val', e.defaultContact);
                 }
 
             });
-            
             
             console.log("contactId:"+contactId+" accountId:"+accountId);
             if (accountId != 'undefined' && contactId != 'undefined') {
@@ -138,7 +138,49 @@ body {
             return item.name;
         }
 
-        
+
+        var selected_contacts = {};
+        $("#contact_select").on("change",function(e){
+            console.log("contact selector on changed");
+
+
+
+            var actVal = $("#account_select").select2("data");
+            var ctt =  $("#contact_select").select2("data");
+            if(selected_contacts[ctt.id] === undefined){
+                $("#selected_contacts_table tbody").append("<tr id=\"selected_contact_id_"+ctt.id+"\"><td>"+actVal.name+"</td><td>"+ctt.name+"</td><td><a id=\"deselect_contact_link\" data-contact-id=\""+ctt.id+"\" href=\"#\">删除</a></td></tr>");
+                selected_contacts[ctt.id] = ctt.name;
+            }
+
+
+        });
+
+        $("#selected_contacts_table").on("click","#deselect_contact_link",function(e){
+            e.preventDefault();
+            var clicked_tr_id =  $(this).data("contact-id");
+            console.log("clicked:"+clicked_tr_id);
+            $("#selected_contacts_table #selected_contact_id_"+clicked_tr_id).remove();
+            selected_contacts[clicked_tr_id] = undefined;
+        });
+
+        $("#visit_type_input").on("change",function(e){
+            console.log("type:"+$("#visit_type_input").val());
+            if ($("#visit_type_input").val() ==1){
+
+                $("#multi_select_div").hide();
+
+            }else if($("#visit_type_input").val() ==2){
+                $("#multi_select_div").show();
+            }
+
+            $("#selected_contacts_table tbody").empty();
+            selected_contacts = {};
+            //renderAccountSelect2(accounts);
+
+
+        });
+
+
         $('#datepicker_from input').val(startdate);
         $('#datepicker_to input').val(startdate);
         $("#select_time_from").timeselector();
@@ -291,11 +333,18 @@ body {
 								<div class="controls">
 									<input type="hidden" id="account_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
 								</div>
-								<label id="contact_label" style="display: none" class="control-label" for="contact">医生：</label>
+								<label id="contact_label"  class="control-label" for="contact">医生：</label>
 								<div class="controls">
-									<input type="hidden" id="contact_select" data-placeholder="请选择" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+									<input type="hidden" id="contact_select" style="width: 200px"  data-placeholder="请选择"  tabindex="-1" class="select2-offscreen input">
 								</div>
 							</div>
+
+                            <div id="multi_select_div" style="display:none">
+                                <h6>添加的医生：</h6>
+                                 <table id="selected_contacts_table">
+                                     <tbody></tbody>
+                                 </table>
+                            </div>
 
 						</div>
 
