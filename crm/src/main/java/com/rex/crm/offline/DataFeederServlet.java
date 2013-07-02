@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
 import com.rex.crm.ajax.FunctionInvoker;
@@ -51,6 +54,15 @@ public class DataFeederServlet extends HttpServlet {
             } else {
                 System.out.println(" json  is :" + jsonString);
             }
+            
+            //JsonElement jelement = new JsonParser().parse(jsonString);
+            
+            //JsonObject  jobject = jelement.getAsJsonObject();
+            //FunctionClass method = new FunctionClass();
+            //method.setF(jobject.getAsJsonPrimitive("f").getAsString());
+           
+            
+            
             FunctionClass method = new Gson().fromJson(jsonString, FunctionClass.class);
 
             if (!method.getF().equalsIgnoreCase("login")) {
@@ -76,7 +88,13 @@ public class DataFeederServlet extends HttpServlet {
             
             FunctionInvoker invoker = new FunctionInvoker(DataProvider.class);
             System.out.println(" method:" + method);
-            String repTxt = (String) invoker.invoke(method.getF(), method.getP());
+            String repTxt = "";
+            if(method.getCp() == null){
+                 repTxt = (String) invoker.invoke(method.getF(), method.getP());
+            }else{
+               System.out.println("AAAAAAAA:"+ method.getCp());
+                repTxt = (String) invoker.invoke(method.getF(),new String[]{method.getCp().toString()});
+            }
             System.out.println(repTxt);
             br.close();
 

@@ -108,6 +108,10 @@ body {
       
       if (navigator.onLine) {
           console.log("online");
+          $('#calendar').fullCalendar('removeEvents', function filter(event) {
+              //console.log("remove" + event.id);
+              return true;
+          });
           //get activity IDs which by contactId
           ACTIVITY_UTIL.getActivityIdsOfContactId(userInfo);
           //get local events and post them to the server
@@ -130,6 +134,7 @@ body {
               renderCalendarWithDataRemotely();
           }
 
+          renderExternalMeetingWithDataRemotely();
       } else {
           console.log("Offline");
           renderCalendarWithDataLocally();
@@ -138,9 +143,24 @@ body {
       function renderCalendarWithDataRemotely() {
           ACTIVITY_UTIL.queryRemoteActivities(userInfo,function(data) {
               var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
-              renderCalendar(calendarEvents);
+              //console.log(calendarEvents);
+              //renderCalendar(calendarEvents);
+              appendCalendarEvent(calendarEvents);
           }, function(status) {
               renderCalendarWithDataLocally();
+          });//END of queryRemoteActivities
+      }
+
+
+      function renderExternalMeetingWithDataRemotely() {
+          ACTIVITY_UTIL.queryRemoteExternalMeetings(userInfo,function(data) {
+              //console.log(data);
+              var meetings = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
+              //console.log(meetings);
+              //renderCalendar(meetings);
+              appendCalendarEvent(meetings);
+          }, function(status) {
+
           });//END of queryRemoteActivities
       }
 

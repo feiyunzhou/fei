@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
@@ -679,6 +680,41 @@ public class DataProvider {
         return jsonString;
 
     }
+    
+    public static String addExternalMeeting(String[] args){
+        Gson gson = new Gson();
+        String para = args[0];
+        logger.debug(para);
+        JsonElement jelement = new JsonParser().parse(para);
+       
+        JsonObject  jobject = jelement.getAsJsonObject();
+        int crmuserId = jobject.getAsJsonPrimitive("crmUserId").getAsInt();
+        int[] contactIds = gson.fromJson(jobject.getAsJsonArray("contactIds"),int[].class);
+        String title = jobject.getAsJsonPrimitive("title").getAsString();
+        long start = jobject.getAsJsonPrimitive("startt").getAsLong();
+        long end = jobject.getAsJsonPrimitive("endt").getAsLong();
+        int status = jobject.getAsJsonPrimitive("status").getAsInt();
+        
+        Resp resp = new Resp();
+
+        resp.setCode(0);
+        logger.debug("time:"+start+"   :"+end);
+        try {  
+            DAOImpl.addExternalMeeting(crmuserId, contactIds, title, start, end, status);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            resp.setCode(-1);
+            resp.setMessage(e.getMessage());
+        }
+
+        
+        String jsonString = gson.toJson(resp, Resp.class);
+        return jsonString;
+        
+        
+        
+    }
 
     public static String updateStatusOfCalendarEvent(String[] args){
         Resp resp = new Resp();
@@ -704,6 +740,15 @@ public class DataProvider {
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
+        Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),id);
+        
+        return getIndexTable(entity,multiMap,id);
+    }
+    
+    public static String getExternalMeetingTableDataByUserId(String[] args){
+        String id = args[0];
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        Entity entity = entities.get("externalMeeting");
         Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),id);
         
         return getIndexTable(entity,multiMap,id);

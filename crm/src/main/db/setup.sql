@@ -91,6 +91,36 @@ CREATE TABLE accountcrmuser
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
+drop table if exists externalMeeting;
+CREATE TABLE externalMeeting 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    crmuserId MEDIUMINT NOT NULL,
+    endtime BIGINT,
+    starttime BIGINT NOT NULL DEFAULT 0,
+    title VARCHAR(128),
+    contactIds VARCHAR(512),
+    status MEDIUMINT,
+    activity_type MEDIUMINT,
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
+
+drop table if exists internalMeeting;
+CREATE TABLE internalMeeting 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    crmuserId MEDIUMINT NOT NULL,
+    endtime BIGINT,
+    starttime BIGINT NOT NULL DEFAULT 0,
+    title VARCHAR(128),
+    contactId MEDIUMINT,
+    crmusermanagerId MEDIUMINT,
+    status MEDIUMINT,
+     activity_type MEDIUMINT,
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
 drop table if exists activity;
 CREATE TABLE activity 
 (
@@ -101,6 +131,7 @@ CREATE TABLE activity
     title VARCHAR(128),
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+
 ALTER table activity ADD activity_type MEDIUMINT;
 ALTER table activity ADD contactId MEDIUMINT;
 ALTER table activity ADD status MEDIUMINT;

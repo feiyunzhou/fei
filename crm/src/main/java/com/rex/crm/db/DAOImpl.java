@@ -32,6 +32,7 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.google.gson.Gson;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -626,6 +627,37 @@ public class DAOImpl {
         }
 
     }
+    
+    
+    public static void addExternalMeeting(int crmuserId, int[] contactIds, String title, long start, long end, int status) throws Exception {
+        //int type_id = Integer.parseInt(type);
+        String sql = "INSERT INTO externalMeeting (crmuserId,contactIds,endtime,starttime,title,status,activity_type) VALUES (?,?,?,?,?,?,?)";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            CalendarEvent e = new CalendarEvent();
+            e.setTitle("拜访");
+            e.setStarttime(start * 1000L);
+            e.setEndtime(end * 1000L);
+            e.setCrmUserId(crmuserId);
+            //e.setActivity_type(type_id);
+            //e.setContactId(contactId);
+            //e.setContactIds(contactIds);
+            e.setStatus(status);
+            Gson gson = new Gson();
+            inserts += run.update(conn, sql, e.getCrmUserId(), gson.toJson(contactIds, int[].class), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getStatus(),2);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to add new calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
+    
 
     public static void updateStatusOfCalendarEvent(int eventId, int status) {
         String sql = "UPDATE activity SET status=? where id=?";

@@ -121,7 +121,8 @@ INSERT INTO region_level2_pl (val) VALUES('华东');
 
 --  拜访类型
 INSERT INTO activity_types (val) VALUES('拜访');
-INSERT INTO activity_types (val) VALUES('会议');
+INSERT INTO activity_types (val) VALUES('内部会议');
+INSERT INTO activity_types (val) VALUES('外部会议');
 
 -- 拜访状态
 INSERT INTO activity_status (val) VALUES('计划');

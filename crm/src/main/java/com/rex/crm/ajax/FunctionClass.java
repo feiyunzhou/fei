@@ -6,6 +6,9 @@ package com.rex.crm.ajax;
 
 import java.util.List;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 /**
  *
  * @author Feiyun
@@ -14,6 +17,7 @@ public class FunctionClass {
     private String f;
     private String[] p;
     private SessionInfo s;
+    private JsonElement cp;//complex parameters in form of json
     
     public String getF() {
         return f;
@@ -53,5 +57,14 @@ public class FunctionClass {
     public void setS(SessionInfo s) {
         this.s = s;
     }
+
+    public JsonElement getCp() {
+        return cp;
+    }
+
+    public void setCp(JsonElement cp) {
+        this.cp = cp;
+    }
+
     
 }

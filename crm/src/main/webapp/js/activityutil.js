@@ -19,6 +19,21 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         });
         
     },
+
+     queryRemoteExternalMeetings = function (userInfo,onCompleted,onError) {
+            var args = {};
+            args.f = "getExternalMeetingTableDataByUserId";
+            var userId = userInfo.id+"";
+            args.p = [ userId ];
+            args.s = {id:userId,key: userInfo.password};
+            ajaxPost2(args, function(data) {
+                if(onCompleted != undefined)onCompleted(data);
+                //setRemoteActivities2LocalStorage(data);
+            }, function(status) {
+                if(onError != undefined)onError(status);
+            });
+
+        },
     
     getActivityIdsOfContactId = function (userInfo,onCompleted,onError) {
         var args = {};
@@ -74,6 +89,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                       event.color = getEventByStatusAndType(act.act_status,act.act_type);
                       event.allDay = false;
                       events.push(event);
+                    console.log(event);
                 }
             });
         }
@@ -172,6 +188,37 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                 
         });
     },
+
+
+        postExternalMeetingEvent = function (userInfo,cp,onComplete,onError) {
+            var args = {};
+            args.f = "addExternalMeeting";
+            var userId = userInfo.id+"";
+            args.s = {id:userId,key: userInfo.password};
+            args.cp = cp;
+            args.p = [];
+
+            ajaxPost2(args, function(resp) {
+                isOnline = true;
+                //console.log(resp);
+                if (resp.code == 0) {
+                    console.log("post calendar event successfully");
+                    onComplete();
+                } else {
+                    console.log("failed to set event");
+                }
+
+                return resp.code;
+            }, function(status) {
+                onError(status);
+                if (!isEventInLocalStorage){
+
+                }
+
+
+            });
+        },
+
 
      postCalendarEvents = function(userInfo, userEvents, isEventInLocalStorage, onComplete, onError) {
         if (userEvents.length === 0)
@@ -281,7 +328,9 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         setStatusChangesInLocalstorage: setStatusChangesInLocalstorage,
         getStatusChangesFromLocalstorage: getStatusChangesFromLocalstorage,
         resetStatusChangesInLocalstorage: resetStatusChangesInLocalstorage,
-        getEventByStatusAndType : getEventByStatusAndType
+        getEventByStatusAndType : getEventByStatusAndType,
+        postExternalMeetingEvent : postExternalMeetingEvent,
+        queryRemoteExternalMeetings : queryRemoteExternalMeetings
         
     };
     

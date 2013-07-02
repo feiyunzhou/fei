@@ -15,6 +15,8 @@ public class CalendarEvent {
 	private int activity_type;
 	private int contactId;
 	private int status;
+	private String contactIds;
+	private int crmUserManagerId;
 
 	public int getId() {
 		return id;
@@ -109,6 +111,22 @@ public class CalendarEvent {
 
         public void setStatus(int status) {
             this.status = status;
+        }
+
+        public String getContactIds() {
+            return contactIds;
+        }
+
+        public void setContactIds(String contactIds) {
+            this.contactIds = contactIds;
+        }
+
+        public int getCrmUserManagerId() {
+            return crmUserManagerId;
+        }
+
+        public void setCrmUserManagerId(int crmUserManagerId) {
+            this.crmUserManagerId = crmUserManagerId;
         }
 
 }

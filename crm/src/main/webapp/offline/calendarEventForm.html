@@ -62,9 +62,6 @@ body {
 <script>
     $(document).ready(function() {
         CRM_OFFLINE.init();
-        var st = 
-        console.log("starttime:"+st);
-        
         var startdate =CRM_OFFLINE.getParameterByName('startdate');
         var enddate = CRM_OFFLINE.getParameterByName('enddate');
         var accountId = CRM_OFFLINE.getParameterByName('accountId');
@@ -189,9 +186,58 @@ body {
         
         $('#save_btn').on("click", function(e) {
             e.preventDefault();
-            saveCalendarEventAndBackward();
+            var event_type = parseInt($("#visit_type_input").val());
+            if(event_type == 1){
+              saveCalendarEventAndBackward();
+            } else if(event_type == 2){
+                saveExternalMeetingAndBackward();
+            }
 
         });
+
+
+        function saveExternalMeetingAndBackward(){
+            var dt = $('#datepicker_from input').val();
+            console.log("saveExternalMeetingAndBackward:"+dt);
+            var starttime = ($.fullCalendar.parseDate(dt + " " + $("#select_time_from").val() + ":00")).getTime() / 1000;
+            var endtime = ($.fullCalendar.parseDate(dt + " " + $("#select_time_to").val() + ":00")).getTime() / 1000;
+            console.log("saveExternalMeetingAndBackward" + "from:" + starttime + " to:" + endtime);
+            var event_type = parseInt($("#visit_type_input").val());
+
+
+            if(!$.isEmptyObject(selected_contacts))   {
+                var cids = [];
+                $.each(selected_contacts, function(k,v){
+                    cids.push(parseInt(k,10));
+
+                });
+
+
+	            var meetingEvent = {
+	                id:    Date.now(),
+	                title : ACTIVITY_UTIL.getEventTitle(event_type),
+	                crmUserId : userInfo.id,
+	                startt : starttime,
+	                endt : endtime,
+	                allDay : false,
+	                activity_type : event_type,
+	                contactIds : cids,
+	                color : ACTIVITY_UTIL.getEventByStatusAndType(1,event_type),
+	                status: "1"
+	            };
+
+                ACTIVITY_UTIL.postExternalMeetingEvent(userInfo,meetingEvent, function(data) {
+                    //renderCalendarWithDataRemotely();
+                    CRM_OFFLINE.backto(parentpage);
+                }, function(status) {
+
+                    //appendCalendarEvent([userEvent]);
+                    CRM_OFFLINE.backto(parentpage);
+                });
+
+            }
+
+        }
 
 
         function saveCalendarEventAndBackward() {
@@ -295,7 +341,8 @@ body {
 								<div class="controls">
 									<select id="visit_type_input" class="input input-small">
 										<option value="1">拜访</option>
-										<option value="2">会议</option>
+										<option value="2">外部会议</option>
+										<option value="3">内部会议</option>
 									</select>
 								</div>
 							</div>
