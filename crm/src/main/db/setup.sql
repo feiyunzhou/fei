@@ -104,7 +104,7 @@ CREATE TABLE externalMeeting
     activity_type MEDIUMINT,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-
+ALTER table externalMeeting ADD coachId MEDIUMINT;
 
 drop table if exists internalMeeting;
 CREATE TABLE internalMeeting 

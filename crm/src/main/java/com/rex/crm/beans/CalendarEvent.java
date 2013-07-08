@@ -16,7 +16,7 @@ public class CalendarEvent {
 	private int contactId;
 	private int status;
 	private String contactIds;
-	private int crmUserManagerId;
+	private int coachId;
 
 	public int getId() {
 		return id;
@@ -122,11 +122,11 @@ public class CalendarEvent {
         }
 
         public int getCrmUserManagerId() {
-            return crmUserManagerId;
+            return coachId;
         }
 
         public void setCrmUserManagerId(int crmUserManagerId) {
-            this.crmUserManagerId = crmUserManagerId;
+            this.coachId = crmUserManagerId;
         }
 
 }

@@ -41,8 +41,11 @@ body {
       if(CRM_OFFLINE.isLogined() === false){
           CRM_OFFLINE.gotoPage("login.html");
       }
+
       var userId = CRM_OFFLINE.getUserId();  
       var userInfo =   CRM_OFFLINE.getUserInfo();
+
+
       var url = $.url();
       $('#calendar').fullCalendar({
           header : {
@@ -78,8 +81,12 @@ body {
               //element.children().first().append("<i class=\"icon-tasks pull-right\"></i>");
           },
           eventClick: function(calEvent, jsEvent, view) {
-             
-              location.href = "activityDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
+            console.log(calEvent);
+            if(calEvent.act_type == 1){
+                location.href = "activityDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
+            }else if(calEvent.act_type == 2 || calEvent.act_type == 3){
+                location.href = "meetingDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
+            }
 
           },
           dayClick : function(date, allDay, jsEvent, view) {
@@ -235,7 +242,8 @@ body {
 		<div class="span1">
 		
 		<span class="label" style="background-color:#2B60DE">拜访</span>
-		<span class="label" style="background-color:#E18B6B">会议</span>
+		<span class="label" style="background-color:#E18B6B">外部会议</span>
+		<span class="label" style="background-color:#ff8c00">内部会议</span>
 		<span class="label" style="background-color:#6698FF">其他</span>
 		<hr/>
 		<span class="label" style="background-color:#659EC7">完成</span>

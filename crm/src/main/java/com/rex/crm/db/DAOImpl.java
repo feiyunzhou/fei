@@ -629,9 +629,10 @@ public class DAOImpl {
     }
     
     
-    public static void addExternalMeeting(int crmuserId, int[] contactIds, String title, long start, long end, int status) throws Exception {
+    public static void addExternalMeeting(int crmuserId, int[] contactIds, String title, long start, long end, int status,String meeting_type,String coachId) throws Exception {
         //int type_id = Integer.parseInt(type);
-        String sql = "INSERT INTO externalMeeting (crmuserId,contactIds,endtime,starttime,title,status,activity_type) VALUES (?,?,?,?,?,?,?)";
+        
+        String sql = "INSERT INTO externalMeeting (crmuserId,contactIds,endtime,starttime,title,status,activity_type,coachId) VALUES (?,?,?,?,?,?,?,?)";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
@@ -647,7 +648,7 @@ public class DAOImpl {
             //e.setContactIds(contactIds);
             e.setStatus(status);
             Gson gson = new Gson();
-            inserts += run.update(conn, sql, e.getCrmUserId(), gson.toJson(contactIds, int[].class), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getStatus(),2);
+            inserts += run.update(conn, sql, e.getCrmUserId(), gson.toJson(contactIds, int[].class), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getStatus(),Integer.parseInt(meeting_type),Integer.parseInt(coachId));
 
             System.out.println("inserted:" + inserts);
         } catch (Exception e) {
@@ -657,6 +658,7 @@ public class DAOImpl {
         }
 
     }
+    
     
 
     public static void updateStatusOfCalendarEvent(int eventId, int status) {
@@ -671,6 +673,43 @@ public class DAOImpl {
             System.out.println("inserted:" + inserts);
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
+    
+    
+    public static void updateStatusOfExternalMeeting(int eventId, int status) {
+        String sql = "UPDATE externalMeeting SET status=? where id=?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql, status, eventId);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to updateStatusOfExternalMeeting", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
+    
+    public static void updateStatusOfInternalMeeting(int eventId, int status) {
+        String sql = "UPDATE internalMeeting SET status=? where id=?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql, status, eventId);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to updateStatusOfInternalMeeting", e);
         } finally {
             DBHelper.closeConnection(conn);
         }

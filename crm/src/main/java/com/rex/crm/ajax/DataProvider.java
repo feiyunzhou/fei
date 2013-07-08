@@ -681,7 +681,7 @@ public class DataProvider {
 
     }
     
-    public static String addExternalMeeting(String[] args){
+    public static String addMeeting(String[] args){
         Gson gson = new Gson();
         String para = args[0];
         logger.debug(para);
@@ -694,13 +694,16 @@ public class DataProvider {
         long start = jobject.getAsJsonPrimitive("startt").getAsLong();
         long end = jobject.getAsJsonPrimitive("endt").getAsLong();
         int status = jobject.getAsJsonPrimitive("status").getAsInt();
+        String meeting_type = jobject.getAsJsonPrimitive("activity_type").getAsString();
+        String coachId = jobject.getAsJsonPrimitive("coachId").getAsString();
         
         Resp resp = new Resp();
 
         resp.setCode(0);
         logger.debug("time:"+start+"   :"+end);
         try {  
-            DAOImpl.addExternalMeeting(crmuserId, contactIds, title, start, end, status);
+            DAOImpl.addExternalMeeting(crmuserId, contactIds, title, start, end, status,meeting_type,coachId);
+            
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -736,6 +739,48 @@ public class DataProvider {
         return jsonString; 
     }
     
+    
+    public static String updateStatusOfExternalMeetingRemotely(String[] args){
+        Resp resp = new Resp();
+        resp.setCode(0);
+        int eventId = Integer.parseInt(args[0]);
+        int status = Integer.parseInt(args[1]);
+        
+        try {
+            DAOImpl.updateStatusOfExternalMeeting(eventId, status);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            resp.setCode(-1);
+            resp.setMessage(e.getMessage());
+        }
+        
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(resp, Resp.class);
+        return jsonString; 
+    }
+    
+    public static String updateStatusOfInternalMeetingRemotely(String[] args){
+        Resp resp = new Resp();
+        resp.setCode(0);
+        int eventId = Integer.parseInt(args[0]);
+        int status = Integer.parseInt(args[1]);
+        
+        try {
+            DAOImpl.updateStatusOfInternalMeeting(eventId, status);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            resp.setCode(-1);
+            resp.setMessage(e.getMessage());
+        }
+        
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(resp, Resp.class);
+        return jsonString; 
+    }
+    
+    
     public static String getActivitiesTableDataByUserId(String[] args){
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -766,6 +811,25 @@ public class DataProvider {
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("contact");
+        Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),id);
+        
+        return getIndexTable(entity,multiMap,id);
+    }
+    
+    
+    public static String getCRMUserIndexTable(String[] args){
+        String id = args[0];
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        Entity entity = entities.get("crmuser");
+        Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),id);
+        
+        return getIndexTable(entity,multiMap,id);
+    }
+    
+    public static String getCoachIndexTable(String[] args){
+        String id = args[0];
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        Entity entity = entities.get("coach");
         Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),id);
         
         return getIndexTable(entity,multiMap,id);

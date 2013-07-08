@@ -5,7 +5,8 @@
 		<name>account</name>
 		<display>医院</display>
 		<!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as aAccount</sql> -->
-		<sql>SELECT * from (select account.* from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId group by account.id) as aAccount</sql>
+		<sql>SELECT * from (select account.* from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId group by account.id) as aAccount
+		</sql>
 		<filterField>pl6</filterField>
 		<fields>
 			<field>
@@ -69,7 +70,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 			<field>
 				<name>pl2</name>
 				<display>医院分级</display>
@@ -81,7 +82,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl3</name>
 				<display>重点医院</display>
@@ -93,7 +94,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 			<field>
 				<name>pl4</name>
 				<display>市场分类</display>
@@ -105,7 +106,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 			<field>
 				<name>pl5</name>
 				<display>客户中国区域</display>
@@ -117,7 +118,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 			<field>
 				<name>pl6</name>
 				<display>医院类型</display>
@@ -129,14 +130,15 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-					
+
 		</fields>
 	</entity>
 
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from (select contact.*\,account.name as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId) as aContact</sql>
+		<sql>select * from (select contact.*\,account.name as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId) as
+			aContact</sql>
 		<filterField>pl1</filterField>
 		<fields>
 			<field>
@@ -220,7 +222,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 			<field>
 				<name>pl1</name>
 				<display>科室</display>
@@ -232,7 +234,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl2</name>
 				<display>职务</display>
@@ -244,7 +246,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl3</name>
 				<display>职称</display>
@@ -255,7 +257,7 @@
 				<isVisible>true</isVisible>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl4</name>
 				<display>主要产品</display>
@@ -267,7 +269,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl5</name>
 				<display>状态</display>
@@ -279,7 +281,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 			<field>
 				<name>pl6</name>
 				<display>医生分级</display>
@@ -291,7 +293,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>visiting_target</name>
 				<display>拜访目标</display>
@@ -302,14 +304,14 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 		</fields>
 	</entity>
 
 	<entity>
-		<name>crmuser</name>
+		<name>coach</name>
 		<display>用户</display>
-		<sql>select * from crmuser</sql>
+		<sql>select * from crmuser where ? is NOT NULL limit 10</sql>
 		<filterField>pl2</filterField>
 		<fields>
 			<field>
@@ -362,7 +364,65 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+		</fields>
+	</entity>
+	<entity>
+		<name>crmuser</name>
+		<display>用户</display>
+		<sql>select * from crmuser where ? is NOT NULL</sql>
+		<filterField>pl2</filterField>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>name</name>
+				<display>姓名</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>cellPhone</name>
+				<display>手机号码</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>email</name>
+				<display>邮箱</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>jobTitle</name>
+				<display>职位</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+
 			<field>
 				<name>pl1</name>
 				<display>状态</display>
@@ -374,7 +434,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 			<field>
 				<name>pl2</name>
 				<display>产品线</display>
@@ -386,7 +446,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>role</name>
 				<display>角色</display>
@@ -398,7 +458,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl4</name>
 				<display>一级区域</display>
@@ -410,7 +470,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 			<field>
 				<name>pl5</name>
 				<display>二级区域</display>
@@ -422,15 +482,17 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-			
+
 		</fields>
 	</entity>
+
+
 	<entity>
-	    <name>city</name>
-	    <display>城市</display>
-	    <fields>
-	       <field>
-	          <name>id</name>
+		<name>city</name>
+		<display>城市</display>
+		<fields>
+			<field>
+				<name>id</name>
 				<display>ID</display>
 				<data-type>Long</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
@@ -438,9 +500,9 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
-	       </field>
-	       <field>
-	          <name>name</name>
+			</field>
+			<field>
+				<name>name</name>
 				<display>城市</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -448,9 +510,9 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-	       </field>
-	       <field>
-	          <name>provinceId</name>
+			</field>
+			<field>
+				<name>provinceId</name>
 				<display>ID</display>
 				<data-type>Long</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -458,8 +520,8 @@
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-	       </field>
-	    </fields>
+			</field>
+		</fields>
 	</entity>
 	<entity>
 		<name>activity</name>
@@ -562,9 +624,9 @@
 			</field>
 		</fields>
 	</entity>
-	
-	
-		<entity>
+
+
+	<entity>
 		<name>externalMeeting</name>
 		<display>日历</display>
 		<sql>select * from (select *\,activity_type as act_type\,status as act_status from externalMeeting where crmuserId=?) as aMeeting</sql>
@@ -613,7 +675,7 @@
 			</field>
 			<field>
 				<name>contactIds</name>
-				<display>类型</display>
+				<display>联系人</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -663,12 +725,22 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
+			<field>
+				<name>coachId</name>
+				<display>教练</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
 		</fields>
 	</entity>
-	
-	
-	
-		<entity>
+
+
+
+	<entity>
 		<name>dealerAccount</name>
 		<display>经销商</display>
 		<sql>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL</sql>
@@ -725,7 +797,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl1</name>
 				<display>一级区域</display>
@@ -737,7 +809,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl2</name>
 				<display>二级区域</display>
@@ -748,11 +820,11 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-			</field>	
+			</field>
 		</fields>
 	</entity>
-	
-		<entity>
+
+	<entity>
 		<name>dealerContact</name>
 		<display>经销商联系人</display>
 		<sql>select * from dealerContact where ? IS NOT NULL</sql>
@@ -786,9 +858,9 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-                                <priority>1</priority>
+				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>sex</name>
 				<display>性别</display>
@@ -800,7 +872,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>status</name>
 				<display>状态</display>
@@ -812,7 +884,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 			<field>
 				<name>pl1</name>
 				<display>主要产品</display>
@@ -824,8 +896,8 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-			
+
 		</fields>
 	</entity>
-	
+
 </entities>

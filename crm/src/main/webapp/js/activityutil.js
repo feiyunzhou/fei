@@ -28,7 +28,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
             args.s = {id:userId,key: userInfo.password};
             ajaxPost2(args, function(data) {
                 if(onCompleted != undefined)onCompleted(data);
-                //setRemoteActivities2LocalStorage(data);
+                setRemoteMeetings2LocalStorage(data);
             }, function(status) {
                 if(onError != undefined)onError(status);
             });
@@ -82,6 +82,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                 if(value.length>0){
                   var  act = convertActivityArray2Object(data.cols,value[0]);
                   var event = {};
+                      event.act_type = act.act_type;
                       event.id = act.id;
                       event.title = act.status;
                       event.start =  parseInt(act.starttime)/1000;
@@ -102,6 +103,8 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                 return "#2B60DE";
             }else if(type == 2){
                 return "#E18B6B";
+            }else if(type == 3){
+                return "#ff8c00";
             }else{
                 return "#6698FF";
             }
@@ -116,6 +119,8 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
             return "#5484ed";   
         } else if (type == 2) {
             return "#5484e";
+        }else if(type == 3){
+            return "#ff8c00";
         }
          return "#a4bdfc";
         
@@ -127,7 +132,9 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
             //#D06B64; #5484ed;#a4bdfc;rgb(255, 136, 124);                  
             return "常规";
         } else if (type == 2) {
-            return "会议";    
+            return "外部会议";
+        } else if (type == 3) {
+            return "内部会议";
         }
         return "其他";
     
@@ -137,6 +144,10 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     setRemoteActivities2LocalStorage = function(data){
         localStorage["remoteactivities"] = JSON.stringify(data);
     },
+
+        setRemoteMeetings2LocalStorage = function(data){
+            localStorage["remotemeetings"] = JSON.stringify(data);
+        },
     
     setCalendarEvent2LocalStorage = function(event){
         var ed = localStorage["localevents"];
@@ -148,6 +159,11 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     getRemoteActivitesFromLocalStorage = function(){
         var acts =  localStorage["remoteactivities"] || '{}';
         return JSON.parse(acts);
+    },
+
+    getRemoteMeetingsFromLocalStorage = function(){
+            var acts =  localStorage["remotemeetings"] || '{}';
+            return JSON.parse(acts);
     },
     
     getCalendarEventFromLocalStorage = function(){
@@ -192,7 +208,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
 
         postExternalMeetingEvent = function (userInfo,cp,onComplete,onError) {
             var args = {};
-            args.f = "addExternalMeeting";
+            args.f = "addMeeting";
             var userId = userInfo.id+"";
             args.s = {id:userId,key: userInfo.password};
             args.cp = cp;
@@ -202,7 +218,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                 isOnline = true;
                 //console.log(resp);
                 if (resp.code == 0) {
-                    console.log("post calendar event successfully");
+                    console.log("post the meeting event successfully");
                     onComplete();
                 } else {
                     console.log("failed to set event");
@@ -264,6 +280,56 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
             if(onError != undefined ) onError(status);    
         });
     },
+
+
+     updateStatusOfExternalMeetingRemotely = function(userInfo,eventId, status, onComplete, onError){
+            var args = {};
+            args.f = "updateStatusOfExternalMeetingRemotely";
+            var userId = userInfo.id+"";
+            args.s = {id:userId,key: userInfo.password};
+            args.p = [eventId,status];
+
+            ajaxPost2(args, function(resp) {
+                isOnline = true;
+                //console.log(resp);
+                if (resp.code == 0) {
+                    console.log("updateStatusOfExternalMeetingRemotely successfully");
+                    if(onComplete !=undefined)onComplete(resp);
+                } else {
+                    console.log("failed to updateStatusOfExternalMeetingRemotely");
+                    if(onError != undefined ) onError(status);
+                }
+
+                return resp.code;
+            }, function(status) {
+                if(onError != undefined ) onError(status);
+            });
+        },
+
+        updateStatusOfInternalMeetingRemotely = function(userInfo,eventId, status, onComplete, onError){
+            var args = {};
+            args.f = "updateStatusOfInternalMeetingRemotely";
+            var userId = userInfo.id+"";
+            args.s = {id:userId,key: userInfo.password};
+            args.p = [eventId,status];
+
+            ajaxPost2(args, function(resp) {
+                isOnline = true;
+                //console.log(resp);
+                if (resp.code == 0) {
+                    console.log("updateStatusOfInternalMeetingRemotely successfully");
+                    if(onComplete !=undefined)onComplete(resp);
+                } else {
+                    console.log("failed to updateStatusOfInternalMeetingRemotely");
+                    if(onError != undefined ) onError(status);
+                }
+
+                return resp.code;
+            }, function(status) {
+                if(onError != undefined ) onError(status);
+            });
+        },
+
     
     updateStatusOfCalendarEventLocally = function(eventId,status){
         
@@ -330,7 +396,12 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         resetStatusChangesInLocalstorage: resetStatusChangesInLocalstorage,
         getEventByStatusAndType : getEventByStatusAndType,
         postExternalMeetingEvent : postExternalMeetingEvent,
-        queryRemoteExternalMeetings : queryRemoteExternalMeetings
+        queryRemoteExternalMeetings : queryRemoteExternalMeetings,
+        setRemoteMeetings2LocalStorage : setRemoteMeetings2LocalStorage,
+        getRemoteMeetingsFromLocalStorage : getRemoteMeetingsFromLocalStorage,
+        updateStatusOfExternalMeetingRemotely: updateStatusOfExternalMeetingRemotely,
+        updateStatusOfInternalMeetingRemotely : updateStatusOfInternalMeetingRemotely
+
         
     };
     

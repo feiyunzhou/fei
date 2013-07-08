@@ -52,6 +52,7 @@
 <link href="../offline/offline.css" rel="stylesheet">
 <script src="../js/offline_common.js"></script>
   <script src="../js/loginutil.js"></script>
+<script src="../js/crmuserutil.js"></script>
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -69,19 +70,34 @@ body {
         var parentpage = CRM_OFFLINE.getParameterByName('parentpage');
         console.log(startdate);
         console.log(enddate);
-        
-        var userId = "20";
+
         var userInfo = CRM_OFFLINE.getUserInfo();
         //initialize
         if (navigator.onLine) {
             CONTACT_UTIL.getContactIdsOfAccountIdRemotely(userInfo);
+            CRMUSER_UTIL.getCoachTableDataRemotely(userInfo);
         }
         
         
         var accounts = ACCOUNT_UTIL.getAllAccountsLocally(); 
         console.log(accounts);
         renderAccountSelect2(accounts);
-        
+
+
+        var coachIds = CRMUSER_UTIL.getValidCoachesLocally();
+        renderSelect4Coaches(coachIds);
+
+        function renderSelect4Coaches(coachIds){
+            $('#user_manager_select').select2({
+                data : {
+                    results : coachIds,
+                    text : 'name'
+                },
+                formatSelection : selectformat,
+                formatResult : selectformat
+            });
+        }
+
         function renderAccountSelect2(optionsData) {
             //console.log(optionsData);
             $('#account_select').select2({
@@ -165,9 +181,14 @@ body {
             if ($("#visit_type_input").val() ==1){
 
                 $("#multi_select_div").hide();
+                $("#user_manager_select_div").hide();
 
             }else if($("#visit_type_input").val() ==2){
                 $("#multi_select_div").show();
+                $("#user_manager_select_div").hide();
+            }else if($("#visit_type_input").val() ==3){
+                $("#multi_select_div").hide();
+                $("#user_manager_select_div").show();
             }
 
             $("#selected_contacts_table tbody").empty();
@@ -189,14 +210,16 @@ body {
             var event_type = parseInt($("#visit_type_input").val());
             if(event_type == 1){
               saveCalendarEventAndBackward();
-            } else if(event_type == 2){
-                saveExternalMeetingAndBackward();
+            } else if(event_type == 2 ){
+                saveMeetingAndBackward(event_type);
+            } else if(event_type == 3){
+                saveMeetingAndBackward(event_type);
             }
 
         });
 
 
-        function saveExternalMeetingAndBackward(){
+        function saveMeetingAndBackward(type){
             var dt = $('#datepicker_from input').val();
             console.log("saveExternalMeetingAndBackward:"+dt);
             var starttime = ($.fullCalendar.parseDate(dt + " " + $("#select_time_from").val() + ":00")).getTime() / 1000;
@@ -205,14 +228,35 @@ body {
             var event_type = parseInt($("#visit_type_input").val());
 
 
-            if(!$.isEmptyObject(selected_contacts))   {
-                var cids = [];
-                $.each(selected_contacts, function(k,v){
-                    cids.push(parseInt(k,10));
+            var cids = [];
+            var selected_coach_Id;
+            if(type == 2){
+                if(!$.isEmptyObject(selected_contacts))   {
 
-                });
+                    $.each(selected_contacts, function(k,v){
+                        cids.push(parseInt(k,10));
+
+                    });
+                }
+
+            } else if(type == 3){
+                var contactIdval = $('#contact_select').val();
+                if (contactIdval === 'undefined' || jQuery.isEmptyObject(contactIdval)) {
+                    alert("医生信息不能为空");
+                    return;
+                }
+                cids.push(contactIdval);
 
 
+                selected_coach_Id =  $("#user_manager_select").val();
+               if (selected_coach_Id === 'undefined' || jQuery.isEmptyObject(selected_coach_Id)) {
+                    alert("教练信息不能为空");
+                    return;
+               }
+            }
+
+
+            if(cids.length>0){
 	            var meetingEvent = {
 	                id:    Date.now(),
 	                title : ACTIVITY_UTIL.getEventTitle(event_type),
@@ -223,6 +267,7 @@ body {
 	                activity_type : event_type,
 	                contactIds : cids,
 	                color : ACTIVITY_UTIL.getEventByStatusAndType(1,event_type),
+                    coachId:   selected_coach_Id,
 	                status: "1"
 	            };
 
@@ -234,8 +279,8 @@ body {
                     //appendCalendarEvent([userEvent]);
                     CRM_OFFLINE.backto(parentpage);
                 });
-
             }
+
 
         }
 
@@ -392,6 +437,15 @@ body {
                                      <tbody></tbody>
                                  </table>
                             </div>
+
+
+                            <div id="user_manager_select_div" style="display:none" class="control-group">
+                                <label class="control-label" for="user_manager">经理：</label>
+                                <div class="controls">
+                                    <input type="hidden" id="user_manager_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+                                </div>
+                            </div>
+
 
 						</div>
 

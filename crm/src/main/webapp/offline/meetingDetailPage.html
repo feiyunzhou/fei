@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html manifest="cache.appcache" dir="ltr" lang="zh-CN">
 <head>
-<title>拜访详细</title>
+<title>会议详细</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -28,6 +28,7 @@
 <link href="../offline/offline.css" rel="stylesheet">
 <script src="../js/offline_common.js"></script>
   <script src="../js/loginutil.js"></script>
+    <script src="../js/crmuserutil.js"></script>
 <style type="text/css">
 body {
 	padding-top: 80px;
@@ -48,7 +49,7 @@ body {
                         console.log("activity id is:" + activityId);
 
                         //get accountTable from local storage
-                        var table = ACTIVITY_UTIL.getRemoteActivitesFromLocalStorage();
+                        var table = ACTIVITY_UTIL.getRemoteMeetingsFromLocalStorage();
                         console.log(table);
                         var tbobj = $("#detail_tb");
                         tbobj.empty();
@@ -57,6 +58,7 @@ body {
 
                             if (table.cols.length > 0 && (table.tData[activityId] != undefined) && (table.tData[activityId] != null)) {
                                 isEventLocated = true;
+
                                 var cols = table.cols;
                                 var colWidth = table.cols.length;
                                 var trs = "";
@@ -71,7 +73,28 @@ body {
                                         var str_date = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm:ss");
                                         trs = trs + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">" + cols[i].display + "</td>" + "<td style=\"text-align:right\">" + str_date + "</td>"
                                                 + "</tr>";
-                                    } else {
+                                    }else if(cols[i].name == "contactIds"){
+
+                                        var ctIds = JSON.parse(rowData[i]||'[]');
+                                        var nameofcontacts = "";
+                                        for(var t=0;t<ctIds.length;t++){
+                                            var ct = CONTACT_UTIL.getContactByIdLocally(ctIds[t]);
+                                            if(!$.isEmptyObject(ct)){
+                                                nameofcontacts =   ct.name  + "," +   nameofcontacts;
+
+                                            }
+                                        }
+                                        
+                                        trs = trs + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">" + cols[i].display + "</td>" + "<td style=\"text-align:right\">" + nameofcontacts + "</td>"+ "</tr>";
+                                    }else if(cols[i].name == "coachId"){
+
+                                        var coach = CRMUSER_UTIL.getCoachByIdLocally(rowData[i]);
+                                        console.log(coach);
+                                        trs = trs + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">" + cols[i].display + "</td>" + "<td style=\"text-align:right\">" + coach.name + "</td>"+ "</tr>";
+                                    }else {
+
+
+
                                         trs = trs + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">" + cols[i].display + "</td>" + "<td style=\"text-align:right\">" + rowData[i] + "</td>"
                                                 + "</tr>";
                                     }
@@ -81,36 +104,16 @@ body {
                             }
                         }
 
-                        //if we can't find the event in the remote data
-                        if (!isEventLocated) {
-                            var events = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
-                            if (events[activityId] != undefined) {
-                                var evt = events[activityId];
-                                var date = new Date(evt.startt * 1000);
-                                var starttime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
-                                date = new Date(evt.endt * 1000);
-                                var endtime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
-                                $('#detail_title').html("拜访");
-                                var trs = "<tbody>" + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">开始时间:</td>" + "<td style=\"text-align:right\" >" + starttime + "</td></tr>" + "<tr>"
-                                        + "<td style=\"text-align:left;font-weight:bold\">结束时间:</td>" + "<td style=\"text-align:right\">" + endtime + "</td></tr>" + "<tr>"
-                                        + "<td style=\"text-align:left;font-weight:bold\">拜访类型:</td>" + "<td style=\"text-align:right\">" + ACTIVITY_UTIL.getEventTitle(evt.activity_type)
-                                        + "</td></tr>" + "</tbody>";
-
-                                tbobj.append(trs);
-
-                            }
-                        }
-
                         $(".completebtn").click(function(e) {
                             if (navigator.onLine) {
-                                ACTIVITY_UTIL.updateStatusOfCalendarEventRemotely(userInfo, activityId, "2", function(data) {
+                                ACTIVITY_UTIL.updateStatusOfExternalMeetingRemotely(userInfo, activityId, "2", function(data) {
                                     CRM_OFFLINE.backto(parentpage);
                                 }, function(status) {
-                                    ACTIVITY_UTIL.updateStatusOfCalendarEventLocally(activityId, "2");
+                                    //ACTIVITY_UTIL.updateStatusOfCalendarEventLocally(activityId, "2");
                                     CRM_OFFLINE.backto(parentpage);
                                 });
                             } else {
-                                ACTIVITY_UTIL.updateStatusOfCalendarEventLocally(activityId, "2");
+                                //ACTIVITY_UTIL.updateStatusOfCalendarEventLocally(activityId, "2");
                                 CRM_OFFLINE.backto(parentpage);
                             }
                         });
