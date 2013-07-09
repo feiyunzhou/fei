@@ -87,6 +87,8 @@ body {
         var coachIds = CRMUSER_UTIL.getValidCoachesLocally();
         renderSelect4Coaches(coachIds);
 
+
+
         function renderSelect4Coaches(coachIds){
             $('#user_manager_select').select2({
                 data : {
@@ -97,6 +99,31 @@ body {
                 formatResult : selectformat
             });
         }
+
+        renderSelect4VisitedContact();
+        function renderSelect4VisitedContact(){
+            var objs =  [];
+            var cts = CONTACT_UTIL.getVisitedContactsLocally();
+            for(var i=0;i<cts.length;i++){
+                var obj = {};
+                var account = ACCOUNT_UTIL.getAccountByIdLocally(cts[i].accountId) ;
+
+                obj.name = cts[i].name + " - " + account.name;
+                obj.id =   cts[i].id;
+                objs.push(obj);
+            }
+
+
+            $('#visited_contact_select').select2({
+                data : {
+                    results : objs ,
+                    text : 'name'
+                },
+                formatSelection : selectformat,
+                formatResult : selectformat
+            });
+        }
+
 
         function renderAccountSelect2(optionsData) {
             //console.log(optionsData);
@@ -182,13 +209,18 @@ body {
 
                 $("#multi_select_div").hide();
                 $("#user_manager_select_div").hide();
-
+                $("#visited_contact_select_div").hide();
+                $("#accountNcontact").show()    ;
             }else if($("#visit_type_input").val() ==2){
                 $("#multi_select_div").show();
                 $("#user_manager_select_div").hide();
+                $("#visited_contact_select_div").hide();
+                $("#accountNcontact").show();
             }else if($("#visit_type_input").val() ==3){
                 $("#multi_select_div").hide();
                 $("#user_manager_select_div").show();
+                $("#visited_contact_select_div").show();
+                $("#accountNcontact").hide();
             }
 
             $("#selected_contacts_table tbody").empty();
@@ -240,7 +272,7 @@ body {
                 }
 
             } else if(type == 3){
-                var contactIdval = $('#contact_select').val();
+                var contactIdval = $('#visited_contact_select').val();
                 if (contactIdval === 'undefined' || jQuery.isEmptyObject(contactIdval)) {
                     alert("医生信息不能为空");
                     return;
@@ -420,7 +452,7 @@ body {
 							</div>
 
 
-							<div class="control-group">
+							<div id="accountNcontact" class="control-group">
 								<label class="control-label" for="account">医院：</label>
 								<div class="controls">
 									<input type="hidden" id="account_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
@@ -430,6 +462,15 @@ body {
 									<input type="hidden" id="contact_select" style="width: 200px"  data-placeholder="请选择"  tabindex="-1" class="select2-offscreen input">
 								</div>
 							</div>
+
+
+                            <div id="visited_contact_select_div" style="display:none" class="control-group">
+                                <label class="control-label" for="visited_contact">拜访过的医生：</label>
+                                <div class="controls">
+                                    <input type="hidden" id="visited_contact_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+                                </div>
+                            </div>
+
 
                             <div id="multi_select_div" style="display:none">
                                 <h6>添加的医生：</h6>

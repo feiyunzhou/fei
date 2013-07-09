@@ -790,6 +790,16 @@ public class DataProvider {
         return getIndexTable(entity,multiMap,id);
     }
     
+    
+    public static String getVisitedContactsTableByUserId(String[] args){
+        String id = args[0];
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        Entity entity = entities.get("contact");
+        Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId("select contact.* from activity,contact where crmuserId= ? AND contact.id=activity.contactId group by id",id);
+        
+        return getIndexTable(entity,multiMap,id);
+    }
+    
     public static String getExternalMeetingTableDataByUserId(String[] args){
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();

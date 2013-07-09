@@ -18,6 +18,25 @@ var CONTACT_UTIL = (function($, w, undefined) {
             }
         });
     },
+
+    getVisitedContactTableDataRemotely = function(userInfo, onComp, onError) {
+            var args = {};
+            args.f = "getVisitedContactsTableByUserId";
+            var userId = userInfo.id+"";
+            args.p = [ userId ];
+            args.s = {id:userId,key: userInfo.password};
+            ajaxPost2(args, function(data) {
+                if (jQuery.isEmptyObject(data) === false) {
+                    setVisitedContactTable2Localstorage(data);
+                    if (onComp != undefined)
+                        onComp(data);
+                }
+            }, function(status) {
+                if(onError != undefined){
+                    onError(status);
+                }
+            });
+        },
     
     getContactIdsOfAccountIdRemotely = function(userInfo,onComp,onError){
         var args = {};        
@@ -61,7 +80,25 @@ var CONTACT_UTIL = (function($, w, undefined) {
         }
         return contacts;
     },
-    
+
+    getVisitedContactsLocally = function(){
+            var accts = [];
+            var table =  getVisitedContactTableFromLocalstorage();
+            if(!$.isEmptyObject(table)){
+                if(table.cols != undefined && table.tData != undefined){
+                    var collength = table.cols.length;
+                    $.each(table.tData,function(key,value){
+                        var row = value[0];
+                        var acct = {};
+                        for(var i=0;i<collength;i += 1){
+                            acct[table.cols[i].name] = row[i];
+                        }
+                        accts.push(acct);
+                    });
+                }
+            }
+            return accts;
+        },
     getContactByIdLocally = function(contactId){
         var ct = {};
         var table = getContactTableFromLocalstorage();
@@ -83,7 +120,15 @@ var CONTACT_UTIL = (function($, w, undefined) {
 
     getContactTableFromLocalstorage = function() {
         return JSON.parse(localStorage["contacttable"] || '{}');
-    };
+    },
+
+        setVisitedContactTable2Localstorage = function(data) {
+            localStorage["visitedcontacttable"] = JSON.stringify(data);
+        },
+
+        getVisitedContactTableFromLocalstorage = function() {
+            return JSON.parse(localStorage["visitedcontacttable"] || '{}');
+        };
     
     return {
         getContactTableDataRemotely : getContactTableDataRemotely,
@@ -93,7 +138,11 @@ var CONTACT_UTIL = (function($, w, undefined) {
         setContactIdsOfAccountId2Localstorage: setContactIdsOfAccountId2Localstorage,
         getContactIdsOfAccountIdFromLocalstorage:getContactIdsOfAccountIdFromLocalstorage,
         getContactsByAccountIdLocally : getContactsByAccountIdLocally,
-        getContactByIdLocally:getContactByIdLocally
+        getContactByIdLocally:getContactByIdLocally,
+        getVisitedContactTableDataRemotely:getVisitedContactTableDataRemotely,
+        setVisitedContactTable2Localstorage:setVisitedContactTable2Localstorage,
+        getVisitedContactTableFromLocalstorage:getVisitedContactTableFromLocalstorage,
+        getVisitedContactsLocally:getVisitedContactsLocally
 
     };
 }(jQuery, window));
