@@ -90,7 +90,6 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                       event.color = getEventByStatusAndType(act.act_status,act.act_type);
                       event.allDay = false;
                       events.push(event);
-                    console.log(event);
                 }
             });
         }

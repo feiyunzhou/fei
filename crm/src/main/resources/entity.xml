@@ -583,7 +583,7 @@
 			</field>
 			<field>
 				<name>contactId</name>
-				<display>类型</display>
+				<display>拜访医生</display>
 				<data-type>Integer</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
