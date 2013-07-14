@@ -70,8 +70,12 @@ body {
                                 var rowData = table.tData[activityId][0];
                                 $('#detail_title').html(rowData[1]);
                                 for ( var i = 1; i < colWidth; i++) {
-                                    if (cols[i].isVisible === false && (cols[i].name !== "contactId"))
+                                    if (cols[i].isVisible === false && (cols[i].name !== "contactId"))   {
+                                        if(cols[i].name == "act_status" && rowData[i] == 2){
+                                            $("#completebtn_div").hide();
+                                        }
                                         continue;
+                                    }
                                     if (i == 2 || i == 3) {
                                         var date = new Date(parseInt(rowData[i]));
                                         //console.log(date);
@@ -173,7 +177,7 @@ body {
 						<div class="btn-group">
 							<a href="#" onclick="window.history.back(); return false;" class="btn">返回</a>
 						</div>
-						<div class="btn-group">
+						<div id ="completebtn_div" class="btn-group">
 							<a class="completebtn btn btn-primary" href="#" class="btn btn-primary">完成</a>
 						</div>
 					</div>
