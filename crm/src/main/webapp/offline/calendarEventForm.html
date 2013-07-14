@@ -216,6 +216,7 @@ select{
             console.log("clicked:"+clicked_tr_id);
             $("#selected_contacts_table #selected_contact_id_"+clicked_tr_id).remove();
             selected_contacts[clicked_tr_id] = undefined;
+            //selected_contacts.s
         });
 
         $("#visit_type_input").on("change",function(e){
@@ -281,7 +282,9 @@ select{
                 if(!$.isEmptyObject(selected_contacts))   {
 
                     $.each(selected_contacts, function(k,v){
-                        cids.push(parseInt(k,10));
+                        if(v != undefined){
+                          cids.push(parseInt(k,10));
+                        }
 
                     });
                 }
