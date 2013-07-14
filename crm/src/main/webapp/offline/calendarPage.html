@@ -24,6 +24,8 @@
 
 <script src="../js/activityutil.js"></script>
 <script src="../js/activityUI.js"></script>
+<script src="../js/contactutil.js"></script>
+<script src="../js/crmuserutil.js"></script>
 
 <script src="../js/offline_common.js"></script>
   <script src="../js/loginutil.js"></script>
@@ -43,8 +45,13 @@ body {
           CRM_OFFLINE.gotoPage("login.html");
       }
 
-      var userId = CRM_OFFLINE.getUserId();  
       var userInfo =   CRM_OFFLINE.getUserInfo();
+      if (navigator.onLine) {
+          CONTACT_UTIL.getVisitedContactTableDataRemotely(userInfo);
+          CRMUSER_UTIL.getCoachTableDataRemotely(userInfo);
+      }
+
+
       $("#logout_link").click(function(event){
           event.preventDefault();
           console.log("logout clicked");

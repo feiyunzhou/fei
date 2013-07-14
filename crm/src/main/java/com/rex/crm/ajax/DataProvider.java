@@ -695,7 +695,11 @@ public class DataProvider {
         long end = jobject.getAsJsonPrimitive("endt").getAsLong();
         int status = jobject.getAsJsonPrimitive("status").getAsInt();
         String meeting_type = jobject.getAsJsonPrimitive("activity_type").getAsString();
-        String coachId = jobject.getAsJsonPrimitive("coachId").getAsString();
+        JsonPrimitive coachObj = jobject.getAsJsonPrimitive("coachId");
+        String coachId = "0";
+        if (coachObj !=null){ 
+           coachId = jobject.getAsJsonPrimitive("coachId").getAsString();
+        }
         
         Resp resp = new Resp();
 

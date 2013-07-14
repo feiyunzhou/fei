@@ -44,9 +44,12 @@ var CRM_OFFLINE = (function($, w, undefined) {
                    return LOGIN_UTIL.getLoginInfoFromLocalstorage();
     },
     logout =function(){
-        localStorage.clear();
-        gotoPage("login.html");
-    }
+
+        if(confirm("确定登出吗？登出后数据清除！只有在在线状态才能重新登录！")){
+          localStorage.clear();
+          gotoPage("login.html");
+        }
+    },
     gotoPage = function(page){
         location.href = page;
      };
