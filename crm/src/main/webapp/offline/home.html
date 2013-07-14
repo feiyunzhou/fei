@@ -39,8 +39,15 @@ body {
       if(CRM_OFFLINE.isLogined() === false){
           CRM_OFFLINE.gotoPage("login.html");
       }
-      var userId = CRM_OFFLINE.getUserId();
-      var userInfo =       CRM_OFFLINE.getUserInfo();
+
+      var userInfo = CRM_OFFLINE.getUserInfo();
+      $("#logout_link").click(function(event){
+          event.preventDefault();
+          console.log("logout clicked");
+          CRM_OFFLINE.logout();
+      });
+      $("#username_on_nav").text("你好，"+userInfo.name);
+
       if (navigator.onLine) {
           ACTIVITY_UTIL.queryRemoteActivities(userInfo);
           CONTACT_UTIL.getContactIdsOfAccountIdRemotely(userInfo);
@@ -49,7 +56,8 @@ body {
           CONTACT_UTIL.getVisitedContactTableDataRemotely(userInfo);
           CRMUSER_UTIL.getCoachTableDataRemotely(userInfo);
       }
-      
+
+
   });
 </script>
 </head>
@@ -70,7 +78,12 @@ body {
 						<li class=""><a href="contactPage.html" class="bootstro" data-bootstro-title="医生" data-bootstro-placement="bottom" data-bootstro-step="2">医生</a></li>
 						<li class=""><a href="pptPage.html" class="bootstro" data-bootstro-title="展示" data-bootstro-placement="bottom" data-bootstro-step="3">展示</a></li>
 					</ul>
-				</div>
+                    <ul class="nav pull-right">
+                         <li class=""><span id="username_on_nav"></span></li>
+                         <li class=""><a id="logout_link" href="#" class="pull-right">退出</a></li>
+                    </ul>
+
+                </div>
 			</div>
 		</div>
 	</div>

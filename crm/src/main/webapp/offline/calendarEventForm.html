@@ -81,6 +81,12 @@ select{
         console.log(enddate);
 
         var userInfo = CRM_OFFLINE.getUserInfo();
+        $("#logout_link").click(function(event){
+            event.preventDefault();
+            console.log("logout clicked");
+            CRM_OFFLINE.logout();
+        });
+        $("#username_on_nav").text("你好，"+userInfo.name);
         //initialize
         if (navigator.onLine) {
             CONTACT_UTIL.getContactIdsOfAccountIdRemotely(userInfo);
@@ -407,6 +413,11 @@ select{
 						<li class=""><a href="contactPage.html" class="bootstro" data-bootstro-title="医生" data-bootstro-placement="bottom" data-bootstro-step="2">医生</a></li>
 						<li class=""><a href="pptPage.html" class="bootstro" data-bootstro-title="展示" data-bootstro-placement="bottom" data-bootstro-step="3">展示</a></li>
 					</ul>
+				    <ul class="nav pull-right">
+                         <li class=""><span id="username_on_nav"></span></li>
+                         <li class=""><a id="logout_link" href="#" class="pull-right">退出</a></li>
+                    </ul>
+				
 				</div>
 			</div>
 		</div>

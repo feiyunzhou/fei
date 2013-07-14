@@ -43,6 +43,10 @@ var CRM_OFFLINE = (function($, w, undefined) {
     getUserInfo = function(){
                    return LOGIN_UTIL.getLoginInfoFromLocalstorage();
     },
+    logout =function(){
+        localStorage.clear();
+        gotoPage("login.html");
+    }
     gotoPage = function(page){
         location.href = page;
      };
@@ -55,6 +59,7 @@ var CRM_OFFLINE = (function($, w, undefined) {
         getParameterByName: getParameterByName,
         isLogined: isLogined,
         getUserInfo: getUserInfo,
+        logout:logout,
         gotoPage:gotoPage
     };
     

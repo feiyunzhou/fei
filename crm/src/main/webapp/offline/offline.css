@@ -19,3 +19,14 @@ color: #444;
     margin: 0 auto;
     width: 400px; /* Whatever exact width you are looking for (not bound by preset bootstrap widths) */
 }
+
+
+
+.navbar .nav > li > span {
+  float: none;
+  padding: 10px 15px 10px;
+  color: #777777;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #ffffff;
+  display:block;
+}
