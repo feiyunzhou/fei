@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.dbutils.DbUtils;
@@ -26,6 +28,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 
 import com.google.common.base.Joiner;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.ListMultimap;
@@ -44,6 +48,10 @@ import com.rex.crm.beans.Province;
 public class DAOImpl {
     private static final Logger logger = Logger.getLogger(DAOImpl.class);
     public static ListMultimap<Integer, Integer> accountIdsByUserId;
+    
+    private static Cache<String, String> pickListCache = CacheBuilder.newBuilder()
+            .maximumSize(1000).expireAfterWrite(10, TimeUnit.MINUTES)
+            .build();
 
     public static ImmutableMap<Integer, City> getCityTable() {
         com.google.common.collect.ImmutableMap.Builder<Integer, City> mapBuilder = ImmutableMap.<Integer, City> builder();
@@ -525,6 +533,23 @@ public class DAOImpl {
 
     }
 
+    public static String queryPickListByIdCached(final String picklist, final String id){
+        String value = "";
+        try{
+            value =  pickListCache.get(picklist + "_" + id, new Callable<String>() {
+                @Override
+                public String call() throws Exception {                   
+                    return queryPickListById(picklist,id);
+                }
+          });
+        }catch(Exception e){
+            logger.error("Failed to get data from cache",e);
+        }
+        
+        //logger.debug("hitRate:"+pickListCache.stats().hitRate() + " size:"+ pickListCache.size());
+        return value;
+    }
+    
     public static String queryPickListById(String picklist, String id) {
         String query = "select id, val from " + picklist + " where id=? ";
         // logger.debug(query);

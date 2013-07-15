@@ -884,7 +884,7 @@ public class DataProvider {
                     
                     String fieldValue = "";
                     if (f.getPicklist() != null) {
-                        fieldValue = DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName())));
+                        fieldValue = DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName())));
                     } else {
                         fieldValue = String.valueOf(map.get(f.getName()));
                     }         
