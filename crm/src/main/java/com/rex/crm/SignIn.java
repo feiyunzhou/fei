@@ -16,6 +16,8 @@
  */
 package com.rex.crm;
 
+import java.util.Locale;
+
 import org.apache.wicket.authroles.authentication.panel.SignInPanel;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -47,6 +49,7 @@ public final class SignIn extends WebPage
 	{
 		// Take our standard Logon Panel from the auth-role module and add it to the Page. That is
 		// all what is necessary.
+	    getSession().setLocale(new Locale("zh", "CN"));
 		add(new SignInPanel("signInPanel", false));
 	}
 }
