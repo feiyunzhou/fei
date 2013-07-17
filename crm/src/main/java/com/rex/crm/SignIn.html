@@ -1,27 +1,20 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org" dir="ltr" lang="zh-CN">
+<html xmlns:wicket="http://wicket.apache.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <LINK href="favicon.ico" type="image/x-icon" rel="shortcut icon">
-<title wicket:id="title">CRM</title>
+<title>登录</title>
 <!-- <link rel="stylesheet" type="text/css" href="style.css" />
 <link rel="stylesheet" type="text/css" href="template/style.css" /> -->
 <script src='jquery/js/jquery-1.9.1.js'></script>
 <script src='jquery/js/jquery-ui-1.10.2.custom.js'></script>
-<script src='fullcalendar/fullcalendar.js'></script>
 <script src="js/common.js"></script>
 <script src="bootstrap/js/bootstrap.js"></script>
-<script src="datatable/js/jquery.dataTables.js"></script>
-<script src="datatable/js/dataTables.bootstrap.js"></script>
 <link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
-<link href='fullcalendar/fullcalendar.css' rel='stylesheet' />
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- <link href="flat/css/flat-ui.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="FortAwesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="datatable/css/dataTables.bootstrap.css">
 <link href="css/common.css" rel="stylesheet" />
-<script src="Chart/Chart.js"></script>
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -46,52 +39,30 @@ body {
 <!-- <link  href="css/template.css" rel="stylesheet"/> -->
 <script>
 	$(document).ready(function() {
-
-		$(".nav-item").on("click", function(event) {
-			console.log("item click");
-			$(this).removeClass("active");
-		});
-		//prepareAutoComplete();
 	});
 </script>
 </head>
 <body>
-	<div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				<a class="brand" href="#">CRM</a>
-				<div class="nav-collapse collapse">
-
-					<p class="navbar-text pull-right">
-						<!-- Logged in as <a href="#" class="navbar-link">Username</a> -->
-						<wicket:link><a class="navbar-link" href="SignOut.html">登出</a></wicket:link>
-					</p>
-					<p class="navbar-text pull-right">&nbsp;&nbsp;&nbsp;&nbsp;
-					<p class="navbar-text pull-right">
-					<p class="navbar-text pull-right">
-						<a href="#"><i class="icon-cogs"></i></a>
-					</p>
-				</div>
+				<a class="brand" href="#">E3</a>
 			</div>
 		</div>
 	</div>
-
-	<div class="container-fluid">
+ 
+    <div class="container-fluid">
 
 		<div class="row-fluid">
 			<div>
-				<ul class="nav nav-tabs">
-					<li wicket:id="menu" class="nav-item"><a href="#" wicket:id="link"><span wicket:id="caption"></span> </a></li>
-				</ul>
+				 <span wicket:id="signInPanel"/>
 			</div>
-
-			<wicket:child />
 			<hr>
 			<div class="footer">
 				<p>© Company 2013</p>
 			</div>
 		</div>
 	</div>
-
+    
 </body>
 </html>

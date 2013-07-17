@@ -56,7 +56,7 @@ import com.rex.crm.db.DAOImpl;
  * 
  * @author Feiyun Zhou
  */
-public abstract class TemplatePage extends WebPage {
+public abstract class TemplatePage extends AuthenticatedWebPage {
 	/** title of the current page. */
 	private String pageTitle = "TemplatePageTest";
     protected static ImmutableMap<String,MenuItem>  pageMenuMap;

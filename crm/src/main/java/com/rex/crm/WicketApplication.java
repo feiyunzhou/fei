@@ -1,7 +1,15 @@
 package com.rex.crm;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.Session;
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.component.IRequestableComponent;
 import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.util.file.File;
 
@@ -23,6 +31,11 @@ public class WicketApplication extends WebApplication
 		return HomePage.class;
 	}
 
+	   @Override
+	    public Session newSession(Request request, Response response)
+	    {
+	        return new SignIn2Session(request);
+	    }
 	/**
 	 * @see org.apache.wicket.Application#init()
 	 */
@@ -31,10 +44,44 @@ public class WicketApplication extends WebApplication
 	{
 		super.init();
 
-	       getRequestCycleSettings().setResponseRequestEncoding("UTF-8"); 
+	         getRequestCycleSettings().setResponseRequestEncoding("UTF-8"); 
 	         getMarkupSettings().setDefaultMarkupEncoding("UTF-8"); 
 	        // add your configuration here
 	         getSharedResources().add("image", new FolderResource(new File(getServletContext().getRealPath("image"))));
 	         mountResource("/image", new SharedResourceReference("image"));
+	         
+	         // Register the authorization strategy
+	         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy()
+	         {
+	             public boolean isActionAuthorized(Component component, Action action)
+	             {
+	                 // authorize everything
+	                 return true;
+	             }
+
+	             public <T extends IRequestableComponent> boolean isInstantiationAuthorized(
+	                 Class<T> componentClass)
+	             {
+	                 // Check if the new Page requires authentication (implements the marker interface)
+	                 if (AuthenticatedWebPage.class.isAssignableFrom(componentClass))
+	                 {
+	                     // Is user signed in?
+	                     if (((SignIn2Session)Session.get()).isSignedIn())
+	                     {
+	                         // okay to proceed
+	                         return true;
+	                     }
+
+	                     // Intercept the request, but remember the target for later.
+	                     // Invoke Component.continueToOriginalDestination() after successful logon to
+	                     // continue with the target remembered.
+	                     throw new RestartResponseAtInterceptPageException(SignIn.class);
+	                 }
+
+	                 // okay to proceed
+	                 return true;
+	             }
+	         });
+	         
 	}
 }
