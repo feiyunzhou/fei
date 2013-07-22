@@ -1,6 +1,7 @@
 package com.rex.crm.common;
 
 import java.util.EnumSet;
+import java.util.Map;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -13,6 +14,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.rex.crm.beans.Account;
+import com.rex.crm.util.Configuration;
 
 public class CRUDPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
@@ -22,8 +24,11 @@ public class CRUDPanel extends Panel {
 
     }
 
-    public CRUDPanel(String id, EnumSet<Permissions> userPerms) {
+    public CRUDPanel(String id, String entityName,EnumSet<Permissions> userPerms) {
         super(id);
+        
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        final Entity entity = entities.get(entityName);
         
         if (userPerms == null || userPerms.size() == 0) {
             add(new Fragment("addCon","emptyFragment",this));
@@ -33,7 +38,16 @@ public class CRUDPanel extends Panel {
         } else {
             
             if (userPerms.contains(Permissions.ADD)) {
-                add(new Fragment("addCon","addFragment",this));
+               Fragment addfrag = new Fragment("addCon","addFragment",this);
+               addfrag.add(new Link("create_new_data_btn") {
+
+                   @Override
+                   public void onClick() {
+                      
+                       setResponsePage(new CreateDataPage(entity.getName()));
+                   }
+               });
+                add(addfrag);
             }else{
                 add(new Fragment("addCon","emptyFragment",this));
             }

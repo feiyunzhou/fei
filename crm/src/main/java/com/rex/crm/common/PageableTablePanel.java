@@ -114,7 +114,7 @@ public class PageableTablePanel extends Panel {
         datacontainer.add(new AjaxPagingNavigator("navigator", listview));
         datacontainer.setVersioned(false);
         
-        add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.ADD)));
+        add(new CRUDPanel("operationBar",entity.getName(),EnumSet.of(CRUDPanel.Permissions.ADD)));
         
         
         add(new NewDataFormPanel("formPanel",entity.getFields()));

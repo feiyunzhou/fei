@@ -35,7 +35,7 @@ public class AccountListPanel extends Panel {
         add(dataView);
         
         //TODO Get permission info of user from database.
-        add(new CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.EDIT)));
+        add(new CRUDPanel("operationBar","account",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.EDIT)));
 
     }
 
