@@ -24,7 +24,8 @@ public class UserPage extends TemplatePage
 		Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("crmuser");
         setPageTitle(entity.getDisplay());
-        List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
+        //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
+        List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), "20");
 		add(new PageableTablePanel("datalist",entity,mapList));
 		
 	}

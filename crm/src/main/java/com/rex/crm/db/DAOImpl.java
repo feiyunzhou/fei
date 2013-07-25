@@ -685,6 +685,29 @@ public class DAOImpl {
     }
     
     
+    public static void createNewRecord(String entityName, List<String> fieldNames, List<String> values){        
+         String fieldssql = Joiner.on(",").join(fieldNames);
+         String valuesql = Joiner.on(",").join(values);
+    
+        String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
+        
+        logger.debug("insert sql is:"+sql);
+ 
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn,sql);
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to add new calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
+    
 
     public static void updateStatusOfCalendarEvent(int eventId, int status) {
         String sql = "UPDATE activity SET status=? where id=?";

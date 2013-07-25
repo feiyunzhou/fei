@@ -31,21 +31,19 @@ import org.apache.wicket.util.template.PackageTextTemplate;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.PageFactory;
 import com.rex.crm.beans.Choice;
 import com.rex.crm.db.DAOImpl;
 
 public class NewDataFormPanel extends Panel {
     private static final Logger logger = Logger.getLogger(NewDataFormPanel.class);
 
-    public NewDataFormPanel(String id, List<Field> fields) {
+    public NewDataFormPanel(String id, final Entity entity) {
         super(id);
-
-        Form form = new Form("form");
-        add(form);
-
+        List<Field> fields = entity.getFields();
         RepeatingView repeater = new RepeatingView("repeater");
-        form.add(repeater);
-        final List<IModel> models = Lists.newArrayList();
+      
+        final Map<String,IModel> models = Maps.newHashMap();
         for (Field f : fields) {
             if (!f.isEditable())
                 continue;
@@ -56,8 +54,9 @@ public class NewDataFormPanel extends Panel {
 
             item.add(new Label("fieldlabel", f.getDisplay()));
             if (f.getPicklist() == null) {
-                IModel textModel = new Model("");
-                models.add(textModel);
+                IModel<String> textModel = new Model<String>("");
+                models.put(f.getName(),textModel);
+                
                 item.add(new TextInputFragment("inputField", "textInputFragment", this, textModel));
             } else {
                 List<Choice> pickList = DAOImpl.queryPickList(f.getPicklist());
@@ -68,21 +67,47 @@ public class NewDataFormPanel extends Panel {
                     ids.add(p.getId());
                 }
                 IModel choiceModel = new Model(1L);
-                models.add(choiceModel);
+                models.put(f.getName(),choiceModel);
                 item.add(new DropDownChoiceFragment("inputField", "dropDownFragment", this, ids, list, choiceModel));
             }
         }
 
-        form.add(new AjaxSubmitLink("save") {
+        
+        Form form = new Form("form"){
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form form) {
-                System.out.println("form" + form);
-                for (IModel m : models) {
-                    System.out.println("value:" + m.getObject());
+            protected void onSubmit()
+            {
+                logger.debug("the form was submitted!");
+                logger.debug(models);
+                List<String> fieldNames = Lists.newArrayList();
+                List<String> values = Lists.newArrayList();
+                for(String key: models.keySet()){
+                    fieldNames.add(key);
+                    //models.get(key).getObject()
+                    if(models.get(key).getObject() instanceof String){
+                        values.add("'"+(String)models.get(key).getObject()+"'");
+                    }else{
+                        values.add(String.valueOf(models.get(key).getObject()));
+                    }
+                    
                 }
-
+                DAOImpl.createNewRecord(entity.getName(), fieldNames, values);
+                setResponsePage(PageFactory.createPage(entity.getName()));
             }
-        });
+        };
+        form.add(repeater);
+        add(form);
+        
+//        form.add(new AjaxSubmitLink("save") {
+//            @Override
+//            protected void onSubmit(AjaxRequestTarget target, Form form) {
+//                System.out.println("form" + form);
+//                for (IModel m : models) {
+//                    System.out.println("value:" + m.getObject());
+//                }
+//
+//            }
+//        });
     }
 
     public NewDataFormPanel(String id, IModel<?> model) {

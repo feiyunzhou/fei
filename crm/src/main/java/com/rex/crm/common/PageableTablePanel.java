@@ -117,7 +117,7 @@ public class PageableTablePanel extends Panel {
         add(new CRUDPanel("operationBar",entity.getName(),EnumSet.of(CRUDPanel.Permissions.ADD)));
         
         
-        add(new NewDataFormPanel("formPanel",entity.getFields()));
+        add(new NewDataFormPanel("formPanel",entity));
 
     }
 
