@@ -44,6 +44,8 @@ import com.rex.crm.beans.Choice;
 import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.beans.Province;
+import com.rex.crm.common.Entity;
+import com.rex.crm.util.Configuration;
 
 public class DAOImpl {
     private static final Logger logger = Logger.getLogger(DAOImpl.class);
@@ -52,6 +54,11 @@ public class DAOImpl {
     private static Cache<String, String> pickListCache = CacheBuilder.newBuilder()
             .maximumSize(1000).expireAfterWrite(10, TimeUnit.MINUTES)
             .build();
+    
+    private static Cache<String, String> relationDataCache = CacheBuilder.newBuilder()
+            .maximumSize(1000).expireAfterWrite(10, TimeUnit.MINUTES)
+            .build();
+
 
     public static ImmutableMap<Integer, City> getCityTable() {
         com.google.common.collect.ImmutableMap.Builder<Integer, City> mapBuilder = ImmutableMap.<Integer, City> builder();
@@ -533,6 +540,50 @@ public class DAOImpl {
 
     }
 
+    public static String queryCachedRelationDataById(final String tableName, final String id){
+        String value = "";
+        try{
+            value =  relationDataCache.get(tableName + "_" + id, new Callable<String>() {
+                @Override
+                public String call() throws Exception {                   
+                    return queryRelationDataById(tableName,id);
+                }
+          });
+        }catch(Exception e){
+            logger.error("Failed to get data from cache",e);
+        }
+        
+        //logger.debug("hitRate:"+pickListCache.stats().hitRate() + " size:"+ pickListCache.size());
+        return value;
+    }
+    
+    
+    public static String queryRelationDataById(final String tableName, final String id){
+        String query = "select id, name from " + tableName + " where id=? ";
+        // logger.debug(query);
+        String result = "";
+        Connection conn = null;
+        Map map = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            map = (Map) run.query(conn, query, new MapHandler(), id);
+            if (map != null) {
+                Object value = map.get("name");
+                if (value != null) {
+                    result = (String) value;
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error("failed to get queryPickListById", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return result;
+    }
+    
     public static String queryPickListByIdCached(final String picklist, final String id){
         String value = "";
         try{
@@ -596,6 +647,23 @@ public class DAOImpl {
         return choices;
 
     }
+    
+    public static List<Choice> queryRelationDataList(String tablename,String userId) {
+        Entity entity = Configuration.getEntityByName(tablename);
+        List<Choice> choices = Lists.newArrayList();
+        List list = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
+         
+         for(Map map:(List<Map>)list){
+             Choice c = new Choice();
+             c.setId(((Number)map.get("id")).longValue());
+             c.setVal((String)map.get("name"));
+             choices.add(c);
+         }
+         
+        return choices;
+
+    }
+    
 
     public static List<Pair<String, Map<String, Object>>> queryFilters(String sourceTableSQL, String filterField, String filterbyTable, String user_id) {
         List<Choice> choices = queryPickList(filterbyTable);

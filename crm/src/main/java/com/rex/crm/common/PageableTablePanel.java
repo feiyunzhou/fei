@@ -96,10 +96,13 @@ public class PageableTablePanel extends Panel {
                     } else {
                         if (f.getPicklist() != null) {
                             // get option from picklist
-                            String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName()))));
+                            String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName()))));
                             columnitem.add(new Label("celldata", value));
 
-                        } else {
+                        } else if(f.getRelationTable() != null){
+                            String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName()))));
+                            columnitem.add(new Label("celldata", value));
+                        }else {
                             String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
                             columnitem.add(new Label("celldata", value));
                         }

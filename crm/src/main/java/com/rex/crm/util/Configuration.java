@@ -174,6 +174,14 @@ public class Configuration {
                         field.setPicklist(null);
                     }
                     
+                    
+                    String relationTable = sub2.getString("relationTable");
+                    if(relationTable!=null && relationTable.trim().length()!=0){
+                        field.setRelationTable(relationTable);
+                    }else{
+                        field.setRelationTable(null);
+                    }
+                    
                     String formatter = sub2.getString("formatter");
                     if(formatter !=null){
                         field.setFormatter(formatter);

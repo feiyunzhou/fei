@@ -84,10 +84,19 @@ public class EntityDetailPanel extends Panel {
                       columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                       columnitem.add(new AttributeAppender("style", new Model("text-align:left;"), ";"));
                   }else{
-                      String value = CRMUtility.formatValue(currentField.getFormatter(),DAOImpl.queryPickListById(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
+                      String value = CRMUtility.formatValue(currentField.getFormatter(),DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
                       columnitem.add(new Label("celldata",value).setEscapeModelStrings(false));
                       columnitem.add(new AttributeAppender("style", new Model("text-align:right;"), ";"));
                   }     
+              }else if(currentField.getRelationTable() != null){
+                  if(j%2 == 0){
+                      columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                      columnitem.add(new AttributeAppender("style", new Model("text-align:left;"), ";"));
+                  }else{
+                      String value = CRMUtility.formatValue(currentField.getFormatter(),DAOImpl.queryCachedRelationDataById(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
+                      columnitem.add(new Label("celldata",value).setEscapeModelStrings(false));
+                      columnitem.add(new AttributeAppender("style", new Model("text-align:right;"), ";"));
+                  }
               }else{
                   if(j%2 == 0){
                       columnitem.add(new Label("celldata",currentField.getDisplay()+":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));

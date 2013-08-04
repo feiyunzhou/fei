@@ -28,6 +28,8 @@ public class Field implements Serializable {
     private String formatter;
     @Expose
     private int priority;
+    @Expose
+    private String relationTable = null;
     
 
     public boolean isPrimaryKey() {
@@ -123,6 +125,14 @@ public class Field implements Serializable {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public String getRelationTable() {
+        return relationTable;
+    }
+
+    public void setRelationTable(String relationTable) {
+        this.relationTable = relationTable;
     }
     
 

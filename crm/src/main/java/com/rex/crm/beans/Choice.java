@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Choice implements Serializable {
     private long id;
     private String val;
+    private String name;
 
     public long getId() {
         return id;
@@ -20,6 +21,14 @@ public class Choice implements Serializable {
 
     public void setVal(String val) {
         this.val = val;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

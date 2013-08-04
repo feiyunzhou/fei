@@ -567,6 +567,8 @@ public class DataProvider {
                 String fieldValue = "";
                 if (f.getPicklist() != null) {
                     fieldValue = DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName())));
+                }else if(f.getRelationTable() != null){
+                    fieldValue = DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName())));
                 } else {
                     fieldValue = String.valueOf(map.get(f.getName()));
                 }
@@ -604,6 +606,8 @@ public class DataProvider {
                 String fieldValue = "";
                 if (f.getPicklist() != null) {
                     fieldValue = DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName())));
+                }else if(f.getRelationTable() !=null){
+                    fieldValue = DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName())));
                 } else {
                     fieldValue = String.valueOf(map.get(f.getName()));
                 }
@@ -643,6 +647,8 @@ public class DataProvider {
                 String fieldValue = "";
                 if (f.getPicklist() != null) {
                     fieldValue = DAOImpl.queryPickListById(f.getPicklist(), String.valueOf(map.get(f.getName())));
+                }else if(f.getRelationTable() != null){
+                    fieldValue = DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName())));
                 } else {
                     fieldValue = String.valueOf(map.get(f.getName()));
                 }
@@ -885,6 +891,8 @@ public class DataProvider {
                     String fieldValue = "";
                     if (f.getPicklist() != null) {
                         fieldValue = DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName())));
+                    } else if(f.getRelationTable() != null){
+                        fieldValue = DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName())));
                     } else {
                         fieldValue = String.valueOf(map.get(f.getName()));
                     }         

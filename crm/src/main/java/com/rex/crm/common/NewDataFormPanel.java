@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -32,6 +33,7 @@ import org.apache.wicket.util.template.PackageTextTemplate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.PageFactory;
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.Choice;
 import com.rex.crm.db.DAOImpl;
 
@@ -53,12 +55,8 @@ public class NewDataFormPanel extends Panel {
             repeater.add(item);
 
             item.add(new Label("fieldlabel", f.getDisplay()));
-            if (f.getPicklist() == null) {
-                IModel<String> textModel = new Model<String>("");
-                models.put(f.getName(),textModel);
+            if (f.getPicklist() != null) {
                 
-                item.add(new TextInputFragment("inputField", "textInputFragment", this, textModel));
-            } else {
                 List<Choice> pickList = DAOImpl.queryPickList(f.getPicklist());
                 Map<Long, String> list = Maps.newHashMap();
                 List<Long> ids = Lists.newArrayList();
@@ -69,6 +67,30 @@ public class NewDataFormPanel extends Panel {
                 IModel choiceModel = new Model(1L);
                 models.put(f.getName(),choiceModel);
                 item.add(new DropDownChoiceFragment("inputField", "dropDownFragment", this, ids, list, choiceModel));
+                
+            } else if(f.getRelationTable() != null){
+                
+                String userId = ((SignIn2Session)getSession()).getUserId();
+                List<Choice> pickList = DAOImpl.queryRelationDataList(f.getRelationTable(), userId);
+                Map<Long, String> list = Maps.newHashMap();
+                List<Long> ids = Lists.newArrayList();
+                for (Choice p : pickList) {
+                    list.put(p.getId(), p.getVal());
+                    ids.add(p.getId());
+                }
+                IModel choiceModel = new Model(1L);
+                models.put(f.getName(),choiceModel);
+                item.add(new DropDownChoiceFragment("inputField", "dropDownFragment", this, ids, list, choiceModel));
+                
+            }else {
+                
+                IModel<String> textModel = new Model<String>("");
+                models.put(f.getName(),textModel);
+                
+                item.add(new TextInputFragment("inputField", "textInputFragment", this, textModel));
+                
+                
+             
             }
         }
 

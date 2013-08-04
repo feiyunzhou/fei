@@ -137,7 +137,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from (select contact.*\,account.name as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId) as
+		<sql>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId) as
 			aContact</sql>
 		<filterField>pl1</filterField>
 		<fields>
@@ -180,6 +180,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<relationTable>account</relationTable>
 			</field>
 			<field>
 				<name>mobilephone</name>

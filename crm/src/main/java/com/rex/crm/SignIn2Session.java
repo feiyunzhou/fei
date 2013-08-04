@@ -29,6 +29,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 {
 	/** Trivial user representation */
 	private String user;
+	private String userId;
 
 	/**
 	 * Constructor
@@ -61,6 +62,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 			if ("tig".equalsIgnoreCase(username) && "12345".equalsIgnoreCase(password))
 			{
 				user = username;
+				userId = "20";
 			}
 		}
 
@@ -88,4 +90,12 @@ public final class SignIn2Session extends AuthenticatedWebSession
 	{
 		return user;
 	}
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
