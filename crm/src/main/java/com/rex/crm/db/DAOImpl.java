@@ -1,9 +1,11 @@
 package com.rex.crm.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -753,30 +755,82 @@ public class DAOImpl {
     }
     
     
-    public static void createNewRecord(String entityName, List<String> fieldNames, List<String> values){        
+    public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values){        
          String fieldssql = Joiner.on(",").join(fieldNames);
+         fieldssql = fieldssql + ",whenadded";
+         
          String valuesql = Joiner.on(",").join(values);
+         valuesql =  valuesql + ", now()";
     
         String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
         
         logger.debug("insert sql is:"+sql);
  
         Connection conn = null;
+        //PreparedStatement statement = null;
+        ResultSet generatedKeys = null;
+        PreparedStatement statement = null;
+        long key = -1;
+        try {
+            conn = DBHelper.getConnection();
+            statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                logger.error("Failed to insert data");
+                return -1;
+            }
+            
+            generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                //user.setId(generatedKeys.getLong(1));
+                 key = generatedKeys.getLong(1);
+            } else {
+                logger.error("failed to insert data");
+                return -1;
+            }
+            
+        } catch (Exception e) {
+            logger.error("failed to add new calendar event", e);
+        } finally {
+            if (generatedKeys != null) try { generatedKeys.close(); } catch (SQLException logOrIgnore) {}
+            if (statement != null) try { statement.close(); } catch (SQLException logOrIgnore) {}
+            if (conn != null) try { conn.close(); } catch (SQLException logOrIgnore) {}
+        }
+        
+        return key;
+
+    }
+    
+
+    public static void insert2UserRelationTable(String entityName, String userId, String entityId){
+        String sql = null;
+        if(entityName.equalsIgnoreCase("account")){
+            sql = "INSERT INTO accountcrmuser ( accountId, crmuserId) VALUES ("+entityId+","+userId+")";
+        }else if(entityName.equalsIgnoreCase("contact")){
+            sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+userId+")";
+        }
+        
+        if(sql == null) {
+            logger.error("entityName error");
+            return;
+        }
+        
+        Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            inserts += run.update(conn,sql);
+            inserts += run.update(conn, sql);
+
             System.out.println("inserted:" + inserts);
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
-
     }
     
-
+    
     public static void updateStatusOfCalendarEvent(int eventId, int status) {
         String sql = "UPDATE activity SET status=? where id=?";
         Connection conn = null;

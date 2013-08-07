@@ -56,10 +56,10 @@ public class EntityDetailPanel extends Panel {
             name = String.valueOf(data.get("name"));
         }
         add(new Label("name",name));
-        logger.debug("numOfField:"+numOfField);
+        //logger.debug("numOfField:"+numOfField);
        //set the detailed info
         int num_of_row = (numOfField/NUM_OF_COLUMN) + 1;
-        logger.debug("num_of_row:"+num_of_row);
+        //logger.debug("num_of_row:"+num_of_row);
         
         for(int i=0;i<num_of_row;i++){
             AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());

@@ -46,6 +46,7 @@ public class NewDataFormPanel extends Panel {
         RepeatingView repeater = new RepeatingView("repeater");
       
         final Map<String,IModel> models = Maps.newHashMap();
+        final String userId = ((SignIn2Session)getSession()).getUserId();
         for (Field f : fields) {
             if (!f.isEditable())
                 continue;
@@ -65,12 +66,14 @@ public class NewDataFormPanel extends Panel {
                     ids.add(p.getId());
                 }
                 IModel choiceModel = new Model(1L);
+                
+                
                 models.put(f.getName(),choiceModel);
                 item.add(new DropDownChoiceFragment("inputField", "dropDownFragment", this, ids, list, choiceModel));
                 
             } else if(f.getRelationTable() != null){
                 
-                String userId = ((SignIn2Session)getSession()).getUserId();
+                
                 List<Choice> pickList = DAOImpl.queryRelationDataList(f.getRelationTable(), userId);
                 Map<Long, String> list = Maps.newHashMap();
                 List<Long> ids = Lists.newArrayList();
@@ -79,7 +82,15 @@ public class NewDataFormPanel extends Panel {
                     ids.add(p.getId());
                 }
                 IModel choiceModel = new Model(1L);
-                models.put(f.getName(),choiceModel);
+                
+                String fn = "";
+                if(f.getAlias()!=null){
+                    fn = f.getAlias();
+                }else{
+                    fn = f.getName();
+                }
+                
+                models.put(fn,choiceModel);
                 item.add(new DropDownChoiceFragment("inputField", "dropDownFragment", this, ids, list, choiceModel));
                 
             }else {
@@ -113,7 +124,11 @@ public class NewDataFormPanel extends Panel {
                     }
                     
                 }
-                DAOImpl.createNewRecord(entity.getName(), fieldNames, values);
+                long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values);
+                if(generatedId>0){
+                    logger.debug("generateId is:"+generatedId);
+                 DAOImpl.insert2UserRelationTable(entity.getName(), userId, String.valueOf(generatedId));
+                }
                 setResponsePage(PageFactory.createPage(entity.getName()));
             }
         };

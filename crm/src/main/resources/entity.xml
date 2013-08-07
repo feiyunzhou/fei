@@ -5,8 +5,8 @@
 		<name>account</name>
 		<display>医院</display>
 		<!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as aAccount</sql> -->
-		<sql>SELECT * from (select account.* from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId group by account.id) as aAccount
-		</sql>
+		<!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId group by account.id) as aAccount -->
+		<sql>SELECT * from (select account.* from accountcrmuser\,account where accountcrmuser.crmuserId=? AND accountcrmuser.accountId=account.id order by whenadded DESC) as aAccount</sql>
 		<filterField>pl6</filterField>
 		<fields>
 			<field>
@@ -137,7 +137,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId) as
+		<sql>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId order by whenadded DESC) as
 			aContact</sql>
 		<filterField>pl1</filterField>
 		<fields>
@@ -173,6 +173,7 @@
 			</field>
 			<field>
 				<name>accountName</name>
+			    <alias>accountId</alias>
 				<display>医院</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>

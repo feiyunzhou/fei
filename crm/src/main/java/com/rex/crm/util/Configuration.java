@@ -182,6 +182,14 @@ public class Configuration {
                         field.setRelationTable(null);
                     }
                     
+                    
+                    String alias = sub2.getString("alias");
+                    if(alias!=null && alias.trim().length()!=0){
+                        field.setAlias(alias);
+                    }else{
+                        field.setAlias(null);
+                    }
+                    
                     String formatter = sub2.getString("formatter");
                     if(formatter !=null){
                         field.setFormatter(formatter);

@@ -22,6 +22,7 @@ ALTER table account ADD pl3 MEDIUMINT;
 ALTER table account ADD pl4 MEDIUMINT;
 ALTER table account ADD pl5 MEDIUMINT;
 ALTER table account ADD pl6 MEDIUMINT;
+ALTER table account ADD whenadded DATETIME;
 
 --picklist for account
 --状态;
@@ -135,6 +136,7 @@ CREATE TABLE activity
 ALTER table activity ADD activity_type MEDIUMINT;
 ALTER table activity ADD contactId MEDIUMINT;
 ALTER table activity ADD status MEDIUMINT;
+ALTER table activity ADD whenadded DATETIME;
 
 -- 活动状态;
 drop table if exists activity_status;
@@ -177,6 +179,7 @@ ALTER table contact ADD pl4 MEDIUMINT;
 ALTER table contact ADD pl5 MEDIUMINT;
 ALTER table contact ADD pl6 MEDIUMINT;
 ALTER table contact ADD visiting_target MEDIUMINT;
+ALTER table contact ADD whenadded DATETIME;
 
 -- picklist for contact;
 -- 性别;
@@ -278,6 +281,7 @@ ALTER table crmuser ADD loginName VARCHAR(255);
 ALTER table crmuser ADD password VARCHAR(255);
 ALTER table crmuser ADD sessionKey VARCHAR(255);
 ALTER table crmuser ADD lastLoginTime BIGINT;
+ALTER table crmuser ADD whenadded DATETIME;
 
 
 -- pick list for crmuser
@@ -359,7 +363,7 @@ CREATE TABLE dealerAccount
     pl2 MEDIUMINT,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-
+ALTER table dealerAccount ADD whenadded DATETIME;
 
 
 drop table if exists dealerContact;
@@ -374,5 +378,5 @@ CREATE TABLE dealerContact
     pl1 MEDIUMINT,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-
+ALTER table dealerContact ADD whenadded DATETIME;
 

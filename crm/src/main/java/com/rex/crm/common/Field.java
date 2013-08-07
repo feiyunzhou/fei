@@ -31,6 +31,9 @@ public class Field implements Serializable {
     @Expose
     private String relationTable = null;
     
+    @Expose
+    private String alias = null;
+    
 
     public boolean isPrimaryKey() {
         return isPrimaryKey;
@@ -133,6 +136,14 @@ public class Field implements Serializable {
 
     public void setRelationTable(String relationTable) {
         this.relationTable = relationTable;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 
