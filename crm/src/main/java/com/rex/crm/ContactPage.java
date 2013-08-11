@@ -60,7 +60,7 @@ public class ContactPage extends TemplatePage
                     
         }
         add(new PageableTablePanel("datalist",entity,mapList));
-        
+        System.out.println("AAAAAAAAAAAAAAAAAAAA:"+entity.getFilterField());
         
         //for the side bar
         List<Pair<String, Map<String, Object>>> types = DAOImpl.queryFilters(entity.getSql(), entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);

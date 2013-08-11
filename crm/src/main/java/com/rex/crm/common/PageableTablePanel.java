@@ -62,7 +62,7 @@ public class PageableTablePanel extends Panel {
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
         datacontainer.add(columnNameRepeater);
         for (Field f : entity.getFields()) {
-            if (!f.isVisible())
+            if (!f.isVisible()|| f.getPriority() >1)
                 continue;
             AbstractItem item = new AbstractItem(columnNameRepeater.newChildId());
             columnNameRepeater.add(item);
@@ -78,7 +78,7 @@ public class PageableTablePanel extends Panel {
                 item.add(columnRepeater);
                 final String rowId = String.valueOf(map.get(primaryKeyName));
                 for (Field f : fields) {
-                    if (!f.isVisible())
+                    if (!f.isVisible() || f.getPriority() >1)
                         continue;
                     AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model() {
                         @Override

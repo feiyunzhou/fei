@@ -7,8 +7,9 @@
 		<!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as aAccount</sql> -->
 		<!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId group by account.id) as aAccount -->
 		<sql>SELECT * from (select account.* from accountcrmuser\,account where accountcrmuser.crmuserId=? AND accountcrmuser.accountId=account.id order by whenadded DESC) as aAccount</sql>
-		<filterField>pl6</filterField>
+		<filterField>medicalType</filterField>
 		<fields>
+		<!--  医院的基本信息 -->
 			<field>
 				<name>id</name>
 				<display>ID</display>
@@ -30,6 +31,159 @@
 				<priority>1</priority>
 			</field>
 			<field>
+				<name>alias</name>
+				<display>企业别名</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>medicalType</name>
+				<display>医疗机构类型</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_medicalType_pl</picklist>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>headOfHospital</name>
+				<display>院长姓名</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>grade</name>
+				<display>医院等级</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_grade_pl</picklist>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>isMedicalInsurance</name>
+				<display>医保</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>boolean_pl</picklist>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>profitMethod</name>
+				<display>医院盈利性质</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>isEducational</name>
+				<display>教学医院</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>medicalCollege</name>
+				<display>所属医学院</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>superiorHospital</name>
+				<display>上级医疗机构</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>tel</name>
+				<display>主要电话号码</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>fax</name>
+				<display>主要传真号码</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>website</name>
+				<display>网站</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>province</name>
+				<display>所在省市</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>city</name>
+				<display>地级城市</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>area</name>
+				<display>区县</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
 				<name>address</name>
 				<display>地址</display>
 				<data-type>String</data-type>
@@ -40,8 +194,18 @@
 				<priority>1</priority>
 			</field>
 			<field>
-				<name>classification</name>
-				<display>类型</display>
+				<name>postcode</name>
+				<display>邮政编码</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>strongPoint</name>
+				<display>专科特长</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -49,88 +213,241 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
+            <!-- 医院相关业务信息-->
+            <field>
+				<name>businessRevenue</name>
+				<display>业务总收入</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
 			<field>
-				<name>tele</name>
-				<display>电话</display>
+				<name>numOfDoctor</name>
+				<display>医生数量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>numOfSickbed</name>
+				<display>病床数量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>numOfTreatment</name>
+				<display>年诊疗人次量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+            <field>
+				<name>numOfOperation</name>
+				<display>住院病人手术次数</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>establishYear</name>
+				<display>建院年份</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>medicalTreatmentRevenue</name>
+				<display>医疗收入</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>outpatientRevenue</name>
+				<display>门诊收入</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+             <field>
+				<name>outpatientOperationRevenue</name>
+				<display>门诊手术收入</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>outpatientAssayRevenue</name>
+				<display>门诊化验收入</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>hospitalizationRevenue</name>
+				<display>住院收入</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>hospitalizationOperationRevenue</name>
+				<display>住院手术收入</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+            <!-- 手术与手术量信息 -->
+            <field>
+				<name>numOfOperationRoom</name>
+				<display>手术室数量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+			</field>
+			<field>
+				<name>numOfsickroom4Operation</name>
+				<display>病房手术间数量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+			</field>
+			<field>
+				<name>numOfOutpatientRoom4Operation</name>
+				<display>门诊手术间数量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+			</field>
+			<field>
+				<name>numOfChildbirth</name>
+				<display>产房分娩数量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+			</field>
+			<field>
+				<name>numOfEmergencyOperation</name>
+				<display>急诊手术量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+			</field>
+			<field>
+				<name>numOfOutpatientOperation</name>
+				<display>门诊手术量</display>
+				<data-type>Int</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+			</field>
+            <!-- 附加信息  -->
+			<field>
+				<name>dutyOfficer</name>
+				<display>责任人</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>4</priority>
 			</field>
 			<field>
-				<name>pl1</name>
+				<name>status</name>
 				<display>状态</display>
-				<data-type>String</data-type>
-				<picklist>account_pl1</picklist>
+				<data-type>Long</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<picklist>account_status_pl</picklist>
+				<priority>4</priority>
 			</field>
-
 			<field>
-				<name>pl2</name>
-				<display>医院分级</display>
+				<name>description</name>
+				<display>说明</display>
 				<data-type>String</data-type>
-				<picklist>account_pl2</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>4</priority>
 			</field>
-
 			<field>
-				<name>pl3</name>
-				<display>重点医院</display>
+				<name>externalModification</name>
+				<display>外部修改</display>
 				<data-type>String</data-type>
-				<picklist>account_pl3</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>4</priority>
 			</field>
-
 			<field>
-				<name>pl4</name>
-				<display>市场分类</display>
+				<name>externalCreation</name>
+				<display>外部创建</display>
 				<data-type>String</data-type>
-				<picklist>account_pl4</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>4</priority>
 			</field>
-
-			<field>
-				<name>pl5</name>
-				<display>客户中国区域</display>
-				<data-type>String</data-type>
-				<picklist>account_pl5</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-			</field>
-
-			<field>
-				<name>pl6</name>
-				<display>医院类型</display>
-				<data-type>String</data-type>
-				<picklist>account_pl6</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-			</field>
-
+			
 		</fields>
 	</entity>
 
@@ -139,7 +456,7 @@
 		<display>医生</display>
 		<sql>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId order by whenadded DESC) as
 			aContact</sql>
-		<filterField>pl1</filterField>
+		<filterField>department</filterField>
 		<fields>
 			<field>
 				<name>id</name>
@@ -162,19 +479,9 @@
 				<priority>1</priority>
 			</field>
 			<field>
-				<name>accountId</name>
-				<display>医院ID</display>
-				<data-type>Long</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>false</isEditable>
-				<priority>1</priority>
-			</field>
-			<field>
 				<name>accountName</name>
-			    <alias>accountId</alias>
-				<display>医院</display>
+				<display>医疗机构</display>
+				<alias>accountId</alias>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -183,130 +490,324 @@
 				<priority>1</priority>
 				<relationTable>account</relationTable>
 			</field>
+            <field>
+				<name>accountId</name>
+				<display>医院ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
 			<field>
-				<name>mobilephone</name>
-				<display>手机</display>
+				<name>department</name>
+				<display>科室</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-			</field>
-			<field>
-				<name>tel_work</name>
-				<display>电话</display>
-				<data-type>String</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-			</field>
-			<field>
-				<name>title</name>
-				<display>职位</display>
-				<data-type>String</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<picklist>contact_pl1</picklist>
 			</field>
 			<field>
 				<name>sex</name>
 				<display>性别</display>
 				<data-type>String</data-type>
-				<picklist>sex_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>sex_pl</picklist>
+			</field>
+			<field>
+				<name>birthYear</name>
+				<display>出生年份</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 			</field>
-
 			<field>
-				<name>pl1</name>
-				<display>科室</display>
-				<data-type>String</data-type>
-				<picklist>contact_pl1</picklist>
+				<name>birthMonth</name>
+				<display>出生月份</display>
+				<data-type>Long</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 			</field>
-
 			<field>
-				<name>pl2</name>
-				<display>职务</display>
-				<data-type>String</data-type>
-				<picklist>contact_pl2</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-			</field>
-
-			<field>
-				<name>pl3</name>
-				<display>职称</display>
-				<data-type>String</data-type>
-				<picklist>contact_pl3</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<priority>1</priority>
-			</field>
-
-			<field>
-				<name>pl4</name>
-				<display>主要产品</display>
-				<data-type>String</data-type>
-				<picklist>contact_pl4</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-			</field>
-
-			<field>
-				<name>pl5</name>
+				<name>status</name>
 				<display>状态</display>
 				<data-type>String</data-type>
-				<picklist>contact_pl5</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>1</priority>
+				<picklist>contact_pl5</picklist>
 			</field>
-
 			<field>
-				<name>pl6</name>
-				<display>医生分级</display>
+				<name>tel</name>
+				<display>工作电话号码</display>
 				<data-type>String</data-type>
-				<picklist>contact_pl6</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
+			<field>
+				<name>fax</name>
+				<display>工作传真号码</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>mobile</name>
+				<display>移动电话号码</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>email</name>
+				<display>电子邮件</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>validAddress</name>
+				<display>有效地址</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>otherTel</name>
+				<display>其他电话</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
 
+			<field>
+				<name>administrativePosition</name>
+				<display>行政职务</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>contact_pl2</picklist>
+			</field>
+			<field>
+				<name>technicalPosition</name>
+				<display>专业职务</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>contact_pl3</picklist>
+			</field>
+			<field>
+				<name>medicalAssociationPosition</name>
+				<display>学会兼职</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>highestDegree</name>
+				<display>最高学历</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>tutorQualification</name>
+				<display>导师资格</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>academicSpecialties</name>
+				<display>学术专长</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>operationSpecialties</name>
+				<display>手术专长</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>numOfOperationPerYear</name>
+				<display>年手术台数</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>numOfsickbed</name>
+				<display>负责床位数</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>languageLevelOfEnglish</name>
+				<display>英语水平</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>JNIfaulty</name>
+				<display>是否是JNJ成员</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<picklist>boolean_pl</picklist>
+			</field>
+			<field>
+				<name>researchDirection</name>
+				<display>研究方向</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>instuctorLevel</name>
+				<display>讲师级别</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>kol</name>
+				<display>KOL影响力水平</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>grade</name>
+				<display>分级条目</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>contact_pl6</picklist>
+			</field>
+			<field>
+				<name>factorOfGrade</name>
+				<display>分级系数</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>managerId</name>
+				<display>责任人</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>description</name>
+				<display>描述</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
 			<field>
 				<name>visiting_target</name>
 				<display>拜访目标</display>
-				<data-type>Integer</data-type>
+				<data-type>Long</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-
 		</fields>
 	</entity>
 
