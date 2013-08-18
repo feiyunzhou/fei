@@ -9,30 +9,16 @@
 		</script>
 		<div class="container-fluid">
 			<div class="row-fluid">
-
-				<!-- side bar -->
-				<div class="span3">
-					<div class="sidebar-nav sidebarbox well" wicket:id="detailed"></div>
-				</div>
-				<!-- end of side bar -->
-
 				<!-- right container -->
-				<div class="span9">
+				<div class="span12">
 					<div class="title">
 						<span wicket:id="name">我的</span>
+						<div class="pull-right">
+					    <span wicket:id="operationBar">[operation bar]</span>
+				       </div>
 					</div>
-					<ul class="thumbnails" style="margin-top:15px">
-						<li class="span12">
-							<div class="thumbnail">
-								<div class="controls">
-									<div class="input-prepend">
-										<span class="add-on">^_^</span> <input class="span12" placeholder="说点什么..." id="prependedInput" width="500px" type="text"></input>
-									</div>
-									
-								</div>
-							</div>
-						</li>
-					</ul>
+				
+					<div class="" wicket:id="detailed"></div>
 					<div class="accordion" id="accordion2">
 						<div wicket:id="relationRepeater" class="accordion-group">
 							<span wicket:id="relationPanel"></span>

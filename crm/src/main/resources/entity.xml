@@ -19,6 +19,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>name</name>
@@ -29,6 +30,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>alias</name>
@@ -39,6 +41,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>medicalType</name>
@@ -50,6 +53,7 @@
 				<isEditable>true</isEditable>
 				<picklist>account_medicalType_pl</picklist>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>headOfHospital</name>
@@ -60,6 +64,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>grade</name>
@@ -71,6 +76,7 @@
 				<isEditable>true</isEditable>
 				<picklist>account_grade_pl</picklist>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>isMedicalInsurance</name>
@@ -82,6 +88,7 @@
 				<isEditable>true</isEditable>
 				<picklist>boolean_pl</picklist>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>profitMethod</name>
@@ -92,6 +99,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>isEducational</name>
@@ -102,6 +110,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>medicalCollege</name>
@@ -112,6 +121,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>superiorHospital</name>
@@ -122,6 +132,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>tel</name>
@@ -132,6 +143,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>fax</name>
@@ -142,6 +154,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>website</name>
@@ -152,6 +165,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>province</name>
@@ -162,6 +176,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>city</name>
@@ -172,6 +187,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>area</name>
@@ -182,6 +198,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>address</name>
@@ -192,6 +209,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>postcode</name>
@@ -202,6 +220,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>strongPoint</name>
@@ -212,6 +231,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
             <!-- 医院相关业务信息-->
             <field>
@@ -223,6 +243,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfDoctor</name>
@@ -233,6 +254,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfSickbed</name>
@@ -243,6 +265,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfTreatment</name>
@@ -253,6 +276,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
             <field>
 				<name>numOfOperation</name>
@@ -263,6 +287,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>establishYear</name>
@@ -273,6 +298,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>medicalTreatmentRevenue</name>
@@ -283,6 +309,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>outpatientRevenue</name>
@@ -293,6 +320,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
              <field>
 				<name>outpatientOperationRevenue</name>
@@ -303,6 +331,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>outpatientAssayRevenue</name>
@@ -313,6 +342,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>hospitalizationRevenue</name>
@@ -323,6 +353,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>hospitalizationOperationRevenue</name>
@@ -333,6 +364,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
             <!-- 手术与手术量信息 -->
             <field>
@@ -344,6 +376,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfsickroom4Operation</name>
@@ -354,6 +387,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfOutpatientRoom4Operation</name>
@@ -364,6 +398,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfChildbirth</name>
@@ -374,6 +409,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfEmergencyOperation</name>
@@ -384,6 +420,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfOutpatientOperation</name>
@@ -394,6 +431,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
             <!-- 附加信息  -->
 			<field>
@@ -405,6 +443,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>4</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>status</name>
@@ -416,6 +455,7 @@
 				<isEditable>true</isEditable>
 				<picklist>account_status_pl</picklist>
 				<priority>4</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>description</name>
@@ -426,6 +466,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>4</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>externalModification</name>
@@ -436,6 +477,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>4</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>externalCreation</name>
@@ -446,6 +488,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>4</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			
 		</fields>
@@ -467,6 +510,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>name</name>
@@ -477,6 +521,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>accountName</name>
@@ -489,6 +534,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<relationTable>account</relationTable>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
             <field>
 				<name>accountId</name>
@@ -499,6 +545,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>department</name>
@@ -510,6 +557,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<picklist>contact_pl1</picklist>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>sex</name>
@@ -521,6 +569,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<picklist>sex_pl</picklist>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>birthYear</name>
@@ -541,6 +590,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>status</name>
@@ -562,6 +612,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>fax</name>
@@ -572,6 +623,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>mobile</name>
@@ -582,6 +634,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>email</name>
@@ -592,6 +645,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>validAddress</name>
@@ -602,6 +656,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>otherTel</name>
@@ -612,6 +667,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 
 			<field>
@@ -624,6 +680,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<picklist>contact_pl2</picklist>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>technicalPosition</name>
@@ -635,6 +692,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<picklist>contact_pl3</picklist>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>medicalAssociationPosition</name>
@@ -645,6 +703,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>highestDegree</name>
@@ -655,6 +714,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>tutorQualification</name>
@@ -665,6 +725,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>academicSpecialties</name>
@@ -675,6 +736,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>operationSpecialties</name>
@@ -685,6 +747,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfOperationPerYear</name>
@@ -695,6 +758,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>numOfsickbed</name>
@@ -705,6 +769,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>languageLevelOfEnglish</name>
@@ -715,6 +780,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>JNIfaulty</name>
@@ -726,6 +792,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<picklist>boolean_pl</picklist>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>researchDirection</name>
@@ -736,6 +803,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>instuctorLevel</name>
@@ -746,6 +814,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>kol</name>
@@ -756,6 +825,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>grade</name>
@@ -767,6 +837,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<picklist>contact_pl6</picklist>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>factorOfGrade</name>
@@ -777,6 +848,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>managerId</name>
@@ -787,6 +859,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>description</name>
@@ -797,6 +870,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>其他信息</fieldGroup>
 			</field>
 			<field>
 				<name>visiting_target</name>
@@ -807,6 +881,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
 	</entity>
@@ -826,6 +901,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>name</name>
@@ -836,6 +912,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>cellPhone</name>
@@ -846,6 +923,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>email</name>
@@ -856,6 +934,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>jobTitle</name>
@@ -866,6 +945,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
 	</entity>
@@ -884,6 +964,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>name</name>
@@ -894,6 +975,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>cellPhone</name>
@@ -904,6 +986,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>email</name>
@@ -914,6 +997,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>jobTitle</name>
@@ -924,6 +1008,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
 			<field>
@@ -936,6 +1021,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
 			<field>
@@ -948,6 +1034,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
 			<field>
@@ -960,6 +1047,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
 			<field>
@@ -972,6 +1060,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 
 			<field>
@@ -984,6 +1073,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 
 		</fields>
@@ -1003,6 +1093,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>name</name>
@@ -1013,6 +1104,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>provinceId</name>
@@ -1023,6 +1115,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
 	</entity>
@@ -1040,6 +1133,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>title</name>
@@ -1050,6 +1144,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>starttime</name>
@@ -1061,6 +1156,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>endtime</name>
@@ -1072,6 +1168,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>activity_type</name>
@@ -1083,6 +1180,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>contactId</name>
@@ -1093,6 +1191,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_type</name>
@@ -1103,6 +1202,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>status</name>
@@ -1114,6 +1214,7 @@
 				<isEditable>true</isEditable>
 				<picklist>activity_status</picklist>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_status</name>
@@ -1124,6 +1225,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
 	</entity>
@@ -1143,6 +1245,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>title</name>
@@ -1153,6 +1256,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>starttime</name>
@@ -1164,6 +1268,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>endtime</name>
@@ -1175,6 +1280,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>contactIds</name>
@@ -1185,6 +1291,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>activity_type</name>
@@ -1196,6 +1303,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_type</name>
@@ -1206,6 +1314,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>status</name>
@@ -1217,6 +1326,7 @@
 				<isEditable>true</isEditable>
 				<picklist>activity_status</picklist>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_status</name>
@@ -1227,6 +1337,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>coachId</name>
@@ -1237,6 +1348,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
 	</entity>

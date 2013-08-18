@@ -1,9 +1,9 @@
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
 	<script>
-		$(document).ready(function() {
+        $(document).ready(function() {
 
-		});
-	</script>
+        });
+    </script>
 
 
 	<div class="container-fluid">
@@ -13,21 +13,26 @@
 			</div>
 			 -->
 			<div class="span12">
-				<div id="span12 detailinfo">
-					<table class="table table-condensed" style="">
-					    <thead>
-					    <tr><td colspan="2"><h5><span wicket:id="name"></span></h5></td></tr>
-					    </thead>
+				<!-- <div id="span12 detailinfo"> -->
+
+				<div wicket:id="fieldGroupRepeater">
+					<table class="table table-striped table-condensed" style="">
+						<thead>
+							<tr>
+								<td colspan="2"><h5>
+										<span wicket:id="groupname"></span>
+									</h5></td>
+							</tr>
+						</thead>
 						<tbody>
 							<tr wicket:id="dataRowRepeater">
 								<td wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
 							</tr>
 						</tbody>
 					</table>
-					<div class="pull-right">
-					<span wicket:id="operationBar">[operation bar]</span>
-					</div>
 				</div>
+
+				<!-- </div> -->
 			</div>
 		</div>
 	</div>

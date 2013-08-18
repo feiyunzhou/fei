@@ -25,7 +25,7 @@ public class EntityDetailPage extends TemplatePage {
     private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
     private static final long serialVersionUID = -2613412283023068638L;
 
-    private static int NUM_OF_COLUMN  = 2;
+    private static int NUM_OF_COLUMN  = 3;
     
     public EntityDetailPage(final String entityName, String id){
         this.setPageTitle("详细信息");
@@ -69,6 +69,7 @@ public class EntityDetailPage extends TemplatePage {
             }  
              
          });
+         add(new CRUDPanel("operationBar",entityName, EnumSet.of(CRUDPanel.Permissions.EDIT, CRUDPanel.Permissions.DEL)));
          
         
     }

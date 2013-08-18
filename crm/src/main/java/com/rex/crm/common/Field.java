@@ -30,6 +30,8 @@ public class Field implements Serializable {
     private int priority;
     @Expose
     private String relationTable = null;
+    @Expose
+    private String fieldGroup = "基本信息";
     
     @Expose
     private String alias = null;
@@ -144,6 +146,14 @@ public class Field implements Serializable {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getFieldGroup() {
+        return fieldGroup;
+    }
+
+    public void setFieldGroup(String fieldGroup) {
+        this.fieldGroup = fieldGroup;
     }
     
 

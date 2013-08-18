@@ -114,6 +114,16 @@ public class Configuration {
         return relations;
     }
 
+    
+    public static List<String> getSortedFieldGroupNames(){
+        List<String> list = Lists.newArrayList();
+        list.add("基本信息");
+        list.add("地址信息");
+        list.add("其他信息");
+        
+        return list;
+    }
+    
     public static List<Relation> getRelations(){
         List<Relation> relations = new ArrayList<>();
         try {
@@ -193,6 +203,12 @@ public class Configuration {
                     String formatter = sub2.getString("formatter");
                     if(formatter !=null){
                         field.setFormatter(formatter);
+                    }
+                    
+                    
+                    String fieldGroup = sub2.getString("fieldGroup");
+                    if(fieldGroup !=null){
+                        field.setFieldGroup(fieldGroup);
                     }
                     
                     field.setPrimaryKey(Boolean.parseBoolean(sub2.getString("isPrimaryKey")));
