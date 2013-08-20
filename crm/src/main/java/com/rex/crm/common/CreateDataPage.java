@@ -15,6 +15,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.StringValue;
 
 import com.rex.crm.TemplatePage;
 import com.rex.crm.db.DAOImpl;
@@ -22,15 +24,30 @@ import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
 public class CreateDataPage extends TemplatePage {
-    private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
+    private static final Logger logger = Logger.getLogger(CreateDataPage.class);
     private static final long serialVersionUID = -2613412283023068638L;
 
     private static int NUM_OF_COLUMN  = 2;
     
+    
+    public CreateDataPage(){
+        
+        StringValue entityName = getRequest().getRequestParameters().getParameterValue("entityName");
+
+        String name = entityName.toString();
+        initPage(name);
+    }
+   
     public CreateDataPage(String entityName){
+       
+        initPage(entityName);
+        
+    }
+    
+    private void initPage(String entityName){
         //this.getRequest().
         this.setPageTitle("创建");
-       
+       //this.getPageParameters().get
         Map<String, Entity> entities = Configuration.getEntityTable();
         //if (entityName == null) entityName="contact";
         final Entity entity = entities.get(entityName);
@@ -51,8 +68,6 @@ public class CreateDataPage extends TemplatePage {
             }  
              
          });
-         
-        
     }
 
 }

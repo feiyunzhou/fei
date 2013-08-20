@@ -3,10 +3,25 @@
 <relations>
 	<relation>
 		<from>account</from>
+		<name>contactlistOfaccount</name>
+		<display>医生列表</display>
+		<sql>select a.* from contact as a where a.accountId=?</sql>
+		<to>contact</to>
+		<reactions>
+		   <reaction>
+		       <name>createContact</name>
+		       <display>创建</display>
+		        <url>contact</url>
+		   </reaction>
+		</reactions>
+	</relation>
+	
+	<relation>
+		<from>account</from>
 		<name>account2crmuser</name>
 		<display>团队关系</display>
 		<sql>select a.* from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?</sql>
-		<to>crmuser</to>
+		<to>crmuser</to>		
 	</relation>
 	
 	<relation>
@@ -25,13 +40,7 @@
 		<to>activity</to>
 	</relation>
 	
-	<relation>
-		<from>account</from>
-		<name>contactlistOfaccount</name>
-		<display>医生列表</display>
-		<sql>select a.* from contact as a where a.accountId=?</sql>
-		<to>contact</to>
-	</relation>
+
 	
 	<relation>
 		<from>contact</from>

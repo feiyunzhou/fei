@@ -28,6 +28,7 @@ import com.rex.crm.beans.City;
 import com.rex.crm.beans.Province;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
+import com.rex.crm.common.Reaction;
 import com.rex.crm.common.Relation;
 
 public class Configuration {
@@ -138,6 +139,19 @@ public class Configuration {
                 relation.setFrom(sub.getString("from"));
                 relation.setTo(sub.getString("to"));
                 relation.setSql(sub.getString("sql"));
+                
+                
+                List<Reaction> reactions = Lists.newArrayList();
+                relation.setReactions(reactions);
+                List<HierarchicalConfiguration> hp2 = sub.configurationsAt("reactions.reaction");
+                
+                for(HierarchicalConfiguration sub2:hp2){
+                    Reaction reaction = new Reaction();
+                    reactions.add(reaction);              
+                    reaction.setName(sub2.getString("name"));
+                    reaction.setUrl(sub2.getString("url"));
+                    reaction.setDisplay(sub2.getString("display"));
+                }
             }
 
         } catch (ConfigurationException cex) {

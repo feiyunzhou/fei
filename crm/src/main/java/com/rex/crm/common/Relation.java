@@ -1,5 +1,7 @@
 package com.rex.crm.common;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 
 public class Relation {
@@ -8,7 +10,9 @@ public class Relation {
     private String from;
     private String to;
     private String sql;
-
+    
+    private List<Reaction> reactions;
+    
     public String getName() {
         return name;
     }
@@ -54,6 +58,14 @@ public class Relation {
     public String toString() {
         Gson gson = new Gson();
         return gson.toJson(this, Relation.class);
+    }
+
+    public List<Reaction> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(List<Reaction> reactions) {
+        this.reactions = reactions;
     }
 
    
