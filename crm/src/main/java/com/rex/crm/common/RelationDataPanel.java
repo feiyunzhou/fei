@@ -23,7 +23,7 @@ import com.rex.crm.util.Configuration;
 public class RelationDataPanel extends Panel {
   
 
-    public RelationDataPanel( String id, Relation relation, List list) {
+    public RelationDataPanel( String id, Relation relation, List list,String entityId) {
         super(id);
         
 
@@ -58,6 +58,10 @@ public class RelationDataPanel extends Panel {
           btn_repeater.add(item);
           final PageParameters pars = new PageParameters();
           pars.set("entityName", relation.getTo());
+          //System.out.println("PPPPPP:"+act.getParamName());
+          if(act.getParamName()!=null && !act.getParamName().isEmpty()){
+              pars.set(act.getParamName(),entityId);
+          }
           BookmarkablePageLink link = new BookmarkablePageLink("actionlink", CreateDataPage.class,pars);
           link.add(new Label("cap",act.getDisplay()));
           item.add(link);

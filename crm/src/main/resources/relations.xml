@@ -7,11 +7,13 @@
 		<display>医生列表</display>
 		<sql>select a.* from contact as a where a.accountId=?</sql>
 		<to>contact</to>
+		<relationKey>accountId</relationKey>
 		<reactions>
 		   <reaction>
 		       <name>createContact</name>
 		       <display>创建</display>
 		        <url>contact</url>
+		        <paramName>accountId</paramName>
 		   </reaction>
 		</reactions>
 	</relation>

@@ -151,6 +151,8 @@ public class Configuration {
                     reaction.setName(sub2.getString("name"));
                     reaction.setUrl(sub2.getString("url"));
                     reaction.setDisplay(sub2.getString("display"));
+                    reaction.setParamName(sub2.getString("paramName"));
+                    
                 }
             }
 

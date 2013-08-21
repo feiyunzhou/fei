@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Session;
@@ -40,7 +41,7 @@ import com.rex.crm.db.DAOImpl;
 public class NewDataFormPanel extends Panel {
     private static final Logger logger = Logger.getLogger(NewDataFormPanel.class);
 
-    public NewDataFormPanel(String id, final Entity entity) {
+    public NewDataFormPanel(String id, final Entity entity,final Map<String,String> relationIds) {
         super(id);
         List<Field> fields = entity.getFields();
         RepeatingView repeater = new RepeatingView("repeater");
@@ -81,7 +82,11 @@ public class NewDataFormPanel extends Panel {
                     list.put(p.getId(), p.getVal());
                     ids.add(p.getId());
                 }
-                IModel choiceModel = new Model(1L);
+                long foreignKey = 1L;
+                if(relationIds!=null && relationIds.containsKey(f.getAlias())){
+                    foreignKey = Long.parseLong(relationIds.get(f.getAlias()));
+                }
+                IModel choiceModel = new Model(foreignKey);
                 
                 String fn = "";
                 if(f.getAlias()!=null){

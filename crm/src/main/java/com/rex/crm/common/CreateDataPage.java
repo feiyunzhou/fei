@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
@@ -18,6 +19,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 
+import com.google.common.collect.Maps;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -33,18 +35,25 @@ public class CreateDataPage extends TemplatePage {
     public CreateDataPage(){
         
         StringValue entityName = getRequest().getRequestParameters().getParameterValue("entityName");
-
         String name = entityName.toString();
-        initPage(name);
+        
+        Set<String> names = getRequest().getRequestParameters().getParameterNames();
+        Map<String,String> map = Maps.newHashMap();
+        for(String nm:names){
+            StringValue sv = getRequest().getRequestParameters().getParameterValue(nm);
+            map.put(nm, sv.toString());
+        }
+        
+        initPage(name,map);
     }
    
     public CreateDataPage(String entityName){
        
-        initPage(entityName);
+        initPage(entityName,null);
         
     }
     
-    private void initPage(String entityName){
+    private void initPage(String entityName,Map<String,String> map){
         //this.getRequest().
         this.setPageTitle("创建");
        //this.getPageParameters().get
@@ -52,7 +61,7 @@ public class CreateDataPage extends TemplatePage {
         //if (entityName == null) entityName="contact";
         final Entity entity = entities.get(entityName);
         
-        add(new NewDataFormPanel("formPanel",entity));
+        add(new NewDataFormPanel("formPanel",entity,map));
 
 
          add(new AbstractAjaxBehavior(){

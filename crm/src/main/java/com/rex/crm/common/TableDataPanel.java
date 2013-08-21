@@ -97,7 +97,7 @@ public class TableDataPanel extends Panel {
         add(new CRUDPanel("operationBar",entityName,EnumSet.of(CRUDPanel.Permissions.ADD)));
         
         
-        add(new NewDataFormPanel("formPanel",entity));
+        add(new NewDataFormPanel("formPanel",entity,null));
 
     }
 

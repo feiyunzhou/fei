@@ -5,6 +5,7 @@ public class Reaction {
     private String name;
     private String url;
     private String display;
+    private String paramName;
     
     
     public String getName() {
@@ -24,6 +25,12 @@ public class Reaction {
     }
     public void setDisplay(String display) {
         this.display = display;
+    }
+    public String getParamName() {
+        return paramName;
+    }
+    public void setParamName(String paramName) {
+        this.paramName = paramName;
     }
 
     
