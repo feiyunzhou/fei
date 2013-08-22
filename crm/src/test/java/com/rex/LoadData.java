@@ -149,6 +149,53 @@ public class LoadData {
        }
    
     
+       @Test 
+       public void loadData() throws SQLException {
+       String sql = "INSERT INTO contactcrmuser (contactId,crmuserId) values (?,20)";
+           Connection conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int res =0;
+           for (int i=7;i<200;i++) {
+               try {
+                   //sql=String.format("%d医院", i+11);
+                   res = run.update(conn, sql,i)+res;
+                   //System.out.println(tmpsql);
+                   
+               } catch(Exception e){
+                   e.printStackTrace();
+               }finally{
+                   System.out.println(res);
+               }
+           }
+           DbUtils.close(conn);
+       }
+       
+       
+       @Test
+       public void loadAccount2DB() throws SQLException {
+           String sql =  "INSERT INTO `contact` VALUES (%d,'2013-08-22 21:02:42','李云%d',%a,'1',1,1988,11,'1','9829222','%d857822','13%d0109765','dbdf@sina.com','北京市朝阳区望京东路%d好',NULL,2,2,'无','本科','无','眼科手术','微创',10,11,'一般','1','眼科',NULL,NULL,1,NULL,NULL,5,NULL);"; 
+           Connection conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int res =0;
+           for (int i=0;i<588;i++) {
+               try {
+                   System.out.println(i);
+                   String tmpsql = sql.replaceAll("%d", String.valueOf(6+i));
+                   String tmp = tmpsql.replace("%a", String.valueOf(10+i%80));
+                   
+                   //sql=String.format("%d医院", i+11);
+                   res = run.update(conn, tmp)+res;
+                   System.out.println(tmp);
+                   
+               } catch(Exception e){
+                   e.printStackTrace();
+               }finally{
+                   System.out.println(res);
+               }
+           }
+           DbUtils.close(conn);
+       }
+       
        
        @Test
        public void loadDealerAccount2DB() throws SQLException {

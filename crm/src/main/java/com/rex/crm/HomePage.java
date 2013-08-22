@@ -37,7 +37,7 @@ public class HomePage extends TemplatePage {
         
         Entity accountEntity = Configuration.getEntityByName("account");
 
-        add(new RelationDataPanel("testpanel", relation, list));
+        add(new RelationDataPanel("testpanel", relation, list,"1"));
         // add(new CalendarPanel("testpanel"));
         //add(new EntityDetailPanel("testpanel","account","20"));
         

@@ -523,6 +523,18 @@
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
+			<!-- Please do not change the order of this field(accountId)!! -->
+            <field>
+				<name>accountId</name>
+				<display>医院ID</display>
+				<data-type>Long</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
 			<field>
 				<name>accountName</name>
 				<display>医疗机构</display>
@@ -534,17 +546,6 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<relationTable>account</relationTable>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-            <field>
-				<name>accountId</name>
-				<display>医院ID</display>
-				<data-type>Long</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
