@@ -402,8 +402,8 @@ public class DAOImpl {
         menulist.add("account");
         menulist.add("contact");
         menulist.add("activity");
-        menulist.add("dealerAccount");
-        menulist.add("dealerContact");
+//        menulist.add("dealerAccount");
+//        menulist.add("dealerContact");
         menulist.add("user");
         return menulist;
     }

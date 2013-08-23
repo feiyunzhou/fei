@@ -95,17 +95,17 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setId("navitem-activity");
         builder.put("activity", item);
         
-        item = new MenuItem();
-        item.setCaption("<i class=\"icon-truck icon-large\"></i>经销商");
-        item.setDestination(DealerAccountPage.class);
-        item.setId("navitem-dealerAccount");
-        builder.put("dealerAccount", item);
-        
-        item = new MenuItem();
-        item.setCaption("<i class=\"icon-umbrella icon-large\"></i>经销商联系人");
-        item.setDestination(DealerContactPage.class);
-        item.setId("navitem-dealerContact");
-        builder.put("dealerContact", item);
+//        item = new MenuItem();
+//        item.setCaption("<i class=\"icon-truck icon-large\"></i>经销商");
+//        item.setDestination(DealerAccountPage.class);
+//        item.setId("navitem-dealerAccount");
+//        builder.put("dealerAccount", item);
+//        
+//        item = new MenuItem();
+//        item.setCaption("<i class=\"icon-umbrella icon-large\"></i>经销商联系人");
+//        item.setDestination(DealerContactPage.class);
+//        item.setId("navitem-dealerContact");
+//        builder.put("dealerContact", item);
         
         item = new MenuItem();
         item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
