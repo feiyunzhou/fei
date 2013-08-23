@@ -52,6 +52,15 @@
 		<to>account</to>
 	</relation>
 	
+	
+	<relation>
+		<from>contact</from>
+		<name>visitingOfContact</name>
+		<display>拜访</display>
+		<sql>select * from (select *\,activity_type as act_type\,status as act_status from activity where contactId=?) as aActivity </sql>
+		<to>activity</to>
+	</relation>
+	
 	<relation>
 		<from>dealerAccount</from>
 		<name>dealerContactlistOfdealerAccount</name>
