@@ -11,6 +11,7 @@
 		<fields>
 		<!--  医院的基本信息 -->
 			<field>
+			
 				<name>id</name>
 				<display>ID</display>
 				<data-type>Long</data-type>
