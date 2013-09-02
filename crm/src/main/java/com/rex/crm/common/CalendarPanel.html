@@ -13,6 +13,64 @@
 				selectable : true,
 				selectHelper : true,
 				editable : true,
+				
+				monthNames : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+		          monthNamesShort : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+		          dayNames : [ '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天' ],
+		          dayNamesShort : [ '周一', '周二', '周三', '周四', '周五', '周六', '周日' ],
+		          columnFormat : {
+		              month : 'ddd',
+		              week : 'M/d ddd',
+		              day : 'M/d dddd'
+		          },
+		          titleFormat : {
+		              month : 'yyyy年MMMM',
+		              week : "yyyy年",
+		              day : 'yyyy年'
+		          },
+		          buttonText : {
+		              today : '今天',
+		              month : '月',
+		              week : '周',
+		              day : '日'
+		          },
+		          eventAfterRender : function( event, element, view ) {
+		              //cell.prepend('<span class=\"newEventSpan pull-left\" style="display:none"><a class="newEventLink" href="#">新建</a></span>');
+		              //cell.css("min-height", "");
+		              //element.children().first().append("<i class=\"icon-tasks pull-right\"></i>");
+		          },
+		          eventClick: function(calEvent, jsEvent, view) {
+		            console.log(calEvent);
+		           /*  if(calEvent.act_type == 1){
+		                location.href = "activityDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
+		            }else if(calEvent.act_type == 2 || calEvent.act_type == 3){
+		                location.href = "meetingDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
+		            } */
+
+		          },
+		          dayClick : function(date, allDay, jsEvent, view) {
+
+		              if (allDay) {
+		                  console.log('Clicked on the entire day: ' + date);
+		              } else {
+		                  console.log('Clicked on the slot: ' + date);
+		              }
+
+		              console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+		              console.log('Current view: ' + view.name);
+
+		              // change the day's background color just for fun
+		              // $(this).css('background-color', 'red');
+
+		              var selecteddate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
+		             
+		              console.log(selecteddate);
+		              //location.href = '../offline/calendarEventForm.html#seg?startdate='+selecteddate+"&parentpage="+url.attr("relative");
+		              location.href = "/"+context_name+'/mount/createEventPage?startdate='+selecteddate;
+
+		          },
+				
 				events : JSON.parse(user_event_data)
 
 			});
