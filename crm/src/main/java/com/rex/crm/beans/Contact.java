@@ -1,9 +1,11 @@
 package com.rex.crm.beans;
 
+import java.io.Serializable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Contact {
+public class Contact implements Serializable  {
 	private int id;
 	private String name;
 	private String duty;

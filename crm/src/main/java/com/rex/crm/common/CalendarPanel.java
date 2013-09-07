@@ -18,6 +18,8 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 import org.apache.wicket.util.template.PackageTextTemplate;
 
+import com.rex.crm.WicketApplication;
+
 
 
 public class CalendarPanel extends Panel {
@@ -39,7 +41,7 @@ public class CalendarPanel extends Panel {
         //TODO get userID from session
         String userId = "20";
         map.put("user_event_data", com.rex.crm.ajax.DataProvider.getEventsByUserId(new String[]{userId}));
-        map.put("context_name", getRootContext());
+       // map.put("context_name",getRootContext());
  
         PackageTextTemplate ptt = new PackageTextTemplate(getClass(),"calendar.js");
         //logger.debug(ptt.asString(map));

@@ -1,5 +1,7 @@
 package com.rex.crm;
 
+import javax.servlet.ServletContext;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
@@ -50,7 +52,7 @@ public class WicketApplication extends WebApplication
 	         getSharedResources().add("image", new FolderResource(new File(getServletContext().getRealPath("image"))));
 	         mountResource("/image", new SharedResourceReference("image"));
 	         
-	         
+	         mountPage("/mount/searchContactPage", SearchContactPage.class);
 	         mountPage("/mount/createEventPage", CreateEventPage.class);
 	         
 	         // Register the authorization strategy
@@ -87,4 +89,6 @@ public class WicketApplication extends WebApplication
 	         });
 	         
 	}
+	
+
 }

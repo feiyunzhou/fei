@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.Component;
@@ -37,6 +38,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.TextRequestHandler;
 import org.apache.wicket.request.http.WebRequest;
@@ -121,7 +123,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 	 */
 	public TemplatePage() {
 		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
-
+		
 		//TODO get function work with real id
 		List<String> menulist = DAOImpl.getMenuByUserId("test");
 		
@@ -205,7 +207,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 				map.put("ajaxURL", callbackUrl);
 				map.put("allUsers", DataProvider.getAllCRMUsers(new String[0]));
 				map.put("allAccounts", DataProvider.getAllAccounts(new String[0]));
-
+                map.put("context_name",getRootContext());
 				PackageTextTemplate ptt = new PackageTextTemplate(getClass(),"template.js");
                 //System.out.println(ptt.asString(map));
 				response.render(JavaScriptHeaderItem.forScript(ptt.asString(map), null));
@@ -220,6 +222,26 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 		add(ajaxBehaviour);
 
 	}
+	
+    public static String getRootContext(){
+        
+        String rootContext = "";
+ 
+        WebApplication webApplication = WebApplication.get();
+        if(webApplication!=null){
+            ServletContext servletContext = webApplication.getServletContext();
+            if(servletContext!=null){
+                rootContext = servletContext.getServletContextName();
+            }else{
+                //do nothing
+            }
+        }else{
+            //do nothing
+        }
+ 
+        return rootContext;
+ 
+     }
 
 	/**
 	 * Gets the title.
