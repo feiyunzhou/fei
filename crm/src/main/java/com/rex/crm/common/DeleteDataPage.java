@@ -1,4 +1,4 @@
-package com.rex.crm;
+package com.rex.crm.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,8 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.SignIn2Session;
+import com.rex.crm.TemplatePage;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
@@ -26,10 +28,10 @@ import com.rex.crm.util.Configuration;
 /**
  * @author Feiyun Zhou 
  */
-public class AccountPage extends TemplatePage
+public class DeleteDataPage extends TemplatePage
 {
     
-    public AccountPage(Map<String,Boolean> map){
+    public DeleteDataPage(Map<String,Boolean> map){
         initPage(map);
     }
     
@@ -58,14 +60,14 @@ public class AccountPage extends TemplatePage
         
         //for the side bar
         List<Pair<String, Map<String, Object>>> types = DAOImpl.queryFilters(entity.getSql(), entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);
-        add(new FilterPanel("filterPanel",types ,filter,AccountPage.class));
+        add(new FilterPanel("filterPanel",types ,filter,DeleteDataPage.class));
        
     }
     
 	/**
 	 * Constructor
 	 */
-	public AccountPage()
+	public DeleteDataPage()
 	{
        initPage(null);
 		

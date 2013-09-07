@@ -11,6 +11,7 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -93,17 +94,24 @@ public class PageableTablePanel extends Panel {
                     if (f.isDetailLink()) {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
                         columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value));
+//                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
+                        
+                        
+         
                     } else {
                         if (f.getPicklist() != null) {
                             // get option from picklist
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName()))));
+                            System.out.println("111111111111111111111111111####" + value);
                             columnitem.add(new Label("celldata", value));
 
                         } else if(f.getRelationTable() != null){
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName()))));
+                            System.out.println("2222222222222222222222222####" + value);
                             columnitem.add(new Label("celldata", value));
                         }else {
                             String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
+                            System.out.println("333333333333333333333333333333######" + value);
                             columnitem.add(new Label("celldata", value));
                         }
                     }
@@ -117,8 +125,7 @@ public class PageableTablePanel extends Panel {
         datacontainer.add(new AjaxPagingNavigator("navigator", listview));
         datacontainer.setVersioned(false);
         
-        add(new CRUDPanel("operationBar",entity.getName(),EnumSet.of(CRUDPanel.Permissions.ADD)));
-        
+      add(new CRUDPanel("operationBar",entity.getName(),null,EnumSet.of(CRUDPanel.Permissions.ADD)));
         
         add(new NewDataFormPanel("formPanel",entity,null));
 
@@ -151,12 +158,24 @@ public class PageableTablePanel extends Panel {
                     // (Account)getParent().getDefaultModelObject();
                     Param p = (Param) getParent().getParent().getDefaultModelObject();
                     logger.debug(p + " id:" + p.getId() + " name:" + p.getEntityName());
+//                    Attribute att = new Attribute();
+                    
                     setResponsePage(new EntityDetailPage(p.getEntityName(), p.getId()));
-
                     // setResponsePage(new AccountDetailPage(id));
                 }
             }.add(new Label("caption", new Model<String>(caption))));
         }
     }
+    private  class  ButtonFragment extends Fragment{
 
+		public ButtonFragment(String id, String markupId,
+				MarkupContainer markupProvider, String delmas) {
+			super(id, markupId, markupProvider);
+			// TODO Auto-generated constructor stub
+			
+		}
+
+		
+    	
+    }
 }

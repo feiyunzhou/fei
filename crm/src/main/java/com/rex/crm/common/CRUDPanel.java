@@ -3,6 +3,8 @@ package com.rex.crm.common;
 import java.util.EnumSet;
 import java.util.Map;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -12,6 +14,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.rex.crm.beans.Account;
 import com.rex.crm.util.Configuration;
@@ -24,7 +27,7 @@ public class CRUDPanel extends Panel {
 
     }
 
-    public CRUDPanel(String id, String entityName,EnumSet<Permissions> userPerms) {
+    public CRUDPanel(   final String id, String entityName,final String entityId,EnumSet<Permissions> userPerms) {
         super(id);
         
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -53,16 +56,35 @@ public class CRUDPanel extends Panel {
             }
             
             if (userPerms.contains(Permissions.DEL)) {
-                add(new Fragment("delCon","delFragment",this));
+            	Fragment delfrag = new Fragment("delCon","delFragment",this);
+            	delfrag.add(new Link("del_data_btn") {
+
+                    @Override
+                    public void onClick() {
+                       
+                        setResponsePage(new DeleteDataPage());
+                    }
+                });
+                 add(delfrag);
             }else{
                 add(new Fragment("delCon","emptyFragment",this));
             }
             
             if (userPerms.contains(Permissions.EDIT)) {
-                addOrReplace(new Fragment("editCon","editFragment",this));
+            	Fragment editfrag = new Fragment("editCon","editFragment",this);
+            	editfrag.addOrReplace(new Link("edit_data_btn") {
+            		
+                    @Override
+                    public void onClick() {
+                    	
+                        setResponsePage(new EditDataPage(entity.getName(),entityId));
+                    }
+                });
+            	addOrReplace(editfrag);
             }else{
                 addOrReplace(new Fragment("editCon","emptyFragment",this));
             }
+            
             
             
         }

@@ -27,7 +27,7 @@ public class CalendarPanel extends Panel {
     public CalendarPanel(String id) {
         super(id);       
         //TODO Get permission info of user from database.
-        add(new CRUDPanel("operationBar","calendar",EnumSet.of(CRUDPanel.Permissions.ADD)));
+        add(new CRUDPanel("operationBar","calendar",null,EnumSet.of(CRUDPanel.Permissions.ADD)));
     }
     
     

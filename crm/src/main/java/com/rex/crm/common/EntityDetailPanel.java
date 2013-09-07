@@ -25,36 +25,37 @@ import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
 public class EntityDetailPanel extends Panel {
-    private static final Logger logger = Logger.getLogger(EntityDetailPanel.class);
-    private static final long serialVersionUID = -2613412283023068638L;
+	private static final Logger logger = Logger
+			.getLogger(EntityDetailPanel.class);
+	private static final long serialVersionUID = -2613412283023068638L;
 
-    private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap();
+	private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap();
 
-    private static int NUM_OF_COLUMN = 3;
+	private static int NUM_OF_COLUMN = 3;
 
-    public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId) {
+	public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId) {
         super(id);
-        // TODO Get permission info of user from database.
-        // add(new
-        // CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
+        // TODO Get permission info of user from databaseys.
+        System.out.println("DFDFDFDFDFDFDF:"+entityId + "   sdfsdfsdfsdfsdf:"+((Number)data.get("id")).toString());
+//        add(new CRUDPanel("operationBar",schema.getName(),entityId, EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
 
         // TODO Get the table definition from database or configuration
 
         String primaryKeyName = schema.getPrimaryKeyName();
-        List<Field> fields = schema.getFields();
+        List<Field> fields = schema.getFields();//得到所有fields
         // List<String> fn = schema.getFieldNames();
         for (Field f : fields) {
             if (fieldGroupMap.get(f.getFieldGroup()) != null) {
-                fieldGroupMap.get(f.getFieldGroup()).add(f);
+                fieldGroupMap.get(f.getFieldGroup()).add(f);//以fieldgroup为条件查询，并将其添加入新的集合钟
+//                System.out.println(fieldGroupMap.get(f.getFieldGroup()));
             } else {
                 List<Field> fs = Lists.newArrayList();
                 fs.add(f);
                 fieldGroupMap.put(f.getFieldGroup(), fs);
             }
         }
-
-        List<String> groupNames = Configuration.getSortedFieldGroupNames();
-
+        List<String> groupNames = Configuration.getSortedFieldGroupNames();//得到分组信息
+//        System.out.println(groupNames.toString());
         RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
         add(fieldGroupRepeater);
         for (String gn : groupNames) {
@@ -62,10 +63,10 @@ public class EntityDetailPanel extends Panel {
             if(groupfields == null) continue;
             AbstractItem groupitem = new AbstractItem(fieldGroupRepeater.newChildId());
             fieldGroupRepeater.add(groupitem);
-
+//            System.out.println(groupitem);
             RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
             groupitem.add(dataRowRepeater);
-
+//            System.out.println(dataRowRepeater);
             int numOfField = 0;
             List<Field> visibleFields = Lists.newArrayList();
             
@@ -105,8 +106,7 @@ public class EntityDetailPanel extends Panel {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                             columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
                         } else {
-                            String value = CRMUtility.formatValue(currentField.getFormatter(),
-                                    DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
+                            String value = CRMUtility.formatValue(currentField.getFormatter(),DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
                             columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
                             columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
@@ -128,8 +128,6 @@ public class EntityDetailPanel extends Panel {
                             columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
                         } else {
                             Object rawvalue = data.get(currentField.getName());
-                            System.out.println("rawvalue:" + rawvalue + ":::" + (rawvalue == null));
-
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
                             String value = CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(rawvalue));
                             value = (value == null) ? "" : value;
@@ -162,5 +160,4 @@ public class EntityDetailPanel extends Panel {
 
       
     }
-
 }
