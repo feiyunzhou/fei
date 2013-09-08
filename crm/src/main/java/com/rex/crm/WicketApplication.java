@@ -54,6 +54,7 @@ public class WicketApplication extends WebApplication
 	         
 	         mountPage("/mount/searchContactPage", SearchContactPage.class);
 	         mountPage("/mount/createEventPage", CreateEventPage.class);
+	         mountPage("/mount/eventViewer",EventViewerPage.class);
 	         
 	         // Register the authorization strategy
 	         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy()

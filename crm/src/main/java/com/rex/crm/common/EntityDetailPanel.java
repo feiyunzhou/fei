@@ -30,10 +30,11 @@ public class EntityDetailPanel extends Panel {
 
     private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap();
 
-    private static int NUM_OF_COLUMN = 3;
+    private int number_of_column = 3;
 
-    public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId) {
+    public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId,int number_of_column) {
         super(id);
+        this.number_of_column = number_of_column;
         // TODO Get permission info of user from database.
         // add(new
         // CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
@@ -80,7 +81,7 @@ public class EntityDetailPanel extends Panel {
             groupitem.add(new Label("groupname", gn));
             // logger.debug("numOfField:"+numOfField);
             // set the detailed info
-            int num_of_row = (numOfField / NUM_OF_COLUMN) + 1;
+            int num_of_row = (numOfField / number_of_column) + 1;
             // logger.debug("num_of_row:"+num_of_row);
 
             for (int i = 0; i < num_of_row; i++) {
@@ -89,21 +90,21 @@ public class EntityDetailPanel extends Panel {
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 item.add(columnRepeater);
 
-                for (int j = 0; j < 2 * NUM_OF_COLUMN; j++) {
+                for (int j = 0; j < 2 * number_of_column; j++) {
                     AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(data.get(primaryKeyName))));
 
-                    if ((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()) {
+                    if ((i * number_of_column + j / 2) >= visibleFields.size()) {
                         columnitem.add(new Label("celldata", "&nbsp;").setEscapeModelStrings(false));
                         columnRepeater.add(columnitem);
                         continue;
                     }
-                    Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
+                    Field currentField = visibleFields.get(i * number_of_column + j / 2);
 
                     if (currentField.getPicklist() != null) {
 
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(),
                                     DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
@@ -114,7 +115,7 @@ public class EntityDetailPanel extends Panel {
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(),
                                     DAOImpl.queryCachedRelationDataById(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
@@ -125,7 +126,7 @@ public class EntityDetailPanel extends Panel {
                     } else {
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
                         } else {
                             Object rawvalue = data.get(currentField.getName());
                             System.out.println("rawvalue:" + rawvalue + ":::" + (rawvalue == null));

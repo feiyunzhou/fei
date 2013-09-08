@@ -18,6 +18,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 import org.apache.wicket.util.template.PackageTextTemplate;
 
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.WicketApplication;
 
 
@@ -29,7 +30,7 @@ public class CalendarPanel extends Panel {
     public CalendarPanel(String id) {
         super(id);       
         //TODO Get permission info of user from database.
-        add(new CRUDPanel("operationBar","calendar",EnumSet.of(CRUDPanel.Permissions.ADD)));
+        //add(new CRUDPanel("operationBar","calendar",EnumSet.of(CRUDPanel.Permissions.ADD)));
     }
     
     
@@ -39,7 +40,7 @@ public class CalendarPanel extends Panel {
         super.renderHead(response);
         Map<String, Object> map = new HashMap<>();
         //TODO get userID from session
-        String userId = "20";
+        final String userId = ((SignIn2Session)getSession()).getUserId();
         map.put("user_event_data", com.rex.crm.ajax.DataProvider.getEventsByUserId(new String[]{userId}));
        // map.put("context_name",getRootContext());
  

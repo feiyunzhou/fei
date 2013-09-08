@@ -19,6 +19,9 @@ public class Entity implements Serializable{
     private String sql;
     @Expose
     private String filterField;
+    
+    @Expose
+    private String sql_ent;
 
 
     public String getName() {
@@ -108,6 +111,14 @@ public class Entity implements Serializable{
         }
         
         return null;
+    }
+
+    public String getSql_ent() {
+        return sql_ent;
+    }
+
+    public void setSql_ent(String sql_ent) {
+        this.sql_ent = sql_ent;
     }
 
 }

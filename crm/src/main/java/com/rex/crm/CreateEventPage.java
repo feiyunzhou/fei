@@ -88,7 +88,7 @@ public class CreateEventPage extends TemplatePage
                 logger.debug("visit_type:" + visit_type);
                 try {
                     
-                    DAOImpl.addCalendarEvent(Integer.parseInt(uid), Integer.parseInt(hidden_contact_select), visit_type, visit_type, String.valueOf(startdt.getTime()/1000), String.valueOf(enddt.getTime()/1000), 0);
+                    DAOImpl.addCalendarEvent(Integer.parseInt(uid), Integer.parseInt(hidden_contact_select), visit_type, visit_type, String.valueOf(startdt.getTime()/1000), String.valueOf(enddt.getTime()/1000), 1);
                 } catch (NumberFormatException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

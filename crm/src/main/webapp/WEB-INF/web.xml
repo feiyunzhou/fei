@@ -22,7 +22,8 @@
   <servlet-mapping>
     <servlet-name>DataFeederServlet</servlet-name>
     <url-pattern>/offline/DataFeederServlet</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> 
+  
   <servlet>
     <description></description>
     <display-name>TestServ</display-name>

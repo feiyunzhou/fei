@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -52,6 +53,7 @@ import com.google.gson.Gson;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
 import com.rex.crm.ajax.FunctionInvoker;
+import com.rex.crm.common.CalendarPanel;
 import com.rex.crm.db.DAOImpl;
 
 /**
@@ -61,6 +63,8 @@ import com.rex.crm.db.DAOImpl;
 public abstract class TemplatePage extends AuthenticatedWebPage {
 	/** title of the current page. */
 	private String pageTitle = "TemplatePageTest";
+	 private static final Logger logger = Logger.getLogger(TemplatePage.class);
+
     protected static ImmutableMap<String,MenuItem>  pageMenuMap;
     
     static{
@@ -170,9 +174,9 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 
 					String jsonString = br.readLine();
 					if ((jsonString == null) || jsonString.isEmpty()) {
-						System.out.println(" no json found");
+					    logger.debug(" no json found");
 					} else {
-						System.out.println(" json  is :" + jsonString);
+						logger.debug(" json  is :" + jsonString);
 					}
 					FunctionClass method = new Gson().fromJson(jsonString,
 							FunctionClass.class);
@@ -201,13 +205,16 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 			public void renderHead(Component component, IHeaderResponse response) {
 				super.renderHead(component, response);
 
+				 final String userId = ((SignIn2Session)getSession()).getUserId();
 				String callbackUrl = getCallbackUrl().toString();
 
 				Map<String, Object> map = new HashMap<>();
+				map.put("userInfo",DataProvider.getCRMUserInfoById(new String[]{userId}));
 				map.put("ajaxURL", callbackUrl);
-				map.put("allUsers", DataProvider.getAllCRMUsers(new String[0]));
-				map.put("allAccounts", DataProvider.getAllAccounts(new String[0]));
+				//map.put("allUsers", DataProvider.getAllCRMUsers(new String[0]));
+				//map.put("allAccounts", DataProvider.getAllAccounts(new String[0]));
                 map.put("context_name",getRootContext());
+                
 				PackageTextTemplate ptt = new PackageTextTemplate(getClass(),"template.js");
                 //System.out.println(ptt.asString(map));
 				response.render(JavaScriptHeaderItem.forScript(ptt.asString(map), null));

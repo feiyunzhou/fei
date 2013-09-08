@@ -35,10 +35,10 @@ public class EntityDetailPage extends TemplatePage {
         
         
         long lid = Long.parseLong(id);
-        Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
-        
+       // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
+        Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
         add(new Label("name",String.valueOf(map.get("name"))));
-        add(new EntityDetailPanel("detailed",entity,map,id));
+        add(new EntityDetailPanel("detailed",entity,map,id,3));
         
         //set relations data
          List<Relation> relations = Configuration.getRelationsByName(entityName);

@@ -46,6 +46,8 @@
 		            }else if(calEvent.act_type == 2 || calEvent.act_type == 3){
 		                location.href = "meetingDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
 		            } */
+		            
+		            location.href = "/"+context_name+'/mount/eventViewer?eventid='+calEvent.id;
 
 		          },
 		          dayClick : function(date, allDay, jsEvent, view) {
@@ -69,25 +71,63 @@
 		              //location.href = '../offline/calendarEventForm.html#seg?startdate='+selecteddate+"&parentpage="+url.attr("relative");
 		              location.href = "/"+context_name+'/mount/createEventPage?startdate='+selecteddate;
 
-		          },
+		          }
 				
-				events : JSON.parse(user_event_data)
+				//events : JSON.parse(user_event_data)
 
 			});
+            userInfo = JSON.parse(userInfo);
+            console.log("user info is:");
+            console.log(userInfo);
+            renderCalendarWithDataRemotely(userInfo);
+
+            function renderCalendarWithDataRemotely(ui) {
+                ACTIVITY_UTIL.queryRemoteActivities(ui,function(data) {
+                    var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
+                    //console.log(calendarEvents);
+                    //renderCalendar(calendarEvents);
+                    appendCalendarEvent(calendarEvents);
+                }, function(status) {
+                    //renderCalendarWithDataLocally();
+                    console.log("failed to get remote event data");
+                });//END of queryRemoteActivities
+            }
+
+            function appendCalendarEvent(event) {
+                var eventlen = event.length;
+                for ( var i = 0; i < eventlen; i++) {
+                    $('#calendar').fullCalendar('renderEvent', event[i], true);
+                }
+                $('#calendar').fullCalendar('render');
+            }
+
 		});
 	</script>
-	<div class="container-fluid">
+    <script src="js/activityutil.js"></script>
+    <script src="js/activityUI.js"></script>
+    <script src="js/contactutil.js"></script>
+    <script src="js/crmuserutil.js"></script>
+    <script src='js/dataclient2.js'></script>
+
+    <div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span12">
-				<div class="pull-right navbar-static-top">
-					<span wicket:id="operationBar" >[operation bar]</span>
-				</div>
-				<br />
-				<br />
+			<div class="span11">
 				<div>
 					<div id="calendar"></div>
 				</div>
 			</div>
+
+            <div class="span1">
+
+                <span class="label" style="background-color:#2B60DE">拜访</span>
+                <span class="label" style="background-color:#E18B6B">外部会议</span>
+                <span class="label" style="background-color:#ff8c00">内部会议</span>
+                <span class="label" style="background-color:#6698FF">其他</span>
+                <hr/>
+                <span class="label" style="background-color:#659EC7">完成</span>
+
+            </div>
+
 		</div>
 	</div>
 </wicket:panel>

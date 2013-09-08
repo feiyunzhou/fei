@@ -394,6 +394,32 @@ public class DAOImpl {
 
         return events;
     }
+    
+    
+    public static List<CalendarEvent> getEventsByEventId(int id) {
+        List<CalendarEvent> events = Lists.newArrayList();
+        Connection conn = null;
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<CalendarEvent>> h = new BeanListHandler<CalendarEvent>(CalendarEvent.class);
+
+            events = run.query(conn, "SELECT * FROM activity where id=?", h, id);
+            for (CalendarEvent e : events) {
+                e.setStart(sd.format(new Date(e.getStarttime())));
+                e.setEnd(sd.format(new Date(e.getEndtime())));
+            }
+        } catch (SQLException e) {
+            logger.error("failed to getEventsByEventId:" + id, e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return events;
+    }
+    
 
     public static List<String> getMenuByUserId(String id) {
         List<String> menulist = Lists.newArrayList();
@@ -698,7 +724,7 @@ public class DAOImpl {
 
     public static void addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end, int status) throws Exception {
         int type_id = Integer.parseInt(type);
-        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type,status) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type,status,whenadded) VALUES (?,?,?,?,?,?,?,now())";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();

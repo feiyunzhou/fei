@@ -175,6 +175,7 @@ public class Configuration {
                 entity.setName( sub.getString("name"));
                 entity.setDisplay(sub.getString("display"));
                 entity.setSql(sub.getString("sql"));
+                entity.setSql_ent(sub.getString("sql-ent"));
                 
                 String filterField = sub.getString("filterField");
                 if(filterField !=null){

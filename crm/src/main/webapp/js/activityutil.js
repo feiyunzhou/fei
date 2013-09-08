@@ -3,6 +3,8 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
     
     
     var queryRemoteActivities = function (userInfo,onCompleted,onError) {
+        console.log("queryRemoteActivities");
+        console.log(userInfo);
         var args = {};
         args.f = "getActivitiesTableDataByUserId";
         var userId = userInfo.id+"";
