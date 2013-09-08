@@ -16,9 +16,14 @@
                     e.preventDefault();
                     var cid =  $(this).parent().parent().data("cid");
                     var cname = $(this).parent().parent().data("cname");
+                    var aname = $(this).parent().parent().data("aname");
                     console.log( "cname is:"+ cname);
                     window.opener.$("#selected_contact").val(cname);
                     window.opener.$("#hidden_selected_contact").val(cid);
+                    window.opener.$("#account_label").show();
+                    window.opener.$("#account_info").text(aname);
+
+
                     window.close();
 
 				});

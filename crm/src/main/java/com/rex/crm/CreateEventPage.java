@@ -138,7 +138,7 @@ public class CreateEventPage extends TemplatePage
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-         Date next_date_time = new Date(sd.getTime()+3600*1000);
+         Date next_date_time = new Date(current_date_time.getTime()+3600*1000);
          WebMarkupContainer end_date_input = new WebMarkupContainer("end_date_input");
          form.add(end_date_input);
          end_date_input.add(new AttributeModifier("value",dateformat.format(next_date_time)));

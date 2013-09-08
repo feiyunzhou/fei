@@ -69,14 +69,18 @@
 
 
 								<div id="accountNcontact" class="control-group">
-									<!-- <label class="control-label" for="account">医院：</label>
-									<select id="selected_account" wicket:id="account_select">
+									
+									<!-- <select id="selected_account" wicket:id="account_select">
 									</select> -->
 									<label id="contact_label" class="control-label" for="contact">医生：</label> 
 									<div class="controls">
 									<input type="text" id="selected_contact" class="input" placeholder="张三" wicket:id="contact_select"/>
                                     <input type="hidden" id="hidden_selected_contact" class="input"  wicket:id="hidden_contact_select"/>
 									<a href="#" class="btn btn-mini" id="search_click" name="search_contact" title="查找医生" >查找医生</a>
+									</div>
+									<label class="control-label" for="account" id="account_label" style="display:none">医院：</label>
+									<div class="controls">
+									  <span id="account_info"></span>
 									</div>
 								</div>
 

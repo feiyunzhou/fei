@@ -74,6 +74,7 @@ public class SearchContactPage extends WebPage {
                 Label cap = new Label("cname_span", new Model(cname));
                 item.add(new AttributeAppender("data-cid",new Model(cid)));
                 item.add(new AttributeAppender("data-cname",new Model(cname)));
+                item.add(new AttributeAppender("data-aname",new Model(aname)));
                 //item.add(new AttributeAppender("data-cname", new Model(cname)));
                 item.add(cap);
                 item.add(new Label("aname_span", new Model(aname)));
