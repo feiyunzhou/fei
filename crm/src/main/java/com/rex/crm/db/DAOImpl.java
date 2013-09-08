@@ -856,7 +856,42 @@ public class DAOImpl {
         }
     }
     
+    public static void updateRecord(String id,String entityName, List<String> fieldNames, List<String> values ) {
+    	 String sql = "";
+    	 int i=0;
+         for(String name:fieldNames){
+             if(i==0){
+            	 sql = name +" = "+ values.get(i)  ;
+            	
+            	
+             }else{
+        	    sql = sql + "," + name +" = "+ values.get(i)  ;	 
+        	    
+             }
+        	 i++;
+         }
+         
+         sql = sql + ",whenadded = now()";
+  
     
+         sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;
+        
+        logger.debug("UPDATE sql is:"+sql);
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to add new calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
     public static void updateStatusOfCalendarEvent(int eventId, int status) {
         String sql = "UPDATE activity SET status=? where id=?";
         Connection conn = null;

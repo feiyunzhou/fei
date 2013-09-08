@@ -15,33 +15,31 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.rex.crm.TemplatePage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
-public class EntityDetailPage extends TemplatePage {
+public class UpdateDataFormPanel extends TemplatePage {
     private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
     private static final long serialVersionUID = -2613412283023068638L;
 
     private static int NUM_OF_COLUMN  = 3;
     
-    public EntityDetailPage(final String entityName, String id){
-        this.setPageTitle("详细信息");
+    public UpdateDataFormPanel(final String entityName, String id){
+        this.setPageTitle("编辑");
        
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get(entityName);
         
         
         long lid = Long.parseLong(id);
-       // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
-        Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
-        add(new Label("name",String.valueOf(map.get("name"))));
-        add(new EntityDetailPanel("detailed",entity,map,id,3));
+        Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         
-
+        add(new Label("name",String.valueOf(map.get("name"))));
+        add(new EntityDetailPanel("detailed",entity,map,id));
+        
         //set relations data
          List<Relation> relations = Configuration.getRelationsByName(entityName);
          
@@ -71,8 +69,7 @@ public class EntityDetailPage extends TemplatePage {
             }  
              
          });
-         
-         add(new CRUDPanel("operationBar",entity.getName(),id, EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
+         add(new CRUDPanel("operationBar",entityName,null, EnumSet.of(CRUDPanel.Permissions.EDIT, CRUDPanel.Permissions.DEL)));
          
         
     }

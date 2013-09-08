@@ -36,7 +36,7 @@ public class AccountDetailPage extends TemplatePage {
 
     private void initPage(Account account){
         //TODO Get permission infor of user from database.
-        add(new CRUDPanel("operationBar","account",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
+        add(new CRUDPanel("operationBar","account",null,EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
         
         List<String> filedsName = account.getFieldNames();
         Map<String, String> fieldMap = account.getMappingOfField2ColumnName();
@@ -87,7 +87,7 @@ public class AccountDetailPage extends TemplatePage {
         add(dataView);
         
         //TODO Get permission info of user from database.
-        add(new CRUDPanel("team-operationBar","account",EnumSet.of(CRUDPanel.Permissions.ADD)));
+        add(new CRUDPanel("team-operationBar","account",null,EnumSet.of(CRUDPanel.Permissions.ADD)));
 
     }
 }
