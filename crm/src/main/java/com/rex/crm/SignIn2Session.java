@@ -20,6 +20,9 @@ import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
 
+import com.rex.crm.beans.CRMUser;
+import com.rex.crm.db.DAOImpl;
+
 /**
  * Session class for signin example. Holds and authenticates users.
  * 
@@ -30,6 +33,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 	/** Trivial user representation */
 	private String user;
 	private String userId;
+	private int roleId;
 
 	/**
 	 * Constructor
@@ -58,12 +62,13 @@ public final class SignIn2Session extends AuthenticatedWebSession
 	{
 		if (user == null)
 		{
-			// Trivial password "db"
-			if ("tig".equalsIgnoreCase(username) && "12345".equalsIgnoreCase(password))
-			{
-				user = username;
-				userId = "20";
-			}
+		    
+		    CRMUser crmUser = DAOImpl.login(username, password);
+		    if(crmUser!=null && crmUser.getId() != 0){
+		        user = crmUser.getName();
+		        userId = String.valueOf(crmUser.getId());
+		        roleId = crmUser.getRole();
+		    }
 		}
 
 		return user != null;
@@ -97,5 +102,17 @@ public final class SignIn2Session extends AuthenticatedWebSession
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

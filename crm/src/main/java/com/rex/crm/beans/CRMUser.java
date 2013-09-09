@@ -26,6 +26,8 @@ public class CRMUser {
 	private String loginName;
 	private String sessionKey;
 	private long lastLoginTime;
+	private int role;
+	private int reportto;
 
 	public String getName() {
 		return name;
@@ -193,6 +195,22 @@ public class CRMUser {
 
         public void setLastLoginTime(long lastLoginTime) {
             this.lastLoginTime = lastLoginTime;
+        }
+
+        public int getRole() {
+            return role;
+        }
+
+        public void setRole(int role) {
+            this.role = role;
+        }
+
+        public int getReportto() {
+            return reportto;
+        }
+
+        public void setReportto(int reportto) {
+            this.reportto = reportto;
         }
 	
 }

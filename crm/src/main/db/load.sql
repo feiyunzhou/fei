@@ -99,11 +99,12 @@ INSERT INTO crmuser_pl2 (val) VALUES('全部');
 
 
 --   角色;
-INSERT INTO role (val) VALUES('MCPC销售代表');
-INSERT INTO role (val) VALUES('主管');
-INSERT INTO role (val) VALUES('区域经理');
-INSERT INTO role (val) VALUES('服务经理');
 INSERT INTO role (val) VALUES('高级用户');
+INSERT INTO role (val) VALUES('主管');
+INSERT INTO role (val) VALUES('销售代表');
+-- INSERT INTO role (val) VALUES('区域经理');
+-- INSERT INTO role (val) VALUES('服务经理');
+
 
 --  一级区域;
 INSERT INTO region_level1_pl (val) VALUES('北中国');

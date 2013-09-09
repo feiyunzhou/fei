@@ -11,3 +11,14 @@ Some notes:
 <p/>
 2. If you want to try 'offline' version of this CRM, you can check it out at http://localhost:8080/offline/home.html
 
+<p/>
+some users/password roles for the testing.
+tig/12345   Manager
+li/12345    Admin
+pi/12345    Sales
+ki/12345    Sales
+
+All report to tig
+
+
+

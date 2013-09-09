@@ -518,6 +518,7 @@ ALTER table crmuser ADD password VARCHAR(255);
 ALTER table crmuser ADD sessionKey VARCHAR(255);
 ALTER table crmuser ADD lastLoginTime BIGINT;
 ALTER table crmuser ADD whenadded DATETIME;
+ALTER table crmuser ADD reportto MEDIUMINT;
 
 
 -- pick list for crmuser
