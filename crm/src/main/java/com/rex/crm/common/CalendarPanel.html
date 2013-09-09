@@ -47,7 +47,8 @@
 		                location.href = "meetingDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
 		            } */
 		            
-		            location.href = "/"+context_name+'/mount/eventViewer?eventid='+calEvent.id;
+		           // location.href = "/"+context_name+'/mount/eventViewer?eventid='+calEvent.id;
+		            location.href = '../../mount/eventViewer?eventid='+calEvent.id;
 
 		          },
 		          dayClick : function(date, allDay, jsEvent, view) {
@@ -69,7 +70,8 @@
 		             
 		              console.log(selecteddate);
 		              //location.href = '../offline/calendarEventForm.html#seg?startdate='+selecteddate+"&parentpage="+url.attr("relative");
-		              location.href = "/"+context_name+'/mount/createEventPage?startdate='+selecteddate;
+		              //location.href = "/"+context_name+'/mount/createEventPage?startdate='+selecteddate;
+		              location.href ='../../mount/createEventPage?startdate='+selecteddate;
 
 		          }
 				

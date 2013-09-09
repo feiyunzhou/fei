@@ -235,10 +235,14 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         String rootContext = "";
  
         WebApplication webApplication = WebApplication.get();
+        
         if(webApplication!=null){
             ServletContext servletContext = webApplication.getServletContext();
             if(servletContext!=null){
                 rootContext = servletContext.getServletContextName();
+                //servletContext.getServletContextName()
+                System.out.println("PPP:"+rootContext);
+                
             }else{
                 //do nothing
             }

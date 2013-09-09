@@ -22,7 +22,7 @@ import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
 public class UpdateDataFormPanel extends TemplatePage {
-    private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
+    private static final Logger logger = Logger.getLogger(UpdateDataFormPanel.class);
     private static final long serialVersionUID = -2613412283023068638L;
 
     private static int NUM_OF_COLUMN  = 3;
@@ -38,7 +38,7 @@ public class UpdateDataFormPanel extends TemplatePage {
         Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         
         add(new Label("name",String.valueOf(map.get("name"))));
-        add(new EntityDetailPanel("detailed",entity,map,id));
+        add(new EntityDetailPanel("detailed",entity,map,id,3));
         
         //set relations data
          List<Relation> relations = Configuration.getRelationsByName(entityName);

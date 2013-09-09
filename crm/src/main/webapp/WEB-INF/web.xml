@@ -23,15 +23,4 @@
     <servlet-name>DataFeederServlet</servlet-name>
     <url-pattern>/offline/DataFeederServlet</url-pattern>
   </servlet-mapping> 
-  
-  <servlet>
-    <description></description>
-    <display-name>TestServ</display-name>
-    <servlet-name>TestServ</servlet-name>
-    <servlet-class>com.rex.crm.offline.TestServ</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>TestServ</servlet-name>
-    <url-pattern>/offline/TestServ</url-pattern>
-  </servlet-mapping>
 </web-app>

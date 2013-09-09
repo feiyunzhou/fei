@@ -9,7 +9,7 @@
 	<groupId>com.rex.crm</groupId>
 	<artifactId>crm</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<!-- TODO project name -->
 	<name>CRM</name>
 	<description></description>
