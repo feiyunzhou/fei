@@ -6,8 +6,10 @@
 		<display>医院</display>
 		<!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as aAccount</sql> -->
 		<!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId group by account.id) as aAccount -->
-		<sql>SELECT * from (select account.* from accountcrmuser\,account where accountcrmuser.crmuserId=? AND accountcrmuser.accountId=account.id order by whenadded DESC) as aAccount</sql>
-		<sql-ent>SELECT * from (select account.* from accountcrmuser\,account where account.id=? AND accountcrmuser.accountId=account.id order by whenadded DESC) as aAccount</sql-ent>
+		<sql>SELECT * from (select account.* from accountcrmuser\,account where (accountcrmuser.crmuserId=?) AND accountcrmuser.accountId=account.id order by whenadded DESC) as aAccount</sql>
+		<sql-admin>SELECT * from (select account.* from account where (? IS NOT NULL) order by whenadded DESC) as aAccount</sql-admin>
+		
+		<sql-ent>SELECT * from (select account.* from account where account.id=? order by whenadded DESC) as aAccount</sql-ent>
 		<filterField>medicalType</filterField>
 		<fields>
 		<!--  医院的基本信息 -->
@@ -501,7 +503,11 @@
 		<display>医生</display>
 		<sql>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where contactcrmuser.crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId order by whenadded DESC) as
 			aContact</sql>
-		<sql-ent>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where contact.id=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId order by whenadded DESC) as
+		
+		<sql-admin>select * from (select contact.*\,account.id as accountName from contact\,account where account.id=contact.accountId AND (? IS NOT NULL) order by whenadded DESC) as
+			aContact</sql-admin>
+		
+		<sql-ent>select * from (select contact.*\,account.id as accountName from contact\,account where contact.id=? AND account.id=contact.accountId order by whenadded DESC) as
 			aContact</sql-ent>
 		<filterField>department</filterField>
 		
@@ -960,6 +966,7 @@
 		<name>crmuser</name>
 		<display>用户</display>
 		<sql>select * from crmuser where ? is NOT NULL</sql>
+		<sql-admin>select * from crmuser where ? is NOT NULL</sql-admin>
 		<sql-ent>select * from crmuser where ? is NOT NULL</sql-ent>
 		<filterField>pl2</filterField>
 		<fields>
@@ -1131,6 +1138,7 @@
 		<name>activity</name>
 		<display>日历</display>
 		<sql>select * from (select activity.*\,activity.activity_type as act_type\,activity.status as act_status\, activity.contactId as contactName\, contact.accountId as accountName from activity\, contact where contact.id= activity.contactId AND crmuserId=?) as aActivity</sql>
+		<sql-admin>select * from (select activity.*\,activity.activity_type as act_type\,activity.status as act_status\, activity.contactId as contactName\, contact.accountId as accountName from activity\, contact where contact.id= activity.contactId AND (? IS NOT NULL)) as aActivity</sql-admin>
 		<sql-ent>select * from (select activity.*\,activity.activity_type as act_type\,activity.status as act_status\, activity.contactId as contactName\, contact.accountId as accountName from activity\, contact where contact.id= activity.contactId AND activity.id=?) as aActivity</sql-ent>
 		<fields>
 			<field>
@@ -1273,6 +1281,7 @@
 		<name>externalMeeting</name>
 		<display>日历</display>
 		<sql>select * from (select *\,activity_type as act_type\,status as act_status from externalMeeting where crmuserId=?) as aMeeting</sql>
+		<sql-admin>select * from (select *\,activity_type as act_type\,status as act_status from externalMeeting where crmuserId=?) as aMeeting</sql-admin>
 		<sql-ent>select * from (select *\,activity_type as act_type\,status as act_status from externalMeeting where externalMeeting.id=?) as aMeeting</sql-ent>
 		<fields>
 			<field>
@@ -1398,6 +1407,7 @@
 		<name>dealerAccount</name>
 		<display>经销商</display>
 		<sql>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL</sql>
+		<sql-admin>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL</sql-admin>
 		<sql-ent></sql-ent>
 		<filterField>pl1</filterField>
 		<fields>
@@ -1483,6 +1493,7 @@
 		<name>dealerContact</name>
 		<display>经销商联系人</display>
 		<sql>select * from dealerContact where ? IS NOT NULL</sql>
+		<sql-admin>select * from dealerContact where ? IS NOT NULL</sql-admin>
 		<sql-ent></sql-ent>
 		<filterField>pl1</filterField>
 		<fields>

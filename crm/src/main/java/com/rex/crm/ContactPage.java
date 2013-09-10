@@ -46,9 +46,14 @@ public class ContactPage extends TemplatePage
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
         //TODO get userId from request's session
         final String userId = ((SignIn2Session)getSession()).getUserId();
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         List mapList = null;
         if(filter == null){
-            mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
+            String sql = entity.getSql();
+            if(roleId == 1){
+                sql = entity.getSqlAdmin();
+            }
+            mapList = DAOImpl.queryEntityRelationList(sql, userId);
         }else{
             
             List<String> ft = Lists.newArrayList();

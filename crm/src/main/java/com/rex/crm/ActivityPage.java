@@ -34,7 +34,13 @@ public class ActivityPage extends TemplatePage
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
         //TODO get userId from request's session
         final String userId = ((SignIn2Session)getSession()).getUserId();
-        List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
+        
+        String sql = entity.getSql();
+        if(roleId == 1){
+            sql = entity.getSqlAdmin();
+        }
+        List mapList = DAOImpl.queryEntityRelationList(sql, userId);
 		add(new PageableTablePanel("datalist",entity,mapList));
 		
 		

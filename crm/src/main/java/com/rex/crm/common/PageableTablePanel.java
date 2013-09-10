@@ -44,7 +44,7 @@ public class PageableTablePanel extends Panel {
         final List<Field> fields = entity.getFields();
         final List<String> fn = entity.getFieldNames();
         final String entityName = entity.getName();
-
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         // RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
         // add(dataRowRepeater);
 
@@ -122,7 +122,7 @@ public class PageableTablePanel extends Panel {
         datacontainer.add(new AjaxPagingNavigator("navigator", listview));
         datacontainer.setVersioned(false);
         
-        final int roleId = ((SignIn2Session)getSession()).getRoleId();
+       
         
         add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName())));
         

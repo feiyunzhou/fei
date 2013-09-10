@@ -175,6 +175,28 @@ public class CRMUtility {
 	        return res;
 
 	    }
+	   
+	
+	    public static EnumSet<Permissions> getPermissionForEntity(int roleId, String entityName) {
+
+	        EnumSet<Permissions> permission = null;
+	        
+	        if (entityName.equalsIgnoreCase("account")) {
+	            if (roleId == 1) {
+	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
+	            }
+	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")){
+	            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
+	        }else if(entityName.equalsIgnoreCase("crmuser")){
+	            
+	            if (roleId == 1) {
+	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
+	            }
+	        }
+	        
+	        return permission;
+	    }
+	    
 	    
     public static EnumSet<Permissions> getPermissionOfEntityList(int roleId, String entityName) {
 
@@ -185,6 +207,11 @@ public class CRMUtility {
             }
         }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")){
             permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        }else if(entityName.equalsIgnoreCase("crmuser")){
+            
+            if (roleId == 1) {
+                permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+            }
         }
         
         return permission;

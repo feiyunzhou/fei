@@ -17,6 +17,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -37,6 +38,7 @@ public class EntityDetailPage extends TemplatePage {
         
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
+        logger.debug("KKKKKKKK:"+entity.getSql_ent()+ "  PPPP:"+lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
         add(new Label("name",String.valueOf(map.get("name"))));
         add(new EntityDetailPanel("detailed",entity,map,id,3));
@@ -72,7 +74,8 @@ public class EntityDetailPage extends TemplatePage {
              
          });
          
-         add(new CRUDPanel("operationBar",entity.getName(),id, EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
+         final int roleId = ((SignIn2Session)getSession()).getRoleId();
+         add(new CRUDPanel("operationBar",entity.getName(),id, CRMUtility.getPermissionForEntity(roleId, entity.getName())));
          
         
     }

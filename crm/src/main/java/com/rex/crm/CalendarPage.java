@@ -31,7 +31,7 @@ public class CalendarPage extends TemplatePage
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
         
         final String userId = ((SignIn2Session)getSession()).getUserId();
-        List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
+        //List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
 		//add(new TableDataPanel("datalist",entity,mapList));
         add(new CalendarPanel("datalist"));
 		

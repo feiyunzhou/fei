@@ -22,6 +22,8 @@ public class Entity implements Serializable{
     
     @Expose
     private String sql_ent;
+    @Expose
+    private String sqlAdmin;  //for the admin to query all data
 
 
     public String getName() {
@@ -119,6 +121,14 @@ public class Entity implements Serializable{
 
     public void setSql_ent(String sql_ent) {
         this.sql_ent = sql_ent;
+    }
+
+    public String getSqlAdmin() {
+        return sqlAdmin;
+    }
+
+    public void setSqlAdmin(String sqlAdmin) {
+        this.sqlAdmin = sqlAdmin;
     }
 
 }
