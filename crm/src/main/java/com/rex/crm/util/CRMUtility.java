@@ -1,5 +1,6 @@
 package com.rex.crm.util;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,9 @@ import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
 import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
+import com.rex.crm.common.CRUDPanel;
 import com.rex.crm.common.IFormatter;
+import com.rex.crm.common.CRUDPanel.Permissions;
 
 public class CRMUtility {
 
@@ -173,7 +176,19 @@ public class CRMUtility {
 
 	    }
 	    
-	    
+    public static EnumSet<Permissions> getPermissionOfEntityList(int roleId, String entityName) {
+
+        EnumSet<Permissions> permission = null;
+        if (entityName.equalsIgnoreCase("account")) {
+            if (roleId == 1) {
+                permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+            }
+        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")){
+            permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        }
+        
+        return permission;
+    }
 	    public static String MD5Base64(String src) {
 	        if (src == null || src.isEmpty())
 	            return null;

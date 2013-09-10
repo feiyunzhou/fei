@@ -33,7 +33,7 @@ public class ActivityPage extends TemplatePage
         setPageTitle(entity.getDisplay());
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
         //TODO get userId from request's session
-        String userId = "20";
+        final String userId = ((SignIn2Session)getSession()).getUserId();
         List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
 		add(new PageableTablePanel("datalist",entity,mapList));
 		

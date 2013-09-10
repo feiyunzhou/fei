@@ -499,7 +499,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId order by whenadded DESC) as
+		<sql>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where contactcrmuser.crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId order by whenadded DESC) as
 			aContact</sql>
 		<sql-ent>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where contact.id=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId order by whenadded DESC) as
 			aContact</sql-ent>

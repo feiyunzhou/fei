@@ -24,6 +24,7 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.account.AccountDetailPage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
@@ -102,16 +103,12 @@ public class PageableTablePanel extends Panel {
                         if (f.getPicklist() != null) {
                             // get option from picklist
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName()))));
-                            System.out.println("111111111111111111111111111####" + value);
                             columnitem.add(new Label("celldata", value));
-
                         } else if(f.getRelationTable() != null){
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName()))));
-                            System.out.println("2222222222222222222222222####" + value);
                             columnitem.add(new Label("celldata", value));
                         }else {
                             String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
-                            System.out.println("333333333333333333333333333333######" + value);
                             columnitem.add(new Label("celldata", value));
                         }
                     }
@@ -125,7 +122,9 @@ public class PageableTablePanel extends Panel {
         datacontainer.add(new AjaxPagingNavigator("navigator", listview));
         datacontainer.setVersioned(false);
         
-      add(new CRUDPanel("operationBar",entity.getName(),null,EnumSet.of(CRUDPanel.Permissions.ADD)));
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
+        
+        add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName())));
         
         add(new NewDataFormPanel("formPanel",entity,null));
 

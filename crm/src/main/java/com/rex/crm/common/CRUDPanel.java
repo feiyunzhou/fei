@@ -23,7 +23,7 @@ public class CRUDPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
 
     public enum Permissions {
-        ADD, DEL, EDIT;
+        ADD, DEL, EDIT,NONE;
 
     }
 
