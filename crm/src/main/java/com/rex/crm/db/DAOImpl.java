@@ -892,6 +892,24 @@ public class DAOImpl {
         }
 
     }
+    public static void deleteRecord(String entityId,String entityName) {
+        String sql = "";
+        sql = "DELETE from " + entityName +" where id = " + entityId;
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to delete  calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
     public static void updateStatusOfCalendarEvent(int eventId, int status) {
         String sql = "UPDATE activity SET status=? where id=?";
         Connection conn = null;

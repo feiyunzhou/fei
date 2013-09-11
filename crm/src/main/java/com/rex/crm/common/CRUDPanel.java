@@ -16,7 +16,9 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.rex.crm.AccountPage;
 import com.rex.crm.beans.Account;
+import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 
 public class CRUDPanel extends Panel {
@@ -27,7 +29,7 @@ public class CRUDPanel extends Panel {
 
     }
 
-    public CRUDPanel(   final String id, String entityName,final String entityId,EnumSet<Permissions> userPerms) {
+    public CRUDPanel(   final String id, final String entityName,final String entityId,EnumSet<Permissions> userPerms) {
         super(id);
         
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -61,8 +63,8 @@ public class CRUDPanel extends Panel {
 
                     @Override
                     public void onClick() {
-                       
-                        setResponsePage(new DeleteDataPage());
+                       DAOImpl.deleteRecord(entityId, entityName);
+                        setResponsePage(new AccountPage());
                     }
                 });
                  add(delfrag);
