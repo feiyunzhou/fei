@@ -52,7 +52,6 @@ public class SearchContactPage extends WebPage {
                 logger.debug("the form was submitted!");
                 // new PropertyModel<String>(this, "selected")
                 List<Map> maplist = DAOImpl.searchContact(userId, search_target);
-                System.out.println("AAAA:"+maplist);
                 setResponsePage(new SearchContactPage(maplist));
 
             }

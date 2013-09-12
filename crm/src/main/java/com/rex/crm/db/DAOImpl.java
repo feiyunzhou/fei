@@ -372,20 +372,26 @@ public class DAOImpl {
     }
     
     
-    public static void insertRelationOfContactIDCRMUserID(String cId, String userId) throws Exception {
+    public static void insertRelationOfEntityIDCRMUserID(String entityName, String cId, String userId) throws Exception {
         int contactId = Integer.parseInt(cId);
         int uid = Integer.parseInt(userId);
         if (contactId != 0 && uid != 0) {
+            String sql = "";
+            if(entityName.equalsIgnoreCase("contact")){
+                sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
+            }else if(entityName.equalsIgnoreCase("account")){
+                sql = "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)";
+            }
             Connection conn = null;
             try {
                 conn = DBHelper.getConnection();
                 QueryRunner run = new QueryRunner();
-                int inserts = run.update(conn, "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)", cId, userId);
+                int inserts = run.update(conn, sql, cId, userId);
 
-                logger.info(String.format("%s row inserted into insertRelationOfAccountIDCRMUserID!", inserts));
+                logger.info(String.format("%s row inserted into insertRelationOfEntityIDCRMUserID!", inserts));
 
             } catch (SQLException e) {
-                logger.error("failed to insertRelationOfContactIDCRMUserID", e);
+                logger.error("failed to insertRelationOfEntityIDCRMUserID", e);
             } finally {
                 DBHelper.closeConnection(conn);
             }
@@ -1071,8 +1077,8 @@ public class DAOImpl {
     }
     
     
-    public static void removeContactFromTeam(String id) {
-        String sql = "delete from contactcrmuser where id="+id;
+    public static void removeEntityFromTeam(String teamtable, String id) {
+        String sql = "delete from "+teamtable+" where id="+id;
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();

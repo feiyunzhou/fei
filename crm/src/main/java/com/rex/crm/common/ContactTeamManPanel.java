@@ -20,6 +20,7 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.SearchCRMUserPage;
 import com.rex.crm.account.AccountDetailPage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
@@ -32,28 +33,36 @@ public class ContactTeamManPanel extends Panel {
     private String etId;
     private String currentEntityName;
 
-    public ContactTeamManPanel(String id,String en,final String entityId) {
+    public ContactTeamManPanel(String id,final String en,final String entityId) {
         super(id);
         etId = entityId;
         currentEntityName = en;
         //team sql
-        String teamSql = "select * from (select a.*,b.id as rid from crmuser as a inner join contactcrmuser as b on a.id=b.crmuserId where b.contactId=?) as atable";
+        String teamSql = "";
+        if(en.equalsIgnoreCase("account")){
+          teamSql = "select * from (select a.*,b.id as rid from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?) as atable";
+        }else if(en.equalsIgnoreCase("contact")){
+            teamSql = "select * from (select a.*,b.id as rid from crmuser as a inner join contactcrmuser as b on a.id=b.crmuserId where b.contactId=?) as atable";
+        }
         List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
         
         Entity entity = Configuration.getEntityByName("crmuser");
-        String primaryKeyName = entity.getPrimaryKeyName();
         List<Field> fields = entity.getFields();
-        List<String> fn = entity.getFieldNames();
         final String entityName = entity.getName();
         
         //add button submission
         
-        add(new AjaxLink<Void>("add_users_link"){
+        add(new Link<Void>("add_users_link"){
+
+//            @Override
+//            public void onClick(AjaxRequestTarget target) {
+//              String script = "window.open(\"../mount/searchCRMUser?cid="+entityId+"\",\"Ratting\",\"width=850,height=470,left=150,top=200,0,status=0,\");";
+//               target.appendJavaScript(script);
+//            }
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
-              String script = "window.open(\"../mount/searchCRMUser?cid="+entityId+"\",\"Ratting\",\"width=850,height=470,left=150,top=200,0,status=0,\");";
-               target.appendJavaScript(script);
+            public void onClick() {
+              this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId));
             }
             
         });
@@ -132,10 +141,7 @@ public class ContactTeamManPanel extends Panel {
             columnRepeater.add(columnitem);
             
         }
-        
-        //TODO Get permission info of user from database.
-        add(new CRUDPanel("operationBar",entityName,null,EnumSet.of(CRUDPanel.Permissions.ADD)));
-        
+          
         
         add(new NewDataFormPanel("formPanel",entity,null));
 
@@ -209,7 +215,13 @@ public class ContactTeamManPanel extends Panel {
                     String id  = (String)getParent().getParent().getDefaultModelObject();
                    
                     //remove the team member from the contact
-                    DAOImpl.removeContactFromTeam(id);
+                    String teamtable = "";
+                    if(currentEntityName.equalsIgnoreCase("account")){
+                        teamtable = "accountcrmuser";
+                    }else if(currentEntityName.equalsIgnoreCase("contact")){
+                        teamtable = "contactcrmuser";
+                    }
+                    DAOImpl.removeEntityFromTeam(teamtable,id);
                     
                     setResponsePage(new EntityDetailPage(currentEntityName,etId));
                     

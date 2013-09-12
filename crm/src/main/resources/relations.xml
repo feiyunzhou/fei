@@ -18,14 +18,14 @@
 		</reactions>
 	</relation>
 	
-	<relation>
+<!-- 	<relation>
 		<from>account</from>
 		<name>account2crmuser</name>
 		<display>团队关系</display>
 		<sql>select a.* from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?</sql>
 		<to>crmuser</to>		
 	</relation>
-	
+	 -->
 	<relation>
 		<from>crmuser</from>
 		<name>crmuser2account</name>
@@ -44,13 +44,13 @@
 	
 
 	
-	<relation>
+<!-- 	<relation>
 		<from>contact</from>
 		<name>accountOfContact</name>
 		<display>所属医院</display>
 		<sql>select b.* from contact as a\,account as b where a.id=? AND b.id=a.accountId</sql>
 		<to>account</to>
-	</relation>
+	</relation> -->
 	
 	
 	<relation>

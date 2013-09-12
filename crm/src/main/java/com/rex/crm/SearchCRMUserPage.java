@@ -35,7 +35,8 @@ public class SearchCRMUserPage extends WebPage {
     private String search_target;
     
      List<String> selectedUserIds = Lists.newArrayList();
-     private String contactId;
+     private String entityId;
+     private String entityName;
 
     /**
      * Constructor
@@ -46,13 +47,22 @@ public class SearchCRMUserPage extends WebPage {
     public SearchCRMUserPage() {
         StringValue value = this.getRequest().getRequestParameters().getParameterValue("cid");
         if(value != null){
-            contactId = value.toString();
+            entityId = value.toString();
         }
-        initPage(null,contactId);
+        initPage(null,entityId);
     }
 
-    public SearchCRMUserPage(List<Map> maplist, String cid) {
-        contactId = cid;
+    
+    public SearchCRMUserPage(String entityName, String entityId) {
+        logger.debug("sdfsfsdfdsf:"+entityName);
+        this.entityName = entityName;
+        this.entityId = entityId;
+        initPage(null,entityId);
+    }
+    
+    public SearchCRMUserPage(List<Map> maplist, String entityName, String cid) {
+        this.entityName = entityName;
+        entityId = cid;
         initPage(maplist,cid);
     }
 
@@ -63,7 +73,7 @@ public class SearchCRMUserPage extends WebPage {
             protected void onSubmit() {
                 logger.debug("the form was submitted!");
                 List<Map> maplist = DAOImpl.searchCRMUser(search_target);
-                setResponsePage(new SearchCRMUserPage(maplist,cid));
+                setResponsePage(new SearchCRMUserPage(maplist,entityName,cid));
 
             }
         };
@@ -80,13 +90,12 @@ public class SearchCRMUserPage extends WebPage {
                 logger.debug("seletedUserIds:"+ selectedUserIds);
                 for(String uid:selectedUserIds){
                     try{
-                        DAOImpl.insertRelationOfContactIDCRMUserID(cid, uid);
+                        DAOImpl.insertRelationOfEntityIDCRMUserID(entityName,cid, uid);
                     }catch(Exception e){
                         
                     }
                 }
-                
-                setResponsePage(new EntityDetailPage("contact",cid));
+                setResponsePage(new EntityDetailPage(entityName,cid));
 
             }
         };

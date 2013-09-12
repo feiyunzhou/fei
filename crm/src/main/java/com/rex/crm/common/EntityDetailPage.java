@@ -62,8 +62,8 @@ public class EntityDetailPage extends TemplatePage {
          
          
          
-         if(entityName.equalsIgnoreCase("contact")){
-             add(new ContactTeamManPanel("teamPanel","contact",String.valueOf(lid)));
+         if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")){
+             add(new ContactTeamManPanel("teamPanel",entityName,String.valueOf(lid)));
          }else{
              WebMarkupContainer con = new WebMarkupContainer("teamPanel");
              add(con); 
