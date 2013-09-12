@@ -505,7 +505,6 @@ CREATE TABLE crmuser
     employeeNumber VARCHAR(255),
     photo VARCHAR(255),
     jobTitle VARCHAR(255),
-    cityId MEDIUMINT  NOT NULL,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 ALTER table crmuser ADD pl1 MEDIUMINT;

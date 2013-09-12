@@ -370,6 +370,30 @@ public class DAOImpl {
         }
 
     }
+    
+    
+    public static void insertRelationOfContactIDCRMUserID(String cId, String userId) throws Exception {
+        int contactId = Integer.parseInt(cId);
+        int uid = Integer.parseInt(userId);
+        if (contactId != 0 && uid != 0) {
+            Connection conn = null;
+            try {
+                conn = DBHelper.getConnection();
+                QueryRunner run = new QueryRunner();
+                int inserts = run.update(conn, "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)", cId, userId);
+
+                logger.info(String.format("%s row inserted into insertRelationOfAccountIDCRMUserID!", inserts));
+
+            } catch (SQLException e) {
+                logger.error("failed to insertRelationOfContactIDCRMUserID", e);
+            } finally {
+                DBHelper.closeConnection(conn);
+            }
+
+        }
+
+    }
+    
 
     public static List<CalendarEvent> getEventsByUserId(int userId) {
         List<CalendarEvent> events = Lists.newArrayList();
@@ -1023,5 +1047,45 @@ public class DAOImpl {
         }
 
         return lMap;
+    }
+
+    
+    
+    public static List searchCRMUser(String search_target) {
+        String sql = "select * from (select * from crmuser where name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%') as a";
+        logger.debug(sql );
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return lMap;
+    }
+    
+    
+    public static void removeContactFromTeam(String id) {
+        String sql = "delete from contactcrmuser where id="+id;
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql);
+
+            System.out.println("removed:" + inserts);
+        } catch (Exception e) {
+            logger.error("removeContactFromTeam", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
     }
 }

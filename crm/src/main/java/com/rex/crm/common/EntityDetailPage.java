@@ -11,6 +11,7 @@ import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -38,7 +39,6 @@ public class EntityDetailPage extends TemplatePage {
         
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
-        logger.debug("KKKKKKKK:"+entity.getSql_ent()+ "  PPPP:"+lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
         add(new Label("name",String.valueOf(map.get("name"))));
         add(new EntityDetailPanel("detailed",entity,map,id,3));
@@ -58,6 +58,15 @@ public class EntityDetailPage extends TemplatePage {
            List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
            item.add(new RelationDataPanel("relationPanel",r,list,String.valueOf(lid)));
            
+         }
+         
+         
+         
+         if(entityName.equalsIgnoreCase("contact")){
+             add(new ContactTeamManPanel("teamPanel","contact",String.valueOf(lid)));
+         }else{
+             WebMarkupContainer con = new WebMarkupContainer("teamPanel");
+             add(con); 
          }
 
          add(new AbstractAjaxBehavior(){

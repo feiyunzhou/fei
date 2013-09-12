@@ -1,0 +1,66 @@
+<wicket:panel>
+	<script>
+		$(document).ready(function() {
+			$("#add_relation_link").click(function(e){
+			   // location.href = './mount/searchCRMUser?eventid='+calEvent.id;
+			});
+		});
+	</script>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+		    
+			<div class="span12">
+			
+			<h5 class="pull-left">我的</h5>
+				<div class="pull-right">
+					<span wicket:id="operationBar">[operation bar]</span>
+				</div>
+				<div>
+				     <a id="add_relation_link" wicket:id="add_users_link" class="btn btn-primary">增加</a>
+				</div>
+				<div>
+
+					<table id="dt" style="width: 100%" class="table table-hover table-striped table-condensed">
+						<thead>
+							<tr>
+								<th wicket:id="columnNameRepeater"><span wicket:id="columnName"></span></th>
+								<!-- <th>actions</th> -->
+							</tr>
+						</thead>
+						<tr wicket:id="dataRowRepeater">
+							<td wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+							<!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
+						</tr>
+					</table>
+					<wicket:fragment wicket:id="detailFragment">
+						<a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
+					</wicket:fragment>
+					
+					<wicket:fragment wicket:id="extraFieldFragment">
+						<a href="#" class="btn btn-primary btn-mini" wicket:id="remove_team_member_click"><wicket:container wicket:id="cap" /></a>
+					</wicket:fragment>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">表单</h3>
+		</div>
+		<div class="modal-body">
+			<!--  form start -->
+
+			<span wicket:id="formPanel"></span>
+
+			<!--  form end -->
+		</div>
+		<!-- 		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+			<button class="btn btn-primary">确定</button>
+		</div> -->
+	</div>
+
+</wicket:panel>

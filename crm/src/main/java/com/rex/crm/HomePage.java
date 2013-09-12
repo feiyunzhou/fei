@@ -13,6 +13,7 @@ import org.apache.wicket.model.Model;
 import com.google.common.collect.Maps;
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.CalendarPanel;
+import com.rex.crm.common.ContactTeamManPanel;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.EntityDetailPanel;
 import com.rex.crm.common.FilterPanel;
@@ -35,9 +36,9 @@ public class HomePage extends TemplatePage {
         System.out.println(relation);
         List list = DAOImpl.queryEntityRelationList(relation.getSql(), "20");
         
-        Entity accountEntity = Configuration.getEntityByName("account");
+        Entity accountEntity = Configuration.getEntityByName("contact");
 
-        add(new RelationDataPanel("testpanel", relation, list,"1"));
+        add(new ContactTeamManPanel("testpanel", "contact", "198"));
         // add(new CalendarPanel("testpanel"));
         //add(new EntityDetailPanel("testpanel","account","20"));
         
