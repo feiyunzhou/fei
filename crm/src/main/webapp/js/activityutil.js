@@ -22,6 +22,28 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         
     },
 
+
+     queryRemoteActivitiesByUserId = function (userId,onCompleted,onError) {
+        console.log("queryRemoteActivitiesByUserId");
+        console.log(userId);
+        var args = {};
+        args.f = "getActivitiesTableDataByUserId";
+        //var userId = userInfo.id+"";
+        args.p = [ userId ];
+        //args.s = {id:userId,key: userInfo.password};
+        ajaxPost2(args, function(data) {
+            /* var event = jQuery.Event("on_activities_received");
+             event.received_data =data;
+             $(document).trigger(event);*/
+            if(onCompleted != undefined)onCompleted(data);
+           // setRemoteActivities2LocalStorage(data);
+        }, function(status) {
+            if(onError != undefined)onError(status);
+        });
+
+    },
+
+
      queryRemoteExternalMeetings = function (userInfo,onCompleted,onError) {
             var args = {};
             args.f = "getExternalMeetingTableDataByUserId";
@@ -401,9 +423,8 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         setRemoteMeetings2LocalStorage : setRemoteMeetings2LocalStorage,
         getRemoteMeetingsFromLocalStorage : getRemoteMeetingsFromLocalStorage,
         updateStatusOfExternalMeetingRemotely: updateStatusOfExternalMeetingRemotely,
-        updateStatusOfInternalMeetingRemotely : updateStatusOfInternalMeetingRemotely
-
-        
+        updateStatusOfInternalMeetingRemotely : updateStatusOfInternalMeetingRemotely,
+        queryRemoteActivitiesByUserId : queryRemoteActivitiesByUserId
     };
     
     

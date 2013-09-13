@@ -931,4 +931,17 @@ public class DataProvider {
         } 
         return multimap;
     }
+    
+    
+    public static String getInferiorsByManagerId(String[] args){
+        String managerId = args[0];
+        
+        List<CRMUser> inferiors = DAOImpl.getInferiorsByManagerId(managerId);
+        
+        CRMUser[] array = inferiors.toArray(new CRMUser[0]);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(array, CRMUser[].class);
+        return jsonString;
+        
+    }
 }

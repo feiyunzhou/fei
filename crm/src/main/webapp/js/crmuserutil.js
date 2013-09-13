@@ -26,6 +26,25 @@ var CRMUSER_UTIL = (function($, w, undefined) {
         },
 
 
+        getInferiorsRemotely = function(userId,onComp,onError){
+          var args = {};
+          args.f = "getInferiorsByManagerId";
+          args.p = [userId];
+
+            ajaxPost2(args, function(data) {
+                if (jQuery.isEmptyObject(data) === false) {
+                    //setCoachTable2Localstorage(data);
+                    if (onComp != undefined)
+                        onComp(data);
+                }
+            }, function(status) {
+                if(onError != undefined){
+                    onError(status);
+                }
+            });
+
+        },
+
         getValidCoachesLocally = function(){
             var accts = [];
             var table =  getCoachTableFromLocalstorage();
@@ -74,7 +93,8 @@ var CRMUSER_UTIL = (function($, w, undefined) {
         getCoachByIdLocally : getCoachByIdLocally,
         setCoachTable2Localstorage : setCoachTable2Localstorage,
         getCoachTableFromLocalstorage:getCoachTableFromLocalstorage,
-        getValidCoachesLocally:getValidCoachesLocally
+        getValidCoachesLocally:getValidCoachesLocally,
+        getInferiorsRemotely:getInferiorsRemotely
 
     };
 }(jQuery, window));

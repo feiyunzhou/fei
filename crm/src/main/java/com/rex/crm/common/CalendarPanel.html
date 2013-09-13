@@ -103,15 +103,77 @@
                 $('#calendar').fullCalendar('render');
             }
 
+
+            renderSelect4Inferiors();
+            function renderSelect4Inferiors(){
+
+                CRMUSER_UTIL.getInferiorsRemotely(userInfo.id,function(data){
+
+                    var objs =  [];
+                    for(var i=0;i<data.length;i++){
+                        var obj = {};
+                        obj.name = data[i].name;
+                        obj.id =   data[i].id;
+                        objs.push(obj);
+                    }
+
+                    $('#crmuser_select').select2({
+                        data : {
+                            results : objs ,
+                            text : 'name'
+                        },
+                        formatSelection : selectformat,
+                        formatResult : selectformat
+                    });
+
+
+                    $("#crmuser_select").on("change", function(e){
+                        console.log("change " + JSON.stringify({
+                            val : e.val,
+                            added : e.added,
+                            removed : e.removed,
+                            defaultContact : e.defaultContact
+                        }));
+
+                        var userIdex = {};
+                        userIdex.id = e.val;
+                        renderCalendarWithDataRemotely(userIdex);
+
+                    });
+
+
+                },function(error){
+                      console.log("failed to render select2");
+                });
+
+
+            }
+
+            function selectformat(item) {
+                return item.name;
+            }
+
 		});
 	</script>
-    <script src="js/activityutil.js"></script>
-    <script src="js/activityUI.js"></script>
-    <script src="js/contactutil.js"></script>
-    <script src="js/crmuserutil.js"></script>
-    <script src='js/dataclient2.js'></script>
+	<script src="js/activityutil.js"></script>
+	<script src="js/activityUI.js"></script>
+	<script src="js/contactutil.js"></script>
+	<script src="js/crmuserutil.js"></script>
+	<script src='js/dataclient2.js'></script>
 
-    <div class="container-fluid">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+
+				<div class="control-group">
+					<label class="control-label" for="inforior">下属：</label>
+					<div class="controls">
+						<input type="hidden" id="crmuser_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+					</div>
+				</div>
+
+			</div>
+		</div>
 		<div class="row-fluid">
 			<div class="span11">
 				<div>
@@ -119,17 +181,16 @@
 				</div>
 			</div>
 
-            <div class="span1">
+			<div class="span1">
 
-                <span class="label" style="background-color:#2B60DE">拜访</span>
-                <span class="label" style="background-color:#E18B6B">外部会议</span>
-                <span class="label" style="background-color:#ff8c00">内部会议</span>
-                <span class="label" style="background-color:#6698FF">其他</span>
-                <hr/>
-                <span class="label" style="background-color:#659EC7">完成</span>
+				<span class="label" style="background-color: #2B60DE">拜访</span> 
+				<span class="label" style="background-color: #E18B6B">外部会议</span> 
+				<span class="label" style="background-color: #ff8c00">内部会议</span>
+				<span class="label" style="background-color: #6698FF">其他</span>
+				<hr />
+				<span class="label" style="background-color: #659EC7">完成</span>
 
-            </div>
-
+			</div>
 		</div>
 	</div>
 </wicket:panel>

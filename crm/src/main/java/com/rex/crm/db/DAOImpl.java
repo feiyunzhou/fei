@@ -1094,4 +1094,35 @@ public class DAOImpl {
         }
         
     }
+
+    public static List<CRMUser> getInferiorsByManagerId(String managerId) {
+        List<CRMUser> inferiors = Lists.newArrayList();
+        List<CRMUser> users = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
+
+            users = run.query(conn, "SELECT * FROM crmuser", h);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all crm users", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        
+        for(CRMUser user:users){
+            CRMUser u = new CRMUser();
+            u.setName(user.getName());
+            u.setCellPhone(user.getCellPhone());
+            u.setEmail(user.getEmail());
+            u.setId(user.getId());
+            u.setRole(user.getRole());
+            inferiors.add(u);
+        }
+        
+        return inferiors;
+    }
 }
