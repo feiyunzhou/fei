@@ -44,7 +44,7 @@ public class EditDataFormPanel extends Panel {
 
 	private static int NUM_OF_COLUMN = 3;
 
-	public EditDataFormPanel(String id, final Entity schema, final Map data,final String entityId) {
+	public EditDataFormPanel(String id, final Entity schema, final Map data,final String entityId , final Map<String, String> relationIds) {
 		super(id);
 		final Map<String, IModel> models = Maps.newHashMap();
 		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
@@ -108,19 +108,16 @@ public class EditDataFormPanel extends Panel {
 						columnRepeater.add(columnitem);
 						continue;
 					}
-					Field currentField = visibleFields.get(i * NUM_OF_COLUMN
-							+ j / 2);
+					Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
 					if (currentField.getPicklist() != null) {
-
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
 							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
-							String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
-							value = (value == null) ? "" : value;
+//							String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
+//							value = (value == null) ? "" : value;
 							fieldNames.add(currentField.getName());
 						} else {
-							List<Choice> pickList = DAOImpl
-									.queryPickList(currentField.getPicklist());
+							List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
 							Map<Long, String> list = Maps.newHashMap();
 							List<Long> ids = Lists.newArrayList();
 							for (Choice p : pickList) {
@@ -130,17 +127,15 @@ public class EditDataFormPanel extends Panel {
 							IModel choiceModel = new Model(Long.parseLong(((String)data.get(currentField.getName()))));
 							models.put(currentField.getName(), choiceModel);
 							fieldNameToModel.put(currentField.getName(), choiceModel);
-							
 							columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids,list, choiceModel));
 						}
 					} else if (currentField.getRelationTable() != null) {
 						if (j % 2 == 0) {
-							// columnitem.add(new
-							// TextFragment("editdata","textFragment", this,
-							// currentField.getDisplay() + ":").add(new
-							// AttributeAppender("style",new
-							// Model("font-weight:bold;"),";")));
+							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
 							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+//							String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryPickListByIdCached(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
+//							value = (value == null) ? "" : value;
+							fieldNames.add(currentField.getName());
 						} else {
 							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
 							Map<Long, String> list = Maps.newHashMap();
@@ -149,7 +144,12 @@ public class EditDataFormPanel extends Panel {
 								list.put(p.getId(), p.getVal());
 								ids.add(p.getId());
 							}
-							long foreignKey = Long.parseLong(((String)data.get(currentField.getName())));
+							Integer foreignKey = 0;
+							if (relationIds != null&& relationIds.containsKey(currentField.getAlias())) {
+								
+								foreignKey = Integer.parseInt((relationIds.get(currentField.getAlias())).toString());
+							}
+							
 							IModel choiceModel = new Model(foreignKey);
 							String fn = "";
 							if (currentField.getAlias() != null) {
@@ -157,6 +157,7 @@ public class EditDataFormPanel extends Panel {
 							} else {
 								fn = currentField.getName();
 							}
+							
 							models.put(fn, choiceModel);
 							fieldNameToModel.put(currentField.getName(), choiceModel);
 							columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids,list, choiceModel));
@@ -185,7 +186,6 @@ public class EditDataFormPanel extends Panel {
 				}
 
 			}// end of set the detailed info
-
 		}// end of groupNames loop
 		Form form = new Form("form") {
 			@Override

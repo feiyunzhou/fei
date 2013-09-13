@@ -39,7 +39,7 @@ public class EditDataPage extends TemplatePage {
         Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
 //        String value = CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(map.get(currentField.getName())));
         add(new Label("name",String.valueOf(map.get("name"))));
-        add(new EditDataFormPanel("detailed",entity,map,id));
+        add(new EditDataFormPanel("detailed",entity,map,id, map));
         
         //set relations data
          add(new AbstractAjaxBehavior(){

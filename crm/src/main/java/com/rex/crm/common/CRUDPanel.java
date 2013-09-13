@@ -63,7 +63,13 @@ public class CRUDPanel extends Panel {
 
                     @Override
                     public void onClick() {
-                       DAOImpl.deleteRecord(entityId, entityName);
+                    	if(entityName.equals("account")){
+                    		DAOImpl.deleteaCountactRecord(entityId);
+                        	DAOImpl.deleteaAcountCrmuserRecord(entityId);
+                    	}else if(entityName.equals("contant")){
+                    		DAOImpl.deleteaAcountCrmuserRecord(entityId);
+                    	}
+                        DAOImpl.deleteRecord(entityId, entityName);
                         setResponsePage(new AccountPage());
                     }
                 });

@@ -817,7 +817,13 @@ public class DAOImpl {
          
          String valuesql = Joiner.on(",").join(values);
          valuesql =  valuesql + ", now()";
-    
+         if(entityName.equals("activity")){
+        	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
+        	 int i = 108;
+        	 valuesql  = valuesql.replaceAll(i+",","").trim();
+         }
+         logger.debug("fieldssql sql is:"+fieldssql);
+         logger.debug("valuesql sql is:"+valuesql);
         String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
         
         logger.debug("insert sql is:"+sql);
@@ -925,6 +931,42 @@ public class DAOImpl {
     public static void deleteRecord(String entityId,String entityName) {
         String sql = "";
         sql = "DELETE from " + entityName +" where id = " + entityId;
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to delete  calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
+    public static void deleteaAcountCrmuserRecord(String entityId) {
+        String sql = "";
+        sql = "DELETE from " + "accountcrmuser" + " where accountId = " + entityId;
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to delete  calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+    }
+    public static void deleteaCountactRecord(String entityId) {
+        String sql = "";
+        sql = "DELETE from " + "contact" + " where accountId = " + entityId;
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();

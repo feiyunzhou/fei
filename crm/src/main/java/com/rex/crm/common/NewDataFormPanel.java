@@ -144,7 +144,6 @@ public class NewDataFormPanel extends Panel {
 								fn = currentField.getName();
 							}
 							models.put(fn, choiceModel);
-							logger.debug("###################::"+models.put(fn, choiceModel));
 							columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
 						}
 					} else {
