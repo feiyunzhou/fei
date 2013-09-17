@@ -59,9 +59,6 @@ public class EntityDetailPage extends TemplatePage {
            item.add(new RelationDataPanel("relationPanel",r,list,String.valueOf(lid)));
            
          }
-         
-         
-         
          if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")){
              add(new ContactTeamManPanel("teamPanel",entityName,String.valueOf(lid)));
          }else{
@@ -86,7 +83,6 @@ public class EntityDetailPage extends TemplatePage {
          final int roleId = ((SignIn2Session)getSession()).getRoleId();
          add(new CRUDPanel("operationBar",entity.getName(),id, CRMUtility.getPermissionForEntity(roleId, entity.getName())));
          
-        
     }
 
 }

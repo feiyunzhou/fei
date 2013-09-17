@@ -39,6 +39,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -732,7 +733,6 @@ public class DAOImpl {
             for (Choice ch : choices) {
                 String query = "select sum(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
                 logger.debug("query is:" + query);
-
                 QueryRunner run = new QueryRunner();
                 Map<String, Object> map = run.query(conn, query, new MapHandler(), user_id);
                 if (map.get("sum") == null) {
@@ -740,18 +740,14 @@ public class DAOImpl {
                 }
                 map.put("val", ch.getVal());
                 res.add(Pair.of(String.valueOf(ch.getId()), map));
-
             }
-
         } catch (Exception e) {
             logger.error("failed to queryFilters", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
-
         return res;
     }
-
     public static void addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end, int status) throws Exception {
         int type_id = Integer.parseInt(type);
         String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type,status,whenadded) VALUES (?,?,?,?,?,?,?,now())";
@@ -769,20 +765,16 @@ public class DAOImpl {
             e.setContactId(contactId);
             e.setStatus(status);
             inserts += run.update(conn, sql, e.getCrmUserId(), e.getContactId(), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getActivity_type(), e.getStatus());
-
             System.out.println("inserted:" + inserts);
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
-
     }
-    
     
     public static void addExternalMeeting(int crmuserId, int[] contactIds, String title, long start, long end, int status,String meeting_type,String coachId) throws Exception {
         //int type_id = Integer.parseInt(type);
-        
         String sql = "INSERT INTO externalMeeting (crmuserId,contactIds,endtime,starttime,title,status,activity_type,coachId) VALUES (?,?,?,?,?,?,?,?)";
         Connection conn = null;
         try {
@@ -800,27 +792,28 @@ public class DAOImpl {
             e.setStatus(status);
             Gson gson = new Gson();
             inserts += run.update(conn, sql, e.getCrmUserId(), gson.toJson(contactIds, int[].class), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getStatus(),Integer.parseInt(meeting_type),Integer.parseInt(coachId));
-
             System.out.println("inserted:" + inserts);
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
-
     }
-    
-    
-    public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values){        
+    public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
          String fieldssql = Joiner.on(",").join(fieldNames);
          fieldssql = fieldssql + ",whenadded";
-         
          String valuesql = Joiner.on(",").join(values);
          valuesql =  valuesql + ", now()";
          if(entityName.equals("activity")){
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
-        	 int i = 108;
-        	 valuesql  = valuesql.replaceAll(i+",","").trim();
+        	 fieldssql = fieldssql + ",crmuserId";
+        	 int i = 113;
+        	 valuesql  = valuesql.replaceAll( i+",","").trim();
+        	 valuesql = valuesql + "," +userId;
+        	 System.out.println("++++++++++新建数据+++++++++++++"+valuesql);
+         }else if(entityName.equals("crmuser")){
+        	 fieldssql = fieldssql + ",cityId";
+        	 valuesql =  valuesql + ", 1";
          }
          logger.debug("fieldssql sql is:"+fieldssql);
          logger.debug("valuesql sql is:"+valuesql);

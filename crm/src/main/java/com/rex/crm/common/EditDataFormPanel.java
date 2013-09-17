@@ -44,7 +44,7 @@ public class EditDataFormPanel extends Panel {
 
 	private static int NUM_OF_COLUMN = 3;
 
-	public EditDataFormPanel(String id, final Entity schema, final Map data,final String entityId , final Map<String, String> relationIds) {
+	public EditDataFormPanel(String id, final Entity schema, final Map data,final String entityId ,final Map<String, String> relationIds) {
 		super(id);
 		final Map<String, IModel> models = Maps.newHashMap();
 		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
@@ -55,7 +55,7 @@ public class EditDataFormPanel extends Panel {
 		// List<String> fn = schema.getFieldNames();
 		for (Field f : fields) {
 			if (fieldGroupMap.get(f.getFieldGroup()) != null) {
-				fieldGroupMap.get(f.getFieldGroup()).add(f);// 以fieldgroup为条件查询，并将其添加入新的集合钟
+				fieldGroupMap.get(f.getFieldGroup()).add(f);// 以fieldgroup为条件查询，并将其添加入新的集合中
 			} else {
 				List<Field> fs = Lists.newArrayList();
 				fs.add(f);
@@ -63,25 +63,21 @@ public class EditDataFormPanel extends Panel {
 			}
 		}
 		List<String> groupNames = Configuration.getSortedFieldGroupNames();// 得到分组信息
-		RepeatingView fieldGroupRepeater = new RepeatingView(
-				"fieldGroupRepeater");
+		RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
 		add(fieldGroupRepeater);
 		for (String gn : groupNames) {
 			List<Field> groupfields = fieldGroupMap.get(gn);
 			if (groupfields == null)
 				continue;
-			AbstractItem groupitem = new AbstractItem(
-					fieldGroupRepeater.newChildId());
+			AbstractItem groupitem = new AbstractItem(fieldGroupRepeater.newChildId());
 			fieldGroupRepeater.add(groupitem);
 			RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
 			groupitem.add(dataRowRepeater);
 			int numOfField = 0;
 			List<Field> visibleFields = Lists.newArrayList();
-
 			for (Field f : groupfields) {
-				if (!f.isVisible() || f.getName().equalsIgnoreCase("name"))
+				if (!f.isVisible() )
 					continue;
-
 				numOfField++;
 				visibleFields.add(f);
 			}
@@ -93,8 +89,7 @@ public class EditDataFormPanel extends Panel {
 			// logger.debug("num_of_row:"+num_of_row);
 			
 			for (int i = 0; i < num_of_row; i++) {
-				AbstractItem item = new AbstractItem(
-						dataRowRepeater.newChildId());
+				AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
 				dataRowRepeater.add(item);
 				RepeatingView columnRepeater = new RepeatingView("columnRepeater");
 				item.add(columnRepeater);
@@ -113,8 +108,6 @@ public class EditDataFormPanel extends Panel {
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
 							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
-//							String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
-//							value = (value == null) ? "" : value;
 							fieldNames.add(currentField.getName());
 						} else {
 							List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
@@ -124,17 +117,22 @@ public class EditDataFormPanel extends Panel {
 								list.put(p.getId(), p.getVal());
 								ids.add(p.getId());
 							}
-							IModel choiceModel = new Model(Long.parseLong(((String)data.get(currentField.getName()))));
+							System.out.println("______________________________"+data.get(currentField.getName()));
+							System.out.println("输出结果："+Long.parseLong(((String)"1").trim())+"。");
+							IModel choiceModel = new Model(Long.parseLong((String)data.get(currentField.getName())));
+//							if(schema.getName().equals("account")){
+//								choiceModel = new Model(Long.parseLong(((String)data.get(currentField.getName()))));
+//							}else if(schema.getName().equals("activity")||schema.getName().equals("contact")||schema.getName().equals("crmuser")){
+//								choiceModel = new Model((Long.parseLong(((String)data.get(currentField.getName())))));
+//							}
 							models.put(currentField.getName(), choiceModel);
 							fieldNameToModel.put(currentField.getName(), choiceModel);
 							columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids,list, choiceModel));
 						}
 					} else if (currentField.getRelationTable() != null) {
 						if (j % 2 == 0) {
-							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
+							columnitem.add(new TextFragment("celldatafield","textFragment",this, currentField.getDisplay() +":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
 							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
-//							String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryPickListByIdCached(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
-//							value = (value == null) ? "" : value;
 							fieldNames.add(currentField.getName());
 						} else {
 							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
@@ -144,12 +142,10 @@ public class EditDataFormPanel extends Panel {
 								list.put(p.getId(), p.getVal());
 								ids.add(p.getId());
 							}
-							Integer foreignKey = 0;
+							long foreignKey = 1L;
 							if (relationIds != null&& relationIds.containsKey(currentField.getAlias())) {
-								
-								foreignKey = Integer.parseInt((relationIds.get(currentField.getAlias())).toString());
+								foreignKey = Long.parseLong(relationIds.get(currentField.getAlias()));
 							}
-							
 							IModel choiceModel = new Model(foreignKey);
 							String fn = "";
 							if (currentField.getAlias() != null) {
@@ -157,10 +153,9 @@ public class EditDataFormPanel extends Panel {
 							} else {
 								fn = currentField.getName();
 							}
-							
-							models.put(fn, choiceModel);
-							fieldNameToModel.put(currentField.getName(), choiceModel);
-							columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids,list, choiceModel));
+								models.put(fn, choiceModel);
+								fieldNameToModel.put(currentField.getName(), choiceModel);
+								columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
 						}
 					} else {
 						if (j % 2 == 0) {

@@ -136,7 +136,6 @@ public class NewDataFormPanel extends Panel {
 								foreignKey = Long.parseLong(relationIds.get(currentField.getAlias()));
 							}
 							IModel choiceModel = new Model(foreignKey);
-
 							String fn = "";
 							if (currentField.getAlias() != null) {
 								fn = currentField.getAlias();
@@ -158,7 +157,7 @@ public class NewDataFormPanel extends Panel {
 					}
 					columnRepeater.add(columnitem);
 					
-				}
+				}System.out.println("+++++++++++++++++++++++++++" + entity.toString());
 			}
 		}
 
@@ -181,8 +180,7 @@ public class NewDataFormPanel extends Panel {
 					}
 
 				}
-				long generatedId = DAOImpl.createNewRecord(entity.getName(),
-						fieldNames, values);
+				long generatedId = DAOImpl.createNewRecord(entity.getName(),fieldNames, values,userId);
 				if (generatedId > 0) {
 					DAOImpl.insert2UserRelationTable(entity.getName(), userId,
 							String.valueOf(generatedId));

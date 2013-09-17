@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
@@ -15,7 +16,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.StringValue;
 
+import com.google.common.collect.Maps;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -37,9 +40,15 @@ public class EditDataPage extends TemplatePage {
          logger.debug("BBDBSDBDBDBDBDBD:"+id);
         long lid = Long.parseLong(id);
         Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
+        Set<String> names = getRequest().getRequestParameters().getParameterNames();
+        Map<String,String> relationMap = Maps.newHashMap();
+        for(String nm:names){
+            StringValue sv = getRequest().getRequestParameters().getParameterValue(nm);
+            relationMap.put(nm, sv.toString());
+        }
 //        String value = CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(map.get(currentField.getName())));
         add(new Label("name",String.valueOf(map.get("name"))));
-        add(new EditDataFormPanel("detailed",entity,map,id, map));
+        add(new EditDataFormPanel("detailed",entity,map,id, relationMap));
         
         //set relations data
          add(new AbstractAjaxBehavior(){

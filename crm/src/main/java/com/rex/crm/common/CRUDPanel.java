@@ -17,6 +17,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.rex.crm.AccountPage;
+import com.rex.crm.ActivityPage;
+import com.rex.crm.ContactPage;
+import com.rex.crm.UserPage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
@@ -66,11 +69,20 @@ public class CRUDPanel extends Panel {
                     	if(entityName.equals("account")){
                     		DAOImpl.deleteaCountactRecord(entityId);
                         	DAOImpl.deleteaAcountCrmuserRecord(entityId);
-                    	}else if(entityName.equals("contant")){
+                        	DAOImpl.deleteRecord(entityId, entityName);
+                            setResponsePage(new AccountPage());
+                    	}else if(entityName.equals("contact")){
                     		DAOImpl.deleteaAcountCrmuserRecord(entityId);
+                    		DAOImpl.deleteRecord(entityId, entityName);
+                            setResponsePage(new ContactPage());
+                    	}else if(entityName.equals("activity")) {
+                    		DAOImpl.deleteRecord(entityId, entityName);
+                            setResponsePage(new ActivityPage());
+                    	}else {
+                    		DAOImpl.deleteRecord(entityId, entityName);
+                            setResponsePage(new UserPage());
                     	}
-                        DAOImpl.deleteRecord(entityId, entityName);
-                        setResponsePage(new AccountPage());
+                        
                     }
                 });
                  add(delfrag);
