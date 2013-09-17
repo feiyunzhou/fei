@@ -97,7 +97,7 @@ public class EntityDetailPanel extends Panel {
 
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(),DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
@@ -107,7 +107,7 @@ public class EntityDetailPanel extends Panel {
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryCachedRelationDataById(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
@@ -117,7 +117,7 @@ public class EntityDetailPanel extends Panel {
                     } else {
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
                         } else {
                             Object rawvalue = data.get(currentField.getName());
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
