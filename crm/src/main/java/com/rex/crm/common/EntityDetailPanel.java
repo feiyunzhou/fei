@@ -7,12 +7,15 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
@@ -123,8 +126,14 @@ public class EntityDetailPanel extends Panel {
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
                             String value = CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(rawvalue));
                             value = (value == null) ? "" : value;
-                            columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            if((currentField.getDisplay().equals("医院ID"))){
+                            	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
+                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            }else{
+                            	columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
+                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            }
+                            
                         }
                     }
                     columnRepeater.add(columnitem);
@@ -148,7 +157,17 @@ public class EntityDetailPanel extends Panel {
             }
 
         });
+    }
+    private class DetailLinkFragment extends Fragment {
+        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider, final String caption) {
+            super(id, markupId, markupProvider);
+            add(new Link("detailclick") {
 
-      
+                @Override
+                public void onClick() {
+                    setResponsePage(new EntityDetailPage("account", caption));
+                }
+            }.add(new Label("caption", new Model<String>(caption))));
+        }
     }
 }
