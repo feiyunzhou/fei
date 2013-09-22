@@ -44,6 +44,14 @@ public class EditDataFormPanel extends Panel {
 
 	private static int NUM_OF_COLUMN = 3;
 
+	/**
+	 * 
+	 * @param id
+	 * @param schema
+	 * @param data
+	 * @param entityId
+	 * @param relationIds
+	 */
 	public EditDataFormPanel(String id, final Entity schema, final Map data,final String entityId ,final Map<String, String> relationIds) {
 		super(id);
 		final Map<String, IModel> models = Maps.newHashMap();
@@ -66,29 +74,30 @@ public class EditDataFormPanel extends Panel {
 		RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
 		add(fieldGroupRepeater);
 		for (String gn : groupNames) {
+			logger.info("gn = "+gn+ "groupNames = "+groupNames);
+
 			List<Field> groupfields = fieldGroupMap.get(gn);
 			if (groupfields == null)
 				continue;
 			AbstractItem groupitem = new AbstractItem(fieldGroupRepeater.newChildId());
 			fieldGroupRepeater.add(groupitem);
 			RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
+
 			groupitem.add(dataRowRepeater);
 			int numOfField = 0;
 			List<Field> visibleFields = Lists.newArrayList();
 			for (Field f : groupfields) {
-				if (!f.isVisible() )
+				if (!f.isVisible()|| f.getDisplay().equalsIgnoreCase("医院ID") )
 					continue;
 				numOfField++;
 				visibleFields.add(f);
 			}
 
 			groupitem.add(new Label("groupname", gn));
-			// logger.debug("numOfField:"+numOfField);
-			// set the detailed info
 			int num_of_row = (numOfField / NUM_OF_COLUMN) + 1;
-			// logger.debug("num_of_row:"+num_of_row);
 			
 			for (int i = 0; i < num_of_row; i++) {
+				logger.debug("for i = "+i+",dataRowRepeater.newChildId() = "+dataRowRepeater.newChildId()+",value = "+dataRowRepeater.get(dataRowRepeater.newChildId()));
 				AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
 				dataRowRepeater.add(item);
 				RepeatingView columnRepeater = new RepeatingView("columnRepeater");
@@ -117,47 +126,44 @@ public class EditDataFormPanel extends Panel {
 								list.put(p.getId(), p.getVal());
 								ids.add(p.getId());
 							}
-							System.out.println("______________________________"+data.get(currentField.getName()));
-							System.out.println("输出结果："+Long.parseLong(((String)"1").trim())+"。");
-							IModel choiceModel = new Model(Long.parseLong((String)data.get(currentField.getName())));
-//							if(schema.getName().equals("account")){
-//								choiceModel = new Model(Long.parseLong(((String)data.get(currentField.getName()))));
-//							}else if(schema.getName().equals("activity")||schema.getName().equals("contact")||schema.getName().equals("crmuser")){
-//								choiceModel = new Model((Long.parseLong(((String)data.get(currentField.getName())))));
-//							}
+							String filedName = data.get(currentField.getName()).toString();
+							IModel choiceModel =  new Model(Long.parseLong(filedName));
+					
 							models.put(currentField.getName(), choiceModel);
 							fieldNameToModel.put(currentField.getName(), choiceModel);
 							columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids,list, choiceModel));
 						}
-					} else if (currentField.getRelationTable() != null) {
-						if (j % 2 == 0) {
-							columnitem.add(new TextFragment("celldatafield","textFragment",this, currentField.getDisplay() +":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
-							fieldNames.add(currentField.getName());
-						} else {
-							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
-							Map<Long, String> list = Maps.newHashMap();
-							List<Long> ids = Lists.newArrayList();
-							for (Choice p : pickList) {
-								list.put(p.getId(), p.getVal());
-								ids.add(p.getId());
-							}
-							long foreignKey = 1L;
-							if (relationIds != null&& relationIds.containsKey(currentField.getAlias())) {
-								foreignKey = Long.parseLong(relationIds.get(currentField.getAlias()));
-							}
-							IModel choiceModel = new Model(foreignKey);
-							String fn = "";
-							if (currentField.getAlias() != null) {
-								fn = currentField.getAlias();
-							} else {
-								fn = currentField.getName();
-							}
-								models.put(fn, choiceModel);
-								fieldNameToModel.put(currentField.getName(), choiceModel);
-								columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
-						}
-					} else {
+					}
+//					else if (currentField.getRelationTable() != null) {
+//						if (j % 2 == 0) {
+//							columnitem.add(new TextFragment("celldatafield","textFragment",this, currentField.getDisplay() +":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
+//							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+//							fieldNames.add(currentField.getName());
+//						} else {
+//							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
+//							Map<Long, String> list = Maps.newHashMap();
+//							List<Long> ids = Lists.newArrayList();
+//							for (Choice p : pickList) {
+//								list.put(p.getId(), p.getVal());
+//								ids.add(p.getId());
+//							}
+//							long foreignKey = 1L;
+//							if (relationIds != null&& relationIds.containsKey(currentField.getAlias())) {
+//								foreignKey = Long.parseLong(relationIds.get(currentField.getAlias()));
+//							}
+//							IModel choiceModel = new Model(foreignKey);
+//							String fn = "";
+//							if (currentField.getAlias() != null) {
+//								fn = currentField.getAlias();
+//							} else {
+//								fn = currentField.getName();
+//							}
+//								models.put(fn, choiceModel);
+//								fieldNameToModel.put(currentField.getName(), choiceModel);
+//								columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
+//						}
+//					} 
+						else {
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
 							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));

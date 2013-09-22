@@ -36,7 +36,6 @@ public class CreateDataPage extends TemplatePage {
         
         StringValue entityName = getRequest().getRequestParameters().getParameterValue("entityName");
         String name = entityName.toString();
-        
         Set<String> names = getRequest().getRequestParameters().getParameterNames();
         Map<String,String> map = Maps.newHashMap();
         for(String nm:names){

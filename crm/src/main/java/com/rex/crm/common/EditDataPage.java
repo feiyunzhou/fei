@@ -1,5 +1,6 @@
 package com.rex.crm.common;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.string.StringValue;
+import org.hibernate.annotations.Parent;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.TemplatePage;
@@ -35,9 +37,7 @@ public class EditDataPage extends TemplatePage {
        
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get(entityName);
-         List<Field> currentFields = entity.getFields();
-        //id = "25";b
-         logger.debug("BBDBSDBDBDBDBDBD:"+id);
+        List<Field> currentFields = entity.getFields();
         long lid = Long.parseLong(id);
         Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Set<String> names = getRequest().getRequestParameters().getParameterNames();
@@ -45,7 +45,11 @@ public class EditDataPage extends TemplatePage {
         for(String nm:names){
             StringValue sv = getRequest().getRequestParameters().getParameterValue(nm);
             relationMap.put(nm, sv.toString());
+            logger.debug("svsvsvsvsvsv"+nm);
+            logger.debug("svsvsvsvsvsv" +  sv.toString());
+            logger.debug("svsvsvsvsvsv"+names);
         }
+        
 //        String value = CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(map.get(currentField.getName())));
         add(new Label("name",String.valueOf(map.get("name"))));
         add(new EditDataFormPanel("detailed",entity,map,id, relationMap));

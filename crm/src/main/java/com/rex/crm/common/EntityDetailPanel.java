@@ -1,5 +1,6 @@
 package com.rex.crm.common;
 
+import java.awt.Button;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -64,8 +65,22 @@ public class EntityDetailPanel extends Panel {
             if(groupfields == null) continue;
             AbstractItem groupitem = new AbstractItem(fieldGroupRepeater.newChildId());
             fieldGroupRepeater.add(groupitem);
+//            RepeatingView button = new RepeatingView("button");
+//            groupitem.add(button);
+//            AbstractItem button = new AbstractItem(button.newChildId());
+//            button.add();
+//            int x = 3;
+//            divButton.add(new AttributeAppender("data-target", new Model("#2" + x ), ";"));
+//            x++;
+            RepeatingView divRepeater = new RepeatingView("divRepeater");
+            groupitem.add(divRepeater);
+            AbstractItem div = new AbstractItem(divRepeater.newChildId());
+            divRepeater.add(div);
+            int z = 3 ;
+            div.add(new AttributeAppender("id", new Model("2" +z), ";"));
+            z++;
             RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-            groupitem.add(dataRowRepeater);
+            div.add(dataRowRepeater);
             int numOfField = 0;
             List<Field> visibleFields = Lists.newArrayList();
             
@@ -78,6 +93,7 @@ public class EntityDetailPanel extends Panel {
             }
 
             groupitem.add(new Label("groupname", gn));
+           
             int num_of_row = (numOfField / number_of_column) + 1;
 
             for (int i = 0; i < num_of_row; i++) {
@@ -95,7 +111,6 @@ public class EntityDetailPanel extends Panel {
                         continue;
                     }
                     Field currentField = visibleFields.get(i * number_of_column + j / 2);
-
                     if (currentField.getPicklist() != null) {
 
                         if (j % 2 == 0) {
@@ -133,17 +148,12 @@ public class EntityDetailPanel extends Panel {
                             	columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
                                 columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
                             }
-                            
                         }
                     }
                     columnRepeater.add(columnitem);
-                   
                 }
-                
             }// end of set the detailed info
-
         }// end of groupNames loop
-
         add(new AbstractAjaxBehavior() {
 
             @Override
