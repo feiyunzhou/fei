@@ -75,6 +75,11 @@ public class EntityDetailPanel extends Panel {
             AbstractItem div = new AbstractItem(divRepeater.newChildId());
             divRepeater.add(div);
             div.add(new AttributeAppender("id", new Model("2" + (--gNum)), ";"));
+            if(!(gNum==0)){
+            	div.add(new AttributeAppender("class", new Model("collapse" ), ";"));
+            }else{
+            	div.add(new AttributeAppender("class", new Model("collapse in" ), ";"));
+            }
             gNum++;
             RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
             div.add(dataRowRepeater);
@@ -138,7 +143,7 @@ public class EntityDetailPanel extends Panel {
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
                             String value = CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(rawvalue));
                             value = (value == null) ? "" : value;
-                            if((currentField.getDisplay().equals("医院ID"))){
+                            if((currentField.getName().equals("accountId"))){
                             	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
                                 columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
                             }else{
