@@ -891,20 +891,16 @@ public class DAOImpl {
          for(String name:fieldNames){
              if(i==0){
             	 sql = name +" = "+ values.get(i)  ;
-            	
-            	
              }else{
         	    sql = sql + "," + name +" = "+ values.get(i)  ;	 
-        	    
              }
         	 i++;
          }
          
          sql = sql + ",whenadded = now()";
-  
-    
+         sql = sql.replaceAll("accountId = null,", "").trim();
+         sql = sql.replaceAll("accountName","accountId").trim();
          sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;
-        
         logger.debug("UPDATE sql is:"+sql);
         Connection conn = null;
         try {
@@ -919,7 +915,6 @@ public class DAOImpl {
         } finally {
             DBHelper.closeConnection(conn);
         }
-
     }
     public static void deleteRecord(String entityId,String entityName) {
         String sql = "";

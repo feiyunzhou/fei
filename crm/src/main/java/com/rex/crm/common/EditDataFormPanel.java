@@ -286,7 +286,7 @@ public class EditDataFormPanel extends Panel {
 			super(id, markupId, markupProvider);
 			TextField<String> text = new TextField<String>("input", model);
 							text.add(new AttributeAppender("value", new Model(value), ";"));
-							if(!currentField.isEditable()){text.add(new AttributeAppender("readonly",new Model("readonly"),";"));}
+							if(!currentField.isEditable()){text.add(new AttributeAppender("disabled",new Model("disabled"),";"));}
 							add(text);
 		}
 	}

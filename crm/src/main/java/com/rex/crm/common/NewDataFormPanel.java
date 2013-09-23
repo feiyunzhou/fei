@@ -79,7 +79,7 @@ public class NewDataFormPanel extends Panel {
 			int numOfField = 0;
 			List<Field> visibleFields = Lists.newArrayList();
 			for (Field f : groupfields) {
-				if (!f.isVisible() )
+				if (!f.isVisible() ||f.getName().equals("accountId"))
 					continue;
 				numOfField++;
 				visibleFields.add(f);
@@ -170,8 +170,7 @@ public class NewDataFormPanel extends Panel {
 				List<String> fieldNames = Lists.newArrayList();
 				List<String> values = Lists.newArrayList();
 				for (String key : models.keySet()) {
-					if(!key.equals("accountId")){
-					fieldNames.add(key);}
+					fieldNames.add(key);
 					System.out.println(fieldNames);
 					// models.get(key).getObject()
 					if (models.get(key).getObject() instanceof String) {
