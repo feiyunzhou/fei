@@ -62,7 +62,6 @@ public class DAOImpl {
             .maximumSize(1000).expireAfterWrite(10, TimeUnit.MINUTES)
             .build();
 
-
     public static ImmutableMap<Integer, City> getCityTable() {
         com.google.common.collect.ImmutableMap.Builder<Integer, City> mapBuilder = ImmutableMap.<Integer, City> builder();
 
@@ -512,13 +511,11 @@ public class DAOImpl {
             for (String f : filters) {
                 joinedFilter.add(filterField + " = " + f);
             }
-
             sql = sql + " where (" + Joiner.on(" OR ").join(joinedFilter) + ")";
         } else {
             sql = sql + " where " + filterField + " = -1";
         }
-
-        logger.debug(sql);
+        logger.debug("sql语句："+sql);
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
@@ -1026,6 +1023,7 @@ public class DAOImpl {
     }
 
     public static CRMUser login(String loginName, String password) {
+    	System.out.println("登录");
         Connection conn = null;
         CRMUser user = new CRMUser();
         try {

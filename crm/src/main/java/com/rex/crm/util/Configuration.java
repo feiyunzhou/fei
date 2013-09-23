@@ -46,14 +46,12 @@ public class Configuration {
                 try {
                     properties.load(Configuration.class.getResourceAsStream("/velocity.properties"));
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 ve = new VelocityEngine();
                 ve.init(properties);
             }
         }
-
         return ve;
 
     }

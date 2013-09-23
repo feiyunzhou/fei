@@ -1,68 +1,64 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<LINK href="favicon.ico" type="image/x-icon" rel="shortcut icon">
-<title>登录</title>
-<!-- <link rel="stylesheet" type="text/css" href="style.css" />
-<link rel="stylesheet" type="text/css" href="template/style.css" /> -->
-<script src='jquery/js/jquery-1.9.1.js'></script>
-<script src='jquery/js/jquery-ui-1.10.2.custom.js'></script>
-<script src="js/common.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
-<link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-<!-- <link href="flat/css/flat-ui.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="FortAwesome/css/font-awesome.min.css">
-<link href="css/common.css" rel="stylesheet" />
-<style type="text/css">
-body {
-	padding-top: 60px;
-	padding-bottom: 40px;
-}
-
-.sidebar-nav {
-	padding: 9px 0;
-}
-
-@media ( max-width : 980px) {
-	/* Enable use of floated navbar text */
-	.navbar-text.pull-right {
-		float: none;
-		padding-left: 5px;
-		padding-right: 5px;
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<LINK href="../favicon.ico" type="image/x-icon" rel="shortcut icon">
+	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>登录</title>
+	<script src='flat/js/jquery-1.8.2.js'></script>
+	<script src='flat/js/jquery-ui-1.10.0.custom.js'></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<link href="flat/css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" href="flat/css/demo.css">
+	<link rel="stylesheet" href="flat/css/flat-ui.css">
+	<style type="text/css">
+	body {
+		padding-top: 60px;
+		padding-bottom: 40px;
 	}
-}
-</style>
-<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
-<!-- <link  href="css/template.css" rel="stylesheet"/> -->
-<script>
-	$(document).ready(function() {
-	});
-</script>
+	</style>
+	<script>
+		$(document).ready(function() {
+			
+		});
+	</script>
 </head>
-<body>
-    <div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="brand" href="#">E3</a>
+<body>	
+	<div class="row-fluid" id="login_wrapper">
+		<div class="container">
+			<div class="login">
+				<div class="login-screen">
+			    	<div class="login-icon">
+			            <img src="image/icon.png" alt="Welcome to Mail App" />
+			            <h4>Welcome to <small>&nbsp;&nbsp;E3&nbsp;&nbsp;crm</small></h4>
+			        </div>
+			        <div class="form-group">
+				        		<span wicket:id = "feedback"/>
+		        	</div>
+			        <form wicket:id = "signInForm">
+				        <div class="login-form">
+		            		<div class="form-group">
+				              	<input type="text" wicket:id = "username" class="form-control login-field" value="" placeholder="Enter your name" id="login-name" />
+				              	<label class="login-field-icon fui-user" for="login-name"></label>
+				            </div>
+				            <div class="form-group">
+				            	<input type="password" wicket:id = "password" class="form-control login-field" value="" placeholder="Password" id="login-pass" />
+				              	<label class="login-field-icon fui-lock" for="login-pass"></label>
+				            </div>
+				            <input type="submit" class="btn btn-primary btn-lg btn-block" value="login"/>
+				            <a class="login-link" href="#">Lost your password?</a>
+				        </div>
+			        </form>
+		        </div>
+      		</div>
+	    </div>
+		<center>
+			<div id="footer">
+				<hr/>
+				<p>Copyright © 2000-2013 SalesStrategies.net.All rights reserved.</p>
 			</div>
+		</center>
 		</div>
-	</div>
- 
-    <div class="container-fluid">
-
-		<div class="row-fluid">
-			<div>
-				 <span wicket:id="signInPanel"/>
-			</div>
-			<hr>
-			<div class="footer">
-				<p>© Company 2013</p>
-			</div>
-		</div>
-	</div>
-    
 </body>
 </html>

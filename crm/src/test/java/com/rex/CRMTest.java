@@ -16,36 +16,36 @@ import com.rex.crm.util.Configuration;
 
 public class CRMTest {
 
-    @Test
+   @Test
     public void testConfig(){
         List<Entity> entities = Configuration.getEntities();
         for(Entity en:entities){
             System.out.println(en);
         }
     }
-    
-    @Test
+    //不明白的地方
+   /* @Test
     public void testRelation(){
         Collection<Relation> list = Configuration.getRelationsByName("contact");
         for(Relation r:list){
             System.out.println(r.getSql());
             
         }
-    }
+    }*/
     
-    @Test
+     @Test
     public void testjson(){
        System.out.println(DataProvider.getActivityIdsOfContactIdByUserId(new String[]{"20"}));
    
     }
     
-    @Test
+     @Test
     public void md5test(){
         String password =  DigestUtils.md5Hex("12345");
         System.out.println("MD5 password is:"+password);
     }
  
-    @Test
+     @Test
     public void loginTest(){
         System.out.println(DAOImpl.login("tig", "1"));
     }

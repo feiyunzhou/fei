@@ -18,9 +18,18 @@ package com.rex.crm;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.wicket.authroles.authentication.panel.SignInPanel;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.value.ValueMap;
 
 
 /**
@@ -36,20 +45,68 @@ public final class SignIn extends WebPage
 	 */
 	public SignIn()
 	{
-		this(null);
+		//create feedback panel and add to page
+		add(new FeedbackPanel("feedback"));
+		//add sign-in form to page
+		add(new SignInForm("signInForm"));
 	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param parameters
-	 *            The page parameters
-	 */
-	public SignIn(final PageParameters parameters)
-	{
-		// Take our standard Logon Panel from the auth-role module and add it to the Page. That is
-		// all what is necessary.
-	    getSession().setLocale(new Locale("zh", "CN"));
-		add(new SignInPanel("signInPanel", false));
-	}
+    public final class SignInForm extends Form<Void>
+    {
+    	private static final String USERNAME ="username";
+    	private static final String PASSWORD = "password";
+    	private final ValueMap properties = new ValueMap();
+    	/**
+    	 * Constructor
+    	 * 
+    	 * @param id
+    	 * 			 id of the form component
+    	 */
+    	public SignInForm(final String id)
+    	{
+    		super(id);
+    		add(new TextField<String>(USERNAME,new PropertyModel<String>(properties,USERNAME)));
+    		add(new PasswordTextField(PASSWORD,new PropertyModel<String>(properties,PASSWORD)));
+    	}
+    	/**
+         * sign 
+         */
+        public final void onSubmit()
+        {
+        	//get session info
+        	SignIn2Session session = getMysession();
+        	//clear session user
+        	session.setUser(null);
+        	 // Sign the user in
+            if (session.signIn(getUsername(), getPassword()))
+            {
+               /* if(!continueToOriginalDestination())
+                {*/
+                    setResponsePage(getApplication().getHomePage());
+                /*}*/
+            }
+            else
+            {
+                // Get the error message from the properties file associated with the Component
+                String errmsg = getString("loginError", null, "Unable to sign you in");
+                // Register the error message with the feedback panel
+                error(errmsg);
+            }
+        }
+    	/**
+    	 * @return
+    	 */
+    	private String getUsername()
+    	{
+    		return properties.getString(USERNAME);
+    	}
+    	private String getPassword()
+    	{
+    		return properties.getString(PASSWORD);
+    	}
+    	private SignIn2Session getMysession()
+    	{
+    		return (SignIn2Session)getSession();
+    	}
+    	
+    }
 }

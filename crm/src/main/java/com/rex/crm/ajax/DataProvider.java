@@ -451,7 +451,6 @@ public class DataProvider {
             }
             jsTableData.add(String.valueOf(key), js_rows);
         }
-        
         return jsTableData.toString();
         
     }

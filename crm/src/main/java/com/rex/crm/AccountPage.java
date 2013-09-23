@@ -1,6 +1,5 @@
 package com.rex.crm;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,24 +43,19 @@ public class AccountPage extends TemplatePage
         List mapList = null;
         if(filter == null){
             String sql = entity.getSql();
-            
             //if the user is admin we use admin sql to query database
             if(roleId == 1){
                 sql = entity.getSqlAdmin();
             }
             mapList = DAOImpl.queryEntityRelationList(sql, userId);
         }else{
-            
             List<String> ft = Lists.newArrayList();
             for (String k : filter.keySet()) {
                 if(filter.get(k)) ft.add(k);
             }
             mapList = DAOImpl.queryEntityWithFilter(entity.getSql(), entity.getFilterField(), ft, userId);
-                  
-                    
         }
         add(new PageableTablePanel("datalist",entity,mapList));
-        
         
         //for the side bar
         List<Pair<String, Map<String, Object>>> types = DAOImpl.queryFilters(entity.getSql(), entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);

@@ -16,6 +16,9 @@
  */
 package com.rex.crm;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
@@ -70,10 +73,8 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		        roleId = crmUser.getRole();
 		    }
 		}
-
 		return user != null;
 	}
-
 	/**
 	 * @see org.apache.wicket.authentication.AuthenticatedWebSession#getRoles()
 	 */
@@ -87,7 +88,6 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		}
 		return null;
 	}
-
 	/**
 	 * @return User
 	 */
