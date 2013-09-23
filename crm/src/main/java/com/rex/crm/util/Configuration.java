@@ -116,9 +116,9 @@ public class Configuration {
     
     public static List<String> getSortedFieldGroupNames(){
         List<String> list = Lists.newArrayList();
+        list.add("关键信息");
         list.add("基本信息");
-        list.add("地址信息");
-        list.add("其他信息");
+        list.add("附加信息");
         
         return list;
     }

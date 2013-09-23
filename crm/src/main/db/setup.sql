@@ -1,77 +1,46 @@
 
 USE crmdb;
 
---drop table if exists account;
---CREATE TABLE account 
---(
---    id MEDIUMINT NOT NULL AUTO_INCREMENT,
---    name VARCHAR(255) NOT NULL,
---    address VARCHAR(255),
---    cityId MEDIUMINT NOT NULL,
---    classification VARCHAR(255),
---    isKeyAccount boolean,
---    level  VARCHAR(255),
---    photo VARCHAR(255),
---    status VARCHAR(128),
---    tele VARCHAR(255),
---    PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---ALTER table account ADD pl1 MEDIUMINT;
---ALTER table account ADD pl2 MEDIUMINT;
---ALTER table account ADD pl3 MEDIUMINT;
---ALTER table account ADD pl4 MEDIUMINT;
---ALTER table account ADD pl5 MEDIUMINT;
---ALTER table account ADD pl6 MEDIUMINT;
---ALTER table account ADD whenadded DATETIME;
-
-
 drop table if exists account;
 CREATE TABLE account 
 (
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    whenadded DATETIME,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT, 
     name VARCHAR(255) NOT NULL,
-    alias VARCHAR(255),
-    medicalType MEDIUMINT,
-    headOfHospital VARCHAR(255),
+    bdm_code VARCHAR(255),
+    administrativ_level VARCHAR(255),
     grade VARCHAR(255),
-    isMedicalInsurance VARCHAR(128),
-    profitMethod VARCHAR(255),
-    isEducational VARCHAR(128),
-    superiorHospital VARCHAR(255),
+    hospital_type MEDIUMINT,
+    local_or_army MEDIUMINT,
+    comprehensive_or_specialized MEDIUMINT,
+    key_type MEDIUMINT,
+    status MEDIUMINT,
+    duty_officer VARCHAR(255),
+    num_of_doctors MEDIUMINT,
+    num_of_assistant_doctors MEDIUMINT,
+    num_of_staff MEDIUMINT, 
+    num_of_treat_per_year MEDIUMINT,
+    num_of_outpatient MEDIUMINT,
+    total_num_of_sickbed MEDIUMINT,
+    num_of_anesthesia_doctor MEDIUMINT,
+    num_of_pain_doctor MEDIUMINT, 
+    num_of_surgery_per_year MEDIUMINT,
+    num_of_surgery_room MEDIUMINT,
+    num_of_using_opiates_medicine MEDIUMINT,
+    num_of_using_opiates_injection MEDIUMINT,
+    date_of_establish DATETIME,
+    registered_capital MEDIUMINT,
     tel VARCHAR(255),
     fax VARCHAR(255),
-    website VARCHAR(255),
+    market_classification MEDIUMINT,
     province VARCHAR(255),
     city VARCHAR(255),
-    area VARCHAR(255),
-    address  VARCHAR(255),
-    postcode  VARCHAR(255),
-    strongPoint VARCHAR(255),
-    medicalCollege VARCHAR(255),
-    businessRevenue MEDIUMINT,
-    numOfDoctor MEDIUMINT,
-    numOfSickbed MEDIUMINT,
-    numOfTreatment MEDIUMINT,
-    numOfOperation MEDIUMINT,
-    medicalTreatmentRevenue MEDIUMINT,
-    outpatientRevenue MEDIUMINT,
-    outpatientOperationRevenue MEDIUMINT,
-    outpatientAssayRevenue MEDIUMINT,
-    hospitalizationRevenue MEDIUMINT,
-    hospitalizationOperationRevenue MEDIUMINT,
-    establishYear MEDIUMINT,
-    numOfOperationRoom MEDIUMINT,
-    numOfsickroom4Operation MEDIUMINT,
-    numOfOutpatientRoom4Operation MEDIUMINT,
-    numOfChildbirth MEDIUMINT,
-    numOfEmergencyOperation MEDIUMINT,
-    numOfOutpatientOperation MEDIUMINT,
-    dutyOfficer VARCHAR(255),
-    status MEDIUMINT,
-    description VARCHAR(255),
-    externalModification VARCHAR(255),
-    externalCreation VARCHAR(255),
+    districts VARCHAR(255),
+    address VARCHAR(255),
+    owner VARCHAR(255),
+    whenadded DATETIME,
+    modifier VARCHAR(255),
+    modify_datetime DATETIME,
+    responsible_person VARCHAR(255),
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
@@ -86,16 +55,26 @@ INSERT INTO boolean_pl (val) VALUES('是');
 INSERT INTO boolean_pl (val) VALUES('否');
 
 -- 医院类型
-drop table if exists account_medicalType_pl;
-CREATE TABLE account_medicalType_pl 
+drop table if exists account_administrativ_level_pl;
+CREATE TABLE account_administrativ_level_pl 
 (
  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
  val VARCHAR(255),
  PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO account_medicalType_pl (val) VALUES('麻药目标医院');
-INSERT INTO account_medicalType_pl (val) VALUES('慢痛目标医院');
-INSERT INTO account_medicalType_pl (val) VALUES('其他');
+INSERT INTO account_administrativ_level_pl (val) VALUES('一级');
+INSERT INTO account_administrativ_level_pl (val) VALUES('一级甲等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('一级乙等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('一级丙等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('二级');
+INSERT INTO account_administrativ_level_pl (val) VALUES('二级甲等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('二级乙等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('二级丙等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('三级');
+INSERT INTO account_administrativ_level_pl (val) VALUES('三级甲等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('三级乙等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('三级丙等');
+INSERT INTO account_administrativ_level_pl (val) VALUES('未评级未评等');
 
 -- 医院分级
 drop table if exists account_grade_pl;
@@ -121,67 +100,42 @@ CREATE TABLE account_status_pl
 ) ENGINE InnoDB;
 INSERT INTO account_status_pl (val) VALUES ('有效');
 INSERT INTO account_status_pl (val) VALUES('无效');
-INSERT INTO account_status_pl (val) VALUES('终止');
-INSERT INTO account_status_pl (val) VALUES('候选');
 
---
-----picklist for account
-----状态;
---drop table if exists account_pl1;
---CREATE TABLE account_pl1 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
-----医院分级;
---drop table if exists account_pl2;
---CREATE TABLE account_pl2 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
---
-----重点医院;
---drop table if exists account_pl3;
---CREATE TABLE account_pl3 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
-----市场分类;
---drop table if exists account_pl4;
---CREATE TABLE account_pl4 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
-----客户区域;
---drop table if exists account_pl5;
---CREATE TABLE account_pl5 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
-----医院类型;
---drop table if exists account_pl6;
---CREATE TABLE account_pl6 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
----- end of piklist for account;
+
+drop table if exists account_local_or_army_pl;
+CREATE TABLE account_local_or_army_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO account_local_or_army_pl (val) VALUES ('地方医院');
+INSERT INTO account_local_or_army_pl (val) VALUES('部队医院');
+
+drop table if exists account_comprehensive_or_specialized_pl;
+CREATE TABLE account_comprehensive_or_specialized_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO account_comprehensive_or_specialized_pl (val) VALUES ('综合医院');
+INSERT INTO account_comprehensive_or_specialized_pl (val) VALUES('专科医院');
+
+
+drop table if exists account_market_classification_pl;
+CREATE TABLE account_market_classification_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO account_market_classification_pl (val) VALUES ('战略城市');
+INSERT INTO account_market_classification_pl (val) VALUES('一级城市');
+INSERT INTO account_market_classification_pl (val) VALUES('二级城市');
+INSERT INTO account_market_classification_pl (val) VALUES('三级城市');
+INSERT INTO account_market_classification_pl (val) VALUES('四级城市');
+
 
 drop table if exists accountcrmuser;
 CREATE TABLE accountcrmuser 
@@ -257,134 +211,34 @@ CREATE TABLE activity_types
 ) ENGINE InnoDB;
 
 
---drop table if exists contact;
---CREATE TABLE contact 
---(
---    id MEDIUMINT NOT NULL AUTO_INCREMENT,
---    name VARCHAR(255) NOT NULL,
---    branch VARCHAR(255),
---    department VARCHAR(255),
---    duty VARCHAR(255),
---    gender VARCHAR(255),
---    mobilephone VARCHAR(255),
---    tel_work VARCHAR(255),
---    title VARCHAR(255),
---    accountId MEDIUMINT  NOT NULL,
---    PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---ALTER TABLE contact ADD sex MEDIUMINT;
---ALTER table contact ADD pl1 MEDIUMINT;
---ALTER table contact ADD pl2 MEDIUMINT;
---ALTER table contact ADD pl3 MEDIUMINT;
---ALTER table contact ADD pl4 MEDIUMINT;
---ALTER table contact ADD pl5 MEDIUMINT;
---ALTER table contact ADD pl6 MEDIUMINT;
---ALTER table contact ADD visiting_target MEDIUMINT;
---ALTER table contact ADD whenadded DATETIME;
-
--- picklist for contact;
--- 性别;
---drop table if exists sex_pl;
---CREATE TABLE sex_pl
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
----- 科室;
---drop table if exists contact_pl1;
---CREATE TABLE contact_pl1 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
----- 职务;
---drop table if exists contact_pl2;
---CREATE TABLE contact_pl2 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
----- 职称;
---drop table if exists contact_pl3;
---CREATE TABLE contact_pl3 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
----- 主要产品;
---drop table if exists contact_pl4;
---CREATE TABLE contact_pl4 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
----- 状态;
---drop table if exists contact_pl5;
---CREATE TABLE contact_pl5 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
---
----- 医生级别
---drop table if exists contact_pl6;
---CREATE TABLE contact_pl6 
---(
---  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
---  val VARCHAR(255),
---  PRIMARY KEY USING BTREE (id)
---) ENGINE InnoDB;
--- end of picklist for contact;
-
-
 drop table if exists contact;
 CREATE TABLE contact 
 (
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    whenadded DATETIME,
     name VARCHAR(255) NOT NULL,
     accountId MEDIUMINT  NOT NULL,
     department VARCHAR(255),
     sex MEDIUMINT,
-    birthYear MEDIUMINT,
-    birthMonth MEDIUMINT,
-    status VARCHAR(255),
-    tel VARCHAR(255),
-    fax VARCHAR(255),
-    mobile VARCHAR(255),
+    native_place VARCHAR(255),
+    office_tel VARCHAR(255),
+    office_fax VARCHAR(255),
+    cellphone VARCHAR(255),
     email VARCHAR(255),
-    validAddress VARCHAR(255),
-    otherTel VARCHAR(255),
-    administrativePosition MEDIUMINT,
-    technicalPosition MEDIUMINT,
-    medicalAssociationPosition VARCHAR(255),
-    highestDegree VARCHAR(255),
-    tutorQualification VARCHAR(255),
-    academicSpecialties VARCHAR(255),
-    operationSpecialties VARCHAR(255),
-    numOfOperationPerYear MEDIUMINT,
-    numOfsickbed MEDIUMINT,
-    languageLevelOfEnglish VARCHAR(255),
-    JNIfaulty VARCHAR(255),
-    researchDirection VARCHAR(255),
-    instuctorLevel VARCHAR(255),
-    kol VARCHAR(255),
+    status VARCHAR(255),
+    market_classification MEDIUMINT,
     grade MEDIUMINT,
-    factorOfGrade MEDIUMINT,
-    managerId MEDIUMINT,
+    province VARCHAR(255),
+    city VARCHAR(255),
+    districts VARCHAR(255),
+    duty MEDIUMINT,
+    job_title MEDIUMINT,
     visiting_target MEDIUMINT,
-    description VARCHAR(255),
+    product_target  VARCHAR(255),
+    owner VARCHAR(255),
+    whenadded DATETIME,
+    modifier VARCHAR(255),
+    modify_datetime DATETIME,
+    responsible_person VARCHAR(255),
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
@@ -400,85 +254,99 @@ CREATE TABLE sex_pl
 INSERT INTO sex_pl (val) VALUES('男');
 INSERT INTO sex_pl (val) VALUES('女');
 -- 科室
-drop table if exists contact_pl1;
-CREATE TABLE contact_pl1 
+drop table if exists contact_department_pl;
+CREATE TABLE contact_department_pl 
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO contact_pl1 (val) VALUES('肿瘤科');
-INSERT INTO contact_pl1 (val) VALUES('内科');
-INSERT INTO contact_pl1 (val) VALUES('外科');
-INSERT INTO contact_pl1 (val) VALUES('中医科');
-INSERT INTO contact_pl1 (val) VALUES('化疗科');
-INSERT INTO contact_pl1 (val) VALUES('关怀科');
-INSERT INTO contact_pl1 (val) VALUES('牙科');
-INSERT INTO contact_pl1 (val) VALUES('急症科');
-INSERT INTO contact_pl1 (val) VALUES('骨科');
-INSERT INTO contact_pl1 (val) VALUES('肝胆外科');
-INSERT INTO contact_pl1 (val) VALUES('血液科');
-INSERT INTO contact_pl1 (val) VALUES('风湿科');
-INSERT INTO contact_pl1 (val) VALUES('呼吸科');
+INSERT INTO contact_department_pl (val) VALUES('ICU');
+INSERT INTO contact_department_pl (val) VALUES('内科');
+INSERT INTO contact_department_pl (val) VALUES('外科');
+INSERT INTO contact_department_pl (val) VALUES('中医科');
+INSERT INTO contact_department_pl (val) VALUES('化疗科');
+INSERT INTO contact_department_pl (val) VALUES('关怀科');
+INSERT INTO contact_department_pl (val) VALUES('牙科');
+INSERT INTO contact_department_pl (val) VALUES('急症科');
+INSERT INTO contact_department_pl (val) VALUES('骨科');
+INSERT INTO contact_department_pl (val) VALUES('肝胆外科');
+INSERT INTO contact_department_pl (val) VALUES('血液科');
+INSERT INTO contact_department_pl (val) VALUES('风湿科');
+INSERT INTO contact_department_pl (val) VALUES('呼吸科');
+
+
 
 -- 行政职务;
-drop table if exists contact_pl2;
-CREATE TABLE contact_pl2 
+drop table if exists contact_duty_pl;
+CREATE TABLE contact_duty_pl 
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO contact_pl2 (val) VALUES('主任');
-INSERT INTO contact_pl2 (val) VALUES('主治医师');
-INSERT INTO contact_pl2 (val) VALUES('科室主任');
-INSERT INTO contact_pl2 (val) VALUES('采购');
-INSERT INTO contact_pl2 (val) VALUES('科室主任');
-INSERT INTO contact_pl2 (val) VALUES('院长');
-INSERT INTO contact_pl2 (val) VALUES('副院长');
-INSERT INTO contact_pl2 (val) VALUES('药剂科主任');
+INSERT INTO contact_duty_pl (val) VALUES('主任');
+INSERT INTO contact_duty_pl (val) VALUES('主治医师');
+INSERT INTO contact_duty_pl (val) VALUES('科室主任');
+INSERT INTO contact_duty_pl (val) VALUES('采购');
+INSERT INTO contact_duty_pl (val) VALUES('科室主任');
+INSERT INTO contact_duty_pl (val) VALUES('院长');
+INSERT INTO contact_duty_pl (val) VALUES('副院长');
+INSERT INTO contact_duty_pl (val) VALUES('药剂科主任');
 
 -- 专业职务;
-drop table if exists contact_pl3;
-CREATE TABLE contact_pl3 
+drop table if exists  contact_job_title_pl;
+CREATE TABLE  contact_job_title_pl 
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO contact_pl3 (val) VALUES('住院医师');
-INSERT INTO contact_pl3 (val) VALUES('主治医师');
-INSERT INTO contact_pl3 (val) VALUES('副主任医师');
-INSERT INTO contact_pl3 (val) VALUES('主任医师');
-INSERT INTO contact_pl3 (val) VALUES('护士');
-INSERT INTO contact_pl3 (val) VALUES('主管护师');
-INSERT INTO contact_pl3 (val) VALUES('药师');
-INSERT INTO contact_pl3 (val) VALUES('技师');
+INSERT INTO contact_job_title_pl (val) VALUES('住院医师');
+INSERT INTO contact_job_title_pl (val) VALUES('主治医师');
+INSERT INTO contact_job_title_pl (val) VALUES('副主任医师');
+INSERT INTO contact_job_title_pl (val) VALUES('主任医师');
+INSERT INTO contact_job_title_pl (val) VALUES('护士');
+INSERT INTO contact_job_title_pl (val) VALUES('主管护师');
+INSERT INTO contact_job_title_pl (val) VALUES('药师');
+INSERT INTO contact_job_title_pl (val) VALUES('技师');
 
 -- 状态;
-drop table if exists contact_pl5;
-CREATE TABLE contact_pl5 
+drop table if exists contact_status_pl;
+CREATE TABLE contact_status_pl 
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO contact_pl5 (val) VALUES('有效');
-INSERT INTO contact_pl5 (val) VALUES('无效');
+INSERT INTO contact_status_pl (val) VALUES('有效');
+INSERT INTO contact_status_pl (val) VALUES('无效');
 
 -- 级别;
-drop table if exists contact_pl6;
-CREATE TABLE contact_pl6 
+drop table if exists contact_grade_pl;
+CREATE TABLE contact_grade_pl 
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO contact_pl6 (val) VALUES('A');
-INSERT INTO contact_pl6 (val) VALUES('B');
-INSERT INTO contact_pl6 (val) VALUES('C');
-INSERT INTO contact_pl6 (val) VALUES('D');
+INSERT INTO contact_grade_pl (val) VALUES('A');
+INSERT INTO contact_grade_pl (val) VALUES('B');
+INSERT INTO contact_grade_pl (val) VALUES('C');
+INSERT INTO contact_grade_pl (val) VALUES('D');
 
+drop table if exists contact_market_classification_pl;
+CREATE TABLE contact_market_classification_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO contact_market_classification_pl (val) VALUES ('战略城市');
+INSERT INTO contact_market_classification_pl (val) VALUES('一级城市');
+INSERT INTO contact_market_classification_pl (val) VALUES('二级城市');
+INSERT INTO contact_market_classification_pl (val) VALUES('三级城市');
+INSERT INTO contact_market_classification_pl (val) VALUES('四级城市');
 
 
 

@@ -79,7 +79,7 @@ public class NewDataFormPanel extends Panel {
 			int numOfField = 0;
 			List<Field> visibleFields = Lists.newArrayList();
 			for (Field f : groupfields) {
-				if (!f.isVisible() ||f.getName().equals("accountId"))
+				if (!f.isVisible() || !f.isEditable())
 					continue;
 				numOfField++;
 				visibleFields.add(f);
@@ -157,7 +157,7 @@ public class NewDataFormPanel extends Panel {
 					}
 					columnRepeater.add(columnitem);
 					
-				}System.out.println("+++++++++++++++++++++++++++" + entity.toString());
+				}
 			}
 		}
 
