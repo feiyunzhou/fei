@@ -87,7 +87,7 @@ public class EditDataFormPanel extends Panel {
 			int numOfField = 0;
 			List<Field> visibleFields = Lists.newArrayList();
 			for (Field f : groupfields) {
-				if (!f.isVisible()|| f.getDisplay().equalsIgnoreCase("医院ID") )
+				if (!f.isVisible() )
 					continue;
 				numOfField++;
 				visibleFields.add(f);
@@ -134,35 +134,35 @@ public class EditDataFormPanel extends Panel {
 							columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids,list, choiceModel));
 						}
 					}
-//					else if (currentField.getRelationTable() != null) {
-//						if (j % 2 == 0) {
-//							columnitem.add(new TextFragment("celldatafield","textFragment",this, currentField.getDisplay() +":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-//							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
-//							fieldNames.add(currentField.getName());
-//						} else {
-//							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
-//							Map<Long, String> list = Maps.newHashMap();
-//							List<Long> ids = Lists.newArrayList();
-//							for (Choice p : pickList) {
-//								list.put(p.getId(), p.getVal());
-//								ids.add(p.getId());
-//							}
-//							long foreignKey = 1L;
-//							if (relationIds != null&& relationIds.containsKey(currentField.getAlias())) {
-//								foreignKey = Long.parseLong(relationIds.get(currentField.getAlias()));
-//							}
-//							IModel choiceModel = new Model(foreignKey);
-//							String fn = "";
-//							if (currentField.getAlias() != null) {
-//								fn = currentField.getAlias();
-//							} else {
-//								fn = currentField.getName();
-//							}
-//								models.put(fn, choiceModel);
-//								fieldNameToModel.put(currentField.getName(), choiceModel);
-//								columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
-//						}
-//					} 
+					else if (currentField.getRelationTable() != null) {
+						if (j % 2 == 0) {
+							columnitem.add(new TextFragment("editdata","textFragment",this, currentField.getDisplay() +":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
+							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+							fieldNames.add(currentField.getName());
+						} else {
+							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
+							Map<Long, String> list = Maps.newHashMap();
+							List<Long> ids = Lists.newArrayList();
+							for (Choice p : pickList) {
+								list.put(p.getId(), p.getVal());
+								ids.add(p.getId());
+							}
+							long foreignKey = 1L;
+							if (relationIds != null&& relationIds.containsKey(currentField.getAlias())) {
+								foreignKey = Long.parseLong(relationIds.get(currentField.getAlias()));
+							}
+							IModel choiceModel = new Model(foreignKey);
+							String fn = "";
+							if (currentField.getAlias() != null) {
+								fn = currentField.getAlias();
+							} else {
+								fn = currentField.getName();
+							}
+								models.put(fn, choiceModel);
+								fieldNameToModel.put(currentField.getName(), choiceModel);
+								columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this,ids, list, choiceModel));
+						}
+					} 
 						else {
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
@@ -179,7 +179,7 @@ public class EditDataFormPanel extends Panel {
 							IModel<String> textModel = new Model<String>("");
 							models.put(CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(rawvalue)),textModel);
 							fieldNameToModel.put(currentField.getName(), textModel);
-							columnitem.add(new TextInputFragment("editdata","textInputFragment", this, textModel,value));
+							columnitem.add(new TextInputFragment("editdata","textInputFragment", this, textModel,value,currentField));
 						}
 					}
 					columnRepeater.add(columnitem);
@@ -282,10 +282,11 @@ public class EditDataFormPanel extends Panel {
 
 	private class TextInputFragment extends Fragment {
 		public TextInputFragment(String id, String markupId,
-				MarkupContainer markupProvider, IModel model,String value) {
+				MarkupContainer markupProvider, IModel model,String value,Field currentField) {
 			super(id, markupId, markupProvider);
 			TextField<String> text = new TextField<String>("input", model);
 							text.add(new AttributeAppender("value", new Model(value), ";"));
+							if(!currentField.isEditable()){text.add(new AttributeAppender("readonly",new Model("readonly"),";"));}
 							add(text);
 		}
 	}

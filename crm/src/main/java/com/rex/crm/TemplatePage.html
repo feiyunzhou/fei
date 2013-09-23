@@ -59,35 +59,31 @@ body {
 			$(this).removeClass("active");
 		});
 		//prepareAutoComplete();
-	});
+ 	});
 </script>
 </head>
 <body>
-	<div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
+	<div class="navbar navbar-fixed-top  ">
+			 <div class="navbar-inner  ">
 			<div class="container-fluid">
-				<a class="brand" href="#">CRM</a>
-				<div class="nav-collapse collapse">
-
+			<a class="brand" href="#">CRM</a> 
+		<div class="nav-collapse collapse">
 					<p class="navbar-text pull-right">
 						<!-- Logged in as <a href="#" class="navbar-link">Username</a> -->
 						<wicket:link><a class="navbar-link" href="SignOut.html">登出</a></wicket:link>
-					</p>
-					<p class="navbar-text pull-right">&nbsp;&nbsp;&nbsp;&nbsp;
+					<p class="navbar-text pull-right">&nbsp;&nbsp;
 					<p class="navbar-text pull-right">
 					<p class="navbar-text pull-right">
 						<a href="#"><i class="icon-cogs"></i></a>
 					</p>
 				</div>
-			</div>
-		</div>
+			  </div>
+		</div> 
 	</div>
 
 	<div class="container-fluid">
-
 		<div class="row-fluid">
-			<div>
-				<ul class="nav nav-tabs">
+			    <ul class="nav nav-tabs nav-justified">
 					<li wicket:id="menu" class="nav-item"><a href="#" wicket:id="link"><span wicket:id="caption"></span> </a></li>
 				</ul>
 			</div>
@@ -97,7 +93,6 @@ body {
 			<div class="footer">
 				<p>© Company 2013</p>
 			</div>
-		</div>
 	</div>
 
 </body>

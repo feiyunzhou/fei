@@ -807,8 +807,8 @@ public class DAOImpl {
          if(entityName.equals("activity")){
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
         	 fieldssql = fieldssql + ",crmuserId";
-        	 int i = 113;
-        	 valuesql  = valuesql.replaceAll( i+",","").trim();
+        	 
+//        	？ valuesql  = valuesql.replaceAll( ", ,","").trim();
         	 valuesql = valuesql + "," +userId;
         	 System.out.println("++++++++++新建数据+++++++++++++"+valuesql);
          }else if(entityName.equals("crmuser")){

@@ -92,9 +92,6 @@ public class PageableTablePanel extends Panel {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
                         columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value));
 //                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
-                        
-                        
-         
                     } else {
                         if (f.getPicklist() != null) {
                             // get option from picklist

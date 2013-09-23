@@ -170,7 +170,9 @@ public class NewDataFormPanel extends Panel {
 				List<String> fieldNames = Lists.newArrayList();
 				List<String> values = Lists.newArrayList();
 				for (String key : models.keySet()) {
-					fieldNames.add(key);
+					if(!key.equals("accountId")){
+					fieldNames.add(key);}
+					System.out.println(fieldNames);
 					// models.get(key).getObject()
 					if (models.get(key).getObject() instanceof String) {
 						values.add("'" + (String) models.get(key).getObject()
