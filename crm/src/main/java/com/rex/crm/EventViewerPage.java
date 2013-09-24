@@ -60,7 +60,14 @@ public class EventViewerPage extends TemplatePage
         setPageTitle(entity.getDisplay());
         final String uid = ((SignIn2Session)getSession()).getUserId();
         StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
-        final long eventId = eventIdValue.toLong();
+        //final long eventId
+       
+        long eid = 0;
+        if(!eventIdValue.isEmpty()  && !eventIdValue.isNull()){
+            eid = eventIdValue.toLong();
+            
+        }
+        final long eventId = eid;
         Form form = new Form("form"){
             @Override
             protected void onSubmit()
@@ -80,7 +87,7 @@ public class EventViewerPage extends TemplatePage
          logger.debug("eventID is:"+ eventId);
          Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
          //add(new Label("name",String.valueOf(map.get("name"))));
-         add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eventId),1));
+         add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eventId),1,"calendar"));
          
         
 	}

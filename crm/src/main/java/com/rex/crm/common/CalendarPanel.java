@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
@@ -18,6 +20,8 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 import org.apache.wicket.util.template.PackageTextTemplate;
 
+import com.rex.crm.CreateEventPage;
+import com.rex.crm.EventViewerPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.WicketApplication;
 
@@ -44,6 +48,15 @@ public class CalendarPanel extends Panel {
         //TODO get userID from session
         final String userId = ((SignIn2Session)getSession()).getUserId();
         map.put("user_event_data", com.rex.crm.ajax.DataProvider.getEventsByUserId(new String[]{userId}));
+        CreateEventPage page = new CreateEventPage();
+        CharSequence pageUrl = getRequestCycle().urlFor(new RenderPageRequestHandler(new PageProvider(page)));
+        String url = pageUrl.toString();
+        url =  url.substring(0, url.indexOf("?")+1);
+        map.put("create_event_page_url", url);
+        CharSequence viewPageUrl = getRequestCycle().urlFor(new RenderPageRequestHandler(new PageProvider(new EventViewerPage())));
+        url = viewPageUrl.toString();
+        url =  url.substring(0, url.indexOf("?")+1);
+        map.put("event_view_page_url", url);
        // map.put("context_name",getRootContext());
  
         PackageTextTemplate ptt = new PackageTextTemplate(getClass(),"calendar.js");

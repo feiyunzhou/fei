@@ -19,6 +19,8 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.PopupSettings;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -110,14 +112,15 @@ public class CreateEventPage extends TemplatePage
          long current = System.currentTimeMillis();
          Date current_date_time = new Date(current);
          SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-         if(startdateValue != null){
+         //set default time to current time
+         if(startdateValue != null && !startdateValue.isEmpty() && !startdateValue.isNull()){
               startdate = startdateValue.toString();
-         }else{
-             
-             
+         }else{     
              startdate = dateformat.format(current_date_time);
          }
          logger.debug("startdate:"+startdate);
+         
+         
          
          
          WebMarkupContainer start_date_input = new WebMarkupContainer("start_date_input");
@@ -131,14 +134,18 @@ public class CreateEventPage extends TemplatePage
          form.add(start_time_input);
          start_time_input.add(new AttributeModifier("value",timeformatter.format(current_date_time)));
          
-         Date sd = current_date_time;
+         SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+         
+         Date sDate = current_date_time;
          try {
-             sd = dateformat.parse(startdate);
+             sDate = dateformat2.parse(startdate+ " " + timeformatter.format(current_date_time));
         } catch (ParseException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.warn("failed to parse date:",e);
         }
-         Date next_date_time = new Date(current_date_time.getTime()+3600*1000);
+         
+         
+         Date next_date_time = new Date(sDate.getTime()+3600*1000);
          WebMarkupContainer end_date_input = new WebMarkupContainer("end_date_input");
          form.add(end_date_input);
          end_date_input.add(new AttributeModifier("value",dateformat.format(next_date_time)));
@@ -149,7 +156,6 @@ public class CreateEventPage extends TemplatePage
          WebMarkupContainer end_time_input = new WebMarkupContainer("end_time_input",new Model(""));
          form.add(end_time_input);
          end_time_input.add(new AttributeModifier("value",timeformatter.format(next_date_time)));
-         logger.debug("BSDFSDFSDF:"+ timeformatter.format(next_date_time));
          
         
 //         Entity et = entities.get("account");
@@ -171,7 +177,10 @@ public class CreateEventPage extends TemplatePage
 //      
          
          
-         
+         PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
+                 .setWidth(850).setLeft(150).setTop(200);
+           form.add(new BookmarkablePageLink<Void>("search_btn", SearchContactPage.class).setPopupSettings(popupSettings));
+
 
          form.add(new HiddenField("hidden_contact_select" ,new PropertyModel<String>(this,"hidden_contact_select")));
          form.add(new TextField("contact_select", new Model("")));

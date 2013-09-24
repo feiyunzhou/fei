@@ -38,7 +38,7 @@ public class AddEntityPage extends TemplatePage {
         Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         
         add(new Label("name",String.valueOf(map.get("name"))));
-        add(new EntityDetailPanel("detailed",entity,map,id,3));
+        add(new EntityDetailPanel("detailed",entity,map,id,3,entityName));
         
         //set relations data
          List<Relation> relations = Configuration.getRelationsByName(entityName);

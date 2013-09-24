@@ -37,7 +37,7 @@ public class EntityDetailPanel extends Panel {
 
     private int number_of_column = 3;
 
-    public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId,int number_of_column) {
+    public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId,int number_of_column,final String pageName) {
         super(id);
         this.number_of_column = number_of_column;
         // TODO Get permission info of user from database.
@@ -103,7 +103,7 @@ public class EntityDetailPanel extends Panel {
                 dataRowRepeater.add(item);
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 item.add(columnRepeater);
-
+                if(data == null) continue;
                 for (int j = 0; j < 2 * number_of_column; j++) {
                     AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(data.get(primaryKeyName))));
 
@@ -165,7 +165,7 @@ public class EntityDetailPanel extends Panel {
             @Override
             public void renderHead(Component component, IHeaderResponse response) {
                 super.renderHead(component, response);
-                response.render(OnDomReadyHeaderItem.forScript("$(\"#navitem-" + schema.getName() + "\").addClass(\"active\");"));
+                response.render(OnDomReadyHeaderItem.forScript("$(\"#navitem-" + pageName + "\").addClass(\"active\");"));
             }
 
         });

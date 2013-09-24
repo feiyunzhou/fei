@@ -46,7 +46,7 @@ public class EntityDetailPage extends TemplatePage {
         	add(new Label("name",String.valueOf(map.get("name"))));
         }
         
-        add(new EntityDetailPanel("detailed",entity,map,id,3));
+        add(new EntityDetailPanel("detailed",entity,map,id,3,entityName));
         
 
         //set relations data
