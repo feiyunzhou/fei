@@ -807,7 +807,6 @@ public class DAOImpl {
         	 
 //        	？ valuesql  = valuesql.replaceAll( ", ,","").trim();
         	 valuesql = valuesql + "," +userId;
-        	 System.out.println("++++++++++新建数据+++++++++++++"+valuesql);
          }else if(entityName.equals("crmuser")){
         	 fieldssql = fieldssql + ",cityId";
         	 valuesql =  valuesql + ", 1";

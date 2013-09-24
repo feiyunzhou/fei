@@ -46,11 +46,12 @@ public class NewDataFormPanel extends Panel {
 			.getLogger(NewDataFormPanel.class);
 	private Map<String, List<Field>> addFieldGroupMap = Maps.newHashMap();
 	private static int NUM_OF_COLUMN = 3;
-
+	final String user = ((SignIn2Session) getSession()).getUser();
 	public NewDataFormPanel(String id, final Entity entity,final Map<String, String> relationIds) {
 		super(id);
 
 		final Map<String, IModel> models = Maps.newHashMap();
+//		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
 		final String userId = ((SignIn2Session) getSession()).getUserId();
 		List<Field> fields = entity.getFields();
 		// List<String> fn = schema.getFieldNames();
@@ -79,7 +80,7 @@ public class NewDataFormPanel extends Panel {
 			int numOfField = 0;
 			List<Field> visibleFields = Lists.newArrayList();
 			for (Field f : groupfields) {
-				if (!f.isVisible() || !f.isEditable())
+				if (!f.isVisible() )
 					continue;
 				numOfField++;
 				visibleFields.add(f);
@@ -152,7 +153,11 @@ public class NewDataFormPanel extends Panel {
 						} else {
 							IModel<String> textModel = new Model<String>("");
 							models.put(currentField.getName(), textModel);
-							columnitem.add(new TextInputFragment("celldatafield","textInputFragment", this, textModel));
+							columnitem.add(new TextInputFragment("celldatafield","textInputFragment", this, textModel,currentField));
+//							if(!currentField.isEditable()){
+//								textModel = new Model<String>(user);
+//								fieldNameToModel.put(currentField.getName(),textModel );
+//							}
 						}
 					}
 					columnRepeater.add(columnitem);
@@ -255,10 +260,14 @@ public class NewDataFormPanel extends Panel {
 
 	private class TextInputFragment extends Fragment {
 		public TextInputFragment(String id, String markupId,
-				MarkupContainer markupProvider, IModel model) {
+				MarkupContainer markupProvider, IModel model,Field currentField) {
 			super(id, markupId, markupProvider);
-
-			add(new TextField<String>("input", model));
+			TextField<String> text = new TextField<String>("input", model);
+			add(text);
+			if(!currentField.isEditable()){
+				text.add(new AttributeAppender("value", new Model(user), ";"));
+				text.add(new AttributeAppender("readonly",new Model("realonly"),";"));
+				}
 		}
 	}
 
