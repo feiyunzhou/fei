@@ -428,9 +428,15 @@ CREATE TABLE `activity` (
   `activity_type` mediumint(9) DEFAULT NULL,
   `contactId` mediumint(9) DEFAULT NULL,
   `status` mediumint(9) DEFAULT NULL,
+  `visiting_purpose` mediumint(9) DEFAULT NULL,
+  `feature_product` mediumint(9) DEFAULT NULL,
+  `owner` varchar(255) DEFAULT NULL,
   `whenadded` datetime DEFAULT NULL,
+  `modifier` varchar(255) DEFAULT NULL,
+  `modify_datetime` datetime DEFAULT NULL,
+  `responsible_person` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -439,8 +445,55 @@ CREATE TABLE `activity` (
 
 LOCK TABLES `activity` WRITE;
 /*!40000 ALTER TABLE `activity` DISABLE KEYS */;
-INSERT INTO `activity` VALUES (42,20,1378832400000,1378888200000,'拜访',2,17,2,'2013-09-08 16:30:35'),(43,20,1378918800000,1378974660000,'拜访',3,13,2,'2013-09-08 16:32:02'),(44,20,1378227600000,1378293780000,'拜访',1,8,2,'2013-09-08 19:23:32'),(45,20,1379437200000,1379503380000,'拜访',1,27,2,'2013-09-08 19:23:44'),(46,20,1378746000000,1378819080000,'拜访',1,7,2,'2013-09-08 21:18:56'),(47,20,1379350800000,1379428020000,'拜访',1,8,2,'2013-09-08 22:27:19'),(48,20,1380042000000,1380119460000,'拜访',1,10,2,'2013-09-08 22:31:49'),(49,20,1379955600000,1380033600000,'拜访',1,12,1,'2013-09-08 22:40:59'),(50,20,1379089080000,1380640680000,'拜访',1,19,1,'2013-09-13 23:20:15');
 /*!40000 ALTER TABLE `activity` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `activity_activity_types_pl`
+--
+
+DROP TABLE IF EXISTS `activity_activity_types_pl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_activity_types_pl` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activity_activity_types_pl`
+--
+
+LOCK TABLES `activity_activity_types_pl` WRITE;
+/*!40000 ALTER TABLE `activity_activity_types_pl` DISABLE KEYS */;
+INSERT INTO `activity_activity_types_pl` VALUES (1,'专业化拜访'),(2,'事务性拜访');
+/*!40000 ALTER TABLE `activity_activity_types_pl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `activity_feature_product_pl`
+--
+
+DROP TABLE IF EXISTS `activity_feature_product_pl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_feature_product_pl` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activity_feature_product_pl`
+--
+
+LOCK TABLES `activity_feature_product_pl` WRITE;
+/*!40000 ALTER TABLE `activity_feature_product_pl` DISABLE KEYS */;
+INSERT INTO `activity_feature_product_pl` VALUES (1,'美施康定'),(2,'奥施康定'),(3,'奇曼丁'),(4,'若思本'),(5,'奥诺美');
+/*!40000 ALTER TABLE `activity_feature_product_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -468,6 +521,30 @@ INSERT INTO `activity_status` VALUES (1,'计划'),(2,'完成');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `activity_status_pl`
+--
+
+DROP TABLE IF EXISTS `activity_status_pl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_status_pl` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activity_status_pl`
+--
+
+LOCK TABLES `activity_status_pl` WRITE;
+/*!40000 ALTER TABLE `activity_status_pl` DISABLE KEYS */;
+INSERT INTO `activity_status_pl` VALUES (1,'计划'),(2,'完成');
+/*!40000 ALTER TABLE `activity_status_pl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `activity_types`
 --
 
@@ -489,6 +566,30 @@ LOCK TABLES `activity_types` WRITE;
 /*!40000 ALTER TABLE `activity_types` DISABLE KEYS */;
 INSERT INTO `activity_types` VALUES (1,'拜访'),(2,'外部会议'),(3,'内部会议');
 /*!40000 ALTER TABLE `activity_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `activity_visiting_purpose_pl`
+--
+
+DROP TABLE IF EXISTS `activity_visiting_purpose_pl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_visiting_purpose_pl` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activity_visiting_purpose_pl`
+--
+
+LOCK TABLES `activity_visiting_purpose_pl` WRITE;
+/*!40000 ALTER TABLE `activity_visiting_purpose_pl` DISABLE KEYS */;
+INSERT INTO `activity_visiting_purpose_pl` VALUES (1,'传递产品知识'),(2,'处方观念沟通'),(3,'病例沟通'),(4,'会议安排'),(5,'会议跟进'),(6,'交接工作'),(7,'了解竞争');
+/*!40000 ALTER TABLE `activity_visiting_purpose_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -574,7 +675,7 @@ CREATE TABLE `contact` (
   `modify_datetime` datetime DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -583,7 +684,7 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (1,'AAA',1,'1',1,NULL,NULL,NULL,NULL,NULL,'1',1,1,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'2013-09-23 23:43:32',NULL,NULL,NULL);
+INSERT INTO `contact` VALUES (1,'AAA',1,'1',1,NULL,NULL,NULL,NULL,NULL,'1',1,1,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'2013-09-23 23:43:32',NULL,NULL,NULL),(2,'GETST',2,'1',1,NULL,NULL,NULL,NULL,NULL,'1',1,1,NULL,NULL,NULL,1,1,NULL,NULL,NULL,'2013-09-24 08:24:43',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -888,7 +989,7 @@ CREATE TABLE `contactcrmuser` (
   `crmuserId` mediumint(9) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `contactId` (`contactId`,`crmuserId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1349 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1360 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -897,7 +998,7 @@ CREATE TABLE `contactcrmuser` (
 
 LOCK TABLES `contactcrmuser` WRITE;
 /*!40000 ALTER TABLE `contactcrmuser` DISABLE KEYS */;
-INSERT INTO `contactcrmuser` VALUES (1344,1,99),(1345,2,99),(1346,3,99),(1347,4,99),(1138,7,20),(1139,8,20),(1140,9,20),(1141,10,20),(1142,11,20),(1143,12,20),(1144,13,20),(1145,14,20),(1146,15,20),(1147,16,20),(1148,17,20),(1149,18,20),(1150,19,20),(1151,20,20),(1152,21,20),(1153,22,20),(1154,23,20),(1155,24,20),(1156,25,20),(1157,26,20),(1158,27,20),(1159,28,20),(1160,29,20),(1161,30,20),(1162,31,20),(1163,32,20),(1164,33,20),(1165,34,20),(1166,35,20),(1167,36,20),(1168,37,20),(1169,38,20),(1170,39,20),(1171,40,20),(1172,41,20),(1173,42,20),(1174,43,20),(1175,44,20),(1176,45,20),(1177,46,20),(1178,47,20),(1179,48,20),(1180,49,20),(1181,50,20),(1182,51,20),(1183,52,20),(1184,53,20),(1185,54,20),(1186,55,20),(1187,56,20),(1188,57,20),(1189,58,20),(1190,59,20),(1191,60,20),(1192,61,20),(1193,62,20),(1194,63,20),(1195,64,20),(1196,65,20),(1197,66,20),(1198,67,20),(1199,68,20),(1200,69,20),(1201,70,20),(1202,71,20),(1203,72,20),(1204,73,20),(1205,74,20),(1206,75,20),(1207,76,20),(1208,77,20),(1209,78,20),(1210,79,20),(1211,80,20),(1212,81,20),(1213,82,20),(1214,83,20),(1215,84,20),(1216,85,20),(1217,86,20),(1218,87,20),(1219,88,20),(1220,89,20),(1221,90,20),(1222,91,20),(1223,92,20),(1224,93,20),(1225,94,20),(1226,95,20),(1227,96,20),(1228,97,20),(1229,98,20),(1230,99,20),(1231,100,20),(1232,101,20),(1233,102,20),(1234,103,20),(1235,104,20),(1236,105,20),(1237,106,20),(1238,107,20),(1239,108,20),(1240,109,20),(1241,110,20),(1242,111,20),(1243,112,20),(1244,113,20),(1245,114,20),(1246,115,20),(1247,116,20),(1248,117,20),(1249,118,20),(1250,119,20),(1251,120,20),(1252,121,20),(1253,122,20),(1254,123,20),(1255,124,20),(1256,125,20),(1257,126,20),(1258,127,20),(1259,128,20),(1260,129,20),(1261,130,20),(1262,131,20),(1263,132,20),(1264,133,20),(1265,134,20),(1266,135,20),(1267,136,20),(1268,137,20),(1269,138,20),(1270,139,20),(1271,140,20),(1272,141,20),(1273,142,20),(1274,143,20),(1275,144,20),(1276,145,20),(1277,146,20),(1278,147,20),(1279,148,20),(1280,149,20),(1281,150,20),(1282,151,20),(1283,152,20),(1284,153,20),(1285,154,20),(1286,155,20),(1287,156,20),(1288,157,20),(1289,158,20),(1290,159,20),(1291,160,20),(1292,161,20),(1343,161,23),(1342,161,34),(1293,162,20),(1294,163,20),(1295,164,20),(1296,165,20),(1297,166,20),(1298,167,20),(1299,168,20),(1300,169,20),(1301,170,20),(1302,171,20),(1303,172,20),(1304,173,20),(1305,174,20),(1306,175,20),(1307,176,20),(1308,177,20),(1309,178,20),(1339,180,4),(1334,180,12),(1311,180,20),(1312,181,20),(1313,182,20),(1314,183,20),(1315,184,20),(1316,185,20),(1317,186,20),(1318,187,20),(1320,189,20),(1333,190,2),(1321,190,20),(1335,190,33),(1322,191,20),(1323,192,20),(1324,193,20),(1325,194,20),(1326,195,20),(1327,196,20),(1328,197,20),(1340,198,5),(1341,198,15),(1331,198,55),(1330,199,20);
+INSERT INTO `contactcrmuser` VALUES (1349,1,1),(1350,1,5),(1351,1,6),(1352,1,7),(1353,1,8),(1354,1,9),(1355,1,10),(1356,1,11),(1357,1,12),(1358,1,13),(1344,1,99),(1345,2,99),(1346,3,99),(1347,4,99),(1138,7,20),(1139,8,20),(1140,9,20),(1141,10,20),(1142,11,20),(1143,12,20),(1144,13,20),(1145,14,20),(1146,15,20),(1147,16,20),(1148,17,20),(1149,18,20),(1150,19,20),(1151,20,20),(1152,21,20),(1153,22,20),(1154,23,20),(1155,24,20),(1156,25,20),(1157,26,20),(1158,27,20),(1159,28,20),(1160,29,20),(1161,30,20),(1162,31,20),(1163,32,20),(1164,33,20),(1165,34,20),(1166,35,20),(1167,36,20),(1168,37,20),(1169,38,20),(1170,39,20),(1171,40,20),(1172,41,20),(1173,42,20),(1174,43,20),(1175,44,20),(1176,45,20),(1177,46,20),(1178,47,20),(1179,48,20),(1180,49,20),(1181,50,20),(1182,51,20),(1183,52,20),(1184,53,20),(1185,54,20),(1186,55,20),(1187,56,20),(1188,57,20),(1189,58,20),(1190,59,20),(1191,60,20),(1192,61,20),(1193,62,20),(1194,63,20),(1195,64,20),(1196,65,20),(1197,66,20),(1198,67,20),(1199,68,20),(1200,69,20),(1201,70,20),(1202,71,20),(1203,72,20),(1204,73,20),(1205,74,20),(1206,75,20),(1207,76,20),(1208,77,20),(1209,78,20),(1210,79,20),(1211,80,20),(1212,81,20),(1213,82,20),(1214,83,20),(1215,84,20),(1216,85,20),(1217,86,20),(1218,87,20),(1219,88,20),(1220,89,20),(1221,90,20),(1222,91,20),(1223,92,20),(1224,93,20),(1225,94,20),(1226,95,20),(1227,96,20),(1228,97,20),(1229,98,20),(1230,99,20),(1231,100,20),(1232,101,20),(1233,102,20),(1234,103,20),(1235,104,20),(1236,105,20),(1237,106,20),(1238,107,20),(1239,108,20),(1240,109,20),(1241,110,20),(1242,111,20),(1243,112,20),(1244,113,20),(1245,114,20),(1246,115,20),(1247,116,20),(1248,117,20),(1249,118,20),(1250,119,20),(1251,120,20),(1252,121,20),(1253,122,20),(1254,123,20),(1255,124,20),(1256,125,20),(1257,126,20),(1258,127,20),(1259,128,20),(1260,129,20),(1261,130,20),(1262,131,20),(1263,132,20),(1264,133,20),(1265,134,20),(1266,135,20),(1267,136,20),(1268,137,20),(1269,138,20),(1270,139,20),(1271,140,20),(1272,141,20),(1273,142,20),(1274,143,20),(1275,144,20),(1276,145,20),(1277,146,20),(1278,147,20),(1279,148,20),(1280,149,20),(1281,150,20),(1282,151,20),(1283,152,20),(1284,153,20),(1285,154,20),(1286,155,20),(1287,156,20),(1288,157,20),(1289,158,20),(1290,159,20),(1291,160,20),(1292,161,20),(1343,161,23),(1342,161,34),(1293,162,20),(1294,163,20),(1295,164,20),(1296,165,20),(1297,166,20),(1298,167,20),(1299,168,20),(1300,169,20),(1301,170,20),(1302,171,20),(1303,172,20),(1304,173,20),(1305,174,20),(1306,175,20),(1307,176,20),(1308,177,20),(1309,178,20),(1339,180,4),(1334,180,12),(1311,180,20),(1312,181,20),(1313,182,20),(1314,183,20),(1315,184,20),(1316,185,20),(1317,186,20),(1318,187,20),(1320,189,20),(1333,190,2),(1321,190,20),(1335,190,33),(1322,191,20),(1323,192,20),(1324,193,20),(1325,194,20),(1326,195,20),(1327,196,20),(1328,197,20),(1340,198,5),(1341,198,15),(1331,198,55),(1330,199,20);
 /*!40000 ALTER TABLE `contactcrmuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1241,4 +1342,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-09-23 23:55:52
+-- Dump completed on 2013-09-24 21:10:50

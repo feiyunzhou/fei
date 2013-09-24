@@ -999,65 +999,41 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>title</name>
-				<display>标题</display>
+				<display>活动名称</display>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-			<field>
-				<name>starttime</name>
-				<display>开始时间</display>
-				<data-type>Long</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-			<field>
-				<name>endtime</name>
-				<display>结束时间</display>
-				<data-type>Long</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>activity_type</name>
 				<display>类型</display>
 				<data-type>String</data-type>
-				<picklist>activity_types</picklist>
+				<picklist>activity_activity_types_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>contactId</name>
 				<display>拜访医生</display>
-				<data-type>Integer</data-type>
+				<data-type>Long</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<priority>1</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
 			<field>
@@ -1071,7 +1047,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<relationTable>contact</relationTable>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
 			<field>
@@ -1082,20 +1058,68 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<relationTable>account</relationTable>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>Long</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>Long</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+		
 			<field>
 				<name>act_type</name>
 				<display>拜访类型</display>
-				<data-type>Integer</data-type>
+				<data-type>Long</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>visiting_purpose</name>
+				<display>拜访目的</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_visiting_purpose_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>feature_product</name>
+				<display>主推广产品</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_feature_product_pl</picklist>
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -1107,20 +1131,86 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<picklist>activity_status</picklist>
+				<picklist>activity_status_pl</picklist>
 				<priority>1</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_status</name>
 				<display>状态</display>
-				<data-type>Integer</data-type>
+				<data-type>Long</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<priority>3</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_endtime</name>
+				<display>活动结束时间</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>responsible_person</name>
+				<display>负责人</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
 			</field>
 		</fields>
 	</entity>

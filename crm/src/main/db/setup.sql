@@ -185,30 +185,69 @@ CREATE TABLE activity
     endtime BIGINT,
     starttime BIGINT NOT NULL DEFAULT 0,
     title VARCHAR(128),
+    activity_type MEDIUMINT,
+    contactId MEDIUMINT,
+    status MEDIUMINT,
+    visiting_purpose MEDIUMINT,
+    feature_product MEDIUMINT,
+    owner VARCHAR(255),
+    whenadded DATETIME,
+    modifier VARCHAR(255),
+    modify_datetime DATETIME,
+    responsible_person VARCHAR(255),
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
-ALTER table activity ADD activity_type MEDIUMINT;
-ALTER table activity ADD contactId MEDIUMINT;
-ALTER table activity ADD status MEDIUMINT;
-ALTER table activity ADD whenadded DATETIME;
 
 -- 活动状态;
-drop table if exists activity_status;
-CREATE TABLE activity_status 
+drop table if exists activity_status_pl;
+CREATE TABLE activity_status_pl 
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+INSERT INTO activity_status_pl (val) VALUES('计划');
+INSERT INTO activity_status_pl (val) VALUES('完成');
 
-drop table if exists activity_types;
-CREATE TABLE activity_types 
+
+drop table if exists activity_activity_types_pl;
+CREATE TABLE activity_activity_types_pl 
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+INSERT INTO activity_activity_types_pl (val) VALUES('专业化拜访');
+INSERT INTO activity_activity_types_pl (val) VALUES('事务性拜访');
+
+drop table if exists activity_visiting_purpose_pl;
+CREATE TABLE activity_visiting_purpose_pl 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO activity_visiting_purpose_pl (val) VALUES('传递产品知识');
+INSERT INTO activity_visiting_purpose_pl (val) VALUES('处方观念沟通');
+INSERT INTO activity_visiting_purpose_pl (val) VALUES('病例沟通');
+INSERT INTO activity_visiting_purpose_pl (val) VALUES('会议安排');
+INSERT INTO activity_visiting_purpose_pl (val) VALUES('会议跟进');
+INSERT INTO activity_visiting_purpose_pl (val) VALUES('交接工作');
+INSERT INTO activity_visiting_purpose_pl (val) VALUES('了解竞争');
+
+drop table if exists activity_feature_product_pl;
+CREATE TABLE activity_feature_product_pl 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO activity_feature_product_pl (val) VALUES('美施康定');
+INSERT INTO activity_feature_product_pl (val) VALUES('奥施康定');
+INSERT INTO activity_feature_product_pl (val) VALUES('奇曼丁');
+INSERT INTO activity_feature_product_pl (val) VALUES('若思本');
+INSERT INTO activity_feature_product_pl (val) VALUES('奥诺美');
 
 
 drop table if exists contact;
