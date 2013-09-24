@@ -1057,7 +1057,7 @@ select,
 textarea {
   font-size: 14px;
   font-weight: normal;
-  line-height: 20px;
+  
 }
 
 input,
@@ -5619,7 +5619,6 @@ a.thumbnail:focus {
 
 .label,
 .badge {
-  display: inline-block;
   padding: 2px 4px;
   font-size: 11.844px;
   font-weight: bold;

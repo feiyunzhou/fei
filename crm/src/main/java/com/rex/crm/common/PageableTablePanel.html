@@ -14,34 +14,32 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 
-			<div class="span12">
-				<table style="width: 100%" >
-					<tr>
+			<div class="span12"  >
+				<table style="width: 100%; background-color: #F9CC9D; " class="label label-default "  >
+					<tr >
 						<td>
 						    <div>
-								<span wicket:id="table_title">我的</span>
+								<h5><span>&nbsp;&nbsp;</span><span wicket:id="table_title">我的</span></h5>
 							</div>
 						</td>
 						 <td>
 						     <div class="pull-right">
 								<span wicket:id="operationBar">[operation bar]</span>
-								
+								<span>&nbsp;&nbsp;</span>
 							</div>  
 						</td>
 					</tr>
 				</table>
-           
-				<div>
-					<table wicket:id="data" id="dt" style="width: 100%; margin-top: 15px" class="table table-responsive table-hover table-bordered table-condensed">
+					<table wicket:id="data" id="dt" style="width: 100%; margin-top: 15px" class="table table-responsive table-hover  table-condensed">
 						<thead >
 							<tr bgcolor="#F0F8FF" >
-								<th style="text-align: center; " wicket:id="columnNameRepeater"><span  wicket:id="columnName"></span></th>
+								<th style="text-align: left; " wicket:id="columnNameRepeater"><span  wicket:id="columnName"></span></th>
 								<!-- <th>actions</th> -->
 							</tr>
 						</thead>
 						<tbody>
 							<tr  wicket:id="dataRowRepeater">
-								<td style="text-align: center;" wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+								<td style="text-align: left;" wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
 								<!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
 								<!-- <td wicket:id="name"></td> -->
 							</tr>
@@ -56,7 +54,6 @@
 						<a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
 					</wicket:fragment>
 				</div>
-			</div>
 		</div>
 	</div>
 
