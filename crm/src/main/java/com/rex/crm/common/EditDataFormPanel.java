@@ -39,7 +39,7 @@ import com.rex.crm.util.Configuration;
 public class EditDataFormPanel extends Panel {
 	private static final Logger logger = Logger.getLogger(EditDataFormPanel.class);
 	private static final long serialVersionUID = -2613412283023068638L;
-
+	private final String user = ((SignIn2Session) getSession()).getUser();
 	private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap(); 
 
 	private static int NUM_OF_COLUMN = 3;
@@ -193,13 +193,6 @@ public class EditDataFormPanel extends Panel {
 			protected void onSubmit() {
 				logger.debug("the form was submitted!");
 				logger.debug(models);
-				
-				
-//				Iterator iter = models.entrySet().iterator() ;
-//				while(iter.hasNext()){
-//					   Map.Entry<String, String> e = (Map.Entry<String, String>)iter.next() ;
-//					   fieldNames.add(e.getKey());
-//				}
 				List<String> values = Lists.newArrayList();
 				List<String> names = Lists.newArrayList();
 				for (String k : fieldNameToModel.keySet()) {
@@ -285,8 +278,19 @@ public class EditDataFormPanel extends Panel {
 				MarkupContainer markupProvider, IModel model,String value,Field currentField) {
 			super(id, markupId, markupProvider);
 			TextField<String> text = new TextField<String>("input", model);
-							text.add(new AttributeAppender("value", new Model(value), ";"));
-							if(!currentField.isEditable()){text.add(new AttributeAppender("disabled",new Model("disabled"),";"));}
+							if(!currentField.isEditable()){
+								if(currentField.getName().equals("accountId")){
+									text.add(new AttributeAppender("disabled",new Model("disabled"),";"));
+								}else if(currentField.getName().equals("modifier")){
+									text.add(new AttributeAppender("value", new Model(user), ";"));
+									text.add(new AttributeAppender("readonly",new Model("readonly"),";"));
+								}else{
+									text.add(new AttributeAppender("value", new Model(value), ";"));
+									text.add(new AttributeAppender("readonly",new Model("readonly"),";"));
+								}
+							}else{
+								text.add(new AttributeAppender("value", new Model(value), ";"));
+							}
 							add(text);
 		}
 	}

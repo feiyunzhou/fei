@@ -154,10 +154,6 @@ public class NewDataFormPanel extends Panel {
 							IModel<String> textModel = new Model<String>("");
 							models.put(currentField.getName(), textModel);
 							columnitem.add(new TextInputFragment("celldatafield","textInputFragment", this, textModel,currentField));
-//							if(!currentField.isEditable()){
-//								textModel = new Model<String>(user);
-//								fieldNameToModel.put(currentField.getName(),textModel );
-//							}
 						}
 					}
 					columnRepeater.add(columnitem);
@@ -263,12 +259,18 @@ public class NewDataFormPanel extends Panel {
 				MarkupContainer markupProvider, IModel model,Field currentField) {
 			super(id, markupId, markupProvider);
 			TextField<String> text = new TextField<String>("input", model);
-			add(text);
 			if(!currentField.isEditable()){
-				text.add(new AttributeAppender("value", new Model(user), ";"));
+				if(currentField.getName().equals("accountId")){
+					add(text);
+				}else{
+					text.add(new AttributeAppender("value", new Model(user), ";"));
+				}
+				
 				text.add(new AttributeAppender("readonly",new Model("realonly"),";"));
 				}
+			add(text);
 		}
+		
 	}
 
 }
