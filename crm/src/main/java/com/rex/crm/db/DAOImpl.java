@@ -754,7 +754,7 @@ public class DAOImpl {
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             CalendarEvent e = new CalendarEvent();
-            e.setTitle("拜访");
+            e.setTitle(title);
             e.setStarttime(Long.parseLong(start) * 1000L);
             e.setEndtime(Long.parseLong(end) * 1000L);
             e.setCrmUserId(crmuserId);

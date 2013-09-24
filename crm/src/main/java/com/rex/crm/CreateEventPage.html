@@ -29,13 +29,18 @@
 						<label id="datestr"></label>
 						<div>
 
+                             <div class="control-group">
+								<label class="control-label">拜访类型：</label>
+								<div class="controls">
+								  <input type="text" id="act_title" class="input" placeholder="拜访名称..." wicket:id="act_title_input"/>
+								</div>
+							</div>
 							<div class="control-group">
 								<label class="control-label">拜访类型：</label>
 								<div class="controls">
-									<select id="visit_type_input" name="visit_type" class="input input-small">
-										<option value="1">拜访</option>
-										<option value="2">外部会议</option>
-										<option value="3">内部会议</option>
+									<select id="visit_type_input" wicket:id="activity_type_input" name="visit_type" class="input input-small">
+										<option value="1">专业化拜访</option>
+										<option value="2">事务性拜访</option>
 									</select>
 								</div>
 							</div>
@@ -83,6 +88,34 @@
 									  <span id="account_info"></span>
 									</div>
 								</div>
+								
+								<div class="control-group">
+								<label class="control-label">拜访目的：</label>
+								<div class="controls">
+									<select id="visiting_purpose_input" wicket:id="visiting_purpose_input" name="visiting_purpose" class="input input-small">
+										<option value="1">传递产品知识</option>
+										<option value="2">处方观念沟通</option>
+										<option value="3">病例沟通</option>
+										<option value="4">会议安排</option>
+										<option value="5">会议跟进</option>
+										<option value="6">交接工作</option>
+										<option value="7">了解竞争</option>
+									</select>
+								</div>
+							   </div>
+							   
+							   <div class="control-group">
+								<label class="control-label">主推广产品：</label>
+								<div class="controls">
+									<select id="feature_product_input" wicket:id="feature_product_input" name="feature_product" class="input input-small">
+										<option value="1">美施康定</option>
+										<option value="2">奥施康定</option>
+										<option value="3">奇曼丁</option>
+										<option value="4">若思本</option>
+										<option value="5">奥诺美</option>
+									</select>
+								</div>
+							   </div>
 
 
 								<div id="visited_contact_select_div" style="display:none" class="control-group">

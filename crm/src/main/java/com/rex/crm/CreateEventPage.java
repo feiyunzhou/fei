@@ -18,6 +18,7 @@ import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.PopupSettings;
@@ -30,6 +31,7 @@ import org.apache.wicket.util.template.PackageTextTemplate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.Account;
+import com.rex.crm.beans.Choice;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.common.Entity;
 import com.rex.crm.db.DAOImpl;
@@ -48,6 +50,10 @@ public class CreateEventPage extends TemplatePage
     protected String endTime;
     protected String startTime;
     protected String hidden_contact_select;
+    protected long visiting_purpose = 1L;
+    protected long feature_product = 1L;
+    protected long activity_type = 1L;
+    protected String act_title_input = "";
 	/**
 	 * Constructor
 	 */
@@ -71,7 +77,8 @@ public class CreateEventPage extends TemplatePage
                 String st = getRequest().getPostParameters().getParameterValue("start_time").toString();
                 String ed = getRequest().getPostParameters().getParameterValue("end_date").toString();
                 String et = getRequest().getPostParameters().getParameterValue("end_time").toString();
-                String visit_type = getRequest().getPostParameters().getParameterValue("visit_type").toString();
+                //String visit_type = getRequest().getPostParameters().getParameterValue("visit_type").toString();
+                String visit_type = String.valueOf(activity_type);
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 String sdt = sd+ " " +st;
                 String edt = ed + " " + et;
@@ -90,7 +97,7 @@ public class CreateEventPage extends TemplatePage
                 logger.debug("visit_type:" + visit_type);
                 try {
                     
-                    DAOImpl.addCalendarEvent(Integer.parseInt(uid), Integer.parseInt(hidden_contact_select), visit_type, visit_type, String.valueOf(startdt.getTime()/1000), String.valueOf(enddt.getTime()/1000), 1);
+                    DAOImpl.addCalendarEvent(Integer.parseInt(uid), Integer.parseInt(hidden_contact_select), visit_type, act_title_input, String.valueOf(startdt.getTime()/1000), String.valueOf(enddt.getTime()/1000), 1);
                 } catch (NumberFormatException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -156,26 +163,7 @@ public class CreateEventPage extends TemplatePage
          WebMarkupContainer end_time_input = new WebMarkupContainer("end_time_input",new Model(""));
          form.add(end_time_input);
          end_time_input.add(new AttributeModifier("value",timeformatter.format(next_date_time)));
-         
-        
-//         Entity et = entities.get("account");
-//         final String userId = ((SignIn2Session)getSession()).getUserId();
-//         List mapList = DAOImpl.queryEntityRelationList(et.getSql(), userId);
-//         
-//         List<SelectOption> accounts = Lists.newArrayList();
-//         for(Map map:(List<Map>)mapList){
-//             SelectOption at = new SelectOption();
-//             at.setKey(((Number)(map.get("id"))).intValue());
-//             at.setValue((String)map.get("name"));
-//             accounts.add(at);
-//         }
-//        
-//         //SelectOption[] options = new SelectOption[] {new SelectOption("&", "AND"), new SelectOption("|", "OR")};
-//         ChoiceRenderer choiceRenderer = new ChoiceRenderer("value", "key");
-//        
-//        add(new DropDownChoice("account_select", accounts, choiceRenderer));
-//      
-         
+              
          
          PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
                  .setWidth(850).setLeft(150).setTop(200);
@@ -185,9 +173,39 @@ public class CreateEventPage extends TemplatePage
          form.add(new HiddenField("hidden_contact_select" ,new PropertyModel<String>(this,"hidden_contact_select")));
          form.add(new TextField("contact_select", new Model("")));
         
+         form.add(createDropDownListFromPickList("activity_type_input","activity_activity_types_pl",new PropertyModel(this,"activity_type")));
+         form.add(createDropDownListFromPickList("visiting_purpose_input","activity_visiting_purpose_pl",new PropertyModel(this,"visiting_purpose")));
+         form.add(createDropDownListFromPickList("feature_product_input","activity_feature_product_pl",new PropertyModel(this,"feature_product")));
+         form.add(new TextField("act_title_input", new PropertyModel(this,"act_title_input")));
         
         
-        
+	}
+	
+	private DropDownChoice createDropDownListFromPickList(String markupId, String picklistName,PropertyModel default_model){
+	    
+	    List<Choice> pickList = DAOImpl.queryPickList(picklistName);
+        final Map<Long, String> list = Maps.newHashMap();
+        List<Long> ids = Lists.newArrayList();
+        for (Choice p : pickList) {
+            list.put(p.getId(), p.getVal());
+            ids.add(p.getId());
+        }
+	    
+	  return new DropDownChoice<Long>(markupId, default_model, ids,
+                new IChoiceRenderer<Long>() {
+
+                    @Override
+                    public Object getDisplayValue(Long id) {
+                        // TODO Auto-generated method stub
+                        return list.get(id);
+                    }
+
+                    @Override
+                    public String getIdValue(Long id, int index) {
+                        return String.valueOf(id);
+                    }
+
+                });
 	}
 	
 	class SelectOption implements Serializable{
