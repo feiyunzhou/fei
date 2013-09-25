@@ -97,6 +97,8 @@
             }
 
             function appendCalendarEvent(event) {
+                
+                
                 var eventlen = event.length;
                 for ( var i = 0; i < eventlen; i++) {
                     $('#calendar').fullCalendar('renderEvent', event[i], true);
@@ -106,12 +108,19 @@
 
 
             renderSelect4Inferiors();
+            
             function renderSelect4Inferiors(){
 
                 CRMUSER_UTIL.getInferiorsRemotely(userInfo.id,function(data){
 
                     var objs =  [];
+                    var selfobj = {};
+                    selfobj.name =  "自己";
+                    selfobj.id =   userInfo.id;
+                    objs.push(selfobj);
                     for(var i=0;i<data.length;i++){
+                        //ignore self because we added it above
+                        if(data[i].id == userInfo.id) continue;
                         var obj = {};
                         obj.name = data[i].name;
                         obj.id =   data[i].id;
@@ -127,6 +136,8 @@
                         formatResult : selectformat
                     });
 
+                    $("#crmuser_select").select2("val", userInfo.id);
+
 
                     $("#crmuser_select").on("change", function(e){
                         console.log("change " + JSON.stringify({
@@ -136,6 +147,12 @@
                             defaultContact : e.defaultContact
                         }));
 
+                        //firstly, remove all events from the calendar
+                        $('#calendar').fullCalendar('removeEvents', function filter(event) {
+                          //console.log("remove" + event.id);
+                          return true;
+                       });
+                        
                         var userIdex = {};
                         userIdex.id = e.val;
                         renderCalendarWithDataRemotely(userIdex);
@@ -165,13 +182,14 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span12">
-
+               <form  class="form-horizontal">
 				<div class="control-group">
 					<label class="control-label" for="inforior">下属：</label>
 					<div class="controls">
 						<input type="hidden" id="crmuser_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
 					</div>
 				</div>
+				</form>
 
 			</div>
 		</div>
