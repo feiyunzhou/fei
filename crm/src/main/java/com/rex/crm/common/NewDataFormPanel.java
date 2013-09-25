@@ -94,6 +94,9 @@ public class NewDataFormPanel extends Panel {
 				for (int j = 0; j < 2 * NUM_OF_COLUMN; j++) {
 					AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model());
 					if ((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()) {
+						if((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()){
+							continue;
+						}
 						columnitem.add(new LayoutFragment("celldatafield", "layoutFragment",this," ").setEscapeModelStrings(false));
 						columnRepeater.add(columnitem);
 						
@@ -271,8 +274,6 @@ public class NewDataFormPanel extends Panel {
 			}
 			add(text);
 			text.add(new AttributeAppender("onblur",new Model("checkform();"),";"));
-			text.add(new AttributeAppender("id",new Model(currentField.getName()),";"));
-			
 			
 		}
 		

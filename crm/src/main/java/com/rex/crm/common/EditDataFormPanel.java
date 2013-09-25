@@ -108,6 +108,9 @@ public class EditDataFormPanel extends Panel {
 					AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(data.get(primaryKeyName))));
 
 					if ((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()) {
+						if((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()){
+							continue;
+						}
 						columnitem.add(new LayoutFragment("editdata","layoutFragment", this, "&nbsp;"));
 						columnRepeater.add(columnitem);
 						continue;

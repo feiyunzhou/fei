@@ -108,6 +108,9 @@ public class EntityDetailPanel extends Panel {
                     AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(data.get(primaryKeyName))));
 
                     if ((i * number_of_column + j / 2) >= visibleFields.size()) {
+                    	if((i * number_of_column + j / 2) >= visibleFields.size()){
+							continue;
+						}
                         columnitem.add(new Label("celldata", "&nbsp;").setEscapeModelStrings(false));
                         columnRepeater.add(columnitem);
                         continue;

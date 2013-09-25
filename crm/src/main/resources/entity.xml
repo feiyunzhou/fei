@@ -4,17 +4,29 @@
 	<entity>
 		<name>account</name>
 		<display>医院</display>
-		<!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) as aAccount</sql> -->
-		<!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId group by account.id) as aAccount -->
-		<sql>SELECT * from (select account.* from accountcrmuser\,account where (accountcrmuser.crmuserId=?) AND accountcrmuser.accountId=account.id order by whenadded DESC) as aAccount</sql>
-		<sql-admin>SELECT * from (select account.* from account where (? IS NOT NULL) order by whenadded DESC) as aAccount</sql-admin>
-		
-		<sql-ent>SELECT * from (select account.* from account where account.id=? order by whenadded DESC) as aAccount</sql-ent>
+		<!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser 
+			WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) 
+			as aAccount</sql> -->
+		<!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account 
+			where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId 
+			group by account.id) as aAccount -->
+		<sql>SELECT * from (select account.* from accountcrmuser\,account
+			where (accountcrmuser.crmuserId=?) AND
+			accountcrmuser.accountId=account.id order by whenadded DESC) as
+			aAccount
+		</sql>
+		<sql-admin>SELECT * from (select account.* from account where (? IS
+			NOT NULL) order by whenadded DESC) as aAccount
+		</sql-admin>
+
+		<sql-ent>SELECT * from (select account.* from account where
+			account.id=? order by whenadded DESC) as aAccount
+		</sql-ent>
 		<filterField>grade</filterField>
 		<fields>
-		<!--  医院的基本信息 -->
+			<!-- 医院的基本信息 -->
 			<field>
-			
+
 				<name>id</name>
 				<display>ID</display>
 				<data-type>Long</data-type>
@@ -151,7 +163,7 @@
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>num_of_doctors</name>
 				<display>医生数量</display>
@@ -405,7 +417,7 @@
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			<!-- 附加信息 -->			
+			<!-- 附加信息 -->
 			<field>
 				<name>owner</name>
 				<display>创建人</display>
@@ -465,23 +477,33 @@
 				<isEditable>false</isEditable>
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
-			</field>		
+			</field>
 		</fields>
 	</entity>
 
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from (select contact.*\,account.id as accountName from contact\,contactcrmuser\,account where contactcrmuser.crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId order by whenadded DESC) as
-			aContact</sql>
-		
-		<sql-admin>select * from (select contact.*\,account.id as accountName from contact\,account where account.id=contact.accountId AND (? IS NOT NULL) order by whenadded DESC) as
-			aContact</sql-admin>
-		
-		<sql-ent>select * from (select contact.*\,account.id as accountName from contact\,account where contact.id=? AND account.id=contact.accountId order by whenadded DESC) as
-			aContact</sql-ent>
+		<sql>select * from (select contact.*\,account.id as accountName from
+			contact\,contactcrmuser\,account where contactcrmuser.crmuserId=? AND
+			contactcrmuser.contactId=contact.id AND account.id=contact.accountId
+			order by whenadded DESC) as
+			aContact
+		</sql>
+
+		<sql-admin>select * from (select contact.*\,account.id as accountName
+			from contact\,account where account.id=contact.accountId AND (? IS
+			NOT NULL) order by whenadded DESC) as
+			aContact
+		</sql-admin>
+
+		<sql-ent>select * from (select contact.*\,account.id as accountName
+			from contact\,account where contact.id=? AND
+			account.id=contact.accountId order by whenadded DESC) as
+			aContact
+		</sql-ent>
 		<filterField>department</filterField>
-		
+
 		<fields>
 			<field>
 				<name>id</name>
@@ -507,7 +529,7 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<!-- Please do not change the order of this field(accountId)!! -->
-            <field>
+			<field>
 				<name>accountId</name>
 				<display>医院ID</display>
 				<data-type>Long</data-type>
@@ -681,7 +703,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
-			</field>	
+			</field>
 			<field>
 				<name>districts</name>
 				<display>医院区县</display>
@@ -731,7 +753,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
-			</field>		
+			</field>
 			<field>
 				<name>visiting_target</name>
 				<display>拜访目标次数</display>
@@ -1060,9 +1082,24 @@
 	<entity>
 		<name>activity</name>
 		<display>日历</display>
-		<sql>select * from (select activity.*\,activity.activity_type as act_type\,activity.status as act_status\, activity.contactId as contactName\, contact.accountId as accountName from activity\, contact where contact.id= activity.contactId AND crmuserId=?) as aActivity</sql>
-		<sql-admin>select * from (select activity.*\,activity.activity_type as act_type\,activity.status as act_status\, activity.contactId as contactName\, contact.accountId as accountName from activity\, contact where contact.id= activity.contactId AND (? IS NOT NULL)) as aActivity</sql-admin>
-		<sql-ent>select * from (select activity.*\,activity.activity_type as act_type\,activity.status as act_status\, activity.contactId as contactName\, contact.accountId as accountName from activity\, contact where contact.id= activity.contactId AND activity.id=?) as aActivity</sql-ent>
+		<sql>select * from (select activity.*\,activity.activity_type as
+			act_type\,activity.status as act_status\, activity.contactId as
+			contactName\, contact.accountId as accountName from activity\,
+			contact where contact.id= activity.contactId AND crmuserId=?) as
+			aActivity
+		</sql>
+		<sql-admin>select * from (select activity.*\,activity.activity_type as
+			act_type\,activity.status as act_status\, activity.contactId as
+			contactName\, contact.accountId as accountName from activity\,
+			contact where contact.id= activity.contactId AND (? IS NOT NULL)) as
+			aActivity
+		</sql-admin>
+		<sql-ent>select * from (select activity.*\,activity.activity_type as
+			act_type\,activity.status as act_status\, activity.contactId as
+			contactName\, contact.accountId as accountName from activity\,
+			contact where contact.id= activity.contactId AND activity.id=?) as
+			aActivity
+		</sql-ent>
 		<fields>
 			<field>
 				<name>id</name>
@@ -1078,6 +1115,7 @@
 			<field>
 				<name>title</name>
 				<display>活动名称</display>
+				<isRequired>true</isRequired>
 				<data-type>String</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
@@ -1109,7 +1147,7 @@
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>contactName</name>
 				<display>拜访医生</display>
@@ -1123,7 +1161,7 @@
 				<relationTable>contact</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>accountName</name>
 				<display>医院</display>
@@ -1161,7 +1199,7 @@
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-		
+
 			<field>
 				<name>act_type</name>
 				<display>拜访类型</display>
@@ -1293,9 +1331,16 @@
 	<entity>
 		<name>externalMeeting</name>
 		<display>日历</display>
-		<sql>select * from (select *\,activity_type as act_type\,status as act_status from externalMeeting where crmuserId=?) as aMeeting</sql>
-		<sql-admin>select * from (select *\,activity_type as act_type\,status as act_status from externalMeeting where crmuserId=?) as aMeeting</sql-admin>
-		<sql-ent>select * from (select *\,activity_type as act_type\,status as act_status from externalMeeting where externalMeeting.id=?) as aMeeting</sql-ent>
+		<sql>select * from (select *\,activity_type as act_type\,status as
+			act_status from externalMeeting where crmuserId=?) as aMeeting
+		</sql>
+		<sql-admin>select * from (select *\,activity_type as act_type\,status
+			as act_status from externalMeeting where crmuserId=?) as aMeeting
+		</sql-admin>
+		<sql-ent>select * from (select *\,activity_type as act_type\,status as
+			act_status from externalMeeting where externalMeeting.id=?) as
+			aMeeting
+		</sql-ent>
 		<fields>
 			<field>
 				<name>id</name>
@@ -1419,8 +1464,11 @@
 	<entity>
 		<name>dealerAccount</name>
 		<display>经销商</display>
-		<sql>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL</sql>
-		<sql-admin>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL</sql-admin>
+		<sql>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT NULL
+		</sql>
+		<sql-admin>SELECT dealerAccount.* FROM dealerAccount where ? IS NOT
+			NULL
+		</sql-admin>
 		<sql-ent></sql-ent>
 		<filterField>pl1</filterField>
 		<fields>
