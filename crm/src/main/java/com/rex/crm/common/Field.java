@@ -12,6 +12,8 @@ public class Field implements Serializable {
     @Expose
     private String id;
     @Expose
+    private boolean isRequired;
+    @Expose
     private String display;
     private Class dataType;
     @Expose
@@ -36,6 +38,13 @@ public class Field implements Serializable {
     @Expose
     private String alias = null;
     
+    public boolean isRequired() {
+        return isRequired;
+    }
+
+    public void setRequired(boolean isRequired) {
+        this.isRequired = isRequired;
+    }
 
     public boolean isPrimaryKey() {
         return isPrimaryKey;

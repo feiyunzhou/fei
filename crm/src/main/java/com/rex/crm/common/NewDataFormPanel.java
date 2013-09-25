@@ -49,7 +49,6 @@ public class NewDataFormPanel extends Panel {
 	final String user = ((SignIn2Session) getSession()).getUser();
 	public NewDataFormPanel(String id, final Entity entity,final Map<String, String> relationIds) {
 		super(id);
-
 		final Map<String, IModel> models = Maps.newHashMap();
 //		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
 		final String userId = ((SignIn2Session) getSession()).getUserId();
@@ -101,7 +100,6 @@ public class NewDataFormPanel extends Panel {
 						continue;
 					}
 					Field currentField = visibleFields.get(i * NUM_OF_COLUMN+ j / 2);
-					
 					if (currentField.getPicklist() != null) {
 						
 						if (j % 2 == 0) {
@@ -265,10 +263,17 @@ public class NewDataFormPanel extends Panel {
 				}else{
 					text.add(new AttributeAppender("value", new Model(user), ";"));
 				}
-				
 				text.add(new AttributeAppender("readonly",new Model("realonly"),";"));
 				}
+			if(currentField.isRequired()){
+				text.add(new AttributeAppender("style",new Model("border:1px solid red;"),";"));
+				
+			}
 			add(text);
+			text.add(new AttributeAppender("onblur",new Model("checkform();"),";"));
+			text.add(new AttributeAppender("id",new Model(currentField.getName()),";"));
+			
+			
 		}
 		
 	}

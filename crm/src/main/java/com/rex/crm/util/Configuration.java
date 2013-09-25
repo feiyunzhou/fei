@@ -231,6 +231,7 @@ public class Configuration {
                     field.setDetailLink(Boolean.parseBoolean(sub2.getString("isDetailLink"))); 
                     field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible")));
                     field.setEditable(Boolean.parseBoolean(sub2.getString("isEditable"))); 
+                    field.setRequired(Boolean.parseBoolean(sub2.getString("isRequired"))); 
                
                 }
                 

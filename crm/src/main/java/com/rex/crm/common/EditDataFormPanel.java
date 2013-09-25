@@ -292,6 +292,9 @@ public class EditDataFormPanel extends Panel {
 								text.add(new AttributeAppender("value", new Model(value), ";"));
 							}
 							add(text);
+							text.add(new AttributeAppender("id",new Model(currentField.getName()),";"));
+							text.add(new AttributeAppender("onblur",new Model("__changeUserName("+ currentField.getName() + ")"),";"));
+							text.add(new AttributeAppender("class",new Model("register_input"),";"));
 		}
 	}
 
