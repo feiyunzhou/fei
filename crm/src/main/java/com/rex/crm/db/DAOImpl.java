@@ -1131,7 +1131,7 @@ public class DAOImpl {
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
 
-            users = run.query(conn, "SELECT * FROM crmuser", h);
+            users = run.query(conn, "SELECT * FROM crmuser where reportto=?", h,managerId);
 
         } catch (SQLException e) {
             logger.error("failed to get all crm users", e);
@@ -1147,6 +1147,7 @@ public class DAOImpl {
             u.setEmail(user.getEmail());
             u.setId(user.getId());
             u.setRole(user.getRole());
+            u.setLoginName(user.getLoginName());
             inferiors.add(u);
         }
         

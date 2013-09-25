@@ -65,6 +65,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 	{
 		if (user == null)
 		{
+		    System.out.println("username:"+username + " p:"+password);
 		    
 		    CRMUser crmUser = DAOImpl.login(username, password);
 		    if(crmUser!=null && crmUser.getId() != 0){

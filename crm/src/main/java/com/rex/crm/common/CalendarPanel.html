@@ -112,7 +112,10 @@
             function renderSelect4Inferiors(){
 
                 CRMUSER_UTIL.getInferiorsRemotely(userInfo.id,function(data){
-
+                    //console.log("BBBBBBBBBBBB:"+data.length);
+                   // if(data.length === 0){
+                        $("#inforior_select_control").show();
+                     
                     var objs =  [];
                     var selfobj = {};
                     selfobj.name =  "自己";
@@ -127,6 +130,7 @@
                         objs.push(obj);
                     }
 
+                    
                     $('#crmuser_select').select2({
                         data : {
                             results : objs ,
@@ -183,7 +187,7 @@
 		<div class="row-fluid">
 			<div class="span12">
                <form  class="form-horizontal">
-				<div class="control-group">
+				<div id="inforior_select_control" style="display:none;" class="control-group">
 					<label class="control-label" for="inforior">下属：</label>
 					<div class="controls">
 						<input type="hidden" id="crmuser_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
