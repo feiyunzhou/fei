@@ -236,6 +236,31 @@ INSERT INTO activity_visiting_purpose_pl (val) VALUES('会议跟进');
 INSERT INTO activity_visiting_purpose_pl (val) VALUES('交接工作');
 INSERT INTO activity_visiting_purpose_pl (val) VALUES('了解竞争');
 
+-- 拜访目的1
+drop table if exists sales_visiting_purpose_pl;
+CREATE TABLE sales_visiting_purpose_pl 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO sales_visiting_purpose_pl (val) VALUES('会议安排');
+INSERT INTO sales_visiting_purpose_pl (val) VALUES('会议跟进');
+INSERT INTO sales_visiting_purpose_pl (val) VALUES('交接工作');
+INSERT INTO sales_visiting_purpose_pl (val) VALUES('了解竞争');
+
+-- 拜访目的2
+drop table if exists com_visiting_purpose_pl;
+CREATE TABLE com_visiting_purpose_pl 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO com_visiting_purpose_pl (val) VALUES('处方观念沟通');
+INSERT INTO com_visiting_purpose_pl (val) VALUES('病例沟通');
+
+
 drop table if exists activity_feature_product_pl;
 CREATE TABLE activity_feature_product_pl 
 (

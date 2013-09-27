@@ -7,6 +7,13 @@ public class Choice implements Serializable {
     private String val;
     private String name;
 
+    public Choice(){
+        
+    }
+    public Choice(Long id, String val){
+        this.id = id;
+        this.val = val;
+    }
     public long getId() {
         return id;
     }
