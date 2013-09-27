@@ -1,5 +1,10 @@
 package com.rex.crm.beans;
 
+
+import java.util.Date;
+
+import javax.xml.crypto.Data;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,7 +22,39 @@ public class CalendarEvent {
 	private int status;
 	private String contactIds;
 	private int coachId;
+	private String  modifier;
+	private String  owner;
+	private String responsible_person;
+	private Date modify_datetime;
 
+	public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+	public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getModifier() {
+        return modifier;
+    }
+    public void setResponsible_person(String responsible_person) {
+        this.responsible_person = responsible_person;
+    }
+
+    public String getResponsible_person() {
+        return responsible_person;
+    }
+    public Date getModify_datetime() {
+		return modify_datetime;
+	}
+
+	public void setModify_datetime(Date modify_datetime) {
+		this.modify_datetime = modify_datetime;
+	}
 	public int getId() {
 		return id;
 	}

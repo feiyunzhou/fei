@@ -3,6 +3,7 @@ package com.rex.crm.ajax;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -48,6 +50,7 @@ import com.rex.crm.util.Configuration;
  */
 public class DataProvider {
     private static final Logger logger = Logger.getLogger(DataProvider.class);
+    
 
     public DataProvider() {
     }
@@ -670,9 +673,10 @@ public class DataProvider {
         String end = args[5];
         int status = Integer.parseInt(args[6]);
         resp.setCode(0);
+        Date modify_datetime =new Date(System.currentTimeMillis());
         logger.debug("time:"+start+"   :"+end);
         try {
-            DAOImpl.addCalendarEvent(crmuserId,contactId, type, title, start, end,status);
+            DAOImpl.addCalendarEvent(crmuserId,contactId, type, title, start, end,status,owner,modifier,modify_datetime,responsible_person);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

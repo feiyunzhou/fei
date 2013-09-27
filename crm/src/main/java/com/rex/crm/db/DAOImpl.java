@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import javax.xml.crypto.Data;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -745,9 +747,11 @@ public class DAOImpl {
         }
         return res;
     }
-    public static void addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end, int status) throws Exception {
+    
+    public static void addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end,int status,String owner,String modifier,Date modify_datetime,String responsible_person) throws Exception {
         int type_id = Integer.parseInt(type);
-        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type,status,whenadded) VALUES (?,?,?,?,?,?,?,now())";
+        logger.debug("nmomomomomomo"+modify_datetime);
+        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type,status,owner,whenadded,modifier,modify_datetime ,responsible_person) VALUES (?,?,?,?,?,?,?,?,now(),?,?,?)";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
@@ -761,8 +765,12 @@ public class DAOImpl {
             e.setActivity_type(type_id);
             e.setContactId(contactId);
             e.setStatus(status);
-            inserts += run.update(conn, sql, e.getCrmUserId(), e.getContactId(), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getActivity_type(), e.getStatus());
-            System.out.println("inserted:" + inserts);
+            e.setModifier(modifier);
+            e.setOwner(owner);
+            e.setModify_datetime(modify_datetime);
+            e.setResponsible_person(responsible_person);
+            inserts += run.update(conn, sql, e.getCrmUserId(), e.getContactId(), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getActivity_type(), e.getStatus(),e.getOwner(),e.getModifier(),e.getModify_datetime(),e.getResponsible_person());
+           logger.debug("inserted:" + inserts);
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
         } finally {

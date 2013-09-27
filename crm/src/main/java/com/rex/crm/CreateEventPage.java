@@ -72,7 +72,7 @@ public class CreateEventPage extends TemplatePage
         Entity entity = entities.get("activity");
         setPageTitle(entity.getDisplay());
         final String uid = ((SignIn2Session)getSession()).getUserId();
-        
+        final String user = ((SignIn2Session)getSession()).getUser();
         Form form = new Form("form"){
             @Override
             protected void onSubmit()
@@ -87,6 +87,8 @@ public class CreateEventPage extends TemplatePage
                 //String visit_type = getRequest().getPostParameters().getParameterValue("visit_type").toString();
                 String visit_type = String.valueOf(activity_type);
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//                SimpleDateFormat timeformat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+                Date act_endtime =new Date(System.currentTimeMillis());
                 String sdt = sd+ " " +st;
                 String edt = ed + " " + et;
                 Date startdt = null;
@@ -102,9 +104,10 @@ public class CreateEventPage extends TemplatePage
                 
                 logger.debug("contact id:"+ hidden_contact_select);
                 logger.debug("visit_type:" + visit_type);
+                logger.debug("usersereaser:" + user);
                 try {
                     
-                    DAOImpl.addCalendarEvent(Integer.parseInt(uid), Integer.parseInt(hidden_contact_select), visit_type, act_title_input, String.valueOf(startdt.getTime()/1000), String.valueOf(enddt.getTime()/1000), 1);
+                    DAOImpl.addCalendarEvent(Integer.parseInt(uid), Integer.parseInt(hidden_contact_select), visit_type, act_title_input, String.valueOf(startdt.getTime()/1000), String.valueOf(enddt.getTime()/1000),1,user,user,act_endtime,user);
                 } catch (NumberFormatException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
