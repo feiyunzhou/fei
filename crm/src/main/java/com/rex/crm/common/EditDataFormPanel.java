@@ -296,8 +296,31 @@ public class EditDataFormPanel extends Panel {
 							}
 							add(text);
 							text.add(new AttributeAppender("id",new Model(currentField.getName()),";"));
-							text.add(new AttributeAppender("onblur",new Model("__changeUserName("+ currentField.getName() + ")"),";"));
-							text.add(new AttributeAppender("class",new Model("register_input"),";"));
+//							text.add(new AttributeAppender("class",new Model("register_input"),";"));
+							switch(currentField.getName()){
+							case "email":
+								text.add(new AttributeAppender("onblur",new Model("isEmail(this.value)"),";"));
+							break;
+							case "cellphone":
+								text.add(new AttributeAppender("onblur",new Model("checkMobile(this.value)"),";"));
+							break;
+							case "office_tel":
+								text.add(new AttributeAppender("onblur",new Model("checkPhone(this.value)"),";"));
+							break;
+							case "name":
+								text.add(new AttributeAppender("onblur",new Model("isNull(this.value)"),";"));
+							break;
+							case "office_fax":
+								text.add(new AttributeAppender("onblur",new Model("isTel(this.value)"),";"));
+							break;
+							case "fax":
+								text.add(new AttributeAppender("onblur",new Model("isTel(this.value)"),";"));
+							break;
+							case "tel":
+								text.add(new AttributeAppender("onblur",new Model("checkPhone(this.value)"),";"));
+							break;
+							
+						}
 		}
 	}
 
