@@ -181,6 +181,7 @@ drop table if exists activity;
 CREATE TABLE activity 
 (
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255),
     crmuserId MEDIUMINT NOT NULL,
     endtime BIGINT,
     starttime BIGINT NOT NULL DEFAULT 0,
@@ -190,6 +191,7 @@ CREATE TABLE activity
     status MEDIUMINT,
     visiting_purpose MEDIUMINT,
     feature_product MEDIUMINT,
+    act_endtime DATETIME,
     owner VARCHAR(255),
     whenadded DATETIME,
     modifier VARCHAR(255),

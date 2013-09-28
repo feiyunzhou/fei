@@ -748,28 +748,20 @@ public class DAOImpl {
         return res;
     }
     
-    public static void addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end,int status,String owner,String modifier,Date modify_datetime,String responsible_person) throws Exception {
+    public static void addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end,int status,
+            String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product) throws Exception {
         int type_id = Integer.parseInt(type);
-        logger.debug("nmomomomomomo"+modify_datetime);
-        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type,status,owner,whenadded,modifier,modify_datetime ,responsible_person) VALUES (?,?,?,?,?,?,?,?,now(),?,?,?)";
+        //logger.debug("modified date time:"+modify_datetime);
+        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type," +
+        		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose,feature_product) " +
+        		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?)";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            CalendarEvent e = new CalendarEvent();
-            e.setTitle(title);
-            e.setStarttime(Long.parseLong(start) * 1000L);
-            e.setEndtime(Long.parseLong(end) * 1000L);
-            e.setCrmUserId(crmuserId);
-            e.setActivity_type(type_id);
-            e.setContactId(contactId);
-            e.setStatus(status);
-            e.setModifier(modifier);
-            e.setOwner(owner);
-            e.setModify_datetime(modify_datetime);
-            e.setResponsible_person(responsible_person);
-            inserts += run.update(conn, sql, e.getCrmUserId(), e.getContactId(), e.getEndtime(), e.getStarttime(), e.getTitle(), e.getActivity_type(), e.getStatus(),e.getOwner(),e.getModifier(),e.getModify_datetime(),e.getResponsible_person());
+            inserts += run.update(conn, sql, crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
+                    status,owner,modifier,responsible_person,visiting_purpose,feature_product);
            logger.debug("inserted:" + inserts);
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
@@ -777,6 +769,28 @@ public class DAOImpl {
             DBHelper.closeConnection(conn);
         }
     }
+    
+    
+    public static void updateCalendarEvent(String entityId, String contactId, String type, String title, long start, long end,int status,
+            String modifier,String visiting_purpose,String feature_product) throws Exception {
+        int type_id = Integer.parseInt(type);
+        String sql = "update activity SET contactId=?,endtime=?,starttime=?,title=?,activity_type=?,status=?,"+
+                     "modifier=?,modify_datetime=?,visiting_purpose=?,feature_product=? where id=?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql, contactId, end , start , title, type_id,
+                    status,modifier,new Date(),visiting_purpose,feature_product,entityId);
+           logger.debug("updated ok:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to updateCalendarEvent", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+    }
+    
     
     public static void addExternalMeeting(int crmuserId, int[] contactIds, String title, long start, long end, int status,String meeting_type,String coachId) throws Exception {
         //int type_id = Integer.parseInt(type);
@@ -974,14 +988,14 @@ public class DAOImpl {
         }
 
     }
-    public static void updateStatusOfCalendarEvent(int eventId, int status) {
-        String sql = "UPDATE activity SET status=? where id=?";
+    public static void updateStatusOfCalendarEvent(int eventId, int status, Date act_endtime) {
+        String sql = "UPDATE activity SET status=?, act_endtime=? where id=?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            inserts += run.update(conn, sql, status, eventId);
+            inserts += run.update(conn, sql, status, act_endtime,eventId);
 
             System.out.println("inserted:" + inserts);
         } catch (Exception e) {

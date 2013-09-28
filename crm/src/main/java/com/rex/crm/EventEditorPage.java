@@ -48,15 +48,16 @@ import com.rex.crm.util.Configuration;
 /**
  * @author Feiyun Zhou 
  */
-public class CreateEventPage extends TemplatePage
+public class EventEditorPage extends TemplatePage
 {
     
-    private static final Logger logger = Logger.getLogger(CreateEventPage.class);
+    private static final Logger logger = Logger.getLogger(EventEditorPage.class);
     public Date startDate;
     protected String endDate;
     protected String endTime;
     protected String startTime;
     protected String hidden_contact_select;
+    protected String contact_name;
     protected Choice visiting_purpose = new Choice(1L,"");
     protected Choice feature_product = new Choice(1L,"");;
     protected Choice activity_type = new Choice(1L,"");;
@@ -64,7 +65,7 @@ public class CreateEventPage extends TemplatePage
 	/**
 	 * Constructor
 	 */
-	public CreateEventPage()
+	public EventEditorPage(final long eventId)
 	{
 	    
 
@@ -73,6 +74,9 @@ public class CreateEventPage extends TemplatePage
         setPageTitle(entity.getDisplay());
         final String uid = ((SignIn2Session)getSession()).getUserId();
         final String user = ((SignIn2Session)getSession()).getUser();
+        
+        Map entity_data = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
+        
         Form form = new Form("form"){
             @Override
             protected void onSubmit()
@@ -85,7 +89,7 @@ public class CreateEventPage extends TemplatePage
                 String ed = getRequest().getPostParameters().getParameterValue("end_date").toString();
                 String et = getRequest().getPostParameters().getParameterValue("end_time").toString();
                 //String visit_type = getRequest().getPostParameters().getParameterValue("visit_type").toString();
-                String visit_type = String.valueOf(activity_type);
+                String visit_type = String.valueOf(activity_type.getId());
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 //                SimpleDateFormat timeformat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
                 Date act_endtime =new Date(System.currentTimeMillis());
@@ -107,11 +111,9 @@ public class CreateEventPage extends TemplatePage
                 logger.debug("usersereaser:" + user);
                 try {
                  
-                    DAOImpl.addCalendarEvent(Integer.parseInt(uid), Integer.parseInt(hidden_contact_select), String.valueOf(activity_type.getId()), 
-                            act_title_input, String.valueOf(startdt.getTime()/1000), 
-                            String.valueOf(enddt.getTime()/1000),1,user,user,user,
-                            String.valueOf(visiting_purpose.getId()),
-                            String.valueOf(feature_product.getId()));
+                    DAOImpl.updateCalendarEvent(String.valueOf(eventId), hidden_contact_select, visit_type, act_title_input, startdt.getTime(), enddt.getTime(),
+                            1, user, String.valueOf(visiting_purpose.getId()), String.valueOf(feature_product.getId()));
+                    
                 } catch (NumberFormatException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -129,16 +131,10 @@ public class CreateEventPage extends TemplatePage
         
          StringValue startdateValue = this.getRequest().getRequestParameters().getParameterValue("startdate");
          
-         String startdate  = null;
-         long current = System.currentTimeMillis();
-         Date current_date_time = new Date(current);
          SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-         //set default time to current time
-         if(startdateValue != null && !startdateValue.isEmpty() && !startdateValue.isNull()){
-              startdate = startdateValue.toString();
-         }else{     
-             startdate = dateformat.format(current_date_time);
-         }
+         Date startDate = new Date(((Number)entity_data.get("starttime")).longValue());
+         String startdate  = dateformat.format(startDate);
+         
          logger.debug("startdate:"+startdate);
          
          
@@ -153,39 +149,30 @@ public class CreateEventPage extends TemplatePage
          SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm");
          WebMarkupContainer start_time_input = new WebMarkupContainer("start_time_input");
          form.add(start_time_input);
-         start_time_input.add(new AttributeModifier("value",timeformatter.format(current_date_time)));
+         start_time_input.add(new AttributeModifier("value",timeformatter.format(startDate)));
          
          SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
          
-         Date sDate = current_date_time;
-         try {
-             sDate = dateformat2.parse(startdate+ " " + timeformatter.format(current_date_time));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            logger.warn("failed to parse date:",e);
-        }
-         
-         
-         Date next_date_time = new Date(sDate.getTime()+3600*1000);
+        Date endDate = new Date(((Number)entity_data.get("endtime")).longValue());
          WebMarkupContainer end_date_input = new WebMarkupContainer("end_date_input");
          form.add(end_date_input);
-         end_date_input.add(new AttributeModifier("value",dateformat.format(next_date_time)));
+         end_date_input.add(new AttributeModifier("value",dateformat.format(endDate)));
          
-         
-
-         
+      
          WebMarkupContainer end_time_input = new WebMarkupContainer("end_time_input",new Model(""));
          form.add(end_time_input);
-         end_time_input.add(new AttributeModifier("value",timeformatter.format(next_date_time)));
+         end_time_input.add(new AttributeModifier("value",timeformatter.format(endDate)));
               
          
          PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
                  .setWidth(850).setLeft(150).setTop(200);
          form.add(new BookmarkablePageLink<Void>("search_btn", SearchContactPage.class).setPopupSettings(popupSettings));
 
-
+ 
+         hidden_contact_select = String.valueOf(entity_data.get("contactId"));
          form.add(new HiddenField("hidden_contact_select" ,new PropertyModel<String>(this,"hidden_contact_select")));
-         form.add(new TextField("contact_select", new Model("")));
+         contact_name = String.valueOf(entity_data.get("cn"));
+         form.add(new TextField("contact_select", new PropertyModel<String>(this,"contact_name")));
         
          
          final List<Choice> sales_visiting_purpose_pl = DAOImpl.queryPickList("sales_visiting_purpose_pl");
@@ -209,11 +196,13 @@ public class CreateEventPage extends TemplatePage
                  };
 
           //visiting purpose choice
+        visiting_purpose.setId(((Number)entity_data.get("visiting_purpose")).longValue());
         final DropDownChoice visiting_purpose_choice = createDropDownListFromPickList("visiting_purpose_input","com_visiting_purpose_pl",visiting_purpose_choices_model,new PropertyModel(this,"visiting_purpose"));
         visiting_purpose_choice.setOutputMarkupId(true); 
         form.add(visiting_purpose_choice);
          
          //event type choice
+         activity_type.setId(((Number)entity_data.get("act_type")).longValue());
          DropDownChoice activity_type_choice = createDropDownListFromPickList("activity_type_input","activity_activity_types_pl",null,new PropertyModel(this,"activity_type"));
          activity_type_choice.setOutputMarkupId(true);
          form.add(activity_type_choice);
@@ -225,20 +214,13 @@ public class CreateEventPage extends TemplatePage
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                
-//                if(activity_type.getId() == 1L){
-//
-//                  visiting_purpose_choice.setChoices(com_visiting_purpose_pl);
-//                }else{
-//                  
-//                    visiting_purpose_choice.setChoices(sales_visiting_purpose_pl);
-//                }
                 target.add(visiting_purpose_choice);
             }
          });
          
-
+         feature_product.setId(((Number)entity_data.get("feature_product")).longValue());
          form.add(createDropDownListFromPickList("feature_product_input","activity_feature_product_pl",null,new PropertyModel(this,"feature_product")));
+         act_title_input = (String)entity_data.get("title");
          form.add(new TextField("act_title_input", new PropertyModel(this,"act_title_input")));
         
         

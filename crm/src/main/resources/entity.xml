@@ -1096,7 +1096,7 @@
 		</sql-admin>
 		<sql-ent>select * from (select activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
-			contactName\, contact.accountId as accountName from activity\,
+			contactName\, contact.accountId as accountName\, contact.name as cn from activity\,
 			contact where contact.id= activity.contactId AND activity.id=?) as
 			aActivity
 		</sql-ent>

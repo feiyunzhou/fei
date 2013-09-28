@@ -676,7 +676,8 @@ public class DataProvider {
         Date modify_datetime =new Date(System.currentTimeMillis());
         logger.debug("time:"+start+"   :"+end);
         try {
-            DAOImpl.addCalendarEvent(crmuserId,contactId, type, title, start, end,status,owner,modifier,modify_datetime,responsible_person);
+            DAOImpl.addCalendarEvent(crmuserId,contactId, type, title, start, end,status,
+                    null,null,null,null,null);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -739,7 +740,7 @@ public class DataProvider {
         int status = Integer.parseInt(args[1]);
         
         try {
-            DAOImpl.updateStatusOfCalendarEvent(eventId, status);
+            DAOImpl.updateStatusOfCalendarEvent(eventId, status, new Date());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
