@@ -71,4 +71,18 @@ function isTel(object)
       }else{
     	  alert(prompt);  
       }
- }
+ };
+ function isNumber( s )
+ {
+     var regu = "^[0-9]+$";
+     var prompt = "输入有误！请输入数字！";
+     var re = new RegExp(regu);
+     if (s.search(re) != - 1) {
+         return true;
+     }
+     else {
+    	 alert(prompt);
+         return false;
+     }
+ };
+

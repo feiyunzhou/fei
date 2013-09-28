@@ -275,25 +275,55 @@ public class NewDataFormPanel extends Panel {
 			switch(currentField.getName()){
 				case "email":
 					text.add(new AttributeAppender("onblur",new Model("isEmail(this.value)"),";"));
-				break;
+					break;
 				case "cellphone":
 					text.add(new AttributeAppender("onblur",new Model("checkMobile(this.value)"),";"));
-				break;
+					break;
 				case "office_tel":
 					text.add(new AttributeAppender("onblur",new Model("checkPhone(this.value)"),";"));
-				break;
+					break;
 				case "name":
 					text.add(new AttributeAppender("onblur",new Model("isNull(this.value)"),";"));
-				break;
+					break;
 				case "office_fax":
 					text.add(new AttributeAppender("onblur",new Model("isTel(this.value)"),";"));
-				break;
+					break;
 				case "fax":
 					text.add(new AttributeAppender("onblur",new Model("isTel(this.value)"),";"));
-				break;
+					break;
 				case "tel":
 					text.add(new AttributeAppender("onblur",new Model("checkPhone(this.value)"),";"));
-				break;
+					break;
+				case "num_of_doctors":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "num_of_assistant_doctors":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "num_of_staff":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "num_of_treat_per_year":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "num_of_outpatient":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "total_num_of_sickbed":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "num_of_anesthesia_doctor":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "num_of_pain_doctor":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "num_of_surgery_per_year":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
+				case "num_of_surgery_room":
+					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
+					break;
 				
 			}
 			add(text);
