@@ -188,7 +188,7 @@ public class Configuration {
                 for(HierarchicalConfiguration sub2:hp2){
                     Field field = new Field();
                     fields.add(field);
-                    field.setDataType(convert2Clazz(sub2.getString("data-type")));
+                    field.setDataType(sub2.getString("data-type"));
                     field.setDisplay(sub2.getString("display"));
                     field.setName(sub2.getString("name"));
                     field.setPriority(Integer.parseInt(sub2.getString("priority")));

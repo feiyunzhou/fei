@@ -820,14 +820,12 @@ public class DAOImpl {
     }
     public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
          String fieldssql = Joiner.on(",").join(fieldNames);
-         fieldssql = fieldssql + ",whenadded";
+//         fieldssql = fieldssql + ",whenadded";
          String valuesql = Joiner.on(",").join(values);
-         valuesql =  valuesql + ", now()";
+//         valuesql =  valuesql + ", now()";
          if(entityName.equals("activity")){
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
         	 fieldssql = fieldssql + ",crmuserId";
-        	 
-//        	？ valuesql  = valuesql.replaceAll( ", ,","").trim();
         	 valuesql = valuesql + "," +userId;
          }else if(entityName.equals("crmuser")){
         	 fieldssql = fieldssql + ",cityId";
@@ -915,7 +913,7 @@ public class DAOImpl {
         	 i++;
          }
          
-         sql = sql + ",whenadded = now()";
+         //sql = sql + ",whenadded = now()";
          sql = sql.replaceAll("accountId = null,", "").trim();
          sql = sql.replaceAll("accountName","accountId").trim();
          sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;

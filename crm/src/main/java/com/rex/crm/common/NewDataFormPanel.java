@@ -1,6 +1,10 @@
 package com.rex.crm.common;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -261,73 +265,37 @@ public class NewDataFormPanel extends Panel {
 			super(id, markupId, markupProvider);
 			TextField<String> text = new TextField<String>("input", model);
 			if(!currentField.isEditable()){
+				Calendar calendar = Calendar.getInstance();  
+				SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+				Date time =(Date)calendar.getTime();
 				if(currentField.getName().equals("accountId")){
 					add(text);
 				}else{
-					text.add(new AttributeAppender("value", new Model(user), ";"));
+					if(currentField.getName().equals("modify_datetime")){
+						 String modify_datetime = dateformat.format(time);
+							text.add(new AttributeAppender("value", new Model(modify_datetime), ";"));
+					}else if(currentField.getName().equals("whenadded")){
+						String whenadded = dateformat.format(time);
+							text.add(new AttributeAppender("value", new Model(whenadded), ";"));
+					}else{
+						text.add(new AttributeAppender("value", new Model(user), ";"));
+					}
+					
 				}
 				text.add(new AttributeAppender("readonly",new Model("realonly"),";"));
 				}
+			if(currentField.getDataType().equals("tel")){
+				text.add(new AttributeAppender("pattern",new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"),";"));
+			}
 			if(currentField.isRequired()){
-				text.add(new AttributeAppender("style",new Model("border:1px solid red;"),";"));
+				text.add(new AttributeAppender("required",new Model("required"),";"));
 				
 			}
-			switch(currentField.getName()){
-				case "email":
-					text.add(new AttributeAppender("onblur",new Model("isEmail(this.value)"),";"));
-					break;
-				case "cellphone":
-					text.add(new AttributeAppender("onblur",new Model("checkMobile(this.value)"),";"));
-					break;
-				case "office_tel":
-					text.add(new AttributeAppender("onblur",new Model("checkPhone(this.value)"),";"));
-					break;
-				case "name":
-					text.add(new AttributeAppender("onblur",new Model("isNull(this.value)"),";"));
-					break;
-				case "office_fax":
-					text.add(new AttributeAppender("onblur",new Model("isTel(this.value)"),";"));
-					break;
-				case "fax":
-					text.add(new AttributeAppender("onblur",new Model("isTel(this.value)"),";"));
-					break;
-				case "tel":
-					text.add(new AttributeAppender("onblur",new Model("checkPhone(this.value)"),";"));
-					break;
-				case "num_of_doctors":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "num_of_assistant_doctors":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "num_of_staff":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "num_of_treat_per_year":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "num_of_outpatient":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "total_num_of_sickbed":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "num_of_anesthesia_doctor":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "num_of_pain_doctor":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "num_of_surgery_per_year":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				case "num_of_surgery_room":
-					text.add(new AttributeAppender("onblur",new Model("isNumber(this.value)"),";"));
-					break;
-				
+			if(currentField.getName().equals("fax")||currentField.getName().equals("office_fax")){
+				text.add(new AttributeAppender("pattern",new Model("^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)(\\d{7,8})(-(\\d{3,}))?$"),";"));
 			}
 			add(text);
-			
+			text.add(new AttributeAppender("type",new Model(currentField.getDataType()),";"));
 		}
 		
 	}

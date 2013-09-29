@@ -39,20 +39,10 @@ public class EditDataPage extends TemplatePage {
         Entity entity = entities.get(entityName);
         List<Field> currentFields = entity.getFields();
         long lid = Long.parseLong(id);
-        Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
-        Set<String> names = getRequest().getRequestParameters().getParameterNames();
-        Map<String,String> relationMap = Maps.newHashMap();
-        for(String nm:names){
-            StringValue sv = getRequest().getRequestParameters().getParameterValue(nm);
-            relationMap.put(nm, sv.toString());
-            logger.debug("svsvsvsvsvsv"+nm);
-            logger.debug("svsvsvsvsvsv" +  sv.toString());
-            logger.debug("svsvsvsvsvsv"+names);
-        }
-        
-//        String value = CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(map.get(currentField.getName())));
+       // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
+        Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
         add(new Label("name",String.valueOf(map.get("name"))));
-        add(new EditDataFormPanel("detailed",entity,map,id, relationMap));
+        add(new EditDataFormPanel("detailed",entity,map,id));
         
         //set relations data
          add(new AbstractAjaxBehavior(){

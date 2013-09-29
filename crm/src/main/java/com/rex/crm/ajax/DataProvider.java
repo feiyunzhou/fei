@@ -672,6 +672,9 @@ public class DataProvider {
         String start = args[4];
         String end = args[5];
         int status = Integer.parseInt(args[6]);
+        String owner = args[7];
+       String modifier = args[8];
+        String responsible_person = args[9];
         resp.setCode(0);
         Date modify_datetime =new Date(System.currentTimeMillis());
         logger.debug("time:"+start+"   :"+end);

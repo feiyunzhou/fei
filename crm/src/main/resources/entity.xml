@@ -29,7 +29,7 @@
 
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -41,7 +41,7 @@
 				<name>name</name>
 				<display>医院名称</display>
 				<isRequired>true</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
@@ -53,7 +53,7 @@
 				<name>bdm_code</name>
 				<display>BDM医院编码</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -65,7 +65,7 @@
 				<name>administrativ_level</name>
 				<display>医院行政级别</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -78,7 +78,7 @@
 				<name>grade</name>
 				<display>医院分级</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -91,7 +91,7 @@
 				<name>hospital_type</name>
 				<display>医院类型</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -103,7 +103,7 @@
 				<name>local_or_army</name>
 				<display>地方医院／军队医院</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -116,7 +116,7 @@
 				<name>comprehensive_or_specialized</name>
 				<display>综合医院／专科医院 </display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -129,7 +129,7 @@
 				<name>key_type</name>
 				<display>重点医院</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -140,7 +140,7 @@
 			<field>
 				<name>status</name>
 				<display>状态</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isRequired>false</isRequired>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -155,7 +155,7 @@
 				<name>duty_officer</name>
 				<display>院长（法人）</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -168,7 +168,7 @@
 				<name>num_of_doctors</name>
 				<display>医生数量</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -180,7 +180,7 @@
 				<name>num_of_assistant_doctors</name>
 				<display>助理医师人数</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -192,7 +192,7 @@
 				<name>num_of_staff</name>
 				<display>员工总数</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -204,7 +204,7 @@
 				<name>num_of_treat_per_year</name>
 				<display>年诊疗人数</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -216,7 +216,7 @@
 				<name>num_of_outpatient</name>
 				<display>门诊人数</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -228,7 +228,7 @@
 				<name>total_num_of_sickbed</name>
 				<display>总病床数</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -240,7 +240,7 @@
 				<name>num_of_anesthesia_doctor</name>
 				<display>麻醉科医生数</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -252,7 +252,7 @@
 				<name>num_of_pain_doctor</name>
 				<display>疼痛学组医生数 </display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -264,7 +264,7 @@
 				<name>num_of_surgery_per_year</name>
 				<display>手术量/年</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -276,7 +276,7 @@
 				<name>num_of_surgery_room</name>
 				<display>手术间</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -288,7 +288,7 @@
 				<name>num_of_using_opiates_medicine</name>
 				<display>阿片类用药量</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -300,7 +300,7 @@
 				<name>num_of_using_opiates_injection</name>
 				<display>阿片类注射剂量（金额）</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -312,7 +312,7 @@
 				<name>date_of_establish</name>
 				<display>成立时间</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>Date</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -324,7 +324,7 @@
 				<name>registered_capital</name>
 				<display>注册资金</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -336,7 +336,7 @@
 				<name>tel</name>
 				<display>主要电话号码</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -348,7 +348,7 @@
 				<name>fax</name>
 				<display>主要传真号码</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -360,7 +360,7 @@
 				<name>market_classification</name>
 				<display>市场分类</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -373,7 +373,7 @@
 				<name>province</name>
 				<display>医院省份</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -385,7 +385,7 @@
 				<name>city</name>
 				<display>医院城市</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -397,7 +397,7 @@
 				<name>districts</name>
 				<display>医院区县</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -409,7 +409,7 @@
 				<name>address</name>
 				<display>医院详细地址</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -422,7 +422,7 @@
 				<name>owner</name>
 				<display>创建人</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -434,7 +434,7 @@
 				<name>whenadded</name>
 				<display>创建时间</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -446,7 +446,7 @@
 				<name>modifier</name>
 				<display>修改人</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -458,7 +458,7 @@
 				<name>modify_datetime</name>
 				<display>修改时间</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>Date</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -470,7 +470,7 @@
 				<name>responsible_person</name>
 				<display>负责人</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -508,7 +508,7 @@
 			<field>
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -520,7 +520,7 @@
 				<name>name</name>
 				<display>姓名</display>
 				<isRequired>true</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
@@ -532,7 +532,7 @@
 			<field>
 				<name>accountId</name>
 				<display>医院ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isRequired>false</isRequired>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -546,7 +546,7 @@
 				<display>医疗机构</display>
 				<isRequired>false</isRequired>
 				<alias>accountId</alias>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -559,7 +559,7 @@
 				<name>native_place</name>
 				<display>籍贯</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -571,7 +571,7 @@
 				<name>department</name>
 				<display>科室</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -584,7 +584,7 @@
 				<name>sex</name>
 				<display>性别</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -597,7 +597,7 @@
 				<name>office_tel</name>
 				<display>工作电话号码</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -609,7 +609,7 @@
 				<name>office_fax</name>
 				<display>工作传真号码</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -621,7 +621,7 @@
 				<name>cellphone</name>
 				<display>移动电话号码</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -633,7 +633,7 @@
 				<name>email</name>
 				<display>电子邮件</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>email</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -645,7 +645,7 @@
 				<name>status</name>
 				<display>状态</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -658,7 +658,7 @@
 				<name>market_classification</name>
 				<display>市场分类</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -671,7 +671,7 @@
 				<name>grade</name>
 				<display>分级</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -684,7 +684,7 @@
 				<name>province</name>
 				<display>医院省份</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -696,7 +696,7 @@
 				<name>city</name>
 				<display>医院城市</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -708,7 +708,7 @@
 				<name>districts</name>
 				<display>医院区县</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -720,7 +720,7 @@
 				<name>duty</name>
 				<display>职务</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -733,7 +733,7 @@
 				<name>job_title</name>
 				<display>职称</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -746,7 +746,7 @@
 				<name>product_target</name>
 				<display>主推广产品目标</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -758,7 +758,7 @@
 				<name>visiting_target</name>
 				<display>拜访目标次数</display>
 				<isRequired>false</isRequired>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -770,7 +770,7 @@
 			<field>
 				<name>owner</name>
 				<display>创建人</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isRequired>false</isRequired>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -783,10 +783,10 @@
 				<name>whenadded</name>
 				<display>创建时间</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
@@ -795,7 +795,7 @@
 				<name>modifier</name>
 				<display>修改人</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -806,11 +806,12 @@
 			<field>
 				<name>modify_datetime</name>
 				<display>修改时间</display>
+				
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
@@ -819,7 +820,7 @@
 				<name>responsible_person</name>
 				<display>负责人</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -840,7 +841,7 @@
 			<field>
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -852,7 +853,7 @@
 				<name>name</name>
 				<display>姓名</display>
 				<isRequired>true</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
@@ -864,7 +865,7 @@
 				<name>cellPhone</name>
 				<display>手机号码</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -876,7 +877,7 @@
 				<name>email</name>
 				<display>邮箱</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>email</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -888,7 +889,7 @@
 				<name>jobTitle</name>
 				<display>职位</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -909,7 +910,7 @@
 			<field>
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -921,7 +922,7 @@
 				<name>name</name>
 				<display>姓名</display>
 				<isRequired>true</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
@@ -933,7 +934,7 @@
 				<name>cellPhone</name>
 				<display>手机号码</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -945,7 +946,7 @@
 				<name>email</name>
 				<display>邮箱</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>email</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -957,7 +958,7 @@
 				<name>jobTitle</name>
 				<display>职位</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -970,7 +971,7 @@
 				<name>pl1</name>
 				<display>状态</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>crmuser_pl1</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -984,7 +985,7 @@
 				<name>pl2</name>
 				<display>产品线</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>crmuser_pl2</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -998,7 +999,7 @@
 				<name>role</name>
 				<display>角色</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>role</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1012,7 +1013,7 @@
 				<name>pl4</name>
 				<display>一级区域</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>region_level1_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1026,7 +1027,7 @@
 				<name>pl5</name>
 				<display>二级区域</display>
 				<isRequired>false</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>region_level2_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1047,7 +1048,7 @@
 			<field>
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1058,7 +1059,7 @@
 			<field>
 				<name>name</name>
 				<display>城市</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1069,7 +1070,7 @@
 			<field>
 				<name>provinceId</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1104,7 +1105,7 @@
 			<field>
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1116,7 +1117,7 @@
 				<name>title</name>
 				<display>活动名称</display>
 				<isRequired>true</isRequired>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1127,7 +1128,7 @@
 			<field>
 				<name>activity_type</name>
 				<display>类型</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>activity_activity_types_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1139,7 +1140,7 @@
 			<field>
 				<name>contactId</name>
 				<display>拜访医生</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1152,7 +1153,7 @@
 				<name>contactName</name>
 				<display>拜访医生</display>
 				<alias>contactId</alias>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1166,7 +1167,7 @@
 				<name>accountName</name>
 				<display>医院</display>
 				<alias>accountId</alias>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1178,7 +1179,7 @@
 			<field>
 				<name>starttime</name>
 				<display>开始时间</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1190,7 +1191,7 @@
 			<field>
 				<name>endtime</name>
 				<display>结束时间</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1203,7 +1204,7 @@
 			<field>
 				<name>act_type</name>
 				<display>拜访类型</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1214,7 +1215,7 @@
 			<field>
 				<name>visiting_purpose</name>
 				<display>拜访目的</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1226,7 +1227,7 @@
 			<field>
 				<name>feature_product</name>
 				<display>主推广产品</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1238,7 +1239,7 @@
 			<field>
 				<name>status</name>
 				<display>状态</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1250,7 +1251,7 @@
 			<field>
 				<name>act_status</name>
 				<display>状态</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1261,7 +1262,7 @@
 			<field>
 				<name>act_endtime</name>
 				<display>活动结束时间</display>
-				<data-type>String</data-type>
+				<data-type>Date</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1272,7 +1273,7 @@
 			<field>
 				<name>owner</name>
 				<display>创建人</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1283,7 +1284,7 @@
 			<field>
 				<name>whenadded</name>
 				<display>创建时间</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1294,7 +1295,7 @@
 			<field>
 				<name>modifier</name>
 				<display>修改人</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1305,7 +1306,7 @@
 			<field>
 				<name>modify_datetime</name>
 				<display>修改时间</display>
-				<data-type>String</data-type>
+				<data-type>Date</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1316,7 +1317,7 @@
 			<field>
 				<name>responsible_person</name>
 				<display>负责人</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1345,7 +1346,7 @@
 			<field>
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1356,7 +1357,7 @@
 			<field>
 				<name>title</name>
 				<display>标题</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1367,7 +1368,7 @@
 			<field>
 				<name>starttime</name>
 				<display>开始时间</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1379,7 +1380,7 @@
 			<field>
 				<name>endtime</name>
 				<display>结束时间</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1391,7 +1392,7 @@
 			<field>
 				<name>contactIds</name>
 				<display>联系人</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1402,7 +1403,7 @@
 			<field>
 				<name>activity_type</name>
 				<display>类型</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>activity_types</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1425,7 +1426,7 @@
 			<field>
 				<name>status</name>
 				<display>状态</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1448,7 +1449,7 @@
 			<field>
 				<name>coachId</name>
 				<display>教练</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1475,7 +1476,7 @@
 			<field>
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1485,7 +1486,7 @@
 			<field>
 				<name>name</name>
 				<display>名称</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1495,7 +1496,7 @@
 			<field>
 				<name>address</name>
 				<display>地址</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1505,7 +1506,7 @@
 			<field>
 				<name>tele</name>
 				<display>电话</display>
-				<data-type>String</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1515,7 +1516,7 @@
 			<field>
 				<name>status</name>
 				<display>状态</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>account_pl1</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1527,7 +1528,7 @@
 			<field>
 				<name>pl1</name>
 				<display>一级区域</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>region_level1_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1539,7 +1540,7 @@
 			<field>
 				<name>pl2</name>
 				<display>二级区域</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>region_level2_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1561,7 +1562,7 @@
 			<field>
 				<name>id</name>
 				<display>ID</display>
-				<data-type>Long</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
@@ -1571,7 +1572,7 @@
 			<field>
 				<name>name</name>
 				<display>姓名</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1581,7 +1582,7 @@
 			<field>
 				<name>tel_work</name>
 				<display>电话</display>
-				<data-type>String</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1592,7 +1593,7 @@
 			<field>
 				<name>sex</name>
 				<display>性别</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>sex_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1604,7 +1605,7 @@
 			<field>
 				<name>status</name>
 				<display>状态</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>account_pl1</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1616,7 +1617,7 @@
 			<field>
 				<name>pl1</name>
 				<display>主要产品</display>
-				<data-type>String</data-type>
+				<data-type>text</data-type>
 				<picklist>contact_pl4</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>

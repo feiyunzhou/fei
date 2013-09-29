@@ -1,11 +1,14 @@
 <wicket:panel>
+<style>
+::-webkit-validation-bubble-message {color:white;background:blue;}
+</style>
 	<script>
 		$(document).ready(function() {
 
 		});
 	</script>
 	<div>
-		<form wicket:id="form" class="form-horizontal">
+		<form wicket:id="form" class="form-horizontal" onsubmit="return checkfrom(this);">
 			<fieldset>
 				<div  wicket:id="fieldGroupRepeater">
 					<table class="table table-striped table-condensed" style="">
@@ -38,7 +41,7 @@
 		<span wicket:id="add" ></span>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="textInputFragment">
-		<input wicket:id="input" type="text" />
+		<input wicket:id="input" />
 	</wicket:fragment>
 	<wicket:fragment wicket:id="dropDownFragment">
 		<select wicket:id="dropDownInput"></select>

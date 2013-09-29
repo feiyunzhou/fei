@@ -15,7 +15,7 @@ public class Field implements Serializable {
     private boolean isRequired;
     @Expose
     private String display;
-    private Class dataType;
+    private String dataType;
     @Expose
     private String name;
     @Expose
@@ -70,11 +70,11 @@ public class Field implements Serializable {
         this.display = display;
     }
 
-    public Class getDataType() {
+    public String getDataType() {
         return dataType;
     }
 
-    public void setDataType(Class dataType) {
+    public void setDataType(String dataType) {
         this.dataType = dataType;
     }
 
