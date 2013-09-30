@@ -38,6 +38,7 @@ import org.apache.wicket.util.template.PackageTextTemplate;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.CreateEventPage;
 import com.rex.crm.PageFactory;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.Choice;

@@ -24,6 +24,8 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.CreateEventPage;
+import com.rex.crm.PageFactory;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -120,7 +122,7 @@ public class PageableTablePanel extends Panel {
         
         add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName())));
         
-        add(new NewDataFormPanel("formPanel",entity,null));
+    	add(new NewDataFormPanel("formPanel",entity,null));
 
     }
 

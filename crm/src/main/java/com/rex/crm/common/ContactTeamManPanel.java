@@ -43,10 +43,17 @@ public class ContactTeamManPanel extends Panel {
           teamSql = "select * from (select a.*,b.id as rid from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?) as atable";
         }else if(en.equalsIgnoreCase("contact")){
             teamSql = "select * from (select a.*,b.id as rid from crmuser as a inner join contactcrmuser as b on a.id=b.crmuserId where b.contactId=?) as atable";
+        }else if(en.equalsIgnoreCase("crmuser")){
+            teamSql = "select * from (select a.*,b.id as rid from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?) as atable";
         }
         List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
+        Entity entity ;
+        if(en.equalsIgnoreCase("account")||en.equalsIgnoreCase("contact")){
+        	 entity = Configuration.getEntityByName("crmuser");
+        }else{
+        	entity = Configuration.getEntityByName("account");
+        }
         
-        Entity entity = Configuration.getEntityByName("crmuser");
         List<Field> fields = entity.getFields();
         final String entityName = entity.getName();
         
@@ -220,6 +227,8 @@ public class ContactTeamManPanel extends Panel {
                         teamtable = "accountcrmuser";
                     }else if(currentEntityName.equalsIgnoreCase("contact")){
                         teamtable = "contactcrmuser";
+                    }else if(currentEntityName.equalsIgnoreCase("crmuser")){
+                        teamtable = "crmuseraccount";
                     }
                     DAOImpl.removeEntityFromTeam(teamtable,id);
                     

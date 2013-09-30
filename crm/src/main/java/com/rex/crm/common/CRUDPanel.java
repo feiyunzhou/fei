@@ -19,6 +19,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
 import com.rex.crm.ContactPage;
+import com.rex.crm.CreateEventPage;
 import com.rex.crm.UserPage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
@@ -51,8 +52,11 @@ public class CRUDPanel extends Panel {
 
                    @Override
                    public void onClick() {
-                      
-                       setResponsePage(new CreateDataPage(entity.getName()));
+                	   if(entity.getName().equals("activity")){
+            	    	   setResponsePage(new CreateEventPage());
+            	       }else{
+            	    	   setResponsePage(new CreateDataPage(entity.getName()));            	    	   
+            	       }
                    }
                });
                 add(addfrag);
