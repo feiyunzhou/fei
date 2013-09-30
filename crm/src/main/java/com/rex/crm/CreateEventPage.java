@@ -24,6 +24,9 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.Radio;
+import org.apache.wicket.markup.html.form.RadioChoice;
+import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.PopupSettings;
@@ -32,6 +35,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
@@ -57,10 +61,13 @@ public class CreateEventPage extends TemplatePage
     protected String endTime;
     protected String startTime;
     protected String hidden_contact_select;
+    protected String hidden_select_user;
     protected Choice visiting_purpose = new Choice(1L,"");
-    protected Choice feature_product = new Choice(1L,"");;
-    protected Choice activity_type = new Choice(1L,"");;
+    protected Choice feature_product = new Choice(1L,"");
+    protected Choice activity_type = new Choice(1L,"");
+    protected Choice selected_event_type = new Choice(1L,"拜访");
     protected String act_title_input = "";
+    protected Integer event_type = 1;
 	/**
 	 * Constructor
 	 */
@@ -101,17 +108,27 @@ public class CreateEventPage extends TemplatePage
                     e.printStackTrace();
                 }
                 logger.debug(String.format("time info %s %s %s %s", sd,st,ed,et));
-                
+                logger.debug("event_type:"+ event_type);
                 logger.debug("contact id:"+ hidden_contact_select);
                 logger.debug("visit_type:" + visit_type);
                 logger.debug("usersereaser:" + user);
+                logger.debug("hidden_select_user: "+ hidden_select_user);
                 try {
                  
-                    DAOImpl.addCalendarEvent(Integer.parseInt(uid), Integer.parseInt(hidden_contact_select), String.valueOf(activity_type.getId()), 
+                    int crmuserId = 0;
+                    if(event_type == 1){
+                        //visiting
+                        crmuserId = Integer.parseInt(uid);
+                    }else if(event_type == 2){
+                        //coaching
+                        crmuserId = Integer.parseInt(hidden_select_user);
+                    }
+                    
+                    DAOImpl.addCalendarEvent(crmuserId, Integer.parseInt(hidden_contact_select), String.valueOf(activity_type.getId()), 
                             act_title_input, String.valueOf(startdt.getTime()/1000), 
                             String.valueOf(enddt.getTime()/1000),1,user,user,user,
                             String.valueOf(visiting_purpose.getId()),
-                            String.valueOf(feature_product.getId()));
+                            String.valueOf(feature_product.getId()),event_type);
                 } catch (NumberFormatException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -186,6 +203,12 @@ public class CreateEventPage extends TemplatePage
 
          form.add(new HiddenField("hidden_contact_select" ,new PropertyModel<String>(this,"hidden_contact_select")));
          form.add(new TextField("contact_select", new Model("")));
+         
+         
+        PageParameters params = new PageParameters();
+        params.set("mid", uid);
+        form.add(new BookmarkablePageLink<Void>("search_user_btn", SelectCRMUserPage.class,params ).setPopupSettings(popupSettings));
+         form.add(new HiddenField("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
         
          
          final List<Choice> sales_visiting_purpose_pl = DAOImpl.queryPickList("sales_visiting_purpose_pl");
@@ -238,6 +261,14 @@ public class CreateEventPage extends TemplatePage
          });
          
 
+         //set event type         
+         RadioGroup event_type_group=new RadioGroup("event_type_group",new PropertyModel(this,"event_type"));  
+         event_type_group.add(new Radio("radio1", new Model(1L)));
+         event_type_group.add(new Radio("radio2", new Model(2L)));
+         form.add(event_type_group);
+         
+         
+         
          form.add(createDropDownListFromPickList("feature_product_input","activity_feature_product_pl",null,new PropertyModel(this,"feature_product")));
          form.add(new TextField("act_title_input", new PropertyModel(this,"act_title_input")));
         

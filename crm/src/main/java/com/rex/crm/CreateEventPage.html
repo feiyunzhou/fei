@@ -5,7 +5,20 @@
 	<wicket:extend>
 		<script>
 			$(document).ready(function() {	
-				$("#navitem-calendar").addClass("active");  
+				$("#navitem-calendar").addClass("active");
+
+
+                $(".event_type_class").change(function(e){
+                    var seleted_event_type = $(this).attr("data-typeId");//.data("typeId");
+                    //console.log("seleted_event_type:"+seleted_event_type);
+                    
+                    if(seleted_event_type == 1){
+                        $("#student_div").hide();
+                    }else if(seleted_event_type == 2){
+                        $("#student_div").show();
+                    }
+
+                });
 				
 				//$("#selected_account").select2();
 				
@@ -27,124 +40,158 @@
 				<td>
 					<div title="活动">
 						<label id="datestr"></label>
-						<div>
 
-                             <div class="control-group">
-								<label class="control-label">拜访名称：</label>
-								<div class="controls">
-								  <input type="text" id="act_title" class="input" placeholder="拜访名称..." required="required" wicket:id="act_title_input"/>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">拜访类型：</label>
-								<div class="controls">
-									<select id="visit_type_input" wicket:id="activity_type_input" name="visit_type" class="input input-small">
-										<option value="1">专业化拜访</option>
-										<option value="2">事务性拜访</option>
-									</select>
-								</div>
-							</div>
+								<div>
+									<div class="control-group">
+										<label class="control-label">类型：</label>
+										<div class="controls">
 
-							<div class="control-group">
-								<label class="control-label" for="from">开始时间：</label>
-								<div class="controls">
-									<table>
-										<tr>
-											<td><div  id="datepicker_from" ><input name="start_date"  wicket:id="start_date_input" style="width: 150px" type="date" /></div></td>
-											<td>&nbsp;</td>
-											<td><input  wicket:id="start_time_input" name="start_time"  style="width: 150px" type="time" /></td>
-										</tr>
-									</table>
-								</div>
-								<label class="control-label" for="to">结束时间：</label>
-								<div class="controls">
-									<table>
-										<tr>
-											<td><div  id="datepicker_to" ><input name="end_date"   wicket:id="end_date_input"  style="width: 150px" type="date" /></div></td>
-											<td>&nbsp;</td>
-											<td><input  wicket:id="end_time_input" name="end_time"  style="width: 150px" type="time" /></td>
-										</tr>
-									</table>
+											<table>
+												<tr>
+													<td><span wicket:id="event_type_group">
+													 <input type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"  checked="checked" value=1 /> <span>拜访</span>&nbsp;&nbsp; 
+													<input id="coaching_radio" type="radio"
+															name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2 /> <span>辅导</span>
+													</span></td>
+
+												</tr>
+											</table>
+
+										</div>
+									</div>
 
 
-
-								</div>
-
-							</div>
-
-
-								<div id="accountNcontact" class="control-group">
+                                    <div id="student_div" style="display:none;" class="control-group">
+										<label class="control-label">被辅导人：</label>
+										<div class="controls">
+											<input type="text" id="select_user" class="input input-small" />
+											<input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
+											<a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
+										</div>
+									</div>
 									
-									<!-- <select id="selected_account" wicket:id="account_select">
+									<div class="control-group">
+										<label class="control-label">拜访名称：</label>
+										<div class="controls">
+											<input type="text" id="act_title" class="input" placeholder="拜访名称..." wicket:id="act_title_input" />
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">拜访类型：</label>
+										<div class="controls">
+											<select id="visit_type_input" wicket:id="activity_type_input" name="visit_type" class="input">
+												<option value="1">专业化拜访</option>
+												<option value="2">事务性拜访</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label" for="from">开始时间：</label>
+										<div class="controls">
+											<table>
+												<tr>
+													<td><div id="datepicker_from">
+															<input name="start_date" wicket:id="start_date_input" style="width: 150px" type="date" />
+														</div></td>
+													<td>&nbsp;</td>
+													<td><input wicket:id="start_time_input" name="start_time" style="width: 150px" type="time" /></td>
+												</tr>
+											</table>
+										</div>
+										<label class="control-label" for="to">结束时间：</label>
+										<div class="controls">
+											<table>
+												<tr>
+													<td><div id="datepicker_to">
+															<input name="end_date" wicket:id="end_date_input" style="width: 150px" type="date" />
+														</div></td>
+													<td>&nbsp;</td>
+													<td><input wicket:id="end_time_input" name="end_time" style="width: 150px" type="time" /></td>
+												</tr>
+											</table>
+
+
+
+										</div>
+
+									</div>
+
+
+									<div id="accountNcontact" class="control-group">
+
+										<!-- <select id="selected_account" wicket:id="account_select">
 									</select> -->
-									<label id="contact_label" class="control-label" for="contact">医生：</label> 
-									<div class="controls">
-									<input type="text" id="selected_contact" class="input" placeholder="张三" wicket:id="contact_select"/>
-                                    <input type="hidden" id="hidden_selected_contact" class="input"  wicket:id="hidden_contact_select"/>
-									<a href="#" class="btn btn-mini" wicket:id="search_btn" id="search_click" name="search_contact" title="查找医生" >查找医生</a>
+										<label id="contact_label" class="control-label" for="contact">医生：</label>
+										<div class="controls">
+											<input type="text" id="selected_contact" class="input input-small" placeholder="张三" wicket:id="contact_select" /> 
+											<input type="hidden" id="hidden_selected_contact" class="input"
+												wicket:id="hidden_contact_select" />&nbsp;&nbsp;
+												 <a href="#" class="" wicket:id="search_btn" id="search_click" name="search_contact" title="查找医生"><i class="icon-search"></i></a>
+										      &nbsp;&nbsp;&nbsp;<span id="account_info"></span>
+										</div>
+										<!-- <label class="control-label" for="account" id="account_label" style="display: none">医院：</label>
+										<div class="controls">
+											<span id="account_info"></span>
+										</div> -->
 									</div>
-									<label class="control-label" for="account" id="account_label" style="display:none">医院：</label>
-									<div class="controls">
-									  <span id="account_info"></span>
+
+									<div class="control-group">
+										<label class="control-label">拜访目的：</label>
+										<div class="controls">
+											<select id="visiting_purpose_input" wicket:id="visiting_purpose_input" name="visiting_purpose" class="input">
+												<option value="1">传递产品知识</option>
+												<option value="2">处方观念沟通</option>
+												<option value="3">病例沟通</option>
+												<option value="4">会议安排</option>
+												<option value="5">会议跟进</option>
+												<option value="6">交接工作</option>
+												<option value="7">了解竞争</option>
+											</select>
+										</div>
 									</div>
+
+									<div class="control-group">
+										<label class="control-label">主推广产品：</label>
+										<div class="controls">
+											<select id="feature_product_input" wicket:id="feature_product_input" name="feature_product" class="input">
+												<option value="1">美施康定</option>
+												<option value="2">奥施康定</option>
+												<option value="3">奇曼丁</option>
+												<option value="4">若思本</option>
+												<option value="5">奥诺美</option>
+											</select>
+										</div>
+									</div>
+
+
+									<div id="visited_contact_select_div" style="display: none" class="control-group">
+										<label class="control-label" for="visited_contact">拜访过的医生：</label>
+										<div class="controls">
+											<input type="hidden" id="visited_contact_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+										</div>
+									</div>
+
+
+									<div id="multi_select_div" style="display: none">
+										<h6>添加的医生：</h6>
+										<table id="selected_contacts_table">
+											<tbody></tbody>
+										</table>
+									</div>
+
+
+									<div id="user_manager_select_div" style="display: none" class="control-group">
+										<label class="control-label" for="user_manager">经理：</label>
+										<div class="controls">
+											<input type="hidden" id="user_manager_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+										</div>
+									</div>
+
+
 								</div>
-								
-								<div class="control-group">
-								<label class="control-label">拜访目的：</label>
-								<div class="controls">
-									<select id="visiting_purpose_input" wicket:id="visiting_purpose_input" name="visiting_purpose" class="input input-small">
-										<option value="1">传递产品知识</option>
-										<option value="2">处方观念沟通</option>
-										<option value="3">病例沟通</option>
-										<option value="4">会议安排</option>
-										<option value="5">会议跟进</option>
-										<option value="6">交接工作</option>
-										<option value="7">了解竞争</option>
-									</select>
-								</div>
-							   </div>
-							   
-							   <div class="control-group">
-								<label class="control-label">主推广产品：</label>
-								<div class="controls">
-									<select id="feature_product_input" wicket:id="feature_product_input" name="feature_product" class="input input-small">
-										<option value="1">美施康定</option>
-										<option value="2">奥施康定</option>
-										<option value="3">奇曼丁</option>
-										<option value="4">若思本</option>
-										<option value="5">奥诺美</option>
-									</select>
-								</div>
-							   </div>
 
-
-								<div id="visited_contact_select_div" style="display:none" class="control-group">
-                                <label class="control-label" for="visited_contact">拜访过的医生：</label>
-                                <div class="controls">
-                                    <input type="hidden" id="visited_contact_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
-                                </div>
-                            </div>
-
-
-                            <div id="multi_select_div" style="display:none">
-                                <h6>添加的医生：</h6>
-                                 <table id="selected_contacts_table">
-                                     <tbody></tbody>
-                                 </table>
-                            </div>
-
-
-                            <div id="user_manager_select_div" style="display:none" class="control-group">
-                                <label class="control-label" for="user_manager">经理：</label>
-                                <div class="controls">
-                                    <input type="hidden" id="user_manager_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
-                                </div>
-                            </div>
-
-
-						</div>
-
-					</div>
+							</div>
 				</td>
 			</tr>
 		</table>

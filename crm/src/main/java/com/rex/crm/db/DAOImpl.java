@@ -749,19 +749,19 @@ public class DAOImpl {
     }
     
     public static void addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end,int status,
-            String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product) throws Exception {
+            String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type) throws Exception {
         int type_id = Integer.parseInt(type);
         //logger.debug("modified date time:"+modify_datetime);
         String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type," +
-        		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose,feature_product) " +
-        		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?)";
+        		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose,feature_product,event_type) " +
+        		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?,?)";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql, crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
-                    status,owner,modifier,responsible_person,visiting_purpose,feature_product);
+                    status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type);
            logger.debug("inserted:" + inserts);
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
@@ -1101,6 +1101,30 @@ public class DAOImpl {
 
         return lMap;
     }
+    
+    public static List searchCRMUser(String managerId,String search_target) {
+        String sql = "select * from crmuser";
+        if(managerId!=null){
+           sql = "select * from (select * from crmuser where reportto="+managerId+" AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
+        }else{
+            sql = "select * from (select * from crmuser where (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a"; 
+        }
+        logger.debug(sql );
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return lMap;
+    }
 
     
     
@@ -1122,6 +1146,9 @@ public class DAOImpl {
 
         return lMap;
     }
+    
+    
+
     
     
     public static void removeEntityFromTeam(String teamtable, String id) {

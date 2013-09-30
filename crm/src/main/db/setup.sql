@@ -183,6 +183,7 @@ CREATE TABLE activity
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255),
     crmuserId MEDIUMINT NOT NULL,
+    event_type MEDIUMINT NOT NULL,
     endtime BIGINT,
     starttime BIGINT NOT NULL DEFAULT 0,
     title VARCHAR(128),
@@ -200,6 +201,16 @@ CREATE TABLE activity
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
+-- 类型
+drop table if exists activity_event_type_pl;
+CREATE TABLE activity_event_type_pl 
+(
+  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  val VARCHAR(255),
+  PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO activity_event_type_pl (val) VALUES('拜访');
+INSERT INTO activity_event_type_pl (val) VALUES('辅导');
 
 -- 活动状态;
 drop table if exists activity_status_pl;
