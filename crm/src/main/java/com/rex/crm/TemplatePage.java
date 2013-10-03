@@ -210,7 +210,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 
 				Map<String, Object> map = new HashMap<>();
 				map.put("userInfo",DataProvider.getCRMUserInfoById(new String[]{userId}));
-				logger.debug("userId!!!!!!!:"+userId);
+				//logger.debug("userId!!!!!!!:"+userId);
 				map.put("ajaxURL", callbackUrl);
 				//map.put("allUsers", DataProvider.getAllCRMUsers(new String[0]));
 				//map.put("allAccounts", DataProvider.getAllAccounts(new String[0]));

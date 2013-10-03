@@ -1256,10 +1256,10 @@
 			contact where contact.id= activity.contactId AND (? IS NOT NULL)) as
 			aActivity
 		</sql-admin>
-		<sql-ent>select * from (select activity.*\,activity.activity_type as
+		<sql-ent>select * from (select activity.*\,activity.crmuserId as participant\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
 			contactName\, contact.accountId as accountName\, contact.name as cn from activity\,
-			contact where contact.id= activity.contactId AND activity.id=?) as
+			contact\,activitycrmuser where contact.id= activity.contactId AND activity.id=? AND activitycrmuser.activityId=activity.id) as
 			aActivity
 		</sql-ent>
 		<fields>
@@ -1355,6 +1355,19 @@
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<relationTable>account</relationTable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>participant</name>
+				<display>参与人/相关人员</display>
+				<alias>crmuserId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<relationTable>crmuser</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
