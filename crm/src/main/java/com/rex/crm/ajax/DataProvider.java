@@ -679,8 +679,8 @@ public class DataProvider {
         Date modify_datetime =new Date(System.currentTimeMillis());
         logger.debug("time:"+start+"   :"+end);
         try {
-            DAOImpl.addCalendarEvent(crmuserId,contactId, type, title, start, end,status,
-                    null,null,null,null,null);
+            DAOImpl.addCalendarEvent(crmuserId, contactId, type, title, start, end, status,
+                    owner, modifier, responsible_person, null, null, 1);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -803,6 +803,19 @@ public class DataProvider {
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
         Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),id);
+        
+        return getIndexTable(entity,multiMap,id);
+    }
+    
+    public static String queryRemoteCoachingEventsByUserId(String[] args){
+        String id = args[0];
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        Entity entity = entities.get("activity");
+        String sql = "select * from (select activity.*,activity.activity_type as"+
+            "act_type,activity.status as act_status, activity.contactId as"+
+            "contactName, contact.accountId as accountName from activity,"+
+            "contact where contact.id= activity.contactId AND crmuserId=?) as aActivity";
+        Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(sql,id);
         
         return getIndexTable(entity,multiMap,id);
     }

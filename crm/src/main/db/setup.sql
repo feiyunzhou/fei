@@ -288,6 +288,16 @@ INSERT INTO activity_feature_product_pl (val) VALUES('若思本');
 INSERT INTO activity_feature_product_pl (val) VALUES('奥诺美');
 
 
+drop table if exists activitycrmuser;
+CREATE TABLE activitycrmuser 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    activityId MEDIUMINT NOT NULL,
+    crmuserId MEDIUMINT NOT NULL,
+    UNIQUE KEY(activityId,crmuserId), 
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
 drop table if exists contact;
 CREATE TABLE contact 
 (

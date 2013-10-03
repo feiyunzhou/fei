@@ -1,6 +1,7 @@
 package com.rex.crm.db;
 
 import java.sql.Connection;
+import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -748,7 +749,7 @@ public class DAOImpl {
         return res;
     }
     
-    public static void addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end,int status,
+    public static long addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end,int status,
             String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type) throws Exception {
         int type_id = Integer.parseInt(type);
         //logger.debug("modified date time:"+modify_datetime);
@@ -756,19 +757,63 @@ public class DAOImpl {
         		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose,feature_product,event_type) " +
         		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?,?)";
         Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet generatedKeys = null;
+        int rows = 0;
+        long key = -1;
         try {
             conn = DBHelper.getConnection();
-            QueryRunner run = new QueryRunner();
-            int inserts = 0;
-            inserts += run.update(conn, sql, crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
-                    status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type);
-           logger.debug("inserted:" + inserts);
+            //QueryRunner run = new QueryRunner();
+            //int inserts = 0;
+            //inserts += run.update(conn, sql, crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
+             ///       status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type);
+           //logger.debug("inserted:" + inserts);
+            
+            statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            fillStatement(statement,crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
+                          status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type);
+                
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                logger.error("Failed to insert data");
+                return -1;
+            }
+            
+            generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                //user.setId(generatedKeys.getLong(1));
+                 key = generatedKeys.getLong(1);
+            } else {
+                logger.error("failed to insert data");
+                return -1;
+            }
+            
+            
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
+        
+        return key;
     }
+    
+    
+    private   static void fillStatement(PreparedStatement stmt, Object... params)
+            throws SQLException {
+
+            if (params == null) {
+                return;
+            }
+            ParameterMetaData pmd = stmt.getParameterMetaData();
+            for (int i = 0; i < params.length; i++) {
+                if (params[i] != null) {
+                    stmt.setObject(i + 1, params[i]);
+                } else {
+                    stmt.setNull(i + 1, pmd.getParameterType(i + 1));
+                }
+            }
+        }
     
     
     public static void updateCalendarEvent(String entityId, String contactId, String type, String title, long start, long end,int status,
@@ -844,7 +889,9 @@ public class DAOImpl {
         long key = -1;
         try {
             conn = DBHelper.getConnection();
+            
             statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 logger.error("Failed to insert data");
@@ -879,6 +926,8 @@ public class DAOImpl {
             sql = "INSERT INTO accountcrmuser ( accountId, crmuserId) VALUES ("+entityId+","+userId+")";
         }else if(entityName.equalsIgnoreCase("contact")){
             sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+userId+")";
+        }else if(entityName.equalsIgnoreCase("activity")){
+            sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+userId+")";
         }
         
         if(sql == null) {

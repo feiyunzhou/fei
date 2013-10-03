@@ -116,19 +116,46 @@ public class CreateEventPage extends TemplatePage
                 try {
                  
                     int crmuserId = 0;
+                    
                     if(event_type == 1){
                         //visiting
                         crmuserId = Integer.parseInt(uid);
+                       
                     }else if(event_type == 2){
                         //coaching
                         crmuserId = Integer.parseInt(hidden_select_user);
                     }
                     
-                    DAOImpl.addCalendarEvent(crmuserId, Integer.parseInt(hidden_contact_select), String.valueOf(activity_type.getId()), 
+                    
+                    //insert the event, and return the generated id of the event
+                    long generatedkey = DAOImpl.addCalendarEvent(crmuserId, Integer.parseInt(hidden_contact_select), String.valueOf(activity_type.getId()), 
                             act_title_input, String.valueOf(startdt.getTime()/1000), 
                             String.valueOf(enddt.getTime()/1000),1,user,user,user,
                             String.valueOf(visiting_purpose.getId()),
                             String.valueOf(feature_product.getId()),event_type);
+                    logger.debug("generatedkey:"+ generatedkey);
+                    
+                    
+                    
+                    if(generatedkey>0){
+                        
+                        if(event_type == 1){
+                            //if it is a visiting, we only send this event to the owner;
+                           DAOImpl.insert2UserRelationTable("activity",uid,String.valueOf(generatedkey));
+                        }else if(event_type == 2){
+                            //if it is a coaching, we need send this event to the manager and sales
+                           
+                            //add new record for the manager
+                            DAOImpl.insert2UserRelationTable("activity",uid,String.valueOf(generatedkey));
+                            
+                            //add new record for the sales
+                            DAOImpl.insert2UserRelationTable("activity",hidden_select_user,String.valueOf(generatedkey));
+                            
+                        }
+                        
+                    }
+                    
+                    
                 } catch (NumberFormatException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

@@ -1247,7 +1247,7 @@
 		<sql>select * from (select activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
 			contactName\, contact.accountId as accountName from activity\,
-			contact where contact.id= activity.contactId AND crmuserId=?) as
+			contact\,activitycrmuser where contact.id= activity.contactId AND activitycrmuser.activityId=activity.id AND activitycrmuser.crmuserId=?) as
 			aActivity
 		</sql>
 		<sql-admin>select * from (select activity.*\,activity.activity_type as
