@@ -187,6 +187,7 @@ CREATE TABLE activity
     endtime BIGINT,
     starttime BIGINT NOT NULL DEFAULT 0,
     title VARCHAR(128),
+    participants VARCHAR(512),
     activity_type MEDIUMINT,
     contactId MEDIUMINT,
     status MEDIUMINT,

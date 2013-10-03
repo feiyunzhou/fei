@@ -750,16 +750,15 @@ public class DAOImpl {
     }
     
     public static long addCalendarEvent(int crmuserId, int contactId, String type, String title, String start, String end,int status,
-            String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type) throws Exception {
+            String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type,String participants) throws Exception {
         int type_id = Integer.parseInt(type);
         //logger.debug("modified date time:"+modify_datetime);
         String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type," +
-        		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose,feature_product,event_type) " +
-        		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?,?)";
+        		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose,feature_product,event_type,participants) " +
+        		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?,?,?)";
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet generatedKeys = null;
-        int rows = 0;
         long key = -1;
         try {
             conn = DBHelper.getConnection();
@@ -771,7 +770,7 @@ public class DAOImpl {
             
             statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             fillStatement(statement,crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
-                          status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type);
+                          status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type,participants);
                 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {

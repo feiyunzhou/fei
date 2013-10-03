@@ -679,8 +679,9 @@ public class DataProvider {
         Date modify_datetime =new Date(System.currentTimeMillis());
         logger.debug("time:"+start+"   :"+end);
         try {
+            CRMUser userInfo = DAOImpl.getCRMUserInfoById(crmuserId);
             DAOImpl.addCalendarEvent(crmuserId, contactId, type, title, start, end, status,
-                    owner, modifier, responsible_person, null, null, 1);
+                    owner, modifier, responsible_person, null, null, 1,userInfo.getName());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

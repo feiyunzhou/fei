@@ -1256,7 +1256,7 @@
 			contact where contact.id= activity.contactId AND (? IS NOT NULL)) as
 			aActivity
 		</sql-admin>
-		<sql-ent>select * from (select activity.*\,activity.crmuserId as participant\,activity.activity_type as
+		<sql-ent>select * from (select activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
 			contactName\, contact.accountId as accountName\, contact.name as cn from activity\,
 			contact\,activitycrmuser where contact.id= activity.contactId AND activity.id=? AND activitycrmuser.activityId=activity.id) as
@@ -1302,6 +1302,30 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 			
 			<field>
 				<name>activity_type</name>
@@ -1315,9 +1339,7 @@
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
-            
-			
+					
 			<field>
 				<name>contactId</name>
 				<display>拜访医生</display>
@@ -1358,42 +1380,17 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
-				<name>participant</name>
+				<name>participants</name>
 				<display>参与人/相关人员</display>
-				<alias>crmuserId</alias>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
-				<relationTable>crmuser</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			<field>
-				<name>starttime</name>
-				<display>开始时间</display>
-				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			<field>
-				<name>endtime</name>
-				<display>结束时间</display>
-				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
+
 
 			<field>
 				<name>act_type</name>
@@ -1454,17 +1451,6 @@
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
-				<name>act_endtime</name>
-				<display>活动结束时间</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>4</priority>
-				<fieldGroup>附加信息</fieldGroup>
-			</field>
-			<field>
 				<name>owner</name>
 				<display>创建人</display>
 				<data-type>text</data-type>
@@ -1515,6 +1501,17 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_endtime</name>
+				<display>活动结束时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>

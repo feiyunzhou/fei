@@ -16,6 +16,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -68,6 +69,7 @@ public class CreateEventPage extends TemplatePage
     protected Choice selected_event_type = new Choice(1L,"拜访");
     protected String act_title_input = "";
     protected Integer event_type = 1;
+    protected String selected_user = "";
 	/**
 	 * Constructor
 	 */
@@ -80,6 +82,7 @@ public class CreateEventPage extends TemplatePage
         setPageTitle(entity.getDisplay());
         final String uid = ((SignIn2Session)getSession()).getUserId();
         final String user = ((SignIn2Session)getSession()).getUser();
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Form form = new Form("form"){
             @Override
             protected void onSubmit()
@@ -116,14 +119,15 @@ public class CreateEventPage extends TemplatePage
                 try {
                  
                     int crmuserId = 0;
-                    
+                    String participants = user;
                     if(event_type == 1){
                         //visiting
                         crmuserId = Integer.parseInt(uid);
-                       
+                   
                     }else if(event_type == 2){
                         //coaching
                         crmuserId = Integer.parseInt(hidden_select_user);
+                        participants = participants+ ", "+ selected_user;
                     }
                     
                     
@@ -132,7 +136,7 @@ public class CreateEventPage extends TemplatePage
                             act_title_input, String.valueOf(startdt.getTime()/1000), 
                             String.valueOf(enddt.getTime()/1000),1,user,user,user,
                             String.valueOf(visiting_purpose.getId()),
-                            String.valueOf(feature_product.getId()),event_type);
+                            String.valueOf(feature_product.getId()),event_type,participants);
                     logger.debug("generatedkey:"+ generatedkey);
                     
                     
@@ -235,9 +239,9 @@ public class CreateEventPage extends TemplatePage
         PageParameters params = new PageParameters();
         params.set("mid", uid);
         form.add(new BookmarkablePageLink<Void>("search_user_btn", SelectCRMUserPage.class,params ).setPopupSettings(popupSettings));
-         form.add(new HiddenField("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
-        
-         
+         form.add(new HiddenField<String>("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
+         form.add(new TextField<String>("selected_user" ,new PropertyModel<String>(this,"selected_user")));
+              
          final List<Choice> sales_visiting_purpose_pl = DAOImpl.queryPickList("sales_visiting_purpose_pl");
          final List<Choice> com_visiting_purpose_pl = DAOImpl.queryPickList("com_visiting_purpose_pl");
          
@@ -291,7 +295,11 @@ public class CreateEventPage extends TemplatePage
          //set event type         
          RadioGroup event_type_group=new RadioGroup("event_type_group",new PropertyModel(this,"event_type"));  
          event_type_group.add(new Radio("radio1", new Model(1L)));
-         event_type_group.add(new Radio("radio2", new Model(2L)));
+         Radio coachingRadio = new Radio("radio2", new Model(2L));
+         if(roleId == 3){
+            coachingRadio.add(new AttributeAppender("disabled","true"));
+         }
+         event_type_group.add(coachingRadio);
          form.add(event_type_group);
          
          
