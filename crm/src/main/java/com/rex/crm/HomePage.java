@@ -8,15 +8,18 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.CalendarPanel;
 import com.rex.crm.common.ContactTeamManPanel;
+import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.EntityDetailPanel;
 import com.rex.crm.common.FilterPanel;
@@ -35,21 +38,44 @@ public class HomePage extends TemplatePage {
     public HomePage() {
         super();
         setPageTitle("主页");
-        //List<Relation> relations = Configuration.getRelationsByName("account");
-
-        //Relation relation = relations.get(0);
-       // System.out.println(relation);
-        //List list = DAOImpl.queryEntityRelationList(relation.getSql(), "20");
         
-        //Entity accountEntity = Configuration.getEntityByName("contact");
-
-        //add(new ContactTeamManPanel("testpanel", "contact", "198"));
-        // add(new CalendarPanel("testpanel"));
-        //add(new EntityDetailPanel("testpanel","account","20"));
-        
-        //add(new NewDataFormPanel("testpanel",accountEntity.getFields()));
         final String userId = ((SignIn2Session)getSession()).getUserId();
-        Map<String, Map> map = DAOImpl.stat4ContactVisitingFrequencyByUserId(userId);
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
+        add(new Label("num_of_account_cell",DAOImpl.getNumOfAccountOfUser(userId)));
+        add(new Label("num_of_contact_cell",DAOImpl.getNumOfContactOfUser(userId)));
+        add(new Label("num_of_activity_cell",DAOImpl.getNumOfActivityOfUser(userId)));
+        
+        BookmarkablePageLink contact_link = new BookmarkablePageLink("contact_link", ContactPage.class);
+        add(contact_link);
+        BookmarkablePageLink account_link = new BookmarkablePageLink("account_link", AccountPage.class);
+        add(account_link);
+        BookmarkablePageLink activity_link = new BookmarkablePageLink("activity_link", CalendarPage.class);
+        add(activity_link);
+        
+        
+        
+        //quick creation bar
+        PageParameters param = new PageParameters();
+        param.add("entityName", "contact");
+        BookmarkablePageLink contact_create_link = new BookmarkablePageLink("contact_create_link", CreateDataPage.class,param );
+        add(contact_create_link);
+      
+       
+        BookmarkablePageLink activity_create_link = new BookmarkablePageLink("activity_create_link", CreateEventPage.class);
+        add(activity_create_link);
+        
+        WebMarkupContainer account_create_li = new WebMarkupContainer("account_create_li");
+        param = new PageParameters();
+        param.add("entityName", "account");
+        BookmarkablePageLink account_create_link = new BookmarkablePageLink("account_create_link", CreateDataPage.class,param);
+        account_create_li.setVisible(false);
+        account_create_li.add(account_create_link);
+        add(account_create_li);
+        
+        if(roleId == 1){
+            account_create_li.setVisible(true);
+        }
+        
         
         
         /**

@@ -48,13 +48,16 @@
 
             });
         </script>
-		<div class="row-fluid">
+		<div class="row">
 			<div class="span3">
-				<div class="container-fluid">
+				<!-- <div class="container-fluid">
 					<div class="row-fluid">
-						<div class="span12">
+						<div class="span12"> -->
+						<div>
+						<div>
+						<div>
 							<table width="100%">
-								<tr>
+								<!-- <tr>
 									<td>
 										<div class="well sidebar-nav sidebarbox">
 											<ul class="nav nav-list">
@@ -62,12 +65,11 @@
 												<li><a href="#">医院</a></li>
 												<li><a href="#">医生</a></li>
 												<li><a href="#">活动</a></li>
-												<li><a href="#">经销商</a></li>
-												<li><a href="#">经销商联系人</a></li>
+												
 											</ul>
 										</div>
 									</td>
-								</tr>
+								</tr> -->
 
 								<tr>
 									<td>
@@ -77,24 +79,16 @@
 												<div>
 													<table style="width: 100%">
 														<tr>
-															<td><a href="#">医院</a></td>
-															<td>100</td>
+															<td><a wicket:id="account_link" href="#">医院</a></td>
+															<td><span wicket:id="num_of_account_cell"></span></td>
 														</tr>
 														<tr>
-															<td><a href="#">医生</a></td>
-															<td>120</td>
+															<td><a wicket:id="contact_link" href="#">医生</a></td>
+															<td><span wicket:id="num_of_contact_cell"></span></td>
 														</tr>
 														<tr>
-															<td><a href="#">活动</a></td>
-															<td>45</td>
-														</tr>
-														<tr>
-															<td><a href="#">经销商</a></td>
-															<td>26</td>
-														</tr>
-														<tr>
-															<td><a href="#">经销商联系人</a></td>
-															<td>160</td>
+															<td><a wicket:id="activity_link" href="#">活动</a></td>
+															<td><span wicket:id="num_of_activity_cell"></span></td>
 														</tr>
 													</table>
 												</div>
@@ -108,11 +102,9 @@
 										<div class="well sidebar-nav sidebarbox">
 											<ul class="nav nav-list">
 												<li class="nav-header">快速创建</li>
-												<li><a href="#">医院</a></li>
-												<li><a href="#">医生</a></li>
-												<li><a href="#">活动</a></li>
-												<li><a href="#">经销商</a></li>
-												<li><a href="#">经销商联系人</a></li>
+												<li wicket:id="account_create_li"><a wicket:id="account_create_link" href="#">医院</a></li>
+												<li><a wicket:id="contact_create_link" href="#">医生</a></li>
+												<li><a wicket:id="activity_create_link" href="#">活动</a></li>
 											</ul>
 										</div>
 									</td>
@@ -126,37 +118,30 @@
 					</div>
 				</div>
 			</div>
-			<div class="span8 box">
-
-				<!-- 			<ul class="thumbnails">
-				<li class="span1"><a href="#" class="thumbnail"><i class="icon-home icon-4x"></i></a></li>
-				<li class="span1"><a href="#" class="thumbnail"><i class="icon-hospital icon-4x"></i></a></li>
-				<li class="span1"><a href="#" class="thumbnail"><i class="icon-user-md icon-4x"></i></a></li>
-				<li class="span1"><a href="#" class="thumbnail"><i class="icon-calendar icon-4x"></i></a></li>
-			</ul> -->
+			<div class="span9 box">
 				<ul class="thumbnails">
-				   <li class="">
+				   <li class="span9">
 				        <div class="thumbnail">
 						  <div wicket:id="visiting_frequency_report_panel"></div>	
 							
 						</div>
 				   </li>
 				
-				 <li class="">
+				 <li class="span9">
 				        <div class="thumbnail">
 						  <div wicket:id="visiting_cover_report_panel"></div>	
 							
 						</div>
 				   </li>
 				 
-				 <li class="">
+				 <li class="span9">
 				        <div class="thumbnail">
 						  <div wicket:id="working_day_report_panel"></div>	
 							
 						</div>
 				   </li>
 				   
-				   <li class="">
+				   <li class="span9">
 				        <div class="thumbnail">
 						  <div wicket:id="num_of_visiting_per_day_report_panel"></div>	
 							

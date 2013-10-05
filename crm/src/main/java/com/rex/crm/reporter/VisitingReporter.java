@@ -75,9 +75,16 @@ public class VisitingReporter {
         map.put("metric_of_visiting_per_day", metric_of_visiting_per_day);
         int num_of_visiting_per_day = num_of_activity/num_of_working_day;
         map.put("num_of_visiting_per_day", num_of_visiting_per_day);
-        map.put("rate_of_achieving", (num_of_visiting_per_day*100/metric_of_visiting_per_day)+"%");
         
         
+        int rate_of_achieving = num_of_visiting_per_day*100/metric_of_visiting_per_day;
+        
+        if(rate_of_achieving<100){
+            map.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+rate_of_achieving+"%</strong></span>");
+        }else{
+            map.put("rate_of_achieving", rate_of_achieving+"%");
+        }
+       
         return res;
     }
     
@@ -97,7 +104,12 @@ public class VisitingReporter {
         for(Map mapData:dataList){
             float rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).floatValue();
             int int_rate_of_achieving = (int)rate_of_achieving;
-            mapData.put("rate_of_achieving", int_rate_of_achieving+"%");
+            if(int_rate_of_achieving<100){
+                mapData.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+int_rate_of_achieving+"%</strong></span>");
+            }else{
+                mapData.put("rate_of_achieving", int_rate_of_achieving+"%");
+            }
+            
         }
 
         return dataList;
@@ -124,7 +136,12 @@ public class VisitingReporter {
         for(Map mapData:dataList){
             int rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).intValue();
             //int int_rate_of_achieving = (int)rate_of_achieving;
-            mapData.put("rate_of_achieving", rate_of_achieving+"%");
+            
+            if(rate_of_achieving<100){
+                mapData.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+rate_of_achieving+"%</strong></span>");
+            }else{
+                mapData.put("rate_of_achieving", rate_of_achieving+"%");
+            }
             
             int rate_of_visiting_cover = ((Number)mapData.get("rate_of_visiting_cover")).intValue();
             mapData.put("rate_of_visiting_cover", rate_of_visiting_cover+"%");
@@ -153,7 +170,13 @@ public class VisitingReporter {
         for(Map mapData:dataList){
             int rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).intValue();
             //int int_rate_of_achieving = (int)rate_of_achieving;
-            mapData.put("rate_of_achieving", rate_of_achieving+"%");
+           // mapData.put("rate_of_achieving", rate_of_achieving+"%");
+            
+            if(rate_of_achieving<100){
+                mapData.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+rate_of_achieving+"%</strong></span>");
+            }else{
+                mapData.put("rate_of_achieving", rate_of_achieving+"%");
+            }
 
         }
         return dataList;        

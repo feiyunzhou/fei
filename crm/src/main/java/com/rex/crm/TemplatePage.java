@@ -210,7 +210,6 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 
 				Map<String, Object> map = new HashMap<>();
 				map.put("userInfo",DataProvider.getCRMUserInfoById(new String[]{userId}));
-				//logger.debug("userId!!!!!!!:"+userId);
 				map.put("ajaxURL", callbackUrl);
 				//map.put("allUsers", DataProvider.getAllCRMUsers(new String[0]));
 				//map.put("allAccounts", DataProvider.getAllAccounts(new String[0]));
@@ -241,8 +240,6 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
             ServletContext servletContext = webApplication.getServletContext();
             if(servletContext!=null){
                 rootContext = servletContext.getServletContextName();
-                //servletContext.getServletContextName()
-                System.out.println("PPP:"+rootContext);
                 
             }else{
                 //do nothing

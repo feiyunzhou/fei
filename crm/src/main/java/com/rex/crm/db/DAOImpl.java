@@ -106,6 +106,63 @@ public class DAOImpl {
 
         return mapBuilder.build();
     }
+    
+    public static long getNumOfContactOfUser(String userId) {
+        long size = 0;
+        Connection conn = null;
+        String sql = "select count(distinct contact.id) as num_of_contact from " +
+        		"contactcrmuser,contact where  contactcrmuser.crmuserId=? AND contact.id=contactcrmuser.contactId";
+        try {
+            QueryRunner run = new QueryRunner();
+            conn = DBHelper.getConnection();
+            Map<String, Object> map = run.query(conn, sql, new MapHandler(), userId);
+            size = (long) map.get("num_of_contact");
+        } catch (Exception e) {
+            logger.error("failed to get size of account", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return size;
+    }
+    
+    public static long getNumOfAccountOfUser(String userId) {
+        long size = 0;
+        Connection conn = null;
+        String sql = "select count(distinct account.id) as num_of_account from " +
+                "accountcrmuser,account where  accountcrmuser.crmuserId=? AND account.id=accountcrmuser.accountId";
+        try {
+            QueryRunner run = new QueryRunner();
+            conn = DBHelper.getConnection();
+            Map<String, Object> map = run.query(conn, sql, new MapHandler(), userId);
+            size = (long) map.get("num_of_account");
+        } catch (Exception e) {
+            logger.error("failed to get size of account", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return size;
+    }
+    
+    public static long getNumOfActivityOfUser(String userId) {
+        long size = 0;
+        Connection conn = null;
+        String sql = "select count(activityId) as num_of_activity from activitycrmuser where crmuserId=?";
+        try {
+            QueryRunner run = new QueryRunner();
+            conn = DBHelper.getConnection();
+            Map<String, Object> map = run.query(conn, sql, new MapHandler(), userId);
+            size = (long) map.get("num_of_activity");
+        } catch (Exception e) {
+            logger.error("failed to get size of account", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return size;
+    }
+    
 
     public static long getSizeOfAccountByUserId(int userId) {
         long size = 0;
@@ -124,6 +181,8 @@ public class DAOImpl {
         return size;
     }
 
+    
+    
     public static long getSizeOfUsersByAccountId(int accountId) {
         long size = 0;
         Connection conn = null;

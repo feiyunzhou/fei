@@ -59,7 +59,7 @@ public class ReportingTablePanel extends Panel {
                for( Field f:fields){
                    AbstractItem col_item = new AbstractItem(column_repeater.newChildId());
                    column_repeater.add(col_item);
-                   col_item.add(new Label("cell_value",String.valueOf(data.get(f.getName()))));
+                   col_item.add(new Label("cell_value",String.valueOf(data.get(f.getName()))).setEscapeModelStrings(false));
                }
            }
        }
