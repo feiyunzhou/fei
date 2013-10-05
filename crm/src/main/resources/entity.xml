@@ -642,6 +642,19 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
+				<name>grade</name>
+				<display>分级</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>contact_grade_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
 				<name>status</name>
 				<display>状态</display>
 				<isRequired>false</isRequired>
@@ -665,19 +678,6 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<picklist>contact_market_classification_pl</picklist>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-			<field>
-				<name>grade</name>
-				<display>分级</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<picklist>contact_grade_pl</picklist>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1817,6 +1817,212 @@
 				<priority>1</priority>
 			</field>
 
+		</fields>
+	</entity>
+    
+    <!-- Below are for the reporting -->
+    	<entity>
+		<name>contactVisitingFrequency</name>
+		<display>目标医生拜访频率</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>num_of_activity</name>
+				<display>活动数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>num_of_contact</name>
+				<display>拥有医生数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>num_of_target_of_visiting_frequency</name>
+				<display>拜访频率目标</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>num_of_visiting_frequency</name>
+				<display>拜访频率</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_achieving</name>
+				<display>达标率</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+
+    	<entity>
+		<name>contactVisitingCoverRate</name>
+		<display>目标医生拜访覆盖</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>num_of_visited_contact</name>
+				<display>被拜访的医生数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>num_of_contact</name>
+				<display>拥有医生数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>metric_of_visiting_cover</name>
+				<display>拜访覆盖率标准</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_visiting_cover</name>
+				<display>拜访覆盖率</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_achieving</name>
+				<display>达标率</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+	
+	   <entity>
+		<name>workingday</name>
+		<display>区域内工作天数</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>metric_of_working_day</name>
+				<display>区域内工作天数标准</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>num_of_working_day</name>
+				<display>实际工作天数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_achieving</name>
+				<display>达标率</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+	
+	
+     <entity>
+		<name>visitingPerDayReport</name>
+		<display>日均拜访量</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>metric_of_visiting_per_day</name>
+				<display>日均拜访量标准</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>num_of_visiting_per_day</name>
+				<display>实际日均拜访量</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_achieving</name>
+				<display>达标率</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
 		</fields>
 	</entity>
 

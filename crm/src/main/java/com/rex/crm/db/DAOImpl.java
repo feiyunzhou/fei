@@ -575,9 +575,86 @@ public class DAOImpl {
         }
 
         return map;
+    }
+    
+    /***
+     * 获得目标医生拜访频率统计
+     * @param userId
+     * @return
+     */
+    public static  Map<String,Map> stat4ContactVisitingFrequencyByUserId(String userId) {
+        String query = "select * from (select  * from contact_grade_pl as grade_pl " +
+        		"left join (select grade, count(contact.id) as num_of_contact from contactcrmuser,contact " +
+        		"where contactcrmuser.crmuserId=? AND contact.id=contactcrmuser.contactId group by grade) as countact_count" +
+        		"  on grade_pl.id = countact_count.grade) as joined_countact_count left " +
+        		"join (select grade, count(activity.id) as num_of_activity from activity,contact where " +
+        		"activity.contactId=contact.id AND activity.status=2 AND activity.crmuserId=? group by contact.grade) as " +
+        		"activity_count on activity_count.grade = joined_countact_count.grade";
+        logger.debug(query);
+        Connection conn = null;
+        List<Map<String, Object>> list  = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+             list = run.query(conn, query, new MapListHandler(),userId,userId);
+
+        } catch (SQLException e) {
+            logger.error("failed to getStat4ContactVisitingFrequencyByUserId:"+userId, e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        Map<String,Map> map = Maps.newLinkedHashMap();
+        if(list!=null){
+            for(Map<String,Object> m:list){
+                map.put((String)m.get("val"),m);
+            }
+        }
+        return map;
 
     }
 
+    
+    /***
+     * 获得目标医生拜访覆盖率统计
+     * @param userId
+     * @return
+     */
+    public static  Map<String,Map> stat4ContactVisitingCoverRateByUserId(String userId) {
+         String query = "select * from (select  * from contact_grade_pl as " +
+         		"grade_pl left join (select grade, count(contact.id) as num_of_contact " +
+         		"from contactcrmuser,contact where contactcrmuser.crmuserId=? AND " +
+         		"contact.id=contactcrmuser.contactId group by grade) as countact_count  " +
+         		"on grade_pl.id = countact_count.grade) as joined_countact_count " +
+         		"left join (select grade, count(distinct contactId) as " +
+         		"num_of_visited_contact from activity,contact where " +
+         		"activity.contactId=contact.id AND activity.crmuserId=? group by contact.grade) " +
+         		"as visited_contact_count on visited_contact_count.grade = joined_countact_count.grade";
+        logger.debug(query);
+        Connection conn = null;
+        List<Map<String, Object>> list  = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            list = run.query(conn, query, new MapListHandler(),userId,userId);
+
+        } catch (SQLException e) {
+            logger.error("failed to stat4ContactVisitingCoverRateByUserId:"+userId, e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        Map<String,Map> map = Maps.newLinkedHashMap();
+        if(list!=null){
+            for(Map<String,Object> m:list){
+                map.put((String)m.get("val"),m);
+            }
+        }
+        return map;
+
+    }
+
+    
     public static Map getEntityData(String tableName, List<String> colunmNames, long id) {
         String queryColunm = Joiner.on(",").join(colunmNames);
         String query = "select * from " + tableName + " where id= " + id;

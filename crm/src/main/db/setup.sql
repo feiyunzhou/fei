@@ -572,3 +572,17 @@ CREATE TABLE dealerContact
 ) ENGINE InnoDB;
 ALTER table dealerContact ADD whenadded DATETIME;
 
+
+drop table if exists dealerContact;
+CREATE TABLE dealerContact 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    sex MEDIUMINT,
+    tel_work VARCHAR(255),
+    dealerAccountId MEDIUMINT  NOT NULL,
+    status MEDIUMINT,
+    pl1 MEDIUMINT,
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+
