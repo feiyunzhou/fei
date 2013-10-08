@@ -37,7 +37,8 @@ public class Field implements Serializable {
     
     @Expose
     private String alias = null;
-    
+    @Expose 
+    private boolean isBaseInfo = false;
     public boolean isRequired() {
         return isRequired;
     }
@@ -164,6 +165,14 @@ public class Field implements Serializable {
     public void setFieldGroup(String fieldGroup) {
         this.fieldGroup = fieldGroup;
     }
+
+	public boolean isBaseInfo() {
+		return isBaseInfo;
+	}
+
+	public void setBaseInfo(boolean isBaseInfo) {
+		this.isBaseInfo = isBaseInfo;
+	}
     
 
 }

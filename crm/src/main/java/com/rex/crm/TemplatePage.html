@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="select2/select2.css" />
 <script src="select2/select2.js"></script>
 <script src="select2/select2_locale_zh-CN.js"></script>
+<script type="text/javascript" src="js/updatePassword.js"></script>
 <script src="Chart/Chart.js"></script>
 <style type="text/css">  
 body {
@@ -63,23 +64,21 @@ body {
 		<div class="nav-collapse collapse">
 					<p class="navbar-text pull-right">
 						<!-- Logged in as <a href="#" class="navbar-link">Username</a> -->
-						<wicket:link><a class="navbar-link" href="SignOut.html">登出</a></wicket:link>
+						<wicket:link><a class="navbar-link" href="SignOut.html">退出</a></wicket:link>
 					<p class="navbar-text pull-right">&nbsp;&nbsp;
 					<p class="navbar-text pull-right">
 					<p class="navbar-text pull-right">
-						<a href="#"><i class="icon-cogs"></i></a>
-						<div class="btn-group">
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						    	Action
-						    	<span class="caret"></span>
-						  	</a>
-						  	<ul class="dropdown-menu">
-						    	<li>个人资料</li>
-						    	<li>安全设置</li>
-						    	<li></li>
-						  	</ul>
+						<div class="btn-group open pull-right">
+				    		<a class="btn btn-info" href="#"><i class="icon-user"></i>个人中心</a>
+				    		<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
+				    		<ul class="dropdown-menu">
+						        <li><wicket:link><a href="UserDeatialInfo.html"><i class="icon-user-md"></i>个人信息</a></wicket:link></li>
+						        <li><wicket:link><a href="UpdateSignPassword.html"><i class="icon-lock"></i>修改密码</a></wicket:link></li>
+						        <li class="divider"></li>
+						        <li><a href="#"><i class="i"></i> Make admin</a></li>
+				    		</ul>
 						</div>
-				</div>
+					</div>
 			  </div>
 		</div> 
 	</div>
@@ -94,7 +93,7 @@ body {
 			<wicket:child />
 			<hr>
 			<div class="footer">
-				<p>© Company 2013</p>
+				<p>Copyright © 2000-2013 SalesStrategies.net.All rights reserved.</p>
 			</div>
 	</div>
 

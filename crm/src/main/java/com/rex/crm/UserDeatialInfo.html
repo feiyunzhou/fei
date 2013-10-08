@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.apache.org">
+	<link rel="stylesheet" href="flat/css/flat-ui.css"/>
+	<link rel="stylesheet" href="flat/css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<style type="text/css">
+	h2{
+		margin-left: 2.127659574468085%;
+		margin-top:50px;
+		color:#0099FF;
+	}
+	.big{
+		margin-left: 2.127659574468085%;
+		border:1px solid #f1f1f1;
+	}
+	.relationInfo{
+		background-color:#FFFFCC;
+		border:1px solid #f1f1f1;
+		width:100%;
+		min-width:200px;
+		/* filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0); */
+	}
+	td{
+		text-align:center;
+	}
+	img{
+		width:100%;
+		min-width:250px;
+		height:150px;
+	}
+	.button {
+		width:90px;
+	}
+	</style>
+<body>
+	<wicket:extend>
+		<div class="row-fluid big" >
+			<h2 wicket:id="infoName"></h2>
+				<div id="left" style="float:left;margin-top:30px;margin-left:30px;">
+					<div id="north">
+						<img class="img" wicket:id="userphoto"/>
+						<form wicket:id="imgForm" >
+							<input  wicket:id="image" type="file"></input>
+							<input type="submit"  class="btn btn-primary button" value="替换图片"/>
+						</form>
+					</div>
+					<div id="south" style="margin-top:30px;display:block; color:red;">
+						<form  wicket:id="userRealtionInfo">
+							<table style="width:250px;">
+								<tr><th>登录次数</th><th>医院数量</th><th>拜访数量</th></tr>
+								 <tr>
+						
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+		<div id="right" style="margin-top:30px;marign-left:50px;">
+			<div wicket:id="successFlag" style="display:none"></div>
+				<form wicket:id="form" class="form-horizontal">
+					<div wicket:id="fieldGroupRepeater">
+						<table>
+							<tbody>
+								<tr wicket:id="dataRowRepeater">
+									<td wicket:id="columnRepeater"><span wicket:id="editdata"></span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<center>
+						<div>
+							<input type="submit" class="btn btn-primary button" value="保存" />
+							<input type="reset" class="btn btn-primary button" value="重置"/>
+						</div>
+					</center>	
+				</form>
+		</div>
+	</div>
+		<wicket:fragment wicket:id="textInputFragment">
+		<input wicket:id="input" type="text" />
+		</wicket:fragment>
+		<wicket:fragment wicket:id="textFragment">
+		<span wicket:id="celldata"></span>
+		</wicket:fragment>
+		</wicket:extend>
+</body>
+</html>

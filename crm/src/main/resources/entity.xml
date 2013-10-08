@@ -899,7 +899,7 @@
 			</field>
 		</fields>
 	</entity>
-	<entity>
+		<entity>
 		<name>crmuser</name>
 		<display>用户</display>
 		<sql>select * from crmuser where ? is NOT NULL</sql>
@@ -929,6 +929,8 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>jobTitle</name>
@@ -954,6 +956,8 @@
 				<priority>1</priority>
 				<picklist>sex_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			
 			<field>
@@ -967,6 +971,8 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>cellPhone</name>
@@ -979,6 +985,8 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>false</isBaseInfo>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>loginName</name>
@@ -1004,6 +1012,8 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>false</isBaseInfo>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>role</name>
@@ -1197,7 +1207,18 @@
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-
+			<field>
+				<name>photo</name>
+				<display>图片</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<isBaseInfo>true</isBaseInfo>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
 		</fields>
 	</entity>
 

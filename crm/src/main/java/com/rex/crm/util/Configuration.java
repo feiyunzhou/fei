@@ -232,7 +232,7 @@ public class Configuration {
                     field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible")));
                     field.setEditable(Boolean.parseBoolean(sub2.getString("isEditable"))); 
                     field.setRequired(Boolean.parseBoolean(sub2.getString("isRequired"))); 
-               
+                    field.setBaseInfo(Boolean.parseBoolean(sub2.getString("isBaseInfo")));
                 }
                 
             }

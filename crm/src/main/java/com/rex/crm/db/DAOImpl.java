@@ -4,29 +4,23 @@ import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-
-import javax.xml.crypto.Data;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.KeyedHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.lang3.tuple.Pair;
@@ -36,13 +30,10 @@ import com.google.common.base.Joiner;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
-import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -998,6 +989,44 @@ public class DAOImpl {
             DBHelper.closeConnection(conn);
         }
     }
+    public static String createNewCrmUser(String entityName,List<String> fieldNames,List<String> values,String userId){
+    	String key ="";
+    	Random random= new Random() ;
+    	key=Integer.toString(random.nextInt(10));
+    	String fieldssql = Joiner.on(",").join(fieldNames);
+        fieldssql = fieldssql + ",whenadded";
+        String valuesql = Joiner.on(",").join(values);
+        valuesql =  valuesql + ", now()";
+        fieldssql = fieldssql + ",cityId";
+   	 	valuesql =  valuesql + ",1";
+   	 	logger.debug("fieldssql sql is:"+fieldssql);
+   	 	logger.debug("valuesql sql is:"+valuesql);
+   	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
+    
+   	 	logger.debug("insert sql is:"+sql);
+
+	    Connection conn = null;
+	    //PreparedStatement statement = null;
+	    ResultSet generatedKeys = null;
+	    PreparedStatement statement = null;
+        try {
+			conn = DBHelper.getConnection();
+			statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	        int affectedRows = statement.executeUpdate();
+	        generatedKeys = statement.getGeneratedKeys();
+	        if (!generatedKeys.next()) {
+	        	return null;
+	        } 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        } finally {
+            if (generatedKeys != null) try { generatedKeys.close(); } catch (SQLException logOrIgnore) {}
+            if (statement != null) try { statement.close(); } catch (SQLException logOrIgnore) {}
+            if (conn != null) try { conn.close(); } catch (SQLException logOrIgnore) {}
+        }
+        return  key;
+    }
     public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
          String fieldssql = Joiner.on(",").join(fieldNames);
 //         fieldssql = fieldssql + ",whenadded";
@@ -1007,13 +1036,10 @@ public class DAOImpl {
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
         	 fieldssql = fieldssql + ",crmuserId";
         	 valuesql = valuesql + "," +userId;
-         }else if(entityName.equals("crmuser")){
-        	 fieldssql = fieldssql + ",cityId";
-        	 valuesql =  valuesql + ", 1";
          }
          logger.debug("fieldssql sql is:"+fieldssql);
          logger.debug("valuesql sql is:"+valuesql);
-        String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
+         String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
         
         logger.debug("insert sql is:"+sql);
  
@@ -1384,4 +1410,58 @@ public class DAOImpl {
         
         return inferiors;
     }
+    // update crmuser baseInfo
+    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo) {
+        String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=? where id=?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql, userName, cellphone,email,photo,userId);
+            System.out.println("updateCrmUser:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to updateStatusOfInternalMeeting", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+    }
+    //update user Password
+    public static boolean updateCrmUserPassword(int userId,String password){
+    	String  sql=" UPDATE crmuser SET password=? where id =?";
+    	Connection conn = null;
+    	String newPassword = DigestUtils.md5Hex(password);
+    	int updates = 0;
+    	try{
+    		conn = DBHelper.getConnection();
+    		QueryRunner run = new QueryRunner();
+    		updates += run.update(conn, sql, newPassword,userId);
+    		logger.debug("update password success!");
+    	} catch (Exception e){
+    		logger.error("failed to updatecrmUser Password",e);
+    	}finally{
+    		DBHelper.closeConnection(conn);
+    	}
+    	if(updates>0){
+    		return true;
+    	}
+    	return false;
+    }
+    public  static CRMUser getUserByActivation(String activation){
+    	System.out.println("根据激活码Code获取用户");
+        Connection conn = null;
+        CRMUser user = new CRMUser();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            user = run.query(conn, "SELECT * FROM crmuser where loginName=?", h, activation);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return user;
+    }
+
 }

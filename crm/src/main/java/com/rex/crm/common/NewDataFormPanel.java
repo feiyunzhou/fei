@@ -1,54 +1,49 @@
 package com.rex.crm.common;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
-import org.apache.commons.lang3.tuple.Pair;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.Session;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
-
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import org.apache.wicket.util.template.PackageTextTemplate;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.rex.crm.CreateEventPage;
 import com.rex.crm.PageFactory;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.Choice;
 import com.rex.crm.db.DAOImpl;
-import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
+import com.rex.crm.util.SMTPAuthenticator;
+import com.sun.mail.smtp.SMTPTransport;
 
 public class NewDataFormPanel extends Panel {
 	private static final Logger logger = Logger
 			.getLogger(NewDataFormPanel.class);
+	private Properties server = new Properties();
+    private String email = "";
+    private int port = 25;
 	private Map<String, List<Field>> addFieldGroupMap = Maps.newHashMap();
 	private static int NUM_OF_COLUMN = 3;
 	final String user = ((SignIn2Session) getSession()).getUser();
@@ -186,14 +181,30 @@ public class NewDataFormPanel extends Panel {
 					} else {
 						values.add(String.valueOf(models.get(key).getObject()));
 					}
-
 				}
-				long generatedId = DAOImpl.createNewRecord(entity.getName(),fieldNames, values,userId);
-				if (generatedId > 0) {
-					DAOImpl.insert2UserRelationTable(entity.getName(), userId,
-							String.valueOf(generatedId));
+				
+				//if entity is crmuser  add loginName
+				if("crmuser".equals(entity.getName())){
+					String random = "";
+					fieldNames.add("loginName");
+					values.add("'" + String.valueOf(models.get("name").getObject())+ "'");
+					random = DAOImpl.createNewCrmUser(entity.getName(),fieldNames, values,userId);
+					if(!"".equals(random)){
+						//此时需发送邮件
+						String crmUserCode = String.valueOf(models.get("name").getObject());
+						//创建激活码 getUserByuserCode
+						//传递邮箱地址，用户code.
+						sendMail(crmUserCode);
+					}
+				}else{
+					long generatedId = DAOImpl.createNewRecord(entity.getName(),fieldNames, values,userId);
+					if (generatedId > 0) {
+						DAOImpl.insert2UserRelationTable(entity.getName(), userId,
+								String.valueOf(generatedId));
+					}
 				}
 				setResponsePage(PageFactory.createPage(entity.getName()));
+				
 			}
 		};
 		form.add(fieldGroupRepeater);
@@ -300,5 +311,41 @@ public class NewDataFormPanel extends Panel {
 		}
 		
 	}
-
+	//发送有邮件方法
+	public void sendMail(String getUserByuserCode){
+		Session sendMailSession = null;
+        SMTPTransport transport = null;
+        String emailContent = "请点击连接激活用户";
+        emailContent += "http://localhost:8080/crm/getUserCode?getUserByuserCode="+getUserByuserCode+"";
+        //String emailContent = "请点击连接激活用户,"+"'http://localhost:8080/crm/getUserCode?userCode='"+userCode+"'";
+        logger.debug(emailContent);
+        Properties props = new Properties();
+        // 与服务器建立Session的参数设置
+        props.put("mail.smtp.host", "smtp.163.com"); // 写上你的SMTP服务器。
+        props.put("mail.smtp.auth", "true"); // 将这个参数设为true，让服务器进行认证。
+        SMTPAuthenticator auth = new SMTPAuthenticator("accpcui@163.com", "992041099"); // 不用多说，用户名，密码。
+        sendMailSession = Session.getInstance(props, auth); // 建立连接。
+        // SMTPTransport用来发送邮件。
+        try {
+			transport = (SMTPTransport) sendMailSession.getTransport("smtp");
+			transport.connect();
+	        // 创建邮件。
+	        Message newMessage = new MimeMessage(sendMailSession);
+	        newMessage.setFrom(new InternetAddress("accpcui@163.com"));
+	        newMessage.setRecipient(Message.RecipientType.TO, new InternetAddress("brenda.yuan@rexen.com.cn"));
+	        newMessage.setSubject("用户激活！");
+	        newMessage.setSentDate(new Date());
+	        newMessage.setText(emailContent);
+	        Transport.send(newMessage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        // 使用MimeMultipart和MimeBodyPart才能发HTML格式邮件。
+       /* BodyPart bodyPart = new MimeBodyPart();
+        bodyPart.setContent(generateEmailBody(), "text/html;charset=gb2312"); // 发一个HTML格式的
+        Multipart mp = new MimeMultipart();
+        mp.addBodyPart(bodyPart);
+        */
+	}
 }
