@@ -1,10 +1,24 @@
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
 	<script>
         $(document).ready(function() {
+        	
         });
+        var flag = true;
+        function chengeicon(){
+        	console.info("flag:"+flag);
+    		if(flag){
+    			$("#icon").removeClass("icon-angle-right");
+    			$("#icon").addClass("icon-angle-down");
+    			flag = false;
+    		}else{
+    			$("#icon").removeClass("icon-angle-down");
+    			$("#icon").addClass("icon-angle-right");
+    			flag = true;
+    		}
+    	};
     </script>
 
-
+ 
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span12">
@@ -13,7 +27,7 @@
 							<tr>
 								<td colspan="2"><h5>
 										<span wicket:id="groupname"></span>
-									    <button id="icon"  wicket:id="divButton"  class="btn  btn-xs " data-toggle="collapse" ><span class="caret"></span></button>
+									    <a wicket:id="divButton"  data-toggle="collapse" ><span id="icon" class="icon-angle-down" onclick="chengeicon()"></span></a>
 										</h5>
 								</td>
 							</tr>

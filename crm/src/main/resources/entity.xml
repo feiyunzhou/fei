@@ -437,7 +437,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
@@ -458,10 +458,10 @@
 				<name>modify_datetime</name>
 				<display>修改时间</display>
 				<isRequired>false</isRequired>
-				<data-type>Date</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>

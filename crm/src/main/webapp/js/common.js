@@ -22,6 +22,4 @@ function ajaxPost(args, onComplete) {
          }
     
 	});
-
-	
 }

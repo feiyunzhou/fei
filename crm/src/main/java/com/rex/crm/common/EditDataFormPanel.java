@@ -303,6 +303,7 @@ public class EditDataFormPanel extends Panel {
 								text.add(new AttributeAppender("pattern",new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"),";"));
 							}
 							if(currentField.isRequired()){
+							    text.add(new AttributeAppender("style",new Model("border:1px solid red;"),";"));
 								text.add(new AttributeAppender("required",new Model("required"),";"));
 								
 							}
