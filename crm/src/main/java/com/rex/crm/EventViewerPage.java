@@ -61,6 +61,7 @@ public class EventViewerPage extends TemplatePage
         Entity entity = entities.get("activity");
         setPageTitle(entity.getDisplay());
         final String uid = ((SignIn2Session)getSession()).getUserId();
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
         //final long eventId
         long eid = 0;
@@ -86,6 +87,13 @@ public class EventViewerPage extends TemplatePage
             write_btn_visible =false;
         }
         
+        if (map != null) {
+            int eventType = ((Number) map.get("event_type")).intValue();
+            if (eventType == 2 && roleId == 3) {
+                // for the sales rep, no permission to edit the coaching event
+                write_btn_visible = false;
+            }
+        }
         
         Form form = new Form("form"){
             @Override
@@ -111,7 +119,7 @@ public class EventViewerPage extends TemplatePage
         };
         edit_event_btn.setVisible(write_btn_visible);
         form.addOrReplace(edit_event_btn);
-        
+ 
         Link delete_event_btn = new Link("delete_event_btn") {
             
             @Override
