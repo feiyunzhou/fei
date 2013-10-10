@@ -834,6 +834,27 @@ public class DAOImpl {
 
     }
     
+    public static List<Choice> queryPickListByFilter(String picklist,String filterName, String filterValue) {
+        String query = "select id, val from " + picklist + " where "+filterName+"=?";
+        List<Choice> choices = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<Choice>> h = new BeanListHandler<Choice>(Choice.class);
+            choices = run.query(conn, query, h,filterValue);
+
+        } catch (SQLException e) {
+            logger.error("failed to get queryPickListById", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return choices;
+
+    }
+    
+    
     public static List<Choice> queryRelationDataList(String tablename,String userId) {
         Entity entity = Configuration.getEntityByName(tablename);
         List<Choice> choices = Lists.newArrayList();

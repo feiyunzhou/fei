@@ -173,11 +173,6 @@ public class EventEditorPage extends TemplatePage
          form.add(new HiddenField("hidden_contact_select" ,new PropertyModel<String>(this,"hidden_contact_select")));
          contact_name = String.valueOf(entity_data.get("cn"));
          form.add(new TextField("contact_select", new PropertyModel<String>(this,"contact_name")));
-        
-         
-         final List<Choice> sales_visiting_purpose_pl = DAOImpl.queryPickList("sales_visiting_purpose_pl");
-         final List<Choice> com_visiting_purpose_pl = DAOImpl.queryPickList("com_visiting_purpose_pl");
-         
          
          IModel<List>  visiting_purpose_choices_model = new AbstractReadOnlyModel<List>()
                  {
@@ -185,11 +180,7 @@ public class EventEditorPage extends TemplatePage
                     @Override
                     public List getObject() {
                         List<Choice> choices =  new ArrayList<Choice>();
-                        if(activity_type.getId() == 1L){
-                            return com_visiting_purpose_pl;
-                        }else{
-                            return sales_visiting_purpose_pl;
-                        }
+                        return DAOImpl.queryPickListByFilter("activity_visiting_purpose_pl", "activity_type", String.valueOf(activity_type.getId()));
                     }
                    
 

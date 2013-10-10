@@ -226,24 +226,18 @@ public class CreateEventPage extends TemplatePage
          form.add(new HiddenField<String>("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
          form.add(new TextField<String>("selected_user" ,new PropertyModel<String>(this,"selected_user")));
               
-         final List<Choice> sales_visiting_purpose_pl = DAOImpl.queryPickList("sales_visiting_purpose_pl");
-         final List<Choice> com_visiting_purpose_pl = DAOImpl.queryPickList("com_visiting_purpose_pl");
+         //final List<Choice> sales_visiting_purpose_pl = DAOImpl.queryPickList("sales_visiting_purpose_pl");
+         //final List<Choice> com_visiting_purpose_pl = DAOImpl.queryPickList("com_visiting_purpose_pl");
          
          
          IModel<List>  visiting_purpose_choices_model = new AbstractReadOnlyModel<List>()
                  {
-
                     @Override
                     public List getObject() {
                         List<Choice> choices =  new ArrayList<Choice>();
-                        if(activity_type.getId() == 1L){
-                            return com_visiting_purpose_pl;
-                        }else{
-                            return sales_visiting_purpose_pl;
-                        }
+                        return DAOImpl.queryPickListByFilter("activity_visiting_purpose_pl", "activity_type", String.valueOf(activity_type.getId()));
                     }
                    
-
                  };
 
           //visiting purpose choice

@@ -240,15 +240,16 @@ CREATE TABLE activity_visiting_purpose_pl
 (
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
+  activity_type MEDIUMINT,
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO activity_visiting_purpose_pl (val) VALUES('传递产品知识');
-INSERT INTO activity_visiting_purpose_pl (val) VALUES('处方观念沟通');
-INSERT INTO activity_visiting_purpose_pl (val) VALUES('病例沟通');
-INSERT INTO activity_visiting_purpose_pl (val) VALUES('会议安排');
-INSERT INTO activity_visiting_purpose_pl (val) VALUES('会议跟进');
-INSERT INTO activity_visiting_purpose_pl (val) VALUES('交接工作');
-INSERT INTO activity_visiting_purpose_pl (val) VALUES('了解竞争');
+INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('传递产品知识',1);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('处方观念沟通',1);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('病例沟通',1);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('会议安排',2);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('会议跟进',2);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('交接工作',2);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('了解竞争',2);
 
 -- 拜访目的1
 drop table if exists sales_visiting_purpose_pl;
