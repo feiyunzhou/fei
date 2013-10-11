@@ -1322,6 +1322,9 @@ public class DAOImpl {
     }
 
     public static List searchContact(String userId, String search_target) {
+        if(search_target == null|| search_target.equalsIgnoreCase("*")){
+            search_target = "";
+        }
         String sql = "select * from (select contact.id as cid,contact.name as cname,account.name as aname from contact,account,contactcrmuser where contactcrmuser.crmuserId="+userId+" AND contactcrmuser.contactId = contact.id AND contact.accountId=account.id AND (contact.name like '%"+search_target+"%' OR account.name like '%"+search_target+"%')) as a";
         logger.debug(sql );
         Connection conn = null;
@@ -1368,6 +1371,9 @@ public class DAOImpl {
     }
     
     public static List searchCRMUser(String managerId,String search_target) {
+        if(search_target == null|| search_target.equalsIgnoreCase("*")){
+            search_target = "";
+        }
         String sql = "select * from crmuser";
         if(managerId!=null){
            sql = "select * from (select * from crmuser where reportto="+managerId+" AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
