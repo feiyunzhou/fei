@@ -136,6 +136,44 @@ INSERT INTO account_market_classification_pl (val) VALUES('二级城市');
 INSERT INTO account_market_classification_pl (val) VALUES('三级城市');
 INSERT INTO account_market_classification_pl (val) VALUES('四级城市');
 
+--医院类型
+drop table if exists account_type_pl;
+CREATE TABLE account_type_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO account_market_classification_pl (val) VALUES ('癌痛目标医院');
+INSERT INTO account_market_classification_pl (val) VALUES('慢痛目标医院');
+INSERT INTO account_market_classification_pl (val) VALUES('奥诺美目标医院');
+INSERT INTO account_market_classification_pl (val) VALUES('非目标医院');
+
+--医院类型
+drop table if exists account_type_pl;
+CREATE TABLE account_type_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO account_type_pl (val) VALUES ('癌痛目标医院');
+INSERT INTO account_type_pl (val) VALUES('慢痛目标医院');
+INSERT INTO account_type_pl (val) VALUES('奥诺美目标医院');
+INSERT INTO account_type_pl (val) VALUES('非目标医院');
+
+--重点医院
+drop table if exists account_point_pl;
+CREATE TABLE account_point_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO account_point_pl (val) VALUES ('癌痛重点医院');
+INSERT INTO account_point_pl (val) VALUES('慢痛重点医院');
+INSERT INTO account_point_pl (val) VALUES('奥诺美重点医院');
+INSERT INTO account_point_pl (val) VALUES('非重点医院');
 
 drop table if exists accountcrmuser;
 CREATE TABLE accountcrmuser 
@@ -438,6 +476,18 @@ INSERT INTO contact_market_classification_pl (val) VALUES('三级城市');
 INSERT INTO contact_market_classification_pl (val) VALUES('四级城市');
 
 
+drop table if exists contact_generalization_target_pl;
+CREATE TABLE contact_generalization_target_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO contact_generalization_target_pl (val) VALUES ('美施康定');
+INSERT INTO contact_generalization_target_pl (val) VALUES('奥施康定');
+INSERT INTO contact_generalization_target_pl (val) VALUES('奇曼丁');
+INSERT INTO contact_generalization_target_pl (val) VALUES('若思本');
+INSERT INTO contact_generalization_target_pl (val) VALUES('奥诺美');
 
 drop table if exists contactcrmuser;
 CREATE TABLE contactcrmuser 

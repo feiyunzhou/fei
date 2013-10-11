@@ -96,6 +96,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<picklist>account_type_pl</picklist>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -134,6 +135,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<picklist>account_point_pl</picklist>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -751,6 +753,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<picklist>contact_generalization_target_pl</picklist>
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
