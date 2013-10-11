@@ -125,6 +125,7 @@ public class EventViewerPage extends TemplatePage
             public void onClick() {
                 
                 DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
+               
                 setResponsePage(PageFactory.createPage("calendar"));
             }
         };

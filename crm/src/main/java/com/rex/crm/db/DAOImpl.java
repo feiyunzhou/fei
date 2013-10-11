@@ -1160,6 +1160,9 @@ public class DAOImpl {
             DBHelper.closeConnection(conn);
         }
     }
+    
+    
+    
     public static void deleteRecord(String entityId,String entityName) {
         String sql = "";
         sql = "DELETE from " + entityName +" where id = " + entityId;
@@ -1169,8 +1172,15 @@ public class DAOImpl {
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql);
+            
+            if(inserts ==1 ){
+                if(entityName.equalsIgnoreCase("activity")){
+                    run.update(conn, "DELETE from activitycrmuser where activityId = ?",entityId);
+                    logger.debug("successfully remove the entity");
+                }
+            }
 
-            System.out.println("inserted:" + inserts);
+            
         } catch (Exception e) {
             logger.error("failed to delete  calendar event", e);
         } finally {
@@ -1335,19 +1345,18 @@ public class DAOImpl {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
             search_target = "";
         }
-        String sql = "select * from account where name like '%"+search_target+"%' order by whenadded DESC";
+        String sql = "select * from account where (? is not null) AND name like '%"+search_target+"%' order by whenadded DESC";
         if(roleId != 1){
            sql = "SELECT * from (select account.* from accountcrmuser,account"+
             " where accountcrmuser.crmuserId=? AND " +
             "accountcrmuser.accountId=account.id AND (name like '%"+search_target+"%' ) order by whenadded DESC) as aAccount";
         }
-        logger.debug(sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            lMap = (List) run.query(conn, sql, new MapListHandler());
+            lMap = (List) run.query(conn, sql, new MapListHandler(),userId);
 
         } catch (SQLException e) {
             logger.error("failed to searchAccount", e);

@@ -20,18 +20,23 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.PopupSettings;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.PageFactory;
+import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.beans.Choice;
@@ -146,16 +151,18 @@ public class EditDataFormPanel extends Panel {
 							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
 							fieldNames.add(currentField.getName());
 						} else {
-							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
-							Map<Long, String> list = Maps.newHashMap();
-							List<Long> ids = Lists.newArrayList();
-							for (Choice p : pickList) {
-								list.put(p.getId(), p.getVal());
-								ids.add(p.getId());
-							}
-						logger.debug("current relation key:"+data.get(currentField.getName()));
-							long foreignKey = 1L;
-							foreignKey = ((Number)data.get(currentField.getName())).longValue();
+						    long foreignKey = 1L;
+                            foreignKey = ((Number)data.get(currentField.getName())).longValue();
+                            
+//							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
+//							Map<Long, String> list = Maps.newHashMap();
+//							List<Long> ids = Lists.newArrayList();
+//							for (Choice p : pickList) {
+//								list.put(p.getId(), p.getVal());
+//								ids.add(p.getId());
+//							}
+//						   logger.debug("current relation key:"+data.get(currentField.getName()));
+//							
 							IModel choiceModel = new Model(foreignKey);
 							String fn = "";
 							if (currentField.getAlias() != null) {
@@ -163,9 +170,13 @@ public class EditDataFormPanel extends Panel {
 							} else {
 								fn = currentField.getName();
 							}
-								models.put(fn, choiceModel);
-								fieldNameToModel.put(currentField.getName(), choiceModel);
-								columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this,ids, list, choiceModel));
+							final Entity ent = Configuration.getEntityByName(currentField.getRelationTable());
+							Map et = DAOImpl.queryEntityById(ent.getSql_ent(), String.valueOf(foreignKey));
+							String value = (String)et.get("name");
+							models.put(fn, choiceModel);
+							System.out.println("XXXXXXXXXXXXX:"+fn+"   XXXXXXXXX:"+currentField.getName());
+							fieldNameToModel.put(fn, choiceModel);
+						    columnitem.add(new RelationTableSearchFragment("editdata","relationTableSearchFragment",this,schema.getName(),value,choiceModel));
 						}
 					} 
 						else {
@@ -247,6 +258,25 @@ public class EditDataFormPanel extends Panel {
 		}
 
 	}
+    private class RelationTableSearchFragment extends Fragment {
+        public RelationTableSearchFragment(String id, String markupId,
+                MarkupContainer markupProvider, final String entityName,final String value, IModel model) {
+            super(id, markupId, markupProvider);
+
+            PageParameters params = new PageParameters();
+            params.set("en", entityName);
+            PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
+                    .setWidth(850).setLeft(150).setTop(200);
+            add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class,params).setPopupSettings(popupSettings));
+            HiddenField<?>  hidden = new HiddenField<String>("selected_id_hidden" ,model);
+            hidden.add(new AttributeAppender("id",entityName+"_id"));
+            add(hidden);
+            TextField<String> text = new TextField<String>("selected_value_input" ,new Model(value));
+            text.add(new AttributeAppender("id",entityName+"_name"));
+            text.add(new AttributeAppender("readonly","true"));
+            add(text);
+        }
+    }
 
 	private class DropDownChoiceFragment extends Fragment {
 		public DropDownChoiceFragment(String id, String markupId,

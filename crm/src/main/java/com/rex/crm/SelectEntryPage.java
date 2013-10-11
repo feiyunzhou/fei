@@ -50,12 +50,14 @@ public class SelectEntryPage extends WebPage {
 
     public void initPage(List<Map> list,final String entityName) {
         final String userId = ((SignIn2Session) getSession()).getUserId();
+
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
                 logger.debug("the form was submitted!:::::"+entityName);
                 // new PropertyModel<String>(this, "selected")
+                System.out.println("UUUUUUUUUUUUUUUUU"+userId);
                 List<Map> maplist = DAOImpl.searchAccount(userId, search_target, roleId);
                 PageParameters parm = new PageParameters();
                 parm.set("en", entityName);
