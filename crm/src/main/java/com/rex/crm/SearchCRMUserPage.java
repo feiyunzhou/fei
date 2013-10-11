@@ -49,7 +49,7 @@ public class SearchCRMUserPage extends WebPage {
         if(value != null){
             entityId = value.toString();
         }
-        initPage(null,entityId);
+        initPage(entityName,null,entityId);
     }
 
     
@@ -57,22 +57,28 @@ public class SearchCRMUserPage extends WebPage {
         logger.debug("sdfsfsdfdsf:"+entityName);
         this.entityName = entityName;
         this.entityId = entityId;
-        initPage(null,entityId);
+        initPage(entityName,null,entityId);
     }
     
     public SearchCRMUserPage(List<Map> maplist, String entityName, String cid) {
         this.entityName = entityName;
         entityId = cid;
-        initPage(maplist,cid);
+        initPage(entityName,maplist,cid);
     }
 
-    public void initPage(List<Map> list,final String cid) {
+    public void initPage(final String entiytname, List<Map> list,final String cid) {
         final String userId = ((SignIn2Session) getSession()).getUserId();
-        Form form = new Form("form") {
+        Form form = new Form("form") { 
             @Override
             protected void onSubmit() {
                 logger.debug("the form was submitted!");
-                List<Map> maplist = DAOImpl.searchCRMUser(search_target);
+                List<Map> maplist = null;
+                if(entiytname.equals("account")||entiytname.equals("contact")){
+                	 maplist = DAOImpl.searchCRMUser(search_target);
+                }else{
+                	maplist = DAOImpl.searchCRMAccount(search_target);
+                }
+               
                 setResponsePage(new SearchCRMUserPage(maplist,entityName,cid));
 
             }
@@ -111,16 +117,12 @@ public class SearchCRMUserPage extends WebPage {
             for (Map map : list) {
                 
                 int uid = ((Number) map.get("id")).intValue();
-                
-                
                 String name = (String) map.get("name");
                 String cellPhone = (String) map.get("cellPhone");
                 String division = (String) map.get("division");
                 String email = (String) map.get("email");
-                
                 AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
                 dataRowRepeater.add(item);
-                
                 item.add(new Check("checkbox", new Model(String.valueOf(uid))));
                 item.add(new Label("name", name));
                 item.add(new Label("cellPhone", cellPhone));

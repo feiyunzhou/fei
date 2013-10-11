@@ -434,6 +434,8 @@ public class DAOImpl {
                 sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("account")){
                 sql = "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)";
+            }else if(entityName.equalsIgnoreCase("crmuser")){
+                sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
             }
             Connection conn = null;
             try {
@@ -1050,9 +1052,7 @@ public class DAOImpl {
     }
     public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
          String fieldssql = Joiner.on(",").join(fieldNames);
-//         fieldssql = fieldssql + ",whenadded";
          String valuesql = Joiner.on(",").join(values);
-//         valuesql =  valuesql + ", now()";
          if(entityName.equals("activity")){
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
         	 fieldssql = fieldssql + ",crmuserId";
@@ -1143,9 +1143,6 @@ public class DAOImpl {
              }
         	 i++;
          }
-         
-         //sql = sql + ",whenadded = now()";
-         sql = sql.replaceAll("accountId = null,", "").trim();
          sql = sql.replaceAll("accountName","accountId").trim();
          sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;
         logger.debug("UPDATE sql is:"+sql);
@@ -1406,8 +1403,24 @@ public class DAOImpl {
         return lMap;
     }
     
-    
+    public static List searchCRMAccount(String search_target) {
+        String sql = "select * from (select * from account where name like '%"+search_target+"%' OR tel like '%"+search_target+"%' OR fax like '%"+search_target+"%') as a";
+        logger.debug(sql );
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
 
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return lMap;
+    }
     
     
     public static void removeEntityFromTeam(String teamtable, String id) {

@@ -95,8 +95,8 @@ public class EditDataFormPanel extends Panel {
 				numOfField++;
 				visibleFields.add(f);
 			}
-
-			groupitem.add(new Label("groupname", gn));
+				groupitem.add(new Label("groupname", gn));	
+			
 			int num_of_row = (numOfField / NUM_OF_COLUMN) + 1;
 			
 			for (int i = 0; i < num_of_row; i++) {

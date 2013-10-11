@@ -18,7 +18,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import com.google.common.collect.Maps;
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.CalendarPanel;
-import com.rex.crm.common.ContactTeamManPanel;
+import com.rex.crm.common.TeamManPanel;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.EntityDetailPanel;

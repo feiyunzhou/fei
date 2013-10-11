@@ -1,21 +1,11 @@
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
 	<script>
         $(document).ready(function() {
-        	
+        		$("#1").addClass("icon-angle-down");
+        		$("#2").addClass("icon-angle-right");
+        		$("#3").addClass("icon-angle-right");
         });
-        var flag = true;
-        function chengeicon(){
-        	console.info("flag:"+flag);
-    		if(flag){
-    			$("#icon").removeClass("icon-angle-right");
-    			$("#icon").addClass("icon-angle-down");
-    			flag = false;
-    		}else{
-    			$("#icon").removeClass("icon-angle-down");
-    			$("#icon").addClass("icon-angle-right");
-    			flag = true;
-    		}
-    	};
+       
     </script>
 
  
@@ -27,11 +17,11 @@
 							<tr>
 								<td colspan="2"><h5>
 										<span wicket:id="groupname"></span>
-									    <a wicket:id="divButton"  data-toggle="collapse" ><span id="icon" class="icon-angle-down" onclick="chengeicon()"></span></a>
+									    <a wicket:id="divButton"  data-toggle="collapse" ><span wicket:id="icon"   onclick="chengeicon(this)"></span></a>
 										</h5>
 								</td>
 							</tr>
-						</table>
+					</table>
 						<div  wicket:id="divRepeater" >
 						<table class="table table-hover table-condensed  " style="">
 							<tr wicket:id="dataRowRepeater">

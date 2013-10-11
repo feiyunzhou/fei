@@ -1326,7 +1326,7 @@
 			<field>
 				<name>starttime</name>
 				<display>开始时间</display>
-				<data-type>datetime-local</data-type>
+				<data-type>text</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1338,7 +1338,7 @@
 			<field>
 				<name>endtime</name>
 				<display>结束时间</display>
-				<data-type>datetime-local</data-type>
+				<data-type>text</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1580,7 +1580,7 @@
 			<field>
 				<name>starttime</name>
 				<display>开始时间</display>
-				<data-type>datetime-local</data-type>
+				<data-type>text</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1592,7 +1592,7 @@
 			<field>
 				<name>endtime</name>
 				<display>结束时间</display>
-				<data-type>datetime-local</data-type>
+				<data-type>text</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>

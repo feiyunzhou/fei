@@ -26,13 +26,13 @@
 		<to>crmuser</to>		
 	</relation>
 	 -->
-	<relation>
-		<from>crmuser</from>
-		<name>crmuser2account</name>
-		<display>客户关系</display>
-		<sql>select a.* from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?</sql>
-		<to>account</to>
-	</relation>
+<!-- 	<relation> -->
+<!-- 		<from>crmuser</from> -->
+<!-- 		<name>crmuser2account</name> -->
+<!-- 		<display>客户关系</display> -->
+<!-- 		<sql>select a.* from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?</sql> -->
+<!-- 		<to>account</to> -->
+<!-- 	</relation> -->
 	
 	<relation>
 		<from>crmuser</from>

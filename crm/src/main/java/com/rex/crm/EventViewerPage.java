@@ -55,7 +55,6 @@ public class EventViewerPage extends TemplatePage
 	 */
 	public EventViewerPage()
 	{
-	    
 
 		Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
@@ -174,6 +173,96 @@ public class EventViewerPage extends TemplatePage
 	    }
 	  }
 
+	public EventViewerPage(int roleId)
+	{
+
+		Map<String, Entity> entities = Configuration.getEntityTable();
+		Entity entity  = entities.get("activity");
+	    setPageTitle(entity.getDisplay());
+//	    final String uid = ((SignIn2Session)getSession()).getUserId();
+//	    final int roleId = ((SignIn2Session)getSession()).getRoleId();
+	    StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
+	    //final long eventId
+	    long eid = 0;
+	    if(!eventIdValue.isEmpty()  && !eventIdValue.isNull()){
+	        eid = eventIdValue.toLong();
+	        
+	    }
+	    final long eventId = eid;
+	    Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
+	    //if the complete and edit button visible;
+	    boolean write_btn_visible = true;
+	    //get the event status
+	    int status = 2;
+	      
+	    if(map != null){
+	        Object st = map.get("act_status");
+	         status = ((Number)st).intValue();      
+	    }
+
+	    if(status == 1){
+	        write_btn_visible =true;
+	    }else{
+	        write_btn_visible =false;
+	    }
+	    
+	    if (map != null) {
+	        int eventType = ((Number) map.get("event_type")).intValue();
+	        if (eventType == 2 && roleId == 3) {
+	            // for the sales rep, no permission to edit the coaching event
+	            write_btn_visible = false;
+	        }
+	    }
+	    
+	    Form form = new Form("form"){
+	        @Override
+	        protected void onSubmit()
+	        {
+	            //update status of calenderEvent mark it to be completed
+	            Date act_end_datetime = new Date();
+	            DAOImpl.updateStatusOfCalendarEvent((int)eventId, 2,act_end_datetime);
+	           
+	           setResponsePage(PageFactory.createPage("calendar"));
+	           
+	        }
+	    };
+	    add(form);
+	    
+	    Link edit_event_btn = new Link("edit_event_btn") {
+	        
+	        @Override
+	        public void onClick() {
+	            
+	            setResponsePage(new EventEditorPage(eventId));
+	        }
+	    };
+	    edit_event_btn.setVisible(write_btn_visible);
+	    form.addOrReplace(edit_event_btn);
+
+	    Link delete_event_btn = new Link("delete_event_btn") {
+	        
+	        @Override
+	        public void onClick() {
+	            
+	            DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
+	            setResponsePage(PageFactory.createPage("calendar"));
+	        }
+	    };
+	    delete_event_btn.setVisible(write_btn_visible);
+	    form.addOrReplace(delete_event_btn);
+	    
+	    WebMarkupContainer complete_btn = new WebMarkupContainer("complete_btn");
+	    complete_btn.setVisible(write_btn_visible);
+	    form.add(complete_btn);
+	    
+	    // List<CalendarEvent> events = DAOImpl.getEventsByUserId(Integer.parseInt(uid));
+	     logger.debug("eventID is:"+ eventId);
+	     
+	     //add(new Label("name",String.valueOf(map.get("name"))));
+	     add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eventId),1,"calendar"));
+	     
+	    
+	}
 
 
 }

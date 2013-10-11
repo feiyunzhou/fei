@@ -23,3 +23,18 @@ function ajaxPost(args, onComplete) {
     
 	});
 }
+var flag = true;
+function chengeicon(v){
+	console.info("flag:"+flag);
+	console.info("flag:"+v.id);
+	if(flag){
+			$("#" + v.id + "").removeClass("icon-angle-down");
+			$("#" + v.id + "").addClass("icon-angle-right");	
+		flag = false;
+	}else{
+		$("#" + v.id + "").removeClass("icon-angle-right");
+		$("#" + v.id + "").addClass("icon-angle-down");
+		flag = true;
+	
+	}
+};

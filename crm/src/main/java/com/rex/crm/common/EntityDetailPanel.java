@@ -70,6 +70,9 @@ public class EntityDetailPanel extends Panel {
             WebMarkupContainer container = new WebMarkupContainer("divButton");
             groupitem.add(container);
             container.add(new AttributeAppender("data-target", new Model("#2" + (gNum++)), ";"));
+            WebMarkupContainer icon = new WebMarkupContainer("icon");
+            container.add(icon);
+            icon.add(new AttributeAppender("id", new Model(gNum), ";"));
             RepeatingView divRepeater = new RepeatingView("divRepeater");
             groupitem.add(divRepeater);
             AbstractItem div = new AbstractItem(divRepeater.newChildId());

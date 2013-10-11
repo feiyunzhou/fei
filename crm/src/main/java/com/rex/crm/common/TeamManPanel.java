@@ -27,13 +27,13 @@ import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
-public class ContactTeamManPanel extends Panel {
+public class TeamManPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
-    private static final Logger logger = Logger.getLogger(ContactTeamManPanel.class);
+    private static final Logger logger = Logger.getLogger(TeamManPanel.class);
     private String etId;
     private String currentEntityName;
 
-    public ContactTeamManPanel(String id,final String en,final String entityId) {
+    public TeamManPanel(String id,final String en,final String entityId) {
         super(id);
         etId = entityId;
         currentEntityName = en;
@@ -61,20 +61,12 @@ public class ContactTeamManPanel extends Panel {
         
         add(new Link<Void>("add_users_link"){
 
-//            @Override
-//            public void onClick(AjaxRequestTarget target) {
-//              String script = "window.open(\"../mount/searchCRMUser?cid="+entityId+"\",\"Ratting\",\"width=850,height=470,left=150,top=200,0,status=0,\");";
-//               target.appendJavaScript(script);
-//            }
-
             @Override
             public void onClick() {
               this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId));
             }
             
         });
-        
-        
         
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
@@ -155,7 +147,7 @@ public class ContactTeamManPanel extends Panel {
     }
 
 
-    public ContactTeamManPanel(String id, IModel<?> model) {
+    public TeamManPanel(String id, IModel<?> model) {
         super(id, model);
     }
     
@@ -228,7 +220,7 @@ public class ContactTeamManPanel extends Panel {
                     }else if(currentEntityName.equalsIgnoreCase("contact")){
                         teamtable = "contactcrmuser";
                     }else if(currentEntityName.equalsIgnoreCase("crmuser")){
-                        teamtable = "crmuseraccount";
+                        teamtable = "accountcrmuser";
                     }
                     DAOImpl.removeEntityFromTeam(teamtable,id);
                     

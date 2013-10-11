@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -25,6 +27,7 @@ import org.apache.wicket.model.Model;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.CreateEventPage;
+import com.rex.crm.EventViewerPage;
 import com.rex.crm.PageFactory;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.db.DAOImpl;
@@ -34,7 +37,7 @@ public class PageableTablePanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
     private static final Logger logger = Logger.getLogger(PageableTablePanel.class);
 
-    public PageableTablePanel(String id, Entity entity, List mapList) {
+    public PageableTablePanel(String id, final Entity entity, List mapList) {
         super(id);
 
         add(new Label("table_title",entity.getDisplay()));
@@ -93,7 +96,7 @@ public class PageableTablePanel extends Panel {
                     });
                     if (f.isDetailLink()) {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
-                        columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value));
+                        columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
 //                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
                     } else {
                         if (f.getPicklist() != null) {
@@ -141,7 +144,7 @@ public class PageableTablePanel extends Panel {
          * @param markupProvider
          *            The markup provider
          */
-        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider, String caption) {
+        public DetailLinkFragment( String id, String markupId, MarkupContainer markupProvider, String caption, final Entity entity) {
             super(id, markupId, markupProvider);
             add(new Link("detailclick") {
 
@@ -154,8 +157,11 @@ public class PageableTablePanel extends Panel {
                     Param p = (Param) getParent().getParent().getDefaultModelObject();
                     logger.debug(p + " id:" + p.getId() + " name:" + p.getEntityName());
 //                    Attribute att = new Attribute();
-                    
-                    setResponsePage(new EntityDetailPage(p.getEntityName(), p.getId()));
+                   if(entity.getName().equals("activity")){
+                	   setResponsePage(new EventViewerPage());
+                   }else{
+                	   setResponsePage(new EntityDetailPage(p.getEntityName(), p.getId()));
+                   } 
                     // setResponsePage(new AccountDetailPage(id));
                 }
             }.add(new Label("caption", new Model<String>(caption))));
