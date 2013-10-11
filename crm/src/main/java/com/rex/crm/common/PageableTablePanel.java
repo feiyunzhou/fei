@@ -36,7 +36,6 @@ import com.rex.crm.util.CRMUtility;
 public class PageableTablePanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
     private static final Logger logger = Logger.getLogger(PageableTablePanel.class);
-
     public PageableTablePanel(String id, final Entity entity, List mapList) {
         super(id);
 
@@ -47,6 +46,7 @@ public class PageableTablePanel extends Panel {
         final List<String> fn = entity.getFieldNames();
         final String entityName = entity.getName();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
+        
         // RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
         // add(dataRowRepeater);
 
@@ -158,7 +158,7 @@ public class PageableTablePanel extends Panel {
                     logger.debug(p + " id:" + p.getId() + " name:" + p.getEntityName());
 //                    Attribute att = new Attribute();
                    if(entity.getName().equals("activity")){
-                	   setResponsePage(new EventViewerPage());
+                	   setResponsePage(new EventViewerPage(p.getId()));
                    }else{
                 	   setResponsePage(new EntityDetailPage(p.getEntityName(), p.getId()));
                    } 

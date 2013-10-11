@@ -144,52 +144,27 @@ public class EventViewerPage extends TemplatePage
         
 	}
 	
-	class SelectOption implements Serializable{
-	    private int key;
-	    private String value;
-	   
-	    public SelectOption(int key, String value) {
-	      this.key = key;
-	      this.value = value;
-	    }
-	    public SelectOption() {
-	          
-	        }
 
-	    public int getKey() {
-	        return key;
-	    }
 
-	    public void setKey(int key) {
-	        this.key = key;
-	    }
-
-	    public String getValue() {
-	        return value;
-	    }
-
-	    public void setValue(String value) {
-	        this.value = value;
-	    }
-	  }
-
-	public EventViewerPage(int roleId)
+	public EventViewerPage(String id)
 	{
 
 		Map<String, Entity> entities = Configuration.getEntityTable();
 		Entity entity  = entities.get("activity");
 	    setPageTitle(entity.getDisplay());
-//	    final String uid = ((SignIn2Session)getSession()).getUserId();
+	    final String uid = ((SignIn2Session)getSession()).getUserId();
 //	    final int roleId = ((SignIn2Session)getSession()).getRoleId();
-	    StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
+//	    StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
 	    //final long eventId
-	    long eid = 0;
-	    if(!eventIdValue.isEmpty()  && !eventIdValue.isNull()){
-	        eid = eventIdValue.toLong();
-	        
-	    }
-	    final long eventId = eid;
+//	    long eid = 0;
+//	    if(!eventIdValue.isEmpty()  && !eventIdValue.isNull()){
+//	        eid = eventIdValue.toLong();
+//	        
+//	    }
+	    final int eventId = Integer.parseInt(id);
+	    logger.debug("entity"+entity);
 	    Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
+	    logger.debug("entity.getSql_ent()"+entity.getSql_ent());
 	    //if the complete and edit button visible;
 	    boolean write_btn_visible = true;
 	    //get the event status
@@ -208,11 +183,12 @@ public class EventViewerPage extends TemplatePage
 	    
 	    if (map != null) {
 	        int eventType = ((Number) map.get("event_type")).intValue();
-	        if (eventType == 2 && roleId == 3) {
-	            // for the sales rep, no permission to edit the coaching event
+	        if (eventType == 2) {
+	            // for the sales rep, no permission to edit the coaching event  && roleId == 3
 	            write_btn_visible = false;
 	        }
 	    }
+//	    logger.debug("roleId" + roleId);
 	    
 	    Form form = new Form("form"){
 	        @Override
@@ -264,7 +240,34 @@ public class EventViewerPage extends TemplatePage
 	    
 	}
 
+	class SelectOption implements Serializable{
+	    private int key;
+	    private String value;
+	   
+	    public SelectOption(int key, String value) {
+	      this.key = key;
+	      this.value = value;
+	    }
+	    public SelectOption() {
+	          
+	        }
 
+	    public int getKey() {
+	        return key;
+	    }
+
+	    public void setKey(int key) {
+	        this.key = key;
+	    }
+
+	    public String getValue() {
+	        return value;
+	    }
+
+	    public void setValue(String value) {
+	        this.value = value;
+	    }
+	  }
 }
 
 
