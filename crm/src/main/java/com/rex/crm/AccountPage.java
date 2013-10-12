@@ -8,10 +8,12 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -27,35 +29,72 @@ import com.rex.crm.util.Configuration;
  */
 public class AccountPage extends TemplatePage
 {
+    private String search_target = "";
     
-    public AccountPage(Map<String,Boolean> map){
-        initPage(map);
+    /**
+     * Constructor
+     */
+    public AccountPage()
+    {
+       initPage(null,null);
+        
     }
     
-    private void initPage(Map<String,Boolean> filter){
+    public AccountPage(Map<String,Boolean> map,List tdata){
+        initPage(map, tdata);
+    }
+    
+    private void initPage(final Map<String,Boolean> filter,List tdata){
         Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get("account");
+        final Entity entity = entities.get("account");
         setPageTitle(entity.getDisplay());
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
         //TODO get userId from request's session
         final String userId = ((SignIn2Session)getSession()).getUserId();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
-        List mapList = null;
+        
+        Form form = new Form("form"){
+
+            @Override
+            protected void onSubmit() {
+                String sql = entity.getSql();
+                if(roleId == 1){
+                    sql = entity.getSqlAdmin();
+                }
+                
+                search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
+               
+                sql =  sql + " where name like '%"+search_target+"%'";
+                System.out.println(sql);
+                List datalist = DAOImpl.queryEntityRelationList(sql, userId);
+                setResponsePage(new AccountPage(filter,datalist));
+                
+            }
+            
+        };
+        add(form);
+        
+        TextField search_input = new TextField("search_input", new PropertyModel(this,"search_target"));
+        form.add(search_input);
+        
+        
+        if(tdata == null){
         if(filter == null){
             String sql = entity.getSql();
             //if the user is admin we use admin sql to query database
             if(roleId == 1){
                 sql = entity.getSqlAdmin();
             }
-            mapList = DAOImpl.queryEntityRelationList(sql, userId);
+            tdata = DAOImpl.queryEntityRelationList(sql, userId);
         }else{
             List<String> ft = Lists.newArrayList();
             for (String k : filter.keySet()) {
                 if(filter.get(k)) ft.add(k);
             }
-            mapList = DAOImpl.queryEntityWithFilter(entity.getSql(), entity.getFilterField(), ft, userId);
+            tdata = DAOImpl.queryEntityWithFilter(entity.getSql(), entity.getFilterField(), ft, userId);
         }
-        add(new PageableTablePanel("datalist",entity,mapList));
+        }
+        add(new PageableTablePanel("datalist",entity,tdata));
         
         //for the side bar
         List<Pair<String, Map<String, Object>>> types = DAOImpl.queryFilters(entity.getSql(), entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);
@@ -63,12 +102,5 @@ public class AccountPage extends TemplatePage
        
     }
     
-	/**
-	 * Constructor
-	 */
-	public AccountPage()
-	{
-       initPage(null);
-		
-	}
+
 }

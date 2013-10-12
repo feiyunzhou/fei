@@ -163,9 +163,9 @@ public class EditDataFormPanel extends Panel {
 							Map et = DAOImpl.queryEntityById(ent.getSql_ent(), String.valueOf(foreignKey));
 							String value = (String)et.get("name");
 							models.put(fn, choiceModel);
-							System.out.println("XXXXXXXXXXXXX:"+fn+"   XXXXXXXXX:"+currentField.getName());
+							
 							fieldNameToModel.put(fn, choiceModel);
-						    columnitem.add(new RelationTableSearchFragment("editdata","relationTableSearchFragment",this,schema.getName(),value,choiceModel));
+						    columnitem.add(new RelationTableSearchFragment("editdata","relationTableSearchFragment",this,currentField.getRelationTable(),value,choiceModel));
 						}
 					} 
 						else {
@@ -262,7 +262,7 @@ public class EditDataFormPanel extends Panel {
             add(hidden);
             TextField<String> text = new TextField<String>("selected_value_input" ,new Model(value));
             text.add(new AttributeAppender("id",entityName+"_name"));
-            text.add(new AttributeAppender("readonly","true"));
+            //text.add(new AttributeAppender("readonly","true"));
             add(text);
         }
     }

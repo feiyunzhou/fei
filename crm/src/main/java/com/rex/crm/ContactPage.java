@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
 import com.rex.crm.account.AccountListPanel;
@@ -20,51 +23,81 @@ import com.rex.crm.util.Configuration;
  */
 public class ContactPage extends TemplatePage
 {
+    
+    private String search_target = "";
 	/**
 	 * Constructor
 	 */
 	public ContactPage()
 	{
-//		Map<String, Entity> entities = Configuration.getEntityTable();
-//        Entity entity = entities.get("contact");
-//        setPageTitle(entity.getDisplay());
-//        List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
-//		add(new PageableTablePanel("datalist",entity,mapList));
-	    
-	    initPage(null);
+	    initPage(null,null);
 		
 	}
 	
+	public ContactPage(Map<String,Boolean> filter,List tdata)
+    {
+
+        initPage(filter,tdata);
+        
+    }
+	
     public ContactPage(Map<String,Boolean> map){
-        initPage(map);
+        initPage(map,null);
     }
     
-    private void initPage(Map<String,Boolean> filter){
+    private void initPage(final Map<String,Boolean> filter,List tdata){
         Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get("contact");
+        final Entity entity = entities.get("contact");
         setPageTitle(entity.getDisplay());
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
         //TODO get userId from request's session
         final String userId = ((SignIn2Session)getSession()).getUserId();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
-        List mapList = null;
-        if(filter == null){
-            String sql = entity.getSql();
-            if(roleId == 1){
-                sql = entity.getSqlAdmin();
+        
+        Form form = new Form("form"){
+
+            @Override
+            protected void onSubmit() {
+                String sql = entity.getSql();
+                if(roleId == 1){
+                    sql = entity.getSqlAdmin();
+                }
+                
+                search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
+               
+                sql =  sql + " where name like '%"+search_target+"%' OR an like '%"+search_target+"%'";
+                System.out.println(sql);
+                List datalist = DAOImpl.queryEntityRelationList(sql, userId);
+                setResponsePage(new ContactPage(filter,datalist));
+                
             }
-            mapList = DAOImpl.queryEntityRelationList(sql, userId);
-        }else{
             
-            List<String> ft = Lists.newArrayList();
-            for (String k : filter.keySet()) {
-                if(filter.get(k)) ft.add(k);
+        };
+        add(form);
+        
+        TextField search_input = new TextField("search_input", new PropertyModel(this,"search_target"));
+        form.add(search_input);
+        
+       // List mapList = null;
+        if (tdata == null) {
+            if (filter == null) {
+                String sql = entity.getSql();
+                if (roleId == 1) {
+                    sql = entity.getSqlAdmin();
+                }
+                tdata = DAOImpl.queryEntityRelationList(sql, userId);
+            } else {
+
+                List<String> ft = Lists.newArrayList();
+                for (String k : filter.keySet()) {
+                    if (filter.get(k))
+                        ft.add(k);
+                }
+                tdata = DAOImpl.queryEntityWithFilter(entity.getSql(), entity.getFilterField(), ft, userId);
+
             }
-            mapList = DAOImpl.queryEntityWithFilter(entity.getSql(), entity.getFilterField(), ft, userId);
-                    
-                    
         }
-        add(new PageableTablePanel("datalist",entity,mapList));
+        add(new PageableTablePanel("datalist",entity,tdata));
 
         
         //for the side bar

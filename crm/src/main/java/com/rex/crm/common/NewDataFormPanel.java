@@ -141,7 +141,7 @@ public class NewDataFormPanel extends Panel {
 								list.put(p.getId(), p.getVal());
 								ids.add(p.getId());
 							}
-							long foreignKey = 1L;
+							long foreignKey = -1L;
 							if (relationIds != null&& relationIds.containsKey(currentField.getAlias())) {
 								foreignKey = Long.parseLong(relationIds.get(currentField.getAlias()));
 							}
@@ -155,7 +155,7 @@ public class NewDataFormPanel extends Panel {
 							models.put(fn, choiceModel);
 							//columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
 
-                            columnitem.add(new RelationTableSearchFragment("celldatafield","relationTableSearchFragment",this,entity.getName(),"",choiceModel));
+                            columnitem.add(new RelationTableSearchFragment("celldatafield","relationTableSearchFragment",this,currentField.getRelationTable(),"",choiceModel));
 						}
 					} else {
 						if (j % 2 == 0) {
@@ -297,7 +297,6 @@ public class NewDataFormPanel extends Panel {
 	            add(hidden);
 	            TextField<String> text = new TextField<String>("selected_value_input" ,new Model(value));
 	            text.add(new AttributeAppender("id",entityName+"_name"));
-	            text.add(new AttributeAppender("readonly","true"));
 	            add(text);
 	        }
 	    }

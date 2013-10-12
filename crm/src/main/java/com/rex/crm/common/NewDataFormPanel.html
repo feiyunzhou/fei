@@ -9,6 +9,15 @@ width:100%;
 		$(document).ready(function() {
 
 		});
+		
+		function validateFields(){
+            if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
+                alert("请查询填入医疗机构");
+                return false;
+            }else{
+                return true;
+            }
+		}
 	</script>
 	<div>
 		<form wicket:id="form" class="form-horizontal" >
@@ -31,7 +40,7 @@ width:100%;
 				</div>
 					<div class="control-group">
 						<div class="controls">
-							<input type="submit" class="btn btn-primary" value="保存" />
+							<input type="submit" onClick="return validateFields();" class="btn btn-primary" value="保存" />
 						</div>
 					</div>
 				</fieldset>
@@ -50,7 +59,7 @@ width:100%;
 		<select wicket:id="dropDownInput"></select>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="relationTableSearchFragment">
-		<input type="text"  wicket:id="selected_value_input" class="input input-small" />
+		<input type="text"  required="required" disabled wicket:id="selected_value_input" class="input input-small" />
 		<input type="hidden" class="input" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
 		<a href="#" class="" wicket:id="search_btn" id="search_click"  title="查找"><i class="icon-search"></i></a>
 	</wicket:fragment>
