@@ -90,7 +90,6 @@ public class EditDataFormPanel extends Panel {
 			AbstractItem groupitem = new AbstractItem(fieldGroupRepeater.newChildId());
 			fieldGroupRepeater.add(groupitem);
 			RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-
 			groupitem.add(dataRowRepeater);
 			int numOfField = 0;
 			List<Field> visibleFields = Lists.newArrayList();
@@ -153,16 +152,6 @@ public class EditDataFormPanel extends Panel {
 						} else {
 						    long foreignKey = 1L;
                             foreignKey = ((Number)data.get(currentField.getName())).longValue();
-                            
-//							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
-//							Map<Long, String> list = Maps.newHashMap();
-//							List<Long> ids = Lists.newArrayList();
-//							for (Choice p : pickList) {
-//								list.put(p.getId(), p.getVal());
-//								ids.add(p.getId());
-//							}
-//						   logger.debug("current relation key:"+data.get(currentField.getName()));
-//							
 							IModel choiceModel = new Model(foreignKey);
 							String fn = "";
 							if (currentField.getAlias() != null) {
@@ -277,16 +266,13 @@ public class EditDataFormPanel extends Panel {
             add(text);
         }
     }
-
 	private class DropDownChoiceFragment extends Fragment {
 		public DropDownChoiceFragment(String id, String markupId,
 				MarkupContainer markupProvider, final List<Long> ids,
 				final Map<Long, String> list, IModel model) {
 			super(id, markupId, markupProvider);
-
 			add(new DropDownChoice<Long>("dropDownInput", model, ids,
 					new IChoiceRenderer<Long>() {
-
 						@Override
 						public Object getDisplayValue(Long id) {
 							// TODO Auto-generated method stub

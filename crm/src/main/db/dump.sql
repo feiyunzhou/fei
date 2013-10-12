@@ -112,6 +112,26 @@ CREATE TABLE `account_comprehensive_or_specialized_pl` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--医院类型
+drop table if exists account_type_pl;
+CREATE TABLE account_type_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO account_type_pl (val) VALUES (1,'癌痛目标医院'),(2,'慢痛目标医院'),(3,'奥诺美目标医院'),(4,'非目标医院');
+
+--重点医院
+drop table if exists account_point_pl;
+CREATE TABLE account_point_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO account_point_pl  VALUES (1,'癌痛重点医院'),(2,'慢痛重点医院'),(3,'奥诺美重点医院'),(4,'非重点医院');
+
 --
 -- Dumping data for table `account_comprehensive_or_specialized_pl`
 --
@@ -327,6 +347,15 @@ CREATE TABLE `account_pl5` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+--主推广目标
+drop table if exists contact_generalization_target_pl;
+CREATE TABLE contact_generalization_target_pl 
+(
+ id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+ val VARCHAR(255),
+ PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
+INSERT INTO contact_generalization_target_pl  VALUES (1,'美施康定'),(2,'奥施康定'),(3,'奇曼丁'),(4,'若思本'),(5,'奥诺美');
 
 --
 -- Dumping data for table `account_pl5`

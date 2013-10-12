@@ -144,19 +144,6 @@ CREATE TABLE account_type_pl
  val VARCHAR(255),
  PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO account_market_classification_pl (val) VALUES ('癌痛目标医院');
-INSERT INTO account_market_classification_pl (val) VALUES('慢痛目标医院');
-INSERT INTO account_market_classification_pl (val) VALUES('奥诺美目标医院');
-INSERT INTO account_market_classification_pl (val) VALUES('非目标医院');
-
---医院类型
-drop table if exists account_type_pl;
-CREATE TABLE account_type_pl 
-(
- id MEDIUMINT NOT NULL  AUTO_INCREMENT,
- val VARCHAR(255),
- PRIMARY KEY USING BTREE (id)
-) ENGINE InnoDB;
 INSERT INTO account_type_pl (val) VALUES ('癌痛目标医院');
 INSERT INTO account_type_pl (val) VALUES('慢痛目标医院');
 INSERT INTO account_type_pl (val) VALUES('奥诺美目标医院');
