@@ -154,7 +154,7 @@ public class EventViewerPage extends TemplatePage
 		Entity entity  = entities.get("activity");
 	    setPageTitle(entity.getDisplay());
 	    final String uid = ((SignIn2Session)getSession()).getUserId();
-//	    final int roleId = ((SignIn2Session)getSession()).getRoleId();
+	    final int roleId = ((SignIn2Session)getSession()).getRoleId();
 //	    StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
 	    //final long eventId
 //	    long eid = 0;
@@ -183,13 +183,12 @@ public class EventViewerPage extends TemplatePage
 	    }
 	    
 	    if (map != null) {
-	        int eventType = ((Number) map.get("event_type")).intValue();
-	        if (eventType == 2) {
-	            // for the sales rep, no permission to edit the coaching event  && roleId == 3
-	            write_btn_visible = false;
-	        }
-	    }
-//	    logger.debug("roleId" + roleId);
+            int eventType = ((Number) map.get("event_type")).intValue();
+            if (eventType == 2 && roleId == 3) {
+                // for the sales rep, no permission to edit the coaching event
+                write_btn_visible = false;
+            }
+        }//	    logger.debug("roleId" + roleId);
 	    
 	    Form form = new Form("form"){
 	        @Override
