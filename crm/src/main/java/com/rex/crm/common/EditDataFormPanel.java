@@ -60,7 +60,7 @@ public class EditDataFormPanel extends Panel {
 	 * @param entityId
 	 * @param relationIds
 	 */
-	public EditDataFormPanel(String id, final Entity schema, final Map data,final String entityId ) {
+	public EditDataFormPanel(String id, final Entity schema,  Map data,final String entityId ) {
 		super(id);
 		final Map<String, IModel> models = Maps.newHashMap();
 		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();

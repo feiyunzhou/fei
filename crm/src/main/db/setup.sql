@@ -506,6 +506,7 @@ ALTER table crmuser ADD pl2 MEDIUMINT;
 ALTER table crmuser ADD role MEDIUMINT;
 ALTER table crmuser ADD pl4 MEDIUMINT;
 ALTER table crmuser ADD pl5 MEDIUMINT;
+ALTER table crmuser ADD sex_pl MEDIUMINT;
 ALTER table crmuser ADD loginName VARCHAR(255);
 ALTER table crmuser ADD password VARCHAR(255);
 ALTER table crmuser ADD sessionKey VARCHAR(255);
