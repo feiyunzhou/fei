@@ -13,6 +13,21 @@
     <filter-name>wicket.crm</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+   <display-name>activited</display-name>
+    <filter>
+        <filter-name>activitedApplication</filter-name>
+        <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+        <init-param>
+          <param-name>applicationClassName</param-name>
+          <param-value>com.rex.crm.ActivitedUserApplication</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>activitedApplication</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+  
   <servlet>
     <description></description>
     <display-name>DataFeederServlet</display-name>

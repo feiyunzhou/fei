@@ -23,6 +23,7 @@ public class ActivitedUser extends TemplatePage{
 		initPage(loginName);
 	}
 	public  void initPage(final String loginName){
+		logger.debug("init");
 		final CRMUser crmuser = DAOImpl.getUserByActivation(loginName);
 		//此时获取到对象，接收客户端的数据
 		final  Label promptLabel = new Label("prompt","操作失败重新输入！");

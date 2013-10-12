@@ -240,7 +240,6 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
             ServletContext servletContext = webApplication.getServletContext();
             if(servletContext!=null){
                 rootContext = servletContext.getServletContextName();
-                
             }else{
                 //do nothing
             }

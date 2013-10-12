@@ -15,9 +15,9 @@ public class ActivitedUserApplication extends WebApplication{
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
 	@Override
-	public Class<? extends WebPage> getHomePage()
+	public Class<? extends TemplatePage> getHomePage()
 	{
-		return HomePage.class;
+		return ActivitedUser.class;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class ActivitedUserApplication extends WebApplication{
 	public void init()
 	{
 		super.init();
-		//如何获取参数
+	/*	//如何获取参数
 		//getRequestCycleSettings().
 		getRequestCycleSettings().setResponseRequestEncoding("UTF-8"); 
         getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
@@ -41,6 +41,6 @@ public class ActivitedUserApplication extends WebApplication{
 	    //判断如果user不等于null，则跳转页面，设置密码
 	    if(null!=user){
 	    	mountPage("/mount/ActivitedUser?loginName="+loginName+"", ActivitedUser.class);
-	    }
+	    }*/
 	}
 }
