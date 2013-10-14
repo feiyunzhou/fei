@@ -62,7 +62,7 @@ public class VisitingReporter {
         res.add(map);
         
         int num_of_activity = 0;
-        int num_of_working_day = 0;
+        int num_of_working_day = 1;
         
         if(activityData!=null && activityData.size()>0){
             num_of_activity = ((Number)activityData.get(0).get("num_of_activity")).intValue();
@@ -102,8 +102,13 @@ public class VisitingReporter {
         
         //format the data
         for(Map mapData:dataList){
-            float rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).floatValue();
-            int int_rate_of_achieving = (int)rate_of_achieving;
+        	float rate_of_achieving =0;
+        	if(null==mapData.get("rate_of_achieving")){
+        		rate_of_achieving = 0;
+        	}else{
+        		rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).floatValue();
+        	}
+        	int int_rate_of_achieving = (int)rate_of_achieving;
             if(int_rate_of_achieving<100){
                 mapData.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+int_rate_of_achieving+"%</strong></span>");
             }else{
@@ -135,19 +140,25 @@ public class VisitingReporter {
         //format the data
         for(Map mapData:dataList){
         	int rate_of_achieving = 0;
-        	if(mapData.get("rate_of_achieving").equals("")){
+        	if(null==mapData.get("rate_of_achieving")){
         		rate_of_achieving = 0;
-        	}
-            rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).intValue();
+        	}else{
+        		rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).intValue();
             //int int_rate_of_achieving = (int)rate_of_achieving;
-            
+        	}
             if(rate_of_achieving<100){
                 mapData.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+rate_of_achieving+"%</strong></span>");
             }else{
                 mapData.put("rate_of_achieving", rate_of_achieving+"%");
             }
-            
-            int rate_of_visiting_cover = ((Number)mapData.get("rate_of_visiting_cover")).intValue();
+            int rate_of_visiting_cover = 0;
+            if(null==mapData.get("rate_of_visiting_cover")){
+            	rate_of_visiting_cover = 0;
+        	}else{
+        		rate_of_visiting_cover = ((Number)mapData.get("rate_of_visiting_cover")).intValue();
+            //int int_rate_of_achieving = (int)rate_of_achieving;
+        	}
+            //int rate_of_visiting_cover = ((Number)mapData.get("rate_of_visiting_cover")).intValue();
             mapData.put("rate_of_visiting_cover", rate_of_visiting_cover+"%");
         }
         return dataList;        

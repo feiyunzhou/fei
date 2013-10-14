@@ -33,7 +33,7 @@
 		</script>
 		
 
-		<div class="row-fluid">
+		<div class="row-fluid" style="width:600px; float:left;">
 		<form wicket:id="form" class="form-horizontal">
 			<table>
 			<tr>
@@ -64,7 +64,7 @@
                                     <div id="student_div" style="display:none;" class="control-group">
 										<label class="control-label">被辅导人：</label>
 										<div class="controls">
-											<input type="text" id="select_user" wicket:id="selected_user" class="input input-small" />
+											<input type="text" id="select_user" wicket:id="selected_user" class="input input-big" />
 											<input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
 											<a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
 										</div>
@@ -86,45 +86,13 @@
 										</div>
 									</div>
 
-									<div class="control-group">
-										<label class="control-label" for="from">开始时间：</label>
-										<div class="controls">
-											<table>
-												<tr>
-													<td><div id="datepicker_from">
-															<input name="start_date" wicket:id="start_date_input" style="width: 150px" type="date" />
-														</div></td>
-													<td>&nbsp;</td>
-													<td><input wicket:id="start_time_input" name="start_time" style="width: 150px" type="time" /></td>
-												</tr>
-											</table>
-										</div>
-										<label class="control-label" for="to">结束时间：</label>
-										<div class="controls">
-											<table>
-												<tr>
-													<td><div id="datepicker_to">
-															<input name="end_date" wicket:id="end_date_input" style="width: 150px" type="date" />
-														</div></td>
-													<td>&nbsp;</td>
-													<td><input wicket:id="end_time_input" name="end_time" style="width: 150px" type="time" /></td>
-												</tr>
-											</table>
-
-
-
-										</div>
-
-									</div>
-
-
 									<div id="accountNcontact" class="control-group">
 
 										<!-- <select id="selected_account" wicket:id="account_select">
 									</select> -->
-										<label id="contact_label" class="control-label" for="contact">医生：</label>
+										<label id="contact_label" class="control-label" for="contact">拜访医生：</label>
 										<div class="controls">
-											<input type="text" id="selected_contact" class="input input-small" placeholder="张三" wicket:id="contact_select" /> 
+											<input type="text" id="selected_contact" class="input input-big"   placeholder="张三" wicket:id="contact_select" /> 
 											<input type="hidden" id="hidden_selected_contact" class="input"
 												wicket:id="hidden_contact_select" />&nbsp;&nbsp;
 												 <a href="#" class="" wicket:id="search_btn" id="search_click" name="search_contact" title="查找医生"><i class="icon-search"></i></a>
@@ -152,7 +120,7 @@
 									</div>
 
 									<div class="control-group">
-										<label class="control-label">主推广产品：</label>
+										<label class="control-label">主推产品：</label>
 										<div class="controls">
 											<select id="feature_product_input" wicket:id="feature_product_input" name="feature_product" class="input">
 												<option value="1">美施康定</option>
@@ -163,8 +131,32 @@
 											</select>
 										</div>
 									</div>
-
-
+									<div class="control-group">
+										<label class="control-label" for="from">开始时间：</label>
+										<div class="controls">
+											<table>
+												<tr>
+													<td><div id="datepicker_from">
+															<input name="start_date" wicket:id="start_date_input" style="width: 150px" type="date" />
+														</div></td>
+													<td>&nbsp;</td>
+													<td><input wicket:id="start_time_input" name="start_time" style="width: 150px" type="time" /></td>
+												</tr>
+											</table>
+										</div>
+										<label class="control-label" for="to">结束时间：</label>
+										<div class="controls">
+											<table>
+												<tr>
+													<td><div id="datepicker_to">
+															<input name="end_date" wicket:id="end_date_input" style="width: 150px" type="date" />
+														</div></td>
+													<td>&nbsp;</td>
+													<td><input wicket:id="end_time_input" name="end_time" style="width: 150px" type="time" /></td>
+												</tr>
+											</table>
+										</div>
+									</div>
 									<div id="visited_contact_select_div" style="display: none" class="control-group">
 										<label class="control-label" for="visited_contact">拜访过的医生：</label>
 										<div class="controls">
@@ -187,10 +179,7 @@
 											<input type="hidden" id="user_manager_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
 										</div>
 									</div>
-
-
 								</div>
-
 							</div>
 				</td>
 			</tr>
@@ -207,7 +196,9 @@
 		</div>
 			</form>
 		</div>
-		
+		<div style="margin-left: 80px; margin-top:50px;border:1px solid #000000;width:500px;float: left;">
+			<h3>评分明细列表</h3>
+		</div>
 	</wicket:extend>
 </body>
 </html>
