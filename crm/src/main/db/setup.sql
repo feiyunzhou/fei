@@ -136,7 +136,6 @@ INSERT INTO account_market_classification_pl (val) VALUES('二级城市');
 INSERT INTO account_market_classification_pl (val) VALUES('三级城市');
 INSERT INTO account_market_classification_pl (val) VALUES('四级城市');
 
---医院类型
 drop table if exists account_type_pl;
 CREATE TABLE account_type_pl 
 (
@@ -149,7 +148,6 @@ INSERT INTO  account_type_pl (val) VALUES('慢痛目标医院');
 INSERT INTO  account_type_pl (val) VALUES('奥诺美目标医院');
 INSERT INTO  account_type_pl (val) VALUES('非目标医院');
 
---重点医院
 drop table if exists account_point_pl;
 CREATE TABLE account_point_pl 
 (
@@ -517,11 +515,8 @@ ALTER table crmuser ADD parcel VARCHAR(255);
 ALTER table crmuser ADD modifier VARCHAR(255);
 ALTER table crmuser ADD modify_datetime date;
 ALTER table crmuser ADD owner VARCHAR(255);
-ALTER table crmuser ADD employeeNumber VARCHAR(255);
-ALTER table crmuser ADD department VARCHAR(255);
 ALTER table crmuser ADD postId VARCHAR(255);
 ALTER table crmuser ADD city MEDIUMINT;
-
 -- pick list for crmuser
 -- 状态;
 drop table if exists crmuser_pl1;
@@ -531,7 +526,8 @@ CREATE TABLE crmuser_pl1
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-
+INSERT INTO `crmuser_pl1` (var) VALUES ('有效');
+INSERT INTO `crmuser_pl1` (var) VALUES ('无效');
 -- 产品线;
 drop table if exists crmuser_pl2;
 CREATE TABLE crmuser_pl2 
