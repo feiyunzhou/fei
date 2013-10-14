@@ -324,7 +324,7 @@ public class EditDataFormPanel extends Panel {
 								
 							}
 							if(currentField.getName().equals("fax")||currentField.getName().equals("office_fax")){
-								text.add(new AttributeAppender("pattern",new Model("^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)(\\d{7,8})(-(\\d{3,}))?$"),";"));
+//								text.add(new AttributeAppender("pattern",new Model("(^[0-9]…{3,4}-[0-9]…{3,8}$)|(^[0-9]…{3,8}$)|(^([0-9]…{3,4})[0-9]…{3,8}$)|(^0…{0,1}13[0-9]…{9}$)"),";"));
 							}
 		}
 	}

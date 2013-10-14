@@ -54,7 +54,7 @@ CREATE TABLE boolean_pl
 INSERT INTO boolean_pl (val) VALUES('是');
 INSERT INTO boolean_pl (val) VALUES('否');
 
--- 医院类型
+-- 医院行政级别
 drop table if exists account_administrativ_level_pl;
 CREATE TABLE account_administrativ_level_pl 
 (
@@ -144,10 +144,10 @@ CREATE TABLE account_type_pl
  val VARCHAR(255),
  PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO account_type_pl (val) VALUES ('癌痛目标医院');
-INSERT INTO account_type_pl (val) VALUES('慢痛目标医院');
-INSERT INTO account_type_pl (val) VALUES('奥诺美目标医院');
-INSERT INTO account_type_pl (val) VALUES('非目标医院');
+INSERT INTO  account_type_pl (val) VALUES ('癌痛目标医院');
+INSERT INTO  account_type_pl (val) VALUES('慢痛目标医院');
+INSERT INTO  account_type_pl (val) VALUES('奥诺美目标医院');
+INSERT INTO  account_type_pl (val) VALUES('非目标医院');
 
 --重点医院
 drop table if exists account_point_pl;
