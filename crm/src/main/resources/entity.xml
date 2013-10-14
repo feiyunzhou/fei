@@ -1113,7 +1113,7 @@
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
-				<name>user-city</name>
+				<name>city</name>
 				<display>城市</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
@@ -1806,7 +1806,7 @@
 			</field>
 
 			<field>
-				<name>sex</name>
+				<name>sex_pl</name>
 				<display>性别</display>
 				<data-type>text</data-type>
 				<picklist>sex_pl</picklist>

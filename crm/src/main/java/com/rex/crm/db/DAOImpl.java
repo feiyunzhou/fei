@@ -1014,10 +1014,6 @@ public class DAOImpl {
     	String key ="";
     	String fieldssql = Joiner.on(",").join(fieldNames);
         String valuesql = Joiner.on(",").join(values);
-        fieldssql = fieldssql + ",cityId";
-   	 	valuesql =  valuesql + ",1";
-   	 	fieldssql = fieldssql.replaceAll("user-city", "city");
-   	 	fieldssql = fieldssql.replaceAll("sex", "sex_pl");
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
    	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";

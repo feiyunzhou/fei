@@ -327,15 +327,12 @@ public class NewDataFormPanel extends Panel {
 				}
 				text.add(new AttributeAppender("readonly",new Model("realonly"),";"));
 				}
-			if(currentField.getDataType().equals("tel")){
+			if(currentField.getDataType().equals("tel")||currentField.getName().equals("fax")||currentField.getName().equals("office_fax")){
 				text.add(new AttributeAppender("pattern",new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"),";"));
 			}
 			if(currentField.isRequired()){
 		        text.add(new AttributeAppender("style",new Model("border:1px solid red;"),";"));
 				text.add(new AttributeAppender("required",new Model("required"),";"));
-			}
-			if(currentField.getName().equals("fax")||currentField.getName().equals("office_fax")){
-				text.add(new AttributeAppender("pattern",new Model("^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)(\\d{7,8})(-(\\d{3,}))?$"),";"));
 			}
 			add(text);
 			text.add(new AttributeAppender("type",new Model(currentField.getDataType()),";"));
