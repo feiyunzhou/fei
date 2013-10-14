@@ -554,9 +554,7 @@ public class DAOImpl {
         } finally {
             DBHelper.closeConnection(conn);
         }
-
         return lMap;
-
     }
 
     public static List queryEntityWithFilter(String sql, String filterField, List<String> filters, String... params) {
@@ -1014,14 +1012,12 @@ public class DAOImpl {
     }
     public static String createNewCrmUser(String entityName,List<String> fieldNames,List<String> values,String userId){
     	String key ="";
-    	Random random= new Random() ;
-    	key=Integer.toString(random.nextInt(10));
     	String fieldssql = Joiner.on(",").join(fieldNames);
-        fieldssql = fieldssql + ",whenadded";
         String valuesql = Joiner.on(",").join(values);
-        valuesql =  valuesql + ", now()";
         fieldssql = fieldssql + ",cityId";
    	 	valuesql =  valuesql + ",1";
+   	 	fieldssql = fieldssql.replaceAll("user-city", "city");
+   	 	fieldssql = fieldssql.replaceAll("sex", "sex_pl");
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
    	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
@@ -1039,7 +1035,9 @@ public class DAOImpl {
 	        generatedKeys = statement.getGeneratedKeys();
 	        if (!generatedKeys.next()) {
 	        	return null;
-	        } 
+	        }
+	        System.out.println("add crmuser is True");
+	        key = "true";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -134,7 +134,11 @@ public class VisitingReporter {
         
         //format the data
         for(Map mapData:dataList){
-            int rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).intValue();
+        	int rate_of_achieving = 0;
+        	if(mapData.get("rate_of_achieving").equals("")){
+        		rate_of_achieving = 0;
+        	}
+            rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).intValue();
             //int int_rate_of_achieving = (int)rate_of_achieving;
             
             if(rate_of_achieving<100){

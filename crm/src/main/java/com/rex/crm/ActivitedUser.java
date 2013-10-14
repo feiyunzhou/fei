@@ -19,10 +19,12 @@ public class ActivitedUser extends TemplatePage{
 	private static final long serialVersionUID = 7417410502168544421L;
 	private static final Logger logger = Logger.getLogger(UpdateSignPassword.class);
 	final Map<String, IModel> models = Maps.newHashMap();
-	public ActivitedUser(String loginName){
-		initPage(loginName);
+	public ActivitedUser(){
+		String logigName = (String) getSession().getAttribute("loginName");
+		logger.debug("loginName:"+logigName);
+		initPage(logigName);
 	}
-	public  void initPage(final String loginName){
+	public void initPage(final String loginName){
 		logger.debug("init");
 		final CRMUser crmuser = DAOImpl.getUserByActivation(loginName);
 		//此时获取到对象，接收客户端的数据

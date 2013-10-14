@@ -513,7 +513,14 @@ ALTER table crmuser ADD sessionKey VARCHAR(255);
 ALTER table crmuser ADD lastLoginTime BIGINT;
 ALTER table crmuser ADD whenadded DATETIME;
 ALTER table crmuser ADD reportto MEDIUMINT;
-
+ALTER table crmuser ADD parcel VARCHAR(255);
+ALTER table crmuser ADD modifier VARCHAR(255);
+ALTER table crmuser ADD modify_datetime date;
+ALTER table crmuser ADD owner VARCHAR(255);
+ALTER table crmuser ADD employeeNumber VARCHAR(255);
+ALTER table crmuser ADD department VARCHAR(255);
+ALTER table crmuser ADD postId VARCHAR(255);
+ALTER table crmuser ADD city MEDIUMINT;
 
 -- pick list for crmuser
 -- 状态;

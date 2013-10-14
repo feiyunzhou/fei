@@ -182,7 +182,7 @@ public class NewDataFormPanel extends Panel {
 				List<String> fieldNames = Lists.newArrayList();
 				List<String> values = Lists.newArrayList();
 				for (String key : models.keySet()) {
-					fieldNames.add(key);
+						fieldNames.add(key);
 					System.out.println(fieldNames);
 					// models.get(key).getObject()
 					if (models.get(key).getObject() instanceof String) {
@@ -196,15 +196,14 @@ public class NewDataFormPanel extends Panel {
 				//if entity is crmuser  add loginName
 				if("crmuser".equals(entity.getName())){
 					String random = "";
-					fieldNames.add("loginName");
-					values.add("'" + String.valueOf(models.get("name").getObject())+ "'");
 					random = DAOImpl.createNewCrmUser(entity.getName(),fieldNames, values,userId);
 					if(!"".equals(random)){
 						//此时需发送邮件
-						String crmUserCode = String.valueOf(models.get("name").getObject());
+						String crmUserCode = String.valueOf(models.get("loginName").getObject());
+						String sendEmail = String.valueOf(models.get("email").getObject());
 						//创建激活码 getUserByuserCode
 						//传递邮箱地址，用户code.
-						sendMail(crmUserCode);
+						sendMail(crmUserCode,sendEmail);
 					}
 				}else{
 					long generatedId = DAOImpl.createNewRecord(entity.getName(),fieldNames, values,userId);
@@ -345,18 +344,19 @@ public class NewDataFormPanel extends Panel {
 		
 	}
 	//发送有邮件方法
-	public void sendMail(String getUserByuserCode){
+	public void sendMail(String getUserByLoginName,String sendEmail){
 		Session sendMailSession = null;
         SMTPTransport transport = null;
         String emailContent = "请点击连接激活用户";
-        emailContent += "http://localhost:8080/crm/getUserCode?getUserByuserCode="+getUserByuserCode+"";
+        getSession().setAttribute("loginName",getUserByLoginName);
+        emailContent += "http://localhost:8080/crm/mount/ActivitedUser?loginName="+getUserByLoginName+"";
         //String emailContent = "请点击连接激活用户,"+"'http://localhost:8080/crm/getUserCode?userCode='"+userCode+"'";
         logger.debug(emailContent);
         Properties props = new Properties();
         // 与服务器建立Session的参数设置
         props.put("mail.smtp.host", "smtp.163.com"); // 写上你的SMTP服务器。
         props.put("mail.smtp.auth", "true"); // 将这个参数设为true，让服务器进行认证。
-        SMTPAuthenticator auth = new SMTPAuthenticator("accpcui@163.com", "992041099"); // 不用多说，用户名，密码。
+        SMTPAuthenticator auth = new SMTPAuthenticator("accpcui@163.com", "992041099"); // 用户名，密码。
         sendMailSession = Session.getInstance(props, auth); // 建立连接。
         // SMTPTransport用来发送邮件。
         try {
@@ -365,7 +365,7 @@ public class NewDataFormPanel extends Panel {
 	        // 创建邮件。
 	        Message newMessage = new MimeMessage(sendMailSession);
 	        newMessage.setFrom(new InternetAddress("accpcui@163.com"));
-	        newMessage.setRecipient(Message.RecipientType.TO, new InternetAddress("brenda.yuan@rexen.com.cn"));
+	        newMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(sendEmail));
 	        newMessage.setSubject("用户激活！");
 	        newMessage.setSentDate(new Date());
 	        newMessage.setText(emailContent);
