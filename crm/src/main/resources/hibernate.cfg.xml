@@ -5,6 +5,9 @@
  <session-factory name="">
   <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
   <property name="hibernate.connection.password">crm</property>
+ <!--  db.host=192.168.0.120
+     <property name="hibernate.connection.url">jdbc:mysql://192.168.0.120/crmdb</property>
+     -->
   <property name="hibernate.connection.url">jdbc:mysql://localhost/crmdb</property>
   <property name="hibernate.connection.username">crm</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
