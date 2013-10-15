@@ -161,7 +161,10 @@ public class EditDataFormPanel extends Panel {
 							}
 							final Entity ent = Configuration.getEntityByName(currentField.getRelationTable());
 							Map et = DAOImpl.queryEntityById(ent.getSql_ent(), String.valueOf(foreignKey));
-							String value = (String)et.get("name");
+							String value = "";
+							if(et != null && et.get("name") != null){
+							     value =  (String)et.get("name");
+							}
 							models.put(fn, choiceModel);
 							
 							fieldNameToModel.put(fn, choiceModel);

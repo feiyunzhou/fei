@@ -40,7 +40,6 @@ public class SelectEntryPage extends WebPage {
      */
     public SelectEntryPage() {
         String entityName = getRequest().getRequestParameters().getParameterValue("en").toString();
-        logger.debug("en!:::::"+entityName);
         initPage(null,entityName);
     }
 
@@ -55,10 +54,12 @@ public class SelectEntryPage extends WebPage {
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
-                logger.debug("the form was submitted!:::::"+entityName);
-                // new PropertyModel<String>(this, "selected")
-                System.out.println("UUUUUUUUUUUUUUUUU"+userId);
-                List<Map> maplist = DAOImpl.searchAccount(userId, search_target, roleId);
+                List<Map> maplist = null;
+                if(entityName.equalsIgnoreCase("account")){
+                    maplist = DAOImpl.searchAccount(userId, search_target, roleId);
+                }else if(entityName.equalsIgnoreCase("crmuser")){
+                    maplist = DAOImpl.searchCRMUser(search_target);
+                }
                 PageParameters parm = new PageParameters();
                 parm.set("en", entityName);
                 //this.setResponsePage(cls, parameters)
