@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
@@ -17,6 +18,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.AttributeAppender;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -33,7 +35,7 @@ public class TeamManPanel extends Panel {
     private String etId;
     private String currentEntityName;
 
-    public TeamManPanel(String id,final String en,final String entityId) {
+    public TeamManPanel(String id,final String en,final String entityId,int roleId) {
         super(id);
         etId = entityId;
         currentEntityName = en;
@@ -58,16 +60,22 @@ public class TeamManPanel extends Panel {
         final String entityName = entity.getName();
         
         //add button submission
-        
-        add(new Link<Void>("add_users_link"){
+        if(roleId == 3){
+        	 WebMarkupContainer con = new WebMarkupContainer("add_users_link");
+             add(con);
+             con.add(new AttributeAppender("style", new Model("display:none;"), ";"));
+        }else{
+        	add(new Link<Void>("add_users_link"){
 
-            @Override
-            public void onClick() {
-              this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId));
-            }
-            
-        });
-        
+                @Override
+                public void onClick() {
+                  this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId));
+                }
+                
+            });
+
+        }
+                
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
         add(columnNameRepeater);

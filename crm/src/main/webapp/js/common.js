@@ -23,32 +23,34 @@ function ajaxPost(args, onComplete) {
 
 	});
 }
-var flag = true;
-
 function chengeicon(v) {
+	var str = $(v).attr('class');
 	var va = v.id;
-	alert(flag);
-	if (va != 1) {
-		flag = false;
-		if (flag) {
+	if (va == 1) {
+		if (str == "icon-angle-down" ) {
 			$("#" + v.id + "").removeClass("icon-angle-down");
 			$("#" + v.id + "").addClass("icon-angle-right");
-			flag = false;
 		} else {
 			$("#" + v.id + "").removeClass("icon-angle-right");
 			$("#" + v.id + "").addClass("icon-angle-down");
-			flag = true;
 		}
-	} else {
-		flag = true;
-		if (flag) {
-			$("#" + v.id + "").removeClass("icon-angle-down");
-			$("#" + v.id + "").addClass("icon-angle-right");
-			flag = false;
-		} else {
+	} else if(va == 2){
+		if (str == "icon-angle-right") {
 			$("#" + v.id + "").removeClass("icon-angle-right");
 			$("#" + v.id + "").addClass("icon-angle-down");
 			flag = true;
+		} else {
+			$("#" + v.id + "").removeClass("icon-angle-down");
+			$("#" + v.id + "").addClass("icon-angle-right");
+			flag = false;
+		}
+	}else{
+		if (str == "icon-angle-right") {
+			$("#" + v.id + "").removeClass("icon-angle-right");
+			$("#" + v.id + "").addClass("icon-angle-down");
+		} else {
+			$("#" + v.id + "").removeClass("icon-angle-down");
+			$("#" + v.id + "").addClass("icon-angle-right");
 		}
 	}
 

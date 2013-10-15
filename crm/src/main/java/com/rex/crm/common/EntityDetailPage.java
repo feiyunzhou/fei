@@ -32,7 +32,7 @@ public class EntityDetailPage extends TemplatePage {
     
     public EntityDetailPage(final String entityName, String id){
         this.setPageTitle("详细信息");
-       
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get(entityName);
         
@@ -65,7 +65,7 @@ public class EntityDetailPage extends TemplatePage {
            
          }
          if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")|| entityName.equalsIgnoreCase("crmuser")){
-             add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid)));
+             add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),roleId));
          }
          else{
              WebMarkupContainer con = new WebMarkupContainer("teamPanel");
@@ -86,7 +86,7 @@ public class EntityDetailPage extends TemplatePage {
              
          });
          
-         final int roleId = ((SignIn2Session)getSession()).getRoleId();
+
          add(new CRUDPanel("operationBar",entity.getName(),id, CRMUtility.getPermissionForEntity(roleId, entity.getName())));
          
     }
