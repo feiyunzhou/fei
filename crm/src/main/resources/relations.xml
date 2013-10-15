@@ -11,7 +11,7 @@
 		<reactions>
 		   <reaction>
 		       <name>createContact</name>
-		       <display>创建</display>
+		       <display>增加</display>
 		        <url>contact</url>
 		        <paramName>accountId</paramName>
 		   </reaction>

@@ -516,7 +516,7 @@ ALTER table crmuser ADD modifier VARCHAR(255);
 ALTER table crmuser ADD modify_datetime date;
 ALTER table crmuser ADD owner VARCHAR(255);
 ALTER table crmuser ADD postId VARCHAR(255);
-ALTER table crmuser ADD city MEDIUMINT;
+ALTER table crmuser ADD city VARCHAR(255);
 -- pick list for crmuser
 -- 状态;
 drop table if exists crmuser_pl1;

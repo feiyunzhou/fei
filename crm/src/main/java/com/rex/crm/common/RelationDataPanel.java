@@ -15,6 +15,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.rex.crm.SearchCRMUserPage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 
@@ -62,7 +63,7 @@ public class RelationDataPanel extends Panel {
           if(act.getParamName()!=null && !act.getParamName().isEmpty()){
               pars.set(act.getParamName(),entityId);
           }
-          BookmarkablePageLink link = new BookmarkablePageLink("actionlink", CreateDataPage.class,pars);
+          BookmarkablePageLink link = new BookmarkablePageLink("actionlink", SearchCRMUserPage.class,pars);
           link.add(new Label("cap",act.getDisplay()));
           item.add(link);
          }
