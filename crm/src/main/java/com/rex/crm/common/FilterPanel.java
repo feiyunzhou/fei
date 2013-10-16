@@ -42,7 +42,7 @@ public class FilterPanel extends Panel {
         for(Pair<String, Map<String, Object>> t:types){
             ids.add(t.getKey());
             numberMap.put(t.getKey(), t.getValue());
-            total=total+java.math.BigDecimal.class.cast(t.getValue().get("sum")).longValue();
+            total=total+((Number)t.getValue().get("sum")).longValue();
         }
         
         

@@ -879,12 +879,12 @@ public class DAOImpl {
         try {
             conn = DBHelper.getConnection();
             for (Choice ch : choices) {
-                String query = "select sum(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
+                String query = "select count(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
                 logger.debug("query is:" + query);
                 QueryRunner run = new QueryRunner();
                 Map<String, Object> map = run.query(conn, query, new MapHandler(), user_id);
                 if (map.get("sum") == null) {
-                    map.put("sum", new java.math.BigDecimal(0));
+                    map.put("sum", 0L);
                 }
                 map.put("val", ch.getVal());
                 res.add(Pair.of(String.valueOf(ch.getId()), map));
