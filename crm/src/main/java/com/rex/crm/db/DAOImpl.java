@@ -1537,5 +1537,23 @@ public class DAOImpl {
         }
         return user;
     }
+    //reset password
+    public static void  resetUserPassword(int entityId){
+    	System.out.println("reset password");
+    	String  sql=" UPDATE crmuser SET password=? where id =?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            String password = DigestUtils.md5Hex("123456");
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            run.update(conn, sql,password,entityId);
+    		logger.debug("reset password success!");
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+    }
 
 }

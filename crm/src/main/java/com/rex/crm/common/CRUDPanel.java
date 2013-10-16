@@ -29,7 +29,7 @@ public class CRUDPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
 
     public enum Permissions {
-        ADD, DEL, EDIT,NONE;
+        ADD, DEL, EDIT,NONE,RESETPWD;
 
     }
 
@@ -43,7 +43,7 @@ public class CRUDPanel extends Panel {
             add(new Fragment("addCon","emptyFragment",this));
             add(new Fragment("delCon","emptyFragment",this));
             add(new Fragment("editCon","emptyFragment",this));
-            
+        	add(new Fragment("resetPwdCon","emptyFragment",this));
         } else {
             
             if (userPerms.contains(Permissions.ADD)) {
@@ -105,7 +105,25 @@ public class CRUDPanel extends Panel {
             }else{
                 addOrReplace(new Fragment("editCon","emptyFragment",this));
             }
-            
+            //判断如果entityName为crmuser,则添加重置密码按钮
+            	if (userPerms.contains(Permissions.RESETPWD)) {
+            		if(entityName.equals("crmuser")){
+	                	Fragment editfrag = new Fragment("resetPwdCon","resetPwdFragment",this);
+	                	editfrag.add(new Link("resetPwd_data_btn") {
+	                        @Override
+	                        public void onClick() {
+	                        	int userId = Integer.parseInt(entityId);
+	                        	DAOImpl.resetUserPassword(userId);
+	                            setResponsePage(new UserPage());
+	                        }
+	                    });
+	                	add(editfrag);
+            		}else{
+                        add(new Fragment("resetPwdCon","emptyFragment",this));
+                    }
+                }else{
+                    add(new Fragment("resetPwdCon","emptyFragment",this));
+                }
             
             
         }

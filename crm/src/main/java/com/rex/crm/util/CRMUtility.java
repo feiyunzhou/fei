@@ -190,7 +190,7 @@ public class CRMUtility {
 	        }else if(entityName.equalsIgnoreCase("crmuser")){
 	            
 	            if (roleId == 1) {
-	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
+	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.RESETPWD);
 	            }
 	        }
 	        
