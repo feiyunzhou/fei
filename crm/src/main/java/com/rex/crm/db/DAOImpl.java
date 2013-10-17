@@ -1485,14 +1485,14 @@ public class DAOImpl {
         return inferiors;
     }
     // update crmuser baseInfo
-    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo) {
-        String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=? where id=?";
+    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex) {
+        String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=?,sex=? where id=?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            inserts += run.update(conn, sql, userName, cellphone,email,photo,userId);
+            inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,userId);
             System.out.println("updateCrmUser:" + inserts);
         } catch (Exception e) {
             logger.error("failed to updateStatusOfInternalMeeting", e);

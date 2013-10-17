@@ -708,3 +708,17 @@ CREATE TABLE dealerContact
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
+drop table if exists coachScoring
+CREATE TABLE coachScoring
+(
+	id MEDIUMINT NOT NULL AUTO_INCREMENT,
+	accountId MEDIUMINT  NOT NULL,
+	total_grade MEDIUMINT,
+	preparatory_work MEDIUMINT,
+	open MEDIUMINT,
+	snooping MEDIUMINT,
+	coreInfo_transfer MEDIUMINT,
+	handling_exception MEDIUMINT,
+	conclude MEDIUMINT,
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;

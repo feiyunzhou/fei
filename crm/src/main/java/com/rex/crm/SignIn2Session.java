@@ -49,7 +49,6 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		super(request);
 
 	}
-
 	/**
 	 * Checks the given username and password, returning a User object if if the username and
 	 * password identify a valid user.
