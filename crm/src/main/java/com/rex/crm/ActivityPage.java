@@ -14,6 +14,7 @@ import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.EntityDetailPage;
+import com.rex.crm.common.Field;
 import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.Param;
 import com.rex.crm.common.TableDataPanel;
@@ -56,7 +57,15 @@ public class ActivityPage extends TemplatePage
                 }     
                 search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
                
-                sql =  sql + " where title like '%"+search_target+"%'";
+                //sql =  sql + " where title like '%"+search_target+"%'";
+                List<Field> searchableFields = entity.getSearchableFields();
+                String joint = " like '%"+search_target+"%'";
+                String likequery = "";
+                for(Field sf:searchableFields){
+                    likequery = likequery + " OR "+ sf.getName() + joint;
+                }
+                
+                sql =  sql + " where title like '%"+search_target+"%' " + likequery;
                 List datalist = DAOImpl.queryEntityRelationList(sql, userId);
                 setResponsePage(new ActivityPage(datalist));
                 

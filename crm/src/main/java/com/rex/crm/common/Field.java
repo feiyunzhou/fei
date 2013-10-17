@@ -27,6 +27,8 @@ public class Field implements Serializable {
     @Expose
     private boolean isEditable;
     @Expose
+    private boolean isSearchable;
+    @Expose
     private String formatter;
     @Expose
     private int priority;
@@ -173,6 +175,14 @@ public class Field implements Serializable {
 	public void setBaseInfo(boolean isBaseInfo) {
 		this.isBaseInfo = isBaseInfo;
 	}
+
+    public boolean isSearchable() {
+        return isSearchable;
+    }
+
+    public void setSearchable(boolean isSearchable) {
+        this.isSearchable = isSearchable;
+    }
     
 
 }

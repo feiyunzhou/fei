@@ -13,9 +13,11 @@
                     //console.log("seleted_event_type:"+seleted_event_type);
                     
                     if(seleted_event_type == 1){
-                        $("#student_div").hide();
+                       // $("#student_div").hide();
+                        $("#select_user").attr("readonly",true);
                     }else if(seleted_event_type == 2){
-                        $("#student_div").show();
+                       // $("#student_div").show();
+                          $("#select_user").attr("readonly",false);
                     }
 
                 });
@@ -61,21 +63,22 @@
 									</div>
 
 
-                                    <div id="student_div" style="display:none;" class="control-group">
-										<label class="control-label">被辅导人：</label>
-										<div class="controls">
-											<input type="text" id="select_user" wicket:id="selected_user" required="required" ="input input-big" />
-											<input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
-											<a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
-										</div>
-									</div>
-									
-									<div class="control-group">
+                                    <div class="control-group">
 										<label class="control-label">拜访名称：</label>
 										<div class="controls">
 											<input type="text" id="act_title" class="input" placeholder="拜访名称..." wicket:id="act_title_input" />
 										</div>
 									</div>
+                                    <div id="student_div" style="" class="control-group">
+										<label class="control-label">被辅导人：</label>
+										<div class="controls">
+											<input type="text" id="select_user" readonly=false wicket:id="selected_user" class="input input-big" />
+											<input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
+											<a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
+										</div>
+									</div>
+									
+									
 									<div class="control-group">
 										<label class="control-label">拜访类型：</label>
 										<div class="controls">
