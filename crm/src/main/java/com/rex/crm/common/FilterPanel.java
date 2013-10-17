@@ -7,6 +7,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils.Null;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.apache.wicket.Page;
@@ -26,6 +27,7 @@ import com.google.common.collect.Maps;
 public class FilterPanel extends Panel {
     private static final Logger logger = Logger.getLogger(FilterPanel.class);
     private static final long serialVersionUID = 2501105233172820074L;
+
 
     public FilterPanel(String id,List<Pair<String, Map<String, Object>>> types ,Map<String,Boolean> filter,final Class responsePage) {
         super(id);
@@ -87,8 +89,10 @@ public class FilterPanel extends Panel {
                         Page page = null;
                         try {
                             page = (Page)responsePage.newInstance();
-                            Constructor cons = responsePage.getDeclaredConstructor(new Class[]{Map.class});
-                            page = (Page)cons.newInstance(new Object[]{map});
+                            Constructor cons = responsePage.getDeclaredConstructor(new Class[]{Map.class,List.class});
+                            //Constructor cons = responsePage.getDeclaredConstructor(Map.class,null);
+                             page = (Page)cons.newInstance(new Object[]{map, Lists.newArrayList()});
+                           // page = (Page)cons.newInstance(map,null);
                             
                         } catch (InstantiationException e) {
                             logger.error(e);

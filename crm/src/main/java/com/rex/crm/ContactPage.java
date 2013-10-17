@@ -79,7 +79,7 @@ public class ContactPage extends TemplatePage
         form.add(search_input);
         
        // List mapList = null;
-        if (tdata == null) {
+        if (tdata == null || tdata.size() == 0) {
             if (filter == null) {
                 String sql = entity.getSql();
                 if (roleId == 1) {

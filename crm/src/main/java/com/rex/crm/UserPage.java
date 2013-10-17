@@ -61,7 +61,7 @@ public class UserPage extends TemplatePage
         
         
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
-        if( tdata == null){
+        if( tdata == null || tdata.size() == 0){
           tdata = DAOImpl.queryEntityRelationList(entity.getSql(), "dummy");
         }
 		add(new PageableTablePanel("datalist",entity,tdata));

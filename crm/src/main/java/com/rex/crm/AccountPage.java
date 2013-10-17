@@ -78,7 +78,7 @@ public class AccountPage extends TemplatePage
         form.add(search_input);
         
         
-        if(tdata == null){
+        if(tdata == null || tdata.size() == 0){
         if(filter == null){
             String sql = entity.getSql();
             //if the user is admin we use admin sql to query database

@@ -75,7 +75,7 @@ public class ActivityPage extends TemplatePage
             sql = entity.getSqlAdmin();
         }
         
-        if(tdata == null){
+        if(tdata == null || tdata.size() == 0){
            tdata = DAOImpl.queryEntityRelationList(sql, userId);
         }
 		add(new PageableTablePanel("datalist",entity,tdata));
