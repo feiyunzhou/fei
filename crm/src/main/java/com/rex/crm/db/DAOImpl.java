@@ -879,12 +879,12 @@ public class DAOImpl {
         try {
             conn = DBHelper.getConnection();
             for (Choice ch : choices) {
-                String query = "select count(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
+                String query = "select sum(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
                 logger.debug("query is:" + query);
                 QueryRunner run = new QueryRunner();
                 Map<String, Object> map = run.query(conn, query, new MapHandler(), user_id);
                 if (map.get("sum") == null) {
-                    map.put("sum", 0L);
+                    map.put("sum", new java.math.BigDecimal(0));
                 }
                 map.put("val", ch.getVal());
                 res.add(Pair.of(String.valueOf(ch.getId()), map));
@@ -1014,6 +1014,10 @@ public class DAOImpl {
     	String key ="";
     	String fieldssql = Joiner.on(",").join(fieldNames);
         String valuesql = Joiner.on(",").join(values);
+        fieldssql = fieldssql + ",cityId";
+   	 	valuesql =  valuesql + ",1";
+   	 	fieldssql = fieldssql.replaceAll("user-city", "city");
+   	 	fieldssql = fieldssql.replaceAll("sex", "sex_pl");
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
    	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
@@ -1364,7 +1368,7 @@ public class DAOImpl {
         return lMap;
     }
     
-    public static List searchCRMUserOfManager(String managerId,String search_target) {
+    public static List searchCRMUser(String managerId,String search_target) {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
             search_target = "";
         }
@@ -1394,9 +1398,6 @@ public class DAOImpl {
     
     
     public static List searchCRMUser(String search_target) {
-        if(search_target == null|| search_target.equalsIgnoreCase("*")){
-            search_target = "";
-        }
         String sql = "select * from (select * from crmuser where name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%') as a";
         logger.debug(sql );
         Connection conn = null;
@@ -1485,14 +1486,14 @@ public class DAOImpl {
         return inferiors;
     }
     // update crmuser baseInfo
-    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex) {
-        String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=?,sex=? where id=?";
+    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo) {
+        String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=? where id=?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,userId);
+            inserts += run.update(conn, sql, userName, cellphone,email,photo,userId);
             System.out.println("updateCrmUser:" + inserts);
         } catch (Exception e) {
             logger.error("failed to updateStatusOfInternalMeeting", e);
@@ -1537,6 +1538,7 @@ public class DAOImpl {
         }
         return user;
     }
+    
     //reset password
     public static void  resetUserPassword(int entityId){
     	System.out.println("reset password");

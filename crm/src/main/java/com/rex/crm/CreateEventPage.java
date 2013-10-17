@@ -223,8 +223,8 @@ public class CreateEventPage extends TemplatePage
         PageParameters params = new PageParameters();
         params.set("mid", uid);
         form.add(new BookmarkablePageLink<Void>("search_user_btn", SelectCRMUserPage.class,params ).setPopupSettings(popupSettings));
-        form.add(new HiddenField<String>("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
-        form.add(new TextField<String>("selected_user" ,new PropertyModel<String>(this,"selected_user")));
+         form.add(new HiddenField<String>("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
+         form.add(new TextField<String>("selected_user" ,new PropertyModel<String>(this,"selected_user")));
               
          //final List<Choice> sales_visiting_purpose_pl = DAOImpl.queryPickList("sales_visiting_purpose_pl");
          //final List<Choice> com_visiting_purpose_pl = DAOImpl.queryPickList("com_visiting_purpose_pl");

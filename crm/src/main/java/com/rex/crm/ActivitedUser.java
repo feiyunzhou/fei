@@ -28,7 +28,8 @@ public class ActivitedUser extends WebPage{
 	}
 	public void initPage(final String loginName){
 		logger.debug("init");
-		final CRMUser crmuser = DAOImpl.getUserByActivation(loginName);
+		CRMUser crmuser = DAOImpl.getUserByActivation(loginName);
+		final int userId = crmuser.getId();
 		//此时获取到对象，接收客户端的数据
 		final  Label promptLabel = new Label("prompt","操作失败重新输入！");
 		Form form = new Form("form"){
@@ -36,8 +37,7 @@ public class ActivitedUser extends WebPage{
 			protected void onSubmit() {
 				String password =  models.get("password").getObject() == null? null:String.valueOf(models.get("password").getObject());
 				logger.debug("pwd:"+password);
-				int userId = crmuser.getId();
-				if(DAOImpl.updateCrmUserPassword(crmuser.getId(), password)){
+				if(DAOImpl.updateCrmUserPassword(userId, password)){
 					//用此用户登录
 					SignIn2Session session = getMysession();
 		        	session.setUser(null);

@@ -246,7 +246,7 @@ CREATE TABLE activity_status_pl
 ) ENGINE InnoDB;
 INSERT INTO activity_status_pl (val) VALUES('计划');
 INSERT INTO activity_status_pl (val) VALUES('完成');
-
+INSERT INTO activity_status_pl (val) VALUES('取消');
 
 drop table if exists activity_activity_types_pl;
 CREATE TABLE activity_activity_types_pl 
@@ -708,17 +708,3 @@ CREATE TABLE dealerContact
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
-drop table if exists coachScoring
-CREATE TABLE coachScoring
-(
-	id MEDIUMINT NOT NULL AUTO_INCREMENT,
-	accountId MEDIUMINT  NOT NULL,
-	total_grade MEDIUMINT,
-	preparatory_work MEDIUMINT,
-	open MEDIUMINT,
-	snooping MEDIUMINT,
-	coreInfo_transfer MEDIUMINT,
-	handling_exception MEDIUMINT,
-	conclude MEDIUMINT,
-    PRIMARY KEY USING BTREE (id)
-) ENGINE InnoDB;
