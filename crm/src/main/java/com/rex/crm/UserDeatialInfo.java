@@ -192,7 +192,7 @@ public class UserDeatialInfo extends TemplatePage{
 				}
 				
 				int userId =Integer.parseInt(((SignIn2Session)getSession()).getUserId());
-				DAOImpl.updateStatusOfInternalMeeting(userId,userName,cellPhone,email,photo,sex);
+				DAOImpl.updateStatusOfInternalMeeting(userId,userName,cellPhone,email,photo);
 				setResponsePage(HomePage.class);
 			}
 	    };
