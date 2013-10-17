@@ -88,6 +88,7 @@ public class EventViewerPage extends TemplatePage
         
         if (map != null) {
             int eventType = ((Number) map.get("event_type")).intValue();
+            logger.debug("eventType:"+eventType);
             if (eventType == 2 && roleId == 3) {
                 // for the sales rep, no permission to edit the coaching event
                 write_btn_visible = false;
@@ -99,10 +100,10 @@ public class EventViewerPage extends TemplatePage
             protected void onSubmit()
             {
                 //update status of calenderEvent mark it to be completed
-                Date act_end_datetime = new Date();
+            	Date act_end_datetime = new Date();
                 DAOImpl.updateStatusOfCalendarEvent((int)eventId, 2,act_end_datetime);
-               
-               setResponsePage(PageFactory.createPage("calendar"));
+                //判断类型如果是辅导类型则跳转到评分界面
+                setResponsePage(PageFactory.createPage("calendar"));
                
             }
         };

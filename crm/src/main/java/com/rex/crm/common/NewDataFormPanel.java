@@ -1,5 +1,8 @@
 package com.rex.crm.common;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,13 +33,11 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.PageFactory;
-import com.rex.crm.SelectCRMUserPage;
 import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.Choice;
@@ -344,10 +345,23 @@ public class NewDataFormPanel extends Panel {
 	public void sendMail(String getUserByLoginName,String sendEmail){
 		Session sendMailSession = null;
         SMTPTransport transport = null;
-        String emailContent = "请点击连接激活用户";
-        getSession().setAttribute("loginName",getUserByLoginName);
-        emailContent += "http://localhost:8080/crm/mount/ActivitedUser?loginName="+getUserByLoginName+"";
-        //String emailContent = "请点击连接激活用户,"+"'http://localhost:8080/crm/getUserCode?userCode='"+userCode+"'";
+        StringBuilder emailContent = new StringBuilder("请点击连接激活用户");
+        Properties systemPeroperties = new Properties();
+        try {
+        	systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/system.properties"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        emailContent.append("http://");
+        String localhost = systemPeroperties.getProperty("url");
+        logger.debug("localhost:"+localhost);
+        emailContent.append(systemPeroperties.getProperty("url"));
+        emailContent.append("/crm/mount/ActivitedUser?loginName=");
+        emailContent.append(getUserByLoginName);
         logger.debug(emailContent);
         Properties props = new Properties();
         // 与服务器建立Session的参数设置
@@ -365,17 +379,11 @@ public class NewDataFormPanel extends Panel {
 	        newMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(sendEmail));
 	        newMessage.setSubject("用户激活！");
 	        newMessage.setSentDate(new Date());
-	        newMessage.setText(emailContent);
+	        newMessage.setText(emailContent.toString());
 	        Transport.send(newMessage);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        // 使用MimeMultipart和MimeBodyPart才能发HTML格式邮件。
-       /* BodyPart bodyPart = new MimeBodyPart();
-        bodyPart.setContent(generateEmailBody(), "text/html;charset=gb2312"); // 发一个HTML格式的
-        Multipart mp = new MimeMultipart();
-        mp.addBodyPart(bodyPart);
-        */
 	}
 }

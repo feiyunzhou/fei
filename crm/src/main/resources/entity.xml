@@ -1088,6 +1088,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
