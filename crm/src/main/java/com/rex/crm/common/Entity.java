@@ -77,6 +77,17 @@ public class Entity implements Serializable{
         return null;
     }
     
+    public List<Field> getSearchableFields(){
+        List<Field> res = Lists.newArrayList();
+        if(fields !=null){
+            for(Field f:fields){
+               if(f.isSearchable()){
+                   res.add(f);
+               }
+            }
+        }
+        return res;
+    }
     public List<String> getDisplayNames(){
         List<String> fd = Lists.newArrayList();
         if(fields !=null){

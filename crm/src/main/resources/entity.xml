@@ -10,13 +10,24 @@
 		<!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account 
 			where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId 
 			group by account.id) as aAccount -->
-		<sql>SELECT * from (select account.* from accountcrmuser\,account
-			where (accountcrmuser.crmuserId=?) AND
-			accountcrmuser.accountId=account.id order by whenadded DESC) as
-			aAccount
+		<sql>SELECT * from (select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
+		                                 account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+		                    FROM account\,accountcrmuser\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+			                WHERE (accountcrmuser.crmuserId=?) AND 
+			                       accountcrmuser.accountId=account.id AND
+			                       account_point_pl.id=key_type AND 
+		                           account_type_pl.id=hospital_type AND
+		                           account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
+			                order by whenadded DESC) as aAccount
 		</sql>
-		<sql-admin>SELECT * from (select account.* from account where (? IS
-			NOT NULL) order by whenadded DESC) as aAccount
+		<sql-admin>SELECT * from (select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
+		                                 account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+		                          FROM account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+		                          WHERE (? IS NOT NULL) AND 
+		                                account_point_pl.id=key_type AND 
+		                                account_type_pl.id=hospital_type AND
+		                                account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
+		                          ORDER BY whenadded DESC) as aAccount
 		</sql-admin>
 
 		<sql-ent>SELECT * from (select account.* from account where
@@ -101,6 +112,19 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
+				<name>hospital_type_val</name>
+				<display>医院类型</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
 				<name>local_or_army</name>
 				<display>地方医院／军队医院</display>
 				<isRequired>false</isRequired>
@@ -127,6 +151,19 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
+				<name>comprehensive_or_specialized_val</name>
+				<display>综合医院／专科医院 </display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
 				<name>key_type</name>
 				<display>重点医院</display>
 				<isRequired>false</isRequired>
@@ -136,6 +173,19 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_point_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>key_type_val</name>
+				<display>重点医院</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -486,17 +536,19 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
-		<sql>select * from (select contact.*\,account.name as an\,account.id as accountName from
-			contact\,contactcrmuser\,account where contactcrmuser.crmuserId=? AND
-			contactcrmuser.contactId=contact.id AND account.id=contact.accountId
-			order by whenadded DESC) as
-			aContact
+		<sql>
+		    select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName
+		                  from contact\,contactcrmuser\,account \,contact_generalization_target_pl 
+		                  where contactcrmuser.crmuserId=? AND 
+			                    contactcrmuser.contactId=contact.id AND account.id=contact.accountId AND 
+			                    contact_generalization_target_pl.id= product_target 
+			                    order by whenadded DESC) as
+			                    aContact
 		</sql>
-
-		<sql-admin>select * from (select contact.*\,account.name as an\,account.id as accountName
-			from contact\,account where account.id=contact.accountId AND (? IS
-			NOT NULL) order by whenadded DESC) as
-			aContact
+		<sql-admin>select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName
+			                       from contact\,account\,contact_generalization_target_pl 
+			                       where account.id=contact.accountId AND contact_generalization_target_pl.id= product_target
+                                   AND (? IS NOT NULL) order by whenadded DESC) as aContact
 		</sql-admin>
 
 		<sql-ent>select * from (select contact.*\,account.id as accountName
@@ -555,6 +607,21 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<relationTable>account</relationTable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			 <field>
+				<name>accountName_val</name>
+				<display>医疗机构</display>
+				<isRequired>false</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -757,6 +824,20 @@
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
+            <field>
+                <name>product_target_val</name>
+                <display>主推广产品目标</display>
+                <isRequired>false</isRequired>
+                <data-type>text</data-type>
+                <isPrimaryKey>false</isPrimaryKey>
+                <isDetailLink>false</isDetailLink>
+                <isVisible>false</isVisible>
+                <isEditable>false</isEditable>
+                <isSearchable>true</isSearchable>
+                <priority>1</priority>
+                <fieldGroup>基本信息</fieldGroup>
+            </field>
+
 			<field>
 				<name>visiting_target</name>
 				<display>拜访目标次数</display>
@@ -905,8 +986,13 @@
 		<entity>
 		<name>crmuser</name>
 		<display>用户</display>
-		<sql>select * from crmuser where ? is NOT NULL</sql>
-		<sql-admin>select * from crmuser where ? is NOT NULL</sql-admin>
+		<sql>
+		select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val
+		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser
+		</sql>
+		<sql-admin>select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val
+		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser
+		</sql-admin>
 		<sql-ent>select * from crmuser where id=?</sql-ent>
 		<filterField>pl2</filterField>
 		<fields>
@@ -975,6 +1061,7 @@
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
+				<isSearchable>true</isSearchable>
 				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
@@ -1001,6 +1088,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -1014,10 +1102,24 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+	   		    <isBaseInfo>false</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
-				<isBaseInfo>false</isBaseInfo>
-				<fieldGroup>基本信息</fieldGroup>
 			</field>
+			<field>
+				<name>reportto_val</name>
+				<display>上级经理</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isBaseInfo>false</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>role</name>
 				<display>角色</display>
@@ -1028,6 +1130,19 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>role_val</name>
+				<display>角色</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -1269,16 +1384,21 @@
 		<name>activity</name>
 		<display>日历</display>
 		<sql>select * from (select activity.*\,activity.activity_type as
-			act_type\,activity.status as act_status\, activity.contactId as
-			contactName\, contact.accountId as accountName from activity\,
-			contact\,activitycrmuser where contact.id= activity.contactId AND activitycrmuser.activityId=activity.id AND activitycrmuser.crmuserId=?) as
+			                             act_type\,activity.status as act_status\, activity.contactId as
+			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
+			                             contact.name as contactname_val  
+			                from activity\,contact\,activitycrmuser\,activity_event_type_pl\,account 
+			                where contact.id= activity.contactId AND activitycrmuser.activityId=activity.id AND activitycrmuser.crmuserId=? AND 
+			                activity_event_type_pl.id=event_type AND account.id=contact.accountId) as
 			aActivity
 		</sql>
 		<sql-admin>select * from (select activity.*\,activity.activity_type as
-			act_type\,activity.status as act_status\, activity.contactId as
-			contactName\, contact.accountId as accountName from activity\,
-			contact where contact.id= activity.contactId AND (? IS NOT NULL)) as
-			aActivity
+			                             act_type\,activity.status as act_status\, activity.contactId as
+			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
+			                             contact.name as contactname_val
+			                      from activity\,contact\,activity_event_type_pl\,account
+			                      where contact.id= activity.contactId AND activity_event_type_pl.id=event_type AND account.id=contact.accountId AND (? IS NOT NULL)) 
+			                      as aActivity
 		</sql-admin>
 		<sql-ent>select * from (select activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
@@ -1310,6 +1430,20 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>event_type_val</name>
+				<display>类型</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
@@ -1376,6 +1510,18 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 
+            <field>
+				<name>contactname_val</name>
+				<display>拜访医生</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 			<field>
 				<name>contactName</name>
 				<display>拜访医生</display>
@@ -1403,6 +1549,19 @@
 				<relationTable>account</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			<field>
+				<name>accountName_val</name>
+				<display>医院</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>participants</name>
 				<display>参与人/相关人员</display>

@@ -1014,6 +1014,10 @@ public class DAOImpl {
     	String key ="";
     	String fieldssql = Joiner.on(",").join(fieldNames);
         String valuesql = Joiner.on(",").join(values);
+        fieldssql = fieldssql + ",cityId";
+   	 	valuesql =  valuesql + ",1";
+   	 	fieldssql = fieldssql.replaceAll("user-city", "city");
+   	 	fieldssql = fieldssql.replaceAll("sex", "sex_pl");
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
    	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
@@ -1364,7 +1368,7 @@ public class DAOImpl {
         return lMap;
     }
     
-    public static List searchCRMUserOfManager(String managerId,String search_target) {
+    public static List searchCRMUser(String managerId,String search_target) {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
             search_target = "";
         }
@@ -1394,9 +1398,6 @@ public class DAOImpl {
     
     
     public static List searchCRMUser(String search_target) {
-        if(search_target == null|| search_target.equalsIgnoreCase("*")){
-            search_target = "";
-        }
         String sql = "select * from (select * from crmuser where name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%') as a";
         logger.debug(sql );
         Connection conn = null;
@@ -1537,6 +1538,7 @@ public class DAOImpl {
         }
         return user;
     }
+    
     //reset password
     public static void  resetUserPassword(int entityId){
     	System.out.println("reset password");
