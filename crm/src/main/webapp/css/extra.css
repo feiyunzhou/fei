@@ -1,0 +1,110 @@
+.btn.dropdown-toggle.clearfix.btn-primary {
+    width: 96px;
+}
+
+.navbar-text.pull-right {
+    padding-top: 2px;
+}
+
+.btn.btn-sm.btn-danger.btn-mini {
+    margin-right: 10px;
+}
+
+.btn-group {
+    margin-top: 2px;
+}
+
+.navbar .btn, .navbar .btn-group {
+    margin-top: 7px;
+}
+
+.data-table {
+    margin-top: -53px; 
+}
+
+.form-search {
+    margin-top: 3px;
+    margin-right: 23px;
+}
+
+.input_wrapper {
+    margin-right: 54px;
+}
+.input_button_wrapper {
+    margin-top: -30px;
+}
+
+@media ( max-width : 768px) {
+    /* Enable use of floated navbar text */
+    .btn.dropdown-toggle.clearfix.btn-primary {
+        margin-right: 10px;
+    }
+    .btn.clearfix.btn-primary.btn-menu.navbar-toggle {
+        width: 32px;
+        padding-left: 9px;
+        padding-right: 9px;
+        display:block;
+        margin-right: 17px;
+    }
+    .nav-tabs > li{
+        width:100%;
+    }
+    .nav-tabs{
+        padding-left: 0px;
+    }
+    .nav-tabs > li > a{
+        -webkit-border-radius: 0 0 0 0;
+        -moz-border-radius: 0 0 0 0;
+        border-radius: 0 0 0 0;
+        border-bottom-color: #ddd;
+    }
+    .nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
+        border-bottom-color: #ddd;
+    }
+    .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+        border-color: #eeeeee;
+    }
+    .well.sidebar-nav.sidebarbox {
+        padding-left: 10px;
+    }
+    .data-table {
+        margin-top: 0px; 
+    }
+    .span10.earch-query {
+        width: 100% !important;
+    }
+    .pull-right div {
+        margin-right: 10px;
+    }
+    .input-append {
+        width: 100%;
+    }
+    .form-search {
+        margin-top: 3px;
+        margin-right: 0px;
+    }
+    .input-wrapper {
+        width: 100%;
+    }
+}
+
+@media ( min-width : 768px) {
+    .btn.clearfix.btn-primary.btn-menu.navbar-toggle {
+        display:none;
+    }
+
+    .row-fluid.menu-link.in.collapse {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .row-fluid.menu-link.collapse {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .nav.nav-tabs {
+        padding-left: 20px;
+        margin-top: -9px;
+    }
+}
