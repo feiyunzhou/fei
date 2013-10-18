@@ -15,14 +15,18 @@
 				</div>
 			</div>
 			<div class="span10 box ">
-			    <form wicket:id="form" class="form-search">
+			    <form wicket:id="form" class="form-search" align="right">
 					<div class="input-append">
+                                            <div class="input_wrapper">
 						<input type="text" class="span10 earch-query"  wicket:id="search_input"/>
-						<button type="submit" class="btn">查找</button>
+                                            </div>
+                                            <div class="input_button_wrapper">
+                                                <button type="submit" class="btn">查找</button>
+                                            </div>
 					</div>
 				</form>
 				<div class="box-header"></div>
-				<div >
+				<div class="data-table">
 					<span wicket:id="datalist">data table</span>
 				</div>
 			</div>

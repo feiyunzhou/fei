@@ -216,8 +216,8 @@ you can use the generic selector below, but it's slower:
   border-top-color: #34495e !important;
 }
 body {
-  font-family: 'Lato', Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial,'Hiragino Sans GB', STHeiti, SimSun, sans-serif;
+  font-size: 13px;
   line-height: 1.231;
   color: #34495e;
   background-color: #ffffff;
@@ -367,19 +367,19 @@ h2,
 }
 h3,
 .h3 {
-  font-size: 40px;
+  font-size: 36px;
 }
 h4,
 .h4 {
-  font-size: 29px;
+  font-size: 28px;
 }
 h5,
 .h5 {
-  font-size: 28px;
+  font-size: 16px;
 }
 h6,
 .h6 {
-  font-size: 24px;
+  font-size: 14px;
 }
 h1 small,
 .h1 small {
@@ -444,8 +444,8 @@ address {
   border: none;
   background: #bdc3c7;
   color: #ffffff;
-  padding: 9px 12px 10px;
-  line-height: 22px;
+  padding: 5px 12px 5px;
+  line-height: 20px;
   text-decoration: none;
   border-radius: 6px;
   -webkit-transition: 0.25s linear;
@@ -519,7 +519,7 @@ address {
 .input-group-sm .btn {
   font-size: 13px;
   line-height: 20px;
-  padding: 6px 13px 8px;
+  padding: 4px 13px 4px;
 }
 .btn.btn-sm > [class^="fui-"],
 .input-group-sm .btn > [class^="fui-"] {
@@ -2073,33 +2073,33 @@ fieldset[disabled] .form-control + .input-icon,
 .dropdown-menu li:first-child dt + a {
   border-radius: 0;
 }
-.dropdown-menu li:first-child > a {
+.dropdown-menu li:first-child a {
   border-radius: 6px 6px 0 0;
   padding-top: 8px;
 }
-.dropdown-menu li:last-child > a {
+.dropdown-menu li:last-child a {
   border-radius: 0 0 6px 6px;
   padding-bottom: 10px;
 }
-.dropdown-menu li.active > a,
-.dropdown-menu li.selected > a,
-.dropdown-menu li.active > a.highlighted,
-.dropdown-menu li.selected > a.highlighted {
+.dropdown-menu li.active a,
+.dropdown-menu li.selected a,
+.dropdown-menu li.active a.highlighted,
+.dropdown-menu li.selected a.highlighted {
   background: #1abc9c;
   color: #ffffff;
 }
-.dropdown-menu li.active > a:hover,
-.dropdown-menu li.selected > a:hover,
-.dropdown-menu li.active > a.highlighted:hover,
-.dropdown-menu li.selected > a.highlighted:hover,
-.dropdown-menu li.active > a:focus,
-.dropdown-menu li.selected > a:focus,
-.dropdown-menu li.active > a.highlighted:focus,
-.dropdown-menu li.selected > a.highlighted:focus {
+.dropdown-menu li.active a:hover,
+.dropdown-menu li.selected a:hover,
+.dropdown-menu li.active a.highlighted:hover,
+.dropdown-menu li.selected a.highlighted:hover,
+.dropdown-menu li.active a:focus,
+.dropdown-menu li.selected a:focus,
+.dropdown-menu li.active a.highlighted:focus,
+.dropdown-menu li.selected a.highlighted:focus {
   background: #16a085;
   color: #ffffff;
 }
-.dropdown-menu li > a {
+.dropdown-menu li a {
   color: rgba(52, 73, 94, 0.75);
   padding: 6px 15px 8px;
   text-decoration: none;
@@ -2110,31 +2110,31 @@ fieldset[disabled] .form-control + .input-icon,
   transition: background-color 0.25s;
   -webkit-backface-visibility: hidden;
 }
-.dropdown-menu li > a:before,
-.dropdown-menu li > a:after {
+.dropdown-menu li a:before,
+.dropdown-menu li a:after {
   display: table;
   content: "";
 }
-.dropdown-menu li > a:after {
+.dropdown-menu li a:after {
   clear: both;
 }
-.dropdown-menu li > a:hover,
-.dropdown-menu li > a:active,
-.dropdown-menu li > a:focus {
+.dropdown-menu li a:hover,
+.dropdown-menu li a:active,
+.dropdown-menu li a:focus {
   background: #e1e4e7;
   color: inherit;
   outline: none;
 }
-.dropdown-menu li > a.highlighted {
+.dropdown-menu li a.highlighted {
   background: #c9cfd4;
   color: #ffffff;
 }
-.dropdown-menu li > a.highlighted:hover,
-.dropdown-menu li > a.highlighted:focus {
+.dropdown-menu li a.highlighted:hover,
+.dropdown-menu li a.highlighted:focus {
   background: #bac1c8;
   color: #ffffff;
 }
-.dropdown-menu li > a:before {
+.dropdown-menu li a:before {
   float: right;
   margin-top: 3px;
 }
@@ -2201,18 +2201,18 @@ fieldset[disabled] .form-control + .input-icon,
 .dropdown-inverse li {
   margin: 0 4px -2px;
 }
-.dropdown-inverse li:first-child > a,
-.dropdown-inverse li:last-child > a {
+.dropdown-inverse li a,
+.dropdown-inverse li a {
   border-radius: 2px;
   padding-bottom: 7px;
   padding-top: 5px;
 }
-.dropdown-inverse li:first-child dt + a,
-.dropdown-inverse li:last-child dt + a {
+.dropdown-inverse li dt + a,
+.dropdown-inverse li dt + a {
   border-radius: 2px;
 }
-.dropdown-inverse li.active > a,
-.dropdown-inverse li.selected > a {
+.dropdown-inverse li.active a,
+.dropdown-inverse li.selected a {
   background: #1abc9c;
   color: #ffffff;
   position: relative;
@@ -2226,21 +2226,21 @@ fieldset[disabled] .form-control + .input-icon,
   margin-left: 11px;
   margin-right: 11px;
 }
-.dropdown-inverse li > a {
+.dropdown-inverse li a {
   border-radius: 2px;
   color: #ffffff;
   padding: 5px 11px 7px;
 }
-.dropdown-inverse li > a:hover,
-.dropdown-inverse li > a:active,
-.dropdown-inverse li > a:focus {
+.dropdown-inverse li a:hover,
+.dropdown-inverse li a:active,
+.dropdown-inverse li a:focus {
   background: #2c3e50;
 }
-.dropdown-inverse li > a.highlighted {
+.dropdown-inverse li a.highlighted {
   background: #526476;
 }
-.dropdown-inverse li > a.highlighted:hover,
-.dropdown-inverse li > a.highlighted:focus {
+.dropdown-inverse li a.highlighted:hover,
+.dropdown-inverse li a.highlighted:focus {
   background: #677786;
 }
 .dropdown-inverse li .divider {
