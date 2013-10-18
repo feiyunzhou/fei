@@ -11,6 +11,7 @@ import org.apache.wicket.model.PropertyModel;
 import com.google.common.collect.Lists;
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.Entity;
+import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.TableDataPanel;
@@ -65,8 +66,22 @@ public class ContactPage extends TemplatePage
                 
                 search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
                
-                sql =  sql + " where name like '%"+search_target+"%' OR an like '%"+search_target+"%'";
-                System.out.println(sql);
+//                sql =  sql + " where name like '%"+search_target+"%' OR an like '%"+search_target+"%' OR " +
+//                		"product_target_val like '%"+search_target+"%'";
+                //sql = "(" + sql + ") as bcontact";
+                /*sql = "select * from " + sql + ", contact_generalization_target_pl where contact_generalization_target_pl.id=product_target AND " +
+                       " (name like '%"+search_target+"%' OR an like '%"+search_target+"%' OR contact_generalization_target_pl.val like '%"+search_target+"%')"; 
+                */
+                List<Field> searchableFields = entity.getSearchableFields();
+                String joint = " like '%"+search_target+"%'";
+                String likequery = "";
+                for(Field sf:searchableFields){
+                    likequery = likequery + " OR "+ sf.getName() + joint;
+                }
+                
+                sql =  sql + " where name like '%"+search_target+"%' " + likequery;
+                
+                System.out.println("TEST:"+sql);
                 List datalist = DAOImpl.queryEntityRelationList(sql, userId);
                 setResponsePage(new ContactPage(filter,datalist));
                 
@@ -79,7 +94,7 @@ public class ContactPage extends TemplatePage
         form.add(search_input);
         
        // List mapList = null;
-        if (tdata == null) {
+        if (tdata == null || tdata.size() == 0) {
             if (filter == null) {
                 String sql = entity.getSql();
                 if (roleId == 1) {

@@ -233,6 +233,7 @@ public class Configuration {
                     field.setEditable(Boolean.parseBoolean(sub2.getString("isEditable"))); 
                     field.setRequired(Boolean.parseBoolean(sub2.getString("isRequired"))); 
                     field.setBaseInfo(Boolean.parseBoolean(sub2.getString("isBaseInfo")));
+                    field.setSearchable(Boolean.parseBoolean(sub2.getString("isSearchable")));
                 }
                 
             }

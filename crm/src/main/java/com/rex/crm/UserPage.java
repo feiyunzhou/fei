@@ -9,6 +9,7 @@ import org.apache.wicket.model.PropertyModel;
 
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.Entity;
+import com.rex.crm.common.Field;
 import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.TableDataPanel;
 import com.rex.crm.db.DAOImpl;
@@ -46,7 +47,15 @@ public class UserPage extends TemplatePage
                 
                 search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
                
-                sql =  sql + " AND name like '%"+search_target+"%'";
+                //sql =  sql + " AND name like '%"+search_target+"%'";
+                List<Field> searchableFields = entity.getSearchableFields();
+                String joint = " like '%"+search_target+"%'";
+                String likequery = "";
+                for(Field sf:searchableFields){
+                    likequery = likequery + " OR "+ sf.getName() + joint;
+                }
+                
+                sql =  sql + " where name like '%"+search_target+"%' " + likequery;
                 System.out.println(sql);
                 List datalist = DAOImpl.queryEntityRelationList(sql, "dummy");
                 setResponsePage(new UserPage(datalist));
@@ -61,7 +70,7 @@ public class UserPage extends TemplatePage
         
         
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
-        if( tdata == null){
+        if( tdata == null || tdata.size() == 0){
           tdata = DAOImpl.queryEntityRelationList(entity.getSql(), "dummy");
         }
 		add(new PageableTablePanel("datalist",entity,tdata));
