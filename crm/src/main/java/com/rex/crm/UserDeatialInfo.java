@@ -11,9 +11,7 @@ import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
@@ -28,9 +26,7 @@ import org.apache.wicket.util.file.File;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.CRMUser;
-import com.rex.crm.beans.Choice;
 import com.rex.crm.common.Entity;
-import com.rex.crm.common.EntityDetailPage;
 import com.rex.crm.common.Field;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -61,7 +57,7 @@ public class UserDeatialInfo extends TemplatePage{
 		CRMUser user = DAOImpl.getCRMUserInfoById(userId);
 		 
 		//add and setting image and image style
-		/*if(null==user.getPhoto()){
+		if(null==user.getPhoto()){
 			Image image = new Image("userphoto","src/main/webapp/image/userDefaultImg.jpg");
 		}
 		WebMarkupContainer image = new WebMarkupContainer("userphoto");
@@ -69,7 +65,7 @@ public class UserDeatialInfo extends TemplatePage{
 		//image.add(new AttributeAppender("src","http://localhost:8080/crm/"+user.getPhoto()));
 		add(image);
 		RepeatingView divRepeater = new RepeatingView("userRealtionInfo");
-	    add(divRepeater);*/
+	    add(divRepeater);
 		final List<String> fieldNames = Lists.newArrayList();
 		//得到基本信息信息
 		RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
@@ -93,6 +89,7 @@ public class UserDeatialInfo extends TemplatePage{
 			numOfField++;
 			visibleFields.add(f);
 		}
+		//琥获取到
 		logger.debug("numOfField:"+numOfField);
 		int num_of_row = (numOfField / number_of_column) ;
 		for (int i = 0; i <num_of_row; i++) {
@@ -111,44 +108,26 @@ public class UserDeatialInfo extends TemplatePage{
 					fieldNames.add(currentField.getName());
 				} else {
 					 String fieldName = null;
-					 if(currentField.getName().equals("name")){
+					 if(currentField.getDisplay().equals("姓名")){
 						 fieldName = user.getName();
-					 }else if(currentField.getName().equals("cellPhone")){
+					 }else if(currentField.getDisplay().equals("手机号码")){
 						 fieldName = user.getCellPhone();
-					 }else if(currentField.getName().equals("loginName")){
-						 fieldName = user.getLoginName();
-					 }else if(currentField.getName().equals("sex")){
-						fieldName = ""+user.getSex();
 					 }else{
 						 fieldName = user.getEmail();
 					 }
-					 if(currentField.getName().equals("sex")){
-						 List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
-						 Map<Long, String> list = Maps.newHashMap();
-						 List<Long> ids = Lists.newArrayList();
-						 for (Choice p : pickList) {
-							 list.put(p.getId(), p.getVal());
-							 ids.add(p.getId());
-						 }
-						 IModel choiceModel =  new Model(Long.parseLong(""+user.getSex()));
-						 models.put(currentField.getName(), choiceModel);
-						 fieldNameToModel.put(currentField.getName(), choiceModel);
-						 columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids,list, choiceModel));
-					 }else{
-						 IModel<String> textModel = new Model<String>("");
-						 models.put(CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(fieldName)),textModel);
-						 fieldNameToModel.put(currentField.getName(), textModel);
-						 columnitem.add(new TextInputFragment("editdata","textInputFragment", this, textModel,fieldName,currentField));
-						 columnitem.add(new AttributeAppender("style",new Model("text-align:left;"),";"));
-					 }
 					 logger.debug("fieldName:"+fieldName);
 					 logger.debug("userName:"+user.getName());
+					 IModel<String> textModel = new Model<String>("");
+					 models.put(CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(fieldName)),textModel);
+					 fieldNameToModel.put(currentField.getName(), textModel);
+					 columnitem.add(new TextInputFragment("editdata","textInputFragment", this, textModel,fieldName,currentField));
+					 columnitem.add(new AttributeAppender("style",new Model("text-align:left;"),";"));
 				}
 				columnRepeater.add(columnitem);
 			}
 		}
 		//add user photo
-		/*final FileUploadField fileUploadField =new FileUploadField("image");
+		final FileUploadField fileUploadField =new FileUploadField("image");
 		Form imgForm = new Form("imgForm"){
 			@Override
 			protected void onSubmit() {
@@ -164,7 +143,7 @@ public class UserDeatialInfo extends TemplatePage{
 		};
 		imgForm.add(fileUploadField);
 		imgForm.setMultiPart(true);
-		add(imgForm);*/
+		add(imgForm);
 		 //create edit userForm
 	    Form form = new Form("form") {
 			@Override
@@ -174,7 +153,6 @@ public class UserDeatialInfo extends TemplatePage{
 				String cellPhone = "";
 				String email = "";
 				String photo = "";
-				int  sex = 0;
 				for (String k : fieldNameToModel.keySet()) {
 					logger.debug("k"+k);
 					String value = fieldNameToModel.get(k).getObject() == null? null:String.valueOf(fieldNameToModel.get(k).getObject());
@@ -184,16 +162,14 @@ public class UserDeatialInfo extends TemplatePage{
 						cellPhone = value;
 					}else if(k.equals("photo")){
 						photo = value;
-					}else if(k.equals("sex")){
-						sex = Integer.parseInt(value);
-					}else{
+					}
+					else{
 						email = value;
 					}
 				}
 				
 				int userId =Integer.parseInt(((SignIn2Session)getSession()).getUserId());
 				DAOImpl.updateStatusOfInternalMeeting(userId,userName,cellPhone,email,photo);
-				setResponsePage(HomePage.class);
 			}
 	    };
 	    form.add(fieldGroupRepeater);
@@ -218,27 +194,6 @@ public class UserDeatialInfo extends TemplatePage{
 				MarkupContainer markupProvider, String label) {
 			super(id, markupId, markupProvider);
 			add(new Label("celldata", label));
-		}
-	}
-	
-	private class DropDownChoiceFragment extends Fragment {
-		public DropDownChoiceFragment(String id, String markupId,
-				MarkupContainer markupProvider, final List<Long> ids,
-				final Map<Long, String> list, IModel model) {
-			super(id, markupId, markupProvider);
-			add(new DropDownChoice<Long>("dropDownInput", model, ids,
-					new IChoiceRenderer<Long>() {
-						@Override
-						public Object getDisplayValue(Long id) {
-							// TODO Auto-generated method stub
-							return list.get(id);
-						}
-
-						@Override
-						public String getIdValue(Long id, int index) {
-							return String.valueOf(id);
-						}
-					}));
 		}
 	}
 }

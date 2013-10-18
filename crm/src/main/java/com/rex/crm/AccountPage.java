@@ -15,11 +15,9 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.common.Entity;
-import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.db.DAOImpl;
@@ -66,14 +64,7 @@ public class AccountPage extends TemplatePage
                 
                 search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
                
-                List<Field> searchableFields = entity.getSearchableFields();
-                String joint = " like '%"+search_target+"%'";
-                String likequery = "";
-                for(Field sf:searchableFields){
-                    likequery = likequery + " OR "+ sf.getName() + joint;
-                }
-                
-                sql =  sql + " where name like '%"+search_target+"%' " + likequery;
+                sql =  sql + " where name like '%"+search_target+"%'";
                 System.out.println(sql);
                 List datalist = DAOImpl.queryEntityRelationList(sql, userId);
                 setResponsePage(new AccountPage(filter,datalist));
@@ -87,7 +78,7 @@ public class AccountPage extends TemplatePage
         form.add(search_input);
         
         
-        if(tdata == null || tdata.size() == 0){
+        if(tdata == null){
         if(filter == null){
             String sql = entity.getSql();
             //if the user is admin we use admin sql to query database

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -84,33 +83,51 @@ public class HomePage extends TemplatePage {
          */
         String cap = "目标医生拜访频率统计";
         List<Map> visitingFreq = VisitingReporter.generateVisitingFrequencyReportingByUserId(userId);
-        Entity reportEntity = Configuration.getEntityByName("contactVisitingFrequency");
-        ReportingTablePanel visiting_report_panel = new ReportingTablePanel("visiting_frequency_report_panel", cap, reportEntity, visitingFreq);
-        add(visiting_report_panel);
+        
+        if (visitingFreq != null && visitingFreq.size() > 0) {
+            Entity reportEntity = Configuration.getEntityByName("contactVisitingFrequency");
+            ReportingTablePanel visiting_report_panel = new ReportingTablePanel("visiting_frequency_report_panel", cap, reportEntity, visitingFreq);
+            add(visiting_report_panel);
+        } else {
+            add(new WebMarkupContainer("visiting_frequency_report_panel").setVisible(false));
+        }
         /**
         * 目标医生拜访覆盖率统计
         */
         cap = "目标医生拜访覆盖率统计";
         List<Map> visitingCoverList = VisitingReporter.generateVisitingCoverReportingByUserId(userId);
-        Entity report_Entity = Configuration.getEntityByName("contactVisitingCoverRate");
-        ReportingTablePanel visiting_reportPanel = new ReportingTablePanel("visiting_cover_report_panel", cap, report_Entity, visitingCoverList);
-        add(visiting_reportPanel);
 
+        if (visitingCoverList != null && visitingCoverList.size() > 0) {
+            Entity reportEntity = Configuration.getEntityByName("contactVisitingCoverRate");
+            ReportingTablePanel visiting_report_panel = new ReportingTablePanel("visiting_cover_report_panel", cap, reportEntity, visitingCoverList);
+            add(visiting_report_panel);
+        } else {
+            add(new WebMarkupContainer("visiting_cover_report_panel").setVisible(false));
+        }
+        
+        
+        
+        
         cap = "区域内工作天数";
         List<Map> workingdays = VisitingReporter.generateWorkingDayReportingByUserId(userId);
-        Entity reportEntity2 = Configuration.getEntityByName("workingday");
-        ReportingTablePanel report_panel = new ReportingTablePanel("working_day_report_panel", cap, reportEntity2, workingdays);
-        report_panel.add(new AttributeAppender("style",new Model("display:block;"),";"));
-        add(report_panel);
-       
 
+        if (workingdays != null && workingdays.size() > 0) {
+            Entity reportEntity = Configuration.getEntityByName("workingday");
+            ReportingTablePanel report_panel = new ReportingTablePanel("working_day_report_panel", cap, reportEntity, workingdays);
+            add(report_panel);
+        } else {
+            add(new WebMarkupContainer("working_day_report_panel").setVisible(false));
+        }
+        
+        
+        
         cap = "日均拜访量";
         List<Map> visitingPerDay = VisitingReporter.generateVisitingPerDay(visitingFreq,workingdays);
 
         if (visitingPerDay != null && visitingPerDay.size() > 0) {
-            Entity reportentity = Configuration.getEntityByName("visitingPerDayReport");
-            ReportingTablePanel reportPanel = new ReportingTablePanel("num_of_visiting_per_day_report_panel", cap, reportentity, visitingPerDay);
-            add(reportPanel);
+            Entity reportEntity = Configuration.getEntityByName("visitingPerDayReport");
+            ReportingTablePanel report_panel = new ReportingTablePanel("num_of_visiting_per_day_report_panel", cap, reportEntity, visitingPerDay);
+            add(report_panel);
         } else {
             add(new WebMarkupContainer("num_of_visiting_per_day_report_panel").setVisible(false));
         }

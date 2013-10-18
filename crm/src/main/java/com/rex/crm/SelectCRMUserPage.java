@@ -53,7 +53,7 @@ public class SelectCRMUserPage extends WebPage {
             protected void onSubmit() {
                 logger.debug("the form was submitted!");
                 // new PropertyModel<String>(this, "selected")
-                List<Map> maplist = DAOImpl.searchCRMUser(managerId, search_target);
+                List<Map> maplist = DAOImpl.searchCRMUserOfManager(managerId, search_target);
                 
                 setResponsePage(new SelectCRMUserPage(maplist,managerId));
 

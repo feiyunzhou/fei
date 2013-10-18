@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.14, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.33, for Win64 (x86)
 --
 -- Host: localhost    Database: crmdb
 -- ------------------------------------------------------
--- Server version	5.6.14-log
+-- Server version	5.5.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -61,7 +61,7 @@ CREATE TABLE `account` (
   `modify_datetime` datetime DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (5,'bh',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'李99','2013-10-14 21:23:00','李99','2013-10-14 21:23:00',NULL),(6,'account1','','C','',0,0,0,0,0,'307',0,997,490,486,700,0,0,0,0,0,0,0,'0000-00-00 00:00:00',453,'','',0,'ĵ','','',NULL,NULL,NULL,NULL,NULL,NULL),(7,'account2','','C','',0,0,0,0,0,'543',0,1,837,789,1,0,0,0,0,0,0,1996,'0000-00-00 00:00:00',2253431,'','',0,'','','',NULL,NULL,NULL,NULL,NULL,NULL),(8,'account3','','C','',0,0,0,0,0,'397',0,910,510,471,926,0,0,0,0,0,0,2002,'0000-00-00 00:00:00',633,'','',0,'','','',NULL,NULL,NULL,NULL,NULL,NULL),(9,'account4','','B','',0,0,0,0,0,'',0,0,0,0,0,0,0,0,0,0,0,0,'0000-00-00 00:00:00',0,'','',0,'̩','̩ɽ','̩',NULL,NULL,NULL,NULL,NULL,NULL),(10,'account5','','C','',0,0,0,0,0,'280',0,796,538,460,601,0,0,0,0,0,0,1951,'0000-00-00 00:00:00',532,'','һ',0,'','','',NULL,NULL,NULL,NULL,NULL,NULL),(11,'account1','123213','1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'李99','2013-10-17 11:12:00','李99','2013-10-17 11:12:00',NULL),(12,'北京宣武医院','account1','1','1',1,1,1,1,1,'炫舞',321,12,200,123,213,213,123,23,12313,212,321,12,NULL,10000,'12345678912','12133213213',1,'北京','北京','宣武区','长椿街120号','李99','2013-10-17 11:13:00','李99','2013-10-17 11:13:00',NULL),(13,'北京宣武医院','account1','1','1',1,1,1,1,1,'炫舞',321,123,123,123,123,432,123,123,1233,233,31,12,'2013-10-01 00:00:00',10000,'12345678912','12133213213',1,'北京','北京','宣武区','长椿街120号','李99','2013-10-17 14:02:00','李99','2013-10-17 14:02:00',NULL),(14,'fff',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'李99','2013-10-17 15:09:00','李99','2013-10-17 15:09:00',NULL);
+INSERT INTO `account` VALUES (1,'北京协和医院','10000','1','1',1,1,1,1,2,'张院长',10000,10000,20000,100000,100000,200,26,20,20,20,1000,1000,NULL,10000,'010-51458520','51458520',1,'北京','北京','北京','东城区','admin','2013-10-15 16:14:00','admin','2013-10-15 16:16:00',NULL),(2,'上海虹桥医院','10002','1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'admin','2013-10-15 16:52:00','admin','2013-10-15 16:52:00',NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +325,7 @@ CREATE TABLE `account_pl5` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -406,7 +406,7 @@ CREATE TABLE `account_status_pl` (
 
 LOCK TABLES `account_status_pl` WRITE;
 /*!40000 ALTER TABLE `account_status_pl` DISABLE KEYS */;
-INSERT INTO `account_status_pl` VALUES (1,'有效'),(2,'无效');
+INSERT INTO `account_status_pl` VALUES (1,'无效'),(2,'有效');
 /*!40000 ALTER TABLE `account_status_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,7 +447,7 @@ CREATE TABLE `accountcrmuser` (
   `crmuserId` mediumint(9) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `accountId` (`accountId`,`crmuserId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2114 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -456,7 +456,7 @@ CREATE TABLE `accountcrmuser` (
 
 LOCK TABLES `accountcrmuser` WRITE;
 /*!40000 ALTER TABLE `accountcrmuser` DISABLE KEYS */;
-INSERT INTO `accountcrmuser` VALUES (2014,5,20),(2109,5,99),(2016,6,20),(2017,7,20),(2018,8,20),(2019,9,20),(2020,10,20),(2021,11,20),(2110,11,99),(2022,12,20),(2111,12,99),(2023,13,20),(2112,13,99),(2024,14,20),(2113,14,99),(2025,15,20),(2026,16,20),(2027,17,20),(2028,18,20),(2029,19,20),(2030,20,20),(2031,21,20),(2032,22,20),(2033,23,20),(2034,24,20),(2035,25,20),(2036,26,20),(2037,27,20),(2038,28,20),(2039,29,20),(2040,30,20),(2041,31,20),(2042,32,20),(2043,33,20),(2044,34,20),(2045,35,20),(2046,36,20),(2047,37,20),(2048,38,20),(2049,39,20),(2050,40,20),(2051,41,20),(2052,42,20),(2053,43,20),(2054,44,20),(2055,45,20),(2056,46,20),(2057,47,20),(2058,48,20),(2059,49,20),(2060,50,20),(2061,51,20),(2062,52,20),(2063,53,20),(2064,54,20),(2065,55,20),(2066,56,20),(2067,57,20),(2068,58,20),(2069,59,20),(2070,60,20),(2071,61,20),(2072,62,20),(2073,63,20),(2074,64,20),(2075,65,20),(2076,66,20),(2077,67,20),(2078,68,20),(2079,69,20),(2080,70,20),(2081,71,20),(2082,72,20),(2083,73,20),(2084,74,20),(2085,75,20),(2086,76,20),(2087,77,20),(2088,78,20),(2089,79,20),(2090,80,20),(2091,81,20),(2092,82,20),(2093,83,20),(2094,84,20),(2095,85,20),(2096,86,20),(2097,87,20),(2098,88,20),(2099,89,20),(2100,90,20),(2101,91,20),(2102,92,20),(2103,93,20),(2104,94,20),(2105,95,20),(2106,96,20),(2107,97,20),(2108,98,20);
+INSERT INTO `accountcrmuser` VALUES (2,1,2),(3,2,1),(4,2,2);
 /*!40000 ALTER TABLE `accountcrmuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -487,17 +487,8 @@ CREATE TABLE `activity` (
   `modifier` varchar(255) DEFAULT NULL,
   `modify_datetime` datetime DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
-  `coach` varchar(255) DEFAULT NULL,
-  `location` varchar(255) DEFAULT NULL,
-  `total_score` mediumint(9) DEFAULT NULL,
-  `planing` mediumint(9) DEFAULT NULL,
-  `openling` mediumint(9) DEFAULT NULL,
-  `enquery_listening` mediumint(9) DEFAULT NULL,
-  `deliverable` mediumint(9) DEFAULT NULL,
-  `objection_handing` mediumint(9) DEFAULT NULL,
-  `summary` mediumint(9) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -506,6 +497,7 @@ CREATE TABLE `activity` (
 
 LOCK TABLES `activity` WRITE;
 /*!40000 ALTER TABLE `activity` DISABLE KEYS */;
+INSERT INTO `activity` VALUES (1,NULL,2,1,1380533460000,1380529860000,'拜访张劲松','sales rep',2,2,2,4,2,'2013-10-15 16:33:13','sales rep','2013-10-15 16:32:23','sales rep','2013-10-15 16:32:53','sales rep'),(2,NULL,2,1,1381829640000,1381826040000,'SD','sales rep',1,1,1,1,1,NULL,'sales rep','2013-10-15 16:34:25','sales rep','2013-10-15 16:34:25','sales rep'),(3,NULL,2,1,1382520840000,1382517240000,'拜访白百合','sales rep',1,1,2,1,1,'2013-10-15 16:35:21','sales rep','2013-10-15 16:35:15','sales rep','2013-10-15 16:35:15','sales rep');
 /*!40000 ALTER TABLE `activity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -616,7 +608,7 @@ CREATE TABLE `activity_status_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -625,7 +617,7 @@ CREATE TABLE `activity_status_pl` (
 
 LOCK TABLES `activity_status_pl` WRITE;
 /*!40000 ALTER TABLE `activity_status_pl` DISABLE KEYS */;
-INSERT INTO `activity_status_pl` VALUES (1,'计划'),(2,'完成'),(3,'取消');
+INSERT INTO `activity_status_pl` VALUES (1,'计划'),(2,'完成');
 /*!40000 ALTER TABLE `activity_status_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -691,7 +683,7 @@ CREATE TABLE `activitycrmuser` (
   `crmuserId` mediumint(9) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `activityId` (`activityId`,`crmuserId`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -700,7 +692,7 @@ CREATE TABLE `activitycrmuser` (
 
 LOCK TABLES `activitycrmuser` WRITE;
 /*!40000 ALTER TABLE `activitycrmuser` DISABLE KEYS */;
-INSERT INTO `activitycrmuser` VALUES (18,3,20),(19,3,21),(20,4,21),(21,5,99),(22,6,99),(23,7,99),(24,8,99),(25,9,99),(26,10,20),(27,11,20),(28,12,20),(29,13,99);
+INSERT INTO `activitycrmuser` VALUES (1,1,2),(2,2,2),(3,3,2);
 /*!40000 ALTER TABLE `activitycrmuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -764,7 +756,7 @@ CREATE TABLE `city` (
   `name` varchar(255) NOT NULL,
   `provinceId` varchar(255) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -773,7 +765,6 @@ CREATE TABLE `city` (
 
 LOCK TABLES `city` WRITE;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES (1,'牡丹江','1'),(2,'济宁','2'),(3,'日照','2'),(4,'泰安','2'),(5,'青岛','2');
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -835,7 +826,7 @@ CREATE TABLE `contact` (
   `modify_datetime` datetime DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -844,7 +835,7 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (5,'BBcdcdcd',3,'1',1,NULL,NULL,NULL,NULL,NULL,'1',1,2,NULL,NULL,NULL,1,1,NULL,NULL,'李99','2013-09-28 17:00:40','李99','2013-10-04 08:38:00',NULL),(6,'122',3,'1',1,NULL,NULL,NULL,NULL,'sd@sina.sdfdsf','1',1,1,NULL,NULL,NULL,1,2,NULL,NULL,'李99','2013-09-28 21:48:12','李99','2013-09-30 21:15:00',NULL),(7,'asdsd',3,'1',1,'as',NULL,NULL,NULL,NULL,'1',1,1,NULL,NULL,NULL,1,1,NULL,NULL,'李99','2013-09-30 07:45:00','李99','2013-09-30 07:45:00',NULL),(8,'BBBB',4,'1',1,NULL,NULL,NULL,NULL,NULL,'1',1,2,NULL,NULL,NULL,1,1,NULL,NULL,'李99','2013-10-01 02:23:00','李99','2013-10-04 08:38:00',NULL);
+INSERT INTO `contact` VALUES (1,'白百花',1,'1',1,'吉林','139-29394739','12345678930','12387392829','bqibq@r3.dom','2',1,1,'beijng','beijng','beijng',1,1,11,'1','sales rep','2013-10-15 16:23:00','sales rep','2013-10-15 16:23:00',NULL),(2,'张劲松',1,'1',1,'吉林','12321122332',NULL,NULL,'zhang@rexe.com.cn','1',1,1,NULL,NULL,NULL,1,1,NULL,'1','sales rep','2013-10-15 16:27:00','sales rep','2013-10-15 16:30:00',NULL);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -859,7 +850,7 @@ CREATE TABLE `contact_department_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -868,7 +859,7 @@ CREATE TABLE `contact_department_pl` (
 
 LOCK TABLES `contact_department_pl` WRITE;
 /*!40000 ALTER TABLE `contact_department_pl` DISABLE KEYS */;
-INSERT INTO `contact_department_pl` VALUES (1,'ICU'),(2,'内科'),(3,'外科'),(4,'中医科'),(5,'化疗科'),(6,'关怀科'),(7,'牙科'),(8,'急症科'),(9,'骨科'),(10,'肝胆外科'),(11,'血液科'),(12,'风湿科'),(13,'呼吸科');
+INSERT INTO `contact_department_pl` VALUES (1,'ICU'),(2,'保健科'),(3,'采购科'),(4,'传染科'),(5,'创伤外科'),(6,'儿科'),(7,'耳鼻喉科'),(8,'方便门诊'),(9,'放化疗科'),(10,'放疗科'),(11,'放射科'),(12,'风湿科'),(13,'妇产科'),(14,'妇科'),(15,'肝胆外科'),(16,'感染科'),(17,'肛肠科'),(18,'姑息科'),(19,'骨科'),(20,'国际医疗科'),(21,'核医学科'),(22,'呼吸内科'),(23,'护理部'),(24,'急诊科'),(25,'介入科'),(26,'康复科'),(27,'口腔科'),(28,'老干科'),(29,'麻醉科'),(30,'泌尿外科'),(31,'脑外科'),(32,'内分泌科'),(33,'内科'),(34,'宁养院'),(35,'皮肤科'),(36,'普外科'),(37,'乳腺外科'),(38,'烧伤整形科'),(39,'神经科'),(40,'神经内科'),(41,'神经外科'),(42,'肾内科'),(43,'生物治疗科'),(44,'特需科'),(45,'疼痛科'),(46,'外科'),(47,'微创科'),(48,'胃肠外科'),(49,'消化科'),(50,'消化内科'),(51,'消化外科'),(52,'心内科'),(53,'心胸外科'),(54,'血管外科'),(55,'血透室'),(56,'血液科'),(57,'药剂科'),(58,'医保办'),(59,'医务科'),(60,'整形美容科'),(61,'质控科'),(62,'中西医结合科'),(63,'中医科'),(64,'肿瘤科'),(65,'肿瘤内科'),(66,'肿瘤外科'),(67,'综合科'),(68,'其他');
 /*!40000 ALTER TABLE `contact_department_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -883,7 +874,7 @@ CREATE TABLE `contact_duty_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -892,7 +883,7 @@ CREATE TABLE `contact_duty_pl` (
 
 LOCK TABLES `contact_duty_pl` WRITE;
 /*!40000 ALTER TABLE `contact_duty_pl` DISABLE KEYS */;
-INSERT INTO `contact_duty_pl` VALUES (1,'主任'),(2,'主治医师'),(3,'科室主任'),(4,'采购'),(5,'科室主任'),(6,'院长'),(7,'副院长'),(8,'药剂科主任');
+INSERT INTO `contact_duty_pl` VALUES (1,'医生'),(2,'副主任'),(3,'主任'),(4,'副院长'),(5,'院长'),(6,'院长助理'),(7,'副书记'),(8,'书记'),(9,'护士'),(10,'护士长'),(11,'库管'),(12,'采购'),(13,'采购科科长'),(14,'药师'),(15,'药剂科副主任'),(16,'药剂科主任'),(17,'医务科副科长'),(18,'医务科科长'),(19,'医保办主任'),(20,'科教科主任'),(21,'信息科科长'),(22,'其他');
 /*!40000 ALTER TABLE `contact_duty_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -955,7 +946,7 @@ CREATE TABLE `contact_job_title_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -964,7 +955,7 @@ CREATE TABLE `contact_job_title_pl` (
 
 LOCK TABLES `contact_job_title_pl` WRITE;
 /*!40000 ALTER TABLE `contact_job_title_pl` DISABLE KEYS */;
-INSERT INTO `contact_job_title_pl` VALUES (1,'住院医师'),(2,'主治医师'),(3,'副主任医师'),(4,'主任医师'),(5,'护士'),(6,'主管护师'),(7,'药师'),(8,'技师');
+INSERT INTO `contact_job_title_pl` VALUES (1,'住院医师'),(2,'主治医师'),(3,'副主任医师'),(4,'主任医师'),(5,'护士'),(6,'主管护师'),(7,'副主任护士'),(8,'主任护师'),(9,'药师'),(10,'主管药师'),(11,'副主任药师'),(12,'主任药师'),(13,'技师'),(14,'主管技师'),(15,'副主任技师'),(16,'主任技师'),(17,'其他');
 /*!40000 ALTER TABLE `contact_job_title_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1156,7 +1147,7 @@ CREATE TABLE `contact_status_pl` (
 
 LOCK TABLES `contact_status_pl` WRITE;
 /*!40000 ALTER TABLE `contact_status_pl` DISABLE KEYS */;
-INSERT INTO `contact_status_pl` VALUES (1,'有效'),(2,'无效');
+INSERT INTO `contact_status_pl` VALUES (1,'无效'),(2,'有效');
 /*!40000 ALTER TABLE `contact_status_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1173,7 +1164,7 @@ CREATE TABLE `contactcrmuser` (
   `crmuserId` mediumint(9) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `contactId` (`contactId`,`crmuserId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1332 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1182,7 +1173,7 @@ CREATE TABLE `contactcrmuser` (
 
 LOCK TABLES `contactcrmuser` WRITE;
 /*!40000 ALTER TABLE `contactcrmuser` DISABLE KEYS */;
-INSERT INTO `contactcrmuser` VALUES (1138,7,20),(1139,8,20),(1331,8,99),(1140,9,20),(1141,10,20),(1142,11,20),(1143,12,20),(1144,13,20),(1145,14,20),(1146,15,20),(1147,16,20),(1148,17,20),(1149,18,20),(1150,19,20),(1151,20,20),(1152,21,20),(1153,22,20),(1154,23,20),(1155,24,20),(1156,25,20),(1157,26,20),(1158,27,20),(1159,28,20),(1160,29,20),(1161,30,20),(1162,31,20),(1163,32,20),(1164,33,20),(1165,34,20),(1166,35,20),(1167,36,20),(1168,37,20),(1169,38,20),(1170,39,20),(1171,40,20),(1172,41,20),(1173,42,20),(1174,43,20),(1175,44,20),(1176,45,20),(1177,46,20),(1178,47,20),(1179,48,20),(1180,49,20),(1181,50,20),(1182,51,20),(1183,52,20),(1184,53,20),(1185,54,20),(1186,55,20),(1187,56,20),(1188,57,20),(1189,58,20),(1190,59,20),(1191,60,20),(1192,61,20),(1193,62,20),(1194,63,20),(1195,64,20),(1196,65,20),(1197,66,20),(1198,67,20),(1199,68,20),(1200,69,20),(1201,70,20),(1202,71,20),(1203,72,20),(1204,73,20),(1205,74,20),(1206,75,20),(1207,76,20),(1208,77,20),(1209,78,20),(1210,79,20),(1211,80,20),(1212,81,20),(1213,82,20),(1214,83,20),(1215,84,20),(1216,85,20),(1217,86,20),(1218,87,20),(1219,88,20),(1220,89,20),(1221,90,20),(1222,91,20),(1223,92,20),(1224,93,20),(1225,94,20),(1226,95,20),(1227,96,20),(1228,97,20),(1229,98,20),(1230,99,20),(1231,100,20),(1232,101,20),(1233,102,20),(1234,103,20),(1235,104,20),(1236,105,20),(1237,106,20),(1238,107,20),(1239,108,20),(1240,109,20),(1241,110,20),(1242,111,20),(1243,112,20),(1244,113,20),(1245,114,20),(1246,115,20),(1247,116,20),(1248,117,20),(1249,118,20),(1250,119,20),(1251,120,20),(1252,121,20),(1253,122,20),(1254,123,20),(1255,124,20),(1256,125,20),(1257,126,20),(1258,127,20),(1259,128,20),(1260,129,20),(1261,130,20),(1262,131,20),(1263,132,20),(1264,133,20),(1265,134,20),(1266,135,20),(1267,136,20),(1268,137,20),(1269,138,20),(1270,139,20),(1271,140,20),(1272,141,20),(1273,142,20),(1274,143,20),(1275,144,20),(1276,145,20),(1277,146,20),(1278,147,20),(1279,148,20),(1280,149,20),(1281,150,20),(1282,151,20),(1283,152,20),(1284,153,20),(1285,154,20),(1286,155,20),(1287,156,20),(1288,157,20),(1289,158,20),(1290,159,20),(1291,160,20),(1292,161,20),(1293,162,20),(1294,163,20),(1295,164,20),(1296,165,20),(1297,166,20),(1298,167,20),(1299,168,20),(1300,169,20),(1301,170,20),(1302,171,20),(1303,172,20),(1304,173,20),(1305,174,20),(1306,175,20),(1307,176,20),(1308,177,20),(1309,178,20),(1310,179,20),(1311,180,20),(1312,181,20),(1313,182,20),(1314,183,20),(1315,184,20),(1316,185,20),(1317,186,20),(1318,187,20),(1319,188,20),(1320,189,20),(1321,190,20),(1322,191,20),(1323,192,20),(1324,193,20),(1325,194,20),(1326,195,20),(1327,196,20),(1328,197,20),(1329,198,20),(1330,199,20);
+INSERT INTO `contactcrmuser` VALUES (1,1,2),(2,2,2);
 /*!40000 ALTER TABLE `contactcrmuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1217,12 +1208,12 @@ CREATE TABLE `crmuser` (
   `reportto` mediumint(9) DEFAULT NULL,
   `parcel` varchar(255) DEFAULT NULL,
   `modifier` varchar(255) DEFAULT NULL,
-  `modify_datetime` datetime DEFAULT NULL,
+  `modify_datetime` date DEFAULT NULL,
   `owner` varchar(255) DEFAULT NULL,
   `postId` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1231,7 +1222,7 @@ CREATE TABLE `crmuser` (
 
 LOCK TABLES `crmuser` WRITE;
 /*!40000 ALTER TABLE `crmuser` DISABLE KEYS */;
-INSERT INTO `crmuser` VALUES (99,'李99',NULL,'医疗设备部','','li',NULL,'','职员',1,1,1,1,1,1,'li','827ccb0eea8a706c4c34a16891f84e7b','53856',NULL,NULL,100,NULL,'李99','2013-10-14 21:31:00',NULL,NULL,'1'),(100,'gvg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,1,1,1,'jjj',NULL,NULL,NULL,'2013-10-14 18:58:00',101,NULL,'李99','2013-10-14 18:58:00','李99',NULL,NULL),(101,'gvg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,1,1,1,'jjj','e10adc3949ba59abbe56e057f20f883e',NULL,NULL,'2013-10-14 18:58:00',99,NULL,'李99','2013-10-14 18:58:00','李99',NULL,NULL),(102,'brenda4',NULL,NULL,'18812348765','brenda.yuan@rexen.com.cn',NULL,NULL,'职员',1,1,1,1,1,2,'brenda4','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,'2013-10-16 22:33:00',-1,NULL,'李99','2013-10-16 22:33:00','李99',NULL,NULL),(117,'yuan',NULL,NULL,'18812348765','brenda.yuan@rexen.com.cn',NULL,NULL,'职员',1,1,1,1,1,1,'yuan',NULL,NULL,NULL,'2013-10-17 12:44:00',-1,NULL,'李99','2013-10-17 12:44:00','李99',NULL,NULL);
+INSERT INTO `crmuser` VALUES (1,'admin',NULL,NULL,NULL,'dongjingchao@rexen.com.cn',NULL,NULL,NULL,1,1,1,1,1,1,'admin','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,'2013-10-14 18:58:00',-1,NULL,'admin','2013-10-15',NULL,NULL,NULL),(2,'sales rep','SALES',NULL,'13801248728','dongjingchao@rexen.com.cn','11',NULL,'saler',1,1,3,1,1,1,'salesrep','202cb962ac59075b964b07152d234b70',NULL,NULL,'2013-10-15 15:44:00',3,'SAES T1','李99','2013-10-15','李99','1000P','beijing'),(3,'Sales manager','SALES',NULL,'15210522287','dongjingchao@rexen.com.cn','10001',NULL,'saler',1,1,2,1,1,1,'salesmanager','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,'2013-10-15 15:48:00',-1,'SAES T1','admin','2013-10-15','李99','1000P','BEIJING');
 /*!40000 ALTER TABLE `crmuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1246,7 +1237,7 @@ CREATE TABLE `crmuser_pl1` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1255,7 +1246,7 @@ CREATE TABLE `crmuser_pl1` (
 
 LOCK TABLES `crmuser_pl1` WRITE;
 /*!40000 ALTER TABLE `crmuser_pl1` DISABLE KEYS */;
-INSERT INTO `crmuser_pl1` VALUES (1,'有效'),(2,'无效');
+INSERT INTO `crmuser_pl1` VALUES (1,'无效'),(2,'有效');
 /*!40000 ALTER TABLE `crmuser_pl1` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1300,7 +1291,7 @@ CREATE TABLE `dealeraccount` (
   `pl2` mediumint(9) DEFAULT NULL,
   `whenadded` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1309,7 +1300,6 @@ CREATE TABLE `dealeraccount` (
 
 LOCK TABLES `dealeraccount` WRITE;
 /*!40000 ALTER TABLE `dealeraccount` DISABLE KEYS */;
-INSERT INTO `dealeraccount` VALUES (1,'经销商0','北京市朝阳区望京东路0号','1381199260',1,1,1,NULL),(2,'经销商1','北京市朝阳区望京东路1号','1381199261',2,2,2,NULL),(3,'经销商2','北京市朝阳区望京东路2号','1381199262',1,3,3,NULL),(4,'经销商3','北京市朝阳区望京东路3号','1381199263',2,1,4,NULL),(5,'经销商4','北京市朝阳区望京东路4号','1381199264',1,2,5,NULL),(6,'经销商5','北京市朝阳区望京东路5号','1381199265',2,3,6,NULL),(7,'经销商6','北京市朝阳区望京东路6号','1381199266',1,1,7,NULL),(8,'经销商7','北京市朝阳区望京东路7号','1381199267',2,2,1,NULL),(9,'经销商8','北京市朝阳区望京东路8号','1381199268',1,3,2,NULL),(10,'经销商9','北京市朝阳区望京东路9号','1381199269',2,1,3,NULL),(11,'经销商10','北京市朝阳区望京东路10号','13811992610',1,2,4,NULL),(12,'经销商11','北京市朝阳区望京东路11号','13811992611',2,3,5,NULL),(13,'经销商12','北京市朝阳区望京东路12号','13811992612',1,1,6,NULL),(14,'经销商13','北京市朝阳区望京东路13号','13811992613',2,2,7,NULL),(15,'经销商14','北京市朝阳区望京东路14号','13811992614',1,3,1,NULL),(16,'经销商15','北京市朝阳区望京东路15号','13811992615',2,1,2,NULL),(17,'经销商16','北京市朝阳区望京东路16号','13811992616',1,2,3,NULL),(18,'经销商17','北京市朝阳区望京东路17号','13811992617',2,3,4,NULL),(19,'经销商18','北京市朝阳区望京东路18号','13811992618',1,1,5,NULL),(20,'经销商19','北京市朝阳区望京东路19号','13811992619',2,2,6,NULL),(21,'经销商20','北京市朝阳区望京东路20号','13811992620',1,3,7,NULL),(22,'经销商21','北京市朝阳区望京东路21号','13811992621',2,1,1,NULL),(23,'经销商22','北京市朝阳区望京东路22号','13811992622',1,2,2,NULL),(24,'经销商23','北京市朝阳区望京东路23号','13811992623',2,3,3,NULL),(25,'经销商24','北京市朝阳区望京东路24号','13811992624',1,1,4,NULL),(26,'经销商25','北京市朝阳区望京东路25号','13811992625',2,2,5,NULL),(27,'经销商26','北京市朝阳区望京东路26号','13811992626',1,3,6,NULL),(28,'经销商27','北京市朝阳区望京东路27号','13811992627',2,1,7,NULL),(29,'经销商28','北京市朝阳区望京东路28号','13811992628',1,2,1,NULL),(30,'经销商29','北京市朝阳区望京东路29号','13811992629',2,3,2,NULL),(31,'经销商30','北京市朝阳区望京东路30号','13811992630',1,1,3,NULL),(32,'经销商31','北京市朝阳区望京东路31号','13811992631',2,2,4,NULL),(33,'经销商32','北京市朝阳区望京东路32号','13811992632',1,3,5,NULL),(34,'经销商33','北京市朝阳区望京东路33号','13811992633',2,1,6,NULL),(35,'经销商34','北京市朝阳区望京东路34号','13811992634',1,2,7,NULL),(36,'经销商35','北京市朝阳区望京东路35号','13811992635',2,3,1,NULL),(37,'经销商36','北京市朝阳区望京东路36号','13811992636',1,1,2,NULL),(38,'经销商37','北京市朝阳区望京东路37号','13811992637',2,2,3,NULL),(39,'经销商38','北京市朝阳区望京东路38号','13811992638',1,3,4,NULL),(40,'经销商39','北京市朝阳区望京东路39号','13811992639',2,1,5,NULL),(41,'经销商40','北京市朝阳区望京东路40号','13811992640',1,2,6,NULL),(42,'经销商41','北京市朝阳区望京东路41号','13811992641',2,3,7,NULL),(43,'经销商42','北京市朝阳区望京东路42号','13811992642',1,1,1,NULL),(44,'经销商43','北京市朝阳区望京东路43号','13811992643',2,2,2,NULL),(45,'经销商44','北京市朝阳区望京东路44号','13811992644',1,3,3,NULL),(46,'经销商45','北京市朝阳区望京东路45号','13811992645',2,1,4,NULL),(47,'经销商46','北京市朝阳区望京东路46号','13811992646',1,2,5,NULL),(48,'经销商47','北京市朝阳区望京东路47号','13811992647',2,3,6,NULL),(49,'经销商48','北京市朝阳区望京东路48号','13811992648',1,1,7,NULL),(50,'经销商49','北京市朝阳区望京东路49号','13811992649',2,2,1,NULL),(51,'经销商50','北京市朝阳区望京东路50号','13811992650',1,3,2,NULL),(52,'经销商51','北京市朝阳区望京东路51号','13811992651',2,1,3,NULL),(53,'经销商52','北京市朝阳区望京东路52号','13811992652',1,2,4,NULL),(54,'经销商53','北京市朝阳区望京东路53号','13811992653',2,3,5,NULL),(55,'经销商54','北京市朝阳区望京东路54号','13811992654',1,1,6,NULL),(56,'经销商55','北京市朝阳区望京东路55号','13811992655',2,2,7,NULL),(57,'经销商56','北京市朝阳区望京东路56号','13811992656',1,3,1,NULL),(58,'经销商57','北京市朝阳区望京东路57号','13811992657',2,1,2,NULL),(59,'经销商58','北京市朝阳区望京东路58号','13811992658',1,2,3,NULL),(60,'经销商59','北京市朝阳区望京东路59号','13811992659',2,3,4,NULL),(61,'经销商60','北京市朝阳区望京东路60号','13811992660',1,1,5,NULL),(62,'经销商61','北京市朝阳区望京东路61号','13811992661',2,2,6,NULL),(63,'经销商62','北京市朝阳区望京东路62号','13811992662',1,3,7,NULL),(64,'经销商63','北京市朝阳区望京东路63号','13811992663',2,1,1,NULL),(65,'经销商64','北京市朝阳区望京东路64号','13811992664',1,2,2,NULL),(66,'经销商65','北京市朝阳区望京东路65号','13811992665',2,3,3,NULL),(67,'经销商66','北京市朝阳区望京东路66号','13811992666',1,1,4,NULL),(68,'经销商67','北京市朝阳区望京东路67号','13811992667',2,2,5,NULL),(69,'经销商68','北京市朝阳区望京东路68号','13811992668',1,3,6,NULL),(70,'经销商69','北京市朝阳区望京东路69号','13811992669',2,1,7,NULL),(71,'经销商70','北京市朝阳区望京东路70号','13811992670',1,2,1,NULL),(72,'经销商71','北京市朝阳区望京东路71号','13811992671',2,3,2,NULL),(73,'经销商72','北京市朝阳区望京东路72号','13811992672',1,1,3,NULL),(74,'经销商73','北京市朝阳区望京东路73号','13811992673',2,2,4,NULL),(75,'经销商74','北京市朝阳区望京东路74号','13811992674',1,3,5,NULL),(76,'经销商75','北京市朝阳区望京东路75号','13811992675',2,1,6,NULL),(77,'经销商76','北京市朝阳区望京东路76号','13811992676',1,2,7,NULL),(78,'经销商77','北京市朝阳区望京东路77号','13811992677',2,3,1,NULL),(79,'经销商78','北京市朝阳区望京东路78号','13811992678',1,1,2,NULL),(80,'经销商79','北京市朝阳区望京东路79号','13811992679',2,2,3,NULL),(81,'经销商80','北京市朝阳区望京东路80号','13811992680',1,3,4,NULL),(82,'经销商81','北京市朝阳区望京东路81号','13811992681',2,1,5,NULL),(83,'经销商82','北京市朝阳区望京东路82号','13811992682',1,2,6,NULL),(84,'经销商83','北京市朝阳区望京东路83号','13811992683',2,3,7,NULL),(85,'经销商84','北京市朝阳区望京东路84号','13811992684',1,1,1,NULL),(86,'经销商85','北京市朝阳区望京东路85号','13811992685',2,2,2,NULL),(87,'经销商86','北京市朝阳区望京东路86号','13811992686',1,3,3,NULL),(88,'经销商87','北京市朝阳区望京东路87号','13811992687',2,1,4,NULL);
 /*!40000 ALTER TABLE `dealeraccount` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1385,7 +1375,7 @@ CREATE TABLE `externalmeeting` (
   `activity_type` mediumint(9) DEFAULT NULL,
   `coachId` mediumint(9) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1394,7 +1384,6 @@ CREATE TABLE `externalmeeting` (
 
 LOCK TABLES `externalmeeting` WRITE;
 /*!40000 ALTER TABLE `externalmeeting` DISABLE KEYS */;
-INSERT INTO `externalmeeting` VALUES (32,20,1375804800000,1375804800000,'拜访','[7,167]',2,2,0);
 /*!40000 ALTER TABLE `externalmeeting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1439,7 +1428,7 @@ CREATE TABLE `province` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1448,7 +1437,6 @@ CREATE TABLE `province` (
 
 LOCK TABLES `province` WRITE;
 /*!40000 ALTER TABLE `province` DISABLE KEYS */;
-INSERT INTO `province` VALUES (1,'黑龙江'),(2,'山东');
 /*!40000 ALTER TABLE `province` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1472,7 +1460,7 @@ CREATE TABLE `region_level1_pl` (
 
 LOCK TABLES `region_level1_pl` WRITE;
 /*!40000 ALTER TABLE `region_level1_pl` DISABLE KEYS */;
-INSERT INTO `region_level1_pl` VALUES (1,'北中国'),(2,'南中国'),(3,'东中国');
+INSERT INTO `region_level1_pl` VALUES (1,'北中国'),(2,'东中国'),(3,'南中国');
 /*!40000 ALTER TABLE `region_level1_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1487,7 +1475,7 @@ CREATE TABLE `region_level2_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1496,7 +1484,7 @@ CREATE TABLE `region_level2_pl` (
 
 LOCK TABLES `region_level2_pl` WRITE;
 /*!40000 ALTER TABLE `region_level2_pl` DISABLE KEYS */;
-INSERT INTO `region_level2_pl` VALUES (1,'华北'),(2,'西北'),(3,'东北'),(4,'西南'),(5,'华南'),(6,'华中'),(7,'华东');
+INSERT INTO `region_level2_pl` VALUES (1,'北京'),(2,'东北'),(3,'华北'),(4,'山东'),(5,'西区'),(6,'福建'),(7,'江苏'),(8,'皖赣'),(9,'浙江'),(10,'华南'),(11,'华中'),(12,'上海'),(13,'山东'),(14,'安徽'),(15,'南区'),(16,'上海');
 /*!40000 ALTER TABLE `region_level2_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1511,7 +1499,7 @@ CREATE TABLE `role` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1520,7 +1508,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'高级用户'),(2,'主管'),(3,'销售代表');
+INSERT INTO `role` VALUES (1,'管理员'),(2,'销售经理'),(3,'销售代表');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1581,4 +1569,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-17 16:06:41
+-- Dump completed on 2013-10-15 17:16:47

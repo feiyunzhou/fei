@@ -246,7 +246,7 @@ CREATE TABLE activity_status_pl
 ) ENGINE InnoDB;
 INSERT INTO activity_status_pl (val) VALUES('计划');
 INSERT INTO activity_status_pl (val) VALUES('完成');
-INSERT INTO activity_status_pl (val) VALUES('取消');
+
 
 drop table if exists activity_activity_types_pl;
 CREATE TABLE activity_activity_types_pl 

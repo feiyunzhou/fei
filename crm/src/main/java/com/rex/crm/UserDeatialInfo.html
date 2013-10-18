@@ -37,7 +37,7 @@
 	<wicket:extend>
 		<div class="row-fluid big" >
 			<h2 wicket:id="infoName"></h2>
-				<!-- <div id="left" style="float:left;margin-top:30px;margin-left:30px;">
+				<div id="left" style="float:left;margin-top:30px;margin-left:30px;">
 					<div id="north">
 						<img class="img" wicket:id="userphoto"/>
 						<form wicket:id="imgForm" >
@@ -55,8 +55,8 @@
 							</table>
 						</form>
 					</div>
-				</div> -->
-		<div  class="row-fluid">
+				</div>
+		<div id="right" style="margin-top:30px;marign-left:50px;">
 			<div wicket:id="successFlag" style="display:none"></div>
 				<form wicket:id="form" class="form-horizontal">
 					<div wicket:id="fieldGroupRepeater">
@@ -68,21 +68,20 @@
 							</tbody>
 						</table>
 					</div>
-						<div style="text-align:center;">
+					<center>
+						<div>
 							<input type="submit" class="btn btn-info button" value="保存" />
 							<input type="reset" class="btn btn-info button" value="重置"/>
 						</div>
+					</center>	
 				</form>
 		</div>
 	</div>
 		<wicket:fragment wicket:id="textInputFragment">
-			<input wicket:id="input" type="text" />
+		<input wicket:id="input" type="text" />
 		</wicket:fragment>
 		<wicket:fragment wicket:id="textFragment">
-			<span wicket:id="celldata"></span>
-		</wicket:fragment>
-		<wicket:fragment wicket:id="dropDownFragment">
-		<select wicket:id="dropDownInput"></select>
+		<span wicket:id="celldata"></span>
 		</wicket:fragment>
 		</wicket:extend>
 </body>

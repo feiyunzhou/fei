@@ -28,7 +28,6 @@ public class CRMUser {
 	private long lastLoginTime;
 	private int role;
 	private int reportto;
-	private int sex;
 
 	public String getName() {
 		return name;
@@ -213,13 +212,5 @@ public class CRMUser {
         public void setReportto(int reportto) {
             this.reportto = reportto;
         }
-
-		public int getSex() {
-			return sex;
-		}
-
-		public void setSex(int sex) {
-			this.sex = sex;
-		}
 	
 }

@@ -27,8 +27,6 @@ public class UpdateSignPassword extends TemplatePage{
 		//获取到登录对象，将用户名传入页面，然后如何获取
 		final int userId =Integer.parseInt(((SignIn2Session)getSession()).getUserId());
 		CRMUser user = DAOImpl.getCRMUserInfoById(userId);
-		final Label promptLabel = new Label("prompt","输入有误,请重新输入！");
-		add(promptLabel);
 		Form form = new Form("form"){
 			@Override
 			protected void onSubmit() {
@@ -44,15 +42,19 @@ public class UpdateSignPassword extends TemplatePage{
 					logger.debug("true");
 					//修改密码
 					if(DAOImpl.updateCrmUserPassword(userId, newPassword)){
-						setResponsePage(HomePage.class);
+						/*Label promptTextTrue = new Label("prompt","密码修改成功！");
+						add(promptTextTrue);*/
 					};
 				}else{
 					logger.debug("false");
-					promptLabel.add(new AttributeAppender("style",new Model("text-align:center;display:none;color:red;"),";"));
+					/*Label promptTextFalse = new Label("prompt","旧密码错误，请重新输入！");
+					add(promptTextFalse);*/
 				}
 			};
 		};
 		add(form);
+		Label promptTextFalse = new Label("prompt","旧密码错误，请重新输入！");
+		add(promptTextFalse);
 		form.add(new Label("userName",user.getName()));
 		IModel<String> textModel = new Model<String>("");
 		PasswordTextField oldPassword = new PasswordTextField("oldPassword",textModel);
