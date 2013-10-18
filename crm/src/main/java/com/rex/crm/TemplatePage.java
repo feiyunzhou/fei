@@ -34,6 +34,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
@@ -151,6 +152,17 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
             }
         };  
         add(lv);
+        
+        add(new Link("signout_link"){
+
+            @Override
+            public void onClick() {
+                getSession().invalidate();
+                this.setResponsePage(SignIn.class);
+                
+            }
+            
+        });
         
         //end of populate menu items
 		
