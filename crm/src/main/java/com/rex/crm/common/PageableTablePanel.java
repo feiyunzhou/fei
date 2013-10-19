@@ -122,9 +122,11 @@ public class PageableTablePanel extends Panel {
         datacontainer.setVersioned(false);
         
        
-        
-        add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName())));
-        
+        if((roleId==3)&&(entity.getName().equals("contact"))){
+          add(new WebMarkupContainer("operationBar"));
+        }else{
+          add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName())));
+        }
     	add(new NewDataFormPanel("formPanel",entity,null));
 
     }
