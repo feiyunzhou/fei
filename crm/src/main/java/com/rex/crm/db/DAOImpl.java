@@ -1487,7 +1487,7 @@ public class DAOImpl {
       if(search_target == null|| search_target.equalsIgnoreCase("*")){
         search_target = "";
     }
-        String sql = "select * from (select * from account where name like '%"+search_target+"%' OR tel like '%"+search_target+"%' OR fax like '%"+search_target+"%') as a";
+        String sql = "select * from (select * from account where (account.id > 0 ) AND  (name like '%"+search_target+"%' OR tel like '%"+search_target+"%' OR fax like '%"+search_target+"%')) as a";
         logger.debug(sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
@@ -1509,7 +1509,7 @@ public class DAOImpl {
       if(search_target == null|| search_target.equalsIgnoreCase("*")){
         search_target = "";
     }
-      String sql = "select * from (select * from contact where name like '%"+search_target+"%' OR office_tel like '%"+search_target+"%' OR cellphone like '%"+search_target+"%') as a";
+      String sql = "select * from (select * from contact where (contact.id > 0) AND (name like '%"+search_target+"%' OR office_tel like '%"+search_target+"%' OR cellphone like '%"+search_target+"%')) as a";
       logger.debug(sql );
       Connection conn = null;
       List lMap = Lists.newArrayList();
