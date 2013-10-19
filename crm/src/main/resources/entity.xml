@@ -562,10 +562,9 @@
 		</sql>
 		<sql-manager>
 		     select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName 
-		             from contact\,contactcrmuser\,account \,contact_generalization_target_pl  
+		             from contact\,account \,contact_generalization_target_pl  
 		             where (contact.id in (select contactid from crmdb.contactcrmuser where crmuserid = ?) OR 
-		                   contact.id in (select contactid from crmdb.contactcrmuser where crmuserid in (select crmuser.id from crmdb.crmuser where reportto =?))) AND
-		                   contactcrmuser.contactId=contact.id AND account.id=contact.accountId AND    contact.id != -1 AND
+		                   contact.id in (select contactid from crmdb.contactcrmuser where crmuserid in (select crmuser.id from crmdb.crmuser where reportto =?))) AND account.id=contact.accountId AND    contact.id != -1 AND
 		                   contact_generalization_target_pl.id= product_target 
 		                   order by whenadded DESC) as aContact 
 		</sql-manager>
@@ -1422,10 +1421,10 @@
 			                             act_type\,activity.status as act_status\, activity.contactId as
 			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
 			                             contact.name as contactname_val  
-			                from activity\,contact\,activitycrmuser\,activity_event_type_pl\,account 
+			                from activity\,contact\,activity_event_type_pl\,account 
 			                where (activity.id in (select activityId from activitycrmuser where crmuserid = ?) OR 
 			                       activity.id in (select activityId from activitycrmuser where crmuserid in (select crmuser.id from crmdb.crmuser where reportto =?))) AND 
-			                       contact.id= activity.contactId AND activitycrmuser.activityId=activity.id AND 
+			                       contact.id= activity.contactId AND 
 			                       activity_event_type_pl.id=event_type AND account.id=contact.accountId) as
 			aActivity
 		</sql-manager>
