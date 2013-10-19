@@ -36,7 +36,8 @@ public class SearchCRMUserPage extends WebPage {
     
      List<String> selectedUserIds = Lists.newArrayList();
      private String entityId;
-     private String entityName;
+//     private String entityName;
+     private int type = 0;
 
     /**
      * Constructor
@@ -46,40 +47,45 @@ public class SearchCRMUserPage extends WebPage {
      */
     public SearchCRMUserPage() {
         StringValue value = this.getRequest().getRequestParameters().getParameterValue("cid");
+        StringValue entityname = getRequest().getRequestParameters().getParameterValue("entityname");
         if(value != null){
             entityId = value.toString();
         }
-        initPage(entityName,null,entityId);
+        initPage(entityname.toString(),null,entityId,type);
     }
 
     
-    public SearchCRMUserPage(String entityName, String entityId) {
+    public SearchCRMUserPage(String entityName, String entityId, int type) {
         logger.debug("sdfsfsdfdsf:"+entityName);
-        this.entityName = entityName;
         this.entityId = entityId;
-        initPage(entityName,null,entityId);
+        this.type = type;
+        initPage(entityName,null,entityId,type);
     }
     
-    public SearchCRMUserPage(List<Map> maplist, String entityName, String cid) {
-        this.entityName = entityName;
+    public SearchCRMUserPage(List<Map> maplist, String entityName, String cid,int type) {
         entityId = cid;
-        initPage(entityName,maplist,cid);
+        this.type = type;
+        initPage(entityName,maplist,cid,type);
     }
 
-    public void initPage(final String entiytname, List<Map> list,final String cid) {
+    public void initPage(final String entityname, List<Map> list,final String cid,final int type) {
         final String userId = ((SignIn2Session) getSession()).getUserId();
         Form form = new Form("form") { 
             @Override
             protected void onSubmit() {
                 logger.debug("the form was submitted!");
                 List<Map> maplist = null;
-                if(entiytname.equals("account")||entiytname.equals("contact")){
-                	 maplist = DAOImpl.searchCRMUser(search_target);
+                if(type==1){
+                  if(entityname.equals("account")||entityname.equals("contact")){
+                      maplist = DAOImpl.searchCRMUser(search_target);
+                  }else{
+                      maplist = DAOImpl.searchCRMAccount(search_target);
+                  }
                 }else{
-                	maplist = DAOImpl.searchCRMAccount(search_target);
+                	maplist = DAOImpl.searchCRMContact(search_target);
                 }
                
-                setResponsePage(new SearchCRMUserPage(maplist,entityName,cid));
+                setResponsePage(new SearchCRMUserPage(maplist,entityname,cid,type));
 
             }
         };
@@ -96,12 +102,13 @@ public class SearchCRMUserPage extends WebPage {
                 logger.debug("seletedUserIds:"+ selectedUserIds);
                 for(String uid:selectedUserIds){
                     try{
-                        DAOImpl.insertRelationOfEntityIDCRMUserID(entityName,cid, uid);
+                          DAOImpl.insertRelationOfEntityIDCRMUserID(entityname,cid,uid,type); 
+                       
                     }catch(Exception e){
                         
                     }
                 }
-                setResponsePage(new EntityDetailPage(entityName,cid));
+                setResponsePage(new EntityDetailPage(entityname,cid));
 
             }
         };

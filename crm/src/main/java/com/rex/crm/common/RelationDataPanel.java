@@ -16,6 +16,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.rex.crm.SearchCRMUserPage;
+import com.rex.crm.SearchContactPage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 
@@ -24,7 +25,7 @@ import com.rex.crm.util.Configuration;
 public class RelationDataPanel extends Panel {
   
 
-    public RelationDataPanel( String id, Relation relation, List list,String entityId) {
+    public RelationDataPanel( String id, Relation relation, String entityName,List list,final String entityId) {
         super(id);
         
 
@@ -58,7 +59,9 @@ public class RelationDataPanel extends Panel {
           AbstractItem item = new AbstractItem(btn_repeater.newChildId());
           btn_repeater.add(item);
           final PageParameters pars = new PageParameters();
-          pars.set("entityName", relation.getTo());
+//          pars.set("entityName", relation.getTo());
+          pars.set("cid", entityId);
+          pars.set("entityname",entityName);
           //System.out.println("PPPPPP:"+act.getParamName());
           if(act.getParamName()!=null && !act.getParamName().isEmpty()){
               pars.set(act.getParamName(),entityId);

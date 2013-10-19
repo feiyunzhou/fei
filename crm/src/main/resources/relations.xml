@@ -8,31 +8,23 @@
 		<sql>select a.* from contact as a where a.accountId=?</sql>
 		<to>contact</to>
 		<relationKey>accountId</relationKey>
+	</relation>
+	
+	<relation>
+		<from>crmuser</from>
+		<name>crmuser2account</name>
+		<display>客户关系</display>
+		<sql>select a.* from contact as a inner join contactcrmuser as b on a.id=b.contactId where b.crmuserId=?</sql>
+		<to>contact</to>
 		<reactions>
 		   <reaction>
 		       <name>createContact</name>
 		       <display>增加</display>
 		        <url>contact</url>
-		        <paramName>accountId</paramName>
+		        <paramName>contactId</paramName>
 		   </reaction>
 		</reactions>
 	</relation>
-	
-<!-- 	<relation>
-		<from>account</from>
-		<name>account2crmuser</name>
-		<display>团队关系</display>
-		<sql>select a.* from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?</sql>
-		<to>crmuser</to>		
-	</relation>
-	 -->
-<!-- 	<relation> -->
-<!-- 		<from>crmuser</from> -->
-<!-- 		<name>crmuser2account</name> -->
-<!-- 		<display>客户关系</display> -->
-<!-- 		<sql>select a.* from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?</sql> -->
-<!-- 		<to>account</to> -->
-<!-- 	</relation> -->
 	
 	<relation>
 		<from>crmuser</from>
@@ -41,9 +33,6 @@
 		<sql>select a.* from activity as a inner join crmuser as b on a.crmuserId=b.id where b.id=?</sql>
 		<to>activity</to>
 	</relation>
-	
-
-	
 <!-- 	<relation>
 		<from>contact</from>
 		<name>accountOfContact</name>

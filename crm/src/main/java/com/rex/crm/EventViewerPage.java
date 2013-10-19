@@ -153,27 +153,16 @@ public class EventViewerPage extends TemplatePage
          
          //add(new Label("name",String.valueOf(map.get("name"))));
          add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eventId),1,"calendar"));
-         
-        
 	}
 	
-
-
 	public EventViewerPage(String id)
 	{
 
 		Map<String, Entity> entities = Configuration.getEntityTable();
-		Entity entity  = entities.get("activity");
+		final Entity entity  = entities.get("activity");
 	    setPageTitle(entity.getDisplay());
 	    final String uid = ((SignIn2Session)getSession()).getUserId();
 	    final int roleId = ((SignIn2Session)getSession()).getRoleId();
-//	    StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
-	    //final long eventId
-//	    long eid = 0;
-//	    if(!eventIdValue.isEmpty()  && !eventIdValue.isNull()){
-//	        eid = eventIdValue.toLong();
-//	        
-//	    }
 	    final int eventId = Integer.parseInt(id);
 	    logger.debug("entity"+entity);
 	    Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
@@ -209,9 +198,11 @@ public class EventViewerPage extends TemplatePage
 	            //update status of calenderEvent mark it to be completed
 	            Date act_end_datetime = new Date();
 	            DAOImpl.updateStatusOfCalendarEvent((int)eventId, 2,act_end_datetime);
-	           
-	           setResponsePage(PageFactory.createPage("calendar"));
-	           
+	            if(entity.getName().equals("activity")){
+	               setResponsePage(new ActivityPage());
+	             }else{
+	               setResponsePage(PageFactory.createPage("calendar"));  
+	             }
 	        }
 	    };
 	    add(form);
@@ -233,7 +224,11 @@ public class EventViewerPage extends TemplatePage
 	        public void onClick() {
 	            
 	            DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
-	            setResponsePage(PageFactory.createPage("calendar"));
+	            if(entity.getName().equals("activity")){
+                setResponsePage(new ActivityPage());
+              }else{
+                setResponsePage(PageFactory.createPage("calendar"));  
+              }
 	        }
 	    };
 	    delete_event_btn.setVisible(write_btn_visible);

@@ -5,6 +5,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
+
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -23,6 +25,7 @@ import org.apache.wicket.behavior.AttributeAppender;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.SearchCRMUserPage;
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.account.AccountDetailPage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
@@ -69,7 +72,7 @@ public class TeamManPanel extends Panel {
 
                 @Override
                 public void onClick() {
-                  this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId));
+                  this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId,1));
                 }
                 
             });
@@ -100,7 +103,8 @@ public class TeamManPanel extends Panel {
             dataRowRepeater.add(item);
             RepeatingView columnRepeater = new RepeatingView("columnRepeater");
             item.add(columnRepeater);
-            final String rowId =  String.valueOf(map.get("rid"));            
+            final String rowId =  String.valueOf(map.get("rid"));     
+            final String realId =  String.valueOf(map.get("id"));  
             
             for (Field f : fields) {
                 if (!f.isVisible() || f.getPriority() >1)
@@ -111,6 +115,8 @@ public class TeamManPanel extends Panel {
                     public Serializable getObject() {
                         Param p = new Param();
                         p.setId(rowId);
+                        p.setExtraId(realId);
+                        //Param par = new Parameter();
                         p.setEntityName(entityName);
                         //p.setExtraId(extraId);
                         return p;
@@ -144,7 +150,12 @@ public class TeamManPanel extends Panel {
             
             //add extra field in the last column
             AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(rowId));
-            columnitem.add(new ExtraFieldFragment("celldata","extraFieldFragment",this,"删除"));
+            if(roleId == 1){
+              columnitem.add(new ExtraFieldFragment("celldata","extraFieldFragment",this,"删除")); 
+            }else{
+              columnitem.add(new WebMarkupContainer("celldata"));
+            }
+             
             columnRepeater.add(columnitem);
             
         }
@@ -186,7 +197,7 @@ public class TeamManPanel extends Panel {
                     //Account selected = (Account)getParent().getDefaultModelObject();
                     Param p = (Param)getParent().getParent().getDefaultModelObject();
                     logger.debug(p+ " id:"+p.getId() + " name:"+p.getEntityName());
-                    setResponsePage(new EntityDetailPage(p.getEntityName(),p.getId()));
+                    setResponsePage(new EntityDetailPage(p.getEntityName(),p.getExtraId()));
                     
                     //setResponsePage(new AccountDetailPage(id));
                 }
@@ -219,18 +230,20 @@ public class TeamManPanel extends Panel {
                     //System.out.println(getParent().getId());
                    // System.out.println("this link is clicked!"+this.getParent().getParent().getDefaultModelObject());
                     //Account selected = (Account)getParent().getDefaultModelObject();
-                    String id  = (String)getParent().getParent().getDefaultModelObject();
-                   
+                  
+                    String rid = (String)getParent().getParent().getDefaultModelObject();
                     //remove the team member from the contact
                     String teamtable = "";
                     if(currentEntityName.equalsIgnoreCase("account")){
                         teamtable = "accountcrmuser";
+                        
                     }else if(currentEntityName.equalsIgnoreCase("contact")){
                         teamtable = "contactcrmuser";
                     }else if(currentEntityName.equalsIgnoreCase("crmuser")){
                         teamtable = "accountcrmuser";
                     }
-                    DAOImpl.removeEntityFromTeam(teamtable,id);
+                    logger.debug("dfagdafgadfgdafgfdag"+rid);
+                    DAOImpl.removeEntityFromTeam(teamtable,rid);
                     
                     setResponsePage(new EntityDetailPage(currentEntityName,etId));
                     

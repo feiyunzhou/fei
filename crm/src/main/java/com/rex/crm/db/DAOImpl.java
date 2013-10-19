@@ -425,11 +425,12 @@ public class DAOImpl {
     }
     
     
-    public static void insertRelationOfEntityIDCRMUserID(String entityName, String cId, String userId) throws Exception {
+    public static void insertRelationOfEntityIDCRMUserID(String entityName, String cId, String userId,int type) throws Exception {
         int contactId = Integer.parseInt(cId);
         int uid = Integer.parseInt(userId);
         if (contactId != 0 && uid != 0) {
             String sql = "";
+          if(type == 1){
             if(entityName.equalsIgnoreCase("contact")){
                 sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("account")){
@@ -437,6 +438,9 @@ public class DAOImpl {
             }else if(entityName.equalsIgnoreCase("crmuser")){
                 sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
             }
+          }else{
+              sql = "INSERT INTO contactcrmuser (crmuserId,contactId) VALUES (?,?)";
+          } 
             Connection conn = null;
             try {
                 conn = DBHelper.getConnection();
@@ -1480,6 +1484,9 @@ public class DAOImpl {
     }
     
     public static List searchCRMAccount(String search_target) {
+      if(search_target == null|| search_target.equalsIgnoreCase("*")){
+        search_target = "";
+    }
         String sql = "select * from (select * from account where name like '%"+search_target+"%' OR tel like '%"+search_target+"%' OR fax like '%"+search_target+"%') as a";
         logger.debug(sql );
         Connection conn = null;
@@ -1498,9 +1505,30 @@ public class DAOImpl {
         return lMap;
     }
     
-    
+    public static List searchCRMContact(String search_target) {
+      if(search_target == null|| search_target.equalsIgnoreCase("*")){
+        search_target = "";
+    }
+      String sql = "select * from (select * from contact where name like '%"+search_target+"%' OR office_tel like '%"+search_target+"%' OR cellphone like '%"+search_target+"%') as a";
+      logger.debug(sql );
+      Connection conn = null;
+      List lMap = Lists.newArrayList();
+      try {
+          conn = DBHelper.getConnection();
+          QueryRunner run = new QueryRunner();
+          lMap = (List) run.query(conn, sql, new MapListHandler());
+
+      } catch (SQLException e) {
+          logger.error("failed to get user", e);
+      } finally {
+          DBHelper.closeConnection(conn);
+      }
+
+      return lMap;
+  }
     public static void removeEntityFromTeam(String teamtable, String id) {
         String sql = "delete from "+teamtable+" where id="+id;
+        logger.debug("sserserserser"+ sql);
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();

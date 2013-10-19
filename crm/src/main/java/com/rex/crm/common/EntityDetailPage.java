@@ -40,6 +40,7 @@ public class EntityDetailPage extends TemplatePage {
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
+        logger.debug("dfafgafgdagf" + entity.getSql_ent());
         if(entity.getName().equals("activity")){
         	add(new Label("name",String.valueOf(map.get("title"))));
         }else{
@@ -61,7 +62,7 @@ public class EntityDetailPage extends TemplatePage {
            logger.debug(r.getSql());
            logger.debug("parms:"+id);
            List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
-           item.add(new RelationDataPanel("relationPanel",r,list,String.valueOf(lid)));
+           item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid)));
            
          }
          if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")|| entityName.equalsIgnoreCase("crmuser")){
