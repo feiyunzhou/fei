@@ -29,6 +29,21 @@
 		                                account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
 		                          ORDER BY whenadded DESC) as aAccount
 		</sql-admin>
+		<sql-manager>
+		           SELECT * from (
+		                        select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
+		                                 account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+		                        FROM account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+		                        where (account.id in (select accountid from crmdb.accountcrmuser where crmuserid = ?) OR 
+		                              account.id in (select accountid from crmdb.accountcrmuser where crmuserid in (select id from crmuser where reportto = ?)) OR
+		                              account.id in (select accountid from crmdb.contact where id in (select contactid from crmdb.contactcrmuser where crmuserid  in (select id from crmdb.crmuser where reportto = ?)))) AND 
+		                              account_point_pl.id=key_type AND  
+		                              account_type_pl.id=hospital_type AND 
+		                              account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
+		                        ORDER BY whenadded DESC 
+		                       ) as aAccount
+		            
+		</sql-manager>
 
 		<sql-ent>SELECT * from (select account.* from account where
 			account.id=? order by whenadded DESC) as aAccount
@@ -545,6 +560,16 @@
 			                    order by whenadded DESC) as
 			                    aContact
 		</sql>
+		<sql-manager>
+		     select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName 
+		             from contact\,contactcrmuser\,account \,contact_generalization_target_pl  
+		             where (contact.id in (select contactid from crmdb.contactcrmuser where crmuserid = ?) OR 
+		                   contact.id in (select contactid from crmdb.contactcrmuser where crmuserid in (select crmuser.id from crmdb.crmuser where reportto =?))) AND
+		                   contactcrmuser.contactId=contact.id AND account.id=contact.accountId AND 
+		                   contact_generalization_target_pl.id= product_target 
+		                   order by whenadded DESC) as aContact 
+		</sql-manager>
+		
 		<sql-admin>select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName
 			                       from contact\,account\,contact_generalization_target_pl 
 			                       where account.id=contact.accountId AND contact_generalization_target_pl.id= product_target
@@ -1392,6 +1417,19 @@
 			                activity_event_type_pl.id=event_type AND account.id=contact.accountId) as
 			aActivity
 		</sql>
+		
+		<sql-manager>select * from (select activity.*\,activity.activity_type as
+			                             act_type\,activity.status as act_status\, activity.contactId as
+			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
+			                             contact.name as contactname_val  
+			                from activity\,contact\,activitycrmuser\,activity_event_type_pl\,account 
+			                where (activity.id in (select activityId from activitycrmuser where crmuserid = ?) OR 
+			                       activity.id in (select activityId from activitycrmuser where crmuserid in (select crmuser.id from crmdb.crmuser where reportto =?))) AND 
+			                       contact.id= activity.contactId AND activitycrmuser.activityId=activity.id AND 
+			                       activity_event_type_pl.id=event_type AND account.id=contact.accountId) as
+			aActivity
+		</sql-manager>
+		
 		<sql-admin>select * from (select activity.*\,activity.activity_type as
 			                             act_type\,activity.status as act_status\, activity.contactId as
 			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,

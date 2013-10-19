@@ -52,9 +52,18 @@ public class ActivityPage extends TemplatePage
             protected void onSubmit() {
 
                 String sql = entity.getSql();
-                if(roleId == 1){
-                    sql = entity.getSqlAdmin();
-                }     
+                switch(roleId){
+                 case 1:
+                     sql = entity.getSqlAdmin();
+                    break;
+                 case 2:
+                     sql = entity.getSqlManager();
+                    break;
+                 case 3:
+                     sql = entity.getSql();
+                    break;
+                }
+                   
                 search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
                
                 //sql =  sql + " where title like '%"+search_target+"%'";
@@ -66,7 +75,16 @@ public class ActivityPage extends TemplatePage
                 }
                 
                 sql =  sql + " where title like '%"+search_target+"%' " + likequery;
-                List datalist = DAOImpl.queryEntityRelationList(sql, userId);
+                
+                List datalist = null; 
+                
+                switch(roleId){
+                case 2:
+                    datalist = DAOImpl.queryEntityRelationList(sql, userId,userId);
+                    break;
+                default:
+                    datalist = DAOImpl.queryEntityRelationList(sql, userId);
+                }
                 setResponsePage(new ActivityPage(datalist));
                 
             }
@@ -80,12 +98,28 @@ public class ActivityPage extends TemplatePage
         
         
         String sql = entity.getSql();
-        if(roleId == 1){
-            sql = entity.getSqlAdmin();
+        switch(roleId){
+         case 1:
+             sql = entity.getSqlAdmin();
+            break;
+         case 2:
+             sql = entity.getSqlManager();
+            break;
+         case 3:
+             sql = entity.getSql();
+            break;
         }
         
         if(tdata == null || tdata.size() == 0){
-           tdata = DAOImpl.queryEntityRelationList(sql, userId);
+            switch(roleId){
+            case 2:
+                tdata = DAOImpl.queryEntityRelationList(sql, userId,userId);
+                break;
+            default:
+                tdata = DAOImpl.queryEntityRelationList(sql, userId);
+            }
+            
+         
         }
 		add(new PageableTablePanel("datalist",entity,tdata));
 	

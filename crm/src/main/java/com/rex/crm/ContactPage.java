@@ -60,18 +60,20 @@ public class ContactPage extends TemplatePage
             @Override
             protected void onSubmit() {
                 String sql = entity.getSql();
-                if(roleId == 1){
-                    sql = entity.getSqlAdmin();
+                switch(roleId){
+                 case 1:
+                     sql = entity.getSqlAdmin();
+                    break;
+                 case 2:
+                     sql = entity.getSqlManager();
+                    break;
+                 case 3:
+                     sql = entity.getSql();
+                    break;
                 }
                 
                 search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
                
-//                sql =  sql + " where name like '%"+search_target+"%' OR an like '%"+search_target+"%' OR " +
-//                		"product_target_val like '%"+search_target+"%'";
-                //sql = "(" + sql + ") as bcontact";
-                /*sql = "select * from " + sql + ", contact_generalization_target_pl where contact_generalization_target_pl.id=product_target AND " +
-                       " (name like '%"+search_target+"%' OR an like '%"+search_target+"%' OR contact_generalization_target_pl.val like '%"+search_target+"%')"; 
-                */
                 List<Field> searchableFields = entity.getSearchableFields();
                 String joint = " like '%"+search_target+"%'";
                 String likequery = "";
@@ -82,7 +84,16 @@ public class ContactPage extends TemplatePage
                 sql =  sql + " where name like '%"+search_target+"%' " + likequery;
                 
                 System.out.println("TEST:"+sql);
-                List datalist = DAOImpl.queryEntityRelationList(sql, userId);
+                
+                 List datalist = null; 
+                
+                switch(roleId){
+                case 2:
+                    datalist = DAOImpl.queryEntityRelationList(sql, userId,userId);
+                    break;
+                default:
+                    datalist = DAOImpl.queryEntityRelationList(sql, userId);
+                }
                 setResponsePage(new ContactPage(filter,datalist));
                 
             }
@@ -93,14 +104,33 @@ public class ContactPage extends TemplatePage
         TextField search_input = new TextField("search_input", new PropertyModel(this,"search_target"));
         form.add(search_input);
         
-       // List mapList = null;
+        String sql = entity.getSql();
+        switch(roleId){
+         case 1:
+             sql = entity.getSqlAdmin();
+            break;
+         case 2:
+             sql = entity.getSqlManager();
+            break;
+         case 3:
+             sql = entity.getSql();
+            break;
+        }
         if (tdata == null || tdata.size() == 0) {
+            
+            
+            
             if (filter == null) {
-                String sql = entity.getSql();
-                if (roleId == 1) {
-                    sql = entity.getSqlAdmin();
+               
+                switch(roleId){
+                case 2:
+                    tdata = DAOImpl.queryEntityRelationList(sql, userId,userId);
+                    break;
+                default:
+                    tdata = DAOImpl.queryEntityRelationList(sql, userId);
                 }
-                tdata = DAOImpl.queryEntityRelationList(sql, userId);
+              
+              
             } else {
 
                 List<String> ft = Lists.newArrayList();
@@ -108,7 +138,13 @@ public class ContactPage extends TemplatePage
                     if (filter.get(k))
                         ft.add(k);
                 }
-                tdata = DAOImpl.queryEntityWithFilter(entity.getSql(), entity.getFilterField(), ft, userId);
+                switch(roleId){
+                case 2:
+                    tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, userId,userId);
+                    break;
+                default:
+                    tdata =DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, userId);
+                }
 
             }
         }
@@ -116,7 +152,17 @@ public class ContactPage extends TemplatePage
 
         
         //for the side bar
-        List<Pair<String, Map<String, Object>>> types = DAOImpl.queryFilters(entity.getSql(), entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);
+        //List<Pair<String, Map<String, Object>>> types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);
+        
+        List<Pair<String, Map<String, Object>>> types = null;
+        switch(roleId){
+        case 2:
+            types =  DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId,userId);
+            break;
+        default:
+            types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);
+        }
+        
         add(new FilterPanel("filterPanel",types ,filter,ContactPage.class));
        
     }
