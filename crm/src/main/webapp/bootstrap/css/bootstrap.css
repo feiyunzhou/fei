@@ -812,7 +812,7 @@ h4 small {
 
 ul,
 ol {
-    margin: 0 0 10px 25px;
+    margin: 0 0 30px 25px;
 }
 
 ul ul,
@@ -4049,11 +4049,11 @@ input[type="submit"].btn.btn-mini {
 }
 
 .nav-tabs {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 2px solid #3498DB;
 }
 
 .nav-tabs > li {
-    margin-bottom: -1px;
+    margin-bottom: -2px;
 }
 
 .nav-tabs > li > a {
@@ -4077,7 +4077,7 @@ input[type="submit"].btn.btn-mini {
     color: #555555;
     cursor: default;
     background-color: #ffffff;
-    border: 1px solid #ddd;
+    border: 2px solid #3498DB;
     border-bottom-color: transparent;
 }
 
