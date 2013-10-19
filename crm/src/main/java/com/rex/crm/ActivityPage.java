@@ -3,6 +3,7 @@ package com.rex.crm;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -15,6 +16,7 @@ import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.EntityDetailPage;
 import com.rex.crm.common.Field;
+import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.Param;
 import com.rex.crm.common.TableDataPanel;
@@ -29,13 +31,13 @@ public class ActivityPage extends TemplatePage
 {
     private String search_target = "";
     public ActivityPage(){
-       init(null);
+       init(null,null);
     }
-    public ActivityPage(List tdata){
-        init(tdata);
+    public ActivityPage(final Map<String,Boolean> filter,List tdata){
+        init(filter,tdata);
     }
 
-	public void init(List tdata)
+	public void init(final Map<String,Boolean> filter,List tdata)
 	{
 		Map<String, Entity> entities = Configuration.getEntityTable();
         final Entity entity = entities.get("activity");
@@ -85,7 +87,7 @@ public class ActivityPage extends TemplatePage
                 default:
                     datalist = DAOImpl.queryEntityRelationList(sql, userId);
                 }
-                setResponsePage(new ActivityPage(datalist));
+                setResponsePage(new ActivityPage(filter,datalist));
                 
             }
             
@@ -122,6 +124,19 @@ public class ActivityPage extends TemplatePage
          
         }
 		add(new PageableTablePanel("datalist",entity,tdata));
+		
+		
+		 //for the side bar
+        List<Pair<String, Map<String, Object>>> types = null;
+        switch(roleId){
+        case 2:
+            types =  DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId,userId);
+            break;
+        default:
+            types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);
+        }
+       
+        add(new FilterPanel("filterPanel",types ,filter,ActivityPage.class));
 	
 	}
 }

@@ -1010,6 +1010,7 @@
 		<entity>
 		<name>crmuser</name>
 		<display>用户</display>
+	    <filterField>role</filterField>
 		<sql>
 		select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val
 		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser
@@ -1407,6 +1408,7 @@
 	<entity>
 		<name>activity</name>
 		<display>日历</display>
+		<filterField>event_type</filterField>
 		<sql>select * from (select activity.*\,activity.activity_type as
 			                             act_type\,activity.status as act_status\, activity.contactId as
 			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
