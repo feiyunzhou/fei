@@ -29,7 +29,7 @@ public class CRMUser {
 	private int role;
 	private int reportto;
 	private int sex;
-
+    private int isActivited;
 	public String getName() {
 		return name;
 	}
@@ -126,6 +126,14 @@ public class CRMUser {
 		this.photo = photo;
 	}
 
+	public int getIsActivited() {
+		return isActivited;
+	}
+
+	public void setIsActivited(int isActivited) {
+		this.isActivited = isActivited;
+	}
+
 	@Override
 	public String toString() {
 		Gson gson = new GsonBuilder().create();
@@ -143,6 +151,7 @@ public class CRMUser {
 		map.put("name", name);
 		map.put("id", id);
 		map.put("photo", photo);
+		map.put("isActivited","isActivited");
 		return map;
 	}
 	

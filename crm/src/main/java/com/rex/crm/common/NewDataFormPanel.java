@@ -356,11 +356,15 @@ public class NewDataFormPanel extends Panel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-        emailContent.append("http://");
-        String localhost = systemPeroperties.getProperty("url");
-        logger.debug("localhost:"+localhost);
+        emailContent.append(systemPeroperties.getProperty("http"));
         emailContent.append(systemPeroperties.getProperty("url"));
-        emailContent.append("/crm/mount/ActivitedUser?loginName=");
+        emailContent.append("/");
+        emailContent.append(systemPeroperties.getProperty("project"));
+        emailContent.append("/");
+        emailContent.append(systemPeroperties.getProperty("jumpage"));
+        emailContent.append("?");
+        emailContent.append(systemPeroperties.getProperty("parameter"));
+        emailContent.append("=");
         emailContent.append(getUserByLoginName);
         logger.debug(emailContent);
         Properties props = new Properties();

@@ -467,6 +467,7 @@ public class DAOImpl {
             ResultSetHandler<List<CalendarEvent>> h = new BeanListHandler<CalendarEvent>(CalendarEvent.class);
 
             events = run.query(conn, "SELECT * FROM activity where crmuserId=?", h, userId);
+            logger.debug("events:"+events.size());
             for (CalendarEvent e : events) {
                 e.setStart(sd.format(new Date(e.getStarttime())));
                 e.setEnd(sd.format(new Date(e.getEndtime())));
@@ -879,12 +880,12 @@ public class DAOImpl {
         try {
             conn = DBHelper.getConnection();
             for (Choice ch : choices) {
-                String query = "select sum(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
-                logger.debug("query is:" + query);
+            	 String query = "select count(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
+                 logger.debug("query is:" + query);
                 QueryRunner run = new QueryRunner();
                 Map<String, Object> map = run.query(conn, query, new MapHandler(), user_id);
                 if (map.get("sum") == null) {
-                    map.put("sum", new java.math.BigDecimal(0));
+                	map.put("sum", 0L);
                 }
                 map.put("val", ch.getVal());
                 res.add(Pair.of(String.valueOf(ch.getId()), map));
@@ -945,6 +946,48 @@ public class DAOImpl {
         return key;
     }
     
+    public static long addCalendarEventForCoach(int crmuserId, int contactId, String type, String title, String start, String end,int status,
+            String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type,String participants,
+           String coach,String location,int total_score,int planing,int openling,int enquery_listening,int deliverable,int objection_handing,int summary,String name) throws Exception {
+        int type_id = Integer.parseInt(type);
+        //logger.debug("modified date time:"+modify_datetime);
+        String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type," +
+        		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose," +
+        		"feature_product,event_type,participants,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,name) " +
+        		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet generatedKeys = null;
+        long key = -1;
+        try {
+            conn = DBHelper.getConnection();
+            statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            fillStatement(statement,crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
+                          status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type,participants
+                          ,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,name);
+                
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                logger.error("Failed to insert data");
+                return -1;
+            }
+            generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                //user.setId(generatedKeys.getLong(1));
+                 key = generatedKeys.getLong(1);
+            } else {
+                logger.error("failed to insert data");
+                return -1;
+            }
+        } catch (Exception e) {
+            logger.error("failed to add new calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return key;
+    }
+    
     
     private   static void fillStatement(PreparedStatement stmt, Object... params)
             throws SQLException {
@@ -954,12 +997,13 @@ public class DAOImpl {
             }
             ParameterMetaData pmd = stmt.getParameterMetaData();
             for (int i = 0; i < params.length; i++) {
-                if (params[i] != null) {
+            	stmt.setObject(i + 1, params[i]);
+                /*if (params[i] != null) {
                     stmt.setObject(i + 1, params[i]);
                 } else {
                     stmt.setNull(i + 1, pmd.getParameterType(i + 1));
                 }
-            }
+*/            }
         }
     
     
@@ -1014,10 +1058,9 @@ public class DAOImpl {
     	String key ="";
     	String fieldssql = Joiner.on(",").join(fieldNames);
         String valuesql = Joiner.on(",").join(values);
-        fieldssql = fieldssql + ",cityId";
-   	 	valuesql =  valuesql + ",1";
+        fieldssql = fieldssql + ",isActivited";
+   	 	valuesql =  valuesql + ",0";
    	 	fieldssql = fieldssql.replaceAll("user-city", "city");
-   	 	fieldssql = fieldssql.replaceAll("sex", "sex_pl");
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
    	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
@@ -1109,7 +1152,6 @@ public class DAOImpl {
         }else if(entityName.equalsIgnoreCase("activity")){
             sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+userId+")";
         }
-        
         if(sql == null) {
             logger.error("entityName error");
             return;
@@ -1237,9 +1279,24 @@ public class DAOImpl {
         } finally {
             DBHelper.closeConnection(conn);
         }
-
     }
-    
+    //拜访辅导点击删除触发的事件
+    public static void updateStatusOfActivity(int eventId, int status) {
+        String sql = "UPDATE activity SET status=? where id=?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql, status,eventId);
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to add new calendar event", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+    }
     
     public static void updateStatusOfExternalMeeting(int eventId, int status) {
         String sql = "UPDATE externalMeeting SET status=? where id=?";
@@ -1368,7 +1425,7 @@ public class DAOImpl {
         return lMap;
     }
     
-    public static List searchCRMUser(String managerId,String search_target) {
+    public static List searchCRMUserOfManager(String managerId,String search_target) {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
             search_target = "";
         }
@@ -1398,6 +1455,9 @@ public class DAOImpl {
     
     
     public static List searchCRMUser(String search_target) {
+    	if(search_target == null|| search_target.equalsIgnoreCase("*")){
+	          search_target = "";
+    	}
         String sql = "select * from (select * from crmuser where name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%') as a";
         logger.debug(sql );
         Connection conn = null;
@@ -1486,14 +1546,14 @@ public class DAOImpl {
         return inferiors;
     }
     // update crmuser baseInfo
-    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo) {
-        String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=? where id=?";
+    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex) {
+    	String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=?,sex=? where id=?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            inserts += run.update(conn, sql, userName, cellphone,email,photo,userId);
+            inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,userId);
             System.out.println("updateCrmUser:" + inserts);
         } catch (Exception e) {
             logger.error("failed to updateStatusOfInternalMeeting", e);
@@ -1551,6 +1611,23 @@ public class DAOImpl {
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
             run.update(conn, sql,password,entityId);
     		logger.debug("reset password success!");
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+    }
+    //修改用户激活状态
+    public static void updateUserActivited(int entityId){
+    	System.err.println("update activited");
+    	String  sql=" UPDATE crmuser SET isActivited=? where id =?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            run.update(conn, sql,1,entityId);
+    		logger.debug("update activited success!");
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {

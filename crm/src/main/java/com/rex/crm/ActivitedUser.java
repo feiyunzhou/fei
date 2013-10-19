@@ -14,6 +14,7 @@ import org.apache.wicket.util.string.StringValue;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.CRMUser;
+import com.rex.crm.common.ErrorPromptPage;
 import com.rex.crm.db.DAOImpl;
 
 public class ActivitedUser extends WebPage{
@@ -22,9 +23,14 @@ public class ActivitedUser extends WebPage{
 	private static final Logger logger = Logger.getLogger(UpdateSignPassword.class);
 	final Map<String, IModel> models = Maps.newHashMap();
 	public ActivitedUser(){
-		String logigName = this.getRequest().getRequestParameters().getParameterValue("loginName").toString();
-		logger.debug("loginName:"+logigName);
-		initPage(logigName);
+		String loginName = this.getRequest().getRequestParameters().getParameterValue("loginName").toString();
+		logger.debug("loginName:"+loginName);
+		CRMUser crmuser = DAOImpl.getUserByActivation(loginName);
+		if(crmuser.getIsActivited()==0){
+			initPage(loginName);
+		}else{
+			setResponsePage(new ErrorPromptPage());
+		}
 	}
 	public void initPage(final String loginName){
 		logger.debug("init");
@@ -38,6 +44,8 @@ public class ActivitedUser extends WebPage{
 				String password =  models.get("password").getObject() == null? null:String.valueOf(models.get("password").getObject());
 				logger.debug("pwd:"+password);
 				if(DAOImpl.updateCrmUserPassword(userId, password)){
+					//修改crmuser的激活状态为已激活
+					DAOImpl.updateUserActivited(userId);
 					//用此用户登录
 					SignIn2Session session = getMysession();
 		        	session.setUser(null);
@@ -47,7 +55,6 @@ public class ActivitedUser extends WebPage{
 		            }else{
 		            	promptLabel.add(new AttributeAppender("style",new Model("display:block;"),";"));
 		            }
-					//setResponsePage(getApplication().getHomePage());
 				}else{
 					promptLabel.add(new AttributeAppender("style",new Model("display:block;"),";"));
 				}

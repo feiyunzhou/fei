@@ -102,19 +102,27 @@ public class EventViewerPage extends TemplatePage
                 //update status of calenderEvent mark it to be completed
             	Date act_end_datetime = new Date();
                 DAOImpl.updateStatusOfCalendarEvent((int)eventId, 2,act_end_datetime);
-                //判断类型如果是辅导类型则跳转到评分界面
                 setResponsePage(PageFactory.createPage("calendar"));
                
             }
         };
         add(form);
-        
+        int eventType = 0;
+        if(map != null){
+        	 eventType = ((Number) map.get("event_type")).intValue();
+             logger.debug("eventType:"+eventType);
+        }
+        final int event_type  = eventType;  
         Link edit_event_btn = new Link("edit_event_btn") {
-            
             @Override
             public void onClick() {
-                
-                setResponsePage(new EventEditorPage(eventId));
+                //判断活动类型
+            	if(event_type==1){
+            		 setResponsePage(new EventEditorPage(eventId));
+            	}else{
+            		DAOImpl.updateStatusOfActivity((int)eventId,3);
+            	}
+               
             }
         };
         edit_event_btn.setVisible(write_btn_visible);
@@ -124,10 +132,13 @@ public class EventViewerPage extends TemplatePage
             
             @Override
             public void onClick() {
-                
-                DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
+            	if(event_type==1){
+            		 DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
+                     setResponsePage(PageFactory.createPage("calendar"));
+            	}else{
+           		 	setResponsePage(new EventCoachEditorPage(eventId));
+            	}
                
-                setResponsePage(PageFactory.createPage("calendar"));
             }
         };
         delete_event_btn.setVisible(write_btn_visible);

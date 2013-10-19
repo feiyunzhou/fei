@@ -1965,7 +1965,7 @@
 			</field>
 
 			<field>
-				<name>sex_pl</name>
+				<name>sex</name>
 				<display>性别</display>
 				<data-type>text</data-type>
 				<picklist>sex_pl</picklist>
