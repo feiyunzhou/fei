@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import com.google.common.collect.Lists;
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
@@ -113,15 +114,36 @@ public class ActivityPage extends TemplatePage
         }
         
         if(tdata == null || tdata.size() == 0){
-            switch(roleId){
-            case 2:
-                tdata = DAOImpl.queryEntityRelationList(sql, userId,userId);
-                break;
-            default:
-                tdata = DAOImpl.queryEntityRelationList(sql, userId);
+          
+            if(filter == null){
+                
+                switch(roleId){
+                case 2:
+                    tdata = DAOImpl.queryEntityRelationList(sql, userId,userId);
+                    break;
+                default:
+                    tdata = DAOImpl.queryEntityRelationList(sql, userId);
+                }
+              
+                
+            }else{
+                List<String> ft = Lists.newArrayList();
+                for (String k : filter.keySet()) {
+                    if(filter.get(k)) ft.add(k);
+                }
+                
+                switch(roleId){
+                case 2:
+                    tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, userId,userId);
+                    break;
+                default:
+                    tdata =DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, userId);
+                }
+                
+                
             }
             
-         
+            
         }
 		add(new PageableTablePanel("datalist",entity,tdata));
 		

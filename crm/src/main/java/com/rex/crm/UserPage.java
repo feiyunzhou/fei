@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 
+import com.google.common.collect.Lists;
 import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
@@ -74,13 +75,30 @@ public class UserPage extends TemplatePage
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
         if( tdata == null || tdata.size() == 0){
           tdata = DAOImpl.queryEntityRelationList(entity.getSql(), "dummy");
+          
+          if(filter == null){
+              
+             
+              tdata = DAOImpl.queryEntityRelationList(entity.getSql(), "dummy");
+              
+          }else{
+              List<String> ft = Lists.newArrayList();
+              for (String k : filter.keySet()) {
+                  if(filter.get(k)) ft.add(k);
+              }
+              
+            
+              tdata =DAOImpl.queryEntityWithFilter(entity.getSql(), entity.getFilterField(), ft, "dummy"); 
+          }
+          
+          
         }
 		add(new PageableTablePanel("datalist",entity,tdata));
 		
 		 //for the side bar
         List<Pair<String, Map<String, Object>>> types = null;
         
-        types = DAOImpl.queryFilters(entity.getSql(), entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), "userId");
+        types = DAOImpl.queryFilters(entity.getSql(), entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), "dummy");
         add(new FilterPanel("filterPanel",types ,filter,UserPage.class));
     
 	}
