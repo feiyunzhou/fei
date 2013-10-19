@@ -167,7 +167,9 @@ CREATE TABLE accountcrmuser
     accountId MEDIUMINT NOT NULL,
     crmuserId MEDIUMINT NOT NULL,
     UNIQUE KEY(accountId,crmuserId), 
-    PRIMARY KEY USING BTREE (id)
+    PRIMARY KEY USING BTREE (id),
+    CONSTRAINT `account_crmuser_cons` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `account_crmuser_cons2` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB;
 
 drop table if exists externalMeeting;
@@ -222,8 +224,20 @@ CREATE TABLE activity
     modifier VARCHAR(255),
     modify_datetime DATETIME,
     responsible_person VARCHAR(255),
-    PRIMARY KEY USING BTREE (id)
+    coach VARCHAR(255),
+    location VARCHAR(255),
+    total_score MEDIUMINT,
+    planing MEDIUMINT,
+    openling MEDIUMINT,
+    enquery_listening MEDIUMINT,
+    deliverable MEDIUMINT,
+    objection_handing MEDIUMINT,
+    summary MEDIUMINT,
+    PRIMARY KEY USING BTREE (id),
+    CONSTRAINT `crmuserId_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `contactId_activity_cons` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB;
+
 
 -- 类型
 drop table if exists activity_event_type_pl;
@@ -320,7 +334,9 @@ CREATE TABLE activitycrmuser
     activityId MEDIUMINT NOT NULL,
     crmuserId MEDIUMINT NOT NULL,
     UNIQUE KEY(activityId,crmuserId), 
-    PRIMARY KEY USING BTREE (id)
+    PRIMARY KEY USING BTREE (id),
+    CONSTRAINT `crm_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,
+     CONSTRAINT `crm_activity_cons2` FOREIGN KEY (`activityId`) REFERENCES `activity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
 ) ENGINE InnoDB;
 
 drop table if exists contact;
@@ -351,9 +367,9 @@ CREATE TABLE contact
     modifier VARCHAR(255),
     modify_datetime DATETIME,
     responsible_person VARCHAR(255),
-    PRIMARY KEY USING BTREE (id)
+    PRIMARY KEY USING BTREE (id),
+    CONSTRAINT `account_id_cons` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
 ) ENGINE InnoDB;
-
 
 -- 性别;
 drop table if exists sex_pl;
@@ -559,7 +575,9 @@ CREATE TABLE contactcrmuser
     contactId MEDIUMINT NOT NULL,
     crmuserId MEDIUMINT NOT NULL,
     UNIQUE KEY(contactId,crmuserId), 
-    PRIMARY KEY USING BTREE (id)
+    PRIMARY KEY USING BTREE (id),
+     CONSTRAINT `crm_contact_cons1` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+      CONSTRAINT `crm_contact_cons2` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB;
 
 
@@ -664,48 +682,4 @@ CREATE TABLE province
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
-
-
-drop table if exists dealerAccount;
-CREATE TABLE dealerAccount 
-(
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    address VARCHAR(255),
-    tele VARCHAR(255),
-    status MEDIUMINT,
-    pl1 MEDIUMINT,
-    pl2 MEDIUMINT,
-    PRIMARY KEY USING BTREE (id)
-) ENGINE InnoDB;
-ALTER table dealerAccount ADD whenadded DATETIME;
-
-
-drop table if exists dealerContact;
-CREATE TABLE dealerContact 
-(
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    sex MEDIUMINT,
-    tel_work VARCHAR(255),
-    dealerAccountId MEDIUMINT  NOT NULL,
-    status MEDIUMINT,
-    pl1 MEDIUMINT,
-    PRIMARY KEY USING BTREE (id)
-) ENGINE InnoDB;
-ALTER table dealerContact ADD whenadded DATETIME;
-
-
-drop table if exists dealerContact;
-CREATE TABLE dealerContact 
-(
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    sex MEDIUMINT,
-    tel_work VARCHAR(255),
-    dealerAccountId MEDIUMINT  NOT NULL,
-    status MEDIUMINT,
-    pl1 MEDIUMINT,
-    PRIMARY KEY USING BTREE (id)
-) ENGINE InnoDB;
 

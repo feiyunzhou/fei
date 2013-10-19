@@ -144,4 +144,8 @@ UPDATE crmuser SET password = FLOOR(1000000* RAND()+1000);
 UPDATE crmuser SET sessionKey = FLOOR(1000000* RAND()+1000);
 
 
+insert into crmuser (id,name) values(-1,"dummy");
+insert into account (id,name) values(-1,"dummy");
+insert into contact (id,name,accountId) values(-1,"dummy",-1);
+
 

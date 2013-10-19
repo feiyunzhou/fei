@@ -1410,10 +1410,10 @@ public class DAOImpl {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
             search_target = "";
         }
-        String sql = "select * from account where (? is not null) AND name like '%"+search_target+"%' order by whenadded DESC";
+        String sql = "select * from account where (? is not null) AND account.id !=-1 AND name like '%"+search_target+"%' order by whenadded DESC";
         if(roleId != 1){
            sql = "SELECT * from (select account.* from accountcrmuser,account"+
-            " where accountcrmuser.crmuserId=? AND " +
+            " where accountcrmuser.crmuserId=? AND account.id != -1 AND " +
             "accountcrmuser.accountId=account.id AND (name like '%"+search_target+"%' ) order by whenadded DESC) as aAccount";
         }
         Connection conn = null;
@@ -1465,7 +1465,7 @@ public class DAOImpl {
     	if(search_target == null|| search_target.equalsIgnoreCase("*")){
 	          search_target = "";
     	}
-        String sql = "select * from (select * from crmuser where name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%') as a";
+        String sql = "select * from (select * from crmuser where (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
         logger.debug(sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
