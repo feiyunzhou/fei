@@ -4,6 +4,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
@@ -24,7 +25,16 @@ import com.rex.crm.FolderResource;
  */
 public class WicketApplication extends WebApplication
 {    	
-	/**
+    
+    
+    
+	@Override
+    public RuntimeConfigurationType getConfigurationType() {
+        // TODO Auto-generated method stub
+        return RuntimeConfigurationType.DEPLOYMENT;
+    }
+
+    /**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
 	@Override
