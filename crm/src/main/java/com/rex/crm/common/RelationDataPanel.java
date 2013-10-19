@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
+
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -17,6 +20,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.rex.crm.SearchCRMUserPage;
 import com.rex.crm.SearchContactPage;
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 
@@ -34,6 +38,7 @@ public class RelationDataPanel extends Panel {
         add(divC);
         
         final String collapseId = divC.getMarkupId();
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         WebMarkupContainer linkC = new WebMarkupContainer("aLink"){
 
             @Override
@@ -66,9 +71,16 @@ public class RelationDataPanel extends Panel {
           if(act.getParamName()!=null && !act.getParamName().isEmpty()){
               pars.set(act.getParamName(),entityId);
           }
-          BookmarkablePageLink link = new BookmarkablePageLink("actionlink", SearchCRMUserPage.class,pars);
-          link.add(new Label("cap",act.getDisplay()));
-          item.add(link);
+          if(roleId == 3){
+            WebMarkupContainer con = new WebMarkupContainer("actionlink");
+            con.add(new AttributeAppender("class", ""));
+            con.add(new WebMarkupContainer("cap"));
+            item.add(con);
+          }else{
+            BookmarkablePageLink link = new BookmarkablePageLink("actionlink", SearchCRMUserPage.class,pars);  
+            link.add(new Label("cap",act.getDisplay()));
+            item.add(link);
+          }
          }
         }
     }
