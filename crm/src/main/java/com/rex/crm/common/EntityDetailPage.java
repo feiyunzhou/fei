@@ -40,7 +40,6 @@ public class EntityDetailPage extends TemplatePage {
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
-        logger.debug("dfafgafgdagf" + entity.getSql_ent());
         if(entity.getName().equals("activity")){
         	add(new Label("name",String.valueOf(map.get("title"))));
         }else{

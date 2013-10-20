@@ -1211,22 +1211,24 @@ public class DAOImpl {
     
     
     
-    public static void deleteRecord(String entityId,String entityName) {
+    public static int deleteRecord(String entityId,String entityName) {
         String sql = "";
         sql = "DELETE from " + entityName +" where id = " + entityId;
+        logger.debug("delte record sql:"+ sql);
         Connection conn = null;
+        int inserts = 0;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            int inserts = 0;
+          
             inserts += run.update(conn, sql);
             
-            if(inserts ==1 ){
-                if(entityName.equalsIgnoreCase("activity")){
-                    run.update(conn, "DELETE from activitycrmuser where activityId = ?",entityId);
-                    logger.debug("successfully remove the entity");
-                }
-            }
+//            if(inserts ==1 ){
+//                if(entityName.equalsIgnoreCase("activity")){
+//                    //run.update(conn, "DELETE from activitycrmuser where activityId = ?",entityId);
+//                    logger.debug("successfully remove the entity");
+//                }
+//            }
 
             
         } catch (Exception e) {
@@ -1235,6 +1237,7 @@ public class DAOImpl {
             DBHelper.closeConnection(conn);
         }
 
+        return inserts;
     }
     public static void deleteaAcountCrmuserRecord(String entityId) {
         String sql = "";
@@ -1665,6 +1668,28 @@ public class DAOImpl {
         } finally {
             DBHelper.closeConnection(conn);
         }
+    }
+    
+    //update user reportto from someone to someone
+    public static boolean updateCrmUserReport(String from, String to){
+        String  sql=" UPDATE crmuser SET reportto=? where reportto =?";
+        Connection conn = null;
+        
+        int updates = 0;
+        try{
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            updates += run.update(conn, sql, to, from);
+            logger.debug("updateCrmUserReport success!");
+        } catch (Exception e){
+            logger.error("failed to updateCrmUserReport",e);
+        }finally{
+            DBHelper.closeConnection(conn);
+        }
+        if(updates>0){
+            return true;
+        }
+        return false;
     }
 
 }

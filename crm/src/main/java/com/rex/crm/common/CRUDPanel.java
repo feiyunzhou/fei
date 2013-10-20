@@ -79,8 +79,10 @@ public class CRUDPanel extends Panel {
                     	}else if(entityName.equals("activity")) {
                     		DAOImpl.deleteRecord(entityId, entityName);
                             setResponsePage(new ActivityPage());
-                    	}else {
-                    		DAOImpl.deleteRecord(entityId, entityName);
+                    	}else if(entityName.equalsIgnoreCase("crmuser")){
+                    		if(DAOImpl.deleteRecord(entityId, entityName)>0){
+                    		   DAOImpl.updateCrmUserReport(entityId, "-1");
+                    		}
                             setResponsePage(new UserPage());
                     	}
                         
