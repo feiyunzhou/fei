@@ -1442,9 +1442,9 @@ public class DAOImpl {
         }
         String sql = "select * from crmuser";
         if(managerId!=null){
-           sql = "select * from (select * from crmuser where reportto="+managerId+" AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
+           sql = "select * from (select * from crmuser where crmuser.id > 0 AND reportto="+managerId+" AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
         }else{
-            sql = "select * from (select * from crmuser where (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a"; 
+            sql = "select * from (select * from crmuser where crmuser.id > 0 AND  (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a"; 
         }
         logger.debug(sql );
         Connection conn = null;
@@ -1471,6 +1471,28 @@ public class DAOImpl {
     	}
         String sql = "select * from (select * from crmuser where (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
         logger.debug(sql );
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return lMap;
+    }
+    
+    public static List searchManager(String search_target,int excludeId) {
+        if(search_target == null|| search_target.equalsIgnoreCase("*")){
+              search_target = "";
+        }
+        String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (role=2) AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
+        logger.debug("searchManager:"+ sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {

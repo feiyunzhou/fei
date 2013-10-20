@@ -17,6 +17,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.db.DAOImpl;
@@ -40,16 +41,17 @@ public class SelectEntryPage extends WebPage {
      */
     public SelectEntryPage() {
         String entityName = getRequest().getRequestParameters().getParameterValue("en").toString();
-        initPage(null,entityName);
+        final int excludeId = getRequest().getRequestParameters().getParameterValue("target").toInt();
+        initPage(null,entityName,excludeId);
     }
 
-    public SelectEntryPage(List<Map> maplist,String entityName) {
-        initPage(maplist,entityName);
+    public SelectEntryPage(List<Map> maplist,String entityName,int excludeId) {
+        initPage(maplist,entityName,excludeId);
     }
 
-    public void initPage(List<Map> list,final String entityName) {
+    public void initPage(List<Map> list,final String entityName,final int excludeId) {
         final String userId = ((SignIn2Session) getSession()).getUserId();
-
+        
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         Form form = new Form("form") {
             @Override
@@ -58,12 +60,16 @@ public class SelectEntryPage extends WebPage {
                 if(entityName.equalsIgnoreCase("account")){
                     maplist = DAOImpl.searchAccount(userId, search_target, roleId);
                 }else if(entityName.equalsIgnoreCase("crmuser")){
-                    maplist = DAOImpl.searchCRMUser(search_target);
+                    //maplist = DAOImpl.searchCRMUser(search_target);
+                    maplist = DAOImpl.searchManager(search_target,excludeId);
+                    Map dummy = Maps.newHashMap();
+                    dummy.put("id",-1);
+                    dummy.put("name", "无");
+                    maplist.add(dummy);
                 }
-                PageParameters parm = new PageParameters();
-                parm.set("en", entityName);
                 //this.setResponsePage(cls, parameters)
-                setResponsePage(new SelectEntryPage(maplist,entityName));
+                
+                setResponsePage(new SelectEntryPage(maplist,entityName,excludeId));
 
             }
         };
