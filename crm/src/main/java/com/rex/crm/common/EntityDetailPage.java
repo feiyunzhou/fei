@@ -64,12 +64,19 @@ public class EntityDetailPage extends TemplatePage {
            item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid)));
            
          }
-         if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")|| entityName.equalsIgnoreCase("crmuser")){
-             add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),roleId));
+         if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")){
+             add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
+             WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
+             add(con2); 
+         }else if(entityName.equalsIgnoreCase("crmuser")){
+             add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
+             add(new TeamManPanel("teamPanel2",entityName,String.valueOf(lid),1));
          }
          else{
              WebMarkupContainer con = new WebMarkupContainer("teamPanel");
              add(con); 
+             WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
+             add(con2); 
          }
 
          add(new AbstractAjaxBehavior(){

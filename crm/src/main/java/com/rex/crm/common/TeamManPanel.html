@@ -7,28 +7,31 @@
 		});
 	</script>
 
-	<div class="container-fluid">
-		<div class="row-fluid">
+	<div class="">
+		<div class="">
 		    
-			<div class="span12" >
-			<table style="width: 100%; background-color:#F1F1F1 " class="label label-default " >
-				<tr><td>			
-			<h5 class="pull-left">团队信息</h5>
-			</td>
-			<td>
-				<div class="pull-right">
-				 <a id="add_relation_link" wicket:id="add_users_link" class="btn btn-mini btn-primary">增加</a>
-				 </div>
-			</td>
-				</tr>
+			<div class="" >
+				<table style="width: 100%; "  >
+					<tr>
+						<td>
+							<h5 class="pull-left">
+								&nbsp;&nbsp;<span wicket:id="title"></span>团队信息
+							</h5>
+						</td>
+						<td>
+							<div class="pull-right">
+								<a id="add_relation_link" wicket:id="add_users_link" class="btn btn-mini btn-info">添加</a>
+							</div>
+						</td>
+					</tr>
 				</table>
 				<div>
 
 					<table id="dt" style="width: 100%" class="table table-hover table-striped table-condensed">
 						<thead>
-							<tr>
+							<tr  bgcolor="#E4EFFB">
 								<th wicket:id="columnNameRepeater"><span wicket:id="columnName"></span></th>
-								<!-- <th>actions</th> -->
+								<th></th>
 							</tr>
 						</thead>
 						<tr wicket:id="dataRowRepeater">
@@ -41,7 +44,7 @@
 					</wicket:fragment>
 					
 					<wicket:fragment wicket:id="extraFieldFragment">
-						<a href="#" class="btn btn-primary btn-mini" wicket:id="remove_team_member_click"><wicket:container wicket:id="cap" /></a>
+						<a href="#" class="btn btn-info btn-mini" wicket:id="remove_team_member_click"><wicket:container wicket:id="cap" /></a>
 					</wicket:fragment>
 					
 				</div>

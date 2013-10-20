@@ -38,10 +38,12 @@ public class TeamManPanel extends Panel {
     private String etId;
     private String currentEntityName;
 
-    public TeamManPanel(String id,final String en,final String entityId,int roleId) {
+    public TeamManPanel(String id,final String en,final String entityId,final int type) {
         super(id);
         etId = entityId;
         currentEntityName = en;
+        final String userId = ((SignIn2Session)getSession()).getUserId();
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         //team sql
         String teamSql = "";
         if(en.equalsIgnoreCase("account")){
@@ -49,30 +51,48 @@ public class TeamManPanel extends Panel {
         }else if(en.equalsIgnoreCase("contact")){
             teamSql = "select * from (select a.*,b.id as rid from crmuser as a inner join contactcrmuser as b on a.id=b.crmuserId where b.contactId=?) as atable";
         }else if(en.equalsIgnoreCase("crmuser")){
-            teamSql = "select * from (select a.*,b.id as rid from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?) as atable";
+            if(type == 0){
+                //for the 医院列表
+               teamSql = "select * from (select a.*,b.id as rid from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?) as atable";
+            }else if(type == 1){
+                //for the 医生列表
+                teamSql = "select * from (select a.*,b.id as rid from contact as a inner join contactcrmuser as b on a.id=b.contactId where b.crmuserId=?) as atable";
+            }
         }
         List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
-        Entity entity ;
+        Entity entity=null ;
         if(en.equalsIgnoreCase("account")||en.equalsIgnoreCase("contact")){
         	 entity = Configuration.getEntityByName("crmuser");
+        	 if(en.equalsIgnoreCase("account")){
+        	     add(new Label("title","医院"));
+        	 }else{
+        	     add(new Label("title","医生"));
+        	 }
         }else{
-        	entity = Configuration.getEntityByName("account");
+            if(type == 0){
+        	  entity = Configuration.getEntityByName("account");
+        	  add(new Label("title","医院"));
+            }else if(type == 1){
+                entity = Configuration.getEntityByName("contact");
+                add(new Label("title","医生"));
+            }
         }
         
         List<Field> fields = entity.getFields();
         final String entityName = entity.getName();
         
         //add button submission
-        if(roleId == 3){
+        if(roleId != 1){
         	 WebMarkupContainer con = new WebMarkupContainer("add_users_link");
              add(con);
-             con.add(new AttributeAppender("style", new Model("display:none;"), ";"));
+             con.setVisible(false);
+             //con.add(new AttributeAppender("style", new Model("display:none;"), ";"));
         }else{
         	add(new Link<Void>("add_users_link"){
 
                 @Override
                 public void onClick() {
-                  this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId,1));
+                  this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId,type));
                 }
                 
             });
@@ -151,7 +171,7 @@ public class TeamManPanel extends Panel {
             //add extra field in the last column
             AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(rowId));
             if(roleId == 1){
-              columnitem.add(new ExtraFieldFragment("celldata","extraFieldFragment",this,"删除")); 
+              columnitem.add(new ExtraFieldFragment("celldata","extraFieldFragment",this,"删除",type)); 
             }else{
               columnitem.add(new WebMarkupContainer("celldata"));
             }
@@ -218,7 +238,7 @@ public class TeamManPanel extends Panel {
          * @param markupProvider
          *            The markup provider
          */
-        public ExtraFieldFragment(String id, String markupId, MarkupContainer markupProvider,String caption)
+        public ExtraFieldFragment(String id, String markupId, MarkupContainer markupProvider,String caption,final int type)
         {
             super(id, markupId, markupProvider);
             add(new Link("remove_team_member_click")
@@ -240,9 +260,13 @@ public class TeamManPanel extends Panel {
                     }else if(currentEntityName.equalsIgnoreCase("contact")){
                         teamtable = "contactcrmuser";
                     }else if(currentEntityName.equalsIgnoreCase("crmuser")){
-                        teamtable = "accountcrmuser";
+                        if(type == 0){
+                            teamtable = "accountcrmuser";
+                        }else if(type == 1){
+                            teamtable = "contactcrmuser";
+                        }
                     }
-                    logger.debug("dfagdafgadfgdafgfdag"+rid);
+                    logger.debug("delete row:"+rid);
                     DAOImpl.removeEntityFromTeam(teamtable,rid);
                     
                     setResponsePage(new EntityDetailPage(currentEntityName,etId));

@@ -430,17 +430,20 @@ public class DAOImpl {
         int uid = Integer.parseInt(userId);
         if (contactId != 0 && uid != 0) {
             String sql = "";
-          if(type == 1){
             if(entityName.equalsIgnoreCase("contact")){
                 sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("account")){
                 sql = "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("crmuser")){
-                sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
+                if(type == 0){
+                    sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
+                }else{
+                    sql = "INSERT INTO contactcrmuser (crmuserId,contactId) VALUES (?,?)";
+                }
+                
+               
             }
-          }else{
-              sql = "INSERT INTO contactcrmuser (crmuserId,contactId) VALUES (?,?)";
-          } 
+      
             Connection conn = null;
             try {
                 conn = DBHelper.getConnection();

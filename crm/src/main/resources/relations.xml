@@ -10,10 +10,10 @@
 		<relationKey>accountId</relationKey>
 	</relation>
 	
-	<relation>
+<!-- 	<relation>
 		<from>crmuser</from>
-		<name>crmuser2account</name>
-		<display>客户关系</display>
+		<name>crmuser2contact</name>
+		<display>医生关系</display>
 		<sql>
 		select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName
 		                  from contact\,contactcrmuser\,account \,contact_generalization_target_pl 
@@ -28,12 +28,12 @@
 		<reactions>
 		   <reaction>
 		       <name>createContact</name>
-		       <display>增加</display>
+		       <display>添加</display>
 		        <url>contact</url>
 		        <paramName>contactId</paramName>
 		   </reaction>
 		</reactions>
-	</relation>
+	</relation> -->
 	
 	<relation>
 		<from>crmuser</from>
@@ -51,28 +51,21 @@
 	</relation> -->
 	
 	
+
+	<relation>
+		<from>contact</from>
+		<name>accountInfoOfContact</name>
+		<display>医院信息</display>
+		<sql>select * from (select account.* from contact\,account where contact.id=? AND account.id=contact.accountId) as act </sql>
+		<to>account</to>
+	</relation>
+	
 	<relation>
 		<from>contact</from>
 		<name>visitingOfContact</name>
 		<display>拜访</display>
 		<sql>select * from (select *\,activity_type as act_type\,status as act_status from activity where contactId=?) as aActivity </sql>
 		<to>activity</to>
-	</relation>
-	
-	<relation>
-		<from>dealerAccount</from>
-		<name>dealerContactlistOfdealerAccount</name>
-		<display>联系人列表</display>
-		<sql>select a.* from dealerContact as a where a.dealerAccountId=?</sql>
-		<to>dealerContact</to>
-	</relation>
-	
-	<relation>
-		<from>dealerContact</from>
-		<name>dealerAccountOfdealerContact</name>
-		<display>所属经销商</display>
-		<sql>select b.* from dealerContact as a\,dealerAccount as b where a.id=? AND b.id=a.dealerAccountId</sql>
-		<to>dealerAccount</to>
 	</relation>
 	
     <relation>

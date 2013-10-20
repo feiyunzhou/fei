@@ -56,7 +56,7 @@ public class SearchCRMUserPage extends WebPage {
 
     
     public SearchCRMUserPage(String entityName, String entityId, int type) {
-        logger.debug("sdfsfsdfdsf:"+entityName);
+        //logger.debug("sdfsfsdfdsf:"+entityName);
         this.entityId = entityId;
         this.type = type;
         initPage(entityName,null,entityId,type);
@@ -75,15 +75,18 @@ public class SearchCRMUserPage extends WebPage {
             protected void onSubmit() {
                 logger.debug("the form was submitted!");
                 List<Map> maplist = null;
-                if(type==1){
+              
                   if(entityname.equals("account")||entityname.equals("contact")){
                       maplist = DAOImpl.searchCRMUser(search_target);
                   }else{
-                      maplist = DAOImpl.searchCRMAccount(search_target);
+                      if(type == 0){
+                      
+                          maplist = DAOImpl.searchCRMAccount(search_target);
+                      }else{
+                          maplist = DAOImpl.searchCRMContact(search_target);
+                      }
                   }
-                }else{
-                	maplist = DAOImpl.searchCRMContact(search_target);
-                }
+                
                
                 setResponsePage(new SearchCRMUserPage(maplist,entityname,cid,type));
 
