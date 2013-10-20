@@ -4,23 +4,45 @@
 	<link rel="stylesheet" href="flat/css/flat-ui.css"/>
 	<link rel="stylesheet" href="flat/css/bootstrap.css"/>
 	<script type="text/javascript" src="jquery/js/jquery-1.9.1.js"></script>
+	<link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"/>
+	<link href="css/common.css" rel="stylesheet" />
 	<SCRIPT type="text/javascript">
 	$(document).ready(function() {
 		
 	});
+	function checkPasswords() {
+	    var pass1 = document.getElementById("newPassword").value;
+	    var pass2 = document.getElementById("password").value;
+	    if (pass1!= pass2){
+	    	alert("两次新密码输入不一致,请重新输入!");
+	    	//设置新密码，验证新密码为空
+	    	$("#newPassword").val("");
+	    	$("#password").val("");
+	    }else{
+	    	pass1.setCustomValidity("");
+	    } 
+	}
 	</SCRIPT>
 <body>
+	<div class="container">
 		 <div class="control-group" >
-	    	<div class="controls" style="display:none;">
-	    	<label class="control-label"></label>
-	      		<span wicket:id="prompt"  style="display:none;text-align:center;color:red;"></span>
-	    	</div>
-	  	</div>
+		    	<div class="controls" style="display:none;">
+		    		<label class="control-label"></label>
+		      		<span wicket:id="prompt"  style="display:none;text-align:center;color:red;"></span>
+		    	</div>
+	  	</div >
 	  	<form wicket:id="form"  class="form-horizontal">
 			<div class="control-group">
-		    	<label class="control-label" >用户名:</label>
+		    	<label class="control-label" ></label>
 		    	<div class="controls">
-		      		<span wicket:id="userName"></span>
+		    		<span wicket:id="userName"></span>您好
+		    	</div>
+		  	</div> 
+		  	<div class="control-group">
+		    	<label class="control-label" >您的登录名:</label>
+		    	<div class="controls">
+		      		<span wicket:id="loginName"></span>
 		    	</div>
 		  	</div> 
 		    <div class="control-group">
@@ -30,11 +52,18 @@
 		    	</div>
 		  	</div>
 		  	<div class="control-group">
+		    	<label class="control-label" >请再次输入密码:</label>
+		    	<div class="controls">
+		      		<input type="password" wicket:id="newPassword"  placeholder="enter the password again" onchange="checkPasswords();"  required="required"/>
+		    	</div>
+		  	</div>
+		  	<div class="control-group">
 			    <div class="controls">
 			    	<button type="submit" class="btn btn-info">保存</button>
 			    	<button type="reset" class="btn btn-info">重置</button>
 			    </div>
 		    </div>
-		 </form>
+	 	</form>
+	</div>
 </body>
 </html>

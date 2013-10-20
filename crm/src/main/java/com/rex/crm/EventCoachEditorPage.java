@@ -1,6 +1,7 @@
 package com.rex.crm;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,12 +68,52 @@ public class EventCoachEditorPage extends TemplatePage{
 		final String uid = ((SignIn2Session) getSession()).getUserId();
 		final String user = ((SignIn2Session) getSession()).getUser();
 		CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(uid));
-		Map entity_data = DAOImpl.queryEntityById(entity.getSql_ent(),
-				String.valueOf(eventId));
+		Map entity_data = DAOImpl.queryEntityById(entity.getSql_ent(),String.valueOf(eventId));
+		//辅导名称拼接字段
+        final StringBuffer concahName = new StringBuffer();
+        concahName.append(crmUser.getName());
 		Form form = new Form("form") {
 			@Override
 			protected void onSubmit() {
+				String sd = getRequest().getPostParameters()
+						.getParameterValue("start_date").toString();
+				String st = getRequest().getPostParameters()
+						.getParameterValue("start_time").toString();
+				String ed = getRequest().getPostParameters()
+						.getParameterValue("end_date").toString();
+				String et = getRequest().getPostParameters()
+						.getParameterValue("end_time").toString();
+				String visit_type = String.valueOf(2);
+				SimpleDateFormat dateformat = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm");
+				Date act_endtime = new Date(System.currentTimeMillis());
+				String sdt = sd + " " + st;
+				String edt = ed + " " + et;
+				Date startdt = null;
+				Date enddt = null;
+				try {
+					startdt = dateformat.parse(sdt);
+					enddt = dateformat.parse(edt);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+                concahName.append(sd);
+                concahName.append("拜访辅导");
+				try {
+					DAOImpl.updateCalendarEventForCoach(String.valueOf(eventId),hidden_select_user,
+							startdt.getTime(), enddt.getTime(),user,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,concahName.toString());
+
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				setResponsePage(PageFactory.createPage("calendar"));
+			}
 		};
 		add(form);
 
@@ -111,7 +152,6 @@ public class EventCoachEditorPage extends TemplatePage{
 		form.add(end_date_input);
 		end_date_input.add(new AttributeModifier("value", dateformat
 				.format(endDate)));
-
 		WebMarkupContainer end_time_input = new WebMarkupContainer(
 				"end_time_input", new Model(""));
 		form.add(end_time_input);
@@ -136,15 +176,23 @@ public class EventCoachEditorPage extends TemplatePage{
 		coach = (String)entity_data.get("coach");
 		form.add(new TextField("coach", new PropertyModel(this,
 				"coach")));
+		
+		 
+	 	hidden_select_user = String.valueOf(entity_data.get("crmuserId"));
+		form.add(new HiddenField("hidden_select_user",
+				new PropertyModel<String>(this, "hidden_select_user")));
 		//被辅导者
-		 selected_user = entity_data.get("crmuserId").toString();
-		 form.add(new TextField<String>("selected_user" ,new PropertyModel<String>(this,"selected_user")));
+		int selected_userId = (int)entity_data.get("crmuserId");
+		selected_user = DAOImpl.getCrmUserById(selected_userId).getName();
+		form.add(new TextField<String>("selected_user" ,new PropertyModel<String>(this,"selected_user")));
+
+		 
 		 PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
                  .setWidth(850).setLeft(150).setTop(200);
          PageParameters params = new PageParameters();
          params.set("mid", uid);
 		 form.add(new BookmarkablePageLink<Void>("search_user_btn", SelectCRMUserPage.class,params ).setPopupSettings(popupSettings));
-	     form.add(new HiddenField<String>("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
+	     //form.add(new HiddenField<String>("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
 		//地址
 		location = (String)entity_data.get("location");
 		form.add(new TextField("location", new PropertyModel(this,

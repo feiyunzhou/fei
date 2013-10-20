@@ -52,24 +52,24 @@
 											<table>
 												<tr>
 													<td><span wicket:id="event_type_group">
-													<input type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"  checked="checked"  value=1 /> <span>拜访</span>&nbsp;&nbsp; 
-													<input id="coaching_radio" type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2  /> <span>辅导</span>
+													<input type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"   value=1 /> <span>拜访</span>&nbsp;&nbsp; 
+													<input id="coaching_radio" type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2  checked="checked" /> <span>辅导</span>
 													</span></td>
 												</tr>
 											</table>
 										</div>
 									</div>
-									<div id="student_div" style="display:none;">
+									<div id="student_div">
 										<div class="control-group">
 											<label class="control-label">辅导人：</label>
 											<div class="controls">
-												<input type="text"  wicket:id="coach" required="required" readOnly="readonly" class="input input-big" />
+												<input type="text"  wicket:id="coach"  readOnly="readonly" class="input input-big" />
 											</div>
 										</div>
 	                                    <div   class="control-group">
 											<label class="control-label">被辅导人：</label>
 											<div class="controls">
-												<input type="text" id="select_user" wicket:id="selected_user"  placeholder="李三"  class="input input-big" />
+												<input type="text" id="select_user" wicket:id="selected_user"  placeholder="李三"  required="required" class="input input-big" />
 												<input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
 												<a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
 											</div>
@@ -77,71 +77,71 @@
 										<div class="control-group">
 											<label class="control-label">访前计划：</label>
 											<div class="controls">
-												<input type="text" id="planing" wicket:id="planing" required="required" placeholder="Enter your grade" class="input input-big" onchange="calculateTotalScore();" />&nbsp;<span>(满分15分)</span>
+												<input type="text" id="planing" wicket:id="planing" placeholder="Enter your grade" class="input input-big" onchange="calculateTotalScore();" />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">开场：</label>
 											<div class="controls">
-												<input type="text" id="openling" wicket:id="openling" required="required"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+												<input type="text" id="openling" wicket:id="openling"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">探询聆听：</label>
 											<div class="controls">
-												<input type="text" id="enquery_listening" wicket:id="enquery_listening"  placeholder="Enter your grade"  required="required" class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+												<input type="text" id="enquery_listening" wicket:id="enquery_listening"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">利益销售：</label>
 											<div class="controls">
-												<input type="text" id="deliverable" wicket:id="deliverable" required="required"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分20分)</span>
+												<input type="text" id="deliverable" wicket:id="deliverable"   placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分20分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">异常处理：</label>
 											<div class="controls">
-												<input type="text" id="objection_handing" wicket:id="objection_handing" required="required"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+												<input type="text" id="objection_handing" wicket:id="objection_handing"   placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">缔结：</label>
 											<div class="controls">
-												<input type="text" id="summary" wicket:id="summary" required="required"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+												<input type="text" id="summary" wicket:id="summary"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">总分：</label>
 											<div class="controls">
-												<input type="text" id="total_score" wicket:id="total_score"  readOnly="readonly"   placeholder="Enter your grade"  required="required" class="input input-big"  />&nbsp;<span>(满分100分)</span>
+												<input type="text" id="total_score" wicket:id="total_score"  readOnly="readonly"   placeholder="Enter your grade"  class="input input-big"  />&nbsp;<span>(满分100分)</span>
 											</div>
 										</div>
 										<div  class="control-group">
 											<label class="control-label">计划地点：</label>
 											<div class="controls">
-												<input type="text" wicket:id="location" class="input input-big" />
+												<input type="text" wicket:id="location"   class="input input-big" />
 											</div>
 										</div>
 										<div  class="control-group">
 											<label class="control-label">状态：</label>
 											<div class="controls">
-												<input type="text" wicket:id="status" required="required" value="计划中" class="input input-big" />
+												<input type="text" wicket:id="status"  value="计划中" class="input input-big" />
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">创建者：</label>
 											<div class="controls">
-												<input type="text"  wicket:id="owner" required="required" readOnly="readonly" class="input input-big" />
+												<input type="text"  wicket:id="owner" readOnly="readonly" class="input input-big" />
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">创建时间：</label>
 											<div class="controls">
-												<input type="text"  wicket:id="whenadded" required="required" readOnly="readonly" class="input input-big" />
+												<input type="text"  wicket:id="whenadded"  readOnly="readonly" class="input input-big" />
 											</div>
 										</div>
 									</div>
-									<div id="callOn" >
+									<div id="callOn" style="display:none;">
 										<div class="control-group">
 											<label class="control-label">拜访名称：</label>
 											<div class="controls">

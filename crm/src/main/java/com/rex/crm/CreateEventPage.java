@@ -135,6 +135,7 @@ public class CreateEventPage extends TemplatePage
                         participants = participants+ ", "+ selected_user;
                         concahName.append(sd);
                         hidden_contact_select = "0";
+                        contactId = -1;
                         concahName.append("拜访辅导");
                     }
                     //insert the event, and return the generated id of the event
@@ -152,9 +153,10 @@ public class CreateEventPage extends TemplatePage
                         }else if(event_type == 2){
                             //if it is a coaching, we need send this event to the manager and sales
                             //add new record for the manager
+                        	logger.debug("key:"+String.valueOf(generatedkey));
                             DAOImpl.insert2UserRelationTable("activity",uid,String.valueOf(generatedkey));
                             //add new record for the sales
-                            DAOImpl.insert2UserRelationTable("activity",hidden_select_user,String.valueOf(generatedkey));
+                            //DAOImpl.insert2UserRelationTable("activity",hidden_select_user,String.valueOf(generatedkey));
                             
                         }
                         

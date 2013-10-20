@@ -1035,6 +1035,24 @@ public class DAOImpl {
         }
     }
     
+    public static void updateCalendarEventForCoach(String entityId,String crmuserId,long start, long end,
+            String modifier,String coach,String location,int total_score,int planing,int openling,int enquery_listening,int deliverable,int objection_handing,int summary,String name) throws Exception {
+        String sql = "update activity SET crmuserID =?,endtime=?,starttime=?,"+
+                     "modifier=?,modify_datetime=?,coach=?,location=?,total_score=?,planing=?,openling=?,enquery_listening=?,deliverable=?,objection_handing=?,summary=?,name=? where id=?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql,crmuserId, end , start,
+                    modifier,new Date(),coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,name,entityId);
+           logger.debug("updated ok:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to updateCalendarEvent", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+    }
     
     public static void addExternalMeeting(int crmuserId, int[] contactIds, String title, long start, long end, int status,String meeting_type,String coachId) throws Exception {
         //int type_id = Integer.parseInt(type);
@@ -1713,5 +1731,22 @@ public class DAOImpl {
         }
         return false;
     }
-
+    
+    //根据crmuserid获取crm对象
+    public static CRMUser getCrmUserById(int entityId){
+    	System.out.println("根据激活码Code获取用户");
+        Connection conn = null;
+        CRMUser user = new CRMUser();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            user = run.query(conn, "SELECT * FROM crmuser where id=?", h, entityId);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return user;
+    }
 }

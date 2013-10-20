@@ -41,7 +41,7 @@ public class ActivitedUser extends WebPage{
 		Form form = new Form("form"){
 			@Override
 			protected void onSubmit() {
-				String password =  models.get("password").getObject() == null? null:String.valueOf(models.get("password").getObject());
+				String password =  models.get("newPassword").getObject() == null? null:String.valueOf(models.get("newPassword").getObject());
 				logger.debug("pwd:"+password);
 				if(DAOImpl.updateCrmUserPassword(userId, password)){
 					//修改crmuser的激活状态为已激活
@@ -64,10 +64,14 @@ public class ActivitedUser extends WebPage{
 		add(promptLabel);
 		form.add(new Label("userName",crmuser.getName()));
 		IModel<String> textModel = new Model<String>("");
+		form.add(new Label("loginName",crmuser.getLoginName()));
 		PasswordTextField password = new PasswordTextField("password",textModel);
-		password.add(new AttributeAppender("value",""));
 		models.put("password",textModel);
 		form.add(password);
+		IModel<String> textModelPassword = new Model<String>("");
+		PasswordTextField newPassword = new PasswordTextField("newPassword",textModel);
+		models.put("newPassword",textModelPassword);
+		form.add(newPassword);
 	}
 	private SignIn2Session getMysession()
 	{
