@@ -71,16 +71,16 @@ public class RelationDataPanel extends Panel {
           if(act.getParamName()!=null && !act.getParamName().isEmpty()){
               pars.set(act.getParamName(),entityId);
           }
-          if(roleId == 3){
-            WebMarkupContainer con = new WebMarkupContainer("actionlink");
-            con.add(new AttributeAppender("class", ""));
-            con.add(new WebMarkupContainer("cap"));
-            item.add(con);
-          }else{
+//          if(roleId == 3){
+//            WebMarkupContainer con = new WebMarkupContainer("actionlink");
+//            con.add(new AttributeAppender("class", ""));
+//            con.add(new WebMarkupContainer("cap"));
+//            item.add(con);
+//          }else{
             BookmarkablePageLink link = new BookmarkablePageLink("actionlink", SearchCRMUserPage.class,pars);  
             link.add(new Label("cap",act.getDisplay()));
             item.add(link);
-          }
+//          }
          }
         }
     }

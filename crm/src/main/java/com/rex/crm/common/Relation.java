@@ -1,10 +1,11 @@
 package com.rex.crm.common;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.google.gson.Gson;
 
-public class Relation {
+public class Relation implements Serializable{
     private String name;
     private String display;
     private String from;

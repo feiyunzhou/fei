@@ -550,6 +550,7 @@ public class DAOImpl {
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
+          
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler(), params);

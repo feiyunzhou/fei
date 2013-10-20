@@ -14,8 +14,17 @@
 		<from>crmuser</from>
 		<name>crmuser2account</name>
 		<display>客户关系</display>
-		<sql>select a.* from contact as a inner join contactcrmuser as b on a.id=b.contactId where b.crmuserId=?</sql>
+		<sql>
+		select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName
+		                  from contact\,contactcrmuser\,account \,contact_generalization_target_pl 
+		                  where contactcrmuser.crmuserId=? AND  contact.id != -1 AND
+			                    contactcrmuser.contactId=contact.id AND account.id=contact.accountId AND 
+			                    contact_generalization_target_pl.id= product_target 
+			                    order by whenadded DESC) as
+			                    aContact
+		</sql>
 		<to>contact</to>
+		<relationKey>accountId</relationKey>
 		<reactions>
 		   <reaction>
 		       <name>createContact</name>

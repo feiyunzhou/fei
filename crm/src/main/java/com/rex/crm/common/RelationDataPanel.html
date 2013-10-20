@@ -7,18 +7,18 @@
 		 <span wicket:id="tableData"></span>
 		</div>
 	</div> -->
-	<script>
-	$(document).ready(function() {
-		var va = $("#cap").text();
-		if(va == ""){
-			$("#addbutton").removeClass("btn btn-mini btn-info reaction-btn");
-		}
-	});
-</script>
+<!-- 	<script> -->
+<!-- // 	$(document).ready(function() { -->
+<!-- // 		var va = $("#cap").text(); -->
+<!-- // 		if(va == ""){ -->
+<!-- // 			$("#addbutton").removeClass("btn btn-mini btn-info reaction-btn"); -->
+<!-- // 		} -->
+<!-- // 	}); -->
+<!-- </script> -->
 	<h5 class="span6"> <a href="#" wicket:id="aLink"><span wicket:id="caption"></span></a> </h5>
 	<div >
 	   <span wicket:id="btn_repeater">
-	     <a href="#" class="btn btn-mini btn-info reaction-btn" id="addbutton" wicket:id="actionlink"><span id="cap" wicket:id="cap"></span></a>
+	     <a href="#" class="btn btn-mini btn-info reaction-btn" wicket:id="actionlink"><span  wicket:id="cap"></span></a>
 	     &nbsp;&nbsp;
 	   </span>
 	</div>
