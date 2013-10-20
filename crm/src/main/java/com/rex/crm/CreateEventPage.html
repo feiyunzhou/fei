@@ -52,14 +52,14 @@
 											<table>
 												<tr>
 													<td><span wicket:id="event_type_group">
-													<input type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"   value=1 /> <span>拜访</span>&nbsp;&nbsp; 
-													<input id="coaching_radio" type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2  checked="checked" /> <span>辅导</span>
+													<input type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"   value=1 checked="checked" /> <span>拜访</span>&nbsp;&nbsp; 
+													<input id="coaching_radio" type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2  /> <span>辅导</span>
 													</span></td>
 												</tr>
 											</table>
 										</div>
 									</div>
-									<div id="student_div">
+									<div id="student_div" style="display:none;">
 										<div class="control-group">
 											<label class="control-label">辅导人：</label>
 											<div class="controls">
@@ -69,7 +69,7 @@
 	                                    <div   class="control-group">
 											<label class="control-label">被辅导人：</label>
 											<div class="controls">
-												<input type="text" id="select_user" wicket:id="selected_user"  placeholder="李三"  required="required" class="input input-big" />
+												<input type="text" id="select_user" wicket:id="selected_user"  placeholder="李三" class="input input-big" />
 												<input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
 												<a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
 											</div>
@@ -141,7 +141,7 @@
 											</div>
 										</div>
 									</div>
-									<div id="callOn" style="display:none;">
+									<div id="callOn" >
 										<div class="control-group">
 											<label class="control-label">拜访名称：</label>
 											<div class="controls">
