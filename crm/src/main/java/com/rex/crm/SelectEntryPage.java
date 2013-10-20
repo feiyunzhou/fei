@@ -19,8 +19,11 @@ import org.apache.wicket.util.string.StringValue;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.Contact;
+import com.rex.crm.common.Entity;
+import com.rex.crm.common.Field;
 import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.util.Configuration;
 
 /**
  * 
@@ -53,12 +56,49 @@ public class SelectEntryPage extends WebPage {
         final String userId = ((SignIn2Session) getSession()).getUserId();
         
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
+        Map<String, Entity> entities = Configuration.getEntityTable();
+        final Entity entity = entities.get("account");
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
                 List<Map> maplist = null;
                 if(entityName.equalsIgnoreCase("account")){
-                    maplist = DAOImpl.searchAccount(userId, search_target, roleId);
+                    
+                    String sql = entity.getSql();
+                    switch(roleId){
+                     case 1:
+                         sql = entity.getSqlAdmin();
+                        break;
+                     case 2:
+                         sql = entity.getSqlManager();
+                        break;
+                     case 3:
+                         sql = entity.getSql();
+                        break;
+                    }
+                    
+                    search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
+                    
+                    List<Field> searchableFields = entity.getSearchableFields();
+                    String joint = " like '%"+search_target+"%'";
+                    String likequery = "";
+                    for(Field sf:searchableFields){
+                        likequery = likequery + " OR "+ sf.getName() + joint;
+                    }
+                    
+                    sql =  sql + " where name like '%"+search_target+"%' " + likequery;
+                    
+                    System.out.println(sql);
+            
+                    switch(roleId){
+                    case 2:
+                        maplist = DAOImpl.queryEntityRelationList(sql, userId,userId,userId);
+                        break;
+                    default:
+                        maplist = DAOImpl.queryEntityRelationList(sql, userId);
+                    }
+                    
+                    
                 }else if(entityName.equalsIgnoreCase("crmuser")){
                     //maplist = DAOImpl.searchCRMUser(search_target);
                     maplist = DAOImpl.searchManager(search_target,excludeId);
