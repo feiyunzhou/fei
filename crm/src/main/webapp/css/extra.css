@@ -24,7 +24,7 @@
 
 .form-search {
     margin-top: 3px;
-    margin-right: 23px;
+    margin-right: 85px;
 }
 
 .input_wrapper {
@@ -33,18 +33,15 @@
 .input_button_wrapper {
     margin-top: -30px;
 }
+a:hover, a:focus {
+    color: #005580;
+    text-decoration: none;
+}
 
 @media ( max-width : 768px) {
     /* Enable use of floated navbar text */
     .btn.dropdown-toggle.clearfix.btn-primary {
         margin-right: 10px;
-    }
-    .btn.clearfix.btn-primary.btn-menu.navbar-toggle {
-        width: 32px;
-        padding-left: 9px;
-        padding-right: 9px;
-        display:block;
-        margin-right: 17px;
     }
     .nav-tabs > li{
         width:100%;
@@ -59,7 +56,7 @@
         border-bottom-color: #ddd;
     }
     .nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
-        border-bottom-color: #ddd;
+        border-bottom-color: #3498DB;
     }
     .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
         border-color: #eeeeee;
@@ -86,10 +83,27 @@
     .input-wrapper {
         width: 100%;
     }
+    .btn.clearfix.btn-info.btn-menu.navbar-toggle{
+        width: 32px;
+        padding-left: 9px;
+        padding-right: 9px;
+        display:block;
+        margin-right: 20px;
+    }
+    .btn.clearfix.btn-info.btn-menu.navbar-toggle.collapsed{
+        width: 32px;
+        padding-left: 9px;
+        padding-right: 9px;
+        display:block;
+        margin-right: 20px;
+    }
+    .btn.dropdown-toggle.clearfix.btn-info{
+        margin-right: 10px;
+    }
 }
 
 @media ( min-width : 768px) {
-    .btn.clearfix.btn-primary.btn-menu.navbar-toggle {
+    .btn.clearfix.btn-info.btn-menu.navbar-toggle {
         display:none;
     }
 
