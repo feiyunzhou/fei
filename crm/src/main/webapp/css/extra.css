@@ -12,30 +12,38 @@
 
 .btn-group {
     margin-top: 2px;
+    margin-right: 2px;
 }
 
 .navbar .btn, .navbar .btn-group {
     margin-top: 7px;
 }
-
-.data-table {
-    margin-top: -53px; 
-}
-
-.form-search {
-    margin-top: 3px;
-    margin-right: 85px;
-}
-
-.input_wrapper {
-    margin-right: 54px;
-}
 .input_button_wrapper {
     margin-top: -30px;
+    float:right;
 }
 a:hover, a:focus {
     color: #005580;
     text-decoration: none;
+}
+.input_wrapper {
+    width: 217px;
+    margin-right: 15px;
+}
+.title > span{
+    padding-left: 4px;
+    display: inline-block;
+    padding-top: 3px;
+}
+.title {
+    background: #ddd;
+    padding-bottom: 4px;
+}
+.detailed {
+    background: #eee;
+}
+.collapse{
+    background: #fff;
 }
 
 @media ( max-width : 768px) {
@@ -80,8 +88,9 @@ a:hover, a:focus {
         margin-top: 3px;
         margin-right: 0px;
     }
-    .input-wrapper {
-        width: 100%;
+    .input_wrapper {
+        width: auto;
+        margin-right: 54px;
     }
     .btn.clearfix.btn-info.btn-menu.navbar-toggle{
         width: 32px;
