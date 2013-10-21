@@ -24,6 +24,7 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.PopupSettings;
@@ -163,9 +164,15 @@ public class NewDataFormPanel extends Panel {
 							columnitem.add(new TextFragment("celldatafield","textFragment",this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
 							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
 						} else {
-							IModel<String> textModel = new Model<String>("");
-							models.put(currentField.getName(), textModel);
-							columnitem.add(new TextInputFragment("celldatafield","textInputFragment", this, textModel,currentField));
+							if(currentField.getName().equals("address")){
+							  IModel<String> textModel = new Model<String>("");
+                models.put(currentField.getName(), textModel);
+                columnitem.add(new Textarea("celldatafield","textAreaFragment", this, textModel));
+							}else{
+							  IModel<String> textModel = new Model<String>("");
+                models.put(currentField.getName(), textModel);
+                columnitem.add(new TextInputFragment("celldatafield","textInputFragment", this, textModel,currentField));
+							}
 						}
 					}
 					columnRepeater.add(columnitem);
@@ -281,6 +288,16 @@ public class NewDataFormPanel extends Panel {
 		}
 	}
 	
+	private class Textarea extends Fragment {
+	  
+    public Textarea(String id, String markupId, MarkupContainer markupProvider,IModel model)
+    {
+      super(id, markupId, markupProvider);
+      // TODO Auto-generated constructor stub
+      add(new TextArea<String>("address",model));  
+    }
+
+}
 	
 	   private class RelationTableSearchFragment extends Fragment {
 	        public RelationTableSearchFragment(String id, String markupId,

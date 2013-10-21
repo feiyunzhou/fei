@@ -355,7 +355,7 @@
 				<name>num_of_using_opiates_medicine</name>
 				<display>阿片类用药量</display>
 				<isRequired>false</isRequired>
-				<data-type>text</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -391,7 +391,7 @@
 				<name>registered_capital</name>
 				<display>注册资金</display>
 				<isRequired>false</isRequired>
-				<data-type>text</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1006,7 +1006,7 @@
 			<field>
 				<name>email</name>
 				<display>邮箱</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>email</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1128,7 +1128,7 @@
 			<field>
 				<name>loginName</name>
 				<display>用户登录名</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
