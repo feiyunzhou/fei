@@ -48,7 +48,7 @@ public class UpdateSignPassword extends TemplatePage{
 					};
 				}else{
 					logger.debug("false");
-					promptLabel.add(new AttributeAppender("style",new Model("text-align:center;display:none;color:red;"),";"));
+					promptLabel.add(new AttributeAppender("style",new Model("text-align:center;display:block;color:red;"),";"));
 				}
 			};
 		};

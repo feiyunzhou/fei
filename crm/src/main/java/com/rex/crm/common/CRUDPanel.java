@@ -1,29 +1,35 @@
 package com.rex.crm.common;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.Properties;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.data.DataView;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
 import com.rex.crm.ContactPage;
 import com.rex.crm.CreateEventPage;
 import com.rex.crm.UserPage;
-import com.rex.crm.beans.Account;
+import com.rex.crm.beans.CRMUser;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
+import com.rex.crm.util.SMTPAuthenticator;
+import com.sun.mail.smtp.SMTPTransport;
 
 public class CRUDPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
@@ -34,8 +40,7 @@ public class CRUDPanel extends Panel {
     }
 
     public CRUDPanel(   final String id, final String entityName,final String entityId,EnumSet<Permissions> userPerms) {
-        super(id);
-        
+    	super(id);
         Map<String, Entity> entities = Configuration.getEntityTable();
         final Entity entity = entities.get(entityName);
         
@@ -115,8 +120,20 @@ public class CRUDPanel extends Panel {
 	                        @Override
 	                        public void onClick() {
 	                        	int userId = Integer.parseInt(entityId);
-	                        	DAOImpl.resetUserPassword(userId);
-	                            setResponsePage(new UserPage());
+	                        	//重置密码设置密码为null,发送邮件设置
+	                        	if(DAOImpl.resetUserPassword(userId)>0){
+	                        		//获取对象
+		                        	CRMUser crmuser = DAOImpl.getCrmUserById(userId);
+		                        	//发送邮件,判断成功与否
+		                        	if(sendMail(crmuser.getLoginName(),"brenda.yuan@rexen.com.cn")){
+		                        		//promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+		                        		setResponsePage(new UserPage());
+		                        	};
+		                        	/*if(sendMail(crmuser.getLoginName(),crmuser.getEmail())){
+		                        		//promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+		                        		setResponsePage(new UserPage());
+		                        	};*/
+	                        	};
 	                        }
 	                    });
 	                	add(editfrag);
@@ -126,10 +143,56 @@ public class CRUDPanel extends Panel {
                 }else{
                     add(new Fragment("resetPwdCon","emptyFragment",this));
                 }
-            
-            
         }
-
     }
-
+  //发送有邮件方法
+  	public boolean sendMail(String getUserByLoginName,String sendEmail){
+  		Session sendMailSession = null;
+          SMTPTransport transport = null;
+          StringBuilder emailContent = new StringBuilder("请点击连接设置密码:");
+          Properties systemPeroperties = new Properties();
+          try {
+          	systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/system.properties"));
+  		} catch (FileNotFoundException e1) {
+  			// TODO Auto-generated catch block
+  			e1.printStackTrace();
+  		} catch (IOException e1) {
+  			// TODO Auto-generated catch block
+  			e1.printStackTrace();
+  		}
+          emailContent.append(systemPeroperties.getProperty("http"));
+          emailContent.append(systemPeroperties.getProperty("url"));
+          emailContent.append("/");
+          emailContent.append(systemPeroperties.getProperty("project"));
+          emailContent.append("/");
+          emailContent.append(systemPeroperties.getProperty("jumpage"));
+          emailContent.append("?");
+          emailContent.append(systemPeroperties.getProperty("parameter"));
+          emailContent.append("=");
+          emailContent.append(getUserByLoginName);
+          Properties props = new Properties();
+          // 与服务器建立Session的参数设置
+          props.put("mail.smtp.host", "smtp.163.com"); // 写上你的SMTP服务器。
+          props.put("mail.smtp.auth", "true"); // 将这个参数设为true，让服务器进行认证。
+          SMTPAuthenticator auth = new SMTPAuthenticator("accpcui@163.com", "992041099"); // 用户名，密码。
+          sendMailSession = Session.getInstance(props, auth); // 建立连接。
+          // SMTPTransport用来发送邮件。
+          try {
+  			transport = (SMTPTransport) sendMailSession.getTransport("smtp");
+  			transport.connect();
+  	        // 创建邮件。
+  	        Message newMessage = new MimeMessage(sendMailSession);
+  	        newMessage.setFrom(new InternetAddress("accpcui@163.com"));
+  	        newMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(sendEmail));
+  	        newMessage.setSubject("用户重置密码！");
+  	        newMessage.setSentDate(new Date());
+  	        newMessage.setText(emailContent.toString());
+  	        Transport.send(newMessage);
+  	        transport.close();  
+  	        return  true;  
+  		} catch (Exception e) {
+  			System.err.println("邮件发送失败！"+e);  
+            return  false; 
+  		}
+  	}
 }

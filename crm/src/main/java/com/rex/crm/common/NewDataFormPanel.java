@@ -346,7 +346,7 @@ public class NewDataFormPanel extends Panel {
 	public void sendMail(String getUserByLoginName,String sendEmail){
 		Session sendMailSession = null;
         SMTPTransport transport = null;
-        StringBuilder emailContent = new StringBuilder("请点击连接激活用户");
+        StringBuilder emailContent = new StringBuilder("请点击连接激活用户:");
         Properties systemPeroperties = new Properties();
         try {
         	systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/system.properties"));

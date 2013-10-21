@@ -16,20 +16,16 @@
  */
 package com.rex.crm;
 
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.wicket.authroles.authentication.panel.SignInPanel;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.value.ValueMap;
+
+import com.rex.crm.beans.CRMUser;
+import com.rex.crm.db.DAOImpl;
 
 
 /**
@@ -76,20 +72,29 @@ public final class SignIn extends WebPage
         	SignIn2Session session = getMysession();
         	//clear session user
         	session.setUser(null);
-        	 // Sign the user in
-            if (session.signIn(getUsername(), getPassword()))
-            {
-               /* if(!continueToOriginalDestination())
-                {*/
-                    setResponsePage(getApplication().getHomePage());
-                /*}*/
-            }
-            else
-            {
-                // Get the error message from the properties file associated with the Component
-                String errmsg = getString("loginError", null, "Unable to sign you in");
+        	//判断用户是否激活密码是否存在
+        	CRMUser user = DAOImpl.getUserByActivation(getUsername());
+            if("".equals(user.getPassword())&&user.getIsActivited()==0){
+            	 // Get the error message from the properties file associated with the Component
+                String errmsg = getString("loginError", null, "This user has not activated!");
                 // Register the error message with the feedback panel
                 error(errmsg);
+            }else{
+	        	// Sign the user in
+	            if (session.signIn(getUsername(), getPassword()))
+	            {
+	               /* if(!continueToOriginalDestination())
+	                {*/
+	                    setResponsePage(getApplication().getHomePage());
+	                /*}*/
+	            }
+	            else
+	            {
+	                // Get the error message from the properties file associated with the Component
+	                String errmsg = getString("loginError", null, "Unable to sign you in");
+	                // Register the error message with the feedback panel
+	                error(errmsg);
+	            }
             }
         }
     	/**

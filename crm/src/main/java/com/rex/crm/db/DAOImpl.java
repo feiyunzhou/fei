@@ -979,13 +979,13 @@ public class DAOImpl {
     
     public static long addCalendarEventForCoach(int crmuserId, int contactId, String type, String title, String start, String end,int status,
             String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type,String participants,
-           String coach,String location,int total_score,int planing,int openling,int enquery_listening,int deliverable,int objection_handing,int summary,String name) throws Exception {
+           String coach,String location,int total_score,int planing,int openling,int enquery_listening,int deliverable,int objection_handing,int summary) throws Exception {
         int type_id = Integer.parseInt(type);
         //logger.debug("modified date time:"+modify_datetime);
         String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type," +
         		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose," +
-        		"feature_product,event_type,participants,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,name) " +
-        		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        		"feature_product,event_type,participants,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary) " +
+        		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet generatedKeys = null;
@@ -995,7 +995,7 @@ public class DAOImpl {
             statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             fillStatement(statement,crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
                           status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type,participants
-                          ,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,name);
+                          ,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary);
                 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -1698,22 +1698,23 @@ public class DAOImpl {
     }
     
     //reset password
-    public static void  resetUserPassword(int entityId){
+    public static int  resetUserPassword(int entityId){
     	System.out.println("reset password");
-    	String  sql=" UPDATE crmuser SET password=? where id =?";
+    	String  sql=" UPDATE crmuser SET password='',isActivited= 0 where id =?";
         Connection conn = null;
+        int insert = 0;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            String password = DigestUtils.md5Hex("123456");
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
-            run.update(conn, sql,password,entityId);
+            insert = run.update(conn, sql,entityId);
     		logger.debug("reset password success!");
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
+        return insert;
     }
     //修改用户激活状态
     public static void updateUserActivited(int entityId){

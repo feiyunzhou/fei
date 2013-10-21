@@ -41,7 +41,7 @@ public class ActivitedUser extends WebPage{
 		Form form = new Form("form"){
 			@Override
 			protected void onSubmit() {
-				String password =  models.get("newPassword").getObject() == null? null:String.valueOf(models.get("newPassword").getObject());
+				String password =  models.get("password").getObject() == null? null:String.valueOf(models.get("password").getObject());
 				logger.debug("pwd:"+password);
 				if(DAOImpl.updateCrmUserPassword(userId, password)){
 					//修改crmuser的激活状态为已激活

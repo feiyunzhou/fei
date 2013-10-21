@@ -226,7 +226,7 @@ public class EventCoachEditorPage extends TemplatePage{
 		whenadded = createTime.toString();
 		form.add(new TextField("whenadded", new PropertyModel(this,
 				"whenadded")));
-		act_name_input = (String) entity_data.get("name");
+		act_name_input = (String) entity_data.get("title");
 		
 		form.add(new TextField("act_name_input", new PropertyModel(this,
 				"act_name_input")));

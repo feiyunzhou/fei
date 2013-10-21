@@ -6,14 +6,13 @@
 
 		});
 	</script>
+		
 	<div class="btn-group">
 			<span  wicket:id="addCon"></span>
 			<span wicket:id="delCon"></span>
 			<span wicket:id="editCon"></span>
 			<span wicket:id="resetPwdCon"></span>
 	</div>
-
-
 	<wicket:fragment wicket:id="addFragment">
 		<!-- <a href="#myModal" class="btn btn-hg btn-mini btn-info" data-toggle="modal"></a> -->
 		<a href="#" class="btn  btn-sm  btn-mini btn-info" wicket:id="create_new_data_btn"><i class="icon-plus"></i>新建</a>
@@ -28,7 +27,7 @@
 		<a href="#" class="btn btn-sm btn-mini btn-info" wicket:id="edit_data_btn"><i class="icon-edit icon-large"></i>编辑</a>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="resetPwdFragment">
-		<a href="#" class="btn btn-sm btn-mini btn-info" wicket:id="resetPwd_data_btn"><i class="icon-refresh icon-large"></i>重置密码</a>
+		<a href="#" class="btn btn-sm btn-mini btn-info" wicket:id="resetPwd_data_btn"  onclick="resetPwd();"><i class="icon-refresh icon-large"></i>重置密码</a>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="emptyFragment"></wicket:fragment>
 </wicket:panel>

@@ -139,12 +139,12 @@ public class CreateEventPage extends TemplatePage
                         concahName.append("拜访辅导");
                     }
                     //insert the event, and return the generated id of the event
-                    long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId, String.valueOf(activity_type.getId()), 
-                            act_title_input, String.valueOf(startdt.getTime()/1000), 
+                    long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId,String.valueOf(activity_type.getId()), 
+                    		concahName.toString(), String.valueOf(startdt.getTime()/1000), 
                             String.valueOf(enddt.getTime()/1000),1,user,user,user,
                             String.valueOf(visiting_purpose.getId()),
                             String.valueOf(feature_product.getId()),event_type.intValue(),participants,
-                            coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,concahName.toString());
+                            coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary);
                     logger.debug("generatedkey:"+ generatedkey);
                     if(generatedkey>0){
                         if(event_type == 1){
@@ -156,13 +156,9 @@ public class CreateEventPage extends TemplatePage
                         	logger.debug("key:"+String.valueOf(generatedkey));
                             DAOImpl.insert2UserRelationTable("activity",uid,String.valueOf(generatedkey));
                             //add new record for the sales
-                            //DAOImpl.insert2UserRelationTable("activity",hidden_select_user,String.valueOf(generatedkey));
-                            
+                            DAOImpl.insert2UserRelationTable("activity",hidden_select_user,String.valueOf(generatedkey));
                         }
-                        
                     }
-                    
-                    
                 } catch (NumberFormatException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -170,9 +166,7 @@ public class CreateEventPage extends TemplatePage
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                
                 setResponsePage(PageFactory.createPage("calendar"));
-                
             }
         };
         add(form);

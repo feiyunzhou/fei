@@ -113,6 +113,17 @@ public class EventViewerPage extends TemplatePage
              logger.debug("eventType:"+eventType);
         }
         final int event_type  = eventType;  
+       /* if(event_type==2){
+        	Link cancel_event_btn = new Link("cancel_event_btn") {
+                @Override
+                public void onClick() {
+                	DAOImpl.updateStatusOfActivity((int)eventId,3);
+                	setResponsePage(PageFactory.createPage("calendar"));
+                }
+            };
+            cancel_event_btn.setVisible(write_btn_visible);
+            form.addOrReplace(cancel_event_btn);
+        }*/
         Link edit_event_btn = new Link("edit_event_btn") {
             @Override
             public void onClick() {
@@ -120,7 +131,7 @@ public class EventViewerPage extends TemplatePage
             	if(event_type==1){
             		 setResponsePage(new EventEditorPage(eventId));
             	}else{
-            		DAOImpl.updateStatusOfActivity((int)eventId,3);
+            		setResponsePage(new EventCoachEditorPage(eventId));
             	}
                
             }
@@ -132,13 +143,8 @@ public class EventViewerPage extends TemplatePage
             
             @Override
             public void onClick() {
-            	if(event_type==1){
-            		 DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
-                     setResponsePage(PageFactory.createPage("calendar"));
-            	}else{
-           		 	setResponsePage(new EventCoachEditorPage(eventId));
-            	}
-               
+            	DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
+            	setResponsePage(PageFactory.createPage("calendar"));
             }
         };
         delete_event_btn.setVisible(write_btn_visible);
