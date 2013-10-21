@@ -1,6 +1,63 @@
-@media ( max-width : 768px) {
+@media ( max-width : 767px ) {
     .container {
         padding-left: 0px;
         padding-right: 0px;
+    }
+    .login-icon > img {
+        display: none !important;
+    }
+    .login-icon {
+        position: static;
+        margin-top: 0px;
+        margin: auto;
+        width: auto;
+    }
+    .login-screen {
+        background-color: #1abc9c;
+        min-height: 473px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 20px;
+    }
+    .login-form:before {
+        border-color: transparent;
+    }
+    .login.row-fluid{
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 0px;
+        padding-top: 0px;
+        margin-bottom: 0px;
+    }
+    .feedbackPanel{
+        padding-left: 0px;
+        padding-top: 20px;
+    }
+    .feedbackPanelERROR{
+        font-size: 24px;
+    }
+}
+@media ( max-width : 880px ) and ( min-width : 768px ) {
+    .container {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .login.row-fluid{
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-bottom: 0px;
+    }
+    .login-icon {
+        left: 130px;
+        position: absolute;
+        top: 120px;
+        width: 96px;
+    }
+    .login-screen {
+        background-color: #1abc9c;
+        min-height: 473px;
+        padding: 83px 120px 33px 256px;
     }
 }
