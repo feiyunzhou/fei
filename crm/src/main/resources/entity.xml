@@ -580,6 +580,12 @@
 			account.id=contact.accountId order by whenadded DESC) as
 			aContact
 		</sql-ent>
+		
+				<sql-search-by-name>select * from (select contact.*\,account.id as accountName
+			from contact\,account where contact.id=? AND
+			account.id=contact.accountId order by whenadded DESC) as
+			aContact
+		</sql-search-by-name>
 		<filterField>department</filterField>
 
 		<fields>
@@ -607,20 +613,21 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<!-- Please do not change the order of this field(accountId)!! -->
+<!-- 			<field> -->
+<!-- 				<name>accountId</name> -->
+<!-- 				<display>医院ID</display> -->
+<!-- 				<data-type>number</data-type> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>false</isEditable> -->
+<!-- 				<priority>1</priority> -->
+<!-- 				<fieldGroup>关键信息</fieldGroup> -->
+<!-- 			</field> -->
+			
 			<field>
 				<name>accountId</name>
-				<display>医院ID</display>
-				<data-type>number</data-type>
-				<isRequired>false</isRequired>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>1</priority>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			<field>
-				<name>accountName</name>
 				<display>医疗机构</display>
 				<isRequired>false</isRequired>
 				<alias>accountId</alias>
@@ -632,7 +639,22 @@
 				<priority>1</priority>
 				<relationTable>account</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
-			</field>
+			</field>	
+			
+<!-- 			<field> -->
+<!-- 				<name>accountName</name> -->
+<!-- 				<display>医疗机构</display> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<alias>accountId</alias> -->
+<!-- 				<data-type>text</data-type> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>true</isEditable> -->
+<!-- 				<priority>1</priority> -->
+<!-- 				<relationTable>account</relationTable> -->
+<!-- 				<fieldGroup>关键信息</fieldGroup> -->
+<!-- 			</field> -->
 			
 			 <field>
 				<name>accountName_val</name>
@@ -1407,7 +1429,7 @@
 	</entity>
 	<entity>
 		<name>activity</name>
-		<display>日历</display>
+		<display>活动</display>
 		<filterField>event_type</filterField>
 		<sql>select * from (select activity.*\,activity.activity_type as
 			                             act_type\,activity.status as act_status\, activity.contactId as

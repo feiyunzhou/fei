@@ -636,6 +636,26 @@ public class DAOImpl {
         return map;
     }
     
+    public static String queryEntityByName(String name) {
+      Connection conn = null;
+      int id = 0;
+      try {
+          conn = DBHelper.getConnection();
+          QueryRunner run = new QueryRunner();
+          Statement st = conn.createStatement();
+          ResultSet rs = st.executeQuery("select id from crmdb.account where name = '" + name + "'");
+          rs.next();
+          id = rs.getInt(1);
+          rs.close();
+          st.close();
+      } catch (SQLException e) {
+          logger.error("failed to get user", e);
+      } finally {
+          DBHelper.closeConnection(conn);
+      }
+      return String.valueOf(id);
+  }
+    
     /***
      * 获得目标医生拜访频率统计
      * @param userId

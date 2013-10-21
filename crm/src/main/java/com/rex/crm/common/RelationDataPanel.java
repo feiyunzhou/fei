@@ -38,18 +38,6 @@ public class RelationDataPanel extends Panel {
         add(divC);
         
         final String collapseId = divC.getMarkupId();
-        final int roleId = ((SignIn2Session)getSession()).getRoleId();
-        WebMarkupContainer linkC = new WebMarkupContainer("aLink"){
-
-            @Override
-            protected void onComponentTag(ComponentTag tag) {
-                super.onComponentTag(tag);
-                tag.put("href", "#"+collapseId);
-            }
-            
-        };
-        add(linkC);
-        linkC.add(new Label("caption",relation.getDisplay()));
         Entity entity = Configuration.getEntityByName(relation.getTo());
         divC.add(new PageableTablePanel("tableData",entity,list));
         

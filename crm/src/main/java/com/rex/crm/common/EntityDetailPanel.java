@@ -137,8 +137,13 @@ public class EntityDetailPanel extends Panel {
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryCachedRelationDataById(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
-                            columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            if((currentField.getName().equals("accountId"))){
+                              columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
+                              columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            }else{
+                              columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
+                              columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));  
+                            }
                         }
                     } else {
                         if (j % 2 == 0) {
@@ -149,13 +154,13 @@ public class EntityDetailPanel extends Panel {
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
                             String value = CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(rawvalue));
                             value = (value == null) ? "" : value;
-                            if((currentField.getName().equals("accountId"))){
-                            	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
-                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
-                            }else{
+//                            if((currentField.getName().equals("accountId"))){
+//                            	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
+//                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+//                            }else{
                             	columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
                                 columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
-                            }
+//                            }
                         }
                     }
                     columnRepeater.add(columnitem);
@@ -177,13 +182,15 @@ public class EntityDetailPanel extends Panel {
         });
     }
     private class DetailLinkFragment extends Fragment {
-        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider, final String caption) {
+        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider,  String caption) {
             super(id, markupId, markupProvider);
+            final String str = DAOImpl.queryEntityByName(caption);
+            logger.debug("ididididididididididdidi" + str);
             add(new Link("detailclick") {
-
                 @Override
                 public void onClick() {
-                    setResponsePage(new EntityDetailPage("account", caption));
+                    
+                    setResponsePage(new EntityDetailPage("account", str));
                 }
             }.add(new Label("caption", new Model<String>(caption))));
         }

@@ -39,7 +39,16 @@
 		<from>crmuser</from>
 		<name>crmuser2activity</name>
 		<display>拜访</display>
-		<sql>select a.* from activity as a inner join crmuser as b on a.crmuserId=b.id where b.id=?</sql>
+		<sql>
+		select * from (select activity.*\,activity.activity_type as
+			                             act_type\,activity.status as act_status\, activity.contactId as
+			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
+			                             contact.name as contactname_val  
+			                from activity\,contact\,activitycrmuser\,activity_event_type_pl\,account 
+			                where contact.id= activity.contactId AND activitycrmuser.activityId=activity.id AND activitycrmuser.crmuserId=? AND 
+			                activity_event_type_pl.id=event_type AND account.id=contact.accountId) as
+			aActivity
+		</sql>
 		<to>activity</to>
 	</relation>
 <!-- 	<relation>

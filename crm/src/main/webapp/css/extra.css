@@ -35,10 +35,6 @@ a:hover, a:focus {
     display: inline-block;
     padding-top: 3px;
 }
-.title {
-    background: #ddd;
-    padding-bottom: 4px;
-}
 .detailed {
     background: #eee;
     padding-bottom: 20px;
