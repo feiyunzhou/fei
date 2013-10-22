@@ -96,18 +96,30 @@ public class PageableTablePanel extends Panel {
                     });
                     if (f.isDetailLink()) {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
+                        if(value.equals("null")||value.equals("")){
+                          value = "无";
+                        }
                         columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
 //                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
                     } else {
                         if (f.getPicklist() != null) {
                             // get option from picklist
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName()))));
+                            if(value.equals("null")||value.equals("")){
+                              value = "无";
+                            }
                             columnitem.add(new Label("celldata", value));
                         } else if(f.getRelationTable() != null){
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName()))));
+                            if(value.equals("null")||value.equals("")){
+                              value = "无";
+                            }
                             columnitem.add(new Label("celldata", value));
                         }else {
                             String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
+                            if(value.equals("null")||value.equals("")){
+                              value = "无";
+                            }
                             columnitem.add(new Label("celldata", value));
                         }
                     }
@@ -149,10 +161,6 @@ public class PageableTablePanel extends Panel {
 
                 @Override
                 public void onClick() {
-                    // System.out.println(getParent().getId());
-                    // System.out.println("this link is clicked!"+this.getParent().getParent().getDefaultModelObject());
-                    // Account selected =
-                    // (Account)getParent().getDefaultModelObject();
                     Param p = (Param) getParent().getParent().getDefaultModelObject();
                     logger.debug(p + " id:" + p.getId() + " name:" + p.getEntityName());
 //                    Attribute att = new Attribute();
