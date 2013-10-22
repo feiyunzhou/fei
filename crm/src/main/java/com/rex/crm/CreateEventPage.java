@@ -137,10 +137,11 @@ public class CreateEventPage extends TemplatePage
                         hidden_contact_select = "0";
                         contactId = -1;
                         concahName.append("拜访辅导");
+                        act_title_input = concahName.toString();
                     }
                     //insert the event, and return the generated id of the event
                     long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId,String.valueOf(activity_type.getId()), 
-                    		concahName.toString(), String.valueOf(startdt.getTime()/1000), 
+                    		act_title_input, String.valueOf(startdt.getTime()/1000), 
                             String.valueOf(enddt.getTime()/1000),1,user,user,user,
                             String.valueOf(visiting_purpose.getId()),
                             String.valueOf(feature_product.getId()),event_type.intValue(),participants,
@@ -275,7 +276,8 @@ public class CreateEventPage extends TemplatePage
          
         PageParameters params = new PageParameters();
         params.set("mid", uid);
-        form.add(new BookmarkablePageLink<Void>("search_user_btn", SelectCRMUserPage.class,params ).setPopupSettings(popupSettings));
+        logger.debug("uid:"+uid);
+        form.add(new BookmarkablePageLink<Void>("search_user_btn", SelectCRMUserPage.class,params).setPopupSettings(popupSettings));
         form.add(new HiddenField<String>("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
         form.add(new TextField<String>("selected_user" ,new PropertyModel<String>(this,"selected_user")));
               
