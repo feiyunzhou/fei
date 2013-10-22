@@ -221,4 +221,9 @@ a:hover, a:focus {
     .title > span{
         padding-left: 0px;
     }
+    @-moz-document url-prefix() { 
+        .detailed {
+        margin-top: 90px;
+        }
+    }
 }
