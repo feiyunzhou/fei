@@ -30,16 +30,15 @@ import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
 public class EntityDetailPanel extends Panel {
-	private static final Logger logger = Logger.getLogger(EntityDetailPanel.class);
-	private static final long serialVersionUID = -2613412283023068638L;
 
-	private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap();
+    private static final Logger logger = Logger.getLogger(EntityDetailPanel.class);
+    private static final long serialVersionUID = -2613412283023068638L;
+    private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap();
+    private int number_of_column = 1;
 
-    private int number_of_column = 3;
-
-    public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId,int number_of_column,final String pageName) {
+    public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId, int number_of_column, final String pageName) {
         super(id);
-        this.number_of_column = number_of_column;
+//        this.number_of_column = number_of_column;
         // TODO Get permission info of user from database.
         // add(new
         // CRUDPanel("operationBar",EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT)));
@@ -64,7 +63,9 @@ public class EntityDetailPanel extends Panel {
         int gNum = 0;
         for (String gn : groupNames) {
             List<Field> groupfields = fieldGroupMap.get(gn);
-            if(groupfields == null) continue;
+            if (groupfields == null) {
+                continue;
+            }
             AbstractItem groupitem = new AbstractItem(fieldGroupRepeater.newChildId());
             fieldGroupRepeater.add(groupitem);
             WebMarkupContainer container = new WebMarkupContainer("divButton");
@@ -78,77 +79,80 @@ public class EntityDetailPanel extends Panel {
             AbstractItem div = new AbstractItem(divRepeater.newChildId());
             divRepeater.add(div);
             div.add(new AttributeAppender("id", new Model("2" + (--gNum)), ";"));
-            if(!(gNum==0)){
-            	div.add(new AttributeAppender("class", new Model("collapse" ), ";"));
-            }else{
-            	div.add(new AttributeAppender("class", new Model("collapse in" ), ";"));
+            if (!(gNum == 0)) {
+                div.add(new AttributeAppender("class", new Model("collapse"), ";"));
+            } else {
+                div.add(new AttributeAppender("class", new Model("collapse in"), ";"));
             }
             gNum++;
             RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
             div.add(dataRowRepeater);
             int numOfField = 0;
             List<Field> visibleFields = Lists.newArrayList();
-            
+
             for (Field f : groupfields) {
-                if (!f.isVisible() || f.getName().equalsIgnoreCase("name"))
+                if (!f.isVisible() || f.getName().equalsIgnoreCase("name")) {
                     continue;
+                }
 
                 numOfField++;
                 visibleFields.add(f);
             }
 
             groupitem.add(new Label("groupname", gn));
-           
-            int num_of_row = (numOfField / number_of_column) + 1;
+
+            int num_of_row = (numOfField / this.number_of_column) + 1;
 
             for (int i = 0; i < num_of_row; i++) {
                 AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
                 dataRowRepeater.add(item);
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 item.add(columnRepeater);
-                if(data == null) continue;
-                for (int j = 0; j < 2 * number_of_column; j++) {
+                if (data == null) {
+                    continue;
+                }
+                for (int j = 0; j < 2 * this.number_of_column; j++) {
                     AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(data.get(primaryKeyName))));
 
-                    if ((i * number_of_column + j / 2) >= visibleFields.size()) {
-                    	if((i * number_of_column + j / 2) >= visibleFields.size()){
-							continue;
-						}
+                    if ((i * this.number_of_column + j / 2) >= visibleFields.size()) {
+                        if ((i * this.number_of_column + j / 2) >= visibleFields.size()) {
+                            continue;
+                        }
                         columnitem.add(new Label("celldata", "&nbsp;").setEscapeModelStrings(false));
                         columnRepeater.add(columnitem);
                         continue;
                     }
-                    Field currentField = visibleFields.get(i * number_of_column + j / 2);
+                    Field currentField = visibleFields.get(i * this.number_of_column + j / 2);
                     if (currentField.getPicklist() != null) {
 
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                         } else {
-                            String value = CRMUtility.formatValue(currentField.getFormatter(),DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
+                            String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
                             columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+//                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
                         }
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryCachedRelationDataById(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
-                            if((currentField.getName().equals("accountId"))){
-                              columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
-                              columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
-                            }else{
-                              columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-                              columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));  
+                            if ((currentField.getName().equals("accountId"))) {
+                                columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
+//                              columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            } else {
+                                columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
+//                              columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));  
                             }
                         }
                     } else {
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-                            columnitem.add(new AttributeAppender("style", new Model("text-align:right;width:200px"), ";"));
+                            columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                         } else {
                             Object rawvalue = data.get(currentField.getName());
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
@@ -158,8 +162,8 @@ public class EntityDetailPanel extends Panel {
 //                            	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
 //                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
 //                            }else{
-                            	columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
+                            columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
+//                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
 //                            }
                         }
                     }
@@ -168,7 +172,6 @@ public class EntityDetailPanel extends Panel {
             }// end of set the detailed info
         }// end of groupNames loop
         add(new AbstractAjaxBehavior() {
-
             @Override
             public void onRequest() {
             }
@@ -178,18 +181,19 @@ public class EntityDetailPanel extends Panel {
                 super.renderHead(component, response);
                 response.render(OnDomReadyHeaderItem.forScript("$(\"#navitem-" + pageName + "\").addClass(\"active\");"));
             }
-
         });
     }
+
     private class DetailLinkFragment extends Fragment {
-        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider,  String caption) {
+
+        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider, String caption) {
             super(id, markupId, markupProvider);
             final String str = DAOImpl.queryEntityByName(caption);
             logger.debug("ididididididididididdidi" + str);
             add(new Link("detailclick") {
                 @Override
                 public void onClick() {
-                    
+
                     setResponsePage(new EntityDetailPage("account", str));
                 }
             }.add(new Label("caption", new Model<String>(caption))));

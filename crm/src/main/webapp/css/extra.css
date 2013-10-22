@@ -36,8 +36,6 @@ a:hover, a:focus {
     padding-top: 3px;
 }
 .detailed {
-    background: #eee;
-    padding-bottom: 20px;
 }
 .collapse{
     background: #fff;
@@ -48,6 +46,15 @@ a:hover, a:focus {
     width: 220px;
     text-align: right;
     padding-right: 10px;
+}
+.table-column-view {
+    float: left;
+    width: 140px;
+    text-align: left;
+    padding-right: 10px;
+}
+.table-column-view .tag{
+    width: 150px;
 }
 .table-cell {
     display: inline-block;
@@ -72,6 +79,7 @@ a:hover, a:focus {
 }
 .tag{
     width: 130px;
+    text-align: right;
 }
 @media ( max-width : 767px) {
     /* Enable use of floated navbar text */
@@ -165,7 +173,7 @@ a:hover, a:focus {
 @media ( max-width : 440px) {
     .table-column {
         float: left;
-        text-align: left;
+        text-align: left !important;
         width: 100%;
     }
     .form_datetime > input {
@@ -180,5 +188,8 @@ a:hover, a:focus {
     }
     .form_datetime {
         padding-right: 12px;
+    }
+    .table-column-view {
+        width: 100px;
     }
 }

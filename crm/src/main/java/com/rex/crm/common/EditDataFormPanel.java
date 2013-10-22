@@ -50,7 +50,7 @@ public class EditDataFormPanel extends Panel {
 	private final String user = ((SignIn2Session) getSession()).getUser();
 	private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap(); 
 
-	private static int NUM_OF_COLUMN = 3;
+	private static int NUM_OF_COLUMN = 1;
 
 	/**
 	 * 
@@ -126,7 +126,7 @@ public class EditDataFormPanel extends Panel {
 					if (currentField.getPicklist() != null) {
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+							columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
 							fieldNames.add(currentField.getName());
 						} else {
 							List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
@@ -147,7 +147,7 @@ public class EditDataFormPanel extends Panel {
 					else if (currentField.getRelationTable() != null) {
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("editdata","textFragment",this, currentField.getDisplay() +":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+							columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
 							fieldNames.add(currentField.getName());
 						} else {
 						    long foreignKey = 1L;
@@ -174,7 +174,7 @@ public class EditDataFormPanel extends Panel {
 						else {
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+							columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
 							fieldNames.add(currentField.getName());
 						} else {
 
