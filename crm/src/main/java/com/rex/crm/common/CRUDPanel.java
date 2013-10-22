@@ -39,7 +39,8 @@ public class CRUDPanel extends Panel {
 
     }
 
-    public CRUDPanel(   final String id, final String entityName,final String entityId,EnumSet<Permissions> userPerms) {
+    public CRUDPanel(final String id, final String entityName,
+            final String entityId,EnumSet<Permissions> userPerms, final ICRUDActionListener listener) {
     	super(id);
         Map<String, Entity> entities = Configuration.getEntityTable();
         final Entity entity = entities.get(entityName);
@@ -57,11 +58,8 @@ public class CRUDPanel extends Panel {
 
                    @Override
                    public void onClick() {
-                	   if(entity.getName().equals("activity")){
-            	    	   setResponsePage(new CreateEventPage(1));
-            	       }else{
-            	    	   setResponsePage(new CreateDataPage(entity.getName()));            	    	   
-            	       }
+                	  
+                	   listener.create();
                    }
                });
                 add(addfrag);
@@ -75,22 +73,9 @@ public class CRUDPanel extends Panel {
 
                     @Override
                     public void onClick() {
-                    	if(entityName.equals("account")){
-                        	DAOImpl.deleteRecord(entityId, entityName);
-                            setResponsePage(new AccountPage());
-                    	}else if(entityName.equals("contact")){
-                    		DAOImpl.deleteRecord(entityId, entityName);
-                            setResponsePage(new ContactPage());
-                    	}else if(entityName.equals("activity")) {
-                    		DAOImpl.deleteRecord(entityId, entityName);
-                            setResponsePage(new ActivityPage());
-                    	}else if(entityName.equalsIgnoreCase("crmuser")){
-                    		if(DAOImpl.deleteRecord(entityId, entityName)>0){
-                    		   DAOImpl.updateCrmUserReport(entityId, "-1");
-                    		}
-                            setResponsePage(new UserPage());
-                    	}
-                        
+                    	
+                    	listener.delete();
+                    	
                     }
                 });
                  add(delfrag);
@@ -104,8 +89,8 @@ public class CRUDPanel extends Panel {
             		
                     @Override
                     public void onClick() {
-                    	
-                        setResponsePage(new EditDataPage(entity.getName(),entityId));
+                        listener.update();
+                        //setResponsePage(new EditDataPage(entity.getName(),entityId));
                     }
                 });
             	addOrReplace(editfrag);

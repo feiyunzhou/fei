@@ -9,7 +9,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
-import com.rex.crm.account.AccountListPanel;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;

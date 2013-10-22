@@ -4,23 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.wicket.markup.html.basic.Label;
+
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.Model;
+
 import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
-import com.rex.crm.account.AccountListPanel;
-import com.rex.crm.common.CreateDataPage;
+
 import com.rex.crm.common.Entity;
-import com.rex.crm.common.EntityDetailPage;
+
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
-import com.rex.crm.common.Param;
-import com.rex.crm.common.TableDataPanel;
+
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 

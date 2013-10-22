@@ -139,8 +139,18 @@ public class PageableTablePanel extends Panel {
         datacontainer.add(new AjaxPagingNavigator("navigator", listview));
         datacontainer.setVersioned(false);
         
+        ICRUDActionListener actionListener = new DefaultCRUDActionListener(){
+            @Override
+            public void create() {
+                if(entity.getName().equals("activity")){
+                    setResponsePage(new CreateEventPage(1));
+                }else{
+                    setResponsePage(new CreateDataPage(entity.getName()));                          
+                }   
+            }    
+        };
        
-        add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName())));
+        add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName()),actionListener));
         
     	add(new NewDataFormPanel("formPanel",entity,null));
 

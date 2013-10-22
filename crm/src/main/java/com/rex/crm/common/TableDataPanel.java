@@ -16,7 +16,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.rex.crm.account.AccountDetailPage;
+import com.rex.crm.CreateEventPage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -26,7 +26,7 @@ public class TableDataPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
     private static final Logger logger = Logger.getLogger(TableDataPanel.class);
 
-    public TableDataPanel(String id,Entity entity, List mapList) {
+    public TableDataPanel(String id,final Entity entity, List mapList) {
         super(id);
   
         //TODO Get the table definition from database or configuration
@@ -93,8 +93,18 @@ public class TableDataPanel extends Panel {
             }
         }
         
-        //TODO Get permission info of user from database.
-        add(new CRUDPanel("operationBar",entityName,null,EnumSet.of(CRUDPanel.Permissions.ADD)));
+        ICRUDActionListener actionListener = new DefaultCRUDActionListener(){
+            @Override
+            public void create() {
+                if(entity.getName().equals("activity")){
+                    setResponsePage(new CreateEventPage(1));
+                }else{
+                    setResponsePage(new CreateDataPage(entity.getName()));                          
+                }   
+            }    
+        };
+        
+        add(new CRUDPanel("operationBar",entityName,null,EnumSet.of(CRUDPanel.Permissions.ADD),actionListener));
         
         
         add(new NewDataFormPanel("formPanel",entity,null));

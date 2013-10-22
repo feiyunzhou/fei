@@ -15,10 +15,6 @@ public class PageFactory {
             return new ActivityPage();
         }else if(name.equalsIgnoreCase("crmuser")){
             return new UserPage();
-        }else if(name.equalsIgnoreCase("dealerAccount")){
-            return new DealerAccountPage();
-        }else if(name.equalsIgnoreCase("dealerContact")){
-            return new DealerContactPage();
         }else{
             return new HomePage();
         }

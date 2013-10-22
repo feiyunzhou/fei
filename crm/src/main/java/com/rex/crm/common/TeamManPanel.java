@@ -26,7 +26,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.SearchCRMUserPage;
 import com.rex.crm.SignIn2Session;
-import com.rex.crm.account.AccountDetailPage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;

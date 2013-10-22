@@ -15,11 +15,12 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-
+import com.rex.crm.AccountPage;
+import com.rex.crm.ActivityPage;
+import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
+import com.rex.crm.UserPage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
@@ -30,7 +31,7 @@ public class EntityDetailPage extends TemplatePage {
 
     private static int NUM_OF_COLUMN  = 3;
     
-    public EntityDetailPage(final String entityName, String id){
+    public EntityDetailPage(final String entityName, final String id){
         this.setPageTitle("详细信息");
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -68,6 +69,7 @@ public class EntityDetailPage extends TemplatePage {
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
              add(con2); 
+             con2.setVisible(false);
          }else if(entityName.equalsIgnoreCase("crmuser")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new TeamManPanel("teamPanel2",entityName,String.valueOf(lid),1));
@@ -75,8 +77,10 @@ public class EntityDetailPage extends TemplatePage {
          else{
              WebMarkupContainer con = new WebMarkupContainer("teamPanel");
              add(con); 
+             con.setVisible(false);
              WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
              add(con2);
+             con2.setVisible(false);
          }
 
          add(new AbstractAjaxBehavior(){
@@ -93,8 +97,37 @@ public class EntityDetailPage extends TemplatePage {
              
          });
          
+         
+         ICRUDActionListener actionListener = new DefaultCRUDActionListener(){
 
-         add(new CRUDPanel("operationBar",entity.getName(),id, CRMUtility.getPermissionForEntity(roleId, entity.getName())));
+            @Override
+            public void delete() {
+                if(entityName.equals("account")){
+                    DAOImpl.deleteRecord(id, entityName);
+                    setResponsePage(new AccountPage());
+                }else if(entityName.equals("contact")){
+                    DAOImpl.deleteRecord(id, entityName);
+                    setResponsePage(new ContactPage());
+                }else if(entityName.equals("activity")) {
+                    DAOImpl.deleteRecord(id, entityName);
+                    setResponsePage(new ActivityPage());
+                }else if(entityName.equalsIgnoreCase("crmuser")){
+                    if(DAOImpl.deleteRecord(id, entityName)>0){
+                       DAOImpl.updateCrmUserReport(id, "-1");
+                    }
+                    setResponsePage(new UserPage());
+                }
+            }
+
+            @Override
+            public void update() {
+                setResponsePage(new EditDataPage(entityName,id));
+            }
+                
+         };
+         
+
+         add(new CRUDPanel("operationBar",entity.getName(),id, CRMUtility.getPermissionForEntity(roleId, entity.getName()),actionListener));
          
     }
 

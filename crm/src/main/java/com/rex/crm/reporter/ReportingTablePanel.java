@@ -1,33 +1,19 @@
 package com.rex.crm.reporter;
 
-import java.io.Serializable;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
-import org.apache.wicket.markup.html.panel.Fragment;
+
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.rex.crm.SearchCRMUserPage;
-import com.rex.crm.account.AccountDetailPage;
-import com.rex.crm.beans.Account;
+
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
-import com.rex.crm.db.DAOImpl;
-import com.rex.crm.util.CRMUtility;
-import com.rex.crm.util.Configuration;
+
 
 public class ReportingTablePanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
