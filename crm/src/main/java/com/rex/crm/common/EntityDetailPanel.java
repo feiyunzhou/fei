@@ -132,7 +132,6 @@ public class EntityDetailPanel extends Panel {
                             String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
                             columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-//                            columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
                         }
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {
@@ -143,10 +142,8 @@ public class EntityDetailPanel extends Panel {
                             value = (value == null) ? "" : value;
                             if ((currentField.getName().equals("accountId"))) {
                                 columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
-//                              columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
                             } else {
                                 columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-//                              columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));  
                             }
                         }
                     } else {
@@ -158,13 +155,7 @@ public class EntityDetailPanel extends Panel {
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
                             String value = CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(rawvalue));
                             value = (value == null) ? "" : value;
-//                            if((currentField.getName().equals("accountId"))){
-//                            	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
-//                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
-//                            }else{
                             columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-//                                columnitem.add(new AttributeAppender("style", new Model("text-align:left;width:200px"), ";"));
-//                            }
                         }
                     }
                     columnRepeater.add(columnitem);

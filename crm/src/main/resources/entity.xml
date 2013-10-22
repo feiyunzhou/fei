@@ -1006,7 +1006,7 @@
 			<field>
 				<name>email</name>
 				<display>邮箱</display>
-				<isRequired>true</isRequired>
+				<isRequired>false</isRequired>
 				<data-type>email</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1099,7 +1099,7 @@
 			<field>
 				<name>email</name>
 				<display>邮箱</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>email</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>

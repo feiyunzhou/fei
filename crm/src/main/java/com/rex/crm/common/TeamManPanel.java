@@ -146,28 +146,34 @@ public class TeamManPanel extends Panel {
                 
                 if (f.isDetailLink()) {
                     String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
-                    //columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value));
-//                    columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
+                    if(value.equals("null")||value.equals("")||value.equals("dummy")){
+                      value = "无";
+                    }
                     columnitem.add(new DetailLinkFragment("celldata","detailFragment",this,value));
-                    
-                    
-     
                 } else {
                     if (f.getPicklist() != null) {
                         // get option from picklist
                         String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName()))));
+                        if(value.equals("null")||value.equals("")||value.equals("dummy")){
+                          value = "无";
+                        }
                         columnitem.add(new Label("celldata", value));
                     } else if(f.getRelationTable() != null){
                         String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName()))));
+                        if(value.equals("null")||value.equals("")||value.equals("dummy")){
+                          value = "无";
+                        }
                         columnitem.add(new Label("celldata", value));
                     }else {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
+                        if(value.equals("null")||value.equals("")||value.equals("dummy")){
+                          value = "无";
+                        }
                         columnitem.add(new Label("celldata", value));
                     }
                 }
                 columnRepeater.add(columnitem);
             }
-            
             //add extra field in the last column
             AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(rowId));
             if(roleId == 1){
@@ -179,12 +185,8 @@ public class TeamManPanel extends Panel {
             columnRepeater.add(columnitem);
             
         }
-          
-        
         add(new NewDataFormPanel("formPanel",entity,null));
-
     }
-
 
     public TeamManPanel(String id, IModel<?> model) {
         super(id, model);
