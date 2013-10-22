@@ -65,10 +65,15 @@ public class PageableTablePanel extends Panel {
         // set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
         datacontainer.add(columnNameRepeater);
+        int count=0;
         for (Field f : entity.getFields()) {
             if (!f.isVisible()|| f.getPriority() >1)
                 continue;
             AbstractItem item = new AbstractItem(columnNameRepeater.newChildId());
+            if(count==0){
+                item.add(new AttributeAppender("class", new Model("table-first-link"), " "));
+                count++;
+            }
             columnNameRepeater.add(item);
             item.add(new Label("columnName", f.getDisplay()));
         }
@@ -97,6 +102,7 @@ public class PageableTablePanel extends Panel {
                     if (f.isDetailLink()) {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
                         columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
+                        columnitem.add(new AttributeAppender("class", new Model("table-first-link"), " "));
 //                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
                     } else {
                         if (f.getPicklist() != null) {
