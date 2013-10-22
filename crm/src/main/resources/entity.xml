@@ -60,6 +60,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<isParam>true</isParam> <!--  关联表的创建的参数 -->
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -73,6 +74,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isParam>true</isParam>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -638,6 +640,8 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<relationTable>account</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>account.id\,account.name</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>	
 			

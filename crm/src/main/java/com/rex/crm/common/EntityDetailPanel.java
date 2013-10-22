@@ -180,7 +180,7 @@ public class EntityDetailPanel extends Panel {
         public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider, String caption) {
             super(id, markupId, markupProvider);
             final String str = DAOImpl.queryEntityByName(caption);
-            logger.debug("ididididididididididdidi" + str);
+
             add(new Link("detailclick") {
                 @Override
                 public void onClick() {

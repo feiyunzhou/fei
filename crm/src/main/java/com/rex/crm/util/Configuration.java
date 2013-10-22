@@ -228,6 +228,16 @@ public class Configuration {
                         field.setFieldGroup(fieldGroup);
                     }
                     
+                    String default_value = sub2.getString("default-value");
+                    if(default_value !=null){
+                        field.setDefault_value(default_value);
+                    }
+                    
+                    String default_value_type = sub2.getString("default-value-type");
+                    if(default_value_type !=null){
+                        field.setDefault_value_type(default_value_type);
+                    }
+                    
                     field.setPrimaryKey(Boolean.parseBoolean(sub2.getString("isPrimaryKey")));
                     field.setDetailLink(Boolean.parseBoolean(sub2.getString("isDetailLink"))); 
                     field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible")));
@@ -235,6 +245,8 @@ public class Configuration {
                     field.setRequired(Boolean.parseBoolean(sub2.getString("isRequired"))); 
                     field.setBaseInfo(Boolean.parseBoolean(sub2.getString("isBaseInfo")));
                     field.setSearchable(Boolean.parseBoolean(sub2.getString("isSearchable")));
+                    field.setParam(Boolean.parseBoolean(sub2.getString("isParam")));
+                    
                 }
                 
             }

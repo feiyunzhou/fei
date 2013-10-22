@@ -92,7 +92,7 @@ public class UserPage extends TemplatePage
           
           
         }
-		add(new PageableTablePanel("datalist",entity,tdata));
+		add(new PageableTablePanel("datalist",entity,tdata,null));
 		
 		 //for the side bar
         List<Pair<String, Map<String, Object>>> types = null;

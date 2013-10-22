@@ -799,6 +799,7 @@ public class DAOImpl {
         return result;
     }
     
+    
     public static String queryPickListByIdCached(final String picklist, final String id){
         String value = "";
         try{

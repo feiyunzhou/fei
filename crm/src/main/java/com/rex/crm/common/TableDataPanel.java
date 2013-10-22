@@ -99,7 +99,7 @@ public class TableDataPanel extends Panel {
                 if(entity.getName().equals("activity")){
                     setResponsePage(new CreateEventPage(1));
                 }else{
-                    setResponsePage(new CreateDataPage(entity.getName()));                          
+                    setResponsePage(new CreateDataPage(entity.getName(),null));                          
                 }   
             }    
         };

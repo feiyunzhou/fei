@@ -15,6 +15,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
+
+import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
 import com.rex.crm.ContactPage;
@@ -56,13 +58,20 @@ public class EntityDetailPage extends TemplatePage {
          RepeatingView relationRepeater = new RepeatingView("relationRepeater");
          add(relationRepeater);
          
+         List<Field> paramFields = entity.getParamFields();
+         Map<String,Object> params = Maps.newHashMap();
+         for(Field f:paramFields){
+             params.put(entityName+"."+f.getName(), map.get(f.getName()));
+         }
+         
+         
          for(Relation r:relations){
            AbstractItem item = new AbstractItem(relationRepeater.newChildId());
            relationRepeater.add(item);
            logger.debug(r.getSql());
            logger.debug("parms:"+id);
            List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
-           item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid)));
+           item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),params));
            
          }
          if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")){

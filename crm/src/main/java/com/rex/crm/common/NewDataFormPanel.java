@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -36,6 +37,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.PageFactory;
@@ -58,7 +60,7 @@ public class NewDataFormPanel extends Panel {
     private static int NUM_OF_COLUMN = 1;
     final String user = ((SignIn2Session) getSession()).getUser();
 
-    public NewDataFormPanel(String id, final Entity entity, final Map<String, String> relationIds) {
+    public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
         super(id);
         final Map<String, IModel> models = Maps.newHashMap();
 //		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
@@ -140,17 +142,29 @@ public class NewDataFormPanel extends Panel {
                             columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                         } else {
-                            List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(), userId);
-                            Map<Long, String> list = Maps.newHashMap();
-                            List<Long> ids = Lists.newArrayList();
-                            for (Choice p : pickList) {
-                                list.put(p.getId(), p.getVal());
-                                ids.add(p.getId());
-                            }
+//                            List<Choice> pickLista = DAOImpl.queryRelationDataList(currentField.getRelationTable(), userId);
+//                            Map<Long, String> list = Maps.newHashMap();
+//                            List<Long> idsa = Lists.newArrayList();
+//                            for (Choice p : pickList) {
+//                                list.put(p.getId(), p.getVal());
+//                                ids.add(p.getId());
+//                            }
                             long foreignKey = -1L;
-                            if (relationIds != null && relationIds.containsKey(currentField.getAlias())) {
-                                foreignKey = Long.parseLong(relationIds.get(currentField.getAlias()));
+                            String defaultValue = "";
+                            if (currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("var")){
+                                if (params != null) {
+                                    Iterable<String> splits = Splitter.on(",").split(currentField.getDefault_value());
+                                    Iterator<String> it = splits.iterator();
+                                    String choiceId = it.next();
+                                    String choiceValue = it.next();
+                                    if(choiceId!=null && choiceId!=null && params.get(choiceId.trim())!=null && params.get(choiceValue.trim())!=null){
+                                       foreignKey = Long.parseLong(String.valueOf(params.get(choiceId.trim())));
+                                       defaultValue = String.valueOf(params.get(choiceValue.trim()));
+                                    }
+                                 
+                                }
                             }
+                           
                             IModel choiceModel = new Model(foreignKey);
                             String fn = "";
                             if (currentField.getAlias() != null) {
@@ -161,7 +175,7 @@ public class NewDataFormPanel extends Panel {
                             models.put(fn, choiceModel);
                             //columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
 
-                            columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(), "", choiceModel));
+                            columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(), defaultValue, foreignKey));
                         }
                     } else {
                         if (j % 2 == 0) {
@@ -171,7 +185,7 @@ public class NewDataFormPanel extends Panel {
                             if (currentField.getName().equals("address")) {
                                 IModel<String> textModel = new Model<String>("");
                                 models.put(currentField.getName(), textModel);
-                                columnitem.add(new Textarea("celldatafield", "textAreaFragment", this, textModel));
+                                columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, textModel));
                             } else {
                                 IModel<String> textModel = new Model<String>("");
                                 models.put(currentField.getName(), textModel);
@@ -290,9 +304,9 @@ public class NewDataFormPanel extends Panel {
         }
     }
 
-    private class Textarea extends Fragment {
+    private class TextareaFrag extends Fragment {
 
-        public Textarea(String id, String markupId, MarkupContainer markupProvider, IModel model) {
+        public TextareaFrag(String id, String markupId, MarkupContainer markupProvider, IModel model) {
             super(id, markupId, markupProvider);
             // TODO Auto-generated constructor stub
             add(new TextArea<String>("address", model));
@@ -302,19 +316,19 @@ public class NewDataFormPanel extends Panel {
     private class RelationTableSearchFragment extends Fragment {
 
         public RelationTableSearchFragment(String id, String markupId,
-                MarkupContainer markupProvider, final String entityName, final String value, IModel model) {
+                MarkupContainer markupProvider, final String entityName, final String defaultValue, final long defaultId) {
             super(id, markupId, markupProvider);
 
             PageParameters params = new PageParameters();
             params.set("en", entityName);
-            params.set("target", (long) model.getObject());
+            params.set("target", defaultId);
             PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
                     .setWidth(850).setLeft(150).setTop(200);
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params).setPopupSettings(popupSettings));
-            HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", model);
+            HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", new Model(defaultId));
             hidden.add(new AttributeAppender("id", entityName + "_id"));
             add(hidden);
-            TextField<String> text = new TextField<String>("selected_value_input", new Model(value));
+            TextField<String> text = new TextField<String>("selected_value_input", new Model(defaultValue));
             text.add(new AttributeAppender("id", entityName + "_name"));
             add(text);
         }
@@ -358,8 +372,10 @@ public class NewDataFormPanel extends Panel {
             text.add(new AttributeAppender("id", new Model(currentField.getName()), ";"));
         }
     }
+    
+   
+    
     //发送有邮件方法
-
     public void sendMail(String getUserByLoginName, String sendEmail) {
         Session sendMailSession = null;
         SMTPTransport transport = null;

@@ -27,6 +27,9 @@ public class Field implements Serializable {
     @Expose
     private boolean isEditable;
     @Expose
+    private boolean isParam;
+    
+    @Expose
     private boolean isSearchable;
     @Expose
     private String formatter;
@@ -41,6 +44,11 @@ public class Field implements Serializable {
     private String alias = null;
     @Expose 
     private boolean isBaseInfo = false;
+    @Expose
+    private String default_value = null;
+    @Expose
+    private String default_value_type = null;
+    
     public boolean isRequired() {
         return isRequired;
     }
@@ -182,6 +190,30 @@ public class Field implements Serializable {
 
     public void setSearchable(boolean isSearchable) {
         this.isSearchable = isSearchable;
+    }
+
+    public String getDefault_value() {
+        return default_value;
+    }
+
+    public void setDefault_value(String default_value) {
+        this.default_value = default_value;
+    }
+
+    public String getDefault_value_type() {
+        return default_value_type;
+    }
+
+    public void setDefault_value_type(String default_value_type) {
+        this.default_value_type = default_value_type;
+    }
+
+    public boolean isParam() {
+        return isParam;
+    }
+
+    public void setParam(boolean isParam) {
+        this.isParam = isParam;
     }
     
 

@@ -52,7 +52,7 @@ public class AddEntityPage extends TemplatePage {
            logger.debug(r.getSql());
            logger.debug("parms:"+id);
            List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
-           item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid)));
+           item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),null));
            
          }
 

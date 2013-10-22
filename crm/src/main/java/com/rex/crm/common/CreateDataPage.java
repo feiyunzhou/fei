@@ -36,23 +36,23 @@ public class CreateDataPage extends TemplatePage {
         
         StringValue entityName = getRequest().getRequestParameters().getParameterValue("entityName");
         String name = entityName.toString();
-        Set<String> names = getRequest().getRequestParameters().getParameterNames();
-        Map<String,String> map = Maps.newHashMap();
-        for(String nm:names){
-            StringValue sv = getRequest().getRequestParameters().getParameterValue(nm);
-            map.put(nm, sv.toString());
-        }
+//        Set<String> names = getRequest().getRequestParameters().getParameterNames();
+//        Map<String,String> map = Maps.newHashMap();
+//        for(String nm:names){
+//            StringValue sv = getRequest().getRequestParameters().getParameterValue(nm);
+//            map.put(nm, sv.toString());
+//        }
         
-        initPage(name,map);
+        initPage(name,null);
     }
    
-    public CreateDataPage(String entityName){
+    public CreateDataPage(String entityName,final Map<String,Object> params){
        
-        initPage(entityName,null);
+        initPage(entityName,params);
         
     }
     
-    private void initPage(String entityName,Map<String,String> map){
+    private void initPage(String entityName,Map<String,Object> params){
         //this.getRequest().
         this.setPageTitle("创建");
        //this.getPageParameters().get
@@ -60,7 +60,7 @@ public class CreateDataPage extends TemplatePage {
         //if (entityName == null) entityName="contact";
         final Entity entity = entities.get(entityName);
         
-        add(new NewDataFormPanel("formPanel",entity,map));
+        add(new NewDataFormPanel("formPanel",entity,params));
 
 
          add(new AbstractAjaxBehavior(){

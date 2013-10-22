@@ -36,7 +36,8 @@ import com.rex.crm.util.CRMUtility;
 public class PageableTablePanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
     private static final Logger logger = Logger.getLogger(PageableTablePanel.class);
-    public PageableTablePanel(String id, final Entity entity, List mapList) {
+    
+    public PageableTablePanel(String id, final Entity entity, List mapList,final Map<String,Object> params) {
         super(id);
 
         add(new Label("table_title",entity.getDisplay()));
@@ -145,7 +146,7 @@ public class PageableTablePanel extends Panel {
                 if(entity.getName().equals("activity")){
                     setResponsePage(new CreateEventPage(1));
                 }else{
-                    setResponsePage(new CreateDataPage(entity.getName()));                          
+                    setResponsePage(new CreateDataPage(entity.getName(),params));                          
                 }   
             }    
         };

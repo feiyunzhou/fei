@@ -18,6 +18,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.google.common.collect.Maps;
 import com.rex.crm.SearchCRMUserPage;
 import com.rex.crm.SearchContactPage;
 import com.rex.crm.SignIn2Session;
@@ -29,7 +30,7 @@ import com.rex.crm.util.Configuration;
 public class RelationDataPanel extends Panel {
   
 
-    public RelationDataPanel( String id, Relation relation, String entityName,List list,final String entityId) {
+    public RelationDataPanel( String id, Relation relation, String entityName,List list,final String entityId,final Map<String,Object> params) {
         super(id);
         
 
@@ -39,7 +40,7 @@ public class RelationDataPanel extends Panel {
         
         final String collapseId = divC.getMarkupId();
         Entity entity = Configuration.getEntityByName(relation.getTo());
-        divC.add(new PageableTablePanel("tableData",entity,list));
+        divC.add(new PageableTablePanel("tableData",entity,list,params));
         
         
         RepeatingView btn_repeater = new RepeatingView("btn_repeater");
