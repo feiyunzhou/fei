@@ -81,6 +81,10 @@ a:hover, a:focus {
     width: 130px;
     text-align: right;
 }
+.btn-group-right{
+    float: right;
+    padding-right: 10px;
+}
 @media ( max-width : 767px) {
     /* Enable use of floated navbar text */
     .btn.btn-sm.btn-danger.btn-mini {
@@ -191,5 +195,23 @@ a:hover, a:focus {
     }
     .table-column-view {
         width: 100px;
+    }
+    .btn-group {
+        display: inline-block;
+    }
+    .full {
+        width: 100%;
+    }
+    .btn-group-right{
+        width: 100%;
+        float: initial;
+        padding-top: 10px;
+    }
+    .btn-group-right a{
+        width: 100%;
+        float: initial;
+    }
+    .pull-right div {
+        margin-right: 25px;
     }
 }

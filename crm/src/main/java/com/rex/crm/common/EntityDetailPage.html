@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
-<body>
-	<wicket:extend>
-		<script>
-			$(document).ready(function() {
-				var str = $("#relation2").text()
-				if(str == null ||str == ""){
-					$("#relation").hide();
-				}
-			});
-			function ConfirmDel() {
-				if (confirm("真的要删除吗？")){
-						return true;
-				}else{
-					return false;
-			}
-			}
+    <body>
+        <wicket:extend>
+            <script>
+                $(document).ready(function() {
+                    var str = $("#relation2").text()
+                    if(str == null ||str == ""){
+                        $("#relation").hide();
+                    }
+                });
+                function ConfirmDel() {
+                    if (confirm("真的要删除吗？")){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
 			
-		</script>
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<!-- right container -->
-				<div class="span12">
-					<div class="title" style="border-bottom:2pt solid #BDD3EB">
-						<span wicket:id="name">我的</span>
-						 <div class="pull-right">
-					    <span wicket:id="operationBar">[operation bar]</span>
-				       </div>
-					</div>
-					<div class="detailed" wicket:id="detailed"></div>
-					<div style="height:20px;">
-					</div>
-					<div style="background-color:#BDD3EB; height:2px;">
-					</div>
-					<div style="height:20px;">
-					</div>
-					<div class="" id="accordion1">
-						<div class="relationBlock">
-							<span wicket:id="teamPanel"></span>
-						</div>
-						
-						<div id=relation>
-							<div class="relationBlock" wicket:id="teamPanel2"  id=relation2></div>
-						</div>
-					</div>
+            </script>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <!-- right container -->
+                    <div class="span12">
+                        <div class="title" style="border-bottom:2pt solid #BDD3EB">
+                            <span wicket:id="name">我的</span>
+                            <div class="pull-right full">
+                                <div wicket:id="operationBar">[operation bar]</div>
+                            </div>
+                        </div>
+                        <div class="detailed" wicket:id="detailed"></div>
+                        <div style="height:20px;">
+                        </div>
+                        <div style="background-color:#BDD3EB; height:2px;">
+                        </div>
+                        <div style="height:20px;">
+                        </div>
+                        <div class="" id="accordion1">
+                            <div class="relationBlock">
+                                <span wicket:id="teamPanel"></span>
+                            </div>
 
-					<div class="" id="accordion2">
-						<div wicket:id="relationRepeater" class="relationBlock">
-							<span wicket:id="relationPanel"></span>
-						</div>
-					</div>
-				</div>
-				<!-- end of right container -->
+                            <div id=relation>
+                                <div class="relationBlock" wicket:id="teamPanel2"  id=relation2></div>
+                            </div>
+                        </div>
 
-			</div>
-		</div>
-	</wicket:extend>
-</body>
+                        <div class="" id="accordion2">
+                            <div wicket:id="relationRepeater" class="relationBlock">
+                                <span wicket:id="relationPanel"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end of right container -->
+
+                </div>
+            </div>
+        </wicket:extend>
+    </body>
 </html>
