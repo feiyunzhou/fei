@@ -76,7 +76,7 @@ public class EntityDetailPage extends TemplatePage {
              WebMarkupContainer con = new WebMarkupContainer("teamPanel");
              add(con); 
              WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
-             add(con2); 
+             add(con2);
          }
 
          add(new AbstractAjaxBehavior(){

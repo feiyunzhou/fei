@@ -4,7 +4,10 @@
 	<wicket:extend>
 		<script>
 			$(document).ready(function() {
-
+				var str = $("#relation2").text()
+				if(str == null ||str == ""){
+					$("#relation").hide();
+				}
 			});
 			function ConfirmDel() {
 				if (confirm("真的要删除吗？")){
@@ -37,8 +40,8 @@
 							<span wicket:id="teamPanel"></span>
 						</div>
 						
-						<div >
-							<div class="relationBlock" wicket:id="teamPanel2"></div>
+						<div id=relation>
+							<div class="relationBlock" wicket:id="teamPanel2"  id=relation2></div>
 						</div>
 					</div>
 
