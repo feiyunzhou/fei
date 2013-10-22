@@ -43,10 +43,43 @@ a:hover, a:focus {
     background: #fff;
 }
 
-@media ( max-width : 768px) {
+.table-column {
+    float: left;
+    width: 220px;
+    text-align: right;
+    padding-right: 10px;
+}
+.table-cell {
+    display: inline-block;
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #ddd;
+    padding-bottom: 5px;
+}
+.table-content {
+    margin-left: 20px;
+}
+.table-header {
+    width: 100%;
+    display: inline-block;
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #ddd;
+    margin-bottom: 5px;
+}
+.navbar .brand {
+    padding-right: 1px;
+}
+.tag{
+    width: 130px;
+}
+@media ( max-width : 767px) {
     /* Enable use of floated navbar text */
+    .btn.btn-sm.btn-danger.btn-mini {
+        margin-right: 5px;
+    }
     .btn.dropdown-toggle.clearfix.btn-primary {
-        margin-right: 10px;
+        margin-right: 5px;
     }
     .nav-tabs > li{
         width:100%;
@@ -94,7 +127,7 @@ a:hover, a:focus {
         padding-left: 9px;
         padding-right: 9px;
         display:block;
-        margin-right: 20px;
+        margin-right: 10px;
     }
     .btn.clearfix.btn-info.btn-menu.navbar-toggle.collapsed{
         width: 32px;
@@ -126,5 +159,26 @@ a:hover, a:focus {
     .nav.nav-tabs {
         padding-left: 20px;
         margin-top: -9px;
+    }
+}
+
+@media ( max-width : 440px) {
+    .table-column {
+        float: left;
+        text-align: left;
+        width: 100%;
+    }
+    .form_datetime > input {
+        width: 100%;
+    }
+    .form_datetime > select {
+        width: 100%;
+    }
+    .table-cell {
+        width: 100%;
+        padding-right: 10px;
+    }
+    .form_datetime {
+        padding-right: 12px;
     }
 }

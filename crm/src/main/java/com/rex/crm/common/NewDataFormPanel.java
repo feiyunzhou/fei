@@ -54,7 +54,7 @@ public class NewDataFormPanel extends Panel {
     private String email = "";
     private int port = 25;
 	private Map<String, List<Field>> addFieldGroupMap = Maps.newHashMap();
-	private static int NUM_OF_COLUMN = 3;
+	private static int NUM_OF_COLUMN = 1;
 	final String user = ((SignIn2Session) getSession()).getUser();
 	public NewDataFormPanel(String id, final Entity entity,final Map<String, String> relationIds) {
 		super(id);
@@ -116,7 +116,7 @@ public class NewDataFormPanel extends Panel {
 						
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("celldatafield","textFragment",this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+							columnitem.add(new AttributeAppender("class",new Model("tag")," "));
 						} else {
 							List<Choice> pickList = DAOImpl
 									.queryPickList(currentField.getPicklist());
@@ -134,7 +134,7 @@ public class NewDataFormPanel extends Panel {
 					} else if (currentField.getRelationTable() != null) {
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("celldatafield","textFragment",this, currentField.getDisplay() +":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+							columnitem.add(new AttributeAppender("class",new Model("tag")," "));
 						} else {
 							List<Choice> pickList = DAOImpl.queryRelationDataList(currentField.getRelationTable(),userId);
 							Map<Long, String> list = Maps.newHashMap();
@@ -162,7 +162,7 @@ public class NewDataFormPanel extends Panel {
 					} else {
 						if (j % 2 == 0) {
 							columnitem.add(new TextFragment("celldatafield","textFragment",this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("style",new Model("text-align:right;width:200px"),";"));
+							columnitem.add(new AttributeAppender("class",new Model("tag")," "));
 						} else {
 							if(currentField.getName().equals("address")){
 							  IModel<String> textModel = new Model<String>("");
