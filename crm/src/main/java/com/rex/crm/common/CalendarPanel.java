@@ -67,8 +67,6 @@ public class CalendarPanel extends Panel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        
     }
 
 

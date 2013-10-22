@@ -68,7 +68,7 @@ public class EventEditorPage extends TemplatePage {
 	public EventEditorPage(final long eventId) {
 
 		Map<String, Entity> entities = Configuration.getEntityTable();
-		Entity entity = entities.get("activity");
+		final Entity entity = entities.get("activity");
 		setPageTitle(entity.getDisplay());
 		final String uid = ((SignIn2Session) getSession()).getUserId();
 		final String user = ((SignIn2Session) getSession()).getUser();
@@ -116,7 +116,6 @@ public class EventEditorPage extends TemplatePage {
 				logger.debug("visit_type:" + visit_type);
 				logger.debug("usersereaser:" + user);
 				try {
-
 					DAOImpl.updateCalendarEvent(String.valueOf(eventId),
 							hidden_contact_select, visit_type, act_title_input,
 							startdt.getTime(), enddt.getTime(), 1, user,
@@ -130,15 +129,12 @@ public class EventEditorPage extends TemplatePage {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-				setResponsePage(PageFactory.createPage("calendar"));
-
+           setResponsePage(new EventViewerPage(String.valueOf(eventId)));
 			}
 		};
 		add(form);
 
-		StringValue startdateValue = this.getRequest().getRequestParameters()
-				.getParameterValue("startdate");
+		StringValue startdateValue = this.getRequest().getRequestParameters().getParameterValue("startdate");
 
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = new Date(

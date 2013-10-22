@@ -22,6 +22,7 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.PopupSettings;
@@ -184,10 +185,18 @@ public class EditDataFormPanel extends Panel {
 							 CRMUtility.formatValue(currentField.getFormatter(),
 							 String.valueOf(rawvalue));
 							 value = (value == null) ? "" : value;
-							IModel<String> textModel = new Model<String>("");
-							models.put(CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(rawvalue)),textModel);
-							fieldNameToModel.put(currentField.getName(), textModel);
-							columnitem.add(new TextInputFragment("editdata","textInputFragment", this, textModel,value,currentField));
+							 
+							 if(currentField.getName().equals("address")){
+							   IModel<String> textModel = new Model<String>(value);
+							   models.put(CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(rawvalue)),textModel);
+	               fieldNameToModel.put(currentField.getName(), textModel);
+	                columnitem.add(new Textarea("editdata","textAreaFragment", this, textModel));
+	              }else{
+	                IModel<String> textModel = new Model<String>("");
+	                models.put(CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(rawvalue)),textModel);
+	                fieldNameToModel.put(currentField.getName(), textModel);
+	                columnitem.add(new TextInputFragment("editdata","textInputFragment", this, textModel,value,currentField));
+	              }
 						}
 					}
 					columnRepeater.add(columnitem);
@@ -291,6 +300,17 @@ public class EditDataFormPanel extends Panel {
 		}
 	}
 
+private class Textarea extends Fragment {
+    
+    public Textarea(String id, String markupId, MarkupContainer markupProvider,IModel<String> value)
+    {
+      super(id, markupId, markupProvider);
+      // TODO Auto-generated constructor stub
+      add(new TextArea<String> ("address",value));
+      
+    }
+
+}
 	private class TextInputFragment extends Fragment {
 		public TextInputFragment(String id, String markupId,
 				MarkupContainer markupProvider, IModel model,String value,Field currentField) {

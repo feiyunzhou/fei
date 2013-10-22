@@ -58,7 +58,7 @@ public class CRUDPanel extends Panel {
                    @Override
                    public void onClick() {
                 	   if(entity.getName().equals("activity")){
-            	    	   setResponsePage(new CreateEventPage());
+            	    	   setResponsePage(new CreateEventPage(1));
             	       }else{
             	    	   setResponsePage(new CreateDataPage(entity.getName()));            	    	   
             	       }

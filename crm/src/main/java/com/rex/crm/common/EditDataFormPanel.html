@@ -33,22 +33,24 @@
         </div>
 
     </div>
-
-    <wicket:fragment wicket:id="textFragment">
-        <span wicket:id="celldata"></span>
-    </wicket:fragment>
-    <wicket:fragment wicket:id="layoutFragment">
-        <span wicket:id="add"></span>
-    </wicket:fragment>
-    <wicket:fragment wicket:id="textInputFragment">
-        <input wicket:id="input" />
-    </wicket:fragment>
-    <wicket:fragment wicket:id="dropDownFragment">
-        <select wicket:id="dropDownInput"></select>
-    </wicket:fragment>
-    <wicket:fragment wicket:id="relationTableSearchFragment">
-        <input type="text" required="required" readonly wicket:id="selected_value_input" class="input input-small" />
-        <input type="hidden" class="input" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
-        <a href="#" class="" wicket:id="search_btn" id="search_click"  title="查找"><i class="icon-search"></i></a>
-    </wicket:fragment>
+	<wicket:fragment wicket:id="textFragment">
+		<span wicket:id="celldata"></span>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="layoutFragment">
+		<span wicket:id="add"></span>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="textInputFragment">
+		<input wicket:id="input" />
+	</wicket:fragment>
+	<wicket:fragment wicket:id="dropDownFragment">
+		<select wicket:id="dropDownInput"></select>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="textAreaFragment">
+		<textarea  wicket:id="address" row="2" cols="40" ></textarea >
+	</wicket:fragment>
+	<wicket:fragment wicket:id="relationTableSearchFragment">
+		<input type="text" required="required" readonly wicket:id="selected_value_input" class="input input-small" />
+		<input type="hidden" class="input" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
+		<a href="#" class="" wicket:id="search_btn" id="search_click"  title="查找"><i class="icon-search"></i></a>
+	</wicket:fragment>
 </wicket:panel>

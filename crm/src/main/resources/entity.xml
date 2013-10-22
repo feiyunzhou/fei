@@ -141,7 +141,7 @@
 			</field>
 			<field>
 				<name>local_or_army</name>
-				<display>地方医院／军队医院</display>
+				<display>地方/军队医院</display>
 				<isRequired>false</isRequired>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -154,7 +154,7 @@
 			</field>
 			<field>
 				<name>comprehensive_or_specialized</name>
-				<display>综合医院／专科医院 </display>
+				<display>综合/专科医院 </display>
 				<isRequired>false</isRequired>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -365,7 +365,7 @@
 			</field>
 			<field>
 				<name>num_of_using_opiates_injection</name>
-				<display>阿片类注射剂量（金额）</display>
+				<display>阿片类注射剂量(￥)</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>

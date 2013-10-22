@@ -203,7 +203,7 @@ public class EventViewerPage extends TemplatePage
 	        {
 	            //update status of calenderEvent mark it to be completed
 	            Date act_end_datetime = new Date();
-	            DAOImpl.updateStatusOfCalendarEvent((int)eventId, 2,act_end_datetime);
+	            DAOImpl.updateStatusOfCalendarEvent((int)eventId,2,act_end_datetime);
 	            if(entity.getName().equals("activity")){
 	               setResponsePage(new ActivityPage());
 	             }else{
