@@ -50,26 +50,33 @@ public class EventViewerPage extends TemplatePage
     protected String endTime;
     protected String startTime;
     protected String hidden_contact_select;
-	/**
-	 * Constructor
-	 */
-	public EventViewerPage()
-	{
-
-		Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get("activity");
-        setPageTitle(entity.getDisplay());
-        final String uid = ((SignIn2Session)getSession()).getUserId();
-        final int roleId = ((SignIn2Session)getSession()).getRoleId();
+  /**
+   * Constructor
+   */
+  public EventViewerPage()
+  {
         StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
-        //final long eventId
         long eid = 0;
         if(!eventIdValue.isEmpty()  && !eventIdValue.isNull()){
-            eid = eventIdValue.toLong();
-            
+            eid = eventIdValue.toLong();  
         }
-        final long eventId = eid;
-        Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
+    final long eventId = eid;
+    initPage(eid,0);
+  }
+  
+  public EventViewerPage(String id) {
+     
+      final int eventId = Integer.parseInt(id);
+      initPage(eventId,1);
+  }
+
+public void initPage(final long eid,final int type ){
+  Map<String, Entity> entities = Configuration.getEntityTable();
+  Entity entity  = entities.get("activity");
+  setPageTitle(entity.getDisplay());
+  final String uid = ((SignIn2Session)getSession()).getUserId();
+  final int roleId = ((SignIn2Session)getSession()).getRoleId();
+  Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eid));
         //if the complete and edit button visible;
         boolean write_btn_visible = true;
         //get the event status
@@ -100,40 +107,25 @@ public class EventViewerPage extends TemplatePage
             protected void onSubmit()
             {
                 //update status of calenderEvent mark it to be completed
-            	Date act_end_datetime = new Date();
-                DAOImpl.updateStatusOfCalendarEvent((int)eventId, 2,act_end_datetime);
-                setResponsePage(PageFactory.createPage("calendar"));
+              Date act_end_datetime = new Date();
+                DAOImpl.updateStatusOfCalendarEvent((int)eid, 2,act_end_datetime);
+                //判断类型如果是辅导类型则跳转到评分界面
+               if(type == 0){
+                setResponsePage(PageFactory.createPage("calendar")); 
+               }else{
+                 setResponsePage(new ActivityPage());
+               }
                
             }
         };
         add(form);
-        int eventType = 0;
-        if(map != null){
-        	 eventType = ((Number) map.get("event_type")).intValue();
-             logger.debug("eventType:"+eventType);
-        }
-        final int event_type  = eventType;  
-       /* if(event_type==2){
-        	Link cancel_event_btn = new Link("cancel_event_btn") {
-                @Override
-                public void onClick() {
-                	DAOImpl.updateStatusOfActivity((int)eventId,3);
-                	setResponsePage(PageFactory.createPage("calendar"));
-                }
-            };
-            cancel_event_btn.setVisible(write_btn_visible);
-            form.addOrReplace(cancel_event_btn);
-        }*/
+        
         Link edit_event_btn = new Link("edit_event_btn") {
+            
             @Override
             public void onClick() {
-                //判断活动类型
-            	if(event_type==1){
-            		 setResponsePage(new EventEditorPage(eventId));
-            	}else{
-            		setResponsePage(new EventCoachEditorPage(eventId));
-            	}
-               
+                
+                setResponsePage(new EventEditorPage(eid));
             }
         };
         edit_event_btn.setVisible(write_btn_visible);
@@ -143,8 +135,13 @@ public class EventViewerPage extends TemplatePage
             
             @Override
             public void onClick() {
-            	DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
-            	setResponsePage(PageFactory.createPage("calendar"));
+                
+                DAOImpl.deleteRecord( String.valueOf(eid), "activity");
+               if(type == 0){
+                setResponsePage(PageFactory.createPage("calendar")); 
+               }else{
+                 setResponsePage(new ActivityPage());
+               }
             }
         };
         delete_event_btn.setVisible(write_btn_visible);
@@ -155,132 +152,42 @@ public class EventViewerPage extends TemplatePage
         form.add(complete_btn);
         
         // List<CalendarEvent> events = DAOImpl.getEventsByUserId(Integer.parseInt(uid));
-         logger.debug("eventID is:"+ eventId);
+         logger.debug("eventID is:"+ eid);
          
          //add(new Label("name",String.valueOf(map.get("name"))));
-         add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eventId),1,"calendar"));
-	}
-	
-	public EventViewerPage(String id)
-	{
+         add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eid),1,"calendar"));
+         
+}
+  
 
-		Map<String, Entity> entities = Configuration.getEntityTable();
-		final Entity entity  = entities.get("activity");
-	    setPageTitle(entity.getDisplay());
-	    final String uid = ((SignIn2Session)getSession()).getUserId();
-	    final int roleId = ((SignIn2Session)getSession()).getRoleId();
-	    final int eventId = Integer.parseInt(id);
-	    logger.debug("entity"+entity);
-	    Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
-	    logger.debug("entity.getSql_ent()"+entity.getSql_ent());
-	    //if the complete and edit button visible;
-	    boolean write_btn_visible = true;
-	    //get the event status
-	    int status = 2;
-	      
-	    if(map != null){
-	        Object st = map.get("act_status");
-	         status = ((Number)st).intValue();      
-	    }
+  class SelectOption implements Serializable{
+      private int key;
+      private String value;
+     
+      public SelectOption(int key, String value) {
+        this.key = key;
+        this.value = value;
+      }
+      public SelectOption() {
+            
+          }
 
-	    if(status == 1){
-	        write_btn_visible =true;
-	    }else{
-	        write_btn_visible =false;
-	    }
-	    
-	    if (map != null) {
-            int eventType = ((Number) map.get("event_type")).intValue();
-            if (eventType == 2 && roleId == 3) {
-                // for the sales rep, no permission to edit the coaching event
-                write_btn_visible = false;
-            }
-        }//	    logger.debug("roleId" + roleId);
-	    
-	    Form form = new Form("form"){
-	        @Override
-	        protected void onSubmit()
-	        {
-	            //update status of calenderEvent mark it to be completed
-	            Date act_end_datetime = new Date();
-	            DAOImpl.updateStatusOfCalendarEvent((int)eventId,2,act_end_datetime);
-	            if(entity.getName().equals("activity")){
-	               setResponsePage(new ActivityPage());
-	             }else{
-	               setResponsePage(PageFactory.createPage("calendar"));  
-	             }
-	        }
-	    };
-	    add(form);
-	    
-	    Link edit_event_btn = new Link("edit_event_btn") {
-	        
-	        @Override
-	        public void onClick() {
-	            
-	            setResponsePage(new EventEditorPage(eventId));
-	        }
-	    };
-	    edit_event_btn.setVisible(write_btn_visible);
-	    form.addOrReplace(edit_event_btn);
+      public int getKey() {
+          return key;
+      }
 
-	    Link delete_event_btn = new Link("delete_event_btn") {
-	        
-	        @Override
-	        public void onClick() {
-	            
-	            DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
-	            if(entity.getName().equals("activity")){
-                setResponsePage(new ActivityPage());
-              }else{
-                setResponsePage(PageFactory.createPage("calendar"));  
-              }
-	        }
-	    };
-	    delete_event_btn.setVisible(write_btn_visible);
-	    form.addOrReplace(delete_event_btn);
-	    
-	    WebMarkupContainer complete_btn = new WebMarkupContainer("complete_btn");
-	    complete_btn.setVisible(write_btn_visible);
-	    form.add(complete_btn);
-	    
-	    // List<CalendarEvent> events = DAOImpl.getEventsByUserId(Integer.parseInt(uid));
-	     logger.debug("eventID is:"+ eventId);
-	     
-	     //add(new Label("name",String.valueOf(map.get("name"))));
-	     add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eventId),1,"calendar"));
-	     
-	    
-	}
+      public void setKey(int key) {
+          this.key = key;
+      }
 
-	class SelectOption implements Serializable{
-	    private int key;
-	    private String value;
-	   
-	    public SelectOption(int key, String value) {
-	      this.key = key;
-	      this.value = value;
-	    }
-	    public SelectOption() {
-	          
-	        }
+      public String getValue() {
+          return value;
+      }
 
-	    public int getKey() {
-	        return key;
-	    }
-
-	    public void setKey(int key) {
-	        this.key = key;
-	    }
-
-	    public String getValue() {
-	        return value;
-	    }
-
-	    public void setValue(String value) {
-	        this.value = value;
-	    }
-	  }
+      public void setValue(String value) {
+          this.value = value;
+      }
+    }
 }
 
 
