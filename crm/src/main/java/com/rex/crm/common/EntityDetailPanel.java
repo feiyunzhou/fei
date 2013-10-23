@@ -105,7 +105,7 @@ public class EntityDetailPanel extends Panel {
 
             for (int i = 0; i < num_of_row; i++) {
                 AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
-                item.add(new AttributeAppender("class", new Model(i), ";"));
+                item.add(new AttributeAppender("class", new Model(" "+i)));
                 dataRowRepeater.add(item);
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 item.add(columnRepeater);
@@ -132,7 +132,9 @@ public class EntityDetailPanel extends Panel {
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryPickListByIdCached(currentField.getPicklist(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
-                            columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
+                            Label label = (Label) new Label("celldata",value).setEscapeModelStrings(false);
+                            label.add(new AttributeAppender("id",new Model(currentField.getName()),";"));
+                            columnitem.add(label);
                         }
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {

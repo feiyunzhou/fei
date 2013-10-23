@@ -119,7 +119,7 @@ public class Configuration {
         list.add("关键信息");
         list.add("基本信息");
         list.add("附加信息");
-        
+        list.add("评分信息");
         return list;
     }
     
