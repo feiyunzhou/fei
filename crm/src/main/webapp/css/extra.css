@@ -87,7 +87,7 @@ a:hover, a:focus {
 }
 .btn-group-right{
     float: right;
-    padding-right: 10px;
+    padding-right: 2px;
 }
 .table-title{
     float: left;
@@ -98,12 +98,17 @@ a:hover, a:focus {
 .table-custom-header{
     padding: 0;
     width: 100%;
+}
+.label {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
     border-bottom: solid;
-    padding-bottom: 1px;
-    border-color: rgb(107, 166, 255);
-    box-sizing: border-box;
+    border-color: #3498DB;
     border-bottom-width: 2px;
+    box-sizing: border-box;
     height: 34px;
+    padding-top: 0px;
 }
 @media ( max-width : 767px) {
     /* Enable use of floated navbar text */
@@ -226,7 +231,7 @@ a:hover, a:focus {
     .btn-group-right{
         width: 100%;
         float: initial;
-        padding-top: 10px;
+        padding-top: 5px;
     }
     .btn-group-right a{
         width: 100%;
@@ -241,9 +246,6 @@ a:hover, a:focus {
     .title > span{
         padding-left: 0px;
     }
-    .table-custom-header{
-        height: 74px;
-    }
     .table-title{
         float: initial;
     }
@@ -254,7 +256,17 @@ a:hover, a:focus {
         display: none;
     }
     .table-first-link{
-        display: block
+        display: block;
+    }
+    .label{
+        border-bottom: none;
+        height: 74px;
+    }
+    .delete{
+        padding-right: 28px !important;
+    }
+    .delete a{
+        width: 100%;
     }
     @-moz-document url-prefix() { 
         .detailed {

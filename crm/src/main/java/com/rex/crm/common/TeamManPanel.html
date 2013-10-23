@@ -1,73 +1,70 @@
 <wicket:panel>
-	<script>
-		$(document).ready(function() {
-			$("#add_relation_link").click(function(e){
-			   // location.href = './mount/searchCRMUser?eventid='+calEvent.id;
-			});
-		});
-	</script>
+    <script>
+        $(document).ready(function() {
+            $("#add_relation_link").click(function(e){
+                // location.href = './mount/searchCRMUser?eventid='+calEvent.id;
+            });
+        });
+    </script>
 
-	<div class="">
-		<div class="">
-		    
-			<div class="" >
-			<div class="bor" >
-				    <table class="label label-default " style="width: 100%; background-color:#F1F1F1 ">
-					<tr >
-						<td>
-							<h5 class="pull-left">
-								&nbsp;&nbsp;<span wicket:id="title"></span>团队信息
-							</h5>
-						</td>
-						<td>
-							<div class="pull-right">
-								<a id="add_relation_link" wicket:id="add_users_link" class="btn btn-mini btn-info">添加</a>
-							</div>
-						</td>
-					</tr>
-				</table>
-				</div>
-				<div>
-					<table id="dt" style="width: 100%" class="table table-hover  table-condensed">
-						<thead>
-							<tr  bgcolor="#E4EFFB">
-								<th wicket:id="columnNameRepeater"><span wicket:id="columnName"></span></th>
-								<th></th>
-							</tr>
-						</thead>
-						<tr wicket:id="dataRowRepeater">
-							<td wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
-							<!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
-						</tr>
-					</table>
-					<wicket:fragment wicket:id="detailFragment">
-						<a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
-					</wicket:fragment>
-					
-					<wicket:fragment wicket:id="extraFieldFragment">
-						<a href="#" class="btn btn-danger btn-mini" wicket:id="remove_team_member_click"><wicket:container wicket:id="cap" /></a>
-					</wicket:fragment>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">表单</h3>
-		</div>
-		<div class="modal-body">
-			<!--  form start -->
+    <div class="">
+        <div class="">
 
-			<span wicket:id="formPanel"></span>
+            <div class="" >
+                <div class="bor" >
+                    <div class="label label-default table-custom-header">
 
-			<!--  form end -->
-		</div>
-		<!-- 		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-			<button class="btn btn-primary">确定</button>
-		</div> -->
-	</div>
+                        <div class="table-title">
+                            <span wicket:id="title"></span>团队信息
+                        </div>
+                        <div class="pull-right operation-bar btn-group-right">
+                            <div>
+                            <a id="add_relation_link" wicket:id="add_users_link" class="btn  btn-sm  btn-mini btn-info">添加</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <table id="dt" style="width: 100%" class="table table-hover  table-condensed">
+                        <thead>
+                            <tr  bgcolor="#E4EFFB">
+                                <th class="table-hide " wicket:id="columnNameRepeater"><span wicket:id="columnName"></span></th>
+                                <th class="table-hide "></th>
+                            </tr>
+                        </thead>
+                        <tr wicket:id="dataRowRepeater">
+                            <td class="table-hide " wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+                            <!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
+                        </tr>
+                    </table>
+                    <wicket:fragment wicket:id="detailFragment">
+                        <a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
+                    </wicket:fragment>
+
+                    <wicket:fragment wicket:id="extraFieldFragment">
+                        <a href="#" class="btn btn-danger btn-mini" wicket:id="remove_team_member_click"><wicket:container wicket:id="cap" /></a>
+                    </wicket:fragment>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">表单</h3>
+        </div>
+        <div class="modal-body">
+            <!--  form start -->
+
+            <span wicket:id="formPanel"></span>
+
+            <!--  form end -->
+        </div>
+        <!-- 		<div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                <button class="btn btn-primary">确定</button>
+        </div> -->
+    </div>
 
 </wicket:panel>

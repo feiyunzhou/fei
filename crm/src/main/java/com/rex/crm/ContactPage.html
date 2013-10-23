@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:wicket="http://wicket.apache.org">
-<body>
-	<wicket:extend>
-		<script>
-			$(document).ready(function() {	
-				$("#navitem-contact").addClass("active");      
+      xmlns:wicket="http://wicket.apache.org">
+    <body>
+        <wicket:extend>
+            <script>
+                $(document).ready(function() {	
+                    $("#navitem-contact").addClass("active");      
 
-			});// end onDomReady function
-		</script>
-		
-		<div class="row-fluid">
-		    <div class="span2"  >
-				<div class="well sidebar-nav sidebarbox" style="background-color:#FFFFFF;">
-					<div wicket:id="filterPanel"></div>
-				</div>
-			</div>
-			<div class="span10 box">
-				<form wicket:id="form" class="form-search">
-					<div class="input-append">
-						<input type="text" class="span10 earch-query"  wicket:id="search_input"/>
-						<button type="submit" class="btn">查找</button>
-					</div>
-				</form>
+                });// end onDomReady function
+            </script>
 
-				<div>
-                <span wicket:id="datalist">data table</span>
+            <div class="row-fluid">
+                <div class="span2"  >
+                    <div class="well sidebar-nav sidebarbox" style="background-color:#FFFFFF;">
+                        <div wicket:id="filterPanel"></div>
+                    </div>
                 </div>
-			</div>
-		</div>
-		
-	</wicket:extend>
-</body>
+                <div class="span10 box">
+                    <form wicket:id="form" class="form-search">
+                        <div class="input-append">
+                            <div class="input_wrapper">
+                                <input type="text" class="span10 earch-query"  wicket:id="search_input"/>
+                            </div>
+                            <div class="input_button_wrapper">
+                                <button type="submit" class="btn">查找</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div>
+                        <span wicket:id="datalist">data table</span>
+                    </div>
+                </div>
+            </div>
+
+        </wicket:extend>
+    </body>
 </html>

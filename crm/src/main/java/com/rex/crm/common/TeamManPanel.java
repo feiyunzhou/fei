@@ -101,10 +101,15 @@ public class TeamManPanel extends Panel {
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
         add(columnNameRepeater);
+        int count=0;
         for(Field f:entity.getFields()){
             if (!f.isVisible()|| f.getPriority() >1)
                 continue;
             AbstractItem item = new AbstractItem(columnNameRepeater.newChildId());
+            if(count==0){
+                item.add(new AttributeAppender("class", new Model("table-first-link"), " "));
+                count++;
+            }
             columnNameRepeater.add(item);
             item.add(new Label("columnName", f.getDisplay()));
         }
@@ -148,6 +153,7 @@ public class TeamManPanel extends Panel {
                     if(value.equals("null")||value.equals("")||value.equals("dummy")){
                       value = "无";
                     }
+                    columnitem.add(new AttributeAppender("class", new Model("table-first-link"), " "));
                     columnitem.add(new DetailLinkFragment("celldata","detailFragment",this,value));
                 } else {
                     if (f.getPicklist() != null) {
@@ -176,7 +182,8 @@ public class TeamManPanel extends Panel {
             //add extra field in the last column
             AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(rowId));
             if(roleId == 1){
-              columnitem.add(new ExtraFieldFragment("celldata","extraFieldFragment",this,"删除",type)); 
+              columnitem.add(new ExtraFieldFragment("celldata","extraFieldFragment",this,"删除",type));
+              columnitem.add(new AttributeAppender("class", new Model("table-first-link delete"), " "));
             }else{
               columnitem.add(new WebMarkupContainer("celldata"));
             }
