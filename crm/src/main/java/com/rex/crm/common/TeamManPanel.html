@@ -9,9 +9,8 @@
 
     <div class="">
         <div class="">
-
-            <div class="" >
-                <div class="bor" >
+			<div class="" >
+			<div class="bor" >
                     <div class="label label-default table-custom-header">
 
                         <div class="table-title">
@@ -32,18 +31,20 @@
                                 <th class="table-hide "></th>
                             </tr>
                         </thead>
-                        <tr wicket:id="dataRowRepeater">
-                            <td class="table-hide " wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
-                            <!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
-                        </tr>
+                       <span wicket:id="group">
+						<tr wicket:id="dataRowRepeater">
+							<td wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+							<!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
+						</tr>
+						</span>
                     </table>
                     <wicket:fragment wicket:id="detailFragment">
                         <a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
                     </wicket:fragment>
 
                     <wicket:fragment wicket:id="extraFieldFragment">
-                        <a href="#" class="btn btn-danger btn-mini" wicket:id="remove_team_member_click"><wicket:container wicket:id="cap" /></a>
-                    </wicket:fragment>
+							<input type="checkbox" wicket:id="checkbox"/>
+					</wicket:fragment>
 
                 </div>
             </div>

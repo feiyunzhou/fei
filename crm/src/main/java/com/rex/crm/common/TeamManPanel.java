@@ -12,6 +12,8 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Check;
+import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Fragment;
@@ -19,6 +21,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AttributeAppender;
 
@@ -36,7 +39,7 @@ public class TeamManPanel extends Panel {
     private static final Logger logger = Logger.getLogger(TeamManPanel.class);
     private String etId;
     private String currentEntityName;
-
+    List<String> selectedUserIds = Lists.newArrayList();
     public TeamManPanel(String id,final String en,final String entityId,final int type) {
         super(id);
         etId = entityId;
@@ -79,13 +82,53 @@ public class TeamManPanel extends Panel {
         
         List<Field> fields = entity.getFields();
         final String entityName = entity.getName();
-        
+        if(roleId != 1){
+          WebMarkupContainer con = new WebMarkupContainer("remove_team_member_click");
+            add(con);
+            con.setVisible(false);
+            //con.add(new AttributeAppender("style", new Model("display:none;"), ";"));
+       }else{
+         add(new Link("remove_team_member_click"){
+           @Override      
+           public void onClick(){
+             //System.out.println(getParent().getId());
+             // System.out.println("this link is clicked!"+this.getParent().getParent().getDefaultModelObject());
+             //Account selected = (Account)getParent().getDefaultModelObject();
+//            String rid = (String)getParent().getParent().getDefaultModelObject();
+             //remove the team member from the contact
+             String teamtable = "";
+           if(currentEntityName.equalsIgnoreCase("account")){
+               teamtable = "accountcrmuser";
+           }else if(currentEntityName.equalsIgnoreCase("contact")){
+               teamtable = "contactcrmuser";
+           }else if(currentEntityName.equalsIgnoreCase("crmuser")){
+               if(type == 0){
+                   teamtable = "accountcrmuser";
+               }else if(type == 1){
+                   teamtable = "contactcrmuser";
+               }
+           }
+            
+           for(String rid:selectedUserIds){
+             logger.debug("rididiridiridirid" + rid);
+             try{
+                   DAOImpl.removeEntityFromTeam(teamtable,rid);
+                
+             }catch(Exception e){
+                 
+             }
+         }
+           setResponsePage(new EntityDetailPage(currentEntityName,etId));
+      
+             }
+           });
+       }
+  
         //add button submission
         if(roleId != 1){
         	 WebMarkupContainer con = new WebMarkupContainer("add_users_link");
              add(con);
              con.setVisible(false);
-             //con.add(new AttributeAppender("style", new Model("display:none;"), ";"));
         }else{
         	add(new Link<Void>("add_users_link"){
 
@@ -97,7 +140,6 @@ public class TeamManPanel extends Panel {
             });
 
         }
-                
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
         add(columnNameRepeater);
@@ -114,40 +156,33 @@ public class TeamManPanel extends Panel {
             item.add(new Label("columnName", f.getDisplay()));
         }
         //end of set column name
-        
         //Add extral field
-        
+        CheckGroup group=new CheckGroup("group", new PropertyModel(this,"selectedUserIds"));
+        add(group);
         RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-        add(dataRowRepeater);
-
+        group.add(dataRowRepeater);
         for (int i = 0; i < mapList.size(); i++)
         {
             Map map = (Map)mapList.get(i);
+            final String rowId =  String.valueOf(map.get("rid"));     
+            final String realId =  String.valueOf(map.get("id"));  
             AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
             dataRowRepeater.add(item);
             RepeatingView columnRepeater = new RepeatingView("columnRepeater");
             item.add(columnRepeater);
-            final String rowId =  String.valueOf(map.get("rid"));     
-            final String realId =  String.valueOf(map.get("id"));  
-            
             for (Field f : fields) {
                 if (!f.isVisible() || f.getPriority() >1)
                     continue;
-                
                 AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model() {
                     @Override
                     public Serializable getObject() {
                         Param p = new Param();
                         p.setId(rowId);
                         p.setExtraId(realId);
-                        //Param par = new Parameter();
                         p.setEntityName(entityName);
-                        //p.setExtraId(extraId);
                         return p;
                     }
-
                 });
-                
                 if (f.isDetailLink()) {
                     String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
                     if(value.equals("null")||value.equals("")||value.equals("dummy")){
@@ -182,12 +217,11 @@ public class TeamManPanel extends Panel {
             //add extra field in the last column
             AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(rowId));
             if(roleId == 1){
-              columnitem.add(new ExtraFieldFragment("celldata","extraFieldFragment",this,"删除",type));
+              columnitem.add(new checkboxFragment("celldata","extraFieldFragment",this, new Model(String.valueOf(realId))));
               columnitem.add(new AttributeAppender("class", new Model("table-first-link delete"), " "));
             }else{
               columnitem.add(new WebMarkupContainer("celldata"));
             }
-             
             columnRepeater.add(columnitem);
             
         }
@@ -201,16 +235,6 @@ public class TeamManPanel extends Panel {
     
     private class DetailLinkFragment extends Fragment
     {
-        /**
-         * Construct.
-         * 
-         * @param id
-         *            The component Id
-         * @param markupId
-         *            The id in the markup
-         * @param markupProvider
-         *            The markup provider
-         */
         public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider,String caption)
         {
             super(id, markupId, markupProvider);
@@ -233,56 +257,14 @@ public class TeamManPanel extends Panel {
         }
     }
     
-    
-    private class ExtraFieldFragment extends Fragment
-    {
-        /**
-         * Construct.
-         * 
-         * @param id
-         *            The component Id
-         * @param markupId
-         *            The id in the markup
-         * @param markupProvider
-         *            The markup provider
-         */
-        public ExtraFieldFragment(String id, String markupId, MarkupContainer markupProvider,String caption,final int type)
-        {
-            super(id, markupId, markupProvider);
-            add(new Link("remove_team_member_click")
-            {
-                
-                @Override
-                public void onClick()
-                {
-                    //System.out.println(getParent().getId());
-                   // System.out.println("this link is clicked!"+this.getParent().getParent().getDefaultModelObject());
-                    //Account selected = (Account)getParent().getDefaultModelObject();
-                  
-                    String rid = (String)getParent().getParent().getDefaultModelObject();
-                    //remove the team member from the contact
-                    String teamtable = "";
-                    if(currentEntityName.equalsIgnoreCase("account")){
-                        teamtable = "accountcrmuser";
-                        
-                    }else if(currentEntityName.equalsIgnoreCase("contact")){
-                        teamtable = "contactcrmuser";
-                    }else if(currentEntityName.equalsIgnoreCase("crmuser")){
-                        if(type == 0){
-                            teamtable = "accountcrmuser";
-                        }else if(type == 1){
-                            teamtable = "contactcrmuser";
-                        }
-                    }
-                    logger.debug("delete row:"+rid);
-                    DAOImpl.removeEntityFromTeam(teamtable,rid);
-                    
-                    setResponsePage(new EntityDetailPage(currentEntityName,etId));
-                    
-                }
-            }.add(new Label("cap", caption)));
-        }
-    }
-    
+    private class checkboxFragment extends Fragment {
 
+      public checkboxFragment(String id, String markupId, MarkupContainer markupProvider,Model Imodel)
+      {
+        super(id, markupId, markupProvider);
+        // TODO Auto-generated constructor stub
+        add(new Check("checkbox",Imodel));
+      }
+      
+    }
 }
