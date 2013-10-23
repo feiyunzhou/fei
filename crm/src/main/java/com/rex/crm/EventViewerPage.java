@@ -146,7 +146,19 @@ public void initPage(final long eid,final int type ){
         };
         delete_event_btn.setVisible(write_btn_visible);
         form.addOrReplace(delete_event_btn);
-        
+        if(map!= null){
+        	 //获取当前时间
+            Date currentDate = new Date();
+            logger.debug("currentDate:"+currentDate);;
+            //获取开始时间
+            Date startDate = new Date(((Number)map.get("starttime")).longValue());
+            logger.debug("startDate:"+startDate);
+            //如果两个时间比较大于0则开始时间大于当前时间
+            if(startDate.compareTo(currentDate)>0){
+            	logger.debug("计划时间晚于当前时间");
+            	write_btn_visible = false;
+            }
+        }
         WebMarkupContainer complete_btn = new WebMarkupContainer("complete_btn");
         complete_btn.setVisible(write_btn_visible);
         form.add(complete_btn);
