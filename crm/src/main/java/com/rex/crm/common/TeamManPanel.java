@@ -14,6 +14,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Check;
 import org.apache.wicket.markup.html.form.CheckGroup;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Fragment;
@@ -39,7 +41,7 @@ public class TeamManPanel extends Panel {
     private static final Logger logger = Logger.getLogger(TeamManPanel.class);
     private String etId;
     private String currentEntityName;
-    List<String> selectedUserIds = Lists.newArrayList();
+    List<String> selectedRowIds = Lists.newArrayList();
     public TeamManPanel(String id,final String en,final String entityId,final int type) {
         super(id);
         etId = entityId;
@@ -82,20 +84,20 @@ public class TeamManPanel extends Panel {
         
         List<Field> fields = entity.getFields();
         final String entityName = entity.getName();
+        
+        Form form = new Form("form");
+        add(form);
         if(roleId != 1){
           WebMarkupContainer con = new WebMarkupContainer("remove_team_member_click");
             add(con);
             con.setVisible(false);
             //con.add(new AttributeAppender("style", new Model("display:none;"), ";"));
-       }else{
-         add(new Link("remove_team_member_click"){
+      
+        }else{
+        
+           add(new SubmitLink("remove_team_member_click",form){
            @Override      
-           public void onClick(){
-             //System.out.println(getParent().getId());
-             // System.out.println("this link is clicked!"+this.getParent().getParent().getDefaultModelObject());
-             //Account selected = (Account)getParent().getDefaultModelObject();
-//            String rid = (String)getParent().getParent().getDefaultModelObject();
-             //remove the team member from the contact
+           public void onSubmit(){
              String teamtable = "";
            if(currentEntityName.equalsIgnoreCase("account")){
                teamtable = "accountcrmuser";
@@ -109,8 +111,7 @@ public class TeamManPanel extends Panel {
                }
            }
             
-           for(String rid:selectedUserIds){
-             logger.debug("rididiridiridirid" + rid);
+           for(String rid:selectedRowIds){
              try{
                    DAOImpl.removeEntityFromTeam(teamtable,rid);
                 
@@ -140,9 +141,11 @@ public class TeamManPanel extends Panel {
             });
 
         }
+        CheckGroup group=new CheckGroup("group", new PropertyModel(this,"selectedRowIds"));
+        form.add(group);
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
-        add(columnNameRepeater);
+        group.add(columnNameRepeater);
         int count=0;
         for(Field f:entity.getFields()){
             if (!f.isVisible()|| f.getPriority() >1)
@@ -155,10 +158,7 @@ public class TeamManPanel extends Panel {
             columnNameRepeater.add(item);
             item.add(new Label("columnName", f.getDisplay()));
         }
-        //end of set column name
-        //Add extral field
-        CheckGroup group=new CheckGroup("group", new PropertyModel(this,"selectedUserIds"));
-        add(group);
+  
         RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
         group.add(dataRowRepeater);
         for (int i = 0; i < mapList.size(); i++)
@@ -214,15 +214,12 @@ public class TeamManPanel extends Panel {
                 }
                 columnRepeater.add(columnitem);
             }
-            //add extra field in the last column
-            AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(rowId));
             if(roleId == 1){
-              columnitem.add(new checkboxFragment("celldata","extraFieldFragment",this, new Model(String.valueOf(realId))));
-              columnitem.add(new AttributeAppender("class", new Model("table-first-link delete"), " "));
+                item.add(new Check("checkbox", new Model(String.valueOf(rowId))));
             }else{
-              columnitem.add(new WebMarkupContainer("celldata"));
+                item.add(new WebMarkupContainer("checkbox"));
             }
-            columnRepeater.add(columnitem);
+         
             
         }
         add(new NewDataFormPanel("formPanel",entity,null));
@@ -244,9 +241,6 @@ public class TeamManPanel extends Panel {
                 @Override
                 public void onClick()
                 {
-                    //System.out.println(getParent().getId());
-                   // System.out.println("this link is clicked!"+this.getParent().getParent().getDefaultModelObject());
-                    //Account selected = (Account)getParent().getDefaultModelObject();
                     Param p = (Param)getParent().getParent().getDefaultModelObject();
                     logger.debug(p+ " id:"+p.getId() + " name:"+p.getEntityName());
                     setResponsePage(new EntityDetailPage(p.getEntityName(),p.getExtraId()));

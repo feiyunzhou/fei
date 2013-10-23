@@ -25,6 +25,8 @@
                     </div>
                 </div>
                 <div>
+                <form wicket:id="form">
+                 <span wicket:id="group">
                     <table id="dt" style="width: 100%" class="table table-hover  table-condensed">
                         <thead>
                             <tr  bgcolor="#E4EFFB">
@@ -32,19 +34,24 @@
                                 <th class="table-hide "></th>
                             </tr>
                         </thead>
-                       <span wicket:id="group">
+                        <tbody>
+                      
 						<tr wicket:id="dataRowRepeater">
+						    <td><input type="checkbox" wicket:id="checkbox"/></td>
 							<td wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
-							<!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
+							
 						</tr>
-						</span>
+						
+						</tbody>
                     </table>
+                    </span>
+                    </form>
                     <wicket:fragment wicket:id="detailFragment">
                         <a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
                     </wicket:fragment>
 
                     <wicket:fragment wicket:id="extraFieldFragment">
-							<input type="checkbox" wicket:id="checkbox"/>
+							<input type="checkbox" wicket:id="checkbox2"/>
 					</wicket:fragment>
 
                 </div>
