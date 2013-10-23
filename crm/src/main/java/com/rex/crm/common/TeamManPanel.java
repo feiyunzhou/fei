@@ -217,7 +217,9 @@ public class TeamManPanel extends Panel {
             if(roleId == 1){
                 item.add(new Check("checkbox", new Model(String.valueOf(rowId))));
             }else{
-                item.add(new WebMarkupContainer("checkbox"));
+                WebMarkupContainer container = new WebMarkupContainer("checkbox");
+                container.setVisible(false);
+                item.add(container);
             }
          
             
