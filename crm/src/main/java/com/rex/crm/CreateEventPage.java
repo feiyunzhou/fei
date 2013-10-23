@@ -48,6 +48,7 @@ public class CreateEventPage extends TemplatePage
     protected String endDate;
     protected String endTime;
     protected String startTime;
+    protected String contact_select;
     protected String hidden_contact_select;
     protected String hidden_select_user;
     protected Choice visiting_purpose = new Choice(1L,"");
@@ -89,9 +90,9 @@ public class CreateEventPage extends TemplatePage
         final String user = ((SignIn2Session)getSession()).getUser();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(uid));
+        final String crmUserName = crmUser.getName();
         //辅导名称拼接字段
         final StringBuffer concahName = new StringBuffer();
-        concahName.append(crmUser.getName());
         Form form = new Form("form"){
             @Override
             protected void onSubmit()
@@ -120,20 +121,28 @@ public class CreateEventPage extends TemplatePage
                 }else{
                   contactId = Integer.parseInt(hidden_contact_select);
                 }
+                if(null==act_title_input){
+                	if(event_type==1){
+                		concahName.append("拜访:");
+                		//根据医生Id获取医生对象
+                		act_title_input = concahName.append(DAOImpl.getContactById(contactId).getName()).toString();
+            		}else{
+            			 concahName.append(crmUserName);
+            			 concahName.append(sd);
+            			 concahName.append("拜访辅导");
+                         act_title_input = concahName.toString();
+            		}
+                }
                 try {
-                 
                     int crmuserId = 0;
                     String participants = user;
                     if(event_type == 1){
                         //visiting
                         crmuserId = Integer.parseInt(uid);
-                   
                     }else if(event_type == 2){
                         //coaching
                         crmuserId = Integer.parseInt(uid);;
                         participants = participants+ ", "+ selected_user;
-                        concahName.append(sd);
-                        hidden_contact_select = "0";
                         contactId = -1;
                         concahName.append("拜访辅导");
                     }
@@ -194,6 +203,7 @@ public class CreateEventPage extends TemplatePage
         TextField total_score = new TextField("total_score", new PropertyModel(this,"total_score"));
         form.add(total_score);
         TextField planing = new TextField("planing", new PropertyModel(this,"planing"));
+        //planing.add(new AttributeAppender("type",new Model("range"),";"));
         form.add(planing);
         TextField openling = new TextField("openling", new PropertyModel(this,"openling"));
         form.add(openling);

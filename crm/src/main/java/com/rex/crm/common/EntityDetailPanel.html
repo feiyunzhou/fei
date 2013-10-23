@@ -4,6 +4,20 @@
         		$("#1").addClass("icon-angle-down");
         		$("#2").addClass("icon-angle-right");
         		$("#3").addClass("icon-angle-right");
+        		$("#4").addClass("icon-angle-right");
+        		var eventType = $("#event_type").text();
+        		var event_type = ""
+        		console.info(eventType+"name"+event_type)
+        		if(eventType=="辅导"){
+        			console.info("sdsd");
+        			$(".4:first").hide();
+        			$(".5:first").hide();
+        			$(".6:first").hide();
+        			$(".7:first").hide();
+        		}else{
+        			$(".collapse:last").hide();
+            		$("h5:last").hide();
+        		}
         });
        
     </script>

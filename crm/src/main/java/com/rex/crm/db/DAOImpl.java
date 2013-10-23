@@ -1759,7 +1759,7 @@ public class DAOImpl {
     
     //根据crmuserid获取crm对象
     public static CRMUser getCrmUserById(int entityId){
-    	System.out.println("根据激活码Code获取用户");
+    	System.out.println("根据crmuserID获取用户");
         Connection conn = null;
         CRMUser user = new CRMUser();
         try {
@@ -1773,5 +1773,22 @@ public class DAOImpl {
             DBHelper.closeConnection(conn);
         }
         return user;
+    }
+    //根据医生ID获取医生对象
+    public static Contact getContactById(int entityId){
+    	System.out.println("根据crmuserID获取用户");
+        Connection conn = null;
+        Contact contact = new Contact();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<Contact> h = new BeanHandler<Contact>(Contact.class);
+            contact = run.query(conn, "SELECT * FROM contact where id=?", h, entityId);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return contact;
     }
 }

@@ -6,34 +6,36 @@
 		<script>
 			$(document).ready(function() {	
 				$("#navitem-calendar").addClass("active");
-
-
+				var seleted_event_type = $(".event_type_class").attr("data-typeId");//.data("typeId");
+		        if(seleted_event_type == 1){
+		            $("#selected_contact").attr("required","required");
+		        }
                 $(".event_type_class").change(function(e){
                     var seleted_event_type = $(this).attr("data-typeId");//.data("typeId");
                     if(seleted_event_type == 1){
                         $("#student_div").hide();
                         $("#callOn").show();
-                        $("act_title").attr("required",required);
-                        $("selected_contact").attr("required",required);
+                        $("#selected_contact").attr("required","required");
+                        $("#select_user").removeAttr("required");
                     }else if(seleted_event_type == 2){
                         $("#student_div").show();
                         $("#callOn").hide();
-                        $("select_user").attr("required",required);
-                        $("planing").attr("required",required);
-                        $("openling").attr("required",required);
-                        $("enquery_listening").attr("required",required);
-                        $("deliverable").attr("required",required);
-                        $("objection_handing").attr("required",required);
-                        $("summary").attr("required",required);
-                        $("plan").attr("required",required);
-                        $("whenadded").attr("required",required);
-                        $("owner").attr("required",required);
+                        $("#select_user").attr("required","required");
+    		            $("#planing").attr("required","required");
+    		            $("#openling").attr("required","required");
+    		            $("#enquery_listening").attr("required","required");
+    		            $("#deliverable").attr("required","required");
+    		            $("#objection_handing").attr("required","required");
+    		            $("#summary").attr("required","required");
+    		            $("#plan").attr("required","required");
+    		            $("#whenadded").attr("required","required");
+    		            $("#owner").attr("required","required");
+    		            $("#selected_contact").removeAttr("required");
                     }
                 });
-
 			});// end onDomReady function
 			//calculate toalScore
-			function calculateTotalScore(){
+			/* function calculateTotalScore(){
 				var totalScore = parseInt(0);
 				var planing = $("#planing").val();
 				var openling = $("#openling").val();
@@ -44,7 +46,35 @@
 				totalScore = parseInt(planing)+parseInt(summary)+parseInt(openling)+parseInt(enquery_listening)+parseInt(deliverable)+parseInt(objection_handing);
 				console.info("totalScore:"+totalScore);
 				$("#total_score").attr("value",parseInt(totalScore));
-			} 
+			} */
+			function changeValue(obj){
+				var planScore = obj.value;
+				console.info("Score:"+planScore);
+				if(obj.id=="planScore"){
+					$("#planing").attr("value",planScore);
+				}else if(obj.id=="openScore"){
+					$("#openling").attr("value",planScore);
+				}else if(obj.id=="listeningScore"){
+					$("#enquery_listening").attr("value",planScore);
+				}else if(obj.id=="deliverableScore"){
+					$("#deliverable").attr("value",planScore);
+				}else if(obj.id=="objectionScore"){
+					$("#objection_handing").attr("value",planScore);
+				}else{
+					$("#summary").attr("value",planScore);
+				}
+				
+				var totalScore = parseInt(0);
+				var planing = $("#planing").val();
+				var openling = $("#openling").val();
+				var enquery_listening = $("#enquery_listening").val();
+				var deliverable = $("#deliverable").val();
+				var objection_handing = $("#objection_handing").val();
+				var summary = $("#summary").val();
+				totalScore = parseInt(planing)+parseInt(summary)+parseInt(openling)+parseInt(enquery_listening)+parseInt(deliverable)+parseInt(objection_handing);
+				console.info("totalScore:"+totalScore);
+				$("#total_score").attr("value",parseInt(totalScore));
+			}
 		</script>
 		
 
@@ -68,6 +98,12 @@
 											</table>
 										</div>
 									</div>
+									<div class="control-group">
+											<label class="control-label">拜访名称：</label>
+											<div class="controls">
+												<input type="text" id="act_title" class="input" placeholder="拜访名称..." wicket:id="act_title_input" />(此项可不填,若必填则自动拼接字符，如:拜访:李医生/主管2013-10-10拜访辅导)
+											</div>
+									</div>
 									<div id="student_div"  style="display:none;">
 										<div class="control-group">
 											<label class="control-label">辅导人：</label>
@@ -86,37 +122,43 @@
 										<div class="control-group">
 											<label class="control-label">访前计划：</label>
 											<div class="controls">
-												<input type="text" id="planing" wicket:id="planing" placeholder="Enter your grade" class="input input-big" onchange="calculateTotalScore();" />&nbsp;<span>(满分15分)</span>
+												<input id="planScore" type="range" min="0" max="15" step="1" onchange="changeValue(this);"/>
+												<input id="planing" type="text" wicket:id="planing" class="input input-mini" readOnly="readonly"  />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">开场：</label>
 											<div class="controls">
-												<input type="text" id="openling" wicket:id="openling"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+												<input id="openScore" type="range" min="0" max="15" step="1" onchange="changeValue(this);"/>
+												<input type="text" id="openling" wicket:id="openling"  placeholder="Enter your grade"  readOnly="readonly"  class="input input-mini"/>&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">探询聆听：</label>
 											<div class="controls">
-												<input type="text" id="enquery_listening" wicket:id="enquery_listening"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+												<input id="listeningScore" type="range" min="0" max="15"  step="1" onchange="changeValue(this);"/>
+												<input type="text" id="enquery_listening" wicket:id="enquery_listening"  readOnly="readonly"  placeholder="Enter your grade"  class="input input-mini"   />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">利益销售：</label>
 											<div class="controls">
-												<input type="text" id="deliverable" wicket:id="deliverable"   placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分20分)</span>
+												<input id="deliverableScore" type="range" min="0" max="20" step="1" onchange="changeValue(this);"/>
+												<input type="text" id="deliverable" wicket:id="deliverable"  readOnly="readonly"    placeholder="Enter your grade"  class="input input-mini"   />&nbsp;<span>(满分20分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">异常处理：</label>
 											<div class="controls">
-												<input type="text" id="objection_handing" wicket:id="objection_handing"   placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+												<input id="objectionScore" type="range" min="0" max="15"  step="1" onchange="changeValue(this);"/>
+												<input type="text" id="objection_handing" wicket:id="objection_handing"  readOnly="readonly"   placeholder="Enter your grade"  class="input input-mini"  />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">缔结：</label>
 											<div class="controls">
-												<input type="text" id="summary" wicket:id="summary"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+												<input id="summaryScore" type="range" min="0" max="20"  step="1" onchange="changeValue(this);"/>
+												<input type="text" id="summary" wicket:id="summary"  readOnly="readonly"   placeholder="Enter your grade"  class="input input-mini"  />&nbsp;<span>(满分15分)</span>
 											</div>
 										</div>
 										<div class="control-group">
@@ -151,12 +193,6 @@
 										</div>
 									</div>
 									<div id="callOn">
-										<div class="control-group">
-											<label class="control-label">拜访名称：</label>
-											<div class="controls">
-												<input type="text" id="act_title" class="input" placeholder="拜访名称..." wicket:id="act_title_input" />
-											</div>
-										</div>
 										<div class="control-group">
 											<label class="control-label">拜访类型：</label>
 											<div class="controls">

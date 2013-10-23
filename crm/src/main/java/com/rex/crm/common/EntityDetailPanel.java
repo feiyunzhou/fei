@@ -105,6 +105,7 @@ public class EntityDetailPanel extends Panel {
 
             for (int i = 0; i < num_of_row; i++) {
                 AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
+                item.add(new AttributeAppender("class", new Model(i), ";"));
                 dataRowRepeater.add(item);
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 item.add(columnRepeater);
