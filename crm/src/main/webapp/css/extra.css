@@ -110,6 +110,111 @@ a:hover, a:focus {
     height: 34px;
     padding-top: 0px;
 }
+.delete {
+    text-align: right;
+}
+.first {
+    display: inline-block;
+    font-family: 'FontAwesome';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    visibility: hidden;
+    word-spacing:-999px;
+    letter-spacing: -999px; 
+}
+.prev {
+    display: inline-block;
+    font-family: 'Flat-UI-Icons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    visibility: hidden;
+    word-spacing:-999px;
+    letter-spacing: -999px; 
+}
+.next {
+    display: inline-block;
+    font-family: 'Flat-UI-Icons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    visibility: hidden;
+    word-spacing:-999px;
+    letter-spacing: -999px; 
+}
+.last {
+    display: inline-block;
+    font-family: 'FontAwesome';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    visibility: hidden;
+    word-spacing:-999px;
+    letter-spacing: -999px; 
+}
+.first:after {
+    content: "\f048";
+    visibility: visible;
+    word-spacing:normal;
+    letter-spacing:normal; 
+}
+.prev:after {
+    content: "\e02d";
+    visibility: visible;
+    word-spacing:normal;
+    letter-spacing:normal; 
+}
+.next:after {
+    content: "\e02c";
+    visibility: visible;
+    word-spacing:normal;
+    letter-spacing:normal; 
+}
+.last:after {
+    content: "\f051";
+    visibility: visible;
+    word-spacing:normal;
+    letter-spacing:normal; 
+}
+.pageable-header {
+    background-color: #FFF;
+}
+.table-header-border {
+    border-right: solid;
+    border-right-color: #FFF;
+    border-right-width: 1px;
+    box-sizing: border-box;
+}
+.home-report {
+    float: right;
+    padding-right: 15px;
+}
+.thumbnails {
+    padding-left: 0px;
+}
+.home-side-bar div{
+    background-color: #FFF !important;
+}
+.home-side-list {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: solid;
+    border-top-width: 1px;
+    border-top-color: #ddd;
+}
 @media ( max-width : 767px) {
     /* Enable use of floated navbar text */
     .btn.btn-sm.btn-danger.btn-mini {
