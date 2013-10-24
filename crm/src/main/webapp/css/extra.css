@@ -189,6 +189,24 @@ a:hover, a:focus {
     word-spacing:normal;
     letter-spacing:normal; 
 }
+#user_info {
+    margin-right: 5px;
+}
+@-moz-document url-prefix() {
+    .prev {
+    margin-left: 7px;
+    margin-right: 3px;
+}
+.next {
+    margin-left: 1px;
+}
+.last {
+    margin-left: 12px;
+}
+.goto {
+    margin-left: 12px;
+}
+}
 .pageable-header {
     background-color: #FFF;
 }
@@ -372,6 +390,17 @@ a:hover, a:focus {
     }
     .delete a{
         width: 100%;
+    }
+    .fc-header-title {
+        position: absolute;
+        top: 6px;
+        left: 2px;
+        width: 200px;
+        background-color: #34495e;
+        color: white;
+    }
+    #user_info {
+        display: none;
     }
     @-moz-document url-prefix() { 
         .detailed {
