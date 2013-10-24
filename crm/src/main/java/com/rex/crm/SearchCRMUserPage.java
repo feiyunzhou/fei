@@ -5,10 +5,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Check;
 import org.apache.wicket.markup.html.form.CheckGroup;
+import org.apache.wicket.markup.html.form.CheckGroupSelector;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.AbstractItem;
@@ -115,9 +117,16 @@ public class SearchCRMUserPage extends WebPage {
 
             }
         };
-        
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         add(users_sbumission_form);
         CheckGroup group=new CheckGroup("group", new PropertyModel(this,"selectedUserIds"));
+        if(roleId == 1){
+          group.add(new CheckGroupSelector("checkboxs"));
+        }else{
+            WebMarkupContainer container = new WebMarkupContainer("checkboxs");
+            container.setVisible(false);
+            group.add(container);
+        }
         users_sbumission_form.add(group);
 
         RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");

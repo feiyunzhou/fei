@@ -10,10 +10,12 @@ import javax.mail.Session;
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Check;
 import org.apache.wicket.markup.html.form.CheckGroup;
+import org.apache.wicket.markup.html.form.CheckGroupSelector;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -67,11 +69,7 @@ public class TeamManPanel extends Panel {
         Entity entity=null ;
         if(en.equalsIgnoreCase("account")||en.equalsIgnoreCase("contact")){
         	 entity = Configuration.getEntityByName("crmuser");
-        	 if(en.equalsIgnoreCase("account")){
-        	     add(new Label("title","医院"));
-        	 }else{
-        	     add(new Label("title","医生"));
-        	 }
+        	     add(new Label("title","用户"));
         }else{
             if(type == 0){
         	  entity = Configuration.getEntityByName("account");
@@ -141,8 +139,15 @@ public class TeamManPanel extends Panel {
             });
 
         }
-        CheckGroup group=new CheckGroup("group", new PropertyModel(this,"selectedRowIds"));
-        form.add(group);
+        CheckGroup group = new CheckGroup("group",new PropertyModel(this,"selectedRowIds"));
+        form.add(group); 
+        if(roleId == 1){
+          group.add(new CheckGroupSelector("checkboxs"));
+        }else{
+            WebMarkupContainer container = new WebMarkupContainer("checkboxs");
+            container.setVisible(false);
+            group.add(container);
+        }
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
         group.add(columnNameRepeater);
@@ -156,9 +161,9 @@ public class TeamManPanel extends Panel {
                 count++;
             }
             columnNameRepeater.add(item);
-            item.add(new Label("columnName", f.getDisplay()));
+            item.add(new Label("columnName", f.getDisplay())); 
         }
-  
+//        group.add(new Check("checkboxs", new Model()));
         RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
         group.add(dataRowRepeater);
         for (int i = 0; i < mapList.size(); i++)
@@ -215,7 +220,7 @@ public class TeamManPanel extends Panel {
                 columnRepeater.add(columnitem);
             }
             if(roleId == 1){
-                item.add(new Check("checkbox", new Model(String.valueOf(rowId))));
+              item.add(new Check("checkbox", new Model(String.valueOf(rowId))));
             }else{
                 WebMarkupContainer container = new WebMarkupContainer("checkbox");
                 container.setVisible(false);
@@ -230,7 +235,6 @@ public class TeamManPanel extends Panel {
     public TeamManPanel(String id, IModel<?> model) {
         super(id, model);
     }
-    
     
     private class DetailLinkFragment extends Fragment
     {
