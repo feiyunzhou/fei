@@ -29,6 +29,7 @@ import com.rex.crm.beans.CRMUser;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 import com.rex.crm.util.SMTPAuthenticator;
+import com.rex.crm.util.SendEmail;
 import com.sun.mail.smtp.SMTPTransport;
 
 public class CRUDPanel extends Panel {
@@ -106,19 +107,7 @@ public class CRUDPanel extends Panel {
 	                        public void onClick() {
 	                        	int userId = Integer.parseInt(entityId);
 	                        	//重置密码设置密码为null,发送邮件设置
-	                        	if(DAOImpl.resetUserPassword(userId)>0){
-	                        		//获取对象
-		                        	CRMUser crmuser = DAOImpl.getCrmUserById(userId);
-		                        	//发送邮件,判断成功与否
-		                        	if(sendMail(crmuser.getLoginName(),"brenda.yuan@rexen.com.cn")){
-		                        		//promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
-		                        		setResponsePage(new UserPage());
-		                        	};
-		                        	/*if(sendMail(crmuser.getLoginName(),crmuser.getEmail())){
-		                        		//promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
-		                        		setResponsePage(new UserPage());
-		                        	};*/
-	                        	};
+	                        	 listener.resetPassword(userId);
 	                        }
 	                    });
 	                	add(editfrag);
@@ -130,54 +119,5 @@ public class CRUDPanel extends Panel {
                 }
         }
     }
-  //发送有邮件方法
-  	public boolean sendMail(String getUserByLoginName,String sendEmail){
-  		Session sendMailSession = null;
-          SMTPTransport transport = null;
-          StringBuilder emailContent = new StringBuilder("请点击连接设置密码:");
-          Properties systemPeroperties = new Properties();
-          try {
-          	systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/system.properties"));
-  		} catch (FileNotFoundException e1) {
-  			// TODO Auto-generated catch block
-  			e1.printStackTrace();
-  		} catch (IOException e1) {
-  			// TODO Auto-generated catch block
-  			e1.printStackTrace();
-  		}
-          emailContent.append(systemPeroperties.getProperty("http"));
-          emailContent.append(systemPeroperties.getProperty("url"));
-          emailContent.append("/");
-          emailContent.append(systemPeroperties.getProperty("project"));
-          emailContent.append("/");
-          emailContent.append(systemPeroperties.getProperty("jumpage"));
-          emailContent.append("?");
-          emailContent.append(systemPeroperties.getProperty("parameter"));
-          emailContent.append("=");
-          emailContent.append(getUserByLoginName);
-          Properties props = new Properties();
-          // 与服务器建立Session的参数设置
-          props.put("mail.smtp.host", "smtp.163.com"); // 写上你的SMTP服务器。
-          props.put("mail.smtp.auth", "true"); // 将这个参数设为true，让服务器进行认证。
-          SMTPAuthenticator auth = new SMTPAuthenticator("accpcui@163.com", "992041099"); // 用户名，密码。
-          sendMailSession = Session.getInstance(props, auth); // 建立连接。
-          // SMTPTransport用来发送邮件。
-          try {
-  			transport = (SMTPTransport) sendMailSession.getTransport("smtp");
-  			transport.connect();
-  	        // 创建邮件。
-  	        Message newMessage = new MimeMessage(sendMailSession);
-  	        newMessage.setFrom(new InternetAddress("accpcui@163.com"));
-  	        newMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(sendEmail));
-  	        newMessage.setSubject("用户重置密码！");
-  	        newMessage.setSentDate(new Date());
-  	        newMessage.setText(emailContent.toString());
-  	        Transport.send(newMessage);
-  	        transport.close();  
-  	        return  true;  
-  		} catch (Exception e) {
-  			System.err.println("邮件发送失败！"+e);  
-            return  false; 
-  		}
-  	}
+
 }

@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
@@ -23,9 +24,11 @@ import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.UserPage;
+import com.rex.crm.beans.CRMUser;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
+import com.rex.crm.util.SendEmail;
 
 public class EntityDetailPage extends TemplatePage {
     private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
@@ -38,8 +41,20 @@ public class EntityDetailPage extends TemplatePage {
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get(entityName);
-        
-        
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem groupitem = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        groupitem.add(promptButton);
+        final Label promptLabel = new Label("prompt","提示:操作已成功！");
+        groupitem.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+		groupitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(groupitem);
+        add(div);
+        /*final Label promptButton = new Label("promptButton","X");
+        final Label promptLabel = new Label("prompt","提示:操作已成功！");
+        add(promptButton);
+        add(promptLabel);*/
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
@@ -131,6 +146,24 @@ public class EntityDetailPage extends TemplatePage {
             @Override
             public void update() {
                 setResponsePage(new EditDataPage(entityName,id));
+            }
+            @Override
+            public void resetPassword(int userId){
+            	if(DAOImpl.resetUserPassword(userId)>0){
+            		//获取对象
+                	CRMUser crmuser = DAOImpl.getCrmUserById(userId);
+                	//发送邮件,判断成功与否
+                	if(SendEmail.sendMail(String.valueOf(crmuser.getTs())+"_"+crmuser.getId(),crmuser.getEmail())){
+                		div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		groupitem.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                	};
+                	/*if(sendMail(crmuser.getLoginName(),crmuser.getEmail())){
+                		//promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		setResponsePage(new UserPage());
+                	};*/
+            	};
             }
                 
          };

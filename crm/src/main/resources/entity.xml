@@ -1478,7 +1478,7 @@
 			
 			 <field>
 				<name>event_type</name>
-				<display>类型</display>
+				<display>活动类型</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<picklist>activity_event_type_pl</picklist>
@@ -1492,7 +1492,7 @@
 			
 			<field>
 				<name>event_type_val</name>
-				<display>类型</display>
+				<display>活动类型</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -1598,7 +1598,7 @@
 
 			<field>
 				<name>accountName</name>
-				<display>医院</display>
+				<display>拜访医院</display>
 				<alias>accountId</alias>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -1612,7 +1612,7 @@
 			</field>
 			<field>
 				<name>accountName_val</name>
-				<display>医院</display>
+				<display>拜访医院</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1664,7 +1664,7 @@
 			</field>
 			<field>
 				<name>feature_product</name>
-				<display>主推广产品</display>
+				<display>主推产品</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1783,6 +1783,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>5</priority>
+				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -1794,6 +1795,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>5</priority>
+				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -1805,6 +1807,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>5</priority>
+				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -1816,6 +1819,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>5</priority>
+				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -1827,6 +1831,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>5</priority>
+				<picklist>score2_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -1838,6 +1843,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>5</priority>
+				<picklist>score2_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 		</fields>

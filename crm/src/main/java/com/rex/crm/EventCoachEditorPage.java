@@ -43,12 +43,12 @@ public class EventCoachEditorPage extends TemplatePage{
     protected String coach = "";
     protected String location = "";
     protected int total_score;
-    protected int planing;
-    protected int openling;
-    protected int enquery_listening;
-    protected int deliverable;
-    protected int objection_handing;
-    protected int summary;
+    protected Choice planing = new Choice(0L,"");
+    protected Choice openling = new Choice(0L,"");
+    protected Choice enquery_listening = new Choice(0L,"");
+    protected Choice deliverable = new Choice(0L,"");
+    protected Choice objection_handing = new Choice(0L,"");
+    protected Choice summary = new Choice(0L,"");
     protected String owner = "";
     protected String whenadded = "";
     protected String modifier = "";
@@ -70,8 +70,8 @@ public class EventCoachEditorPage extends TemplatePage{
 		CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(uid));
 		Map entity_data = DAOImpl.queryEntityById(entity.getSql_ent(),String.valueOf(eventId));
 		//辅导名称拼接字段
+		final String crmuserName = crmUser.getName();
         final StringBuffer concahName = new StringBuffer();
-        concahName.append(crmUser.getName());
 		Form form = new Form("form") {
 			@Override
 			protected void onSubmit() {
@@ -98,11 +98,15 @@ public class EventCoachEditorPage extends TemplatePage{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                concahName.append(sd);
-                concahName.append("拜访辅导");
+				if(null==act_name_input){
+					concahName.append(crmuserName);
+	                concahName.append(sd);
+	                concahName.append("拜访辅导");
+	                act_name_input = concahName.toString();
+				}
 				try {
 					DAOImpl.updateCalendarEventForCoach(String.valueOf(eventId),hidden_select_user,
-							startdt.getTime(), enddt.getTime(),user,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,concahName.toString());
+							startdt.getTime(), enddt.getTime(),user,coach,location,total_score,String.valueOf(planing.getId()),String.valueOf(openling.getId()),String.valueOf(enquery_listening.getId()),String.valueOf(deliverable.getId()),String.valueOf(objection_handing.getId()),String.valueOf(summary.getId()),act_name_input);
 
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
@@ -162,16 +166,6 @@ public class EventCoachEditorPage extends TemplatePage{
 		form.add(createDropDownListFromPickList("feature_product",
 				"activity_feature_product_pl", null, new PropertyModel(this,
 						"feature_product")));
-		/*activity_type_choice.add(new AjaxFormComponentUpdatingBehavior(
-				"onchange") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onUpdate(AjaxRequestTarget target) {
-				target.add(activity_type);
-			}
-		});*/
 		//辅导者
 		coach = (String)entity_data.get("coach");
 		form.add(new TextField("coach", new PropertyModel(this,
@@ -201,24 +195,37 @@ public class EventCoachEditorPage extends TemplatePage{
 		total_score = (int)entity_data.get("total_score");
 		form.add(new TextField("total_score", new PropertyModel(this,
 				"total_score")));
-		planing = (int)entity_data.get("planing");
-		form.add(new TextField("planing", new PropertyModel(this,
-				"planing")));
-		openling = (int)entity_data.get("openling");
-		form.add(new TextField("openling", new PropertyModel(this,
-				"openling")));
-		enquery_listening = (int)entity_data.get("enquery_listening");
-		form.add(new TextField("enquery_listening", new PropertyModel(this,
-				"enquery_listening")));
-		deliverable = (int)entity_data.get("deliverable");
-		form.add(new TextField("deliverable", new PropertyModel(this,
-				"deliverable")));
-		objection_handing = (int)entity_data.get("objection_handing");
-		form.add(new TextField("objection_handing", new PropertyModel(this,
-				"objection_handing")));
-		summary = (int)entity_data.get("summary");
-		form.add(new TextField("summary", new PropertyModel(this,
-				"summary")));
+		
+		planing.setId(((Number) entity_data.get("planing"))
+				.longValue());
+		form.add(createDropDownListFromPickList("planing_input",
+				"score1_pl", null, new PropertyModel(this,
+						"planing")));
+		openling.setId(((Number) entity_data.get("openling"))
+				.longValue());
+		form.add(createDropDownListFromPickList("openling_input",
+				"score1_pl", null, new PropertyModel(this,
+						"openling")));
+		enquery_listening.setId(((Number) entity_data.get("enquery_listening"))
+				.longValue());
+		form.add(createDropDownListFromPickList("enquery_listening_input",
+				"score1_pl", null, new PropertyModel(this,
+						"enquery_listening")));
+		deliverable.setId(((Number) entity_data.get("deliverable"))
+				.longValue());
+		form.add(createDropDownListFromPickList("deliverable_input",
+				"score2_pl", null, new PropertyModel(this,
+						"deliverable")));
+		objection_handing.setId(((Number) entity_data.get("objection_handing"))
+				.longValue());
+		form.add(createDropDownListFromPickList("objection_handing_input",
+				"score2_pl", null, new PropertyModel(this,
+						"objection_handing")));
+		summary.setId(((Number) entity_data.get("summary"))
+				.longValue());
+		form.add(createDropDownListFromPickList("summary_input",
+				"score2_pl", null, new PropertyModel(this,
+						"summary")));
 		owner = (String) entity_data.get("owner");
 		form.add(new TextField("owner", new PropertyModel(this,
 				"owner")));

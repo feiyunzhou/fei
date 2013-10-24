@@ -50,33 +50,26 @@ public class EventViewerPage extends TemplatePage
     protected String endTime;
     protected String startTime;
     protected String hidden_contact_select;
-  /**
-   * Constructor
-   */
-  public EventViewerPage()
-  {
+	/**
+	 * Constructor
+	 */
+	public EventViewerPage()
+	{
+
+		Map<String, Entity> entities = Configuration.getEntityTable();
+        Entity entity = entities.get("activity");
+        setPageTitle(entity.getDisplay());
+        final String uid = ((SignIn2Session)getSession()).getUserId();
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
+        //final long eventId
         long eid = 0;
         if(!eventIdValue.isEmpty()  && !eventIdValue.isNull()){
-            eid = eventIdValue.toLong();  
+            eid = eventIdValue.toLong();
+            
         }
-    final long eventId = eid;
-    initPage(eid,0);
-  }
-  
-  public EventViewerPage(String id) {
-     
-      final int eventId = Integer.parseInt(id);
-      initPage(eventId,1);
-  }
-
-public void initPage(final long eid,final int type ){
-  Map<String, Entity> entities = Configuration.getEntityTable();
-  Entity entity  = entities.get("activity");
-  setPageTitle(entity.getDisplay());
-  final String uid = ((SignIn2Session)getSession()).getUserId();
-  final int roleId = ((SignIn2Session)getSession()).getRoleId();
-  Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eid));
+        final long eventId = eid;
+        Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
         //if the complete and edit button visible;
         boolean write_btn_visible = true;
         //get the event status
@@ -107,25 +100,29 @@ public void initPage(final long eid,final int type ){
             protected void onSubmit()
             {
                 //update status of calenderEvent mark it to be completed
-              Date act_end_datetime = new Date();
-                DAOImpl.updateStatusOfCalendarEvent((int)eid, 2,act_end_datetime);
-                //判断类型如果是辅导类型则跳转到评分界面
-               if(type == 0){
-                setResponsePage(PageFactory.createPage("calendar")); 
-               }else{
-                 setResponsePage(new ActivityPage());
-               }
+            	Date act_end_datetime = new Date();
+                DAOImpl.updateStatusOfCalendarEvent((int)eventId, 2,act_end_datetime);
+                setResponsePage(PageFactory.createPage("calendar"));
                
             }
         };
         add(form);
-        
+        int eventType = 0;
+        if(map != null){
+        	 eventType = ((Number) map.get("event_type")).intValue();
+             logger.debug("eventType:"+eventType);
+        }
+        final int event_type  = eventType;  
         Link edit_event_btn = new Link("edit_event_btn") {
-            
             @Override
             public void onClick() {
-                
-                setResponsePage(new EventEditorPage(eid));
+                //判断活动类型
+            	if(event_type==1){
+            		 setResponsePage(new EventEditorPage(eventId));
+            	}else{
+            		setResponsePage(new EventCoachEditorPage(eventId));
+            	}
+               
             }
         };
         edit_event_btn.setVisible(write_btn_visible);
@@ -135,19 +132,14 @@ public void initPage(final long eid,final int type ){
             
             @Override
             public void onClick() {
-                
-                DAOImpl.deleteRecord( String.valueOf(eid), "activity");
-               if(type == 0){
-                setResponsePage(PageFactory.createPage("calendar")); 
-               }else{
-                 setResponsePage(new ActivityPage());
-               }
+        		 DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
+                 setResponsePage(PageFactory.createPage("calendar"));
             }
         };
         delete_event_btn.setVisible(write_btn_visible);
         form.addOrReplace(delete_event_btn);
         if(map!= null){
-        	 //获取当前时间
+           //获取当前时间
             Date currentDate = new Date();
             logger.debug("currentDate:"+currentDate);;
             //获取开始时间
@@ -155,8 +147,8 @@ public void initPage(final long eid,final int type ){
             logger.debug("startDate:"+startDate);
             //如果两个时间比较大于0则开始时间大于当前时间
             if(startDate.compareTo(currentDate)>0){
-            	logger.debug("计划时间晚于当前时间");
-            	write_btn_visible = false;
+              logger.debug("计划时间晚于当前时间");
+              write_btn_visible = false;
             }
         }
         WebMarkupContainer complete_btn = new WebMarkupContainer("complete_btn");
@@ -164,42 +156,144 @@ public void initPage(final long eid,final int type ){
         form.add(complete_btn);
         
         // List<CalendarEvent> events = DAOImpl.getEventsByUserId(Integer.parseInt(uid));
-         logger.debug("eventID is:"+ eid);
+         logger.debug("eventID is:"+ eventId);
          
          //add(new Label("name",String.valueOf(map.get("name"))));
-         add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eid),1,"calendar"));
-         
-}
-  
+         add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eventId),1,"calendar"));
+	}
+	
+	public EventViewerPage(String id)
+	{
 
-  class SelectOption implements Serializable{
-      private int key;
-      private String value;
-     
-      public SelectOption(int key, String value) {
-        this.key = key;
-        this.value = value;
-      }
-      public SelectOption() {
-            
-          }
+		Map<String, Entity> entities = Configuration.getEntityTable();
+		final Entity entity  = entities.get("activity");
+	    setPageTitle(entity.getDisplay());
+	    final String uid = ((SignIn2Session)getSession()).getUserId();
+	    final int roleId = ((SignIn2Session)getSession()).getRoleId();
+	    final int eventId = Integer.parseInt(id);
+	    logger.debug("entity"+entity);
+	    Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
+	    logger.debug("entity.getSql_ent()"+entity.getSql_ent());
+	    //if the complete and edit button visible;
+	    boolean write_btn_visible = true;
+	    //get the event status
+	    int status = 2;
+	      
+	    if(map != null){
+	        Object st = map.get("act_status");
+	         status = ((Number)st).intValue();      
+	    }
 
-      public int getKey() {
-          return key;
-      }
+	    if(status == 1){
+	        write_btn_visible =true;
+	    }else{
+	        write_btn_visible =false;
+	    }
+	    
+	    if (map != null) {
+            int eventType = ((Number) map.get("event_type")).intValue();
+            if (eventType == 2 && roleId == 3) {
+                // for the sales rep, no permission to edit the coaching event
+                write_btn_visible = false;
+            }
+        }//	    logger.debug("roleId" + roleId);
+	    
+	    Form form = new Form("form"){
+	        @Override
+	        protected void onSubmit()
+	        {
+	            //update status of calenderEvent mark it to be completed
+	            Date act_end_datetime = new Date();
+	            DAOImpl.updateStatusOfCalendarEvent((int)eventId, 2,act_end_datetime);
+	            if(entity.getName().equals("activity")){
+	               setResponsePage(new ActivityPage());
+	             }else{
+	               setResponsePage(PageFactory.createPage("calendar"));  
+	             }
+	        }
+	    };
+	    add(form);
+	    
+	    Link edit_event_btn = new Link("edit_event_btn") {
+	        
+	        @Override
+	        public void onClick() {
+	            
+	            setResponsePage(new EventEditorPage(eventId));
+	        }
+	    };
+	    edit_event_btn.setVisible(write_btn_visible);
+	    form.addOrReplace(edit_event_btn);
 
-      public void setKey(int key) {
-          this.key = key;
-      }
+	    Link delete_event_btn = new Link("delete_event_btn") {
+	        
+	        @Override
+	        public void onClick() {
+	            
+	            DAOImpl.deleteRecord( String.valueOf(eventId), "activity");
+	            if(entity.getName().equals("activity")){
+                setResponsePage(new ActivityPage());
+              }else{
+                setResponsePage(PageFactory.createPage("calendar"));  
+              }
+	        }
+	    };
+	    delete_event_btn.setVisible(write_btn_visible);
+	    form.addOrReplace(delete_event_btn);
+	    if(map!= null){
+       	 //获取当前时间
+           Date currentDate = new Date();
+           logger.debug("currentDate:"+currentDate);;
+           //获取开始时间
+           Date startDate = new Date(((Number)map.get("starttime")).longValue());
+           logger.debug("startDate:"+startDate);
+           //如果两个时间比较大于0则开始时间大于当前时间
+           if(startDate.compareTo(currentDate)>0){
+           	logger.debug("计划时间晚于当前时间");
+           	write_btn_visible = false;
+           }
+       }
+	    WebMarkupContainer complete_btn = new WebMarkupContainer("complete_btn");
+	    complete_btn.setVisible(write_btn_visible);
+	    form.add(complete_btn);
+	    
+	    // List<CalendarEvent> events = DAOImpl.getEventsByUserId(Integer.parseInt(uid));
+	     logger.debug("eventID is:"+ eventId);
+	     
+	     //add(new Label("name",String.valueOf(map.get("name"))));
+	     add(new EntityDetailPanel("detailed",entity,map,String.valueOf(eventId),1,"calendar"));
+	     
+	    
+	}
 
-      public String getValue() {
-          return value;
-      }
+	class SelectOption implements Serializable{
+	    private int key;
+	    private String value;
+	   
+	    public SelectOption(int key, String value) {
+	      this.key = key;
+	      this.value = value;
+	    }
+	    public SelectOption() {
+	          
+	        }
 
-      public void setValue(String value) {
-          this.value = value;
-      }
-    }
+	    public int getKey() {
+	        return key;
+	    }
+
+	    public void setKey(int key) {
+	        this.key = key;
+	    }
+
+	    public String getValue() {
+	        return value;
+	    }
+
+	    public void setValue(String value) {
+	        this.value = value;
+	    }
+	  }
 }
 
 

@@ -1,6 +1,5 @@
 package com.rex.crm.common;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -43,10 +42,12 @@ import com.google.common.collect.Maps;
 import com.rex.crm.PageFactory;
 import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
+import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 import com.rex.crm.util.SMTPAuthenticator;
+import com.rex.crm.util.SendEmail;
 import com.sun.mail.smtp.SMTPTransport;
 
 public class NewDataFormPanel extends Panel {
@@ -63,10 +64,8 @@ public class NewDataFormPanel extends Panel {
     public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
         super(id);
         final Map<String, IModel> models = Maps.newHashMap();
-//		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
         final String userId = ((SignIn2Session) getSession()).getUserId();
         List<Field> fields = entity.getFields();
-        // List<String> fn = schema.getFieldNames();
         for (Field f : fields) {
             if (addFieldGroupMap.get(f.getFieldGroup()) != null) {
                 addFieldGroupMap.get(f.getFieldGroup()).add(f);
@@ -214,10 +213,17 @@ public class NewDataFormPanel extends Panel {
                 logger.debug(models);
                 List<String> fieldNames = Lists.newArrayList();
                 List<String> values = Lists.newArrayList();
+                //判断属性设置
                 for (String key : models.keySet()) {
                     fieldNames.add(key);
+                    Field field = entity.getFieldByName(key);
+                    logger.debug("currentField:"+field);
+                    if(field.isRequired()){
+                    	if("".equals((String) models.get(key).getObject())){
+                    		
+                    	}
+                    }
                     System.out.println(fieldNames);
-                    // models.get(key).getObject()
                     if (models.get(key).getObject() instanceof String) {
                         values.add("'" + (String) models.get(key).getObject()
                                 + "'");
@@ -228,15 +234,17 @@ public class NewDataFormPanel extends Panel {
 
                 //if entity is crmuser  add loginName
                 if ("crmuser".equals(entity.getName())) {
-                    String random = "";
-                    random = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, userId);
-                    if (!"".equals(random)) {
+                    long key = -1;
+                    key= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, userId);
+                    if (key >0 ) {
+                    	CRMUser crmuser = DAOImpl.getCrmUserById((int)key);
                         //此时需发送邮件
-                        String crmUserCode = String.valueOf(models.get("loginName").getObject());
+                        long crmUserCode = crmuser.getTs();
                         String sendEmail = String.valueOf(models.get("email").getObject());
                         //创建激活码 getUserByuserCode
                         //传递邮箱地址，用户code.
-                        sendMail(crmUserCode, sendEmail);
+                        SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ crmuser.getId(), sendEmail);
+                        
                     }
                 } else {
                     long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, userId);
@@ -251,17 +259,6 @@ public class NewDataFormPanel extends Panel {
         };
         form.add(fieldGroupRepeater);
         add(form);
-
-        // form.add(new AjaxSubmitLink("save") {
-        // @Override
-        // protected void onSubmit(AjaxRequestTarget target, Form form) {
-        // System.out.println("form" + form);
-        // for (IModel m : models) {
-        // System.out.println("value:" + m.getObject());
-        // }
-        //
-        // }
-        // });
     }
 
     public NewDataFormPanel(String id, IModel<?> model) {
@@ -380,55 +377,5 @@ public class NewDataFormPanel extends Panel {
         }
     }
     
-   
-    
-    //发送有邮件方法
-    public void sendMail(String getUserByLoginName, String sendEmail) {
-        Session sendMailSession = null;
-        SMTPTransport transport = null;
-        StringBuilder emailContent = new StringBuilder("请点击连接激活用户:");
-        Properties systemPeroperties = new Properties();
-        try {
-            systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/system.properties"));
-        } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        emailContent.append(systemPeroperties.getProperty("http"));
-        emailContent.append(systemPeroperties.getProperty("url"));
-        emailContent.append("/");
-        emailContent.append(systemPeroperties.getProperty("project"));
-        emailContent.append("/");
-        emailContent.append(systemPeroperties.getProperty("jumpage"));
-        emailContent.append("?");
-        emailContent.append(systemPeroperties.getProperty("parameter"));
-        emailContent.append("=");
-        emailContent.append(getUserByLoginName);
-        logger.debug(emailContent);
-        Properties props = new Properties();
-        // 与服务器建立Session的参数设置
-        props.put("mail.smtp.host", "smtp.163.com"); // 写上你的SMTP服务器。
-        props.put("mail.smtp.auth", "true"); // 将这个参数设为true，让服务器进行认证。
-        SMTPAuthenticator auth = new SMTPAuthenticator("accpcui@163.com", "992041099"); // 用户名，密码。
-        sendMailSession = Session.getInstance(props, auth); // 建立连接。
-        // SMTPTransport用来发送邮件。
-        try {
-            transport = (SMTPTransport) sendMailSession.getTransport("smtp");
-            transport.connect();
-            // 创建邮件。
-            Message newMessage = new MimeMessage(sendMailSession);
-            newMessage.setFrom(new InternetAddress("accpcui@163.com"));
-            newMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(sendEmail));
-            newMessage.setSubject("用户激活！");
-            newMessage.setSentDate(new Date());
-            newMessage.setText(emailContent.toString());
-            Transport.send(newMessage);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+
 }

@@ -980,7 +980,7 @@ public class DAOImpl {
     
     public static long addCalendarEventForCoach(int crmuserId, int contactId, String type, String title, String start, String end,int status,
             String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type,String participants,
-           String coach,String location,int total_score,int planing,int openling,int enquery_listening,int deliverable,int objection_handing,int summary) throws Exception {
+           String coach,String location,int total_score,String planing,String openling,String enquery_listening,String deliverable,String objection_handing,String summary) throws Exception {
         int type_id = Integer.parseInt(type);
         //logger.debug("modified date time:"+modify_datetime);
         String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type," +
@@ -1060,9 +1060,9 @@ public class DAOImpl {
     }
     
     public static void updateCalendarEventForCoach(String entityId,String crmuserId,long start, long end,
-            String modifier,String coach,String location,int total_score,int planing,int openling,int enquery_listening,int deliverable,int objection_handing,int summary,String name) throws Exception {
+            String modifier,String coach,String location,int total_score,String planing,String openling,String enquery_listening,String deliverable,String objection_handing,String summary,String name) throws Exception {
         String sql = "update activity SET crmuserID =?,endtime=?,starttime=?,"+
-                     "modifier=?,modify_datetime=?,coach=?,location=?,total_score=?,planing=?,openling=?,enquery_listening=?,deliverable=?,objection_handing=?,summary=?,name=? where id=?";
+                     "modifier=?,modify_datetime=?,coach=?,location=?,total_score=?,planing=?,openling=?,enquery_listening=?,deliverable=?,objection_handing=?,summary=?,title=? where id=?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
@@ -1104,12 +1104,11 @@ public class DAOImpl {
             DBHelper.closeConnection(conn);
         }
     }
-    public static String createNewCrmUser(String entityName,List<String> fieldNames,List<String> values,String userId){
-    	String key ="";
+    public static long createNewCrmUser(String entityName,List<String> fieldNames,List<String> values,String userId){
     	String fieldssql = Joiner.on(",").join(fieldNames);
         String valuesql = Joiner.on(",").join(values);
-        fieldssql = fieldssql + ",isActivited";
-   	 	valuesql =  valuesql + ",0";
+        fieldssql = fieldssql + ",isActivited,ts";
+   	 	valuesql =  valuesql + ",0,"+System.currentTimeMillis();
    	 	fieldssql = fieldssql.replaceAll("user-city", "city");
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
@@ -1121,16 +1120,22 @@ public class DAOImpl {
 	    //PreparedStatement statement = null;
 	    ResultSet generatedKeys = null;
 	    PreparedStatement statement = null;
+	    long key=-1;
         try {
 			conn = DBHelper.getConnection();
 			statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	        int affectedRows = statement.executeUpdate();
+	     
 	        generatedKeys = statement.getGeneratedKeys();
-	        if (!generatedKeys.next()) {
-	        	return null;
-	        }
+            if (generatedKeys.next()) {
+                //user.setId(generatedKeys.getLong(1));
+                 key = generatedKeys.getLong(1);
+            } else {
+                logger.error("failed to insert data");
+                return -1;
+            }
 	        System.out.println("add crmuser is True");
-	        key = "true";
+	        return key;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1139,7 +1144,7 @@ public class DAOImpl {
             if (statement != null) try { statement.close(); } catch (SQLException logOrIgnore) {}
             if (conn != null) try { conn.close(); } catch (SQLException logOrIgnore) {}
         }
-        return  key;
+        return -1L;
     }
     public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
          String fieldssql = Joiner.on(",").join(fieldNames);
@@ -1645,14 +1650,14 @@ public class DAOImpl {
         return inferiors;
     }
     // update crmuser baseInfo
-    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex) {
-    	String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=?,sex=? where id=?";
+    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex,String loginName) {
+    	String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=?,sex=?,loginName=? where id=?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,userId);
+            inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,loginName,userId);
             System.out.println("updateCrmUser:" + inserts);
         } catch (Exception e) {
             logger.error("failed to updateStatusOfInternalMeeting", e);
@@ -1681,7 +1686,7 @@ public class DAOImpl {
     	}
     	return false;
     }
-    public  static CRMUser getUserByActivation(String activation){
+    public  static CRMUser getUserByActivation(int userID,long createTime){
     	System.out.println("根据激活码Code获取用户");
         Connection conn = null;
         CRMUser user = new CRMUser();
@@ -1689,7 +1694,7 @@ public class DAOImpl {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
-            user = run.query(conn, "SELECT * FROM crmuser where loginName=?", h, activation);
+            user = run.query(conn, "SELECT * FROM crmuser where ts=? and id=?", h, createTime,userID);
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {
@@ -1790,5 +1795,20 @@ public class DAOImpl {
             DBHelper.closeConnection(conn);
         }
         return contact;
+    }
+    public  static CRMUser getUserByLoginName(String loginName){
+        Connection conn = null;
+        CRMUser user = new CRMUser();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            user = run.query(conn, "SELECT * FROM crmuser where loginName=?", h, loginName);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return user;
     }
 }

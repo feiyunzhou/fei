@@ -23,19 +23,25 @@ public class ActivitedUser extends WebPage{
 	private static final Logger logger = Logger.getLogger(UpdateSignPassword.class);
 	final Map<String, IModel> models = Maps.newHashMap();
 	public ActivitedUser(){
-		String loginName = this.getRequest().getRequestParameters().getParameterValue("loginName").toString();
-		logger.debug("loginName:"+loginName);
-		CRMUser crmuser = DAOImpl.getUserByActivation(loginName);
+		logger.debug("activitedUser");
+		String activitedCode = this.getRequest().getRequestParameters().getParameterValue("activitedCode").toString();
+		logger.debug("loginName:"+activitedCode);
+		String [] strs=activitedCode.split("_");
+		logger.debug("str:"+strs[0]);
+		long createTime = Long.parseLong(strs[0]);
+		int userID =Integer.parseInt(strs[1]);
+		CRMUser crmuser = DAOImpl.getUserByActivation(userID,createTime);
 		if(crmuser.getIsActivited()==0){
-			initPage(loginName);
+			initPage(userID,createTime);
 		}else{
 			setResponsePage(new ErrorPromptPage());
 		}
 	}
-	public void initPage(final String loginName){
+	public void initPage(final int userID,final long createTime){
 		logger.debug("init");
-		CRMUser crmuser = DAOImpl.getUserByActivation(loginName);
+		CRMUser crmuser = DAOImpl.getUserByActivation(userID,createTime);;
 		final int userId = crmuser.getId();
+		final String userLoginName = crmuser.getLoginName();
 		//此时获取到对象，接收客户端的数据
 		final  Label promptLabel = new Label("prompt","操作失败重新输入！");
 		Form form = new Form("form"){
@@ -49,7 +55,7 @@ public class ActivitedUser extends WebPage{
 					//用此用户登录
 					SignIn2Session session = getMysession();
 		        	session.setUser(null);
-		            if (session.signIn(loginName, password))
+		            if (session.signIn(userLoginName, password))
 		            {
 	                    setResponsePage(getApplication().getHomePage());
 		            }else{

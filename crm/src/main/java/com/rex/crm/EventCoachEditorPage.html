@@ -8,177 +8,265 @@
 				$("#navitem-calendar").addClass("active");  
 			});
 			//calculate toalScore
-			function calculateTotalScore(){
+			 function changeValue(obj){
+				var planScore = obj.value;
+				if(obj.id=="planing_input"){
+					console.info("赋值");
+					$("#planing_input").attr("value",planScore);
+				}else if(obj.id=="openling_input"){
+					$("#openling_input").attr("value",planScore);
+				}else if(obj.id=="enquery_listening_input"){
+					$("#enquery_listening_input").attr("value",planScore);
+				}else if(obj.id=="deliverable_input"){
+					$("#deliverable_input").attr("value",planScore);
+				}else if(obj.id=="objection_handing_input"){
+					$("#objection_handing_input").attr("value",planScore);
+				}else{
+					$("#summary_input").attr("value",planScore);
+				}
 				var totalScore = parseInt(0);
-				var planing = $("#planing").val();
-				var openling = $("#openling").val();
-				var enquery_listening = $("#enquery_listening").val();
-				var deliverable = $("#deliverable").val();
-				var objection_handing = $("#objection_handing").val();
-				var summary = $("#summary").val();
+				var planing = $("#planing_input").val();
+				var openling = $("#openling_input").val();
+				var enquery_listening = $("#enquery_listening_input").val();
+				var deliverable = $("#deliverable_input").val();
+				var objection_handing = $("#objection_handing_input").val();
+				var summary = $("#summary_input").val();
 				totalScore = parseInt(planing)+parseInt(summary)+parseInt(openling)+parseInt(enquery_listening)+parseInt(deliverable)+parseInt(objection_handing);
-				console.info("totalScore:"+totalScore);
 				$("#total_score").attr("value",parseInt(totalScore));
-			} 
+			}
 		</script>
 		
 
 		<div class="row-fluid">
-			<form wicket:id="form" class="form-horizontal">
-			<table>
-				<tr>
-					<td>
+			<div class="span7">
+				<form wicket:id="form" class="form-horizontal">
 						<div title="活动">
-							<label id="datestr"></label>
-                            <div class="control-group">
-								<label class="control-label">辅导名称：</label>
-								<div class="controls">
-								  <input type="text" id="act_title"  readOnly="readonly"  class="input" wicket:id="act_name_input"/>
+                            <div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>活动名称：</span></div>
 								</div>
-						 	</div>
-						 	<div class="control-group">
-								<label class="control-label">辅导人：</label>
-								<div class="controls">
-									<input type="text"  wicket:id="coach" required="required" readOnly="readonly" class="input input-big" />
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text" id="act_title" class="input" placeholder="拜访名称..." wicket:id="act_name_input" />
+									</div>
 								</div>
 							</div>
-                            <div   class="control-group">
-								<label class="control-label">被辅导人：</label>
-								<div class="controls">
-									<input type="text" id="select_user" wicket:id="selected_user"  placeholder="李三"  required="required" class="input input-big" />
-									<input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
-									<a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
+						 	<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>辅导人：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text"  wicket:id="coach"  readOnly="readonly" class="input input-big" />
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">访前计划：</label>
-								<div class="controls">
-									<input type="text" id="planing" wicket:id="planing" required="required" placeholder="Enter your grade" class="input input-big" onchange="calculateTotalScore();" />&nbsp;<span>(满分15分)</span>
+                                  <div   class="table-cell">
+                                  	<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>被辅导人：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text" id="select_user" wicket:id="selected_user"  placeholder="李三"  class="input input-small" />
+										<input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
+										<a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">开场：</label>
-								<div class="controls">
-									<input type="text" id="openling" wicket:id="openling" required="required"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>访前计划：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<select id="planing_input"  wicket:id="planing_input"  name="planing"   class="input" onchange="changeValue(this);">
+										</select>
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">探询聆听：</label>
-								<div class="controls">
-									<input type="text" id="enquery_listening" wicket:id="enquery_listening"  placeholder="Enter your grade"  required="required" class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>开场：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<select id="openling_input" wicket:id="openling_input" name="openling" class="input" onchange="changeValue(this);">
+										</select>
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">利益销售：</label>
-								<div class="controls">
-									<input type="text" id="deliverable" wicket:id="deliverable" required="required"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分20分)</span>
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>探询聆听：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<select id="enquery_listening_input" wicket:id="enquery_listening_input" name="enquery_listening" class="input" onchange="changeValue(this);">
+										</select>
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">异常处理：</label>
-								<div class="controls">
-									<input type="text" id="objection_handing" wicket:id="objection_handing" required="required"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分15分)</span>
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>利益销售：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<select id="deliverable_input" wicket:id="deliverable_input" name="deliverable" class="input" onchange="changeValue(this);">
+										</select>
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">缔结：</label>
-								<div class="controls">
-									<input type="text" id="summary" wicket:id="summary" required="required"  placeholder="Enter your grade"  class="input input-big" onchange="calculateTotalScore();"  />&nbsp;<span>(满分20分)</span>
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>异常处理：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<select id="objection_handing_input" wicket:id="objection_handing_input" name="objection_handing" class="input" onchange="changeValue(this);">
+										</select>
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">总分：</label>
-								<div class="controls">
-									<input type="text" id="total_score" wicket:id="total_score"  readOnly="readonly"   placeholder="Enter your grade"  required="required" class="input input-big"  />&nbsp;<span>(满分100分)</span>
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>缔结：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<select id="summary_input" wicket:id="summary_input" name="summary" class="input" onchange="changeValue(this);">
+										</select>
+									</div>
+								</div>
+							</div> 
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>总分：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text" id="total_score" wicket:id="total_score"  readOnly="readonly"   placeholder="Enter your grade"  class="input input-big"  />&nbsp;<span>(满分100分)</span>
+									</div>
 								</div>
 							</div>
-							<div  class="control-group">
-								<label class="control-label">计划地点：</label>
-								<div class="controls">
-									<input type="text" wicket:id="location" required="required"  class="input input-big" />
+							<div  class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>计划地点：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text" wicket:id="location"   class="input input-big" />
+									</div>
 								</div>
 							</div>
-							<div  class="control-group">
-								<label class="control-label">状态：</label>
-								<div class="controls">
-									<input type="text" wicket:id="status" required="required"  readOnly="readonly"  value="计划中" class="input input-big" />
+							<div  class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>状态：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text" wicket:id="status"  readOnly="readonly"   value="计划中" class="input input-big" />
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">创建者：</label>
-								<div class="controls">
-									<input type="text"  wicket:id="owner" required="required" readOnly="readonly" class="input input-big" />
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>创建者：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text"  wicket:id="owner" readOnly="readonly" class="input input-big" />
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">创建时间：</label>
-								<div class="controls">
-									<input type="text"  wicket:id="whenadded" required="required" readOnly="readonly" class="input input-big" />
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>创建时间：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text"  wicket:id="whenadded"  readOnly="readonly" class="input input-big" />
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">修改者：</label>
-								<div class="controls">
-									<input type="text"  wicket:id="modifier" required="required" readOnly="readonly" class="input input-big" />
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>修改者：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text"  wicket:id="modifier" required="required" readOnly="readonly" class="input input-big" />
+									</div>
 								</div>
 							</div>
-							<div class="control-group">
-								<label class="control-label">修改时间：</label>
-								<div class="controls">
-									<input type="text"  wicket:id="modifier_time" required="required" readOnly="readonly" class="input input-big" />
+							<div class="table-cell">
+								<div class="table-column tag">
+									<div class="form_datetime" style="font-weight:bold;"><span>修改时间：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<input type="text"  wicket:id="modifier_time" required="required" readOnly="readonly" class="input input-big" />
+									</div>
 								</div>
 							</div>
 							<!--修改者-->
-						   <div class="control-group">
-							<label class="control-label">主推产品：</label>
-							<div class="controls">
-								<select  wicket:id="feature_product" name="feature_product" class="input">
-									<option value="1">美施康定</option>
-									<option value="2">奥施康定</option>
-									<option value="3">奇曼丁</option>
-									<option value="4">若思本</option>
-									<option value="5">奥诺美</option>
-								</select>
-							</div>
-						   </div>
-						   <div class="control-group">
-								<label class="control-label" for="from">开始时间：</label>
-								<div class="controls">
-									<table>
-										<tr>
-											<td><div  id="datepicker_from" ><input name="start_date"  wicket:id="start_date_input" style="width: 150px" type="date" /></div></td>
-											<td>&nbsp;</td>
-											<td><input  wicket:id="start_time_input" name="start_time"  style="width: 150px" type="time" /></td>
-										</tr>
-									</table>
+						   <div class="table-cell">
+								<div class="table-column tag">
+										<div class="form_datetime" style="font-weight:bold;"><span>主推产品：</span></div>
 								</div>
-								<label class="control-label" for="to">结束时间：</label>
-								<div class="controls">
-									<table>
-										<tr>
-											<td><div  id="datepicker_to" ><input name="end_date"   wicket:id="end_date_input"  style="width: 150px" type="date" /></div></td>
-											<td>&nbsp;</td>
-											<td><input  wicket:id="end_time_input" name="end_time"  style="width: 150px" type="time" /></td>
-										</tr>
-									</table>
+								<div class="table-column">
+									<div class="form_datetime">
+										<select  wicket:id="feature_product" id="feature_product" name="feature_product" class="input">
+											<option value="1">美施康定</option>
+											<option value="2">奥施康定</option>
+											<option value="3">奇曼丁</option>
+											<option value="4">若思本</option>
+											<option value="5">奥诺美</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="table-cell">
+								<div class="table-column tag">
+										<div class="form_datetime" style="font-weight:bold;"><span>开始时间：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<div id="datepicker_from">
+											<input name="start_date" wicket:id="start_date_input" style="width: 150px" type="date" />
+											</div><input wicket:id="start_time_input" name="start_time" style="width: 150px" type="time" />
+									</div>
+								</div>
+							</div>
+							<div class="table-cell">
+								<div class="table-column tag">
+										<div class="form_datetime" style="font-weight:bold;"  for="to"><span>结束时间：</span></div>
+								</div>
+								<div class="table-column">
+									<div class="form_datetime">
+										<div id="datepicker_to">
+											<input name="end_date" wicket:id="end_date_input" style="width: 150px" type="date" />
+											</div>
+											<input wicket:id="end_time_input" name="end_time" style="width: 150px" type="time" />
+									</div>
 								</div>
 							</div>
 						</div>
-				</td>
-			</tr>
-		</table>
-	<hr/>
-		<div class="btn-toolbar">
-			<div class="btn-group">
-				<a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
-			</div>
-			<div class="btn-group">
-				<input type="submit" href="#" class="btn btn-primary">保存&返回</input>
+					<hr/>
+					<div class="btn-toolbar">
+						<div class="btn-group">
+							<a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
+						</div>
+						<div class="btn-group">
+							<input type="submit" href="#" class="btn btn-primary">保存&返回</input>
+						</div>
+					</div>
+				</form>
+				</div>
+			<div class="span5">
+				<h3>提示信息</h3>
 			</div>
 		</div>
-			</form>
-		</div>
-		
 	</wicket:extend>
 </body>
 </html>

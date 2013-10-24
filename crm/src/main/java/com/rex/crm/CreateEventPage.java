@@ -62,12 +62,12 @@ public class CreateEventPage extends TemplatePage
     protected String coach = "";
     protected String location = "";
     protected int total_score;
-    protected int planing;
-    protected int openling;
-    protected int enquery_listening;
-    protected int deliverable;
-    protected int objection_handing;
-    protected int summary;
+    protected Choice planing = new Choice(0L,"");
+    protected Choice openling = new Choice(0L,"");
+    protected Choice enquery_listening = new Choice(0L,"");
+    protected Choice deliverable = new Choice(0L,"");
+    protected Choice objection_handing = new Choice(0L,"");
+    protected Choice summary = new Choice(0L,"");
     protected String owner = "";
     protected String whenadded = "";
 	/**
@@ -79,11 +79,11 @@ public class CreateEventPage extends TemplatePage
 	}
 	
 	public CreateEventPage( int type)
-  {
-	  initPage(type);
-  }
+	{
+		  initPage(type);
+	}
 	 public void initPage(final int type){
-    Map<String, Entity> entities = Configuration.getEntityTable();
+		Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
         setPageTitle(entity.getDisplay());
         final String uid = ((SignIn2Session)getSession()).getUserId();
@@ -103,6 +103,7 @@ public class CreateEventPage extends TemplatePage
                 String ed = getRequest().getPostParameters().getParameterValue("end_date").toString();
                 String et = getRequest().getPostParameters().getParameterValue("end_time").toString();
                 String visit_type = String.valueOf(activity_type);
+                logger.debug("opening:"+String.valueOf(openling.getId()));
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 String sdt = sd+ " " +st;
                 String edt = ed + " " + et;
@@ -148,11 +149,11 @@ public class CreateEventPage extends TemplatePage
                     }
                     //insert the event, and return the generated id of the event
                     long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId,String.valueOf(activity_type.getId()), 
-                        concahName.toString(), String.valueOf(startdt.getTime()/1000), 
+                    		act_title_input, String.valueOf(startdt.getTime()/1000), 
                             String.valueOf(enddt.getTime()/1000),1,user,user,user,
                             String.valueOf(visiting_purpose.getId()),
                             String.valueOf(feature_product.getId()),event_type.intValue(),participants,
-                            coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary);
+                            coach,location,total_score,String.valueOf(planing.getId()),String.valueOf(openling.getId()),String.valueOf(enquery_listening.getId()),String.valueOf(deliverable.getId()),String.valueOf(objection_handing.getId()),String.valueOf(summary.getId()));
                     logger.debug("generatedkey:"+ generatedkey);
                     if(generatedkey>0){
                         if(event_type == 1){
@@ -202,19 +203,6 @@ public class CreateEventPage extends TemplatePage
         //分数
         TextField total_score = new TextField("total_score", new PropertyModel(this,"total_score"));
         form.add(total_score);
-        TextField planing = new TextField("planing", new PropertyModel(this,"planing"));
-        //planing.add(new AttributeAppender("type",new Model("range"),";"));
-        form.add(planing);
-        TextField openling = new TextField("openling", new PropertyModel(this,"openling"));
-        form.add(openling);
-        TextField enquery_listening = new TextField("enquery_listening", new PropertyModel(this,"enquery_listening"));
-        form.add(enquery_listening);
-        TextField deliverable = new TextField("deliverable", new PropertyModel(this,"deliverable"));
-        form.add(deliverable);
-        TextField objection_handing = new TextField("objection_handing", new PropertyModel(this,"objection_handing"));
-        form.add(objection_handing);
-        TextField summary = new TextField("summary", new PropertyModel(this,"summary"));
-        form.add(summary);
         StringValue startdateValue = this.getRequest().getRequestParameters().getParameterValue("startdate");
          
          String startdate  = null;
@@ -291,6 +279,12 @@ public class CreateEventPage extends TemplatePage
          event_type_group.add(coachingRadio);
          form.add(event_type_group);
          form.add(createDropDownListFromPickList("feature_product_input","activity_feature_product_pl",null,new PropertyModel(this,"feature_product")));
+         form.add(createDropDownListFromPickList("planing_input","score1_pl",null,new PropertyModel(this,"planing")));
+         form.add(createDropDownListFromPickList("openling_input","score1_pl",null,new PropertyModel(this,"openling")));
+         form.add(createDropDownListFromPickList("enquery_listening_input","score1_pl",null,new PropertyModel(this,"enquery_listening")));
+         form.add(createDropDownListFromPickList("deliverable_input","score2_pl",null,new PropertyModel(this,"deliverable")));
+         form.add(createDropDownListFromPickList("objection_handing_input","score1_pl",null,new PropertyModel(this,"objection_handing")));
+         form.add(createDropDownListFromPickList("summary_input","score2_pl",null,new PropertyModel(this,"summary")));
          form.add(new TextField("act_title_input", new PropertyModel(this,"act_title_input")));
          //拜访辅导。辅导者,状态，
   }

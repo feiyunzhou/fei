@@ -30,6 +30,8 @@ public class CRMUser {
 	private int reportto;
 	private int sex;
     private int isActivited;
+    private long ts;
+    
 	public String getName() {
 		return name;
 	}
@@ -229,6 +231,14 @@ public class CRMUser {
 
 		public void setSex(int sex) {
 			this.sex = sex;
+		}
+
+		public long getTs() {
+			return ts;
+		}
+
+		public void setTs(long ts) {
+			this.ts = ts;
 		}
 	
 }

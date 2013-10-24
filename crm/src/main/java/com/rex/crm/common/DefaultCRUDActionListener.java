@@ -17,5 +17,9 @@ public class DefaultCRUDActionListener implements ICRUDActionListener, Serializa
     public void update() {
      
     }
+    @Override
+    public void resetPassword(int userId){
+    	
+    }
 
 }

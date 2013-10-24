@@ -38,7 +38,9 @@ public class SelectCRMUserPage extends WebPage {
      *            Page parameters (ignored since this is the home page)
      */
     public SelectCRMUserPage() {
-        StringValue mid = getPageParameters().get("mid");
+        StringValue mid = getRequest().getRequestParameters().getParameterValue("mid");
+        //.getPageParameters().get("mid");
+        logger.debug("mid:"+mid);
         initPage(null,mid.toString());
     }
 

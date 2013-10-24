@@ -6,74 +6,59 @@
 		<script>
 			$(document).ready(function() {	
 				$("#navitem-calendar").addClass("active");  
-				
-				//$("#selected_account").select2();
-				
-				//$("#selected_contact").select2();
-				
-				/* $("#search_click").click(function(e){
-                    e.preventDefault();
-                    window.open("../mount/searchContactPage","Ratting","width=850,height=470,left=150,top=200,0,status=0,");
-				}); */
 
 			});// end onDomReady function
 		</script>
 		
 
 		<div class="row-fluid">
-		<form wicket:id="form" class="form-horizontal">
-			<table>
-			<tr>
-				<td>
+			<form wicket:id="form" class="form-horizontal">
 					<div title="活动">
-						<label id="datestr"></label>
-						<div>
-
-                             <div class="control-group">
-								<label class="control-label">拜访名称：</label>
-								<div class="controls">
-								  <input type="text" id="act_title" class="input" placeholder="拜访名称..." wicket:id="act_title_input"/>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">拜访类型：</label>
-								<div class="controls">
-									<select id="visit_type_input" wicket:id="activity_type_input" name="visit_type" class="input input-big">
-										<option value="1">专业化拜访</option>
-										<option value="2">事务性拜访</option>
-									</select>
-								</div>
-							</div>
-								<div id="accountNcontact" class="control-group">
-									
-									<!-- <select id="selected_account" wicket:id="account_select">
-									</select> -->
-									<label id="contact_label" class="control-label" for="contact">拜访医生：</label> 
-									<div class="controls">
-									<input type="text" id="selected_contact" class="input" placeholder="张三" wicket:id="contact_select"/>
-                                    <input type="hidden" id="hidden_selected_contact" class="input"  wicket:id="hidden_contact_select"/>
-									<a href="#" class="btn btn-mini" wicket:id="search_btn" id="search_click" name="search_contact" title="查找医生" >查找医生</a>
-									</div>
-									<label class="control-label" for="account" id="account_label" style="display:none">医院：</label>
-									<div class="controls">
-									  <span id="account_info"></span>
-									</div>
-								</div>
+                     <div class="control-group">
+						<label class="control-label">活动名称：</label>
+						<div class="controls">
+						  <input type="text" id="act_title" class="input" placeholder="拜访名称..." wicket:id="act_title_input"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">拜访类型：</label>
+						<div class="controls">
+							<select id="visit_type_input" wicket:id="activity_type_input" name="visit_type" class="input input-big">
+								<option value="1">专业化拜访</option>
+								<option value="2">事务性拜访</option>
+							</select>
+						</div>
+					</div>
+							<div id="accountNcontact" class="control-group">
 								
-								<div class="control-group">
-								<label class="control-label">拜访目的：</label>
+								<!-- <select id="selected_account" wicket:id="account_select">
+								</select> -->
+								<label id="contact_label" class="control-label" for="contact">拜访医生：</label> 
 								<div class="controls">
-									<select id="visiting_purpose_input" wicket:id="visiting_purpose_input" name="visiting_purpose" class="input input-big">
-										<option value="1">传递产品知识</option>
-										<option value="2">处方观念沟通</option>
-										<option value="3">病例沟通</option>
-										<option value="4">会议安排</option>
-										<option value="5">会议跟进</option>
-										<option value="6">交接工作</option>
-										<option value="7">了解竞争</option>
-									</select>
+								<input type="text" id="selected_contact" class="input" placeholder="张三" wicket:id="contact_select"/>
+                                   <input type="hidden" id="hidden_selected_contact" class="input"  wicket:id="hidden_contact_select"/>
+								<a href="#" class="btn btn-mini" wicket:id="search_btn" id="search_click" name="search_contact" title="查找医生" >查找医生</a>
 								</div>
-							   </div>
+								<label class="control-label" for="account" id="account_label" style="display:none">医院：</label>
+								<div class="controls">
+								  <span id="account_info"></span>
+								</div>
+							</div>
+								
+							<div class="control-group">
+							<label class="control-label">拜访目的：</label>
+							<div class="controls">
+								<select id="visiting_purpose_input" wicket:id="visiting_purpose_input" name="visiting_purpose" class="input input-big">
+									<option value="1">传递产品知识</option>
+									<option value="2">处方观念沟通</option>
+									<option value="3">病例沟通</option>
+									<option value="4">会议安排</option>
+									<option value="5">会议跟进</option>
+									<option value="6">交接工作</option>
+									<option value="7">了解竞争</option>
+								</select>
+							</div>
+						    </div>
 							   
 							   <div class="control-group">
 								<label class="control-label">主推产品：</label>
@@ -110,49 +95,37 @@
 								</div>
 							</div>
 
-								<div id="visited_contact_select_div" style="display:none" class="control-group">
-                                <label class="control-label" for="visited_contact">拜访过的医生：</label>
-                                <div class="controls">
-                                    <input type="hidden" id="visited_contact_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
-                                </div>
-                            </div>
+					<div id="visited_contact_select_div" style="display:none" class="control-group">
+                       <label class="control-label" for="visited_contact">拜访过的医生：</label>
+                       <div class="controls">
+                           <input type="hidden" id="visited_contact_select" style="width: 200px" tabindex="-1" class="select2-offscreen input"/>
+                       </div>
+                  	</div>
 
-
-                            <div id="multi_select_div" style="display:none">
-                                <h6>添加的医生：</h6>
-                                 <table id="selected_contacts_table">
-                                     <tbody></tbody>
-                                 </table>
-                            </div>
-
-
-                            <div id="user_manager_select_div" style="display:none" class="control-group">
-                                <label class="control-label" for="user_manager">经理：</label>
-                                <div class="controls">
-                                    <input type="hidden" id="user_manager_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
-                                </div>
-                            </div>
-
-
+                  <div id="multi_select_div" style="display:none">
+                      <h6>添加的医生：</h6>
+                       <table id="selected_contacts_table">
+                           <tbody></tbody>
+                       </table>
+                  </div>
+                 <div id="user_manager_select_div" style="display:none" class="control-group">
+                     <label class="control-label" for="user_manager">经理：</label>
+                     <div class="controls">
+                         <input type="hidden" id="user_manager_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+                     </div>
+                 </div>
+				<hr/>
+					<div class="btn-toolbar">
+						<div class="btn-group">
+							<a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
 						</div>
-
+						<div class="btn-group">
+							<input type="submit" href="#" class="btn btn-primary">保存&返回</input>
+						</div>
 					</div>
-				</td>
-			</tr>
-		</table>
-		
-	<hr/>
-		<div class="btn-toolbar">
-			<div class="btn-group">
-				<a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
-			</div>
-			<div class="btn-group">
-				<input type="submit" href="#" class="btn btn-primary">保存&返回</input>
-			</div>
-		</div>
+				</div>
 			</form>
 		</div>
-		
 	</wicket:extend>
 </body>
 </html>

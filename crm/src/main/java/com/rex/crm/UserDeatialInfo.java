@@ -174,6 +174,7 @@ public class UserDeatialInfo extends TemplatePage{
 				String cellPhone = "";
 				String email = "";
 				String photo = "";
+				String loginName ="";
 				int  sex = 0;
 				for (String k : fieldNameToModel.keySet()) {
 					logger.debug("k"+k);
@@ -186,13 +187,15 @@ public class UserDeatialInfo extends TemplatePage{
 						photo = value;
 					}else if(k.equals("sex")){
 						sex = Integer.parseInt(value);
+					}else if(k.equals("loginName")){
+						loginName = value;
 					}else{
 						email = value;
 					}
 				}
 				
 				int userId =Integer.parseInt(((SignIn2Session)getSession()).getUserId());
-				DAOImpl.updateStatusOfInternalMeeting(userId,userName,cellPhone,email,photo,sex);
+				DAOImpl.updateStatusOfInternalMeeting(userId,userName,cellPhone,email,photo,sex,loginName);
 				setResponsePage(HomePage.class);
 			}
 	    };

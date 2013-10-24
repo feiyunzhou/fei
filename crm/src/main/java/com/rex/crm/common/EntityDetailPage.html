@@ -13,10 +13,20 @@
                         return false;
                     }
                 }
-			
+                function resetPwd() {
+                    if (confirm("确定要重置密码吗？")){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
             </script>
             <div class="container-fluid">
                 <div class="row-fluid">
+             		<div wicket:id="promptDiv" class="alert" >
+	 					<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
+						<span wicket:id="prompt" ><strong></strong></span>
+					</div>
                     <!-- right container -->
                     <div class="span12">
                         <div class="title" style="border-bottom:2pt solid #BDD3EB">
