@@ -8,69 +8,73 @@
         
         function ChkAllClick(sonName, cbAllId){
             var arrSon = document.getElementsByName(sonName);
-         var cbAll = document.getElementById(cbAllId);
-         var tempState=cbAll.checked;
-         for(i=0;i<arrSon.length;i++) {
-          if(arrSon[i].checked!=tempState)
-                   arrSon[i].click();
-         }
+            var cbAll = document.getElementById(cbAllId);
+            var tempState=cbAll.checked;
+            for(i=0;i<arrSon.length;i++) {
+                if(arrSon[i].checked!=tempState)
+                    arrSon[i].click();
+            }
         }
 
         // --子项复选框被单击---
         function ChkSonClick(sonName, cbAllId) {
-         var arrSon = document.getElementsByName(sonName);
-         var cbAll = document.getElementById(cbAllId);
-         for(var i=0; i<arrSon.length; i++) {
-             if(!arrSon[i].checked) {
-             cbAll.checked = false;
-             return;
-             }
-         }
-         cbAll.checked = true;
+            var arrSon = document.getElementsByName(sonName);
+            var cbAll = document.getElementById(cbAllId);
+            for(var i=0; i<arrSon.length; i++) {
+                if(!arrSon[i].checked) {
+                    cbAll.checked = false;
+                    return;
+                }
+            }
+            cbAll.checked = true;
         }
 
     </script>
 
     <div class="">
         <div class="">
-			<div class="" >
-			<div class="bor" >
+            <div class="" >
+                <div class="bor" >
                     <div class="label label-default table-custom-header">
 
                         <div class="table-title">
                             <span wicket:id="title"></span>
                         </div>
                         <div class="pull-right operation-bar btn-group-right">
-                            <div>
-                            <a id="add_relation_link" wicket:id="add_users_link" class="btn  btn-sm  btn-mini btn-info">添加</a>
-                            <a  wicket:id="remove_team_member_click" class="btn btn-danger btn-mini">删除</a>
+                            <div class="btn-group-team">
+                                <a id="add_relation_link" wicket:id="add_users_link" class="btn btn-sm  btn-mini btn-info">添加</a>
+                            </div>
+                            <div class="btn-group-team">
+                                <a  wicket:id="remove_team_member_click" class="btn btn-sm btn-danger btn-mini">删除</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div>
-                <form wicket:id="form">
-                 <span wicket:id="group">
-                    <table id="dt" style="width: 100%" class="table table-hover  table-condensed">
-                        <thead>
-                            <tr  bgcolor="#E4EFFB">
-                                <th class="table-hide " wicket:id="columnNameRepeater">
-                                <span wicket:id="columnName"></span></th>
-                                <th><input type="checkbox"  wicket:id="checkboxs"/></th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                      
-						<tr wicket:id="dataRowRepeater">
-							<td wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
-							<td><input  type="checkbox" wicket:id="checkbox"/></td>
-							
-						</tr>
-						
-						</tbody>
-                    </table>
-                    </span>
+                <div class="team-table">
+                    <form wicket:id="form">
+                        <span wicket:id="group">
+                            <table id="dt" style="width: 100%" class="table table-hover  table-condensed">
+                                <thead>
+                                    <tr  bgcolor="#E4EFFB">
+                                        <th class="table-hide " wicket:id="columnNameRepeater">
+                                            <span wicket:id="columnName"></span></th>
+                                        <th class="table-check">
+                                            <input type="checkbox"  wicket:id="checkboxs"/>
+                                            <label wicket:id="checkboxs_label" class="chk-header"><span></span></label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr wicket:id="dataRowRepeater">
+                                        <td class="table-hide " wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+                                        <td>
+                                            <input  type="checkbox" wicket:id="checkbox"/>
+                                            <label wicket:id="checkbox_label"><span></span></label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </span>
                     </form>
                     <wicket:fragment wicket:id="detailFragment">
                         <a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>

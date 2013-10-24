@@ -23,6 +23,8 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 
 public class FilterPanel extends Panel {
     private static final Logger logger = Logger.getLogger(FilterPanel.class);
@@ -74,9 +76,7 @@ public class FilterPanel extends Panel {
                 final String key = item.getModelObject();
                 String value = String.valueOf(numberMap.get(key).get("val"));
                 String num = String.valueOf(numberMap.get(key).get("sum"));
-                item.add(new CheckBox("type", models.get(key)){
-                    
-                    
+                CheckBox chk=new CheckBox("type", models.get(key)){
                     @Override
                     protected void onSelectionChanged(Boolean newSelection) {
                         super.onSelectionChanged(newSelection);
@@ -116,8 +116,13 @@ public class FilterPanel extends Panel {
                     protected boolean wantOnSelectionChangedNotifications() {
                         return true;
                     }
-                    
-                });
+                };
+                WebMarkupContainer container_label = new WebMarkupContainer("checkbox_label");
+                item.add(container_label);
+                chk.setMarkupId("check"+key);
+                
+                container_label.add(new AttributeAppender("for", new Model(chk.getMarkupId()), " "));
+                item.add(chk);
                 item.add(new Label("name", new Model(value)));
                 item.add(new Label("num", new Model(num)));
             }
