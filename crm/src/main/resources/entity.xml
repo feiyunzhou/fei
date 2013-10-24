@@ -445,10 +445,12 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<picklist>province</picklist>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
+				<priority>2</priority>
+				<childNode>city</childNode>
 			</field>
 			<field>
 				<name>city</name>
@@ -460,19 +462,9 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<picklist>city</picklist>
 				<fieldGroup>基本信息</fieldGroup>
-			</field>
-			<field>
-				<name>districts</name>
-				<display>医院区县</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<parentNode>province</parentNode>
 			</field>
 			<field>
 				<name>address</name>

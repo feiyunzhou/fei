@@ -215,3 +215,32 @@ CREATE TABLE crmuser
 ) ENGINE InnoDB;
 
 
+DROP TABLE IF EXISTS `area`;
+CREATE TABLE `area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+   `externalId` varchar(20) DEFAULT NULL,
+  `parentId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `area_parentid_cons` FOREIGN KEY (`parentId`) REFERENCES `city` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
+) ENGINE InnoDB;
+
+DROP TABLE IF EXISTS `city`;
+CREATE TABLE `city` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+   `externalId` varchar(20) DEFAULT NULL,
+  `parentId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+   CONSTRAINT `city_parentid_cons` FOREIGN KEY (`parentId`) REFERENCES `province` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
+) ENGINE InnoDB;
+
+DROP TABLE IF EXISTS `province`;
+CREATE TABLE `province` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+  `externalId` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE InnoDB;
+
+

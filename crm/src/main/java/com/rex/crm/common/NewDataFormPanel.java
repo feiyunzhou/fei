@@ -124,17 +124,24 @@ public class NewDataFormPanel extends Panel {
                             columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                         } else {
-                            List<Choice> pickList = DAOImpl
-                                    .queryPickList(currentField.getPicklist());
-                            Map<Long, String> list = Maps.newHashMap();
-                            List<Long> ids = Lists.newArrayList();
-                            for (Choice p : pickList) {
-                                list.put(p.getId(), p.getVal());
-                                ids.add(p.getId());
+                            
+                            if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
+                                
+                                
+
+                            } else {
+
+                                List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
+                                Map<Long, String> list = Maps.newHashMap();
+                                List<Long> ids = Lists.newArrayList();
+                                for (Choice p : pickList) {
+                                    list.put(p.getId(), p.getVal());
+                                    ids.add(p.getId());
+                                }
+                                IModel choiceModel = new Model(1L);
+                                models.put(currentField.getName(), choiceModel);
+                                columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this, ids, list, choiceModel));
                             }
-                            IModel choiceModel = new Model(1L);
-                            models.put(currentField.getName(), choiceModel);
-                            columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this, ids, list, choiceModel));
 
                         }
                     } else if (currentField.getRelationTable() != null) {

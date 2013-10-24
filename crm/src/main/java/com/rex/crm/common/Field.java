@@ -48,6 +48,11 @@ public class Field implements Serializable {
     private String default_value = null;
     @Expose
     private String default_value_type = null;
+    @Expose
+    private String childNode;
+    @Expose
+    private String parentNode;
+    
     
     public boolean isRequired() {
         return isRequired;
@@ -214,6 +219,22 @@ public class Field implements Serializable {
 
     public void setParam(boolean isParam) {
         this.isParam = isParam;
+    }
+
+    public String getChildNode() {
+        return childNode;
+    }
+
+    public void setChildNode(String childNode) {
+        this.childNode = childNode;
+    }
+
+    public String getParentNode() {
+        return parentNode;
+    }
+
+    public void setParentNode(String parentNode) {
+        this.parentNode = parentNode;
     }
     
 

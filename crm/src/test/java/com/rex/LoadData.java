@@ -8,15 +8,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Contact;
@@ -241,5 +244,77 @@ public class LoadData {
            }
            DbUtils.close(conn);
        }
+       
+       
+       @Test
+       public void loadCountries() throws SQLException {
+           String sql = "select * from province1";
+           String insertsql =  "INSERT INTO province (val,externalId) VALUES (?,?)";
+           //logger.debug(sql );
+           Connection conn = null;
+           List lMap = Lists.newArrayList();
+           int res =0;
+           try {
+               conn = DBHelper.getConnection();
+               QueryRunner run = new QueryRunner();
+               lMap = (List) run.query(conn, sql, new MapListHandler());
+               
+               for(Object m:lMap){
+                   String code =  (String)((Map)m).get("code");
+                   String val =  (String)((Map)m).get("val");
+                   res = run.update(conn, insertsql, val,code)+1;
+               }
+               
+               
+
+           } catch (SQLException e) {
+               e.printStackTrace();
+           } finally {
+               DBHelper.closeConnection(conn);
+           }
+
+       }
+       
+       
+       @Test
+       public void loadCities() throws SQLException {
+           String sql = "select * from city1";
+           String insertsql =  "INSERT INTO city (val,externalId,parentId) VALUES (?,?,?)";
+           //logger.debug(sql );
+           Map<String,Integer> countryCode2Id =  Maps.newHashMap();
+           Connection conn = null;
+           
+           int res =0;
+           try {
+               conn = DBHelper.getConnection();
+               QueryRunner run = new QueryRunner();
+               List<Map<String, Object>> countries = run.query(conn, "select * from province", new MapListHandler());
+               for(Map<String,Object> c:countries){
+                   String externalId =  (String)(c).get("externalId");
+                   int id =  (Integer)(c).get("id");
+                   countryCode2Id.put(externalId, id);
+               }             
+               
+                List<Map<String, Object>> lMap = run.query(conn, "select * from city1", new MapListHandler());
+               
+               for(Object m:lMap){
+                   String code =  (String)((Map)m).get("code");
+                   String val =  (String)((Map)m).get("val");
+                   String provincecode =  (String)((Map)m).get("provincecode");
+                   if(countryCode2Id.containsKey(provincecode)){
+                     res = run.update(conn, insertsql, val,code,countryCode2Id.get(provincecode))+1;
+                   }
+               }
+               
+               
+
+           } catch (SQLException e) {
+               e.printStackTrace();
+           } finally {
+               DBHelper.closeConnection(conn);
+           }
+
+       }
+       
 	
 }
