@@ -182,7 +182,7 @@ public class NewDataFormPanel extends Panel {
                             models.put(fn, choiceModel);
                             //columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
 
-                            columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(), defaultValue, foreignKey));
+                            columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(), defaultValue, choiceModel));
                         }
                     } else {
                         if (j % 2 == 0) {
@@ -323,16 +323,16 @@ public class NewDataFormPanel extends Panel {
     private class RelationTableSearchFragment extends Fragment {
 
         public RelationTableSearchFragment(String id, String markupId,
-                MarkupContainer markupProvider, final String entityName, final String defaultValue, final long defaultId) {
+                MarkupContainer markupProvider, final String entityName, final String defaultValue, final IModel defaultModel) {
             super(id, markupId, markupProvider);
 
             PageParameters params = new PageParameters();
             params.set("en", entityName);
-            params.set("target", defaultId);
+            params.set("target", (Long)defaultModel.getObject());
             PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
                     .setWidth(850).setLeft(150).setTop(200);
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params).setPopupSettings(popupSettings));
-            HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", new Model(defaultId));
+            HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", defaultModel);
             hidden.add(new AttributeAppender("id", entityName + "_id"));
             add(hidden);
             TextField<String> text = new TextField<String>("selected_value_input", new Model(defaultValue));
