@@ -449,6 +449,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<fieldGroup>基本信息</fieldGroup>
+				<isParam>true</isParam>
 				<priority>2</priority>
 				<childNode>city</childNode>
 			</field>
@@ -463,6 +464,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<picklist>city</picklist>
+				<isParam>true</isParam>
 				<fieldGroup>基本信息</fieldGroup>
 				<parentNode>province</parentNode>
 			</field>
@@ -804,6 +806,8 @@
 				<picklist>province</picklist>
 				<childNode>city</childNode>
 				<fieldGroup>基本信息</fieldGroup>
+				<default-value-type>var</default-value-type>
+				<default-value>account.province</default-value>
 			</field>
 			<field>
 				<name>city</name>
@@ -818,6 +822,8 @@
 				<picklist>city</picklist>
 				<parentNode>province</parentNode>
 				<fieldGroup>基本信息</fieldGroup>
+				<default-value-type>var</default-value-type>
+				<default-value>account.city</default-value>
 			</field>
 			<field>
 				<name>districts</name>

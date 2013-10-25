@@ -141,8 +141,23 @@ public class NewDataFormPanel extends Panel {
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                         } else {
                             
+                            long default_key = 1L;
+                            if (currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("var")){
+                                if (params != null) {
+                                    
+                                    String choiceId = currentField.getDefault_value();
+                                    System.out.println("choiceId::::::"+choiceId);
+                                    if(choiceId!=null && choiceId!=null && params.get(choiceId.trim())!=null){
+                                        default_key = Long.parseLong(String.valueOf(params.get(choiceId.trim())));  
+                                        System.out.println("default_key::::::"+default_key);
+                                    }
+                                 
+                                }
+                            }
+                            
+                            
                             if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
-                                 IModel<Choice> selected_model =  new Model(new Choice(1L,""));
+                                 IModel<Choice> selected_model =  new Model(new Choice(default_key,""));
                                 IModel<List<? extends Choice>> choices_models = null;
                                 
                                 if(currentField.getChildNode()!=null && currentField.getParentNode() == null ){
