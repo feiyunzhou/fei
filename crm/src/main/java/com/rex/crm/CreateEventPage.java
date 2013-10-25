@@ -100,7 +100,7 @@ public class CreateEventPage extends TemplatePage {
                 String ed = getRequest().getPostParameters().getParameterValue("end_date").toString();
                 String visit_type = String.valueOf(activity_type);
                 logger.debug("opening:" + String.valueOf(openling.getId()));
-                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 String sdt = sd;
                 String edt = ed;
                 int contactId = 0;
