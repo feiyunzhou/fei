@@ -42,7 +42,8 @@ CREATE TABLE account
     responsible_person VARCHAR(255),
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-
+ALTER table account modify province int(11);
+ALTER table account modify city int(11);
 
 drop table if exists accountcrmuser;
 CREATE TABLE accountcrmuser 

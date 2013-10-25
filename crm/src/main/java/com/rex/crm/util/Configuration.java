@@ -238,6 +238,16 @@ public class Configuration {
                         field.setDefault_value_type(default_value_type);
                     }
                     
+                    String childNode = sub2.getString("childNode");
+                    if(childNode !=null){
+                        field.setChildNode(childNode);
+                    }
+                    
+                    String parentNode = sub2.getString("parentNode");
+                    if(parentNode !=null){
+                        field.setParentNode(parentNode);
+                    }
+                    
                     field.setPrimaryKey(Boolean.parseBoolean(sub2.getString("isPrimaryKey")));
                     field.setDetailLink(Boolean.parseBoolean(sub2.getString("isDetailLink"))); 
                     field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible")));
@@ -246,6 +256,8 @@ public class Configuration {
                     field.setBaseInfo(Boolean.parseBoolean(sub2.getString("isBaseInfo")));
                     field.setSearchable(Boolean.parseBoolean(sub2.getString("isSearchable")));
                     field.setParam(Boolean.parseBoolean(sub2.getString("isParam")));
+                    
+                    
                     
                 }
                 

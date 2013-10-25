@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -35,6 +36,9 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -59,6 +63,8 @@ public class NewDataFormPanel extends Panel {
     private int port = 25;
     private Map<String, List<Field>> addFieldGroupMap = Maps.newHashMap();
     private static int NUM_OF_COLUMN = 1;
+    private Map<String, IModel> parentModels = Maps.newHashMap();
+    private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
     final String user = ((SignIn2Session) getSession()).getUser();
     public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
         super(id);
@@ -127,7 +133,7 @@ public class NewDataFormPanel extends Panel {
 
                         continue;
                     }
-                    Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
+                   final Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
                     if (currentField.getPicklist() != null) {
 
                         if (j % 2 == 0) {
@@ -136,8 +142,53 @@ public class NewDataFormPanel extends Panel {
                         } else {
                             
                             if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
+                                 IModel<Choice> selected_model =  new Model(new Choice(1L,""));
+                                IModel<List<? extends Choice>> choices_models = null;
+                                
+                                if(currentField.getChildNode()!=null && currentField.getParentNode() == null ){
+                                    choices_models = Model.ofList(DAOImpl.queryPickList(currentField.getPicklist()));
+                                  }
+                                
+                                if(currentField.getParentNode()!=null){
+                                    choices_models = new AbstractReadOnlyModel<List<? extends Choice>>(){
+                                        List<Choice> choices;
+
+                                        @Override
+                                        public List<? extends Choice> getObject() {
+                                            IModel pm = parentModels.get(currentField.getParentNode());
+                                            if(pm!=null){
+                                              choices =  DAOImpl.queryPickListByFilter(currentField.getPicklist(), "parentId",String.valueOf(((Choice)pm.getObject()).getId()));
+                                             
+                                            }else{
+                                                choices = Lists.newArrayList();
+                                            }
+                                            return choices;
+                                        }
+                                        
+                                        @Override
+                                        public void detach() {
+                                            choices = null;
+                                            //System.out.println("detached");
+                                        }
+   
+                                      };
+                                }
                                 
                                 
+                                DropDownChoiceFragment  selector = new DropDownChoiceFragment("celldatafield", "dropDownFragment", this, choices_models, selected_model,entity,currentField);
+                                columnitem.add(selector);
+                                selector.setOutputMarkupId(true);
+                               
+                                if(currentField.getParentNode()!=null){
+                                   
+                                   childDropDownComponent.put(currentField.getName(),selector);
+                                }
+                                
+                                models.put(currentField.getName(), selected_model);
+                                
+                                columnitem.add(selector);
+                                
+                               
 
                             } else {
 
@@ -250,7 +301,9 @@ public class NewDataFormPanel extends Panel {
                     if (models.get(key).getObject() instanceof String) {
                         values.add("'" + (String) models.get(key).getObject()
                                 + "'");
-                    } else {
+                    }else if(models.get(key).getObject() instanceof Choice){
+                        values.add(String.valueOf(((Choice) models.get(key).getObject()).getId()));
+                    }else {
                         values.add(String.valueOf(models.get(key).getObject()));
                     }
                 }
@@ -329,8 +382,63 @@ public class NewDataFormPanel extends Panel {
                         }
                     }));
         }
+        
+        public DropDownChoiceFragment(String id, String markupId,MarkupContainer markupProvider,
+                IModel choices,IModel default_model,final Entity entity, final Field currentField){
+            super(id, markupId, markupProvider);
+            DropDownChoice dropDown = createDropDownListFromPickList("dropDownInput",choices,default_model);
+            add(dropDown);
+            
+            if(currentField.getChildNode()!=null){
+                parentModels.put(currentField.getName(), default_model);
+                //childDropDownComponent.put(field.get("child-pl"), null);
+                
+                dropDown.add(new AjaxFormComponentUpdatingBehavior("onchange"){
+
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        //System.out.println("TTTT:"+field.get("name"));
+                        //System.out.println("childDropDownComponent:"+childDropDownComponent);
+                        target.add(childDropDownComponent.get( currentField.getChildNode()));
+                        //System.out.println("currentfield code:"+String.valueOf(((Choice)parentModels.get(field.get("name")).getObject()).getCode()));
+                            //System.out.println("DDDD:"+table.get(field.get("childNode")).get("childNode"));
+                            if( entity.getFieldByName(currentField.getChildNode()).getChildNode() != null ){
+                              
+                               parentModels.get(entity.getFieldByName(currentField.getChildNode()).getName()).setObject(new Choice(-1L,""));
+                               target.add(childDropDownComponent.get(entity.getFieldByName(currentField.getChildNode()).getChildNode()));
+                               // target.
+                            }
+                        
+                    }
+                    
+                    
+                   
+                    
+                 });
+             }
+            
+        } 
+        
     }
 
+
+    private DropDownChoice createDropDownListFromPickList(String markupId,IModel choices,IModel default_model) {
+        return new DropDownChoice<Choice>(markupId, default_model, choices,
+                new IChoiceRenderer<Choice>() {
+                    @Override
+                    public Object getDisplayValue(Choice choice) {
+                        // TODO Auto-generated method stub
+                        return choice.getVal();
+                    }
+                    @Override
+                    public String getIdValue(Choice choice, int index) {
+                        // TODO Auto-generated method stub
+                        return String.valueOf(choice.getId());
+                    }
+                    
+                    
+                });
+    }
     private class TextareaFrag extends Fragment {
 
         public TextareaFrag(String id, String markupId, MarkupContainer markupProvider, IModel model) {
