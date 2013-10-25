@@ -1443,7 +1443,7 @@
 			                             contact.name as contactname_val  
 			                from activity\,contact\,activitycrmuser\,activity_event_type_pl\,account 
 			                where contact.id= activity.contactId AND activitycrmuser.activityId=activity.id AND activitycrmuser.crmuserId=? AND 
-			                activity_event_type_pl.id=event_type AND account.id=contact.accountId) as
+			                activity_event_type_pl.id=event_type AND account.id=contact.accountId order by whenadded DESC) as
 			aActivity
 		</sql>
 		
@@ -1455,7 +1455,7 @@
 			                where (activity.id in (select activityId from activitycrmuser where crmuserid = ?) OR 
 			                       activity.id in (select activityId from activitycrmuser where crmuserid in (select crmuser.id from crmdb.crmuser where reportto =?))) AND 
 			                       contact.id= activity.contactId AND 
-			                       activity_event_type_pl.id=event_type AND account.id=contact.accountId) as
+			                       activity_event_type_pl.id=event_type AND account.id=contact.accountId order by whenadded DESC) as
 			aActivity
 		</sql-manager>
 		
@@ -1464,13 +1464,13 @@
 			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
 			                             contact.name as contactname_val
 			                      from activity\,contact\,activity_event_type_pl\,account
-			                      where contact.id= activity.contactId AND activity_event_type_pl.id=event_type AND account.id=contact.accountId AND (? IS NOT NULL)) 
+			                      where contact.id= activity.contactId AND activity_event_type_pl.id=event_type AND account.id=contact.accountId AND (? IS NOT NULL) order by whenadded DESC) 
 			                      as aActivity
 		</sql-admin>
 		<sql-ent>select * from (select activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
 			contactName\, contact.accountId as accountName\, contact.name as cn from activity\,
-			contact\,activitycrmuser where contact.id= activity.contactId AND activity.id=? AND activitycrmuser.activityId=activity.id) as
+			contact\,activitycrmuser where contact.id= activity.contactId AND activity.id=? AND activitycrmuser.activityId=activity.id order by whenadded DESC) as
 			aActivity
 		</sql-ent>
 		<fields>
