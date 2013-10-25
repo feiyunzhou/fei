@@ -801,6 +801,8 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<picklist>province</picklist>
+				<childNode>city</childNode>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -813,6 +815,8 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
+				<picklist>city</picklist>
+				<parentNode>province</parentNode>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>

@@ -31,8 +31,8 @@ CREATE TABLE account
     tel VARCHAR(255),
     fax VARCHAR(255),
     market_classification MEDIUMINT,
-    province VARCHAR(255),
-    city VARCHAR(255),
+    province int(11),
+    city int(11),
     districts VARCHAR(255),
     address VARCHAR(255),
     owner VARCHAR(255),
@@ -42,8 +42,7 @@ CREATE TABLE account
     responsible_person VARCHAR(255),
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-ALTER table account modify province int(11);
-ALTER table account modify city int(11);
+
 
 drop table if exists accountcrmuser;
 CREATE TABLE accountcrmuser 
@@ -151,8 +150,8 @@ CREATE TABLE contact
     status VARCHAR(255),
     market_classification MEDIUMINT,
     grade MEDIUMINT,
-    province VARCHAR(255),
-    city VARCHAR(255),
+    province int(11),
+    city int(11),
     districts VARCHAR(255),
     duty MEDIUMINT,
     job_title MEDIUMINT,
@@ -243,5 +242,8 @@ CREATE TABLE `province` (
   `externalId` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE InnoDB;
+
+
+
 
 
