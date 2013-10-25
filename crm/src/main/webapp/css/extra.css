@@ -501,6 +501,11 @@ a:hover, a:focus {
         padding-right: 0;
         padding-left: 0;
     }
+    .action-btn button {
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+    }
     .action-btn a {
         width: 100%;
         padding-right: 0;
