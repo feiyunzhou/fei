@@ -61,6 +61,17 @@
                     totalScore = parseInt(planing)+parseInt(summary)+parseInt(openling)+parseInt(enquery_listening)+parseInt(deliverable)+parseInt(objection_handing);
                     $("#total_score").attr("value",parseInt(totalScore));
                 }
+                
+                function validateFields(){
+                    var sdt = new Date($("#start_datetime").val());
+                    var edt = new Date( $("#end_datetime").val());
+                    if(sdt.getTime() >= edt.getTime()) {
+                        alert("结束时间不能早于开始时间！");
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
             </script>
 
 
@@ -308,7 +319,7 @@
                                 <div class="table-column">
                                     <div class="form_datetime">
                                         <div class="date-html5" id="datepicker_from">
-                                            <input name="start_date" wicket:id="start_date_input" type="datetime-local" />
+                                            <input id="start_datetime" name="start_date" wicket:id="start_date_input" type="datetime-local" />
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +331,7 @@
                                 <div class="table-column">
                                     <div class="form_datetime">
                                         <div class="date-html5" id="datepicker_to">
-                                            <input name="end_date" wicket:id="end_date_input" type="datetime-local" />
+                                            <input name="end_date" id="end_datetime"  wicket:id="end_date_input" type="datetime-local" />
                                         </div>
                                     </div>
                                 </div>
@@ -347,7 +358,7 @@
                         <hr/>
                         <div class="btn-toolbar">
                             <div class="btn-group action-btn">
-                                <input type="submit" class="btn btn-primary">保存&返回</input>
+                                <input type="submit" onClick="return validateFields();" class="btn btn-primary">保存&返回</input>
                             </div>
                             <div class="btn-group action-btn">
                                 <a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
