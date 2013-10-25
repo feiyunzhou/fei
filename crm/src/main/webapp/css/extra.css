@@ -1,7 +1,15 @@
 .btn.dropdown-toggle.clearfix.btn-primary {
     width: 96px;
 }
-
+#selected_contact {
+    width: auto;
+}
+.radio-label {
+    padding-top: 4px;
+}
+input[type="radio"] {
+    margin-top: 0;
+}
 input[type="checkbox"] {
     display:none;
 }
@@ -9,7 +17,6 @@ input[type="checkbox"] + label {
     margin-bottom: 0px;
 }
 input[type="checkbox"] + label span {
-
     font-family: 'Flat-UI-Icons';
     display:inline-block;
     font-size: 20px;
@@ -115,6 +122,9 @@ a:hover, a:focus {
 .tag{
     width: 130px;
     text-align: right;
+}
+.tag .form_datetime {
+    font-weight:bold;
 }
 .btn-group-right{
     float: right;
@@ -451,6 +461,20 @@ a:hover, a:focus {
     }
     .chk-header {
         margin-top: 0px;
+    }
+    input[type="radio"] {
+        width: auto;
+    }
+    .search-btn {
+        float: right;
+        margin-top: -30px;
+        height: 23px;
+        width: 15px;
+        padding-top: 7px;
+        padding-left: 20px;
+    }
+    #selected_contact {
+        width: 100%;
     }
     @-moz-document url-prefix() { 
         .detailed {

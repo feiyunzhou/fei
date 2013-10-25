@@ -99,14 +99,12 @@ public class CreateEventPage extends TemplatePage
             {
                 logger.debug("this form was submitted!");
                 String sd = getRequest().getPostParameters().getParameterValue("start_date").toString();
-                String st = getRequest().getPostParameters().getParameterValue("start_time").toString();
                 String ed = getRequest().getPostParameters().getParameterValue("end_date").toString();
-                String et = getRequest().getPostParameters().getParameterValue("end_time").toString();
                 String visit_type = String.valueOf(activity_type);
                 logger.debug("opening:"+String.valueOf(openling.getId()));
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String sdt = sd+ " " +st;
-                String edt = ed + " " + et;
+                String sdt = sd;
+                String edt = ed;
                 int contactId = 0;
                 Date startdt = null;
                 Date enddt = null;
@@ -208,7 +206,7 @@ public class CreateEventPage extends TemplatePage
          String startdate  = null;
          long current = System.currentTimeMillis();
          Date current_date_time = new Date(current);
-         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
          //set default time to current time
          if(startdateValue != null && !startdateValue.isEmpty() && !startdateValue.isNull()){
               startdate = startdateValue.toString();
@@ -218,14 +216,10 @@ public class CreateEventPage extends TemplatePage
          WebMarkupContainer start_date_input = new WebMarkupContainer("start_date_input");
          form.add(start_date_input);
          start_date_input.add(new AttributeModifier("value",startdate));
-         SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm");
-         WebMarkupContainer start_time_input = new WebMarkupContainer("start_time_input");
-         form.add(start_time_input);
-         start_time_input.add(new AttributeModifier("value",timeformatter.format(current_date_time)));
          SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
          Date sDate = current_date_time;
          try {
-             sDate = dateformat2.parse(startdate+ " " + timeformatter.format(current_date_time));
+             sDate = dateformat2.parse(startdate);
         } catch (ParseException e) {
             logger.warn("failed to parse date:",e);
         }
@@ -233,9 +227,6 @@ public class CreateEventPage extends TemplatePage
          WebMarkupContainer end_date_input = new WebMarkupContainer("end_date_input");
          form.add(end_date_input);
          end_date_input.add(new AttributeModifier("value",dateformat.format(next_date_time)));
-         WebMarkupContainer end_time_input = new WebMarkupContainer("end_time_input",new Model(""));
-         form.add(end_time_input);
-         end_time_input.add(new AttributeModifier("value",timeformatter.format(next_date_time)));
          PopupSettings popupSettings = new PopupSettings("查找").setHeight(470).setWidth(850).setLeft(150).setTop(200);
          form.add(new BookmarkablePageLink<Void>("search_btn", SearchContactPage.class).setPopupSettings(popupSettings));
          form.add(new HiddenField("hidden_contact_select" ,new PropertyModel<String>(this,"hidden_contact_select")));
