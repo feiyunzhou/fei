@@ -1538,6 +1538,8 @@ public class DAOImpl {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
               search_target = "";
         }
+        if(excludeId == null) excludeId = "-1";
+        
         String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (role=2) AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
         logger.debug("searchManager:"+ sql );
         Connection conn = null;
