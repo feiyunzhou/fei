@@ -11,7 +11,7 @@
         });
         function validateFields(){
             if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
-                alert("璇锋煡璇㈠～鍏ュ尰鐤楁満鏋�");
+                alert("请查询添入医院！");
                 return false;
             }else{
                 return true;
@@ -19,6 +19,10 @@
         }
     </script>
     <div>
+    	<div wicket:id="promptDiv" class="alert" >
+			<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
+			<span wicket:id="prompt" ><strong></strong></span>
+		</div>
         <form wicket:id="form" class="form-horizontal" >
             <fieldset>
                 <div  wicket:id="fieldGroupRepeater">

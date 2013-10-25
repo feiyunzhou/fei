@@ -60,12 +60,23 @@ public class NewDataFormPanel extends Panel {
     private Map<String, List<Field>> addFieldGroupMap = Maps.newHashMap();
     private static int NUM_OF_COLUMN = 1;
     final String user = ((SignIn2Session) getSession()).getUser();
-
     public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
         super(id);
+        //add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem divitem = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        divitem.add(promptButton);
+        final Label promptLabel = new Label("prompt","红色输入框是必填字段不能为空，请输入!");
+        divitem.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(divitem);
+        add(div);	
         final Map<String, IModel> models = Maps.newHashMap();
         final String userId = ((SignIn2Session) getSession()).getUserId();
         List<Field> fields = entity.getFields();
+        
         for (Field f : fields) {
             if (addFieldGroupMap.get(f.getFieldGroup()) != null) {
                 addFieldGroupMap.get(f.getFieldGroup()).add(f);
@@ -213,19 +224,28 @@ public class NewDataFormPanel extends Panel {
                 logger.debug(models);
                 List<String> fieldNames = Lists.newArrayList();
                 List<String> values = Lists.newArrayList();
+                //创建一个标识，判断非空验证是否通过
+                boolean flag = true;
                 //判断属性设置
                 for (String key : models.keySet()) {
                     fieldNames.add(key);
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
+                    //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
                     if(field.isRequired()){
-                    	logger.debug("sdsas");
-                    	if("".equals((String) models.get(key).getObject())){
+                    	if(null==(String) models.get(key).getObject()){
+                    		flag = false;
                     		logger.debug("value:"+(String) models.get(key).getObject());
                     		//如果为空写出提示信息
-                    		
+                    		logger.debug("fieldName:"+field.getName()+"不能为空");
+                    		div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    	}else{
+                    		flag = true;
                     	}
-                    }
+                	}
                     System.out.println(fieldNames);
                     if (models.get(key).getObject() instanceof String) {
                         values.add("'" + (String) models.get(key).getObject()
@@ -234,30 +254,30 @@ public class NewDataFormPanel extends Panel {
                         values.add(String.valueOf(models.get(key).getObject()));
                     }
                 }
-
-                //if entity is crmuser  add loginName
-                if ("crmuser".equals(entity.getName())) {
-                    long key = -1;
-                    key= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, userId);
-                    if (key >0 ) {
-                    	CRMUser crmuser = DAOImpl.getCrmUserById((int)key);
-                        //此时需发送邮件
-                        long crmUserCode = crmuser.getTs();
-                        String sendEmail = String.valueOf(models.get("email").getObject());
-                        //创建激活码 getUserByuserCode
-                        //传递邮箱地址，用户code.
-                        SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ crmuser.getId(), sendEmail);
-                        
+                if(flag){
+            		//if entity is crmuser  add loginName
+                    if ("crmuser".equals(entity.getName())) {
+                        long crmuserkey = -1;
+                        crmuserkey= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, userId);
+                        if (crmuserkey >0 ) {
+                        	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
+                            //此时需发送邮件
+                            long crmUserCode = crmuser.getTs();
+                            String sendEmail = String.valueOf(models.get("email").getObject());
+                            //创建激活码 getUserByuserCode
+                            //传递邮箱地址，用户code.
+                            SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ crmuser.getId(), sendEmail);
+                            
+                        }
+                    } else {
+                        long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, userId);
+                        if (generatedId > 0) {
+                            DAOImpl.insert2UserRelationTable(entity.getName(), userId,
+                                    String.valueOf(generatedId));
+                        }
                     }
-                } else {
-                    long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, userId);
-                    if (generatedId > 0) {
-                        DAOImpl.insert2UserRelationTable(entity.getName(), userId,
-                                String.valueOf(generatedId));
-                    }
+                    setResponsePage(PageFactory.createPage(entity.getName()));
                 }
-                setResponsePage(PageFactory.createPage(entity.getName()));
-
             }
         };
         form.add(fieldGroupRepeater);

@@ -72,7 +72,7 @@ public final class SignIn extends WebPage
         	SignIn2Session session = getMysession();
         	//clear session user
         	session.setUser(null);
-        	//在此处判断是否用户名密码是否为空
+        	//判断用户是否激活密码是否存在
         	if("".equals(getUsername())||"".equals(getPassword())){
         		 String errmsg = getString("loginError", null, "用户名和密码不能为空!");
                  error(errmsg);
@@ -86,7 +86,7 @@ public final class SignIn extends WebPage
                        error(errmsg);
                    }else{
        	        	// Sign the user in
-       	            if (session.signIn(getUsername(), getPassword()))
+       	            if (session.signIn(getUsername(),getPassword()))
        	            {
        	                    setResponsePage(getApplication().getHomePage());
        	            }
