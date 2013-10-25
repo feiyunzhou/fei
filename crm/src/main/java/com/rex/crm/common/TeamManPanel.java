@@ -150,7 +150,10 @@ public class TeamManPanel extends Panel {
         }else{
             WebMarkupContainer container = new WebMarkupContainer("checkboxs");
             container.setVisible(false);
+            WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
+            container_label.setVisible(false);
             group.add(container);
+            group.add(container_label);
         }
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
