@@ -206,20 +206,21 @@ public class CreateEventPage extends TemplatePage
          String startdate  = null;
          long current = System.currentTimeMillis();
          Date current_date_time = new Date(current);
-         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
          //set default time to current time
          if(startdateValue != null && !startdateValue.isEmpty() && !startdateValue.isNull()){
               startdate = startdateValue.toString();
          }else{     
              startdate = dateformat.format(current_date_time);
          }
+         SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm");
          WebMarkupContainer start_date_input = new WebMarkupContainer("start_date_input");
          form.add(start_date_input);
-         start_date_input.add(new AttributeModifier("value",startdate));
-         SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+         start_date_input.add(new AttributeModifier("value",startdate.substring(0, 10) + "T" + timeformatter.format(current_date_time)));
+         SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
          Date sDate = current_date_time;
          try {
-             sDate = dateformat2.parse(startdate);
+             sDate = dateformat2.parse(startdate + "T" + timeformatter.format(current_date_time));
         } catch (ParseException e) {
             logger.warn("failed to parse date:",e);
         }
