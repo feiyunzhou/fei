@@ -228,7 +228,7 @@ public class EditDataFormPanel extends Panel {
 							models.put(fn, choiceModel);
 							
 							fieldNameToModel.put(fn, choiceModel);
-						    columnitem.add(new RelationTableSearchFragment("editdata","relationTableSearchFragment",this,currentField.getRelationTable(),value,choiceModel));
+						    columnitem.add(new RelationTableSearchFragment("editdata","relationTableSearchFragment",this,currentField.getRelationTable(),value,choiceModel,entityId));
 						}
 					} 
 						else {
@@ -331,12 +331,14 @@ public class EditDataFormPanel extends Panel {
 	}
     private class RelationTableSearchFragment extends Fragment {
         public RelationTableSearchFragment(String id, String markupId,
-                MarkupContainer markupProvider, final String entityName,final String value, IModel model) {
+                MarkupContainer markupProvider, final String entityName,final String value, IModel model,final String eid) {
             super(id, markupId, markupProvider);
 
             PageParameters params = new PageParameters();
             params.set("en", entityName);
             params.set("target", (long)model.getObject());
+            params.set("eid", eid);
+            
             PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
                     .setWidth(850).setLeft(150).setTop(200);
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class,params).setPopupSettings(popupSettings));

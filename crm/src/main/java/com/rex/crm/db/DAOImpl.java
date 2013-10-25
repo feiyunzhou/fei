@@ -1534,7 +1534,7 @@ public class DAOImpl {
         return lMap;
     }
     
-    public static List searchManager(String search_target,int excludeId) {
+    public static List searchManager(String search_target,String excludeId) {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
               search_target = "";
         }

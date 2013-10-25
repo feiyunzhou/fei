@@ -44,15 +44,15 @@ public class SelectEntryPage extends WebPage {
      */
     public SelectEntryPage() {
         String entityName = getRequest().getRequestParameters().getParameterValue("en").toString();
-        final int excludeId = getRequest().getRequestParameters().getParameterValue("target").toInt();
+        final String excludeId = getRequest().getRequestParameters().getParameterValue("eid").toString();
         initPage(null,entityName,excludeId);
     }
 
-    public SelectEntryPage(List<Map> maplist,String entityName,int excludeId) {
+    public SelectEntryPage(List<Map> maplist,String entityName,String excludeId) {
         initPage(maplist,entityName,excludeId);
     }
 
-    public void initPage(List<Map> list,final String entityName,final int excludeId) {
+    public void initPage(List<Map> list,final String entityName,final String excludeId) {
         final String userId = ((SignIn2Session) getSession()).getUserId();
         
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
