@@ -3,7 +3,7 @@
 		$(document).ready(function() {
 			$('#calendar').fullCalendar({
 				// put your options and callbacks here
-				theme: true,
+			    theme: true,
 				header : {
 					left : 'prev,next today',
 					center : 'title',
@@ -127,28 +127,32 @@
                         obj.name = data[i].name;
                         obj.id =   data[i].id;
                         objs.push(obj);
+                        
+                       
                     }
 
                     
-                    $('#crmuser_select').select2({
-                        data : {
-                            results : objs ,
-                            text : 'name'
-                        },
-                        formatSelection : selectformat,
-                        formatResult : selectformat
-                    });
+                    for(var i=0;i<objs.length;i++){
+                    	 $("#crmuser_select").append("<option value='"+objs[i].id+"'>"+objs[i].name+"</option>");
+                    }
+                 /*    $('#crmuser_select').select2({
+                         data : {
+                             results : objs ,
+                             text : 'name'
+                         },
+                         formatSelection : selectformat,
+                         formatResult : selectformat
+                     }); */
+                    // $("#crmuser_select").select2("val", userInfo.id);
 
-                    $("#crmuser_select").select2("val", userInfo.id);
 
-
-                    $("#crmuser_select").on("change", function(e){
-                        console.log("change " + JSON.stringify({
+                    $("#crmuser_select").change(function(e){
+                      /*   console.log("change " + JSON.stringify({
                             val : e.val,
                             added : e.added,
                             removed : e.removed,
                             defaultContact : e.defaultContact
-                        }));
+                        })); */
 
                         //firstly, remove all events from the calendar
                         $('#calendar').fullCalendar('removeEvents', function filter(event) {
@@ -157,7 +161,7 @@
                        });
                         
                         var userIdex = {};
-                        userIdex.id = e.val;
+                        userIdex.id = $(this).children('option:selected').val();
                         renderCalendarWithDataRemotely(userIdex);
 
                     });
@@ -189,7 +193,8 @@
 				<div id="inforior_select_control" style="display:none;" class="control-group">
 					<label class="control-label" for="inforior">下属：</label>
 					<div class="controls">
-						<input type="hidden" id="crmuser_select" style="width: 200px" tabindex="-1" class="select2-offscreen input">
+						<!-- <input type="hidden" id="crmuser_select" style="width: 200px" tabindex="-1" class="select2-offscreen input"> -->
+						<select id="crmuser_select"></select>
 					</div>
 				</div>
 				</form>

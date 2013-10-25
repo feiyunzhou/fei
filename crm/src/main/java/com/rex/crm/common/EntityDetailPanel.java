@@ -143,8 +143,8 @@ public class EntityDetailPanel extends Panel {
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryCachedRelationDataById(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
-                            if ((currentField.getName().equals("accountId"))) {
-                                columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this, value));
+                            if ((currentField.getName().equals("accountName"))) {
+                                columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this,value, String.valueOf(data.get(currentField.getName()))));
                             } else {
                                 columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
                             }
@@ -180,17 +180,17 @@ public class EntityDetailPanel extends Panel {
 
     private class DetailLinkFragment extends Fragment {
 
-        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider, String caption) {
+        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider,String name, final String eid) {
             super(id, markupId, markupProvider);
-            final String str = DAOImpl.queryEntityByName(caption);
+//            final String str = DAOImpl.queryEntityByName(caption);
 
             add(new Link("detailclick") {
                 @Override
                 public void onClick() {
 
-                    setResponsePage(new EntityDetailPage("account", str));
+                    setResponsePage(new EntityDetailPage("account", eid));
                 }
-            }.add(new Label("caption", new Model<String>(caption))));
+            }.add(new Label("caption", new Model<String>(name))));
         }
     }
 }
