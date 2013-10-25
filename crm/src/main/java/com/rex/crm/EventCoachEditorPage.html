@@ -40,7 +40,8 @@
 		<div class="row-fluid">
 			<div class="span7">
 				<form wicket:id="form" class="form-horizontal">
-						<div title="活动">
+					<div class="table-content">
+						<label id="datestr"></label>
                             <div class="table-cell">
 								<div class="table-column tag">
 									<div class="form_datetime" style="font-weight:bold;"><span>活动名称：</span></div>
@@ -61,9 +62,9 @@
 									</div>
 								</div>
 							</div>
-                                  <div   class="table-cell">
-                                  	<div class="table-column tag">
-									<div class="form_datetime" style="font-weight:bold;"><span>被辅导人：</span></div>
+                            <div   class="table-cell">
+                               	<div class="table-column tag">
+								<div class="form_datetime" style="font-weight:bold;"><span>被辅导人：</span></div>
 								</div>
 								<div class="table-column">
 									<div class="form_datetime">
@@ -252,21 +253,12 @@
 								</div>
 							</div>
 						</div>
-					<hr/>
-					<div class="btn-toolbar">
-						<div class="btn-group">
-							<a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
-						</div>
-						<div class="btn-group">
-							<input type="submit" href="#" class="btn btn-primary">保存&返回</input>
-						</div>
-					</div>
-				</form>
+					</form>
 				</div>
-			<div class="span5">
-				<h3>提示信息</h3>
-			</div>
-		</div>
+				<div class="span5">
+					<h3>提示信息</h3>
+				</div> 
+			</div>	
 	</wicket:extend>
 </body>
 </html>

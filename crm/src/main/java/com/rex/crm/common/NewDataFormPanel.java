@@ -219,7 +219,10 @@ public class NewDataFormPanel extends Panel {
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
                     if(field.isRequired()){
+                    	logger.debug("sdsas");
                     	if("".equals((String) models.get(key).getObject())){
+                    		logger.debug("value:"+(String) models.get(key).getObject());
+                    		//如果为空写出提示信息
                     		
                     	}
                     }
@@ -369,7 +372,7 @@ public class NewDataFormPanel extends Panel {
             }
             if (currentField.isRequired()) {
                 text.add(new AttributeAppender("style", new Model("border:1px solid red;"), ";"));
-                text.add(new AttributeAppender("required", new Model("required"), ";"));
+                //text.add(new AttributeAppender("required", new Model("required"), ";"));
             }
             add(text);
             text.add(new AttributeAppender("type", new Model(currentField.getDataType()), ";"));

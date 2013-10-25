@@ -11,7 +11,7 @@
         });
         function validateFields(){
             if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
-                alert("请查询填入医疗机构");
+                alert("璇锋煡璇㈠～鍏ュ尰鐤楁満鏋�");
                 return false;
             }else{
                 return true;
@@ -61,6 +61,6 @@
     <wicket:fragment wicket:id="relationTableSearchFragment">
         <input type="text"  required="required"  wicket:id="selected_value_input" disabled="disabled" class="input input-small" />
         <input type="hidden" class="input" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
-        <a href="#" class="" wicket:id="search_btn" id="search_click"  title="查找医院"><i class="icon-search"></i></a>
+        <a href="#" class="" wicket:id="search_btn" id="search_click"  title="鏌ユ壘鍖婚櫌"><i class="icon-search"></i></a>
     </wicket:fragment>
 </wicket:panel>
