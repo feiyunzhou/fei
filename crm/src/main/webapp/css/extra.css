@@ -1,6 +1,17 @@
 .btn.dropdown-toggle.clearfix.btn-primary {
     width: 96px;
 }
+.user-btn {
+    margin-left: 140px; 
+}
+.center {
+    width: 500px;
+}
+em {
+    font-style: normal;
+    line-height: 32px;
+    padding-left: 11px;
+}
 #selected_contact {
     width: auto;
 }
@@ -503,6 +514,12 @@ a:hover, a:focus {
     }
     .btn-toolbar.pull-right {
         float: none;
+    }
+    .center {
+        width: auto;
+    }
+    .user-btn {
+        margin-left: 0px; 
     }
     @-moz-document url-prefix() { 
         .detailed {
