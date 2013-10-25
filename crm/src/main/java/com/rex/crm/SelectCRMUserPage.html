@@ -1,18 +1,21 @@
+<!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-<head>
-<script src='jquery/js/jquery-1.9.1.js'></script>
-<script src='jquery/js/jquery-ui-1.10.2.custom.js'></script>
-<script src='fullcalendar/fullcalendar.js'></script>
-<script src="js/common.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
-<link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" type="text/css" href="style.css"/>
+    <head>
+        <script src='jquery/js/jquery-1.9.1.js'></script>
+        <script src='jquery/js/jquery-ui-1.10.2.custom.js'></script>
+        <script src='fullcalendar/fullcalendar.js'></script>
+        <script src="js/common.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+        <link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
+        <link href="flat/css/flat-ui.css" rel="stylesheet" />
+        <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen" />
+        <link href="css/search_ex.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width" />
 
-
-<script>
-			$(document).ready(function() {	
-				$(".name_click").click(function(e){
+        <script>
+            $(document).ready(function() {	
+                $(".name_click").click(function(e){
                     e.preventDefault();
                     var uid =  $(this).parent().parent().data("uid");
                     var uname = $(this).parent().parent().data("uname");
@@ -23,35 +26,33 @@
 
                     window.close();
 
-				});
+                });
 
-			});// end onDomReady function
-		</script>
-
-</head>
-<body>
-    
-	<form wicket:id="form" class="form-search">
-				<input wicket:id="search_input" type="text" />
-				 <input type="submit" class="btn btn-primary" value="查找" />
-		</form>
-		
-		<table id="dt" style="width: 100%; margin-top: 15px" class="table table-striped table-condensed">
-						
-						<tbody>
-							<tr wicket:id="dataRowRepeater">
-								<td><a class="name_click" href="#" ><span data-uid="" data-uname="" wicket:id="name_span"></span></a></td>
-								<td><span wicket:id="cellPhone_span"></span></td>
-								<td><span wicket:id="email_span"></span></td>
-								<td><span wicket:id="jobTitle_span"></span></td>
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="20"></td>
-							</tr>
-						</tfoot>
-					</table>
-	
-</body>
+            });// end onDomReady function
+        </script>
+    </head>
+    <body>
+        <div class="search-fixed-top">
+            <form wicket:id="form" class="form-search">
+                <div class="search-box-container">
+                    <input wicket:id="search_input" type="text" class="search-box"  placeholder="按医生名称查找" />
+                </div>
+                <div class="pull-right btn-box">
+                    <input type="submit" class="btn btn-primary" value="查找" />
+                </div>
+            </form>
+        </div>
+        <div class="container-fluid">
+            <div id="dt" class="table table-striped table-condensed list-container">
+                <div wicket:id="dataRowRepeater" class="list-item">
+                    <div class="link-list">
+                        <a class="name_click" href="#" ><span data-uid="" data-uname="" wicket:id="name_span"></span></a>
+                    </div>
+                    <div class="details-list"><span wicket:id="cellPhone_span"></span></div>
+                    <div class="details-list"><span wicket:id="email_span"></span></div>
+                    <div class="details-list"><span wicket:id="jobTitle_span"></span></div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

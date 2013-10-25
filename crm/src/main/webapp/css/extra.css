@@ -4,6 +4,9 @@
 #selected_contact {
     width: auto;
 }
+#selected_user {
+    width: auto;
+}
 .radio-label {
     padding-top: 4px;
 }
