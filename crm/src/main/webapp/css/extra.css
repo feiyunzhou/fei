@@ -479,6 +479,31 @@ a:hover, a:focus {
     #selected_contact {
         width: 100%;
     }
+    .btn-group + .btn-group {
+        margin-left: 0;
+    }
+    .action-btn {
+        width: 100%;
+    }
+    .action-btn input {
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .action-btn a {
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .action-btn + .action-btn {
+        margin-top: 12px;
+    }
+    .btn-toolbar.pull-left {
+        float: none;
+    }
+    .btn-toolbar.pull-right {
+        float: none;
+    }
     @-moz-document url-prefix() { 
         .detailed {
         margin-top: 90px;

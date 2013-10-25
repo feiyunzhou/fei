@@ -349,9 +349,7 @@ public class NewDataFormPanel extends Panel {
             PageParameters params = new PageParameters();
             params.set("en", entityName);
             params.set("target", (Long)defaultModel.getObject());
-            PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
-                    .setWidth(850).setLeft(150).setTop(200);
-            add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params).setPopupSettings(popupSettings));
+            add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params));
             HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", defaultModel);
             hidden.add(new AttributeAppender("id", entityName + "_id"));
             add(hidden);
