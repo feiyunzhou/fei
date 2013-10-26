@@ -99,7 +99,7 @@ public class AccountPage extends TemplatePage
           datalist = DAOImpl.queryEntityRelationList(sql, userId, userId);
           break;
           case UserRole.USER_ROLE_ADMINISTRATOR:
-          datalist = DAOImpl.queryEntityRelationList(sql, userId);
+          datalist = DAOImpl.queryEntityRelationList(sql);
         }
 
         setResponsePage(new AccountPage(filter, datalist));

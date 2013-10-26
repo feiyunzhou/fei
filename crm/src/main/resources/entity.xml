@@ -4,23 +4,7 @@
 	<entity>
 		 <name>account</name>
     <display>医院</display>
-    <!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser
-    WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?)
-    as aAccount</sql> -->
-    <!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account
-    where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId
-    group by account.id) as aAccount -->
     <sql>
-<!--       SELECT * from (select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
-      account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
-      FROM account\,accountcrmuser\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
-      WHERE (accountcrmuser.crmuserId=?) AND account.id != -1 AND
-      accountcrmuser.accountId=account.id AND
-      account_point_pl.id=key_type AND
-      account_type_pl.id=hospital_type AND
-      account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
-      order by whenadded DESC) as aAccount
- -->
 	select * from (select account.*\,
 	account_point_pl.val as key_type_val\,
 	account_type_pl.val as hospital_type_val\,
@@ -35,20 +19,11 @@
 	account.id in (select accountid from accountcrmuser where
 	accountcrmuser.crmuserid = ?)
 	or account.id in (select contact.accountid from contactcrmuser left join
-	contact on contactcrmuser.contactid = contactid where
+	contact on contactcrmuser.contactid = contact.id where
 	contactcrmuser.crmuserid = ?))) as aAccount
 
     </sql>
     <sql-admin>
-<!--       SELECT * from (select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
-      account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
-      FROM account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
-      WHERE (? IS NOT NULL) AND   account.id != -1 AND
-      account_point_pl.id=key_type AND
-      account_type_pl.id=hospital_type AND
-      account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
-      ORDER BY whenadded DESC) as aAccount
- -->
 	select * from (select account.*\,
 	account_point_pl.val as key_type_val\,
 	account_type_pl.val as hospital_type_val\,
