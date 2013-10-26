@@ -101,13 +101,8 @@ public class EventEditorPage extends TemplatePage {
                         .getParameterValue("start_date").toString();
                 String ed = getRequest().getPostParameters()
                         .getParameterValue("end_date").toString();
-                // String visit_type =
-                // getRequest().getPostParameters().getParameterValue("visit_type").toString();
                 String visit_type = String.valueOf(activity_type.getId());
-                SimpleDateFormat dateformat = new SimpleDateFormat(
-                        "yyyy-MM-dd HH:mm");
-                // SimpleDateFormat timeformat = new
-                // SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 Date act_endtime = new Date(System.currentTimeMillis());
                 String sdt = sd;
                 String edt = ed;
@@ -139,10 +134,11 @@ public class EventEditorPage extends TemplatePage {
             		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
             		flag = false;
                 }
+                System.out.println("title:"+act_title_input);
                 try {
                     DAOImpl.updateCalendarEvent(String.valueOf(eventId),
                             hidden_contact_select, visit_type, act_title_input,
-                            startdt.getTime(), enddt.getTime(), 1, user,
+                            String.valueOf(startdt.getTime() / 1000),String.valueOf(enddt.getTime() / 1000), 1, user,
                             String.valueOf(visiting_purpose.getId()),
                             String.valueOf(feature_product.getId()));
 

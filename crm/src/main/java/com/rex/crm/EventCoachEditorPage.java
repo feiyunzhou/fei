@@ -99,7 +99,7 @@ public class EventCoachEditorPage extends TemplatePage{
 						.getParameterValue("end_time").toString();
 				String visit_type = String.valueOf(2);
 				SimpleDateFormat dateformat = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm");
+						"yyyy-MM-ddTHH:mm");
 				Date act_endtime = new Date(System.currentTimeMillis());
 				String sdt = sd + " " + st;
 				String edt = ed + " " + et;
@@ -136,7 +136,8 @@ public class EventCoachEditorPage extends TemplatePage{
 	             if(flag){
 	            	 try {
 	 					DAOImpl.updateCalendarEventForCoach(String.valueOf(eventId),hidden_select_user,
-	 							startdt.getTime(), enddt.getTime(),user,coachId,location,total_score,String.valueOf(planing.getId()),String.valueOf(openling.getId()),String.valueOf(enquery_listening.getId()),String.valueOf(deliverable.getId()),String.valueOf(objection_handing.getId()),String.valueOf(summary.getId()),act_name_input);
+	 							String.valueOf(startdt.getTime() / 1000),
+                                String.valueOf(enddt.getTime() / 1000),user,coachId,location,total_score,String.valueOf(planing.getId()),String.valueOf(openling.getId()),String.valueOf(enquery_listening.getId()),String.valueOf(deliverable.getId()),String.valueOf(objection_handing.getId()),String.valueOf(summary.getId()),act_name_input);
 
 	 				} catch (NumberFormatException e) {
 	 					// TODO Auto-generated catch block

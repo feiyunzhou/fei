@@ -55,7 +55,7 @@ public class EventViewerPage extends TemplatePage
 	 */
 	public EventViewerPage()
 	{
-
+		System.out.println("无参数");
 		Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
         setPageTitle(entity.getDisplay());
@@ -164,7 +164,7 @@ public class EventViewerPage extends TemplatePage
 	
 	public EventViewerPage(String id)
 	{
-
+		System.out.println("id:"+id);
 		Map<String, Entity> entities = Configuration.getEntityTable();
 		final Entity entity  = entities.get("activity");
 	    setPageTitle(entity.getDisplay());

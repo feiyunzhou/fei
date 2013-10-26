@@ -14,6 +14,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
@@ -22,7 +23,8 @@ import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.PopupSettings;
+import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -57,8 +59,6 @@ public class CreateEventPage extends TemplatePage {
     protected Integer event_type = 1;
     protected String selected_user = "";
     protected String status = "计划中"; /*new Choice(1L,"计划中");*/
-
-    protected String coach = "";
     protected String location = "";
     protected int total_score;
     protected Choice planing = new Choice(0L, "");
@@ -69,7 +69,7 @@ public class CreateEventPage extends TemplatePage {
     protected Choice summary = new Choice(0L, "");
     protected String owner = "";
     protected String whenadded = "";
-
+    protected String crmuserId = "";
     /**
      * Constructor
      */
@@ -90,6 +90,25 @@ public class CreateEventPage extends TemplatePage {
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(uid));
         final String crmUserName = crmUser.getName();
+        //add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem divitem = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        divitem.add(promptButton);
+        final Label promptLabel = new Label("prompt","红色字体字段为必填项，请输入!");
+        divitem.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(divitem);
+        add(div);
+        //set event type         
+        RadioGroup event_type_group = new RadioGroup("event_type_group", new PropertyModel(this, "event_type"));
+        final Radio callRadio = new Radio("radio1", new Model(1L));
+        event_type_group.add(callRadio);
+        final Radio coachingRadio = new Radio("radio2", new Model(2L));
+        if (roleId == 3) {
+            coachingRadio.add(new AttributeAppender("disabled", "true"));
+        }
         //辅导名称拼接字段
         final StringBuffer concahName = new StringBuffer();
         Form form = new Form("form") {
@@ -104,8 +123,10 @@ public class CreateEventPage extends TemplatePage {
                 String sdt = sd;
                 String edt = ed;
                 int contactId = 0;
+                int coacheeId = 0;
                 Date startdt = null;
                 Date enddt = null;
+                boolean flag = true;
                 try {
                     startdt = dateformat.parse(sdt);
                     enddt = dateformat.parse(edt);
@@ -113,83 +134,105 @@ public class CreateEventPage extends TemplatePage {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                if (null == hidden_contact_select) {
-                    contactId = 0;
-                } else {
-                    contactId = Integer.parseInt(hidden_contact_select);
-                }
-                if (null == act_title_input) {
-                    if (event_type == 1) {
-                        concahName.append("拜访:");
-                        //根据医生Id获取医生对象
-                        act_title_input = concahName.append(DAOImpl.getContactById(contactId).getName()).toString();
-                    } else {
-                        concahName.append(crmUserName);
-                        concahName.append(sd);
-                        concahName.append("拜访辅导");
-                        act_title_input = concahName.toString();
+                if(event_type==1){
+                	 if (null == hidden_contact_select) {
+                         contactId = 0;
+              			div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                 		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
+                 		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                 		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                 		callRadio.add(new AttributeModifier("checked","checked"));
+                 		flag = false;
+                     } else {
+                         contactId = Integer.parseInt(hidden_contact_select);
+                     }
+                }else{
+                	if(null==hidden_select_user){
+                    	coacheeId = 0;
+                    	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		coachingRadio.add(new AttributeModifier("checked","checked"));
+                		flag = false;
+                    }else{
+                    	coacheeId = Integer.parseInt(hidden_select_user);
                     }
                 }
-                try {
-                    int crmuserId = 0;
-                    String participants = user;
-                    if (event_type == 1) {
-                        //visiting
-                        crmuserId = Integer.parseInt(uid);
-                    } else if (event_type == 2) {
-                        //coaching
-                        crmuserId = Integer.parseInt(uid);;
-                        participants = participants + ", " + selected_user;
-                        contactId = -1;
-                        concahName.append("拜访辅导");
-                    }
-                    long generatedkey = 0;
-                    //insert the event, and return the generated id of the event
-                    /*long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId, String.valueOf(activity_type.getId()),
-                            act_title_input, String.valueOf(startdt.getTime() / 1000),
-                            String.valueOf(enddt.getTime() / 1000), 1, user, user, user,
-                            String.valueOf(visiting_purpose.getId()),
-                            String.valueOf(feature_product.getId()), event_type.intValue(), participants,
-                            coach, location, total_score, String.valueOf(planing.getId()), String.valueOf(openling.getId()), String.valueOf(enquery_listening.getId()), String.valueOf(deliverable.getId()), String.valueOf(objection_handing.getId()), String.valueOf(summary.getId()));
-                   */ logger.debug("generatedkey:" + generatedkey);
-                    if (generatedkey > 0) {
+                if(flag){
+                	if (null == act_title_input) {
                         if (event_type == 1) {
-                            //if it is a visiting, we only send this event to the owner;
-                            DAOImpl.insert2UserRelationTable("activity", uid, String.valueOf(generatedkey));
-                        } else if (event_type == 2) {
-                            //if it is a coaching, we need send this event to the manager and sales
-                            //add new record for the manager
-                            logger.debug("key:" + String.valueOf(generatedkey));
-                            DAOImpl.insert2UserRelationTable("activity", uid, String.valueOf(generatedkey));
-                            //add new record for the sales
-                            DAOImpl.insert2UserRelationTable("activity", hidden_select_user, String.valueOf(generatedkey));
+                            concahName.append("拜访:");
+                            //根据医生Id获取医生对象
+                            act_title_input = concahName.append(DAOImpl.getContactById(contactId).getName()).toString();
+                        } else {
+                            concahName.append(crmUserName);
+                            concahName.append(sd);
+                            concahName.append("拜访辅导");
+                            act_title_input = concahName.toString();
                         }
                     }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    try {
+                        int crmuserId = 0;
+                        String participants = user;
+                        if (event_type == 1) {
+                            //visiting
+                            crmuserId = Integer.parseInt(uid);
+                        } else if (event_type == 2) {
+                            //coaching
+                            crmuserId = Integer.parseInt(uid);;
+                            participants = participants + ", " + selected_user;
+                            contactId = -1;
+                            concahName.append("拜访辅导");
+                        }
+                        //insert the event, and return the generated id of the event
+                        long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId, String.valueOf(activity_type.getId()),
+                                act_title_input, String.valueOf(startdt.getTime() / 1000),
+                                String.valueOf(enddt.getTime() / 1000), 1, user, user, user,
+                                String.valueOf(visiting_purpose.getId()),
+                                String.valueOf(feature_product.getId()), event_type.intValue(), participants,
+                                coacheeId, location, total_score, String.valueOf(planing.getId()), String.valueOf(openling.getId()), String.valueOf(enquery_listening.getId()), String.valueOf(deliverable.getId()), String.valueOf(objection_handing.getId()), String.valueOf(summary.getId()));
+                        logger.debug("generatedkey:" + generatedkey);
+                        if (generatedkey > 0) {
+                            if (event_type == 1) {
+                                //if it is a visiting, we only send this event to the owner;
+                                DAOImpl.insert2UserRelationTable("activity", uid, String.valueOf(generatedkey));
+                            } else if (event_type == 2) {
+                                //if it is a coaching, we need send this event to the manager and sales
+                                //add new record for the manager
+                                logger.debug("key:" + String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity", uid, String.valueOf(generatedkey));
+                                //add new record for the sales
+                                DAOImpl.insert2UserRelationTable("activity", hidden_select_user, String.valueOf(generatedkey));
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (type == 0) {
+                        setResponsePage(PageFactory.createPage("calendar"));
+                    } else {
+                        setResponsePage(new ActivityPage());
+                    }
                 }
-                if (type == 0) {
-                    setResponsePage(PageFactory.createPage("calendar"));
-                } else {
-                    setResponsePage(new ActivityPage());
-                }
+                
             }
         };
         add(form);
         //辅导者
-        TextField coach = new TextField("coach", new PropertyModel(this, "coach"));
-        coach.add(new AttributeAppender("value", crmUser.getName()));
+        TextField coach = new TextField("crmuserId", new PropertyModel(this, "crmuserId"));
+        coach.add(new AttributeModifier("value", crmUser.getName()));
         form.add(coach);
         //创建人
         TextField owner = new TextField("owner", new PropertyModel(this, "owner"));
-        owner.add(new AttributeAppender("value", crmUser.getName()));
+        owner.add(new AttributeModifier("value", crmUser.getName()));
         form.add(owner);
         //创建时间
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         TextField whenadded = new TextField("whenadded", new PropertyModel(this, "whenadded"));
-        whenadded.add(new AttributeAppender("value", df.format(new Date())));
+        whenadded.add(new AttributeModifier("value", df.format(new Date())));
         form.add(whenadded);
         //状态默认为计划中
         TextField status = new TextField("status", new PropertyModel(this, "status"));
@@ -259,13 +302,7 @@ public class CreateEventPage extends TemplatePage {
                 target.add(visiting_purpose_choice);
             }
         });
-        //set event type         
-        RadioGroup event_type_group = new RadioGroup("event_type_group", new PropertyModel(this, "event_type"));
-        event_type_group.add(new Radio("radio1", new Model(1L)));
-        Radio coachingRadio = new Radio("radio2", new Model(2L));
-        if (roleId == 3) {
-            coachingRadio.add(new AttributeAppender("disabled", "true"));
-        }
+        
         event_type_group.add(coachingRadio);
         form.add(event_type_group);
         form.add(createDropDownListFromPickList("feature_product_input", "activity_feature_product_pl", null, new PropertyModel(this, "feature_product")));

@@ -1043,7 +1043,7 @@ public class DAOImpl
         }
     
     
-    public static void updateCalendarEvent(String entityId, String contactId, String type, String title, long start, long end,int status,
+    public static void updateCalendarEvent(String entityId, String contactId, String type, String title, String start, String end,int status,
             String modifier,String visiting_purpose,String feature_product) throws Exception {
         int type_id = Integer.parseInt(type);
         String sql = "update activity SET contactId=?,endtime=?,starttime=?,title=?,activity_type=?,status=?,"+
@@ -1053,7 +1053,7 @@ public class DAOImpl
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            inserts += run.update(conn, sql, contactId, end , start , title, type_id,
+            inserts += run.update(conn, sql, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
                     status,modifier,new Date(),visiting_purpose,feature_product,entityId);
            logger.debug("updated ok:" + inserts);
         } catch (Exception e) {
@@ -1063,7 +1063,7 @@ public class DAOImpl
         }
     }
     
-    public static void updateCalendarEventForCoach(String entityId,String crmuserId,long start, long end,
+    public static void updateCalendarEventForCoach(String entityId,String crmuserId,String start, String end,
             String modifier,int coach,String location,int total_score,String planing,String openling,String enquery_listening,String deliverable,String objection_handing,String summary,String name) throws Exception {
         String sql = "update activity SET crmuserID =?,endtime=?,starttime=?,"+
                      "modifier=?,modify_datetime=?,coachId=?,location=?,total_score=?,planing=?,openling=?,enquery_listening=?,deliverable=?,objection_handing=?,summary=?,title=? where id=?";
@@ -1072,7 +1072,7 @@ public class DAOImpl
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
-            inserts += run.update(conn, sql,crmuserId, end , start,
+            inserts += run.update(conn, sql,crmuserId,Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L,
                     modifier,new Date(),coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary,name,entityId);
            logger.debug("updated ok:" + inserts);
         } catch (Exception e) {
