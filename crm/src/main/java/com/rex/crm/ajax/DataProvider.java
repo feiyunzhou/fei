@@ -40,6 +40,7 @@ import com.rex.crm.beans.Resp;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.db.dao.UserRole;
 import com.rex.crm.html.Node;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
@@ -803,8 +804,31 @@ public class DataProvider {
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
-        Multimap<Integer, Map> multiMap = getEntityListByIdOfUserId(entity.getSql(),id);
-        
+        CRMUser user = DAOImpl.getCrmUserById(Integer.parseInt(id));
+        int roleId = user.getRole();
+        String sql = null;
+        switch(roleId){
+         case UserRole.USER_ROLE_ADMINISTRATOR:
+             sql = entity.getSqlAdmin();
+            break;
+         case UserRole.USER_ROLE_MANAGER:
+             sql = entity.getSqlManager();
+            break;
+         case UserRole.USER_ROLE_SALES:
+             sql = entity.getSql();
+            break;
+        }
+        Multimap<Integer, Map> multiMap = null;
+        switch(roleId){
+          case UserRole.USER_ROLE_ADMINISTRATOR:
+          multiMap = getEntityListByIdOfUserId(sql);
+          break;
+        case UserRole.USER_ROLE_MANAGER:
+        multiMap = getEntityListByIdOfUserId(sql,id,id);
+            break;
+        case UserRole.USER_ROLE_SALES:
+        multiMap = getEntityListByIdOfUserId(sql, id);
+        }
         return getIndexTable(entity,multiMap,id);
     }
     
@@ -942,9 +966,9 @@ public class DataProvider {
         
     }
     
-    private static Multimap<Integer,Map> getEntityListByIdOfUserId(String sql, String userId){
+    private static Multimap<Integer,Map> getEntityListByIdOfUserId(String sql, String... ids){
         Multimap<Integer,Map> multimap =  LinkedHashMultimap.create();
-        List maplist = DAOImpl.queryEntityRelationList(sql, userId);
+        List maplist = DAOImpl.queryEntityRelationList(sql, ids);
         
         for(Map map:(List<Map>)maplist){
             Integer id = Integer.parseInt(String.valueOf(map.get("id"))); 
