@@ -16,6 +16,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -27,6 +28,8 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.PopupSettings;
+import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -77,7 +80,17 @@ public class EventEditorPage extends TemplatePage {
 
         Map entity_data = DAOImpl.queryEntityById(entity.getSql_ent(),
                 String.valueOf(eventId));
-
+        //add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem divitem = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        divitem.add(promptButton);
+        final Label promptLabel = new Label("prompt","红色输入框为必填项，请输入!");
+        divitem.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(divitem);
+        add(div);
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
@@ -100,6 +113,9 @@ public class EventEditorPage extends TemplatePage {
                 String edt = ed;
                 Date startdt = null;
                 Date enddt = null;
+                int contactId = 0;
+                //标识
+                boolean flag = true;
                 try {
                     startdt = dateformat.parse(sdt);
                     enddt = dateformat.parse(edt);
@@ -111,6 +127,18 @@ public class EventEditorPage extends TemplatePage {
                 logger.debug("contact id:" + hidden_contact_select);
                 logger.debug("visit_type:" + visit_type);
                 logger.debug("usersereaser:" + user);
+                if(null==hidden_contact_select){
+                    contactId = 0;
+                  }else{
+                    contactId = Integer.parseInt(hidden_contact_select);
+                  }
+                if(contactId==0){
+                	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		flag = false;
+                }
                 try {
                     DAOImpl.updateCalendarEvent(String.valueOf(eventId),
                             hidden_contact_select, visit_type, act_title_input,

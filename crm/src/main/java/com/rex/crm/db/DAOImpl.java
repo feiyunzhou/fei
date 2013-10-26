@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +41,7 @@ import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.beans.Province;
 import com.rex.crm.common.Entity;
+import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.Configuration;
 
 public class DAOImpl 
@@ -982,12 +982,15 @@ public class DAOImpl
     
     public static long addCalendarEventForCoach(int crmuserId, int contactId, String type, String title, String start, String end,int status,
             String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type,String participants,
-           String coach,String location,int total_score,String planing,String openling,String enquery_listening,String deliverable,String objection_handing,String summary) throws Exception {
-        int type_id = Integer.parseInt(type);
+            int coach,String location,int total_score,String planing,String openling,String enquery_listening,String deliverable,String objection_handing,String summary) throws Exception {
+        int type_id = 1;
+        if(event_type==2){
+        	type_id= 3;
+        }
         //logger.debug("modified date time:"+modify_datetime);
         String sql = "INSERT INTO activity (crmuserId,contactId,endtime,starttime,title,activity_type," +
         		"status,owner,whenadded,modifier,modify_datetime ,responsible_person,visiting_purpose," +
-        		"feature_product,event_type,participants,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary) " +
+        		"feature_product,event_type,participants,coacheeId,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary) " +
         		"VALUES (?,?,?,?,?,?,?,?,now(),?,now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection conn = null;
         PreparedStatement statement = null;
@@ -999,7 +1002,7 @@ public class DAOImpl
             fillStatement(statement,crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
                           status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type,participants
                           ,coach,location,total_score,planing,openling,enquery_listening,deliverable,objection_handing,summary);
-                
+            System.out.println("visiting_purpose:"+visiting_purpose);    
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 logger.error("Failed to insert data");
@@ -1007,7 +1010,6 @@ public class DAOImpl
             }
             generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                //user.setId(generatedKeys.getLong(1));
                  key = generatedKeys.getLong(1);
             } else {
                 logger.error("failed to insert data");
@@ -1062,9 +1064,9 @@ public class DAOImpl
     }
     
     public static void updateCalendarEventForCoach(String entityId,String crmuserId,long start, long end,
-            String modifier,String coach,String location,int total_score,String planing,String openling,String enquery_listening,String deliverable,String objection_handing,String summary,String name) throws Exception {
+            String modifier,int coach,String location,int total_score,String planing,String openling,String enquery_listening,String deliverable,String objection_handing,String summary,String name) throws Exception {
         String sql = "update activity SET crmuserID =?,endtime=?,starttime=?,"+
-                     "modifier=?,modify_datetime=?,coach=?,location=?,total_score=?,planing=?,openling=?,enquery_listening=?,deliverable=?,objection_handing=?,summary=?,title=? where id=?";
+                     "modifier=?,modify_datetime=?,coachId=?,location=?,total_score=?,planing=?,openling=?,enquery_listening=?,deliverable=?,objection_handing=?,summary=?,title=? where id=?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
@@ -1814,5 +1816,21 @@ public class DAOImpl
             DBHelper.closeConnection(conn);
         }
         return user;
+    }
+    public static Activity getActivityById(int entityId){
+    	System.out.println("根据crmuserID获取用户");
+        Connection conn = null;
+        Activity activity = new Activity();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<Activity> h = new BeanHandler<Activity>(Activity.class);
+            activity = run.query(conn, "SELECT * FROM activity where id=?", h, entityId);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return activity;
     }
 }

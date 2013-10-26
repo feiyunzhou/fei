@@ -14,6 +14,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
@@ -21,6 +22,8 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.PopupSettings;
+import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -40,7 +43,7 @@ public class EventCoachEditorPage extends TemplatePage{
     protected String endDate;
     protected String endTime;
     protected String startTime;
-    protected String coach = "";
+    protected String crmuserId = "";
     protected String location = "";
     protected int total_score;
     protected Choice planing = new Choice(0L,"");
@@ -69,6 +72,17 @@ public class EventCoachEditorPage extends TemplatePage{
 		final String user = ((SignIn2Session) getSession()).getUser();
 		CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(uid));
 		Map entity_data = DAOImpl.queryEntityById(entity.getSql_ent(),String.valueOf(eventId));
+		//add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem divitem = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        divitem.add(promptButton);
+        final Label promptLabel = new Label("prompt","红色输入框为必填项，请输入!");
+        divitem.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(divitem);
+        add(div);
 		//辅导名称拼接字段
 		final String crmuserName = crmUser.getName();
         final StringBuffer concahName = new StringBuffer();
@@ -91,6 +105,7 @@ public class EventCoachEditorPage extends TemplatePage{
 				String edt = ed + " " + et;
 				Date startdt = null;
 				Date enddt = null;
+				int coachId = 0;
 				try {
 					startdt = dateformat.parse(sdt);
 					enddt = dateformat.parse(edt);
@@ -104,19 +119,34 @@ public class EventCoachEditorPage extends TemplatePage{
 	                concahName.append("拜访辅导");
 	                act_name_input = concahName.toString();
 				}
-				try {
-					DAOImpl.updateCalendarEventForCoach(String.valueOf(eventId),hidden_select_user,
-							startdt.getTime(), enddt.getTime(),user,coach,location,total_score,String.valueOf(planing.getId()),String.valueOf(openling.getId()),String.valueOf(enquery_listening.getId()),String.valueOf(deliverable.getId()),String.valueOf(objection_handing.getId()),String.valueOf(summary.getId()),act_name_input);
+				 if(null==hidden_select_user){
+                	coachId = 0;
+                 }else{
+                	coachId = Integer.parseInt(hidden_select_user);
+                 }
+				 boolean flag = true;
+	                //验证字段是否为空如果为空则做页面提示
+	                if(coachId==0){
+	                	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+	            		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
+	            		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+	            		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+	            		flag = false;
+	                }
+	             if(flag){
+	            	 try {
+	 					DAOImpl.updateCalendarEventForCoach(String.valueOf(eventId),hidden_select_user,
+	 							startdt.getTime(), enddt.getTime(),user,coachId,location,total_score,String.valueOf(planing.getId()),String.valueOf(openling.getId()),String.valueOf(enquery_listening.getId()),String.valueOf(deliverable.getId()),String.valueOf(objection_handing.getId()),String.valueOf(summary.getId()),act_name_input);
 
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				setResponsePage(PageFactory.createPage("calendar"));
+	 				} catch (NumberFormatException e) {
+	 					// TODO Auto-generated catch block
+	 					e.printStackTrace();
+	 				} catch (Exception e) {
+	 					// TODO Auto-generated catch block
+	 					e.printStackTrace();
+	 				}
+	 				setResponsePage(PageFactory.createPage("calendar"));
+	             }
 			}
 		};
 		add(form);
@@ -167,16 +197,18 @@ public class EventCoachEditorPage extends TemplatePage{
 				"activity_feature_product_pl", null, new PropertyModel(this,
 						"feature_product")));
 		//辅导者
-		coach = (String)entity_data.get("coach");
-		form.add(new TextField("coach", new PropertyModel(this,
-				"coach")));
+		//获取辅导者对象
+		CRMUser crmuser = DAOImpl.getCrmUserById((int) entity_data.get("crmuserId"));
+		crmuserId = crmuser.getName();
+		form.add(new TextField("crmuserId", new PropertyModel(this,
+				"crmuserId")));
 		
 		 
 	 	hidden_select_user = String.valueOf(entity_data.get("crmuserId"));
 		form.add(new HiddenField("hidden_select_user",
 				new PropertyModel<String>(this, "hidden_select_user")));
 		//被辅导者
-		int selected_userId = (int)entity_data.get("crmuserId");
+		int selected_userId = (int)entity_data.get("coacheeId");
 		selected_user = DAOImpl.getCrmUserById(selected_userId).getName();
 		form.add(new TextField<String>("selected_user" ,new PropertyModel<String>(this,"selected_user")));
 
@@ -238,12 +270,12 @@ public class EventCoachEditorPage extends TemplatePage{
 		form.add(new TextField("act_name_input", new PropertyModel(this,
 				"act_name_input")));
 		TextField modifier = new TextField("modifier", new PropertyModel(this,"modifier"));
-		modifier.add(new AttributeAppender("value",crmUser.getName()));
+		modifier.add(new AttributeModifier("value",crmUser.getName()));
         form.add(modifier);
         //创建时间
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         TextField modifier_time = new TextField("modifier_time", new PropertyModel(this,"modifier_time"));
-        modifier_time.add(new AttributeAppender("value",df.format(new Date())));
+        modifier_time.add(new AttributeModifier("value",df.format(new Date())));
         form.add(modifier_time);
         TextField statusField = new TextField("status", new PropertyModel(this,"status"));
         form.add(statusField);

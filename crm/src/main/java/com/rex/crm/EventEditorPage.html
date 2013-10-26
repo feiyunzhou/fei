@@ -11,8 +11,13 @@
             </script>
 
             <div class="row-fluid">
+            	<div class="span7">
+           		<div wicket:id="promptDiv" id="promptDiv" class="alert" >
+					<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
+					<span wicket:id="prompt" ><strong></strong></span>
+				</div>
                 <form wicket:id="form" class="form-horizontal">
-                    <div title="活动">
+                	<div class="table-content">
                         <div class="table-cell">
                             <div class="table-column tag">活动名称：</div>
                             <div class="table-column ">
@@ -39,7 +44,7 @@
                             <div id="contact_label" class="table-column tag" for="contact">拜访医生：</div> 
                             <div class="table-column ">
                                 <div class="form_datetime">
-                                    <input type="text" id="selected_contact" class="input" placeholder="张三" wicket:id="contact_select"/>
+                                    <input type="text" id="selected_contact" class="input" placeholder="张三" readonly="readonly" wicket:id="contact_select"/>
                                     <input type="hidden" id="hidden_selected_contact" class="input"  wicket:id="hidden_contact_select"/>
                                     <a href="#" class="search-btn" wicket:id="search_btn" id="search_click" name="search_contact" title="查找医生" ><i class="icon-search"></i></a>
                                 </div>
@@ -134,6 +139,10 @@
                         </div>
                     </div>
                 </form>
+                </div>
+                <div class="span5">
+                	<h3>提示信息</h3>
+                </div>
             </div>
         </wicket:extend>
     </body>

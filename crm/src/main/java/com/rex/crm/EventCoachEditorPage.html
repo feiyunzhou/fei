@@ -39,6 +39,10 @@
 
             <div class="row-fluid">
                 <div class="span7">
+                	<div wicket:id="promptDiv" id="promptDiv" class="alert" >
+						<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
+						<span wicket:id="prompt" ><strong></strong></span>
+					</div>
                     <form wicket:id="form" class="form-horizontal">
                         <div class="table-content">
                             <label id="datestr"></label>
@@ -58,7 +62,7 @@
                                 </div>
                                 <div class="table-column">
                                     <div class="form_datetime">
-                                        <input type="text"  wicket:id="coach"  readOnly="readonly" class="input input-big" />
+                                        <input type="text"  wicket:id="crmuserId"  readOnly="readonly" class="input input-big" />
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +72,7 @@
                                 </div>
                                 <div class="table-column">
                                     <div class="form_datetime">
-                                        <input type="text" id="select_user" wicket:id="selected_user"  placeholder="李三"  class="input input-small" />
+                                        <input type="text" id="select_user" readonly="readonly" wicket:id="selected_user"  placeholder="李三"  class="input input-small" />
                                         <input type="hidden" id="hidden_select_user" class="input" wicket:id="hidden_select_user" />&nbsp;&nbsp;
                                         <a href="#" class="" wicket:id="search_user_btn" id="search_click" name="search_inferior" title="查找下属"><i class="icon-search"></i></a>
                                     </div>
@@ -251,6 +255,15 @@
                                         <input wicket:id="end_time_input" name="end_time" style="width: 150px" type="time" />
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
+                            </div>
+                            <div class="btn-group">
+                                <input type="submit" class="btn btn-primary">保存&返回</input>
                             </div>
                         </div>
                     </form>

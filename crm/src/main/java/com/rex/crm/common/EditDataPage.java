@@ -41,11 +41,7 @@ public class EditDataPage extends TemplatePage {
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
-       if(entity.getName().equals("activity")){
-    	   add(new Label("name",String.valueOf(map.get("title"))));
-       }else{
-    	   add(new Label("name",String.valueOf(map.get("name"))));
-    	   }
+       
         add(new EditDataFormPanel("detailed",entity,map,id));
         
         //set relations data

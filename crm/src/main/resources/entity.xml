@@ -1684,7 +1684,21 @@ left join account on contact.accountId = account.Id order by whenadded DESC) as 
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-
+			
+			<field>
+				<name>coacheeId</name>
+				<display>被辅导人</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<relationTable>crmuser</relationTable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+				
 			<field>
 				<name>accountName</name>
 				<display>拜访医院</display>
@@ -1725,7 +1739,7 @@ left join account on contact.accountId = account.Id order by whenadded DESC) as 
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-
+			
 
 			<field>
 				<name>act_type</name>

@@ -12,7 +12,7 @@ public class Activity implements java.io.Serializable {
 	private Long endtime;
 	private long starttime;
 	private String title;
-
+    private int event_type;
 	public Activity() {
 	}
 
@@ -68,4 +68,12 @@ public class Activity implements java.io.Serializable {
 		this.title = title;
 	}
 
+	public int getEvent_type() {
+		return event_type;
+	}
+
+	public void setEvent_type(int event_type) {
+		this.event_type = event_type;
+	}
+	
 }

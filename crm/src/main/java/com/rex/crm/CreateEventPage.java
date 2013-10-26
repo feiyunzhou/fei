@@ -143,14 +143,15 @@ public class CreateEventPage extends TemplatePage {
                         contactId = -1;
                         concahName.append("拜访辅导");
                     }
+                    long generatedkey = 0;
                     //insert the event, and return the generated id of the event
-                    long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId, String.valueOf(activity_type.getId()),
+                    /*long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId, String.valueOf(activity_type.getId()),
                             act_title_input, String.valueOf(startdt.getTime() / 1000),
                             String.valueOf(enddt.getTime() / 1000), 1, user, user, user,
                             String.valueOf(visiting_purpose.getId()),
                             String.valueOf(feature_product.getId()), event_type.intValue(), participants,
                             coach, location, total_score, String.valueOf(planing.getId()), String.valueOf(openling.getId()), String.valueOf(enquery_listening.getId()), String.valueOf(deliverable.getId()), String.valueOf(objection_handing.getId()), String.valueOf(summary.getId()));
-                    logger.debug("generatedkey:" + generatedkey);
+                   */ logger.debug("generatedkey:" + generatedkey);
                     if (generatedkey > 0) {
                         if (event_type == 1) {
                             //if it is a visiting, we only send this event to the owner;

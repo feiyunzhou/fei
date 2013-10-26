@@ -2,6 +2,7 @@ package com.rex.crm.common;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +18,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -78,7 +80,7 @@ public class NewDataFormPanel extends Panel {
         div.add(new AttributeAppender("style",new Model("display:none"),";"));
         divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
         div.add(divitem);
-        add(div);	
+        add(div);
         final Map<String, IModel> models = Maps.newHashMap();
         final String userId = ((SignIn2Session) getSession()).getUserId();
         List<Field> fields = entity.getFields();
@@ -207,9 +209,6 @@ public class NewDataFormPanel extends Panel {
                                 models.put(currentField.getName(), selected_model);
                                 
                                 columnitem.add(selector);
-                                
-                               
-
                             } else {
 
                                 List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
@@ -314,7 +313,6 @@ public class NewDataFormPanel extends Panel {
                     //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
                     if(field.isRequired()){
                     	if(null==(String) models.get(key).getObject()){
-                    		flag = false;
                     		logger.debug("value:"+(String) models.get(key).getObject());
                     		//如果为空写出提示信息
                     		logger.debug("fieldName:"+field.getName()+"不能为空");
@@ -322,8 +320,8 @@ public class NewDataFormPanel extends Panel {
                     		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
                     		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
                     		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    	}else{
-                    		flag = true;
+                    		flag = false;
+                    		return;
                     	}
                 	}
                     System.out.println(fieldNames);
@@ -488,10 +486,10 @@ public class NewDataFormPanel extends Panel {
             params.set("target", (Long)defaultModel.getObject());
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params));
             HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", defaultModel);
-            hidden.add(new AttributeAppender("id", entityName + "_id"));
+            hidden.add(new AttributeModifier("id", entityName + "_id"));
             add(hidden);
             TextField<String> text = new TextField<String>("selected_value_input", new Model(defaultValue));
-            text.add(new AttributeAppender("id", entityName + "_name"));
+            text.add(new AttributeModifier("id", entityName + "_name"));
             add(text);
         }
     }
@@ -504,33 +502,42 @@ public class NewDataFormPanel extends Panel {
             TextField<String> text = new TextField<String>("input", model);
             if (!currentField.isEditable()) {
                 Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+                final SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
                 Date time = (Date) calendar.getTime();
                 if (currentField.getName().equals("accountId")) {
                     add(text);
                 } else {
                     if (currentField.getName().equals("modify_datetime")) {
                         String modify_datetime = dateformat.format(time);
-                        text.add(new AttributeAppender("value", new Model(modify_datetime), ";"));
+                        IModel modifiedTimeModel = new Model(){
+							@Override
+							public Serializable getObject() {
+								Date time = new Date(System.currentTimeMillis());
+								return  dateformat.format(time);
+							}
+
+                        };
+                        text.add(new AttributeModifier("value", modifiedTimeModel));
                     } else if (currentField.getName().equals("whenadded")) {
                         String whenadded = dateformat.format(time);
-                        text.add(new AttributeAppender("value", new Model(whenadded), ";"));
+                       
+                        text.add(new AttributeModifier("value", whenadded));
                     } else {
-                        text.add(new AttributeAppender("value", new Model(user), ";"));
+                        text.add(new AttributeModifier("value", new Model(user)));
                     }
 
                 }
-                text.add(new AttributeAppender("readonly", new Model("realonly"), ";"));
+                text.add(new AttributeModifier("readonly", new Model("realonly")));
             }
             if (currentField.getDataType().equals("tel") || currentField.getName().equals("fax") || currentField.getName().equals("office_fax")) {
-                text.add(new AttributeAppender("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"), ";"));
+                text.add(new AttributeModifier("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));
             }
             if (currentField.isRequired()) {
               text.add(new AttributeAppender("required", new Model("required"), ";"));
           }
             add(text);
-            text.add(new AttributeAppender("type", new Model(currentField.getDataType()), ";"));
-            text.add(new AttributeAppender("id", new Model(currentField.getName()), ";"));
+            text.add(new AttributeModifier("type", new Model(currentField.getDataType())));
+            text.add(new AttributeModifier("id", new Model(currentField.getName())));
         }
     }
     

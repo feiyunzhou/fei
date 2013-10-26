@@ -5,35 +5,34 @@
         <wicket:extend>
             <script>
                 $(document).ready(function() {	
+                	if(document.getElementById("radio").checked==true){
+                		$("#student_div").hide();
+                        $("#callOn").show();
+                	}else{
+                		$("#student_div").show();
+                        $("#callOn").hide();
+                	}
                     $("#navitem-calendar").addClass("active");
                     var seleted_event_type = $(".event_type_class").attr("data-typeId");//.data("typeId");
                     if(seleted_event_type == 1){
-                        $("#selected_contact").attr("required","required");
-                    }
-		      
+                        $("#selected_contact").attr("required","true");
+                    }		      
                     $(".event_type_class").change(function(e){
-                        var seleted_event_type = $(this).attr("data-typeId");//.data("typeId");
+                    	var seleted_event_type = $(this).attr("data-typeId");//.data("typeId");
                         if(seleted_event_type == 1){
                             $("#student_div").hide();
                             $("#callOn").show();
                             $("#selected_contact").attr("required","required");
                             $("#select_user").removeAttr("required");
+                            document.getElementById("act_title").value="";
                         }else if(seleted_event_type == 2){
+                        	document.getElementById("act_title").value="";
                             $("#student_div").show();
                             $("#callOn").hide();
                             $("#select_user").attr("required","required");
-                            $("#planing").attr("required","required");
-                            $("#openling").attr("required","required");
-                            $("#enquery_listening").attr("required","required");
-                            $("#deliverable").attr("required","required");
-                            $("#objection_handing").attr("required","required");
-                            $("#summary").attr("required","required");
-                            $("#plan").attr("required","required");
-                            $("#whenadded").attr("required","required");
-                            $("#owner").attr("required","required");
                             $("#selected_contact").removeAttr("required");
                         }
-                    });
+                    })
                 });// end onDomReady function
                 function changeValue(obj){
                     var planScore = obj.value;
@@ -77,6 +76,10 @@
 
             <div class="row-fluid">
                 <div class="span7">
+                	<div wicket:id="promptDiv" id="promptDiv" class="alert" >
+						<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
+						<span wicket:id="prompt" ><strong></strong></span>
+					</div>
                     <form wicket:id="form" class="form-horizontal">
                         <div class="table-content">
                             <label id="datestr"></label>
@@ -88,7 +91,7 @@
                                     <div class="form_datetime">
                                         <span wicket:id="event_type_group">
                                             <div class="pull-left">
-                                                <input type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"  checked="checked"   value=1 /> <span class="radio-label">拜访</span>
+                                                <input id="radio" type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"  checked="checked"   value=1 /> <span class="radio-label">拜访</span>
                                             </div>
                                             <div class="pull-left">
                                                 <input id="coaching_radio" type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2 /> <span class="radio-label">辅导</span>
@@ -114,7 +117,7 @@
                                     </div>
                                     <div class="table-column">
                                         <div class="form_datetime">
-                                            <input type="text"  wicket:id="coach"  readOnly="readonly" class="input input-big" />
+                                            <input type="text"  wicket:id="crmuserId"  readOnly="readonly" class="input input-big" />
                                         </div>
                                     </div>
                                 </div>

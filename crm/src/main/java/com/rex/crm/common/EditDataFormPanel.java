@@ -1,5 +1,6 @@
 package com.rex.crm.common;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -69,6 +71,22 @@ public class EditDataFormPanel extends Panel {
 	 */
 	public EditDataFormPanel(String id, final Entity schema,  Map data,final String entityId ) {
 		super(id);
+		//add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem divitem = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        divitem.add(promptButton);
+        final Label promptLabel = new Label("prompt","红色输入框是必填字段不能为空，请输入!");
+        divitem.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(divitem);
+        add(div);	
+        if(schema.getName().equals("activity")){
+      	   add(new Label("name",String.valueOf(data.get("title"))));
+         }else{
+      	   add(new Label("name",String.valueOf(data.get("name"))));
+  	   }
 		final Map<String, IModel> models = Maps.newHashMap();
 		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
 		final String userId = ((SignIn2Session) getSession()).getUserId();
@@ -285,10 +303,27 @@ public class EditDataFormPanel extends Panel {
 			protected void onSubmit() {
 				logger.debug("the form was submitted!");
 				logger.debug(models);
+				System.out.println("models:"+models);
 				List<String> values = Lists.newArrayList();
 				List<String> names = Lists.newArrayList();
+				boolean flag = true;
 				for (String k : fieldNameToModel.keySet()) {
 					names.add(k);
+					Field field = schema.getFieldByName(k);
+                    logger.debug("currentField:"+field);
+                    //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
+                    if(field.isRequired()){
+                    	if(null==(String) fieldNameToModel.get(k).getObject()){
+                    		//如果为空写出提示信息
+                    		logger.debug("fieldName:"+field.getName()+"不能为空");
+                    		div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    		flag = false;
+                    		return;
+                    	}
+                	}
 					Object obj = fieldNameToModel.get(k).getObject() ;
 					String value = null;
 					if(obj!=null){
@@ -299,8 +334,6 @@ public class EditDataFormPanel extends Panel {
 					   }
 					}
 					//String value = fieldNameToModel.get(k).getObject() == null? null:"'"+String.valueOf(fieldNameToModel.get(k).getObject())+"'";
-				    
-					
 					values.add(value);
 				}
 				DAOImpl.updateRecord(entityId,schema.getName(),names, values);
@@ -460,32 +493,38 @@ private class Textarea extends Fragment {
 			TextField<String> text = new TextField<String>("input", model);
 							if(!currentField.isEditable()){
 								if(currentField.getName().equals("accountId")){
-									text.add(new AttributeAppender("disabled",new Model("disabled"),";"));
+									text.add(new AttributeModifier("disabled",new Model("disabled")));
 								}else if(currentField.getName().equals("modifier")){
-									text.add(new AttributeAppender("value", new Model(user), ";"));
-									text.add(new AttributeAppender("readonly",new Model("readonly"),";"));
+									text.add(new AttributeModifier("value", new Model(user)));
+									text.add(new AttributeModifier("readonly",new Model("readonly")));
 								}else if(currentField.getName().equals("modify_datetime")){
 										Calendar calendar = Calendar.getInstance();  
-										SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+										final SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 										Date time =(Date)calendar.getTime();
 										String modify_datetime = dateformat.format(time);
-										text.add(new AttributeAppender("value", new Model(modify_datetime), ";"));
-										text.add(new AttributeAppender("readonly",new Model("readonly"),";"));
+										IModel modifiedTimeModel = new Model(){
+											@Override
+											public Serializable getObject() {
+												Date time = new Date(System.currentTimeMillis());
+												return  dateformat.format(time);
+											}
+				                        };
+										text.add(new AttributeModifier("value",modifiedTimeModel));
+										text.add(new AttributeModifier("readonly",new Model("readonly")));
 								}else{
-									text.add(new AttributeAppender("value", new Model(value), ";"));
-									text.add(new AttributeAppender("readonly",new Model("readonly"),";"));
+									text.add(new AttributeModifier("value", new Model(value)));
+									text.add(new AttributeModifier("readonly",new Model("readonly")));
 								}
 							}else{
-								text.add(new AttributeAppender("value", new Model(value), ";"));
+								text.add(new AttributeModifier("value", new Model(value)));
 							}
 							add(text);
 							text.add(new AttributeAppender("type",new Model(currentField.getDataType()),";"));
 							if(currentField.getDataType().equals("tel")||currentField.getName().equals("fax")||currentField.getName().equals("office_fax")){
-								text.add(new AttributeAppender("pattern",new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"),";"));
+								text.add(new AttributeModifier("pattern",new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));
 							}
 							if(currentField.isRequired()){
 								text.add(new AttributeAppender("required",new Model("required"),";"));
-								
 							}
 		}
 	}

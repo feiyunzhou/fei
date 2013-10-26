@@ -20,9 +20,9 @@ public class SendEmail {
 	private static final Logger logger = Logger.getLogger(SendEmail.class);
 	  //发送有邮件方法
   	public static boolean sendMail(String code,String sendEmail){
-  		Session sendMailSession = null;
+  	      Session sendMailSession = null;
           SMTPTransport transport = null;
-          StringBuilder emailContent = new StringBuilder("请点击连接激活用户:");
+          StringBuilder emailContent = new StringBuilder("Please click on this link to activate:");
           Properties systemPeroperties = new Properties();
           try {
           	systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/system.properties"));
@@ -57,11 +57,12 @@ public class SendEmail {
   	        Message newMessage = new MimeMessage(sendMailSession);
   	        newMessage.setFrom(new InternetAddress("accpcui@163.com"));
   	        newMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(sendEmail));
-  	        newMessage.setSubject("用户重置密码！");
+  	        newMessage.setSubject("Your crm Activation Email ");
   	        newMessage.setSentDate(new Date());
   	        newMessage.setText(emailContent.toString());
   	        Transport.send(newMessage);
   	        transport.close();  
+  	        logger.info("accpcui@163.com发送邮件到"+sendEmail+",已发送成功！");
   	        return  true;  
   		} catch (Exception e) {
   			System.err.println("邮件发送失败！"+e);  

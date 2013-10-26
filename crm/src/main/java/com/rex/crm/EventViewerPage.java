@@ -66,15 +66,14 @@ public class EventViewerPage extends TemplatePage
         long eid = 0;
         if(!eventIdValue.isEmpty()  && !eventIdValue.isNull()){
             eid = eventIdValue.toLong();
-            
         }
         final long eventId = eid;
+        System.out.println("eventID:"+eventId);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(eventId));
         //if the complete and edit button visible;
         boolean write_btn_visible = true;
         //get the event status
         int status = 2;
-          
         if(map != null){
             Object st = map.get("act_status");
              status = ((Number)st).intValue();      
@@ -113,6 +112,7 @@ public class EventViewerPage extends TemplatePage
              logger.debug("eventType:"+eventType);
         }
         final int event_type  = eventType;  
+        System.out.println("event_type:"+eventType);
         Link edit_event_btn = new Link("edit_event_btn") {
             @Override
             public void onClick() {
@@ -213,13 +213,22 @@ public class EventViewerPage extends TemplatePage
 	        }
 	    };
 	    add(form);
-	    
+	    int eventType = 0;
+        if(map != null){
+        	 eventType = ((Number) map.get("event_type")).intValue();
+             logger.debug("eventType:"+eventType);
+        }
+        final int event_type  = eventType;  
+        System.out.println("event_type:"+eventType);
 	    Link edit_event_btn = new Link("edit_event_btn") {
 	        
 	        @Override
 	        public void onClick() {
-	            
-	            setResponsePage(new EventEditorPage(eventId));
+	        	if(event_type==1){
+	        		setResponsePage(new EventEditorPage(eventId));
+	        	}else{
+	        		setResponsePage(new EventCoachEditorPage(eventId));
+	        	}
 	        }
 	    };
 	    edit_event_btn.setVisible(write_btn_visible);
