@@ -118,8 +118,8 @@ public class Configuration {
         List<String> list = Lists.newArrayList();
         list.add("关键信息");
         list.add("基本信息");
-        list.add("附加信息");
         list.add("评分信息");
+        list.add("附加信息");
         return list;
     }
     
@@ -247,6 +247,13 @@ public class Configuration {
                     if(parentNode !=null){
                         field.setParentNode(parentNode);
                     }
+                    
+                    String fieldtype = sub2.getString("field-type");
+                    if(fieldtype !=null){
+                        field.setFieldType(fieldtype);
+                    }
+                    
+                    
                     
                     field.setPrimaryKey(Boolean.parseBoolean(sub2.getString("isPrimaryKey")));
                     field.setDetailLink(Boolean.parseBoolean(sub2.getString("isDetailLink"))); 

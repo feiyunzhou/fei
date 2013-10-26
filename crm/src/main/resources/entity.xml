@@ -502,6 +502,7 @@
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<field-type>auto</field-type>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
@@ -513,6 +514,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -525,6 +527,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -537,6 +540,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -549,6 +553,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -945,6 +950,7 @@
 				<isRequired>false</isRequired>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -957,6 +963,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -969,6 +976,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -977,11 +985,11 @@
 			<field>
 				<name>modify_datetime</name>
 				<display>修改时间</display>
-				
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -994,6 +1002,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -1175,7 +1184,6 @@
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
 				<isSearchable>true</isSearchable>
-				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
 				<name>cellPhone</name>
@@ -1189,7 +1197,6 @@
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>false</isBaseInfo>
-				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>loginName</name>
@@ -1384,6 +1391,7 @@
 				<isRequired>false</isRequired>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -1396,6 +1404,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -1408,6 +1417,7 @@
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
@@ -1416,24 +1426,12 @@
 			<field>
 				<name>modify_datetime</name>
 				<display>修改时间</display>
-				
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>4</priority>
-				<fieldGroup>附加信息</fieldGroup>
-			</field>
-			<field>
-				<name>responsible_person</name>
-				<display>负责人</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
@@ -1495,7 +1493,7 @@
 	</entity>
 	<entity>
 		<name>activity</name>
-		<display>活动</display>
+		<display>拜访</display>
 		<filterField>event_type</filterField>
 		<sql>
 		select * from (select activity.*\,
@@ -1951,8 +1949,346 @@ left join account on contact.accountId = account.Id order by whenadded DESC) as 
 			</field>
 		</fields>
 	</entity>
-
-
+<entity>
+		<name>coaching</name>
+		<display>辅导</display>
+		<filterField>feature_product</filterField>
+		<sql>
+		select * from (select activity.crmuserId as crmuserName\, activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val 
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id
+left join activitycrmuser on activity.id = activitycrmuser.activityId
+where activitycrmuser.crmuserid = ? order by whenadded DESC) as aActivity
+		</sql>
+		<sql-manager>
+		select * from (select activity.crmuserId as crmuserName\, activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val 
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id
+left join activitycrmuser on activity.id = activitycrmuser.activityId
+left join crmuser on activitycrmuser.crmuserId = crmuser.id
+where crmuser.reportto = ? or crmuser.id = ? order by whenadded DESC) as aActivity
+		</sql-manager>
+		
+		<sql-admin>
+		
+		select * from (select activity.crmuserId as crmuserName\, activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val  
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id order by whenadded DESC) as aActivity
+		</sql-admin>
+		<sql-ent>select * from (select activity.crmuserId as crmuserName\, activity.*\,activity.activity_type as
+			act_type\,activity.status as act_status\, activity.contactId as
+			contactName\, contact.accountId as accountName\, contact.name as cn
+from activity left join activitycrmuser on activitycrmuser.activityId=activity.id LEFT JOIN contact on contact.id = activity.contactId  where activity.id=?) 
+as aCoaching
+		</sql-ent>
+<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>title</name>
+				<display>活动名称</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>crmuserId</name>
+				<display>被辅导人Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>crmuserName</name>
+				<display>被辅导人</display>
+				<alias>crmuserId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>crmuser</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>participants</name>
+				<display>参与人/相关人员</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>feature_product</name>
+				<display>主推产品</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_feature_product_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_status_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_status</name>
+				<display>状态</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>responsible_person</name>
+				<display>负责人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_endtime</name>
+				<display>活动结束时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>total_score</name>
+				<display>总分</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>5</priority>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>planing</name>
+				<display>访前计划</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<picklist>score1_pl</picklist>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>openling</name>
+				<display>开场</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<picklist>score1_pl</picklist>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>enquery_listening</name>
+				<display>探寻聆听</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<picklist>score1_pl</picklist>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>deliverable</name>
+				<display>利益销售</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<picklist>score1_pl</picklist>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>objection_handing</name>
+				<display>异常处理</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<picklist>score2_pl</picklist>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>summary</name>
+				<display>缔结</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<picklist>score2_pl</picklist>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+		</fields>
+</entity>
 	<entity>
 		<name>externalMeeting</name>
 		<display>日历</display>

@@ -48,7 +48,7 @@ public class EntityDetailPage extends TemplatePage {
         final Label promptLabel = new Label("prompt","提示:操作已成功！");
         groupitem.add(promptLabel);
         div.add(new AttributeAppender("style",new Model("display:none"),";"));
-		groupitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+        groupitem.add(new AttributeAppender("style",new Model("display:none"),";"));
         div.add(groupitem);
         add(div);
         /*final Label promptButton = new Label("promptButton","X");
@@ -58,7 +58,7 @@ public class EntityDetailPage extends TemplatePage {
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
-        if(entity.getName().equals("activity")){
+        if(entity.getName().equals("activity")||entity.getName().equals("coaching")){
         	add(new Label("name",String.valueOf(map.get("title"))));
         }else{
         	add(new Label("name",String.valueOf(map.get("name"))));

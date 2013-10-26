@@ -103,6 +103,20 @@ public class Entity implements Serializable{
         return res;
     }
     
+    
+    public List<Field> getAutoFields(){
+      List<Field> res = Lists.newArrayList();
+      if(fields !=null){
+          for(Field f:fields){
+             if(f.getFieldType()!=null && f.getFieldType().equalsIgnoreCase("auto")){
+                 res.add(f);
+             }
+          }
+      }
+      return res;
+  }
+  
+    
     public List<String> getDisplayNames(){
         List<String> fd = Lists.newArrayList();
         if(fields !=null){

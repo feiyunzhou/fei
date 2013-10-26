@@ -3,6 +3,7 @@ package com.rex.crm.common;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -111,7 +112,7 @@ public class NewDataFormPanel extends Panel {
             int numOfField = 0;
             List<Field> visibleFields = Lists.newArrayList();
             for (Field f : groupfields) {
-                if (!f.isVisible()) {
+                if (!f.isVisible() ||!f.isEditable()||(f.getFieldType()!=null &&f.getFieldType().equalsIgnoreCase("auto"))) {
                     continue;
                 }
                 numOfField++;
@@ -139,11 +140,10 @@ public class NewDataFormPanel extends Panel {
                     if (currentField.getPicklist() != null) {
 
                         if (j % 2 == 0) {
+                          columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                           if (currentField.isRequired()) {
-                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
                           }else{
-                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                           }
                         } else {
@@ -153,10 +153,8 @@ public class NewDataFormPanel extends Panel {
                                 if (params != null) {
                                     
                                     String choiceId = currentField.getDefault_value();
-                                    System.out.println("choiceId::::::"+choiceId);
                                     if(choiceId!=null && choiceId!=null && params.get(choiceId.trim())!=null){
                                         default_key = Long.parseLong(String.valueOf(params.get(choiceId.trim())));  
-                                        System.out.println("default_key::::::"+default_key);
                                     }
                                  
                                 }
@@ -190,24 +188,19 @@ public class NewDataFormPanel extends Panel {
                                         @Override
                                         public void detach() {
                                             choices = null;
-                                            //System.out.println("detached");
                                         }
    
                                       };
                                 }
                                 
-                                
                                 DropDownChoiceFragment  selector = new DropDownChoiceFragment("celldatafield", "dropDownFragment", this, choices_models, selected_model,entity,currentField);
                                 columnitem.add(selector);
                                 selector.setOutputMarkupId(true);
-                               
                                 if(currentField.getParentNode()!=null){
-                                   
                                    childDropDownComponent.put(currentField.getName(),selector);
                                 }
                                 
                                 models.put(currentField.getName(), selected_model);
-                                
                                 columnitem.add(selector);
                             } else {
 
@@ -226,21 +219,13 @@ public class NewDataFormPanel extends Panel {
                         }
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {
+                          columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
                           if (currentField.isRequired()) {
-                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
                           }else{
-                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                           }
                         } else {
-//                            List<Choice> pickLista = DAOImpl.queryRelationDataList(currentField.getRelationTable(), userId);
-//                            Map<Long, String> list = Maps.newHashMap();
-//                            List<Long> idsa = Lists.newArrayList();
-//                            for (Choice p : pickList) {
-//                                list.put(p.getId(), p.getVal());
-//                                ids.add(p.getId());
-//                            }
                             long foreignKey = -1L;
                             String defaultValue = "";
                             if (currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("var")){
@@ -253,10 +238,8 @@ public class NewDataFormPanel extends Panel {
                                        foreignKey = Long.parseLong(String.valueOf(params.get(choiceId.trim())));
                                        defaultValue = String.valueOf(params.get(choiceValue.trim()));
                                     }
-                                 
                                 }
                             }
-                           
                             IModel choiceModel = new Model(foreignKey);
                             String fn = "";
                             if (currentField.getAlias() != null) {
@@ -265,17 +248,14 @@ public class NewDataFormPanel extends Panel {
                                 fn = currentField.getName();
                             }
                             models.put(fn, choiceModel);
-                            //columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this,ids, list, choiceModel));
-
                             columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(), defaultValue, choiceModel));
                         }
                     } else {
                         if (j % 2 == 0) {
+                          columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                           if (currentField.isRequired()) {
-                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
                           }else{
-                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                           }
                         } else {
@@ -285,9 +265,21 @@ public class NewDataFormPanel extends Panel {
                                 columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, textModel));
                             } else {
                                 IModel<String> textModel = new Model<String>("");
-                                models.put(currentField.getName(), textModel);
-                                columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, textModel, currentField));
+                                
+                                if(currentField.getDataType().equals("datetime-local")){
+                                   long ts= System.currentTimeMillis();
+                                
+                                   SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                                   String date_value = dateformat.format(ts);
+                                   textModel = new Model<String>(date_value);
+                                   models.put(currentField.getName(), textModel);
+                                  columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, textModel, currentField));
+                                }else{
+                                  models.put(currentField.getName(), textModel);
+                                  columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, textModel, currentField));
+                                }
                             }
+                            
                         }
                     }
                     columnRepeater.add(columnitem);
@@ -305,9 +297,11 @@ public class NewDataFormPanel extends Panel {
                 List<String> values = Lists.newArrayList();
                 //创建一个标识，判断非空验证是否通过
                 boolean flag = true;
+                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 //判断属性设置
                 for (String key : models.keySet()) {
                     fieldNames.add(key);
+                    logger.debug("currentFieldkey:"+key);
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
                     //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
@@ -322,19 +316,66 @@ public class NewDataFormPanel extends Panel {
                     		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
                     		flag = false;
                     		return;
+                    	}else{
+                    		flag = true;
                     	}
                 	}
                     System.out.println(fieldNames);
+                    
+                  
+                     
                     if (models.get(key).getObject() instanceof String) {
+                      
+                      if(field.getDataType().equalsIgnoreCase("datetime-local") && (entity.getName().equalsIgnoreCase("coaching"))){
+                       
+                         
+                        Date date = new Date();
+                        try
+                        {
+                          date = dateformat.parse((String) models.get(key).getObject());
+                        }
+                        catch (ParseException e)
+                        {
+                          // TODO Auto-generated catch block
+                          e.printStackTrace();
+                        }
+                          values.add(String.valueOf(date.getTime()));
+                      }else{
                         values.add("'" + (String) models.get(key).getObject()
-                                + "'");
+                            + "'");
+                      }
+                      
+                     
                     }else if(models.get(key).getObject() instanceof Choice){
                         values.add(String.valueOf(((Choice) models.get(key).getObject()).getId()));
                     }else {
                         values.add(String.valueOf(models.get(key).getObject()));
                     }
+                   
                 }
                 if(flag){
+                  //modify_datetime whenadded response_person 
+                  List<Field> autoFields = entity.getAutoFields();
+                  for(Field f:autoFields){
+                    if(f.getName().equalsIgnoreCase("modify_datetime") || f.getName().equalsIgnoreCase("whenadded")){
+                      values.add("'"+dateformat.format(new Date())+"'");
+                    }
+                    
+                    if(f.getName().equalsIgnoreCase("owner") || f.getName().equalsIgnoreCase("modifier")
+                        || f.getName().equalsIgnoreCase("responsible_person") ){
+                      values.add("'"+user+"'");
+                    }
+                    if(f.getName().equalsIgnoreCase("total_score")){
+                      values.add(String.valueOf(0));
+                    }
+                    fieldNames.add(f.getName());
+                  }
+                  
+                  int i=0;
+                  for(String fn:fieldNames){
+                    System.out.println(fn +"=="+ values.get(i));
+                    i++;
+                  }
             		//if entity is crmuser  add loginName
                     if ("crmuser".equals(entity.getName())) {
                         long crmuserkey = -1;
@@ -350,6 +391,7 @@ public class NewDataFormPanel extends Panel {
                             
                         }
                     } else {
+                       
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, userId);
                         if (generatedId > 0) {
                             DAOImpl.insert2UserRelationTable(entity.getName(), userId,
@@ -418,34 +460,21 @@ public class NewDataFormPanel extends Panel {
             
             if(currentField.getChildNode()!=null){
                 parentModels.put(currentField.getName(), default_model);
-                //childDropDownComponent.put(field.get("child-pl"), null);
-                
                 dropDown.add(new AjaxFormComponentUpdatingBehavior("onchange"){
 
                     @Override
                     protected void onUpdate(AjaxRequestTarget target) {
-                        //System.out.println("TTTT:"+field.get("name"));
-                        //System.out.println("childDropDownComponent:"+childDropDownComponent);
                         target.add(childDropDownComponent.get( currentField.getChildNode()));
-                        //System.out.println("currentfield code:"+String.valueOf(((Choice)parentModels.get(field.get("name")).getObject()).getCode()));
-                            //System.out.println("DDDD:"+table.get(field.get("childNode")).get("childNode"));
                             if( entity.getFieldByName(currentField.getChildNode()).getChildNode() != null ){
                               
                                parentModels.get(entity.getFieldByName(currentField.getChildNode()).getName()).setObject(new Choice(-1L,""));
                                target.add(childDropDownComponent.get(entity.getFieldByName(currentField.getChildNode()).getChildNode()));
                                // target.
                             }
-                        
                     }
-                    
-                    
-                   
-                    
                  });
              }
-            
         } 
-        
     }
 
 
@@ -504,7 +533,7 @@ public class NewDataFormPanel extends Panel {
                 Calendar calendar = Calendar.getInstance();
                 final SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
                 Date time = (Date) calendar.getTime();
-                if (currentField.getName().equals("accountId")) {
+                if (currentField.getName().equals("accountId")||currentField.getName().equals("act_endtime")||currentField.getName().equals("total_score")) {
                     add(text);
                 } else {
                     if (currentField.getName().equals("modify_datetime")) {
@@ -520,21 +549,24 @@ public class NewDataFormPanel extends Panel {
                         text.add(new AttributeModifier("value", modifiedTimeModel));
                     } else if (currentField.getName().equals("whenadded")) {
                         String whenadded = dateformat.format(time);
-                       
                         text.add(new AttributeModifier("value", whenadded));
                     } else {
                         text.add(new AttributeModifier("value", new Model(user)));
                     }
-
                 }
                 text.add(new AttributeModifier("readonly", new Model("realonly")));
             }
+            
             if (currentField.getDataType().equals("tel") || currentField.getName().equals("fax") || currentField.getName().equals("office_fax")) {
                 text.add(new AttributeModifier("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));
             }
             if (currentField.isRequired()) {
               text.add(new AttributeAppender("required", new Model("required"), ";"));
-          }
+            }
+            if(currentField.getDataType().equals("datetime-local")){
+              text.add(new AttributeModifier("value", new Model((String)model.getObject())));
+             
+            } 
             add(text);
             text.add(new AttributeModifier("type", new Model(currentField.getDataType())));
             text.add(new AttributeModifier("id", new Model(currentField.getName())));

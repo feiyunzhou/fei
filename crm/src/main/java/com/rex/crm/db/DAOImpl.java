@@ -522,6 +522,7 @@ public class DAOImpl
         menulist.add("account");
         menulist.add("contact");
         menulist.add("activity");
+        menulist.add("coaching");
 //        menulist.add("dealerAccount");
 //        menulist.add("dealerContact");
         menulist.add("user");
@@ -1153,7 +1154,11 @@ public class DAOImpl
     public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
          String fieldssql = Joiner.on(",").join(fieldNames);
          String valuesql = Joiner.on(",").join(values);
-         if(entityName.equals("activity")){
+         if(entityName.equals("coaching")){
+           entityName= "activity";
+           fieldssql = fieldssql + ",event_type";
+           valuesql = valuesql + "," +2;
+         }else if(entityName.equals("activity")){
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
         	 fieldssql = fieldssql + ",crmuserId";
         	 valuesql = valuesql + "," +userId;
@@ -1210,6 +1215,8 @@ public class DAOImpl
             sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+userId+")";
         }else if(entityName.equalsIgnoreCase("activity")){
             sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+userId+")";
+        }else if (entityName.equalsIgnoreCase("coaching")){
+          sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+userId+")";
         }
         if(sql == null) {
             logger.error("entityName error");

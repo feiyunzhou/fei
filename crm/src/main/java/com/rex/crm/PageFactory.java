@@ -15,7 +15,9 @@ public class PageFactory {
             return new ActivityPage();
         }else if(name.equalsIgnoreCase("crmuser")){
             return new UserPage();
-        }else{
+        }else if(name.equalsIgnoreCase("coaching")){
+          return new CoachingPage();
+          }else{
             return new HomePage();
         }
     }

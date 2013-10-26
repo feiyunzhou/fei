@@ -52,6 +52,8 @@ public class Field implements Serializable {
     private String childNode;
     @Expose
     private String parentNode;
+    @Expose
+    private String fieldType;
     
     
     public boolean isRequired() {
@@ -235,6 +237,16 @@ public class Field implements Serializable {
 
     public void setParentNode(String parentNode) {
         this.parentNode = parentNode;
+    }
+
+    public String getFieldType()
+    {
+      return fieldType;
+    }
+
+    public void setFieldType(String fieldType)
+    {
+      this.fieldType = fieldType;
     }
     
 

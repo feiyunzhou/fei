@@ -91,7 +91,7 @@ public class EntityDetailPanel extends Panel {
             List<Field> visibleFields = Lists.newArrayList();
 
             for (Field f : groupfields) {
-                if (!f.isVisible() || f.getName().equalsIgnoreCase("name")) {
+                if (!f.isVisible()) {
                     continue;
                 }
 
