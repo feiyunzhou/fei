@@ -1544,11 +1544,11 @@ left join activity_event_type_pl on activity.activity_type = activity_event_type
 left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id order by whenadded DESC) as aActivity
 		</sql-admin>
-		<sql-ent>select * from (select activity.*\,activity.activity_type as
+		<sql-ent>select * from (select  activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
-			contactName\, contact.accountId as accountName\, contact.name as cn from activity\,
-			contact\,activitycrmuser where contact.id= activity.contactId AND activity.id=? AND activitycrmuser.activityId=activity.id order by whenadded DESC) as
-			aActivity
+			contactName\, contact.accountId as accountName\, contact.name as cn
+from activity left join activitycrmuser on activitycrmuser.activityId=activity.id LEFT JOIN contact on contact.id = activity.contactId  where activity.id=?) 
+as aActivity
 		</sql-ent>
 		<fields>
 			<field>
