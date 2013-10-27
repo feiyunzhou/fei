@@ -430,7 +430,7 @@
 				<name>fax</name>
 				<display>主要传真号码</display>
 				<isRequired>false</isRequired>
-				<data-type>text</data-type>
+				<data-type>fax</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -485,7 +485,7 @@
 				<name>address</name>
 				<display>医院详细地址</display>
 				<isRequired>false</isRequired>
-				<data-type>text</data-type>
+				<data-type>textarea</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -762,7 +762,7 @@
 				<name>office_fax</name>
 				<display>工作传真号码</display>
 				<isRequired>false</isRequired>
-				<data-type>text</data-type>
+				<data-type>fax</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1867,7 +1867,7 @@ as aActivity
 			<field>
 				<name>total_score</name>
 				<display>总分</display>
-				<data-type>text</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -2211,7 +2211,7 @@ as aCoaching
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<field-type>auto</field-type>
+				<field-type>calculated</field-type>
 				<priority>5</priority>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>

@@ -1,7 +1,5 @@
 package com.rex.crm.common;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,11 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
@@ -31,7 +24,6 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.PopupSettings;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -41,7 +33,6 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -53,9 +44,7 @@ import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
-import com.rex.crm.util.SMTPAuthenticator;
 import com.rex.crm.util.SendEmail;
-import com.sun.mail.smtp.SMTPTransport;
 
 public class NewDataFormPanel extends Panel {
 
@@ -68,9 +57,11 @@ public class NewDataFormPanel extends Panel {
     private static int NUM_OF_COLUMN = 1;
     private Map<String, IModel> parentModels = Maps.newHashMap();
     private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
-    final String user = ((SignIn2Session) getSession()).getUser();
+    
+    
     public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
         super(id);
+        
         //add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
         final AbstractItem divitem = new AbstractItem(div.newChildId());
@@ -83,6 +74,7 @@ public class NewDataFormPanel extends Panel {
         div.add(divitem);
         add(div);
         final Map<String, IModel> models = Maps.newHashMap();
+        final String userName = ((SignIn2Session) getSession()).getUser();
         final String userId = ((SignIn2Session) getSession()).getUserId();
         List<Field> fields = entity.getFields();
         
@@ -259,7 +251,7 @@ public class NewDataFormPanel extends Panel {
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                           }
                         } else {
-                            if (currentField.getName().equals("address")) {
+                            if (currentField.getDataType().equalsIgnoreCase("textarea")) {
                                 IModel<String> textModel = new Model<String>("");
                                 models.put(currentField.getName(), textModel);
                                 columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, textModel));
@@ -357,24 +349,31 @@ public class NewDataFormPanel extends Panel {
                   //modify_datetime whenadded response_person 
                   List<Field> autoFields = entity.getAutoFields();
                   for(Field f:autoFields){
+//                    if(entity.getName().equalsIgnoreCase("coaching") && f.getName().equalsIgnoreCase("total_score")){
+//                          continue;
+//                    }
                     if(f.getName().equalsIgnoreCase("modify_datetime") || f.getName().equalsIgnoreCase("whenadded")){
                       values.add("'"+dateformat.format(new Date())+"'");
                     }
                     
                     if(f.getName().equalsIgnoreCase("owner") || f.getName().equalsIgnoreCase("modifier")
                         || f.getName().equalsIgnoreCase("responsible_person") ){
-                      values.add("'"+user+"'");
+                      values.add("'"+userName+"'");
                     }
-                    if(f.getName().equalsIgnoreCase("total_score")){
-                      values.add(String.valueOf(0));
-                    }
+                  
                     fieldNames.add(f.getName());
                   }
                   
                   int i=0;
                   for(String fn:fieldNames){
-                    System.out.println(fn +"=="+ values.get(i));
+                    System.out.println(i+":::"+fn);
                     i++;
+                  }
+                  i = 0;
+                  
+                  for(String v:values){
+                      System.out.println(i+":::"+v);
+                      i++;
                   }
             		//if entity is crmuser  add loginName
                     if ("crmuser".equals(entity.getName())) {
@@ -533,35 +532,36 @@ public class NewDataFormPanel extends Panel {
                 Calendar calendar = Calendar.getInstance();
                 final SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
                 Date time = (Date) calendar.getTime();
-                if (currentField.getName().equals("accountId")||currentField.getName().equals("act_endtime")||currentField.getName().equals("total_score")) {
+                if (currentField.getName().equals("accountId")||currentField.getName().equals("act_endtime")) {
                     add(text);
-                } else {
-                    if (currentField.getName().equals("modify_datetime")) {
-                        String modify_datetime = dateformat.format(time);
-                        IModel modifiedTimeModel = new Model(){
-							@Override
-							public Serializable getObject() {
-								Date time = new Date(System.currentTimeMillis());
-								return  dateformat.format(time);
-							}
-
-                        };
-                        text.add(new AttributeModifier("value", modifiedTimeModel));
-                    } else if (currentField.getName().equals("whenadded")) {
-                        String whenadded = dateformat.format(time);
-                        text.add(new AttributeModifier("value", whenadded));
-                    } else {
-                        text.add(new AttributeModifier("value", new Model(user)));
-                    }
-                }
+                } 
+//                else {
+//                    if (currentField.getName().equals("modify_datetime")) {
+//                        String modify_datetime = dateformat.format(time);
+//                        IModel modifiedTimeModel = new Model(){
+//							@Override
+//							public Serializable getObject() {
+//								Date time = new Date(System.currentTimeMillis());
+//								return  dateformat.format(time);
+//							}
+//
+//                        };
+//                        text.add(new AttributeModifier("value", modifiedTimeModel));
+//                    } else if (currentField.getName().equals("whenadded")) {
+//                        String whenadded = dateformat.format(time);
+//                        text.add(new AttributeModifier("value", whenadded));
+//                    } else {
+//                        text.add(new AttributeModifier("value", new Model(user)));
+//                    }
+//                }
                 text.add(new AttributeModifier("readonly", new Model("realonly")));
             }
             
-            if (currentField.getDataType().equals("tel") || currentField.getName().equals("fax") || currentField.getName().equals("office_fax")) {
+            if (currentField.getDataType().equals("tel") || currentField.getDataType().equals("fax")) {
                 text.add(new AttributeModifier("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));
             }
             if (currentField.isRequired()) {
-              text.add(new AttributeAppender("required", new Model("required"), ";"));
+              text.add(new AttributeModifier("required", new Model("required")));
             }
             if(currentField.getDataType().equals("datetime-local")){
               text.add(new AttributeModifier("value", new Model((String)model.getObject())));
