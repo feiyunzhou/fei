@@ -318,8 +318,8 @@ public class NewDataFormPanel extends Panel {
                      
                     if (models.get(key).getObject() instanceof String) {
                       
-                      if(field.getDataType().equalsIgnoreCase("datetime-local") && (entity.getName().equalsIgnoreCase("coaching"))){
-                       
+                      if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
+                       //if the filed has formatter, we guess the field saved in data base is in long 
                          
                         Date date = new Date();
                         try
@@ -328,13 +328,12 @@ public class NewDataFormPanel extends Panel {
                         }
                         catch (ParseException e)
                         {
-                          // TODO Auto-generated catch block
-                          e.printStackTrace();
+                          logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
                         }
                           values.add(String.valueOf(date.getTime()));
+                      
                       }else{
-                        values.add("'" + (String) models.get(key).getObject()
-                            + "'");
+                          values.add("'" + (String) models.get(key).getObject()+ "'");
                       }
                       
                      
@@ -349,9 +348,6 @@ public class NewDataFormPanel extends Panel {
                   //modify_datetime whenadded response_person 
                   List<Field> autoFields = entity.getAutoFields();
                   for(Field f:autoFields){
-//                    if(entity.getName().equalsIgnoreCase("coaching") && f.getName().equalsIgnoreCase("total_score")){
-//                          continue;
-//                    }
                     if(f.getName().equalsIgnoreCase("modify_datetime") || f.getName().equalsIgnoreCase("whenadded")){
                       values.add("'"+dateformat.format(new Date())+"'");
                     }
@@ -364,17 +360,17 @@ public class NewDataFormPanel extends Panel {
                     fieldNames.add(f.getName());
                   }
                   
-                  int i=0;
-                  for(String fn:fieldNames){
-                    System.out.println(i+":::"+fn);
-                    i++;
-                  }
-                  i = 0;
-                  
-                  for(String v:values){
-                      System.out.println(i+":::"+v);
-                      i++;
-                  }
+//                  int i=0;
+//                  for(String fn:fieldNames){
+//                    System.out.println(i+":::"+fn);
+//                    i++;
+//                  }
+//                  i = 0;
+//                  
+//                  for(String v:values){
+//                      System.out.println(i+":::"+v);
+//                      i++;
+//                  }
             		//if entity is crmuser  add loginName
                     if ("crmuser".equals(entity.getName())) {
                         long crmuserkey = -1;

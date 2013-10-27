@@ -20,6 +20,7 @@ import org.apache.wicket.model.Model;
 import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
+import com.rex.crm.CoachingPage;
 import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
@@ -134,12 +135,17 @@ public class EntityDetailPage extends TemplatePage {
                     setResponsePage(new ContactPage());
                 }else if(entityName.equals("activity")) {
                     DAOImpl.deleteRecord(id, entityName);
+                    
                     setResponsePage(new ActivityPage());
                 }else if(entityName.equalsIgnoreCase("crmuser")){
                     if(DAOImpl.deleteRecord(id, entityName)>0){
                        DAOImpl.updateCrmUserReport(id, "-1");
                     }
                     setResponsePage(new UserPage());
+                }else if(entityName.equals("coaching")) {
+                    DAOImpl.deleteRecord(id, "activity");
+                    
+                    setResponsePage(new CoachingPage());
                 }
             }
 

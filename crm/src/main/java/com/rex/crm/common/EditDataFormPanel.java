@@ -1,6 +1,7 @@
 package com.rex.crm.common;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,7 +54,6 @@ import com.rex.crm.util.Configuration;
 public class EditDataFormPanel extends Panel {
 	private static final Logger logger = Logger.getLogger(EditDataFormPanel.class);
 	private static final long serialVersionUID = -2613412283023068638L;
-	private final String user = ((SignIn2Session) getSession()).getUser();
 	private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap(); 
 
 	private static int NUM_OF_COLUMN = 1;
@@ -87,9 +87,10 @@ public class EditDataFormPanel extends Panel {
          }else{
       	   add(new Label("name",String.valueOf(data.get("name"))));
   	   }
-		final Map<String, IModel> models = Maps.newHashMap();
+		//final Map<String, IModel> models = Maps.newHashMap();
 		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
 		final String userId = ((SignIn2Session) getSession()).getUserId();
+	   final String userName = ((SignIn2Session) getSession()).getUser();
 		String primaryKeyName = schema.getPrimaryKeyName();
 		List<Field> fields = schema.getFields();// 得到所有fields
 		final List<String> fieldNames = Lists.newArrayList();
@@ -119,8 +120,7 @@ public class EditDataFormPanel extends Panel {
 			int numOfField = 0;
 			List<Field> visibleFields = Lists.newArrayList();
 			for (Field f : groupfields) {
-				if (!f.isVisible() )
-					continue;
+				if (!f.isVisible() || !f.isEditable() || (f.getFieldType()!=null && f.getFieldType().equalsIgnoreCase("auto"))) continue;
 				numOfField++;
 				visibleFields.add(f);
 			}
@@ -128,183 +128,190 @@ public class EditDataFormPanel extends Panel {
 			
 			int num_of_row = (numOfField / NUM_OF_COLUMN) + 1;
 			
-			for (int i = 0; i < num_of_row; i++) {
-				logger.debug("for i = "+i+",dataRowRepeater.newChildId() = "+dataRowRepeater.newChildId()+",value = "+dataRowRepeater.get(dataRowRepeater.newChildId()));
-				AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
-				dataRowRepeater.add(item);
-				RepeatingView columnRepeater = new RepeatingView("columnRepeater");
-				item.add(columnRepeater);
+            for (int i = 0; i < num_of_row; i++) {
+                //logger.debug("for i = " + i + ",dataRowRepeater.newChildId() = " + dataRowRepeater.newChildId() + ",value = " + dataRowRepeater.get(dataRowRepeater.newChildId()));
+                AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
+                dataRowRepeater.add(item);
+                RepeatingView columnRepeater = new RepeatingView("columnRepeater");
+                item.add(columnRepeater);
 
-				for (int j = 0; j < 2 * NUM_OF_COLUMN; j++) {
+                for (int j = 0; j < 2 * NUM_OF_COLUMN; j++) {
 
-					AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(data.get(primaryKeyName))));
+                    AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(data.get(primaryKeyName))));
 
-					if ((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()) {
-						if((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()){
-							continue;
-						}
-						columnitem.add(new LayoutFragment("editdata","layoutFragment", this, "&nbsp;"));
-						columnRepeater.add(columnitem);
-						continue;
-					}
-					final Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
-					if (currentField.getPicklist() != null) {
-						if (j % 2 == 0) {
-						  columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-						  if (currentField.isRequired()) {
-                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
-						  }else{
-                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
-              }
-						  fieldNames.add(currentField.getName());
-						} else {
-   
-						    if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
-						        String value = data.get(currentField.getName()).toString();
-						        IModel<Choice> selected_model =  new Model(new Choice(Long.parseLong(value),""));
+                    if ((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()) {
+                        if ((i * NUM_OF_COLUMN + j / 2) >= visibleFields.size()) {
+                            continue;
+                        }
+                        columnitem.add(new LayoutFragment("editdata", "layoutFragment", this, "&nbsp;"));
+                        columnRepeater.add(columnitem);
+                        continue;
+                    }
+                    final Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
+                    if (currentField.getPicklist() != null) {
+                        if (j % 2 == 0) {
+                            columnitem
+                                    .add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                            if (currentField.isRequired()) {
+                                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                            } else {
+                                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                            }
+                            fieldNames.add(currentField.getName());
+                        } else {
+
+                            if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
+                                String value = data.get(currentField.getName()).toString();
+                                IModel<Choice> selected_model = new Model(new Choice(Long.parseLong(value), ""));
                                 IModel<List<? extends Choice>> choices_models = null;
-                                
-                                if(currentField.getChildNode()!=null && currentField.getParentNode() == null ){
+
+                                if (currentField.getChildNode() != null && currentField.getParentNode() == null) {
                                     choices_models = Model.ofList(DAOImpl.queryPickList(currentField.getPicklist()));
-                                  }
-                                
-                                if(currentField.getParentNode()!=null){
-                                    choices_models = new AbstractReadOnlyModel<List<? extends Choice>>(){
+                                }
+
+                                if (currentField.getParentNode() != null) {
+                                    choices_models = new AbstractReadOnlyModel<List<? extends Choice>>() {
                                         List<Choice> choices;
 
                                         @Override
                                         public List<? extends Choice> getObject() {
                                             IModel pm = parentModels.get(currentField.getParentNode());
-                                            if(pm!=null){
-                                              choices =  DAOImpl.queryPickListByFilter(currentField.getPicklist(), "parentId",String.valueOf(((Choice)pm.getObject()).getId()));
-                                             
-                                            }else{
+                                            if (pm != null) {
+                                                choices = DAOImpl.queryPickListByFilter(currentField.getPicklist(), "parentId", String.valueOf(((Choice) pm.getObject()).getId()));
+
+                                            } else {
                                                 choices = Lists.newArrayList();
                                             }
                                             return choices;
                                         }
-                                        
+
                                         @Override
                                         public void detach() {
                                             choices = null;
-                                            //System.out.println("detached");
+                                            // System.out.println("detached");
                                         }
-   
-                                      };
+
+                                    };
                                 }
-                                
-                                
-                                DropDownChoiceFragment  selector = new DropDownChoiceFragment("editdata", "dropDownFragment", this, choices_models, selected_model,schema,currentField);
+
+                                DropDownChoiceFragment selector = new DropDownChoiceFragment("editdata", "dropDownFragment", this, choices_models, selected_model, schema, currentField);
                                 columnitem.add(selector);
                                 selector.setOutputMarkupId(true);
-                               
-                                if(currentField.getParentNode()!=null){
-                                   
-                                   childDropDownComponent.put(currentField.getName(),selector);
+
+                                if (currentField.getParentNode() != null) {
+
+                                    childDropDownComponent.put(currentField.getName(), selector);
                                 }
-                                
-                                models.put(currentField.getName(), selected_model);
+
+                             
                                 fieldNameToModel.put(currentField.getName(), selected_model);
                                 columnitem.add(selector);
-						        
-						    }else{
-						    
-							List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
-							Map<Long, String> list = Maps.newHashMap();
-							List<Long> ids = Lists.newArrayList();
-							for (Choice p : pickList) {
-								list.put(p.getId(), p.getVal());
-								ids.add(p.getId());
-							}
-							String value = data.get(currentField.getName()).toString();
-							IModel choiceModel =  new Model(Long.parseLong(value));
-					
-							models.put(currentField.getName(), choiceModel);
-							
-							fieldNameToModel.put(currentField.getName(), choiceModel);
-							columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids,list, choiceModel));
-						    }
-						}
-					}
-					else if (currentField.getRelationTable() != null) {
-						if (j % 2 == 0) {
-						  columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-              if (currentField.isRequired()) {
-                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
-              }else{
-                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
-              }
-              fieldNames.add(currentField.getName());
-						} else {
-						    long foreignKey = 1L;
-                            foreignKey = ((Number)data.get(currentField.getName())).longValue();
-							IModel choiceModel = new Model(foreignKey);
-							String fn = "";
-							if (currentField.getAlias() != null) {
-								fn = currentField.getAlias();
-							} else {
-								fn = currentField.getName();
-							}
-							final Entity ent = Configuration.getEntityByName(currentField.getRelationTable());
-							Map et = DAOImpl.queryEntityById(ent.getSql_ent(), String.valueOf(foreignKey));
-							String value = "";
-							if(et != null && et.get("name") != null){
-							     value =  (String)et.get("name");
-							}
-							models.put(fn, choiceModel);
-							
-							fieldNameToModel.put(fn, choiceModel);
-						    columnitem.add(new RelationTableSearchFragment("editdata","relationTableSearchFragment",this,currentField.getRelationTable(),value,choiceModel,entityId));
-						}
-					} 
-						else {
-						if (j % 2 == 0) {
-						  columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
-              if (currentField.isRequired()) {
-                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
-              }else{
-                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
-              }
-              fieldNames.add(currentField.getName());
-						} else {
 
-							Object rawvalue = data.get(currentField.getName());
-							rawvalue = (rawvalue == null) ? "" : rawvalue;
-							 String value =
-							 CRMUtility.formatValue(currentField.getFormatter(),
-							 String.valueOf(rawvalue));
-							 value = (value == null) ? "" : value;
-							 
-							 if(currentField.getName().equals("address")){
-							   IModel<String> textModel = new Model<String>(value);
-							   models.put(CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(rawvalue)),textModel);
-	               fieldNameToModel.put(currentField.getName(), textModel);
-	                columnitem.add(new Textarea("editdata","textAreaFragment", this, textModel));
-	              }else{
-	                IModel<String> textModel = new Model<String>("");
-	                models.put(CRMUtility.formatValue(currentField.getFormatter(),String.valueOf(rawvalue)),textModel);
-	                fieldNameToModel.put(currentField.getName(), textModel);
-	                columnitem.add(new TextInputFragment("editdata","textInputFragment", this, textModel,value,currentField));
-	              }
-						}
-					}
-					columnRepeater.add(columnitem);
-				}
-			}// end of set the detailed info
-		}// end of groupNames loop
+                            } else {
+
+                                List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
+                                Map<Long, String> list = Maps.newHashMap();
+                                List<Long> ids = Lists.newArrayList();
+                                for (Choice p : pickList) {
+                                    list.put(p.getId(), p.getVal());
+                                    ids.add(p.getId());
+                                }
+                                String value = data.get(currentField.getName()).toString();
+                                IModel choiceModel = new Model(Long.parseLong(value));
+
+                               
+                                fieldNameToModel.put(currentField.getName(), choiceModel);
+                                columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids, list, choiceModel));
+                            }
+                        }
+                    } else if (currentField.getRelationTable() != null) {
+                        if (j % 2 == 0) {
+                            columnitem
+                                    .add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                            if (currentField.isRequired()) {
+                                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                            } else {
+                                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                            }
+                            fieldNames.add(currentField.getName());
+                        } else {
+                            long foreignKey = 1L;
+                            foreignKey = ((Number) data.get(currentField.getName())).longValue();
+                            IModel choiceModel = new Model(foreignKey);
+                            String fn = "";
+                            if (currentField.getAlias() != null) {
+                                fn = currentField.getAlias();
+                            } else {
+                                fn = currentField.getName();
+                            }
+                            final Entity ent = Configuration.getEntityByName(currentField.getRelationTable());
+                            Map et = DAOImpl.queryEntityById(ent.getSql_ent(), String.valueOf(foreignKey));
+                            String value = "";
+                            if (et != null && et.get("name") != null) {
+                                value = (String) et.get("name");
+                            }
+                         
+
+                            fieldNameToModel.put(fn, choiceModel);
+                            columnitem.add(new RelationTableSearchFragment("editdata", "relationTableSearchFragment", this, currentField.getRelationTable(), value, choiceModel, entityId));
+                        }
+                    } else {
+                        if (j % 2 == 0) {
+                            columnitem
+                                    .add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                            if (currentField.isRequired()) {
+                                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                            } else {
+                                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                            }
+                            fieldNames.add(currentField.getName());
+                        } else {
+
+                            Object rawvalue = data.get(currentField.getName());
+                            rawvalue = (rawvalue == null) ? "" : rawvalue;
+                            String value = CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(rawvalue));
+                            value = (value == null) ? "" : value;
+
+                            if (currentField.getDataType().equalsIgnoreCase("textarea")) {
+                                IModel<String> textModel = new Model<String>(value);
+                                
+                                fieldNameToModel.put(currentField.getName(), textModel);
+                                columnitem.add(new Textarea("editdata", "textAreaFragment", this, textModel));
+                            } else if(currentField.getDataType().equals("datetime-local")){
+                                
+                                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                                 String str_timestamp = String.valueOf(rawvalue);
+                                 value = dateformat.format(new Date(Long.parseLong(str_timestamp)));
+                                 IModel<String> textModel = new Model<String>(value);
+                                //textModel = new Model<String>(date_value);
+                                fieldNameToModel.put(currentField.getName(), textModel);
+                               columnitem.add(new TextInputFragment("editdata", "textInputFragment", this, textModel,value, currentField));
+                                
+                            }else {
+                                IModel<String> textModel = new Model<String>("");
+                                fieldNameToModel.put(currentField.getName(), textModel);
+                                columnitem.add(new TextInputFragment("editdata", "textInputFragment", this, textModel, value, currentField));
+                            }
+                        }
+                    }
+                    columnRepeater.add(columnitem);
+                }
+            }// end of set the detailed info
+        }// end of groupNames loop
 		Form form = new Form("form") {
 			@Override
 			protected void onSubmit() {
 				logger.debug("the form was submitted!");
-				logger.debug(models);
-				System.out.println("models:"+models);
+				logger.debug(fieldNameToModel);
 				List<String> values = Lists.newArrayList();
 				List<String> names = Lists.newArrayList();
+				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 				boolean flag = true;
 				for (String k : fieldNameToModel.keySet()) {
 					names.add(k);
 					Field field = schema.getFieldByName(k);
-                    logger.debug("currentField:"+field);
+					IModel currentModel = fieldNameToModel.get(k);
+                    logger.debug("currentField:"+field.getName());
                     //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
                     if(field.isRequired()){
                     	if(null==(String) fieldNameToModel.get(k).getObject()){
@@ -318,19 +325,72 @@ public class EditDataFormPanel extends Panel {
                     		return;
                     	}
                 	}
-					Object obj = fieldNameToModel.get(k).getObject() ;
+					Object obj = currentModel.getObject() ;
 					String value = null;
 					if(obj!=null){
-					   if(obj instanceof Choice){
-					       value = String.valueOf(((Choice)obj).getId());
-					   }else{
-					       value = "'"+String.valueOf(obj)+"'"; 
-					   }
+                        if (obj instanceof String) {
+
+                            if (field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() != null && !field.getFormatter().isEmpty()) {
+                                // if the filed has formatter, we guess the
+                                // field saved in data base is in long
+                                Date date = new Date();
+                                try {
+                                    date = dateformat.parse((String)obj);
+                                } catch (ParseException e) {
+                                    logger.error("failed to parse datetime:" + (String)obj, e);
+                                }
+                                //values.add(;
+                                value = String.valueOf(date.getTime());
+
+                            } else {
+                                value = "'" + (String)obj + "'";
+                              
+                            }
+
+                        } else if (obj instanceof Choice) {
+                            value = String.valueOf(((Choice) obj).getId());
+                        } else {
+                            value = String.valueOf(obj) ;
+                        }   
 					}
-					//String value = fieldNameToModel.get(k).getObject() == null? null:"'"+String.valueOf(fieldNameToModel.get(k).getObject())+"'";
-					values.add(value);
+					    
+					
+					values.add(value); 
+					
 				}
-				DAOImpl.updateRecord(entityId,schema.getName(),names, values);
+				
+				 List<Field> autoFields = schema.getAutoFields();
+                 for(Field f:autoFields){
+                    
+                   if(f.getName().equalsIgnoreCase("modify_datetime")){
+                       names.add(f.getName());
+                     values.add("'"+dateformat.format(new Date())+"'");
+                   }
+                   
+                   if(f.getName().equalsIgnoreCase("modifier")){
+                       names.add(f.getName());
+                     values.add("'"+userName+"'");
+                   }
+                 }
+				
+                String table_name  = schema.getName();
+                if(table_name.equalsIgnoreCase("coaching")){
+                    table_name = "activity";
+                }
+                
+//                 int i=0;
+//                 for(String fn:names){
+//                 System.out.println(i+":::"+fn);
+//                 i++;
+//                 }
+//                 i = 0;
+//                
+//                 for(String v:values){
+//                 System.out.println(i+":::"+v);
+//                 i++;
+//                 }
+                
+				DAOImpl.updateRecord(entityId,table_name,names,values);
 				setResponsePage(new EntityDetailPage(schema.getName(),entityId));
 			}
 		};
@@ -354,66 +414,61 @@ public class EditDataFormPanel extends Panel {
 		super(id, model);
 	}
 
-	private class TextFragment extends Fragment {
+    private class TextFragment extends Fragment {
 
-		public TextFragment(String id, String markupId,
-				MarkupContainer markupProvider, String label) {
-			super(id, markupId, markupProvider);
-			add(new Label("celldata", label));
-			// TODO Auto-generated constructor stub
-		}
-	}
+        public TextFragment(String id, String markupId, MarkupContainer markupProvider, String label) {
+            super(id, markupId, markupProvider);
+            add(new Label("celldata", label));
+            // TODO Auto-generated constructor stub
+        }
+    }
 
-	private class LayoutFragment extends Fragment {
+    private class LayoutFragment extends Fragment {
 
-		public LayoutFragment(String id, String markupId,
-				MarkupContainer markupProvider, String label) {
-			super(id, markupId, markupProvider);
-			add(new Label("add", label).setEscapeModelStrings(false));
-			// TODO Auto-generated constructor stub
-		}
+        public LayoutFragment(String id, String markupId, MarkupContainer markupProvider, String label) {
+            super(id, markupId, markupProvider);
+            add(new Label("add", label).setEscapeModelStrings(false));
+            // TODO Auto-generated constructor stub
+        }
 
-	}
+    }
+
     private class RelationTableSearchFragment extends Fragment {
-        public RelationTableSearchFragment(String id, String markupId,
-                MarkupContainer markupProvider, final String entityName,final String value, IModel model,final String eid) {
+        public RelationTableSearchFragment(String id, String markupId, MarkupContainer markupProvider, final String entityName, final String value, IModel model, final String eid) {
             super(id, markupId, markupProvider);
 
             PageParameters params = new PageParameters();
             params.set("en", entityName);
-            params.set("target", (long)model.getObject());
+            params.set("target", (long) model.getObject());
             params.set("eid", eid);
-            
-            PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
-                    .setWidth(850).setLeft(150).setTop(200);
-            add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class,params).setPopupSettings(popupSettings));
-            HiddenField<?>  hidden = new HiddenField<String>("selected_id_hidden" ,model);
-            hidden.add(new AttributeAppender("id",entityName+"_id"));
+
+            PopupSettings popupSettings = new PopupSettings("查找").setHeight(470).setWidth(850).setLeft(150).setTop(200);
+            add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params).setPopupSettings(popupSettings));
+            HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", model);
+            hidden.add(new AttributeAppender("id", entityName + "_id"));
             add(hidden);
-            TextField<String> text = new TextField<String>("selected_value_input" ,new Model(value));
-            text.add(new AttributeAppender("id",entityName+"_name"));
+            TextField<String> text = new TextField<String>("selected_value_input", new Model(value));
+            text.add(new AttributeAppender("id", entityName + "_name"));
             add(text);
         }
     }
-	private class DropDownChoiceFragment extends Fragment {
-		public DropDownChoiceFragment(String id, String markupId,
-				MarkupContainer markupProvider, final List<Long> ids,
-				final Map<Long, String> list, IModel model) {
-			super(id, markupId, markupProvider);
-			add(new DropDownChoice<Long>("dropDownInput", model, ids,
-					new IChoiceRenderer<Long>() {
-						@Override
-						public Object getDisplayValue(Long id) {
-							// TODO Auto-generated method stub
-							return list.get(id);
-						}
 
-						@Override
-						public String getIdValue(Long id, int index) {
-							return String.valueOf(id);
-						}
-					}));
-		}
+    private class DropDownChoiceFragment extends Fragment {
+        public DropDownChoiceFragment(String id, String markupId, MarkupContainer markupProvider, final List<Long> ids, final Map<Long, String> list, IModel model) {
+            super(id, markupId, markupProvider);
+            add(new DropDownChoice<Long>("dropDownInput", model, ids, new IChoiceRenderer<Long>() {
+                @Override
+                public Object getDisplayValue(Long id) {
+                    // TODO Auto-generated method stub
+                    return list.get(id);
+                }
+
+                @Override
+                public String getIdValue(Long id, int index) {
+                    return String.valueOf(id);
+                }
+            }));
+        }
 		
         public DropDownChoiceFragment(String id, String markupId,MarkupContainer markupProvider,
                 IModel choices,IModel default_model,final Entity entity, final Field currentField){
@@ -469,58 +524,32 @@ public class EditDataFormPanel extends Panel {
                 });
     }
 
-private class Textarea extends Fragment {
-    
-    public Textarea(String id, String markupId, MarkupContainer markupProvider,IModel<String> value)
-    {
-      super(id, markupId, markupProvider);
-      // TODO Auto-generated constructor stub
-      add(new TextArea<String> ("address",value));
-      
+    private class Textarea extends Fragment {
+
+        public Textarea(String id, String markupId, MarkupContainer markupProvider, IModel<String> value) {
+            super(id, markupId, markupProvider);
+            // TODO Auto-generated constructor stub
+            add(new TextArea<String>("address", value));
+
+        }
+
     }
 
-}
-	private class TextInputFragment extends Fragment {
-		public TextInputFragment(String id, String markupId,
-				MarkupContainer markupProvider, IModel model,String value,Field currentField) {
-			super(id, markupId, markupProvider);
-			TextField<String> text = new TextField<String>("input", model);
-							if(!currentField.isEditable()){
-								if(currentField.getName().equals("accountId")){
-									text.add(new AttributeModifier("disabled",new Model("disabled")));
-								}else if(currentField.getName().equals("modifier")){
-									text.add(new AttributeModifier("value", new Model(user)));
-									text.add(new AttributeModifier("readonly",new Model("readonly")));
-								}else if(currentField.getName().equals("modify_datetime")){
-										Calendar calendar = Calendar.getInstance();  
-										final SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
-										Date time =(Date)calendar.getTime();
-										String modify_datetime = dateformat.format(time);
-										IModel modifiedTimeModel = new Model(){
-											@Override
-											public Serializable getObject() {
-												Date time = new Date(System.currentTimeMillis());
-												return  dateformat.format(time);
-											}
-				                        };
-										text.add(new AttributeModifier("value",modifiedTimeModel));
-										text.add(new AttributeModifier("readonly",new Model("readonly")));
-								}else{
-									text.add(new AttributeModifier("value", new Model(value)));
-									text.add(new AttributeModifier("readonly",new Model("readonly")));
-								}
-							}else{
-								text.add(new AttributeModifier("value", new Model(value)));
-							}
-							add(text);
-							text.add(new AttributeAppender("type",new Model(currentField.getDataType()),";"));
-							if(currentField.getDataType().equals("tel")||currentField.getName().equals("fax")||currentField.getName().equals("office_fax")){
-								text.add(new AttributeModifier("pattern",new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));
-							}
-							if(currentField.isRequired()){
-								text.add(new AttributeAppender("required",new Model("required"),";"));
-							}
-		}
-	}
+    private class TextInputFragment extends Fragment {
+        public TextInputFragment(String id, String markupId, MarkupContainer markupProvider, IModel model, String value, Field currentField) {
+            super(id, markupId, markupProvider);
+            TextField<String> text = new TextField<String>("input", model);
+            text.add(new AttributeModifier("value", new Model(value)));
+            add(text);
+            text.add(new AttributeAppender("type", new Model(currentField.getDataType()), ";"));
+            if (currentField.getDataType().equals("tel") || currentField.getDataType().equalsIgnoreCase("fax")) {
+                text.add(new AttributeModifier("pattern", new Model(
+                        "^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));
+            }
+            if (currentField.isRequired()) {
+                text.add(new AttributeModifier("required", new Model("required")));
+            }
+        }
+    }
 
 }

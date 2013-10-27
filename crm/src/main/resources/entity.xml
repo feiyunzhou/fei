@@ -1967,7 +1967,7 @@ left join activity_event_type_pl on activity.activity_type = activity_event_type
 left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id
 left join activitycrmuser on activity.id = activitycrmuser.activityId
-where activitycrmuser.crmuserid = ? order by whenadded DESC) as aActivity
+where activitycrmuser.crmuserid = ? and activity.event_type = 2 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
 		select * from (select activity.crmuserId as crmuserName\, activity.*\,
@@ -1984,7 +1984,7 @@ left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id
 left join activitycrmuser on activity.id = activitycrmuser.activityId
 left join crmuser on activitycrmuser.crmuserId = crmuser.id
-where crmuser.reportto = ? or crmuser.id = ? order by whenadded DESC) as aActivity
+where crmuser.reportto = ? or crmuser.id = ?  and activity.event_type = 2  order by whenadded DESC) as aActivity
 		</sql-manager>
 		
 		<sql-admin>
@@ -2000,7 +2000,7 @@ where crmuser.reportto = ? or crmuser.id = ? order by whenadded DESC) as aActivi
 from activity
 left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
 left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id order by whenadded DESC) as aActivity
+left join account on contact.accountId = account.Id where  activity.event_type = 2  order by whenadded DESC) as aActivity
 		</sql-admin>
 		<sql-ent>select * from (select activity.crmuserId as crmuserName\, activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
@@ -2204,18 +2204,6 @@ as aCoaching
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
-				<name>total_score</name>
-				<display>总分</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<field-type>calculated</field-type>
-				<priority>5</priority>
-				<fieldGroup>评分信息</fieldGroup>
-			</field>
-			<field>
 				<name>planing</name>
 				<display>访前计划</display>
 				<data-type>text</data-type>
@@ -2285,6 +2273,18 @@ as aCoaching
 				<isEditable>true</isEditable>
 				<priority>5</priority>
 				<picklist>score2_pl</picklist>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>total_score</name>
+				<display>总分</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>calculated</field-type>
+				<priority>5</priority>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 		</fields>

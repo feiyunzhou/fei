@@ -105,7 +105,6 @@ public class PageableTablePanel extends Panel {
                         if(value.equals("null")||value.equals("")){
                           value = "无";
                         }
-                        logger.debug("value               " + value);
                         columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
                         columnitem.add(new AttributeAppender("class", new Model("table-first-link"), " "));
 //                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
