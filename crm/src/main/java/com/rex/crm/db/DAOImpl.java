@@ -44,7 +44,8 @@ import com.rex.crm.beans.Province;
 import com.rex.crm.common.Entity;
 import com.rex.crm.util.Configuration;
 
-public class DAOImpl {
+public class DAOImpl 
+{
     private static final Logger logger = Logger.getLogger(DAOImpl.class);
     public static ListMultimap<Integer, Integer> accountIdsByUserId;
     
@@ -578,6 +579,7 @@ public class DAOImpl {
             sql = sql + " where " + filterField + " = -1";
         }
         logger.debug("sql语句："+sql);
+        System.out.println("fuck you: " + sql);
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
@@ -907,13 +909,13 @@ public class DAOImpl {
         List<Choice> choices = queryPickList(filterbyTable);
         List<Pair<String, Map<String, Object>>> res = Lists.newArrayList();
         Connection conn = null;
+        String query  = null;
         try {
             conn = DBHelper.getConnection();
             for (Choice ch : choices) {
-
-                String query = "select count(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
+             
+                query = "select count(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
                 logger.debug("query is:" + query);
-
                 QueryRunner run = new QueryRunner();
                 Map<String, Object> map = run.query(conn, query, new MapHandler(), param);
                 if (map.get("sum") == null) {

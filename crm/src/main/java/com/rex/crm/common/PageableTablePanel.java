@@ -102,9 +102,10 @@ public class PageableTablePanel extends Panel {
                     });
                     if (f.isDetailLink()) {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
-                        if(value.equals("null")||value.equals("")||value.equals("dummy")){
+                        if(value.equals("null")||value.equals("")){
                           value = "无";
                         }
+                        logger.debug("value               " + value);
                         columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
                         columnitem.add(new AttributeAppender("class", new Model("table-first-link"), " "));
 //                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
@@ -112,19 +113,19 @@ public class PageableTablePanel extends Panel {
                         if (f.getPicklist() != null) {
                             // get option from picklist
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName()))));
-                            if(value.equals("null")||value.equals("")||value.equals("dummy")){
+                            if(value.equals("null")||value.equals("")){
                               value = "无";
                             }
                             columnitem.add(new Label("celldata", value));
                         } else if(f.getRelationTable() != null){
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName()))));
-                            if(value.equals("null")||value.equals("")||value.equals("dummy")){
+                            if(value.equals("null")||value.equals("")){
                               value = "无";
                             }
                             columnitem.add(new Label("celldata", value));
                         }else {
                             String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
-                            if(value.equals("null")||value.equals("")||value.equals("dummy")){
+                            if(value.equals("null")||value.equals("")){
                               value = "无";
                             }
                             columnitem.add(new Label("celldata", value));
@@ -190,6 +191,7 @@ public class PageableTablePanel extends Panel {
                 }
             }.add(new Label("caption", new Model<String>(caption))));
         }
+        
     }
     private  class  ButtonFragment extends Fragment{
 

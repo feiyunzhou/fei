@@ -2,46 +2,84 @@
 
 <entities>
 	<entity>
-		<name>account</name>
-		<display>医院</display>
-		<!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser 
-			WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?) 
-			as aAccount</sql> -->
-		<!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account 
-			where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId 
-			group by account.id) as aAccount -->
-		<sql>SELECT * from (select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
-		                                 account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
-		                    FROM account\,accountcrmuser\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
-			                WHERE (accountcrmuser.crmuserId=?) AND account.id != -1 AND
-			                       accountcrmuser.accountId=account.id AND
-			                       account_point_pl.id=key_type AND 
-		                           account_type_pl.id=hospital_type AND
-		                           account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
-			                order by whenadded DESC) as aAccount
-		</sql>
-		<sql-admin>SELECT * from (select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
-		                                 account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
-		                          FROM account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
-		                          WHERE (? IS NOT NULL) AND   account.id != -1 AND
-		                                account_point_pl.id=key_type AND 
-		                                account_type_pl.id=hospital_type AND
-		                                account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
-		                          ORDER BY whenadded DESC) as aAccount
-		</sql-admin>
+		 <name>account</name>
+    <display>医院</display>
+    <!-- <sql>SELECT * from (SELECT account.* FROM account\,accountcrmuser
+    WHERE account.id=accountcrmuser.accountId AND accountcrmuser.crmuserId=?)
+    as aAccount</sql> -->
+    <!-- <sql>SELECT * from (select account.* from contact\,contactcrmuser\,account
+    where crmuserId=? AND contactcrmuser.contactId=contact.id AND account.id=contact.accountId
+    group by account.id) as aAccount -->
+    <sql>
+<!--       SELECT * from (select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
+      account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+      FROM account\,accountcrmuser\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+      WHERE (accountcrmuser.crmuserId=?) AND account.id != -1 AND
+      accountcrmuser.accountId=account.id AND
+      account_point_pl.id=key_type AND
+      account_type_pl.id=hospital_type AND
+      account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
+      order by whenadded DESC) as aAccount
+ -->
+	select * from (select account.*\,
+	account_point_pl.val as key_type_val\,
+	account_type_pl.val as hospital_type_val\,
+	account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+	from account
+	left join account_point_pl on account.key_type = account_point_pl.id
+	left join account_type_pl on account.hospital_type = account_type_pl.id
+	left join account_comprehensive_or_specialized_pl on
+	account.comprehensive_or_specialized =
+	account_comprehensive_or_specialized_pl.id
+	where account.id != -1 and(
+	account.id in (select accountid from accountcrmuser where
+	accountcrmuser.crmuserid = ?)
+	or account.id in (select contact.accountid from contactcrmuser left join
+	contact on contactcrmuser.contactid = contactid where
+	contactcrmuser.crmuserid = ?))) as aAccount
+
+    </sql>
+    <sql-admin>
+<!--       SELECT * from (select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
+      account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+      FROM account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+      WHERE (? IS NOT NULL) AND   account.id != -1 AND
+      account_point_pl.id=key_type AND
+      account_type_pl.id=hospital_type AND
+      account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
+      ORDER BY whenadded DESC) as aAccount
+ -->
+	select * from (select account.*\,
+	account_point_pl.val as key_type_val\,
+	account_type_pl.val as hospital_type_val\,
+	account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+	from account
+	left join account_point_pl on account.key_type = account_point_pl.id
+	left join account_type_pl on account.hospital_type = account_type_pl.id
+	left join account_comprehensive_or_specialized_pl on
+	account.comprehensive_or_specialized =
+	account_comprehensive_or_specialized_pl.id
+	where account.id != -1) as aAccount 
+</sql-admin>
 		<sql-manager>
-		           SELECT * from (
-		                        select account.*\,account_point_pl.val as key_type_val\, account_type_pl.val as hospital_type_val \,
-		                                 account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
-		                        FROM account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
-		                        where (account.id in (select accountid from crmdb.accountcrmuser where crmuserid = ?) OR 
-		                              account.id in (select accountid from crmdb.accountcrmuser where crmuserid in (select id from crmuser where reportto = ?)) OR
-		                              account.id in (select accountid from crmdb.contact where id in (select contactid from crmdb.contactcrmuser where crmuserid  in (select id from crmdb.crmuser where reportto = ?)))) AND 
-		                              account_point_pl.id=key_type AND account.id != -1 AND
-		                              account_type_pl.id=hospital_type AND 
-		                              account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized
-		                        ORDER BY whenadded DESC 
-		                       ) as aAccount
+
+	select * from (select account.*\,account_point_pl.val as key_type_val\,
+	account_type_pl.val as hospital_type_val \,
+	account_comprehensive_or_specialized_pl.val as
+	comprehensive_or_specialized_val
+	FROM
+	account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+	where (account.id in (select accountid from crmdb.accountcrmuser where
+	crmuserid = ?) OR
+	account.id in (select accountid from crmdb.accountcrmuser where crmuserid in
+	(select id from crmuser where reportto = ?)) OR
+	account.id in (select accountid from crmdb.contact where id in (select contactid
+	from crmdb.contactcrmuser where crmuserid in (select id from
+	crmdb.crmuser where reportto = ?)))) AND
+	account_point_pl.id=key_type AND account.id != -1 AND
+	account_type_pl.id=hospital_type AND
+	account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized) as aAccount
+		                       
 		            
 		</sql-manager>
 
@@ -548,27 +586,49 @@
 		<name>contact</name>
 		<display>医生</display>
 		<sql>
-		    select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName
-		                  from contact\,contactcrmuser\,account \,contact_generalization_target_pl 
-		                  where contactcrmuser.crmuserId=? AND  contact.id != -1 AND
-			                    contactcrmuser.contactId=contact.id AND account.id=contact.accountId AND 
-			                    contact_generalization_target_pl.id= product_target 
-			                    order by whenadded DESC) as
-			                    aContact
+	select * from (select contact.*\,
+	contact_generalization_target_pl.val as product_target_val\,
+	"account.name" as accountName_val
+	from contact
+	left join contact_generalization_target_pl on contact.product_target =
+	contact_generalization_target_pl.id
+	left join account on contact.accountid = account.id
+	left join contactcrmuser on contact.id = contactcrmuser.contactid
+	where account.id != -1 and contactcrmuser.crmuserid = ?) as aContact
 		</sql>
 		<sql-manager>
-		     select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName 
-		             from contact\,account \,contact_generalization_target_pl  
-		             where (contact.id in (select contactid from crmdb.contactcrmuser where crmuserid = ?) OR 
-		                   contact.id in (select contactid from crmdb.contactcrmuser where crmuserid in (select crmuser.id from crmdb.crmuser where reportto =?))) AND account.id=contact.accountId AND    contact.id != -1 AND
-		                   contact_generalization_target_pl.id= product_target 
-		                   order by whenadded DESC) as aContact 
+	select * from (select contact.*\,
+	contact_generalization_target_pl.val as product_target_val\,
+	"account.name" as accountName_val
+	from contact
+	left join contact_generalization_target_pl on contact.product_target =
+	contact_generalization_target_pl.id
+	left join account on contact.accountid = account.id
+	where account.id != -1 and
+	(
+	contact.id in (select contactid from contactcrmuser where crmuserid = ?) or
+	contact.id in (select contactcrmuser.contactid from crmuser
+	left join contactcrmuser on crmuser.id = contactcrmuser.crmuserid
+	where crmuser.reportto = ?))) as aContact
 		</sql-manager>
 		
-		<sql-admin>select * from (select contact_generalization_target_pl.val as product_target_val\,contact.*\,account.name as accountName_val\,account.id as accountName
-			                       from contact\,account\,contact_generalization_target_pl 
-			                       where account.id=contact.accountId AND contact_generalization_target_pl.id= product_target AND  contact.id != -1
-                                   AND (? IS NOT NULL) order by whenadded DESC) as aContact
+		<sql-admin>
+<!-- 	select contact.*\, -->
+<!-- 	contact_generalization_target_pl.val as product_target_val\, -->
+<!-- 	account.name as accountName_val -->
+<!-- 	from contact -->
+<!-- 	left join contact_generalization_target_pl on contact.product_target = -->
+<!-- 	contact_generalization_target_pl.id -->
+<!-- 	left join account on contact.accountid = account.id -->
+<!-- 	where account.id != -1 -->
+	select * from (select contact.*\,
+	contact_generalization_target_pl.val as product_target_val\,
+	"account.name" as accountName_val
+	from contact
+	left join account on contact.accountid = account.id
+	left join contact_generalization_target_pl on contact.product_target =
+	contact_generalization_target_pl.id) as aContact
+
 		</sql-admin>
 
 		<sql-ent>select * from (select contact.*\,account.id as accountName
@@ -577,7 +637,7 @@
 			aContact
 		</sql-ent>
 		
-				<sql-search-by-name>select * from (select contact.*\,account.id as accountName
+			<sql-search-by-name>select * from (select contact.*\,account.id as accountName
 			from contact\,account where contact.id=? AND
 			account.id=contact.accountId order by whenadded DESC) as
 			aContact
@@ -1040,12 +1100,37 @@
 		<display>用户</display>
 	    <filterField>role</filterField>
 		<sql>
-		select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val
-		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser
+			select * from (select  crmuser.*\,
+					"crmmanager.name" as reportto_val\,
+					role.val role_val
+			from crmuser
+			left join (select * from crmuser) crmmanager on crmuser.reportto = crmmanager.id
+			left join crmdb.role on crmuser.role = role.id
+			where crmuser.id = ?) as aCrmuser
 		</sql>
-		<sql-admin>select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val
-		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser
+		<sql-admin>
+		
+<!-- 		select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val -->
+<!-- 		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
+			select * from (select crmuser.*\,
+			       "crmmanager.name" as reportto_val\,
+			       role.val role_val
+			from crmuser
+			left join (select * from crmuser) crmmanager on crmuser.reportto = crmmanager.id
+			left join crmdb.role on crmuser.role = role.id
+			where crmuser.id != -1	) as aCrmuser
 		</sql-admin>
+		<sql-manager>
+<!-- 		select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val -->
+<!-- 		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
+			select * from (select crmuser.*\,
+			       "crmmanager.name" as reportto_val\,
+			       role.val role_val
+			from crmuser
+			left join (select * from crmuser) crmmanager on crmuser.reportto = crmmanager.id
+			left join crmdb.role on crmuser.role = role.id
+			where crmuser.reportto = ? or crmuser.id = ?	) as aCrmuser	
+		</sql-manager>
 		<sql-ent>select * from crmuser where id=?</sql-ent>
 		<filterField>pl2</filterField>
 		<fields>
@@ -1437,35 +1522,54 @@
 		<name>activity</name>
 		<display>活动</display>
 		<filterField>event_type</filterField>
-		<sql>select * from (select activity.*\,activity.activity_type as
-			                             act_type\,activity.status as act_status\, activity.contactId as
-			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
-			                             contact.name as contactname_val  
-			                from activity\,contact\,activitycrmuser\,activity_event_type_pl\,account 
-			                where contact.id= activity.contactId AND activitycrmuser.activityId=activity.id AND activitycrmuser.crmuserId=? AND 
-			                activity_event_type_pl.id=event_type AND account.id=contact.accountId order by whenadded DESC) as
-			aActivity
+		<sql>
+		select * from (select activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val 
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id
+left join activitycrmuser on activity.id = activitycrmuser.activityId
+where activitycrmuser.crmuserid = ? order by whenadded DESC) as aActivity
 		</sql>
-		
-		<sql-manager>select * from (select activity.*\,activity.activity_type as
-			                             act_type\,activity.status as act_status\, activity.contactId as
-			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
-			                             contact.name as contactname_val  
-			                from activity\,contact\,activity_event_type_pl\,account 
-			                where (activity.id in (select activityId from activitycrmuser where crmuserid = ?) OR 
-			                       activity.id in (select activityId from activitycrmuser where crmuserid in (select crmuser.id from crmdb.crmuser where reportto =?))) AND 
-			                       contact.id= activity.contactId AND 
-			                       activity_event_type_pl.id=event_type AND account.id=contact.accountId order by whenadded DESC) as
-			aActivity
+		<sql-manager>
+		select * from (select activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val 
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id
+left join activitycrmuser on activity.id = activitycrmuser.activityId
+left join crmuser on activitycrmuser.crmuserId = crmuser.id
+where crmuser.reportto = ? or crmuser.id = ? order by whenadded DESC) as aActivity
 		</sql-manager>
 		
-		<sql-admin>select * from (select activity.*\,activity.activity_type as
-			                             act_type\,activity.status as act_status\, activity.contactId as
-			                             contactName\, contact.accountId as accountName\,activity_event_type_pl.val as event_type_val\,account.name as accountName_val\,
-			                             contact.name as contactname_val
-			                      from activity\,contact\,activity_event_type_pl\,account
-			                      where contact.id= activity.contactId AND activity_event_type_pl.id=event_type AND account.id=contact.accountId AND (? IS NOT NULL) order by whenadded DESC) 
-			                      as aActivity
+		<sql-admin>
+		
+		select * from (select activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val 
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id order by whenadded DESC) as aActivity
 		</sql-admin>
 		<sql-ent>select * from (select activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as

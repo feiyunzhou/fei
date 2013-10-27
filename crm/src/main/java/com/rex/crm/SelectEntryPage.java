@@ -86,16 +86,18 @@ public class SelectEntryPage extends WebPage {
                         likequery = likequery + " OR "+ sf.getName() + joint;
                     }
                     
-                    sql =  sql + " where name like '%"+search_target+"%' " + likequery;
-                    
+                      sql =  sql + " where name like '%"+search_target+"%' " + likequery ;
                     System.out.println(sql);
             
                     switch(roleId){
                     case 2:
                         maplist = DAOImpl.queryEntityRelationList(sql, userId,userId,userId);
                         break;
-                    default:
-                        maplist = DAOImpl.queryEntityRelationList(sql, userId);
+                    case 3:
+                      maplist = DAOImpl.queryEntityRelationList(sql, userId, userId);
+                    break;
+                    case 1:
+                        maplist = DAOImpl.queryEntityRelationList(sql);
                     }
                     
                     

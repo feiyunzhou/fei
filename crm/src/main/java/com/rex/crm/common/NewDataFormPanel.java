@@ -137,8 +137,13 @@ public class NewDataFormPanel extends Panel {
                     if (currentField.getPicklist() != null) {
 
                         if (j % 2 == 0) {
+                          if (currentField.isRequired()) {
                             columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                            columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                          }else{
+                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                          }
                         } else {
                             
                             long default_key = 1L;
@@ -222,8 +227,13 @@ public class NewDataFormPanel extends Panel {
                         }
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {
+                          if (currentField.isRequired()) {
                             columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                            columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                          }else{
+                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                          }
                         } else {
 //                            List<Choice> pickLista = DAOImpl.queryRelationDataList(currentField.getRelationTable(), userId);
 //                            Map<Long, String> list = Maps.newHashMap();
@@ -262,8 +272,13 @@ public class NewDataFormPanel extends Panel {
                         }
                     } else {
                         if (j % 2 == 0) {
+                          if (currentField.isRequired()) {
                             columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                            columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                          }else{
+                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                          }
                         } else {
                             if (currentField.getName().equals("address")) {
                                 IModel<String> textModel = new Model<String>("");
@@ -277,7 +292,6 @@ public class NewDataFormPanel extends Panel {
                         }
                     }
                     columnRepeater.add(columnitem);
-
                 }
             }
         }
@@ -512,9 +526,8 @@ public class NewDataFormPanel extends Panel {
                 text.add(new AttributeAppender("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"), ";"));
             }
             if (currentField.isRequired()) {
-                text.add(new AttributeAppender("style", new Model("border:1px solid red;"), ";"));
-                //text.add(new AttributeAppender("required", new Model("required"), ";"));
-            }
+              text.add(new AttributeAppender("required", new Model("required"), ";"));
+          }
             add(text);
             text.add(new AttributeAppender("type", new Model(currentField.getDataType()), ";"));
             text.add(new AttributeAppender("id", new Model(currentField.getName()), ";"));

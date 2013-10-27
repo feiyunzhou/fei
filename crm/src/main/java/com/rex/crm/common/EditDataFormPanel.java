@@ -132,9 +132,15 @@ public class EditDataFormPanel extends Panel {
 					final Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
 					if (currentField.getPicklist() != null) {
 						if (j % 2 == 0) {
-							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
-							fieldNames.add(currentField.getName());
+						  if (currentField.isRequired()) {
+                columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                fieldNames.add(currentField.getName());
+						  }else{
+                columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
+                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                fieldNames.add(currentField.getName());
+              }
 						} else {
    
 						    if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
@@ -206,9 +212,15 @@ public class EditDataFormPanel extends Panel {
 					}
 					else if (currentField.getRelationTable() != null) {
 						if (j % 2 == 0) {
-							columnitem.add(new TextFragment("editdata","textFragment",this, currentField.getDisplay() +":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
-							fieldNames.add(currentField.getName());
+						  if (currentField.isRequired()) {
+                columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                fieldNames.add(currentField.getName());
+              }else{
+                columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
+                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                fieldNames.add(currentField.getName());
+              }
 						} else {
 						    long foreignKey = 1L;
                             foreignKey = ((Number)data.get(currentField.getName())).longValue();
@@ -233,9 +245,15 @@ public class EditDataFormPanel extends Panel {
 					} 
 						else {
 						if (j % 2 == 0) {
-							columnitem.add(new TextFragment("editdata","textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style",new Model("font-weight:bold;"),";")));
-							columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
-							fieldNames.add(currentField.getName());
+						  if (currentField.isRequired()) {
+                columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                fieldNames.add(currentField.getName());
+              }else{
+                columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
+                columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                fieldNames.add(currentField.getName());
+              }
 						} else {
 
 							Object rawvalue = data.get(currentField.getName());
@@ -347,7 +365,6 @@ public class EditDataFormPanel extends Panel {
             add(hidden);
             TextField<String> text = new TextField<String>("selected_value_input" ,new Model(value));
             text.add(new AttributeAppender("id",entityName+"_name"));
-            //text.add(new AttributeAppender("readonly","true"));
             add(text);
         }
     }
@@ -462,13 +479,11 @@ private class Textarea extends Fragment {
 								text.add(new AttributeAppender("value", new Model(value), ";"));
 							}
 							add(text);
-//							text.add(new AttributeAppender("id",new Model(currentField.getDataType()),";"));
 							text.add(new AttributeAppender("type",new Model(currentField.getDataType()),";"));
 							if(currentField.getDataType().equals("tel")||currentField.getName().equals("fax")||currentField.getName().equals("office_fax")){
 								text.add(new AttributeAppender("pattern",new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"),";"));
 							}
 							if(currentField.isRequired()){
-							    text.add(new AttributeAppender("style",new Model("border:1px solid red;"),";"));
 								text.add(new AttributeAppender("required",new Model("required"),";"));
 								
 							}
