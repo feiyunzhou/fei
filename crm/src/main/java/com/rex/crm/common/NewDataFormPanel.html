@@ -10,12 +10,31 @@
 
         });
         function validateFields(){
-            if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
-                alert("请查询添入医院！");
-                return false;
+            
+            var isValidated = true;
+            $( '.required-field').each(function( index ) {
+                console.log( index + ": " + $( this ).text() );
+                if(jQuery.isEmptyObject($(this).val())){
+                    isValidated = false;
+                   
+                }
+                
+              });
+            
+            if(isValidated){
+                if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
+                    alert("请查询添入医院！");
+                    return false;
+                }else{
+                    return true;
+                }
             }else{
-                return true;
+                alert("红色标记字段为必填字段");
+                return false;
             }
+            
+            
+  
         }
     </script>
     <div>

@@ -430,7 +430,7 @@
 				<name>fax</name>
 				<display>主要传真号码</display>
 				<isRequired>false</isRequired>
-				<data-type>fax</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -762,7 +762,7 @@
 				<name>office_fax</name>
 				<display>工作传真号码</display>
 				<isRequired>false</isRequired>
-				<data-type>fax</data-type>
+				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>

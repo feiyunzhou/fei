@@ -557,7 +557,8 @@ public class NewDataFormPanel extends Panel {
                 text.add(new AttributeModifier("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));
             }
             if (currentField.isRequired()) {
-              text.add(new AttributeModifier("required", new Model("required")));
+              //text.add(new AttributeModifier("required", new Model("required")));
+              text.add(new AttributeAppender("class","required-field"));
             }
             if(currentField.getDataType().equals("datetime-local")){
               text.add(new AttributeModifier("value", new Model((String)model.getObject())));
@@ -566,6 +567,7 @@ public class NewDataFormPanel extends Panel {
             add(text);
             text.add(new AttributeModifier("type", new Model(currentField.getDataType())));
             text.add(new AttributeModifier("id", new Model(currentField.getName())));
+           
         }
     }
     

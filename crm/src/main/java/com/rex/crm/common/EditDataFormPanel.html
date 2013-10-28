@@ -1,7 +1,24 @@
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
     <script>
         $(document).ready(function() {
+            
+            
         });
+        
+        function validateFields(){
+            if($('.required-field').length>0 && jQuery.isEmptyObject($('.required-field').val())){
+                alert("红色标记字段不能为空");
+                return false;
+            }else{
+                if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
+                    alert("请查询添入医院！");
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+  
+        }
     </script>
 
     <div class="container-fluid">
@@ -12,7 +29,7 @@
 					<span wicket:id="prompt" ><strong></strong></span>
 				</div>
             	<div class="title">
-                     <span wicket:id="name">�ҵ�</span>
+                     <span wicket:id="name"></span>
                  </div>
                 <form wicket:id="form" class="form-horizontal"  >
                     <fieldset>
@@ -31,7 +48,7 @@
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <input type="submit" class="btn btn-primary" value="保存"  />
+                                <input type="submit" onClick="return validateFields();" class="btn btn-primary" value="保存"  />
                             </div>
                         </div>
                     </fieldset>
