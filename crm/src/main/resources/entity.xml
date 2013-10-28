@@ -1233,13 +1233,13 @@
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			
 			<field>
 				<name>reportto</name>
 				<display>上级经理</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<relationTable>crmuser</relationTable>
+				<isSearchable>true</isSearchable>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1598,7 +1598,7 @@ left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id
 left join activitycrmuser on activity.id = activitycrmuser.activityId
 left join crmuser on activitycrmuser.crmuserId = crmuser.id
-where crmuser.reportto = ? or crmuser.id = ? ) as aactivity  order by whenadded DESC) as aActivity
+where  crmuser.id = ? ) as aactivity  order by whenadded DESC) as aActivity
 		</sql-manager-calendar>
 		
 		<sql-admin-calendar>

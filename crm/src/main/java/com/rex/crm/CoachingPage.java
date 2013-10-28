@@ -81,10 +81,10 @@ public class CoachingPage extends TemplatePage
                   datalist = DAOImpl.queryEntityRelationList(sql);
                   break;
                 case UserRole.USER_ROLE_MANAGER:
-                    datalist = DAOImpl.queryEntityRelationList(sql,userId);
+                    datalist = DAOImpl.queryEntityRelationList(sql,userId,userId);
                     break;
                 case UserRole.USER_ROLE_SALES:
-                    datalist = DAOImpl.queryEntityRelationList(sql,userId,userId);
+                    datalist = DAOImpl.queryEntityRelationList(sql,userId);
                 }
                 setResponsePage(new CoachingPage(filter,datalist));
                 

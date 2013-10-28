@@ -6,7 +6,7 @@
   <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
   <property name="hibernate.connection.password">crm</property>
  <!--  db.host=192.168.0.120
-     <property name="hibernate.connection.url">jdbc:mysql://192.168.0.100/crmdb</property>
+     <property name="hibernate.connection.url">jdbc:mysql://122.200.77.171/crmdb</property>
      -->
   <property name="hibernate.connection.url">jdbc:mysql://localhost/crmdb</property>
   <property name="hibernate.connection.username">crm</property>

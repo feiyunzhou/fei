@@ -50,7 +50,7 @@ import com.rex.crm.util.Configuration;
  * @author Feiyun
  */
 public class DataProvider {
-    private static final Logger logger = Logger.getLogger(DataProvider.class);
+  private static final Logger logger = Logger.getLogger(DataProvider.class);
     
 
     public DataProvider() {
@@ -821,10 +821,10 @@ public class DataProvider {
         Multimap<Integer, Map> multiMap = null;
         switch(roleId){
           case UserRole.USER_ROLE_ADMINISTRATOR:
-          multiMap = getEntityListByIdOfUserId(sql);
+          multiMap = getEntityListByIdOfUserId(sql,id);
           break;
         case UserRole.USER_ROLE_MANAGER:
-        multiMap = getEntityListByIdOfUserId(sql,id,id);
+        multiMap = getEntityListByIdOfUserId(sql,id);
             break;
         case UserRole.USER_ROLE_SALES:
         multiMap = getEntityListByIdOfUserId(sql, id);
