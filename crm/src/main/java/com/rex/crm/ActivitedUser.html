@@ -1,69 +1,76 @@
 <!DOCTYPE html>
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
-	<script type="text/javascript" src="jquery/js/jquery-1.9.1.js"></script>
-	<link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
-	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"/>
-	<link rel="stylesheet" href="flat/css/flat-ui.css"/>
-	<link href="css/common.css" rel="stylesheet" />		
-	<link href="css/extra.css" rel="stylesheet" />
-	<SCRIPT type="text/javascript">
-	$(document).ready(function() {
+    <script type="text/javascript" src="jquery/js/jquery-1.9.1.js"></script>
+    <link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" href="flat/css/flat-ui.css"/>
+    <link href="css/common.css" rel="stylesheet" />		
+    <link href="css/extra.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <SCRIPT type="text/javascript">
+        $(document).ready(function() {
 		
-	});
-	function checkPasswords() {
-	    var pass1 = document.getElementById("newPassword").value;
-	    var pass2 = document.getElementById("password").value;
-	    if (pass1!= pass2){
-	    	alert("两次新密码输入不一致,请重新输入!");
-	    	//设置新密码，验证新密码为空
-	    	$("#newPassword").val("");
-	    	$("#password").val("");
-	    }else{
-	    	pass1.setCustomValidity("");
-	    } 
-	}
-	</SCRIPT>
-<body>
-	<div class="container">
-	 	<div class="control-group" >
-		    	<div class="controls" style="display:none;">
-		    		<label class="control-label"></label>
-		      		<span wicket:id="prompt"  style="display:none;text-align:center;color:red;"></span>
-		    	</div>
-	  	</div >
-	  	<form wicket:id="form"  class="form-horizontal">
-			<div class="control-group">
-		    	<label class="control-label" ></label>
-		    	<div class="controls">
-		    		<span wicket:id="userName"></span>您好
-		    	</div>
-		  	</div> 
-		  	<div class="control-group">
-		    	<label class="control-label" >您的登录名:</label>
-		    	<div class="controls">
-		      		<span wicket:id="loginName"></span>
-		    	</div>
-		  	</div> 
-		    <div class="control-group">
-		    	<label class="control-label" >请输入密码:</label>
-		    	<div class="controls">
-		      		<input type="password" id="password" wicket:id="password"  placeholder="Please enter the password" />
-		    	</div>
-		  	</div>
-		  	<div class="control-group">
-		    	<label class="control-label" >请再次输入密码:</label>
-		    	<div class="controls">
-		      		<input type="password" id="newPassword" wicket:id="newPassword"  placeholder="enter the password again" onchange="checkPasswords();" />
-		    	</div>
-		  	</div>
-		  	<div class="control-group">
-			    <div class="controls">
-			    	<button type="submit" class="btn btn-primary">保存</button>
-			    	<button type="reset" class="btn btn-primary">重置</button>
-			    </div>
-		    </div>
-	 	</form>
-	</div>
-</body>
+        });
+        function checkPasswords() {
+            var pass1 = document.getElementById("newPassword").value;
+            var pass2 = document.getElementById("password").value;
+            if (pass1!= pass2){
+                alert("两次新密码输入不一致,请重新输入!");
+                //设置新密码，验证新密码为空
+                $("#newPassword").val("");
+                $("#password").val("");
+            }else{
+                pass1.setCustomValidity("");
+            } 
+        }
+    </SCRIPT>
+    <body>
+        <div class="container-fluid center">
+            <div class="table-cell" >
+                <div class="table-column " style="display:none;">
+                    <label class="table-column tag"></label>
+                    <span wicket:id="prompt"  style="display:none;text-align:center;color:red;"></span>
+                </div>
+            </div >
+            <form wicket:id="form"  class="form-horizontal">
+                <div class="table-cell">
+                    <label class="table-column tag" ></label>
+                    <div class="table-column ">
+                        <span wicket:id="userName"></span>您好
+                    </div>
+                </div> 
+                <div class="table-cell">
+                    <label class="table-column tag" >您的登录名:</label>
+                    <div class="table-column ">
+                        <span wicket:id="loginName"></span>
+                    </div>
+                </div> 
+                <div class="table-cell">
+                    <label class="table-column tag" >请输入密码:</label>
+                    <div class="table-column ">
+                        <div class="form_datetime">
+                            <input type="password" id="password" wicket:id="password"  placeholder="Please enter the password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="table-cell">
+                    <label class="table-column tag" >请重复密码:</label>
+                    <div class="table-column ">
+                        <div class="form_datetime">
+                            <input type="password" id="newPassword" wicket:id="newPassword"  placeholder="Enter the password again" onchange="checkPasswords();" />
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-toolbar center">
+                    <div class="btn-group action-btn">                                
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                    <div class="btn-group action-btn">
+                        <button type="reset" class="btn btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
 </html>
