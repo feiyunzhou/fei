@@ -1,3 +1,6 @@
+.row-fluid .span12 {
+    margin-left: 0 !important;
+}
 input, select, textarea {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
