@@ -5,6 +5,13 @@
         <wicket:extend>
             <script>
                 $(document).ready(function() {	
+                	if(document.getElementById("call_radio").checked==true){
+                		$("#student_div").hide();
+                        $("#callOn").show();
+                	}else{
+                		$("#student_div").show();
+                        $("#callOn").hide();
+                	}
                     $("#navitem-calendar").addClass("active");
                     var seleted_event_type = $(".event_type_class").attr("data-typeId");//.data("typeId");
                     if(seleted_event_type == 1){
@@ -84,10 +91,10 @@
                                     <div class="form_datetime">
                                         <span wicket:id="event_type_group">
                                             <div class="pull-left">
-                                                <input  type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"  checked="checked"   value=1 /> <span class="radio-label">拜访</span>
+                                                <input id="call_radio" type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"  checked="checked"   value=1 /> <span class="radio-label">拜访</span>
                                             </div>
                                             <div class="pull-left">
-                                                <input  type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2 /> <span class="radio-label">辅导</span>
+                                                <input id="coaching_radio" type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2 /> <span class="radio-label">辅导</span>
                                             </div>
                                         </span>
                                     </div>
