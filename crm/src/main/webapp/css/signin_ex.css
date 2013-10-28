@@ -1,3 +1,6 @@
+input {
+    height: 42px !important;
+}
 @media ( max-width : 767px ) {
     .container {
         padding-left: 0px;
