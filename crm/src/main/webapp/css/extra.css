@@ -7,7 +7,7 @@ input {
     height: 30px !important;
 }
 .form_datetime select {
-    width: 205px;
+    width: 206px;
 }
 .btn.dropdown-toggle.clearfix.btn-primary {
     width: 96px;
@@ -478,6 +478,7 @@ a:hover, a:focus {
         width: 200px;
         background-color: #34495e;
         color: white;
+        height: 35px;
     }
     #user_info {
         display: none;
