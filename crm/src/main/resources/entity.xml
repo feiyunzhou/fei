@@ -574,7 +574,7 @@
 	contact_generalization_target_pl.id
 	left join account on contact.accountid = account.id
 	left join contactcrmuser on contact.id = contactcrmuser.contactid
-	where account.id != -1 and contactcrmuser.crmuserid = ?) as aContact
+	where contact.id != -1 and contactcrmuser.crmuserid = ?) as aContact
 		</sql>
 		<sql-manager>
 	select * from (select contact.*\,
@@ -583,8 +583,8 @@
 	from contact
 	left join contact_generalization_target_pl on contact.product_target =
 	contact_generalization_target_pl.id
-	left join account on contact.accountid = account.id
-	where account.id != -1 and
+	left join account on contact.accountId = account.id
+	where contact.id != -1 and
 	(
 	contact.id in (select contactid from contactcrmuser where crmuserid = ?) or
 	contact.id in (select contactcrmuser.contactid from crmuser
@@ -607,7 +607,7 @@
 	from contact
 	left join account on contact.accountid = account.id
 	left join contact_generalization_target_pl on contact.product_target =
-	contact_generalization_target_pl.id) as aContact
+	contact_generalization_target_pl.id where contact.id != -1) as aContact
 
 		</sql-admin>
 
@@ -1115,6 +1115,14 @@
 			left join crmdb.role on crmuser.role = role.id
 			where crmuser.reportto = ? or crmuser.id = ?	) as aCrmuser	
 		</sql-manager>
+<!-- 		<sql-manager-coaching>select * from (select crmuser.*\, -->
+<!-- 			       "crmmanager.name" as reportto_val\, -->
+<!-- 			       role.val role_val -->
+<!-- 			from crmuser -->
+<!-- 			left join (select * from crmuser) crmmanager on crmuser.reportto = crmmanager.id -->
+<!-- 			left join crmdb.role on crmuser.role = role.id -->
+<!-- 			where crmuser.reportto = ?) as aCrmuser -->
+<!-- 		</sql-manager-coaching> -->
 		<sql-ent>select * from crmuser where id=?</sql-ent>
 		<filterField>pl2</filterField>
 		<fields>
@@ -1494,9 +1502,9 @@
 	<entity>
 		<name>activity</name>
 		<display>拜访</display>
-		<filterField>event_type</filterField>
+		<filterField>activity_type</filterField>
 		<sql>
-		select * from (select activity.*\,
+		select * from (select * from (select activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,
@@ -1509,10 +1517,10 @@ left join activity_event_type_pl on activity.activity_type = activity_event_type
 left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id
 left join activitycrmuser on activity.id = activitycrmuser.activityId
-where activitycrmuser.crmuserid = ? order by whenadded DESC) as aActivity
+where activitycrmuser.crmuserid = ?) as aactivity where event_type = 1 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
-		select * from (select activity.*\,
+		select * from (select * from (select activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,
@@ -1526,7 +1534,7 @@ left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id
 left join activitycrmuser on activity.id = activitycrmuser.activityId
 left join crmuser on activitycrmuser.crmuserId = crmuser.id
-where crmuser.reportto = ? or crmuser.id = ? order by whenadded DESC) as aActivity
+where crmuser.reportto = ? or crmuser.id = ? ) as aactivity  where event_type = 1 order by whenadded DESC) as aActivity
 		</sql-manager>
 		
 		<sql-admin>
@@ -1542,8 +1550,57 @@ where crmuser.reportto = ? or crmuser.id = ? order by whenadded DESC) as aActivi
 from activity
 left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
 left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id order by whenadded DESC) as aActivity
+left join account on contact.accountId = account.Id  where activity.event_type  = 1 order by whenadded DESC) as aActivity
 		</sql-admin>
+		<sql-calendar>
+		select * from (select * from (select activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val 
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id
+left join activitycrmuser on activity.id = activitycrmuser.activityId
+where activitycrmuser.crmuserid = ?) as aactivity  order by whenadded DESC) as aActivity
+		</sql-calendar>
+		<sql-manager-calendar>
+		select * from (select * from (select activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val 
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id
+left join activitycrmuser on activity.id = activitycrmuser.activityId
+left join crmuser on activitycrmuser.crmuserId = crmuser.id
+where crmuser.reportto = ? or crmuser.id = ? ) as aactivity  order by whenadded DESC) as aActivity
+		</sql-manager-calendar>
+		
+		<sql-admin-calendar>
+		
+		select * from (select activity.*\,
+       activity.activity_type as act_type\,
+       activity.status as act_status\,
+       activity.contactId as contactName\,
+       contact.accountId as accountName\,
+       activity_event_type_pl.val as event_type_val\,
+       account.name as accountName_val\,
+       contact.name as contactname_val 
+from activity
+left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+left join contact on activity.contactId = contact.id
+left join account on contact.accountId = account.Id order by whenadded DESC) as aActivity
+		</sql-admin-calendar>
 		<sql-ent>select * from (select  activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
 			contactName\, contact.accountId as accountName\, contact.name as cn
@@ -1954,7 +2011,7 @@ as aActivity
 		<display>辅导</display>
 		<filterField>feature_product</filterField>
 		<sql>
-		select * from (select activity.crmuserId as crmuserName\, activity.*\,
+		select * from (select * from (select activity.crmuserId as crmuserName\, activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,
@@ -1970,7 +2027,7 @@ left join activitycrmuser on activity.id = activitycrmuser.activityId
 where activitycrmuser.crmuserid = ? and activity.event_type = 2 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
-		select * from (select activity.crmuserId as crmuserName\, activity.*\,
+		select * from (select * from (select activity.crmuserId as crmuserName\, activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,

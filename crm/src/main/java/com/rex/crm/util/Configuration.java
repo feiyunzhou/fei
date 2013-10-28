@@ -118,8 +118,8 @@ public class Configuration {
         List<String> list = Lists.newArrayList();
         list.add("关键信息");
         list.add("基本信息");
-        list.add("评分信息");
         list.add("附加信息");
+        list.add("评分信息");
         return list;
     }
     
@@ -176,7 +176,9 @@ public class Configuration {
                 entity.setSql_ent(sub.getString("sql-ent"));
                 entity.setSqlAdmin(sub.getString("sql-admin"));
                 entity.setSqlManager(sub.getString("sql-manager"));
-                
+                entity.setSqlManagerCalendar(sub.getString("sql-manager-calendar"));
+                entity.setSqlAdminCalendar(sub.getString("sql-admin-calendar"));
+                entity.setSqlCalendar(sub.getString("sql-calendar"));
                 String filterField = sub.getString("filterField");
                 if(filterField !=null){
                     entity.setFilterField(filterField);

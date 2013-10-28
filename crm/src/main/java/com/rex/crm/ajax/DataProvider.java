@@ -809,13 +809,13 @@ public class DataProvider {
         String sql = null;
         switch(roleId){
          case UserRole.USER_ROLE_ADMINISTRATOR:
-             sql = entity.getSqlAdmin();
+             sql = entity.getSqlAdminCalendar();
             break;
          case UserRole.USER_ROLE_MANAGER:
-             sql = entity.getSqlManager();
+             sql = entity.getSqlManagerCalendar();
             break;
          case UserRole.USER_ROLE_SALES:
-             sql = entity.getSql();
+             sql = entity.getSqlCalendar();
             break;
         }
         Multimap<Integer, Map> multiMap = null;

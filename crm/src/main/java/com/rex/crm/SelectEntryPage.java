@@ -44,15 +44,16 @@ public class SelectEntryPage extends WebPage {
      */
     public SelectEntryPage() {
         String entityName = getRequest().getRequestParameters().getParameterValue("en").toString();
+        String excludeEntityName = getRequest().getRequestParameters().getParameterValue("excludeName").toString();
         final String excludeId = getRequest().getRequestParameters().getParameterValue("eid").toString();
-        initPage(null,entityName,excludeId);
+        initPage(null,entityName,excludeEntityName,excludeId);
     }
 
-    public SelectEntryPage(List<Map> maplist,String entityName,String excludeId) {
-        initPage(maplist,entityName,excludeId);
+    public SelectEntryPage(List<Map> maplist,String entityName,String excludeEntityName,String excludeId) {
+        initPage(maplist,entityName,excludeEntityName,excludeId);
     }
 
-    public void initPage(List<Map> list,final String entityName,final String excludeId) {
+    public void initPage(List<Map> list,final String entityName,final String excludeEntityName,final String excludeId) {
         final String userId = ((SignIn2Session) getSession()).getUserId();
         
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
@@ -101,6 +102,8 @@ public class SelectEntryPage extends WebPage {
                     }
                     
                     
+                }else if(excludeEntityName.equalsIgnoreCase("coaching")){
+                  maplist = DAOImpl.searchCoachee(search_target,excludeId,userId);
                 }else if(entityName.equalsIgnoreCase("crmuser")){
                     //maplist = DAOImpl.searchCRMUser(search_target);
                     maplist = DAOImpl.searchManager(search_target,excludeId);
@@ -108,10 +111,11 @@ public class SelectEntryPage extends WebPage {
                     dummy.put("id",-1);
                     dummy.put("name", "无");
                     maplist.add(dummy);
+                    
                 }
                 //this.setResponsePage(cls, parameters)
                 
-                setResponsePage(new SelectEntryPage(maplist,entityName,excludeId));
+                setResponsePage(new SelectEntryPage(maplist,entityName,excludeEntityName,excludeId));
 
             }
         };

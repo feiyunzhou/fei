@@ -1271,7 +1271,11 @@ public class DAOImpl
     
     public static int deleteRecord(String entityId,String entityName) {
         String sql = "";
-        sql = "DELETE from " + entityName +" where id = " + entityId;
+        if(entityName.equals("coaching")){
+          sql = "DELETE from activity where id = " + entityId;
+        }else{
+          sql = "DELETE from " + entityName +" where id = " + entityId;
+        }
         logger.debug("delte record sql:"+ sql);
         Connection conn = null;
         int inserts = 0;
@@ -1568,6 +1572,30 @@ public class DAOImpl
 
         return lMap;
     }
+    
+    public static List searchCoachee(String search_target,String excludeId,String userId) {
+      if(search_target == null|| search_target.equalsIgnoreCase("*")){
+            search_target = "";
+      }
+      if(excludeId == null) excludeId = "-1";
+      
+      String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (crmuser.reportto="+userId+") AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
+      logger.debug("searchManager:"+ sql );
+      Connection conn = null;
+      List lMap = Lists.newArrayList();
+      try {
+          conn = DBHelper.getConnection();
+          QueryRunner run = new QueryRunner();
+          lMap = (List) run.query(conn, sql, new MapListHandler());
+
+      } catch (SQLException e) {
+          logger.error("failed to get user", e);
+      } finally {
+          DBHelper.closeConnection(conn);
+      }
+
+      return lMap;
+  }
     
     public static List searchCRMAccount(String search_target) {
       if(search_target == null|| search_target.equalsIgnoreCase("*")){

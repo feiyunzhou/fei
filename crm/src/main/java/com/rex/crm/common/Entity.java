@@ -26,7 +26,13 @@ public class Entity implements Serializable{
     private String sqlAdmin;  //for the admin to query all data
     @Expose
     private String sqlManager; 
-    
+    @Expose
+    private String sqlManagerCalendar; 
+    @Expose
+    private String sqlCalendar; 
+    @Expose
+    private String sqlAdminCalendar; 
+   
 
     public String getName() {
         return name;
@@ -174,9 +180,30 @@ public class Entity implements Serializable{
     public String getSqlManager() {
         return sqlManager;
     }
-
     public void setSqlManager(String sqlManager) {
-        this.sqlManager = sqlManager;
+      this.sqlManager = sqlManager;
+    }
+    
+    public void setSqlManagerCalendar(String sqlManagerCalendar) {
+        this.sqlManagerCalendar = sqlManagerCalendar;
+    }
+    
+    public String getSqlManagerCalendar() {
+      return sqlManagerCalendar;
     }
 
+    public void setSqlAdminCalendar(String sqlAdminCalendar) {
+      this.sqlAdminCalendar = sqlAdminCalendar;
+    }
+  
+    public String getSqlAdminCalendar() {
+      return sqlAdminCalendar;
+    }
+    public void setSqlCalendar(String sqlCalendar) {
+      this.sqlCalendar = sqlCalendar;
+    }
+
+    public String getSqlCalendar() {
+      return sqlCalendar;
+    }
 }

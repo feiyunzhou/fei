@@ -240,7 +240,7 @@ public class NewDataFormPanel extends Panel {
                                 fn = currentField.getName();
                             }
                             models.put(fn, choiceModel);
-                            columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(), defaultValue, choiceModel));
+                            columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(), entity.getName(),defaultValue, choiceModel));
                         }
                     } else {
                         if (j % 2 == 0) {
@@ -502,11 +502,12 @@ public class NewDataFormPanel extends Panel {
     private class RelationTableSearchFragment extends Fragment {
 
         public RelationTableSearchFragment(String id, String markupId,
-                MarkupContainer markupProvider, final String entityName, final String defaultValue, final IModel defaultModel) {
+                MarkupContainer markupProvider, final String entityName,String excludeEntityName ,final String defaultValue, final IModel defaultModel) {
             super(id, markupId, markupProvider);
 
             PageParameters params = new PageParameters();
             params.set("en", entityName);
+            params.set("excludeName", excludeEntityName);
             params.set("target", (Long)defaultModel.getObject());
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params));
             HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", defaultModel);

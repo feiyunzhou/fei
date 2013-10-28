@@ -97,13 +97,13 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 
         
         item = new MenuItem();
-        item.setCaption("<i class=\"icon-bolt icon-large\"></i>活动");
+        item.setCaption("<i class=\"icon-comment icon-large\"></i>拜访");
         item.setDestination(ActivityPage.class);
         item.setId("navitem-activity");
         builder.put("activity", item);
         
         item = new MenuItem();
-        item.setCaption("<i class=\"icon-bolt icon-large\"></i>辅导");
+        item.setCaption("<i class=\"icon-comments-alt icon-large\"></i>辅导");
         item.setDestination(CoachingPage.class);
         item.setId("navitem-coaching");
         builder.put("coaching", item);

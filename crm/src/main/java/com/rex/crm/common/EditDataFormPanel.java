@@ -82,7 +82,7 @@ public class EditDataFormPanel extends Panel {
         divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
         div.add(divitem);
         add(div);	
-        if(schema.getName().equals("activity")){
+        if(schema.getName().equals("activity")||schema.getName().equals("coaching")){
       	   add(new Label("name",String.valueOf(data.get("title"))));
          }else{
       	   add(new Label("name",String.valueOf(data.get("name"))));

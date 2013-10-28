@@ -137,7 +137,10 @@ public class EntityDetailPage extends TemplatePage {
                     DAOImpl.deleteRecord(id, entityName);
                     
                     setResponsePage(new ActivityPage());
-                }else if(entityName.equalsIgnoreCase("crmuser")){
+                }else if(entityName.equals("coaching")) {
+                  DAOImpl.deleteRecord(id, entityName);
+                  setResponsePage(new CoachingPage());
+              }else if(entityName.equalsIgnoreCase("crmuser")){
                     if(DAOImpl.deleteRecord(id, entityName)>0){
                        DAOImpl.updateCrmUserReport(id, "-1");
                     }
