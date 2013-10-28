@@ -1113,7 +1113,7 @@ public class DAOImpl
     	String fieldssql = Joiner.on(",").join(fieldNames);
         String valuesql = Joiner.on(",").join(values);
         fieldssql = fieldssql + ",isActivited,ts";
-   	 	valuesql =  valuesql + ",0,"+System.currentTimeMillis();
+   	 	valuesql =  valuesql + ",2,"+System.currentTimeMillis();
    	 	fieldssql = fieldssql.replaceAll("user-city", "city");
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
@@ -1747,7 +1747,7 @@ public class DAOImpl
     //reset password
     public static int  resetUserPassword(int entityId){
     	System.out.println("reset password");
-    	String  sql=" UPDATE crmuser SET password='',isActivited= 0 where id =?";
+    	String  sql=" UPDATE crmuser SET password='',isActivited= 2 where id =?";
         Connection conn = null;
         int insert = 0;
         try {
