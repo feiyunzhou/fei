@@ -11,3 +11,6 @@ CREATE TABLE `crmdb`.`crmuser_activited` (
   
 INSERT INTO `crmdb`.`crmuser_activited` (`id`, `val`) VALUES ('1', '已激活');
 INSERT INTO `crmdb`.`crmuser_activited` (`id`, `val`) VALUES ('2', '未激活');
+
+ALTER TABLE `crmdb`.`account`
+ADD UNIQUE INDEX `account_ix_01` (`bdm_code` ASC);

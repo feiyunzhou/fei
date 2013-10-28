@@ -107,7 +107,7 @@ public class CreateEventPage extends TemplatePage {
         event_type_group.add(callRadio);
         final Radio coachingRadio = new Radio("radio2", new Model(2L));
         if (roleId == 3) {
-            coachingRadio.add(new AttributeAppender("checked", "checked"));
+            coachingRadio.add(new AttributeAppender("disabled", "true"));
         }
         final AttributeModifier redioModifier = new AttributeModifier("checked","checked");
         //辅导名称拼接字段

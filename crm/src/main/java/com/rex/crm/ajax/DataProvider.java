@@ -809,7 +809,7 @@ public class DataProvider {
         String sql = null;
         switch(roleId){
          case UserRole.USER_ROLE_ADMINISTRATOR:
-             sql = entity.getSqlAdminCalendar();
+            sql = entity.getSqlCalendar();
             break;
          case UserRole.USER_ROLE_MANAGER:
              sql = entity.getSqlManagerCalendar();

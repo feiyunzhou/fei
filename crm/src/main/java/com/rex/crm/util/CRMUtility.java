@@ -185,10 +185,16 @@ public class CRMUtility {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
 	            }
-	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")||entityName.equalsIgnoreCase("coaching")){
+	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")){
+	            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT );
+	        }else if(entityName.equalsIgnoreCase("coaching")){
+	          if (roleId == 1) {
 	            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
-	        }else if(entityName.equalsIgnoreCase("crmuser")){
-	            
+	          }else if(roleId == 2){
+	            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
+	          }
+	        }
+	        else if(entityName.equalsIgnoreCase("crmuser")){
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.RESETPWD);
 	            }
@@ -205,8 +211,12 @@ public class CRMUtility {
             if (roleId == 1) {
                 permission = EnumSet.of(CRUDPanel.Permissions.ADD);
             }
-        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")|| entityName.equalsIgnoreCase("coaching")){
+        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")){
             permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        }else if(entityName.equalsIgnoreCase("coaching")){
+          if(roleId==1||roleId==2){
+            permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+          }
         }else if(entityName.equalsIgnoreCase("crmuser")){
             
             if (roleId == 1) {
