@@ -10,6 +10,8 @@
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: rgba(228, 226, 226, 0.73);
+    left: 0;
+    top: 0;
 }
 form {
     margin-bottom: 0px;
@@ -34,6 +36,16 @@ form {
     border-bottom-color: #ddd;
     border-bottom-width: 1px;
 }
+.chk-lable {
+    padding-top: 4px;
+    padding-left: 60px;
+}
+.btn-left {
+    float: left;
+}
+.no-border {
+    border: none;
+}
 @media ( max-width : 768px) {
     .name_click {
         font-size: 20px !important;
@@ -44,6 +56,19 @@ form {
     .list-item {
         margin-top: 15px;
         padding-bottom: 10px;
+    }
+    .chk-right {
+        float: right;
+    }
+    .chk-lable {
+        float: right;
+        padding-left: 0px;
+    }
+    .wrapper-search {
+        margin-right: 50px;
+    }
+    .btn.btn-primary.btn-left {
+        width: 100%;
     }
 }
 @media (min-width : 769px) {

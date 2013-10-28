@@ -442,7 +442,7 @@ public class EditDataFormPanel extends Panel {
             params.set("target", (long) model.getObject());
             params.set("eid", eid);
 
-            PopupSettings popupSettings = new PopupSettings("查找").setHeight(470).setWidth(850).setLeft(150).setTop(200);
+            PopupSettings popupSettings = new PopupSettings("查找");
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params).setPopupSettings(popupSettings));
             HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", model);
             hidden.add(new AttributeAppender("id", entityName + "_id"));

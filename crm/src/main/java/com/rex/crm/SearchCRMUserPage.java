@@ -27,102 +27,102 @@ import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.db.DAOImpl;
 
 /**
- * 
- * 
+ *
+ *
  * @author Feiyun
  */
 public class SearchCRMUserPage extends WebPage {
-    private static final Logger logger = Logger.getLogger(SearchCRMUserPage.class);
 
+    private static final Logger logger = Logger.getLogger(SearchCRMUserPage.class);
     private String search_target;
-    
-     List<String> selectedUserIds = Lists.newArrayList();
-     private String entityId;
+    List<String> selectedUserIds = Lists.newArrayList();
+    private String entityId;
 //     private String entityName;
-     private int type = 0;
+    private int type = 0;
 
     /**
      * Constructor
-     * 
-     * @param parameters
-     *            Page parameters (ignored since this is the home page)
+     *
+     * @param parameters Page parameters (ignored since this is the home page)
      */
     public SearchCRMUserPage() {
         StringValue value = this.getRequest().getRequestParameters().getParameterValue("cid");
         StringValue entityname = getRequest().getRequestParameters().getParameterValue("entityname");
-        if(value != null){
+        if (value != null) {
             entityId = value.toString();
         }
-        initPage(entityname.toString(),null,entityId,type);
+        initPage(entityname.toString(), null, entityId, type);
     }
 
-    
     public SearchCRMUserPage(String entityName, String entityId, int type) {
         //logger.debug("sdfsfsdfdsf:"+entityName);
         this.entityId = entityId;
         this.type = type;
-        initPage(entityName,null,entityId,type);
-    }
-    
-    public SearchCRMUserPage(List<Map> maplist, String entityName, String cid,int type) {
-        entityId = cid;
-        this.type = type;
-        initPage(entityName,maplist,cid,type);
+        initPage(entityName, null, entityId, type);
     }
 
-    public void initPage(final String entityname, List<Map> list,final String cid,final int type) {
+    public SearchCRMUserPage(List<Map> maplist, String entityName, String cid, int type) {
+        entityId = cid;
+        this.type = type;
+        initPage(entityName, maplist, cid, type);
+    }
+
+    public void initPage(final String entityname, List<Map> list, final String cid, final int type) {
         final String userId = ((SignIn2Session) getSession()).getUserId();
-        Form form = new Form("form") { 
+        Form form = new Form("form") {
             @Override
             protected void onSubmit() {
                 logger.debug("the form was submitted!");
                 List<Map> maplist = null;
-              
-                  if(entityname.equals("account")||entityname.equals("contact")){
-                      maplist = DAOImpl.searchCRMUser(search_target);
-                  }else{
-                      if(type == 0){
-                      
-                          maplist = DAOImpl.searchCRMAccount(search_target);
-                      }else{
-                          maplist = DAOImpl.searchCRMContact(search_target);
-                      }
-                  }
-                
-               
-                setResponsePage(new SearchCRMUserPage(maplist,entityname,cid,type));
+
+                if (entityname.equals("account") || entityname.equals("contact")) {
+                    maplist = DAOImpl.searchCRMUser(search_target);
+                } else {
+                    if (type == 0) {
+
+                        maplist = DAOImpl.searchCRMAccount(search_target);
+                    } else {
+                        maplist = DAOImpl.searchCRMContact(search_target);
+                    }
+                }
+
+
+                setResponsePage(new SearchCRMUserPage(maplist, entityname, cid, type));
 
             }
         };
         form.add(new TextField<String>("search_input", new PropertyModel<String>(this, "search_target")));
-        add(form);  
-        
-        
+        add(form);
 
-        
+
+
+
         Form users_sbumission_form = new Form("users_sbumission_form") {
             @Override
             protected void onSubmit() {
-                
-                logger.debug("seletedUserIds:"+ selectedUserIds);
-                for(String uid:selectedUserIds){
-                    try{
-                          DAOImpl.insertRelationOfEntityIDCRMUserID(entityname,cid,uid,type); 
-                       
-                    }catch(Exception e){
-                        
+
+                logger.debug("seletedUserIds:" + selectedUserIds);
+                for (String uid : selectedUserIds) {
+                    try {
+                        DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, cid, uid, type);
+
+                    } catch (Exception e) {
                     }
                 }
-                setResponsePage(new EntityDetailPage(entityname,cid));
+                setResponsePage(new EntityDetailPage(entityname, cid));
 
             }
         };
-        final int roleId = ((SignIn2Session)getSession()).getRoleId();
+        final int roleId = ((SignIn2Session) getSession()).getRoleId();
         add(users_sbumission_form);
-        CheckGroup group=new CheckGroup("group", new PropertyModel(this,"selectedUserIds"));
-        if(roleId == 1){
-          group.add(new CheckGroupSelector("checkboxs"));
-        }else{
+        CheckGroup group = new CheckGroup("group", new PropertyModel(this, "selectedUserIds"));
+        if (roleId == 1) {
+            CheckGroupSelector chks = new CheckGroupSelector("checkboxs");
+            group.add(chks);
+            WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
+            group.add(container_label);
+            container_label.add(new AttributeAppender("for", new Model(chks.getMarkupId()), " "));
+        } else {
             WebMarkupContainer container = new WebMarkupContainer("checkboxs");
             container.setVisible(false);
             group.add(container);
@@ -134,7 +134,7 @@ public class SearchCRMUserPage extends WebPage {
 
         if (list != null) {
             for (Map map : list) {
-                
+
                 int uid = ((Number) map.get("id")).intValue();
                 String name = (String) map.get("name");
                 String cellPhone = (String) map.get("cellPhone");
@@ -142,14 +142,18 @@ public class SearchCRMUserPage extends WebPage {
                 String email = (String) map.get("email");
                 AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
                 dataRowRepeater.add(item);
-                item.add(new Check("checkbox", new Model(String.valueOf(uid))));
+                Check chk = new Check("checkbox", new Model(String.valueOf(uid)));
+                item.add(chk);
+                WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
+                item.add(container_label);
+                container_label.add(new AttributeAppender("for", new Model(chk.getMarkupId()), " "));
                 item.add(new Label("name", name));
                 item.add(new Label("cellPhone", cellPhone));
                 item.add(new Label("division", division));
                 item.add(new Label("email", email));
-               
-            
-                
+
+
+
             }
         }
     }
