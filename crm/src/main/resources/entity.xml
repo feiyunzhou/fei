@@ -1219,6 +1219,21 @@
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>isActivited</name>
+				<display>激活状态</display>
+				<data-type>text</data-type>
+				<isRequired>false</isRequired>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<picklist>crmuser_activited</picklist>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>reportto</name>
 				<display>上级经理</display>

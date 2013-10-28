@@ -79,25 +79,31 @@ public final class SignIn extends WebPage
         	}else{
         		//判断用户是否激活密码是否存在()
             	CRMUser user = DAOImpl.getUserByLoginName(getUsername());
+            	System.out.println("user:"+user.getPl1());
             	if(null!=user){
-            		if("".equals(user.getPassword())&&user.getIsActivited()==0){
-                   	 // Get the error message from the properties file associated with the Component
-                       String errmsg = getString("loginError", null, "此用户未激活!");
-                       error(errmsg);
-                   }else{
-       	        	// Sign the user in
-       	            if (session.signIn(getUsername(),getPassword()))
-       	            {
-       	                    setResponsePage(getApplication().getHomePage());
-       	            }
-       	            else
-       	            {
-       	                // Get the error message from the properties file associated with the Component
-       	                String errmsg = getString("loginError", null, "用户名或密码错误!");
-       	                // Register the error message with the feedback panel
-       	                error(errmsg);
-       	            }
-                   }
+            		if(user.getPl1()==1){
+            			if("".equals(user.getPassword())&&user.getIsActivited()==0){
+                          	 // Get the error message from the properties file associated with the Component
+                              String errmsg = getString("loginError", null, "此用户未激活!");
+                              error(errmsg);
+                          }else{
+              	        	// Sign the user in
+              	            if (session.signIn(getUsername(),getPassword()))
+              	            {
+              	                    setResponsePage(getApplication().getHomePage());
+              	            }
+              	            else
+              	            {
+              	                // Get the error message from the properties file associated with the Component
+              	                String errmsg = getString("loginError", null, "用户名或密码错误!");
+              	                // Register the error message with the feedback panel
+              	                error(errmsg);
+              	            }
+                          }
+            		}else{
+            			String errmsg = getString("loginError", null, "此用户已失效!");
+                        error(errmsg);
+            		}
             	}else{
             		String errmsg = getString("loginError", null, "用户名不存在!");
    	                error(errmsg);

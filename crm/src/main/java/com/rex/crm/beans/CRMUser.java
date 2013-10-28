@@ -31,7 +31,7 @@ public class CRMUser {
 	private int sex;
     private int isActivited;
     private long ts;
-    private int status;
+    private int pl1;
     
 	public String getName() {
 		return name;
@@ -242,12 +242,14 @@ public class CRMUser {
 			this.ts = ts;
 		}
 
-		public int getStatus() {
-			return status;
+		public int getPl1() {
+			return pl1;
 		}
 
-		public void setStatus(int status) {
-			this.status = status;
+		public void setPl1(int pl1) {
+			this.pl1 = pl1;
 		}
+
+		
 	
 }
