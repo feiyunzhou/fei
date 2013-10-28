@@ -116,7 +116,7 @@ public class UserDeatialInfo extends TemplatePage {
                 AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(primaryKeyName)));
                 Field currentField = visibleFields.get(i * number_of_column + j / 2);
                 if (j % 2 == 0) {
-                    columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;color:red;"), ";")));
+                    columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("class", new Model("red"), " ")));
                     columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                     fieldNames.add(currentField.getName());
                 } else {
@@ -149,7 +149,6 @@ public class UserDeatialInfo extends TemplatePage {
                         models.put(CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(fieldName)), textModel);
                         fieldNameToModel.put(currentField.getName(), textModel);
                         columnitem.add(new TextInputFragment("editdata", "textInputFragment", this, textModel, fieldName, currentField));
-                        columnitem.add(new AttributeAppender("style", new Model("text-align:left;"), ";"));
                     }
                 }
                 columnRepeater.add(columnitem);

@@ -2,7 +2,8 @@
     margin-left: 0 !important;
 }
 .red{
-    color:red;
+	color:red;
+	font-weight: bold;
 }
 input, select, textarea {
     box-sizing: border-box;

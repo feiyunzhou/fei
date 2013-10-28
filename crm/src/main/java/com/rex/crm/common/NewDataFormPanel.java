@@ -563,7 +563,7 @@ public class NewDataFormPanel extends Panel {
             }
             if(currentField.getDataType().equals("datetime-local")){
               text.add(new AttributeModifier("value", new Model((String)model.getObject())));
-             
+              
             } 
             add(text);
             text.add(new AttributeModifier("type", new Model(currentField.getDataType())));
