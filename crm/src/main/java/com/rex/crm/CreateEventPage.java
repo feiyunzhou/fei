@@ -107,8 +107,9 @@ public class CreateEventPage extends TemplatePage {
         event_type_group.add(callRadio);
         final Radio coachingRadio = new Radio("radio2", new Model(2L));
         if (roleId == 3) {
-            coachingRadio.add(new AttributeAppender("disabled", "true"));
+            coachingRadio.add(new AttributeAppender("checked", "checked"));
         }
+        final AttributeModifier redioModifier = new AttributeModifier("checked","checked");
         //辅导名称拼接字段
         final StringBuffer concahName = new StringBuffer();
         Form form = new Form("form") {
@@ -134,14 +135,16 @@ public class CreateEventPage extends TemplatePage {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+               
                 if(event_type==1){
                 	 if (null == hidden_contact_select) {
-                         contactId = 0;
+                        contactId = 0;
               			div.add(new AttributeAppender("style",new Model("display:block"),";"));
                  		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
                  		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
                  		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-                 		callRadio.add(new AttributeModifier("checked","checked"));
+                 		callRadio.add(redioModifier);
+                 		coachingRadio.add(redioModifier.remove("checked"));
                  		flag = false;
                      } else {
                          contactId = Integer.parseInt(hidden_contact_select);
@@ -153,7 +156,8 @@ public class CreateEventPage extends TemplatePage {
                 		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-                		coachingRadio.add(new AttributeModifier("checked","checked"));
+                		coachingRadio.add(redioModifier);
+                		callRadio.add(redioModifier.remove("checked"));
                 		flag = false;
                     }else{
                     	coacheeId = Integer.parseInt(hidden_select_user);

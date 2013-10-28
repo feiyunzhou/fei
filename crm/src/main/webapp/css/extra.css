@@ -1,6 +1,9 @@
 .row-fluid .span12 {
     margin-left: 0 !important;
 }
+.red{
+    color:red;
+}
 input, select, textarea {
     box-sizing: border-box;
     -moz-box-sizing: border-box;

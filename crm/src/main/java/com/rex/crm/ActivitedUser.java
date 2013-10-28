@@ -33,7 +33,7 @@ public class ActivitedUser extends WebPage{
 		long createTime = Long.parseLong(strs[0]);
 		int userID =Integer.parseInt(strs[1]);
 		CRMUser crmuser = DAOImpl.getUserByActivation(userID,createTime);
-		if(crmuser.getIsActivited()==0){
+		if(crmuser.getIsActivited()==2){
 			initPage(userID,createTime);
 		}else{
 			setResponsePage(new ErrorPromptPage());
