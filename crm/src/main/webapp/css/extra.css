@@ -1,10 +1,13 @@
 input, select, textarea {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 input {
     height: 30px !important;
+}
+.form_datetime select {
+    width: 205px;
 }
 .btn.dropdown-toggle.clearfix.btn-primary {
     width: 96px;
