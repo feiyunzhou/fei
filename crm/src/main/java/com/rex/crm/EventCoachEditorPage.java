@@ -91,18 +91,14 @@ public class EventCoachEditorPage extends TemplatePage{
 			protected void onSubmit() {
 				String sd = getRequest().getPostParameters()
 						.getParameterValue("start_date").toString();
-				String st = getRequest().getPostParameters()
-						.getParameterValue("start_time").toString();
 				String ed = getRequest().getPostParameters()
 						.getParameterValue("end_date").toString();
-				String et = getRequest().getPostParameters()
-						.getParameterValue("end_time").toString();
 				String visit_type = String.valueOf(2);
 				SimpleDateFormat dateformat = new SimpleDateFormat(
-						"yyyy-MM-ddTHH:mm");
+						"yyyy-MM-dd'T'HH:mm");
 				Date act_endtime = new Date(System.currentTimeMillis());
-				String sdt = sd + " " + st;
-				String edt = ed + " " + et;
+				String sdt = sd;
+				String edt = ed;
 				Date startdt = null;
 				Date enddt = null;
 				int coachId = 0;
@@ -155,7 +151,7 @@ public class EventCoachEditorPage extends TemplatePage{
 		StringValue startdateValue = this.getRequest().getRequestParameters()
 				.getParameterValue("startdate");
 
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		Date startDate = new Date(
 				((Number) entity_data.get("starttime")).longValue());
 		String startdate = dateformat.format(startDate);
@@ -164,33 +160,14 @@ public class EventCoachEditorPage extends TemplatePage{
 
 		WebMarkupContainer start_date_input = new WebMarkupContainer(
 				"start_date_input");
-		// startDate = startdate;
-		// DateTextField start_date_input = new
-		// DateTextField("start_date_input", new
-		// PropertyModel<Date>(this,"startDate"));
 		form.add(start_date_input);
 		start_date_input.add(new AttributeModifier("value", startdate));
-
-		SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm");
-		WebMarkupContainer start_time_input = new WebMarkupContainer(
-				"start_time_input");
-		form.add(start_time_input);
-		start_time_input.add(new AttributeModifier("value", timeformatter
-				.format(startDate)));
-
-		SimpleDateFormat dateformat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
 		Date endDate = new Date(
 				((Number) entity_data.get("endtime")).longValue());
 		WebMarkupContainer end_date_input = new WebMarkupContainer(
 				"end_date_input");
 		form.add(end_date_input);
 		end_date_input.add(new AttributeModifier("value", dateformat
-				.format(endDate)));
-		WebMarkupContainer end_time_input = new WebMarkupContainer(
-				"end_time_input", new Model(""));
-		form.add(end_time_input);
-		end_time_input.add(new AttributeModifier("value", timeformatter
 				.format(endDate)));
 		feature_product.setId(((Number) entity_data.get("feature_product"))
 				.longValue());

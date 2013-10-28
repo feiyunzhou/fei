@@ -39,10 +39,10 @@
 
             <div class="row-fluid">
                 <div class="span7">
-                	<div wicket:id="promptDiv" id="promptDiv" class="alert" >
-						<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
-						<span wicket:id="prompt" ><strong></strong></span>
-					</div>
+                    <div wicket:id="promptDiv" id="promptDiv" class="alert" >
+                        <span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
+                        <span wicket:id="prompt" ><strong></strong></span>
+                    </div>
                     <form wicket:id="form" class="form-horizontal">
                         <div class="table-content">
                             <label id="datestr"></label>
@@ -238,8 +238,8 @@
                                 <div class="table-column">
                                     <div class="form_datetime">
                                         <div id="datepicker_from">
-                                            <input name="start_date" wicket:id="start_date_input" style="width: 150px" type="date" />
-                                        </div><input wicket:id="start_time_input" name="start_time" style="width: 150px" type="time" />
+                                            <input name="start_date" wicket:id="start_date_input" type="datetime-local" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -250,20 +250,19 @@
                                 <div class="table-column">
                                     <div class="form_datetime">
                                         <div id="datepicker_to">
-                                            <input name="end_date" wicket:id="end_date_input" style="width: 150px" type="date" />
+                                            <input name="end_date" wicket:id="end_date_input" type="datetime-local" />
                                         </div>
-                                        <input wicket:id="end_time_input" name="end_time" style="width: 150px" type="time" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <hr/>
                         <div class="btn-toolbar">
-                            <div class="btn-group">
-                                <a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
+                            <div class="btn-group action-btn">
+                                <input type="submit" href="#" class="btn btn-primary">保存&返回</input>
                             </div>
-                            <div class="btn-group">
-                                <input type="submit" class="btn btn-primary">保存&返回</input>
+                            <div class="btn-group action-btn">
+                                <a href="#" onclick="window.history.back(); return false;" class="btn">取消</a>
                             </div>
                         </div>
                     </form>
