@@ -1,3 +1,11 @@
+input, select, textarea {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+input {
+    height: 30px !important;
+}
 .btn.dropdown-toggle.clearfix.btn-primary {
     width: 96px;
 }
@@ -52,7 +60,6 @@ input[type="checkbox"]:checked + label span:after {
     background-color: #FFF;
     color: #646464;
     border-left: solid;
-    border-left-color: #2B60DE;
     border-left-width: 6px;
     padding-top: 2px;
     border-bottom: none;
@@ -409,9 +416,6 @@ a:hover, a:focus {
         padding-right: 10px;
         border: none;
     }
-    .form_datetime {
-        padding-right: 12px;
-    }
     .table-column-view {
         width: 100px;
     }
@@ -495,6 +499,7 @@ a:hover, a:focus {
         width: 15px;
         padding-top: 7px;
         padding-left: 20px;
+        padding-right: 16px;
     }
     #selected_contact {
         width: 100%;
