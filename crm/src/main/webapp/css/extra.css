@@ -48,6 +48,15 @@ input[type="checkbox"]:checked + label span:after {
     color: #2980B9;
     content: "\e034";
 }
+.label.legend {
+    background-color: #FFF;
+    color: #646464;
+    border-left: solid;
+    border-left-color: #2B60DE;
+    border-left-width: 6px;
+    padding-top: 2px;
+    border-bottom: none;
+}
 .chk-header {
     margin-top: 10px;
 }
