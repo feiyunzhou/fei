@@ -253,7 +253,7 @@ public class EditDataFormPanel extends Panel {
                          
 
                             fieldNameToModel.put(fn, choiceModel);
-                            columnitem.add(new RelationTableSearchFragment("editdata", "relationTableSearchFragment", this, currentField.getRelationTable(), value, choiceModel, entityId));
+                            columnitem.add(new RelationTableSearchFragment("editdata", "relationTableSearchFragment", this, currentField.getRelationTable(), schema.getName(), value, choiceModel, entityId));
                         }
                     } else {
                         if (j % 2 == 0) {
@@ -434,11 +434,12 @@ public class EditDataFormPanel extends Panel {
     }
 
     private class RelationTableSearchFragment extends Fragment {
-        public RelationTableSearchFragment(String id, String markupId, MarkupContainer markupProvider, final String entityName, final String value, IModel model, final String eid) {
+        public RelationTableSearchFragment(String id, String markupId, MarkupContainer markupProvider, final String entityName, String excludeEntityName ,final String value, IModel model, final String eid) {
             super(id, markupId, markupProvider);
 
             PageParameters params = new PageParameters();
             params.set("en", entityName);
+            params.set("excludeName", excludeEntityName);
             params.set("target", (long) model.getObject());
             params.set("eid", eid);
 

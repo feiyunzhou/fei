@@ -36,7 +36,7 @@ public class CRUDPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
 
     public enum Permissions {
-        ADD, DEL, EDIT,NONE,RESETPWD;
+        ADD, DEL, EDIT,NONE,RESETPWD,DONE;
 
     }
 
@@ -50,7 +50,8 @@ public class CRUDPanel extends Panel {
             add(new Fragment("addCon","emptyFragment",this));
             add(new Fragment("delCon","emptyFragment",this));
             add(new Fragment("editCon","emptyFragment",this));
-        	add(new Fragment("resetPwdCon","emptyFragment",this));
+        	  add(new Fragment("resetPwdCon","emptyFragment",this));
+        	  add(new Fragment("doneCon","emptyFragment",this));
         } else {
             
             if (userPerms.contains(Permissions.ADD)) {
@@ -117,6 +118,20 @@ public class CRUDPanel extends Panel {
                 }else{
                     add(new Fragment("resetPwdCon","emptyFragment",this));
                 }
+            	if (userPerms.contains(Permissions.DONE)) {
+                Fragment addfrag = new Fragment("doneCon","doneFragment",this);
+                addfrag.add(new Link("done_data_btn") {
+
+                    @Override
+                    public void onClick() {
+                     
+                      listener.doneBtn();
+                    }
+                });
+                 add(addfrag);
+             }else{
+                 add(new Fragment("doneCon","emptyFragment",this));
+             }
         }
     }
 

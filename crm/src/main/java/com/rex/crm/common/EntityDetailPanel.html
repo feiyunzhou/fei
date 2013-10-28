@@ -5,6 +5,11 @@
         		$("#2").addClass("icon-angle-right");
         		$("#3").addClass("icon-angle-right");
         		$("#4").addClass("icon-angle-right");
+        		var status = $("#status").text();
+        		if(status=="完成"){
+        			$("#editCon").hide();
+        			$("#done").hide();
+        		}
         		var eventType = $("#event_type").text();
         		var event_type = "辅导"
         		console.info(eventType+"name"+event_type)
@@ -19,6 +24,7 @@
         			
         		}
         });
+        
     </script>
 
 	<div class="container-fluid">

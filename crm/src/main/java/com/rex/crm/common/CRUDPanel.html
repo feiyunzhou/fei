@@ -10,8 +10,10 @@
 	<div class="btn-group full">
 			<div class="btn-group-right" wicket:id="addCon"></div>
 			<div class="btn-group-right" wicket:id="delCon"></div>
-			<div class="btn-group-right" wicket:id="editCon"></div>
+			<div class="btn-group-right" wicket:id="editCon" id="editCon"></div>
 			<div class="btn-group-right" wicket:id="resetPwdCon"></div>
+			<div class="btn-group-right" wicket:id="doneCon" id="done"></div>
+			
 	</div>
 	<wicket:fragment wicket:id="addFragment">
 		<!-- <a href="#myModal" class="btn btn-hg btn-mini btn-info" data-toggle="modal"></a> -->
@@ -28,6 +30,9 @@
 	</wicket:fragment>
 	<wicket:fragment wicket:id="resetPwdFragment">
 		<a href="#" class="btn btn-sm btn-mini btn-info" wicket:id="resetPwd_data_btn"  onclick="resetPwd();"><i class="icon-refresh icon-large"></i>重置密码</a>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="doneFragment">
+		<a href="#" class="btn btn-sm btn-mini btn-success" wicket:id="done_data_btn" ><i class="icon-ok icon-large"></i>完成</a>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="emptyFragment"></wicket:fragment>
 </wicket:panel>

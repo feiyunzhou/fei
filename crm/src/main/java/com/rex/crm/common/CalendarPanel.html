@@ -1,9 +1,15 @@
 <wicket:panel>
+ <link rel='stylesheet' href='fullcalendar/jquery-ui.min.css' />
+<link href='fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='fullcalendar/jquery.min.js'></script>
+<script src='fullcalendar/jquery-ui.custom.min.js'></script>
+<script src='fullcalendar/fullcalendar.min.js'></script>
 	<script>
 		$(document).ready(function() {
 			$('#calendar').fullCalendar({
 				// put your options and callbacks here
-			    theme: true,
+// 			    theme: true,
 				header : {
 					left : 'prev,next today',
 					center : 'title',
@@ -191,7 +197,7 @@
 			<div class="span12">
                <form  class="form-horizontal">
 				<div id="inforior_select_control" style="display:none;" class="control-group">
-					<label class="control-label" for="inforior">下属：</label>
+					<label class="control-label" for="inforior">视图：</label>
 					<div class="controls">
 						<!-- <input type="hidden" id="crmuser_select" style="width: 200px" tabindex="-1" class="select2-offscreen input"> -->
 						<select id="crmuser_select"></select>

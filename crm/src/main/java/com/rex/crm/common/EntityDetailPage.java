@@ -1,6 +1,9 @@
 package com.rex.crm.common;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +160,14 @@ public class EntityDetailPage extends TemplatePage {
                 setResponsePage(new EditDataPage(entityName,id));
             }
             @Override
+            public void doneBtn(){
+              final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+               Date time = new Date();
+              String d = dateformat.format(time);
+              DAOImpl.doneRecord(id, entityName, d);
+             setResponsePage(new EntityDetailPage(entityName,id));
+            }
+            @Override
             public void resetPassword(int userId){
             	if(DAOImpl.resetUserPassword(userId)>0){
             		//获取对象
@@ -174,7 +185,7 @@ public class EntityDetailPage extends TemplatePage {
                 	};*/
             	};
             }
-                
+            
          };
          
 

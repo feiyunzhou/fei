@@ -157,14 +157,12 @@ public class EventEditorPage extends TemplatePage {
         StringValue startdateValue = this.getRequest().getRequestParameters().getParameterValue("startdate");
 
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = new Date(
-                ((Number) entity_data.get("starttime")).longValue());
+        Date startDate = new Date( ((Number) entity_data.get("starttime")).longValue());
         String startdate = dateformat.format(startDate);
 
         logger.debug("startdate:" + startdate);
 
-        WebMarkupContainer start_date_input = new WebMarkupContainer(
-                "start_date_input");
+        WebMarkupContainer start_date_input = new WebMarkupContainer("start_date_input");
         // startDate = startdate;
         // DateTextField start_date_input = new
         // DateTextField("start_date_input", new
@@ -173,10 +171,8 @@ public class EventEditorPage extends TemplatePage {
         SimpleDateFormat timeformatter = new SimpleDateFormat("HH:mm");
         start_date_input.add(new AttributeModifier("value", startdate + "T" + timeformatter.format(startDate)));
 
-        Date endDate = new Date(
-                ((Number) entity_data.get("endtime")).longValue());
-        WebMarkupContainer end_date_input = new WebMarkupContainer(
-                "end_date_input");
+        Date endDate = new Date(((Number) entity_data.get("endtime")).longValue());
+        WebMarkupContainer end_date_input = new WebMarkupContainer("end_date_input");
         form.add(end_date_input);
         end_date_input.add(new AttributeModifier("value", dateformat.format(endDate) + "T" + timeformatter.format(endDate)));
 

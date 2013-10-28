@@ -4,7 +4,11 @@
         <wicket:extend>
             <script>
                 $(document).ready(function() {
-                    
+                    var teamPanel = $("#teamPanel").text();
+                    alert(teamPanel);
+                    if(teamPanel == ""){
+                    	$("#accordion1").hide();
+                    }
                 });
                 function ConfirmDel() {
                     if (confirm("真的要删除吗？")){
@@ -44,7 +48,7 @@
                         </div>
                         <div class="" id="accordion1">
                             <div  class="relationBlock">
-                                <span wicket:id="teamPanel"></span>
+                                <span wicket:id="teamPanel" id="teamPanel"></span>
                             </div>
 
                             <div id=relation>

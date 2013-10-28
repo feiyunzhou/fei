@@ -2026,7 +2026,7 @@ as aActivity
 		<display>辅导</display>
 		<filterField>feature_product</filterField>
 		<sql>
-		select * from (select * from (select activity.crmuserId as crmuserName\, activity.*\,
+		select distinct *  from (select * from (select activity.crmuserId as crmuserName\, activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,
@@ -2039,10 +2039,10 @@ left join activity_event_type_pl on activity.activity_type = activity_event_type
 left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id
 left join activitycrmuser on activity.id = activitycrmuser.activityId
-where activitycrmuser.crmuserid = ? and activity.event_type = 2 order by whenadded DESC) as aActivity
+where activitycrmuser.crmuserid = ?) as aactivity where event_type = 2 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
-		select * from (select * from (select activity.crmuserId as crmuserName\, activity.*\,
+	select distinct * from (select * from (select activity.crmuserId as crmuserName\, activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,
@@ -2056,12 +2056,12 @@ left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id
 left join activitycrmuser on activity.id = activitycrmuser.activityId
 left join crmuser on activitycrmuser.crmuserId = crmuser.id
-where crmuser.reportto = ? or crmuser.id = ?  and activity.event_type = 2  order by whenadded DESC) as aActivity
+where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type = 2  order by whenadded DESC) as aActivity
 		</sql-manager>
 		
 		<sql-admin>
 		
-		select * from (select activity.crmuserId as crmuserName\, activity.*\,
+		select distinct * from (select activity.crmuserId as crmuserName\, activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,

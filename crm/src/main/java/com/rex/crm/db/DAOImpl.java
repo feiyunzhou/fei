@@ -1250,7 +1250,11 @@ public class DAOImpl
         	 i++;
          }
          sql = sql.replaceAll("accountName","accountId").trim();
-         sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;
+        if(entityName.equalsIgnoreCase("coaching")){
+          sql = "UPDATE  activity SET "+sql+" where id = " + id;
+        }else{
+          sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;
+        }
         logger.debug("UPDATE sql is:"+sql);
         Connection conn = null;
         try {
@@ -1268,6 +1272,27 @@ public class DAOImpl
     }
     
     
+    public static void doneRecord(String id,String entityName, String time ) {
+      String sql = "";
+      
+       if(entityName.equalsIgnoreCase("coaching")){
+         sql = "UPDATE  activity SET status= 2 ,act_endtime = '"+ time +"'  where id = " + id;
+       }
+       logger.debug("UPDATE sql is:"+sql);
+       Connection conn = null;
+       try {
+           conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int inserts = 0;
+           inserts += run.update(conn, sql);
+
+           System.out.println("inserted:" + inserts);
+       } catch (Exception e) {
+           logger.error("failed to add new calendar event", e);
+       } finally {
+           DBHelper.closeConnection(conn);
+       }
+   }
     
     public static int deleteRecord(String entityId,String entityName) {
         String sql = "";
