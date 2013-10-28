@@ -5,14 +5,6 @@
         <wicket:extend>
             <script>
                 $(document).ready(function() {	
-                	if(document.getElementById("radio").checked==true){
-                		console.info("radio");
-                		$("#student_div").hide();
-                        $("#callOn").show();
-                	}else{
-                		$("#student_div").show();
-                        $("#callOn").hide();
-                	}
                     $("#navitem-calendar").addClass("active");
                     var seleted_event_type = $(".event_type_class").attr("data-typeId");//.data("typeId");
                     if(seleted_event_type == 1){
@@ -92,10 +84,10 @@
                                     <div class="form_datetime">
                                         <span wicket:id="event_type_group">
                                             <div class="pull-left">
-                                                <input id="radio" type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"  checked="checked"   value=1 /> <span class="radio-label">拜访</span>
+                                                <input  type="radio" class="event_type_class" name="event_type" wicket:id="radio1" data-typeId="1"  checked="checked"   value=1 /> <span class="radio-label">拜访</span>
                                             </div>
                                             <div class="pull-left">
-                                                <input id="coaching_radio" type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2 /> <span class="radio-label">辅导</span>
+                                                <input  type="radio" name="event_type" class="event_type_class" wicket:id="radio2" data-typeId="2" value=2 /> <span class="radio-label">辅导</span>
                                             </div>
                                         </span>
                                     </div>
@@ -124,7 +116,7 @@
                                 </div>
                                 <div   class="table-cell">
                                     <div class="table-column tag">
-                                        <div class="form_datetime"><span>被辅导人：</span></div>
+                                        <div class="form_datetime  red"><span>被辅导人：</span></div>
                                     </div>
                                     <div class="table-column">
                                         <div class="form_datetime">
@@ -268,7 +260,7 @@
 
                                 <div id="accountNcontact" class="table-cell">
                                     <div class="table-column tag">
-                                        <div class="form_datetime"><span>拜访医生：</span></div>
+                                        <div class="form_datetime  red"><span>拜访医生：</span></div>
                                     </div>
                                     <div class="table-column">
                                         <div class="form_datetime">
