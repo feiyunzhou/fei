@@ -76,7 +76,7 @@ public class EditDataFormPanel extends Panel {
         final AbstractItem divitem = new AbstractItem(div.newChildId());
         final Label promptButton = new Label("promptButton","X");
         divitem.add(promptButton);
-        final Label promptLabel = new Label("prompt","红色输入框是必填字段不能为空，请输入!");
+        final Label promptLabel = new Label("prompt","红色字体字段为必填项，请输入!");
         divitem.add(promptLabel);
         div.add(new AttributeAppender("style",new Model("display:none"),";"));
         divitem.add(new AttributeAppender("style",new Model("display:none"),";"));

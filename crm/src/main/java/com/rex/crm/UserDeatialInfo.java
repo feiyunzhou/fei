@@ -1,18 +1,11 @@
 package com.rex.crm;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.rex.crm.beans.CRMUser;
-import com.rex.crm.beans.Choice;
-import com.rex.crm.common.Entity;
-import com.rex.crm.common.Field;
-import com.rex.crm.db.DAOImpl;
-import com.rex.crm.util.CRMUtility;
-import com.rex.crm.util.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
@@ -25,6 +18,16 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.Choice;
+import com.rex.crm.common.Entity;
+import com.rex.crm.common.Field;
+import com.rex.crm.db.DAOImpl;
+import com.rex.crm.util.CRMUtility;
+import com.rex.crm.util.Configuration;
 
 public class UserDeatialInfo extends TemplatePage {
 
@@ -64,6 +67,18 @@ public class UserDeatialInfo extends TemplatePage {
          add(image);
          RepeatingView divRepeater = new RepeatingView("userRealtionInfo");
          add(divRepeater);*/
+        
+        //add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem divitem = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        divitem.add(promptButton);
+        final Label promptLabel = new Label("prompt","红色字体字段为必填项，请输入!");
+        divitem.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(divitem);
+        add(div);	
         final List<String> fieldNames = Lists.newArrayList();
         //得到基本信息信息
         RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
@@ -101,7 +116,7 @@ public class UserDeatialInfo extends TemplatePage {
                 AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(primaryKeyName)));
                 Field currentField = visibleFields.get(i * number_of_column + j / 2);
                 if (j % 2 == 0) {
-                    columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                    columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;color:red;"), ";")));
                     columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                     fieldNames.add(currentField.getName());
                 } else {
@@ -136,8 +151,6 @@ public class UserDeatialInfo extends TemplatePage {
                         columnitem.add(new TextInputFragment("editdata", "textInputFragment", this, textModel, fieldName, currentField));
                         columnitem.add(new AttributeAppender("style", new Model("text-align:left;"), ";"));
                     }
-                    logger.debug("fieldName:" + fieldName);
-                    logger.debug("userName:" + user.getName());
                 }
                 columnRepeater.add(columnitem);
             }
@@ -161,6 +174,7 @@ public class UserDeatialInfo extends TemplatePage {
          imgForm.setMultiPart(true);
          add(imgForm);*/
         //create edit userForm
+        
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
@@ -171,6 +185,7 @@ public class UserDeatialInfo extends TemplatePage {
                 String photo = "";
                 String loginName = "";
                 int sex = 0;
+                boolean flag = true;
                 for (String k : fieldNameToModel.keySet()) {
                     logger.debug("k" + k);
                     String value = fieldNameToModel.get(k).getObject() == null ? null : String.valueOf(fieldNameToModel.get(k).getObject());
@@ -187,11 +202,19 @@ public class UserDeatialInfo extends TemplatePage {
                     } else {
                         email = value;
                     }
+                    if(null==fieldNameToModel.get(k).getObject()){
+                    	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		flag = false;
+                    }
                 }
-
-                int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
-                DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName);
-                setResponsePage(HomePage.class);
+                if(flag){
+                	int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
+                    DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName);
+                    setResponsePage(HomePage.class);
+                }
             }
         };
         form.add(fieldGroupRepeater);
@@ -206,10 +229,13 @@ public class UserDeatialInfo extends TemplatePage {
                 MarkupContainer markupProvider, IModel model, String value, Field currentField) {
             super(id, markupId, markupProvider);
             TextField<String> text = new TextField<String>("input", model);
-            text.add(new AttributeAppender("value", new Model(value), ";"));
+            text.add(new AttributeModifier("value", new Model(value)));
             if (!currentField.isEditable()) {
                 text.add(new AttributeAppender("disabled", new Model("disabled"), ";"));
             }
+            if(currentField.isRequired()){
+            	//text.add(new AttributeModifier("required", new Model("required")));
+        	}
             add(text);
         }
     }

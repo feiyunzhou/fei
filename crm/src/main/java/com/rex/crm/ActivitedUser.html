@@ -1,12 +1,12 @@
+<!DOCTYPE html>
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:wicket="http://wicket.apache.org">
-	<link rel="stylesheet" href="flat/css/flat-ui.css"/>
-	<link rel="stylesheet" href="flat/css/bootstrap.css"/>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 	<script type="text/javascript" src="jquery/js/jquery-1.9.1.js"></script>
 	<link href="jquery/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"/>
-	<link href="css/common.css" rel="stylesheet" />
+	<link rel="stylesheet" href="flat/css/flat-ui.css"/>
+	<link href="css/common.css" rel="stylesheet" />		
+	<link href="css/extra.css" rel="stylesheet" />
 	<SCRIPT type="text/javascript">
 	$(document).ready(function() {
 		
@@ -26,7 +26,7 @@
 	</SCRIPT>
 <body>
 	<div class="container">
-		 <div class="control-group" >
+	 	<div class="control-group" >
 		    	<div class="controls" style="display:none;">
 		    		<label class="control-label"></label>
 		      		<span wicket:id="prompt"  style="display:none;text-align:center;color:red;"></span>
@@ -48,19 +48,19 @@
 		    <div class="control-group">
 		    	<label class="control-label" >请输入密码:</label>
 		    	<div class="controls">
-		      		<input type="password" wicket:id="password"  placeholder="Please enter the password"  required="required"/>
+		      		<input type="password" id="password" wicket:id="password"  placeholder="Please enter the password" />
 		    	</div>
 		  	</div>
 		  	<div class="control-group">
 		    	<label class="control-label" >请再次输入密码:</label>
 		    	<div class="controls">
-		      		<input type="password" wicket:id="newPassword"  placeholder="enter the password again" onchange="checkPasswords();"  required="required"/>
+		      		<input type="password" id="newPassword" wicket:id="newPassword"  placeholder="enter the password again" onchange="checkPasswords();" />
 		    	</div>
 		  	</div>
 		  	<div class="control-group">
 			    <div class="controls">
-			    	<button type="submit" class="btn btn-info">保存</button>
-			    	<button type="reset" class="btn btn-info">重置</button>
+			    	<button type="submit" class="btn btn-primary">保存</button>
+			    	<button type="reset" class="btn btn-primary">重置</button>
 			    </div>
 		    </div>
 	 	</form>

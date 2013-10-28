@@ -8,6 +8,8 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.string.StringValue;
@@ -47,24 +49,25 @@ public class ActivitedUser extends WebPage{
 		Form form = new Form("form"){
 			@Override
 			protected void onSubmit() {
+				System.out.println("submit");
 				String password =  models.get("password").getObject() == null? null:String.valueOf(models.get("password").getObject());
 				logger.debug("pwd:"+password);
-				if(DAOImpl.updateCrmUserPassword(userId, password)){
-					//修改crmuser的激活状态为已激活
-					DAOImpl.updateUserActivited(userId);
-					//用此用户登录
-					SignIn2Session session = getMysession();
-		        	session.setUser(null);
-		            if (session.signIn(userLoginName, password))
-		            {
-	                    setResponsePage(getApplication().getHomePage());
-		            }else{
-		            	promptLabel.add(new AttributeAppender("style",new Model("display:block;"),";"));
-		            }
-				}else{
-					promptLabel.add(new AttributeAppender("style",new Model("display:block;"),";"));
+					if(DAOImpl.updateCrmUserPassword(userId, password)){
+						//修改crmuser的激活状态为已激活
+						DAOImpl.updateUserActivited(userId);
+						//用此用户登录
+						SignIn2Session session = getMysession();
+			        	session.setUser(null);
+			            if (session.signIn(userLoginName, password))
+			            {
+		                    setResponsePage(getApplication().getHomePage());
+			            }else{
+			            	promptLabel.add(new AttributeAppender("style",new Model("display:block;"),";"));
+			            }
+					}else{
+						promptLabel.add(new AttributeAppender("style",new Model("display:block;"),";"));
+					}
 				}
-			}
 		};
 		add(form);
 		add(promptLabel);
