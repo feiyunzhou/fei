@@ -1,3 +1,11 @@
+.footer {
+    text-align: center;
+    clear: both;
+    background-color: #FFF;
+    color: #777;
+    font-size: 15px;
+    padding-top: 5px;
+}
 .row-fluid .span12 {
     margin-left: 0 !important;
 }
