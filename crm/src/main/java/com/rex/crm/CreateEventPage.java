@@ -174,6 +174,7 @@ public class CreateEventPage extends TemplatePage {
                             concahName.append(sd);
                             concahName.append("拜访辅导");
                             act_title_input = concahName.toString();
+                            
                         }
                     }
                     try {
@@ -188,7 +189,9 @@ public class CreateEventPage extends TemplatePage {
                             participants = participants + ", " + selected_user;
                             contactId = -1;
                             concahName.append("拜访辅导");
+                            visiting_purpose = new Choice(8L, "");
                         }
+                        System.out.println("拜访类型："+String.valueOf(visiting_purpose.getId()));
                         //insert the event, and return the generated id of the event
                         long generatedkey = DAOImpl.addCalendarEventForCoach(crmuserId, contactId, String.valueOf(activity_type.getId()),
                                 act_title_input, String.valueOf(startdt.getTime() / 1000),

@@ -22,17 +22,17 @@
             
             if(isValidated){
             	if($("#crmuser_name").length > 0 && jQuery.isEmptyObject($("#crmuser_name").val())){
-              	  alert("请查询添入被辅导人！");
+              	  alert("璇锋煡璇㈡坊鍏ヨ杈呭浜猴紒");
                     return false;
                 }else  if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
-                    alert("请查询添入医院！");
+                    alert("璇锋煡璇㈡坊鍏ュ尰闄紒");
                     return false;
                 }else{
                     return true;
                 }
                 
             }else{
-                alert("红色标记字段为必填字段");
+                alert("绾㈣壊鏍囪瀛楁涓哄繀濉瓧娈�);
                 return false;
             }
             
@@ -87,6 +87,6 @@
     <wicket:fragment wicket:id="relationTableSearchFragment">
         <input type="text"  required="required"  wicket:id="selected_value_input" disabled="disabled" class="input input-small" />
         <input type="hidden" class="input" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
-        <a href="#" class="search-btn" wicket:id="search_btn" id="search_click"  title="搜索" target="_blank"><i class="icon-search"></i></a>
+        <a href="#" class="search-btn" wicket:id="search_btn" id="search_click"  title="鎼滅储" target="_blank"><i class="icon-search"></i></a>
     </wicket:fragment>
 </wicket:panel>

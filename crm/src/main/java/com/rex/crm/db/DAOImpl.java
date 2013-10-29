@@ -984,7 +984,7 @@ public class DAOImpl
     public static long addCalendarEventForCoach(int crmuserId, int contactId, String type, String title, String start, String end,int status,
             String owner,String modifier,String responsible_person,String visiting_purpose,String feature_product,int event_type,String participants,
             int coach,String location,int total_score,String planing,String openling,String enquery_listening,String deliverable,String objection_handing,String summary) throws Exception {
-        int type_id = 1;
+        int type_id =Integer.valueOf(type).intValue();
         if(event_type==2){
         	type_id= 3;
         }

@@ -7,11 +7,11 @@
         
         function validateFields(){
             if($('.required-field').length>0 && jQuery.isEmptyObject($('.required-field').val())){
-                alert("Á∫¢Ëâ≤Ê†áËÆ∞Â≠óÊÆµ‰∏çËÉΩ‰∏∫Á©∫");
+                alert("∫Ï…´◊÷∂ŒŒ™±ÿÃÓ◊÷∂Œ«ÎÃÓ–¥!");
                 return false;
             }else{
                 if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
-                    alert("ËØ∑Êü•ËØ¢Ê∑ªÂÖ•ÂåªÈô¢ÔºÅ");
+                    alert("«Î≤È—ØÃÓ»Î“Ω¡∆ª˙ππ£°");
                     return false;
                 }else{
                     return true;
@@ -45,17 +45,17 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <input type="submit" onClick="return validateFields();" class="btn btn-primary" value="‰øùÂ≠ò"  />
+                                <input type="submit" onClick="return validateFields();" class="btn btn-primary" value="±£¥Ê"  />
                             </div>
                         </div>
                     </fieldset>
                 </form>
             </div>
         </div>
-
     </div>
 	<wicket:fragment wicket:id="textFragment">
 		<span wicket:id="celldata"></span>
