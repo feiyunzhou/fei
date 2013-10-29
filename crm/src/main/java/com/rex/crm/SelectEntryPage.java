@@ -58,49 +58,42 @@ public class SelectEntryPage extends WebPage {
         
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
-        final Entity entity = entities.get("account");
+        final Entity entity = entities.get(entityName);
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
                 List<Map> maplist = null;
                 if(entityName.equalsIgnoreCase("account")){
                     
-                    String sql = entity.getSql();
-                    switch(roleId){
-                     case 1:
-                         sql = entity.getSqlAdmin();
-                        break;
-                     case 2:
-                         sql = entity.getSqlManager();
-                        break;
-                     case 3:
-                         sql = entity.getSql();
-                        break;
-                    }
-                    
-                    search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
-                    
-                    List<Field> searchableFields = entity.getSearchableFields();
-                    String joint = " like '%"+search_target+"%'";
-                    String likequery = "";
-                    for(Field sf:searchableFields){
-                        likequery = likequery + " OR "+ sf.getName() + joint;
-                    }
-                    
-                      sql =  sql + " where name like '%"+search_target+"%' " + likequery ;
+                    String sql = assembleSearchingSQL(roleId, entity);
                     System.out.println(sql);
             
-                    switch(roleId){
+                    switch (roleId) {
                     case 2:
-                        maplist = DAOImpl.queryEntityRelationList(sql, userId,userId,userId);
+                        maplist = DAOImpl.queryEntityRelationList(sql, userId, userId, userId);
                         break;
                     case 3:
-                      maplist = DAOImpl.queryEntityRelationList(sql, userId, userId);
-                    break;
+                        maplist = DAOImpl.queryEntityRelationList(sql, userId, userId);
+                        break;
                     case 1:
                         maplist = DAOImpl.queryEntityRelationList(sql);
                     }
                     
+                    
+                }else if(entityName.equalsIgnoreCase("contact")){
+                    
+                    String sql = assembleSearchingSQL(roleId, entity);
+                    
+                    switch (roleId) {
+                    case 2:
+                        maplist = DAOImpl.queryEntityRelationList(sql, userId,userId);
+                        break;
+                    case 3:
+                        maplist = DAOImpl.queryEntityRelationList(sql, userId);
+                        break;
+                    case 1:
+                        maplist = DAOImpl.queryEntityRelationList(sql);
+                    }
                     
                 }else if(excludeEntityName.equalsIgnoreCase("coaching")){
                   maplist = DAOImpl.searchCoachee(search_target,excludeId,userId);
@@ -143,5 +136,32 @@ public class SelectEntryPage extends WebPage {
                 
             }
         }
+    }
+
+    private String assembleSearchingSQL(final int roleId, final Entity entity) {
+        String sql = entity.getSql();
+        switch(roleId){
+         case 1:
+             sql = entity.getSqlAdmin();
+            break;
+         case 2:
+             sql = entity.getSqlManager();
+            break;
+         case 3:
+             sql = entity.getSql();
+            break;
+        }
+        
+        search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
+        
+        List<Field> searchableFields = entity.getSearchableFields();
+        String joint = " like '%"+search_target+"%'";
+        String likequery = "";
+        for(Field sf:searchableFields){
+            likequery = likequery + " OR "+ sf.getName() + joint;
+        }
+        
+          sql =  sql + " where name like '%"+search_target+"%' " + likequery ;
+        return sql;
     }
 }

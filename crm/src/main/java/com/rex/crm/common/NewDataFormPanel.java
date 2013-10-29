@@ -525,34 +525,34 @@ public class NewDataFormPanel extends Panel {
                 MarkupContainer markupProvider, IModel model, Field currentField) {
             super(id, markupId, markupProvider);
             TextField<String> text = new TextField<String>("input", model);
-            if (!currentField.isEditable()) {
-                Calendar calendar = Calendar.getInstance();
-                final SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
-                Date time = (Date) calendar.getTime();
-                if (currentField.getName().equals("accountId")||currentField.getName().equals("act_endtime")) {
-                    add(text);
-                } 
-//                else {
-//                    if (currentField.getName().equals("modify_datetime")) {
-//                        String modify_datetime = dateformat.format(time);
-//                        IModel modifiedTimeModel = new Model(){
-//							@Override
-//							public Serializable getObject() {
-//								Date time = new Date(System.currentTimeMillis());
-//								return  dateformat.format(time);
-//							}
-//
-//                        };
-//                        text.add(new AttributeModifier("value", modifiedTimeModel));
-//                    } else if (currentField.getName().equals("whenadded")) {
-//                        String whenadded = dateformat.format(time);
-//                        text.add(new AttributeModifier("value", whenadded));
-//                    } else {
-//                        text.add(new AttributeModifier("value", new Model(user)));
-//                    }
-//                }
-                text.add(new AttributeModifier("readonly", new Model("realonly")));
-            }
+//            if (!currentField.isEditable()) {
+//                Calendar calendar = Calendar.getInstance();
+//                final SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+//                Date time = (Date) calendar.getTime();
+//                if (currentField.getName().equals("accountId")||currentField.getName().equals("act_endtime")) {
+//                    add(text);
+//                } 
+////                else {
+////                    if (currentField.getName().equals("modify_datetime")) {
+////                        String modify_datetime = dateformat.format(time);
+////                        IModel modifiedTimeModel = new Model(){
+////							@Override
+////							public Serializable getObject() {
+////								Date time = new Date(System.currentTimeMillis());
+////								return  dateformat.format(time);
+////							}
+////
+////                        };
+////                        text.add(new AttributeModifier("value", modifiedTimeModel));
+////                    } else if (currentField.getName().equals("whenadded")) {
+////                        String whenadded = dateformat.format(time);
+////                        text.add(new AttributeModifier("value", whenadded));
+////                    } else {
+////                        text.add(new AttributeModifier("value", new Model(user)));
+////                    }
+////                }
+//                text.add(new AttributeModifier("readonly", new Model("realonly")));
+//            }
             
             if (currentField.getDataType().equals("tel") || currentField.getDataType().equals("fax")) {
                 text.add(new AttributeModifier("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));

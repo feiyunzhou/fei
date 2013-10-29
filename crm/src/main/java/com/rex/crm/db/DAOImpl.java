@@ -1162,6 +1162,9 @@ public class DAOImpl
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
         	 fieldssql = fieldssql + ",crmuserId";
         	 valuesql = valuesql + "," +userId;
+        	 
+        	 fieldssql = fieldssql + ",event_type";
+             valuesql = valuesql + "," +1;
          }
          logger.debug("fieldssql sql is:"+fieldssql);
          logger.debug("valuesql sql is:"+valuesql);

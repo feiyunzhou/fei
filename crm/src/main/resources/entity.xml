@@ -1535,21 +1535,21 @@ left join activitycrmuser on activity.id = activitycrmuser.activityId
 where activitycrmuser.crmuserid = ?) as aactivity where event_type = 1 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
-		select * from (select * from (select activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val 
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id
-left join activitycrmuser on activity.id = activitycrmuser.activityId
-left join crmuser on activitycrmuser.crmuserId = crmuser.id
-where crmuser.reportto = ? or crmuser.id = ? ) as aactivity  where event_type = 1 order by whenadded DESC) as aActivity
+	select * from (select * from (select activity.*\,
+	activity.activity_type as act_type\,
+	activity.status as act_status\,
+	activity.contactId as contactName\,
+	contact.accountId as accountName\,
+	activity_event_type_pl.val as event_type_val\,
+	account.name as accountName_val\,
+	contact.name as contactname_val
+	from activity
+	left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
+	left join contact on activity.contactId = contact.id
+	left join account on contact.accountId = account.Id
+	left join activitycrmuser on activity.id = activitycrmuser.activityId
+	left join crmuser on activitycrmuser.crmuserId = crmuser.id
+	where crmuser.reportto = ? or crmuser.id = ? ) as aactivity where event_type = 1 order by whenadded DESC) as aActivity
 		</sql-manager>
 		
 		<sql-admin>
@@ -1635,7 +1635,7 @@ as aActivity
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
-			 <field>
+<!-- 			 <field>
 				<name>event_type</name>
 				<display>活动类型</display>
 				<isRequired>false</isRequired>
@@ -1647,7 +1647,7 @@ as aActivity
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
-			</field>
+			</field> -->
 			
 			<field>
 				<name>event_type_val</name>
@@ -1679,7 +1679,7 @@ as aActivity
 			<field>
 				<name>starttime</name>
 				<display>开始时间</display>
-				<data-type>text</data-type>
+				<data-type>datetime-local</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1691,7 +1691,7 @@ as aActivity
 			<field>
 				<name>endtime</name>
 				<display>结束时间</display>
-				<data-type>text</data-type>
+				<data-type>datetime-local</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1711,7 +1711,23 @@ as aActivity
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<childNode>visiting_purpose</childNode>
 				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>visiting_purpose</name>
+				<display>拜访目的</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_visiting_purpose_pl</picklist>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<parentNode>activity_type</parentNode>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 					
 			<field>
@@ -1755,19 +1771,19 @@ as aActivity
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
-			<field>
+<!-- 			<field>
 				<name>coacheeId</name>
 				<display>被辅导人</display>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
+				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<isBaseInfo>true</isBaseInfo>
 				<relationTable>crmuser</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
-			</field>
+			</field> -->
 				
 			<field>
 				<name>accountName</name>
@@ -1797,19 +1813,19 @@ as aActivity
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
-			<field>
-				<name>participants</name>
-				<display>参与人/相关人员</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>1</priority>
-				<isBaseInfo>true</isBaseInfo>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			
+			<!--<field>-->
+				<!--<name>participants</name>-->
+				<!--<display>参与人/相关人员</display>-->
+				<!--<data-type>text</data-type>-->
+				<!--<isPrimaryKey>false</isPrimaryKey>-->
+				<!--<isDetailLink>false</isDetailLink>-->
+				<!--<isVisible>true</isVisible>-->
+				<!--<isEditable>false</isEditable>-->
+				<!--<priority>1</priority>-->
+				<!--<isBaseInfo>true</isBaseInfo>-->
+				<!--<fieldGroup>关键信息</fieldGroup>-->
+			<!--</field>-->
+			<!---->
 
 			<field>
 				<name>act_type</name>
@@ -1822,19 +1838,7 @@ as aActivity
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			<field>
-				<name>visiting_purpose</name>
-				<display>拜访目的</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<picklist>activity_visiting_purpose_pl</picklist>
-				<priority>1</priority>
-				<isBaseInfo>true</isBaseInfo>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
+						
 			<field>
 				<name>feature_product</name>
 				<display>主推产品</display>
@@ -1847,6 +1851,7 @@ as aActivity
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
+			
 			<field>
 				<name>status</name>
 				<display>状态</display>
@@ -1859,6 +1864,7 @@ as aActivity
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
 			<field>
 				<name>act_status</name>
 				<display>状态</display>
@@ -1936,7 +1942,7 @@ as aActivity
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-			<field>
+<!-- 			<field>
 				<name>total_score</name>
 				<display>总分</display>
 				<data-type>number</data-type>
@@ -2018,7 +2024,7 @@ as aActivity
 				<priority>5</priority>
 				<picklist>score2_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
-			</field>
+			</field> -->
 		</fields>
 	</entity>
 <entity>
@@ -2401,7 +2407,7 @@ as aCoaching
 			<field>
 				<name>starttime</name>
 				<display>开始时间</display>
-				<data-type>text</data-type>
+				<data-type>datetime-local</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -2413,7 +2419,7 @@ as aCoaching
 			<field>
 				<name>endtime</name>
 				<display>结束时间</display>
-				<data-type>text</data-type>
+				<data-type>datetime-local</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
