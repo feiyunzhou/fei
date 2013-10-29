@@ -79,7 +79,6 @@ public final class SignIn extends WebPage
         	}else{
         		//判断用户是否激活密码是否存在()
             	CRMUser user = DAOImpl.getUserByLoginName(getUsername());
-            	System.out.println("user:"+user.getPl1());
             	if(null!=user){
             		if(user.getPl1()==1){
             			if("".equals(user.getPassword())&&user.getIsActivited()==0){

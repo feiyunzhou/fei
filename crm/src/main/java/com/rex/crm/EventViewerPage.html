@@ -8,6 +8,13 @@
                     $("#navitem-calendar").addClass("active");  
 				
                 });// end onDomReady function
+                function checkPrompt(){
+                    if (confirm("真的要删除吗？")){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
             </script>
 
 
@@ -32,7 +39,7 @@
                                 </div>
                                 <div class="btn-toolbar pull-left">
                                     <div class="btn-group action-btn">
-                                        <a href="#" wicket:id="delete_event_btn" class="btn btn-small btn-danger">删除</a>
+                                        <a href="#" wicket:id="delete_event_btn" class="btn btn-small btn-danger" onclick="javascript:return checkPrompt()">删除</a>
                                     </div>
 
                                 </div>
