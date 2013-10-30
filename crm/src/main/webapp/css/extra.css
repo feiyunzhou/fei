@@ -1,3 +1,17 @@
+.fc-header-right {
+    float: right;
+    min-width: 100px;
+    margin-top: -35px;
+}
+.fc-header-center {
+    width: 100%;
+    margin: 0 auto;
+}
+.fc-header-left {
+    float: left;
+    min-width: 150px;
+    margin-top: -35px;
+}
 .footer {
     text-align: center;
     clear: both;
@@ -10,8 +24,8 @@
     margin-left: 0 !important;
 }
 .red{
-	color:red;
-	font-weight: bold;
+    color:red;
+    font-weight: bold;
 }
 input, select, textarea {
     box-sizing: border-box;
@@ -423,6 +437,12 @@ a:hover, a:focus {
         text-align: left !important;
         width: 100%;
     }
+    .fc-header-right {
+        margin-top: 0px;
+    }
+    .fc-header-left {
+        margin-top: 0px;
+    }
     .form_datetime input {
         width: 100%;
     }
@@ -485,15 +505,6 @@ a:hover, a:focus {
     }
     .delete a{
         width: 100%;
-    }
-    .fc-header-title {
-        position: absolute;
-        top: 6px;
-        left: 2px;
-        width: 200px;
-        background-color: #34495e;
-        color: white;
-        height: 35px;
     }
     #user_info {
         display: none;
