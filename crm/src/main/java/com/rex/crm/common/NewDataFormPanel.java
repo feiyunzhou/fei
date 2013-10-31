@@ -62,17 +62,6 @@ public class NewDataFormPanel extends Panel {
     public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
         super(id);
         
-        //add prompt 
-        final RepeatingView div = new RepeatingView("promptDiv");
-        final AbstractItem divitem = new AbstractItem(div.newChildId());
-        final Label promptButton = new Label("promptButton","X");
-        divitem.add(promptButton);
-        final Label promptLabel = new Label("prompt","红色字体字段为必填项，请输入!");
-        divitem.add(promptLabel);
-        div.add(new AttributeAppender("style",new Model("display:none"),";"));
-        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
-        div.add(divitem);
-        add(div);
         final Map<String, IModel> models = Maps.newHashMap();
         final String userName = ((SignIn2Session) getSession()).getUser();
         final String userId = ((SignIn2Session) getSession()).getUserId();
