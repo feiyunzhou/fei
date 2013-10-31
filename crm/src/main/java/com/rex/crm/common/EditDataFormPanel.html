@@ -7,11 +7,11 @@
         
         function validateFields(){
             if($('.required-field').length>0 && jQuery.isEmptyObject($('.required-field').val())){
-                alert("ºìÉ«×Ö¶ÎÎª±ØÌî×Ö¶ÎÇëÌîĞ´!");
+            	alert("çº¢è‰²å­—æ®µä¸ºå¿…å¡«å­—æ®µè¯·å¡«å†™!");
                 return false;
             }else{
                 if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
-                    alert("Çë²éÑ¯ÌîÈëÒ½ÁÆ»ú¹¹£¡");
+                    alert("è¯·æŸ¥è¯¢å¡«å…¥åŒ»ç–—æœºæ„ï¼");
                     return false;
                 }else{
                     return true;
@@ -24,10 +24,6 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
-            	<div wicket:id="promptDiv" id="promptDiv" class="alert" >
-					<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
-					<span wicket:id="prompt" ><strong></strong></span>
-				</div>
             	<div class="title">
                      <span wicket:id="name"></span>
                  </div>
@@ -49,7 +45,7 @@
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <input type="submit" onClick="return validateFields();" class="btn btn-primary" value="±£´æ"  />
+                                <input type="submit" onClick="return validateFields();" class="btn btn-primary" value="ä¿å­˜"  />
                             </div>
                         </div>
                     </fieldset>

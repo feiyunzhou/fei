@@ -71,17 +71,6 @@ public class EditDataFormPanel extends Panel {
 	 */
 	public EditDataFormPanel(String id, final Entity schema,  Map data,final String entityId ) {
 		super(id);
-		//add prompt 
-        final RepeatingView div = new RepeatingView("promptDiv");
-        final AbstractItem divitem = new AbstractItem(div.newChildId());
-        final Label promptButton = new Label("promptButton","X");
-        divitem.add(promptButton);
-        final Label promptLabel = new Label("prompt","红色字体字段为必填项，请输入!");
-        divitem.add(promptLabel);
-        div.add(new AttributeAppender("style",new Model("display:none"),";"));
-        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
-        div.add(divitem);
-        add(div);	
         if(schema.getName().equals("activity")||schema.getName().equals("coaching")){
       	   add(new Label("name",String.valueOf(data.get("title"))));
          }else{
@@ -306,25 +295,12 @@ public class EditDataFormPanel extends Panel {
 				List<String> values = Lists.newArrayList();
 				List<String> names = Lists.newArrayList();
 				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-				boolean flag = true;
 				for (String k : fieldNameToModel.keySet()) {
 					names.add(k);
 					Field field = schema.getFieldByName(k);
 					IModel currentModel = fieldNameToModel.get(k);
                     logger.debug("currentField:"+field.getName());
                     //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
-                    if(field.isRequired()){
-                    	if(null==(String) fieldNameToModel.get(k).getObject()){
-                    		//如果为空写出提示信息
-                    		logger.debug("fieldName:"+field.getName()+"不能为空");
-                    		div.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    		flag = false;
-                    		return;
-                    	}
-                	}
 					Object obj = currentModel.getObject() ;
 					String value = null;
 					if(obj!=null){

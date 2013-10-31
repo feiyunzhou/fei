@@ -287,8 +287,6 @@ public class NewDataFormPanel extends Panel {
                 logger.debug(models);
                 List<String> fieldNames = Lists.newArrayList();
                 List<String> values = Lists.newArrayList();
-                //创建一个标识，判断非空验证是否通过
-                boolean flag = true;
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 //判断属性设置
                 for (String key : models.keySet()) {
@@ -296,25 +294,8 @@ public class NewDataFormPanel extends Panel {
                     logger.debug("currentFieldkey:"+key);
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
-                    //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
-                    if(field.isRequired()){
-                    	if(null==(String) models.get(key).getObject()){
-                    		logger.debug("value:"+(String) models.get(key).getObject());
-                    		//如果为空写出提示信息
-                    		logger.debug("fieldName:"+field.getName()+"不能为空");
-                    		div.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    		flag = false;
-                    		return;
-                    	}else{
-                    		flag = true;
-                    	}
-                	}
                     System.out.println(fieldNames);
                     
-                  
                      
                     if (models.get(key).getObject() instanceof String) {
                       
@@ -344,7 +325,6 @@ public class NewDataFormPanel extends Panel {
                     }
                    
                 }
-                if(flag){
                   //modify_datetime whenadded response_person 
                   List<Field> autoFields = entity.getAutoFields();
                   for(Field f:autoFields){
@@ -383,7 +363,6 @@ public class NewDataFormPanel extends Panel {
                             //创建激活码 getUserByuserCode
                             //传递邮箱地址，用户code.
                             SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ crmuser.getId(), sendEmail);
-                            
                         }
                     } else {
                        
@@ -394,7 +373,6 @@ public class NewDataFormPanel extends Panel {
                         }
                     }
                     setResponsePage(PageFactory.createPage(entity.getName()));
-                }
             }
         };
         form.add(fieldGroupRepeater);

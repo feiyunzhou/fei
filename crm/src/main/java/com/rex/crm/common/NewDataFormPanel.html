@@ -22,17 +22,17 @@
             
             if(isValidated){
             	if($("#crmuser_name").length > 0 && jQuery.isEmptyObject($("#crmuser_name").val())){
-              	  alert("璇锋煡璇㈡坊鍏ヨ杈呭浜猴紒");
+              	  alert("请查询添入被辅导人！");
                     return false;
                 }else  if($("#account_name").length > 0 && jQuery.isEmptyObject($("#account_name").val())) {
-                    alert("璇锋煡璇㈡坊鍏ュ尰闄紒");
+                    alert("请查询填入医院！");
                     return false;
                 }else{
                     return true;
                 }
                 
             }else{
-                alert("绾㈣壊鏍囪瀛楁涓哄繀濉瓧娈�);
+                alert("红色标记字段为必填字段");
                 return false;
             }
             
@@ -41,10 +41,6 @@
         }
     </script>
     <div>
-    	<div wicket:id="promptDiv" class="alert" >
-			<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
-			<span wicket:id="prompt" ><strong></strong></span>
-		</div>
         <form wicket:id="form" class="form-horizontal" >
             <fieldset>
                 <div  wicket:id="fieldGroupRepeater">
