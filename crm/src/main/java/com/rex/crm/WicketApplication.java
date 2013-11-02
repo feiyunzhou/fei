@@ -1,7 +1,5 @@
 package com.rex.crm;
 
-import javax.servlet.ServletContext;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.RuntimeConfigurationType;
@@ -16,7 +14,7 @@ import org.apache.wicket.request.component.IRequestableComponent;
 import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.util.file.File;
 
-import com.rex.crm.FolderResource;
+import com.rex.crm.common.CreateDataPage;
 
 /**
  * Application object for your web application. If you want to run this application without deploying, run the Start class.
@@ -67,6 +65,7 @@ public class WicketApplication extends WebApplication
 	         mountPage("/mount/eventViewer",EventViewerPage.class);
 	         mountPage("/mount/searchCRMUser", SearchCRMUserPage.class);
 	 	     mountPage("/mount/ActivitedUser", ActivitedUser.class);
+	 	    mountPage("/mount/CreateDataPage", CreateDataPage.class);
 	         // Register the authorization strategy
 	         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy()
 	         {

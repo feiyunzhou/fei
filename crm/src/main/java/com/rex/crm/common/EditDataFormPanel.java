@@ -240,7 +240,6 @@ public class EditDataFormPanel extends Panel {
                                 value = (String) et.get("name");
                             }
                          
-
                             fieldNameToModel.put(fn, choiceModel);
                             columnitem.add(new RelationTableSearchFragment("editdata", "relationTableSearchFragment", this, currentField.getRelationTable(), schema.getName(), value, choiceModel, entityId));
                         }

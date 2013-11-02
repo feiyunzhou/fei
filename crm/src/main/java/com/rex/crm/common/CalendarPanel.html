@@ -75,11 +75,18 @@
 		              var selecteddate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
 		             
 		              console.log(selecteddate);
+		              var roleId = userInfo.role;
+		              var entityName = "";
+		              if(roleId==2){
+		            	  entityName = "coaching";
+		              }else {
+		            	  entityName = "activity";
+		              }
+		              console.log("userInfo.roleId:"+userInfo.role)
 		              //location.href = '../offline/calendarEventForm.html#seg?startdate='+selecteddate+"&parentpage="+url.attr("relative");
 		              //location.href = "/"+context_name+'/mount/createEventPage?startdate='+selecteddate;
 		              //location.href ='../../mount/createEventPage?startdate='+selecteddate;
-		              location.href = create_event_page_url + "startdate="+selecteddate;
-
+		              location.href = create_event_page_url +"entityName="+entityName;
 		          }
 				
 				//events : JSON.parse(user_event_data)

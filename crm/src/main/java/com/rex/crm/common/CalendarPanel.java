@@ -1,7 +1,6 @@
 package com.rex.crm.common;
 
 import java.io.IOException;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,18 +11,16 @@ import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.Panel;
-
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
-
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
 import com.rex.crm.CreateEventPage;
 import com.rex.crm.EventViewerPage;
 import com.rex.crm.SignIn2Session;
-import com.rex.crm.WicketApplication;
 
 
 
@@ -47,8 +44,18 @@ public class CalendarPanel extends Panel {
         Map<String, Object> map = new HashMap<>();
         //TODO get userID from session
         final String userId = ((SignIn2Session)getSession()).getUserId();
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         map.put("user_event_data", com.rex.crm.ajax.DataProvider.getEventsByUserId(new String[]{userId}));
-        CreateEventPage page = new CreateEventPage();
+        PageParameters params = new PageParameters();
+        WebPage page = null;
+        if(roleId==1){
+        	page = new CreateEventPage();
+        }else if(roleId==2){
+        	page = new CreateDataPage(null,null);   
+        }else{
+        	page = new CreateDataPage(null,null);   
+        }
+        System.out.println("page:"+page);
         CharSequence pageUrl = getRequestCycle().urlFor(new RenderPageRequestHandler(new PageProvider(page)));
         String url = pageUrl.toString();
         url =  url.substring(0, url.indexOf("?")+1);

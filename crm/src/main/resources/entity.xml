@@ -1666,7 +1666,7 @@ as aActivity
 			<field>
 				<name>title</name>
 				<display>活动名称</display>
-				<isRequired>true</isRequired>
+				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
@@ -2032,7 +2032,7 @@ as aActivity
 		<display>辅导</display>
 		<filterField>feature_product</filterField>
 		<sql>
-		select distinct *  from (select * from (select activity.crmuserId as crmuserName\, activity.*\,
+		select distinct *  from (select * from (select activity.crmuserId as crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,
@@ -2048,7 +2048,7 @@ left join activitycrmuser on activity.id = activitycrmuser.activityId
 where activitycrmuser.crmuserid = ?) as aactivity where event_type = 2 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
-	select distinct * from (select * from (select activity.crmuserId as crmuserName\, activity.*\,
+	select distinct * from (select * from (select activity.crmuserId as crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,
@@ -2067,7 +2067,7 @@ where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type = 2  
 		
 		<sql-admin>
 		
-		select distinct * from (select activity.crmuserId as crmuserName\, activity.*\,
+		select distinct * from (select activity.crmuserId as crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
        activity.activity_type as act_type\,
        activity.status as act_status\,
        activity.contactId as contactName\,
@@ -2080,7 +2080,7 @@ left join activity_event_type_pl on activity.activity_type = activity_event_type
 left join contact on activity.contactId = contact.id
 left join account on contact.accountId = account.Id where  activity.event_type = 2  order by whenadded DESC) as aActivity
 		</sql-admin>
-		<sql-ent>select * from (select activity.crmuserId as crmuserName\, activity.*\,activity.activity_type as
+		<sql-ent>select * from (select activity.crmuserId as crmuserName\, activity.coacheeId as coacheeName\, activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
 			contactName\, contact.accountId as accountName\, contact.name as cn
 from activity left join activitycrmuser on activitycrmuser.activityId=activity.id LEFT JOIN contact on contact.id = activity.contactId  where activity.id=?) 
@@ -2102,7 +2102,7 @@ as aCoaching
 			<field>
 				<name>title</name>
 				<display>活动名称</display>
-				<isRequired>true</isRequired>
+				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
@@ -2137,6 +2137,34 @@ as aCoaching
 			</field>
 			<field>
 				<name>crmuserId</name>
+				<display>辅导人Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<field-type>auto</field-type>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>crmuserName</name>
+				<display>辅导人</display>
+				<isRequired>true</isRequired>
+				<alias>crmuserId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<relationTable>crmuser</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>coacheeId</name>
 				<display>被辅导人Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -2148,10 +2176,10 @@ as aCoaching
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
-				<name>crmuserName</name>
+				<name>coacheeName</name>
 				<display>被辅导人</display>
 				<isRequired>true</isRequired>
-				<alias>crmuserId</alias>
+				<alias>coacheeId</alias>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -2162,7 +2190,6 @@ as aCoaching
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
 			<field>
 				<name>participants</name>
 				<display>参与人/相关人员</display>
@@ -2291,6 +2318,8 @@ as aCoaching
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>5</priority>
+				<!-- <default_value_type>var</default_value_type>
+				<default_value>0</default_value> -->
 				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>

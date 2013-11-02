@@ -128,7 +128,6 @@ public class NewDataFormPanel extends Panel {
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                           }
                         } else {
-                            
                             long default_key = 1L;
                             if (currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("var")){
                                 if (params != null) {
@@ -137,7 +136,6 @@ public class NewDataFormPanel extends Panel {
                                     if(choiceId!=null && choiceId!=null && params.get(choiceId.trim())!=null){
                                         default_key = Long.parseLong(String.valueOf(params.get(choiceId.trim())));  
                                     }
-                                 
                                 }
                             }
                             
@@ -283,11 +281,7 @@ public class NewDataFormPanel extends Panel {
                     logger.debug("currentFieldkey:"+key);
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
-                    System.out.println(fieldNames);
-                    
-                     
                     if (models.get(key).getObject() instanceof String) {
-                      
                       if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
                        //if the filed has formatter, we guess the field saved in data base is in long 
                          
@@ -325,8 +319,11 @@ public class NewDataFormPanel extends Panel {
                         || f.getName().equalsIgnoreCase("responsible_person") ){
                       values.add("'"+userName+"'");
                     }
-                  
+                    if(f.getName().equalsIgnoreCase("crmuserID")){
+                    	values.add("'"+userId+"'");
+                    }
                     fieldNames.add(f.getName());
+                    
                   }
                   
 //                  int i=0;
@@ -354,7 +351,6 @@ public class NewDataFormPanel extends Panel {
                             SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ crmuser.getId(), sendEmail);
                         }
                     } else {
-                       
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, userId);
                         if (generatedId > 0) {
                             DAOImpl.insert2UserRelationTable(entity.getName(), userId,
