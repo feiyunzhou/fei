@@ -75,7 +75,7 @@ public class EventEditorPage extends TemplatePage {
         Map<String, Entity> entities = Configuration.getEntityTable();
         final Entity entity = entities.get("activity");
         setPageTitle(entity.getDisplay());
-        final String uid = ((SignIn2Session) getSession()).getUserId();
+        //final String posId = ((SignIn2Session) getSession()).getPositionId();
         final String user = ((SignIn2Session) getSession()).getUser();
 
         Map entity_data = DAOImpl.queryEntityById(entity.getSql_ent(),

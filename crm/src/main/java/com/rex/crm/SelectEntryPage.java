@@ -54,7 +54,7 @@ public class SelectEntryPage extends WebPage {
     }
 
     public void initPage(List<Map> list,final String entityName,final String excludeEntityName,final String excludeId) {
-        final String userId = ((SignIn2Session) getSession()).getUserId();
+        final String posId = ((SignIn2Session) getSession()).getPositionId();
         
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -70,10 +70,10 @@ public class SelectEntryPage extends WebPage {
             
                     switch (roleId) {
                     case 2:
-                        maplist = DAOImpl.queryEntityRelationList(sql, userId, userId, userId);
+                        maplist = DAOImpl.queryEntityRelationList(sql, posId, posId, posId);
                         break;
                     case 3:
-                        maplist = DAOImpl.queryEntityRelationList(sql, userId, userId);
+                        maplist = DAOImpl.queryEntityRelationList(sql, posId, posId);
                         break;
                     case 1:
                         maplist = DAOImpl.queryEntityRelationList(sql);
@@ -86,17 +86,17 @@ public class SelectEntryPage extends WebPage {
                     
                     switch (roleId) {
                     case 2:
-                        maplist = DAOImpl.queryEntityRelationList(sql, userId,userId);
+                        maplist = DAOImpl.queryEntityRelationList(sql, posId,posId);
                         break;
                     case 3:
-                        maplist = DAOImpl.queryEntityRelationList(sql, userId);
+                        maplist = DAOImpl.queryEntityRelationList(sql, posId);
                         break;
                     case 1:
                         maplist = DAOImpl.queryEntityRelationList(sql);
                     }
                     
                 }else if(excludeEntityName.equalsIgnoreCase("coaching")){
-                  maplist = DAOImpl.searchCoachee(search_target,excludeId,userId);
+                  maplist = DAOImpl.searchCoachee(search_target,excludeId,posId);
                 }else if(entityName.equalsIgnoreCase("crmuser")){
                     //maplist = DAOImpl.searchCRMUser(search_target);
                     maplist = DAOImpl.searchManager(search_target,excludeId);

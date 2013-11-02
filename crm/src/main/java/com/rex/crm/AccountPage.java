@@ -54,7 +54,7 @@ public class AccountPage extends TemplatePage
     setPageTitle(entity.getDisplay());
     // List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
     // TODO get userId from request's session
-    final String userId = ((SignIn2Session) getSession()).getUserId();
+    final String positionId = ((SignIn2Session) getSession()).getPositionId();
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
 
     Form form = new Form("form")
@@ -93,10 +93,10 @@ public class AccountPage extends TemplatePage
         switch (roleId)
         {
           case UserRole.USER_ROLE_MANAGER:
-          datalist = DAOImpl.queryEntityRelationList(sql, userId, userId, userId);
+          datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId, positionId);
           break;
           case UserRole.USER_ROLE_SALES:
-          datalist = DAOImpl.queryEntityRelationList(sql, userId, userId);
+          datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId);
           break;
           case UserRole.USER_ROLE_ADMINISTRATOR:
           datalist = DAOImpl.queryEntityRelationList(sql);
@@ -137,10 +137,10 @@ public class AccountPage extends TemplatePage
           tdata = DAOImpl.queryEntityRelationList(sql);
           break;
           case UserRole.USER_ROLE_MANAGER:
-          tdata = DAOImpl.queryEntityRelationList(sql, userId, userId, userId);
+          tdata = DAOImpl.queryEntityRelationList(sql, positionId, positionId, positionId);
           break;
           case UserRole.USER_ROLE_SALES:
-          tdata = DAOImpl.queryEntityRelationList(sql, userId, userId);
+          tdata = DAOImpl.queryEntityRelationList(sql, positionId, positionId);
         }
 
       }
@@ -159,10 +159,10 @@ public class AccountPage extends TemplatePage
           tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft);
           break;
           case UserRole.USER_ROLE_MANAGER:
-          tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, userId, userId, userId);
+          tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, positionId, positionId, positionId);
           break;
           case UserRole.USER_ROLE_SALES:
-          tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, userId,userId);
+          tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, positionId,positionId);
         }
 
       }
@@ -177,10 +177,10 @@ public class AccountPage extends TemplatePage
       types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist());
       break;
       case UserRole.USER_ROLE_MANAGER:
-      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId, userId, userId);
+      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), positionId, positionId, positionId);
       break;
       case UserRole.USER_ROLE_SALES:
-      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId, userId);
+      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), positionId, positionId);
     }
 
     add(new FilterPanel("filterPanel", types, filter, AccountPage.class));

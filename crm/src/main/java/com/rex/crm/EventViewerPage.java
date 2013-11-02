@@ -59,7 +59,7 @@ public class EventViewerPage extends TemplatePage
 		Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
         setPageTitle(entity.getDisplay());
-        final String uid = ((SignIn2Session)getSession()).getUserId();
+        final String posId = ((SignIn2Session)getSession()).getPositionId();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         StringValue eventIdValue = this.getRequest().getRequestParameters().getParameterValue("eventid");
         //final long eventId
@@ -168,7 +168,6 @@ public class EventViewerPage extends TemplatePage
 		Map<String, Entity> entities = Configuration.getEntityTable();
 		final Entity entity  = entities.get("activity");
 	    setPageTitle(entity.getDisplay());
-	    final String uid = ((SignIn2Session)getSession()).getUserId();
 	    final int roleId = ((SignIn2Session)getSession()).getRoleId();
 	    final int eventId = Integer.parseInt(id);
 	    logger.debug("entity"+entity);

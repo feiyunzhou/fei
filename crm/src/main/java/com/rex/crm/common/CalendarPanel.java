@@ -43,9 +43,9 @@ public class CalendarPanel extends Panel {
         super.renderHead(response);
         Map<String, Object> map = new HashMap<>();
         //TODO get userID from session
-        final String userId = ((SignIn2Session)getSession()).getUserId();
+        final String posId = ((SignIn2Session)getSession()).getPositionId();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
-        map.put("user_event_data", com.rex.crm.ajax.DataProvider.getEventsByUserId(new String[]{userId}));
+        map.put("user_event_data", com.rex.crm.ajax.DataProvider.getEventsByUserId(new String[]{posId}));
         PageParameters params = new PageParameters();
         WebPage page = null;
         if(roleId==1){

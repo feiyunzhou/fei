@@ -40,6 +40,7 @@ import com.rex.crm.beans.Choice;
 import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.beans.Province;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.common.Entity;
 import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.Configuration;
@@ -1435,17 +1436,36 @@ public class DAOImpl
 
     }
 
-    public static CRMUser login(String loginName, String password) {
+    public static UserInfo login(String loginName, String password) {
     	System.out.println("登录");
+        Connection conn = null;
+        UserInfo user = new UserInfo();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
+            password = DigestUtils.md5Hex(password);
+            logger.debug("MD5 password is:" + password);
+            user = run.query(conn, "SELECT * FROM userInfo where loginName=? AND password=?", h, loginName, password);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return user;
+    }
+    
+    public static CRMUser getPositionInfoByUserId(int uid) {
+        System.out.println("登录");
         Connection conn = null;
         CRMUser user = new CRMUser();
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
-            password = DigestUtils.md5Hex(password);
-            logger.debug("MD5 password is:" + password);
-            user = run.query(conn, "SELECT * FROM crmuser where loginName=? AND password=?", h, loginName, password);
+            user = run.query(conn, "SELECT * FROM crmuser where id=?", h,  uid);
 
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
@@ -1872,7 +1892,7 @@ public class DAOImpl
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
-            user = run.query(conn, "SELECT * FROM crmuser where loginName=?", h, loginName);
+            user = run.query(conn, "SELECT * FROM userInfo where loginName=?", h, loginName);
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {

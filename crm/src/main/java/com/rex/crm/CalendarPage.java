@@ -30,11 +30,8 @@ public class CalendarPage extends TemplatePage
 		Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
         setPageTitle(entity.getDisplay());
-        //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
+       
         
-        final String userId = ((SignIn2Session)getSession()).getUserId();
-        //List mapList = DAOImpl.queryEntityRelationList(entity.getSql(), userId);
-		//add(new TableDataPanel("datalist",entity,mapList));
         add(new CalendarPanel("datalist"));
         
 		

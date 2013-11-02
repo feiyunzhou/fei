@@ -85,10 +85,10 @@ public class CreateEventPage extends TemplatePage {
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
         setPageTitle(entity.getDisplay());
-        final String uid = ((SignIn2Session) getSession()).getUserId();
+        final String posId = ((SignIn2Session) getSession()).getPositionId();
         final String user = ((SignIn2Session) getSession()).getUser();
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
-        CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(uid));
+        CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(posId));
         final String crmUserName = crmUser.getName();
         //add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
@@ -182,10 +182,10 @@ public class CreateEventPage extends TemplatePage {
                         String participants = user;
                         if (event_type == 1) {
                             //visiting
-                            crmuserId = Integer.parseInt(uid);
+                            crmuserId = Integer.parseInt(posId);
                         } else if (event_type == 2) {
                             //coaching
-                            crmuserId = Integer.parseInt(uid);;
+                            crmuserId = Integer.parseInt(posId);;
                             participants = participants + ", " + selected_user;
                             contactId = -1;
                             concahName.append("拜访辅导");
@@ -203,12 +203,12 @@ public class CreateEventPage extends TemplatePage {
                         if (generatedkey > 0) {
                             if (event_type == 1) {
                                 //if it is a visiting, we only send this event to the owner;
-                                DAOImpl.insert2UserRelationTable("activity", uid, String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity", posId, String.valueOf(generatedkey));
                             } else if (event_type == 2) {
                                 //if it is a coaching, we need send this event to the manager and sales
                                 //add new record for the manager
                                 logger.debug("key:" + String.valueOf(generatedkey));
-                                DAOImpl.insert2UserRelationTable("activity", uid, String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity", posId, String.valueOf(generatedkey));
                                 //add new record for the sales
                                 DAOImpl.insert2UserRelationTable("activity", hidden_select_user, String.valueOf(generatedkey));
                             }
@@ -282,7 +282,7 @@ public class CreateEventPage extends TemplatePage {
         form.add(new HiddenField("hidden_contact_select", new PropertyModel<String>(this, "hidden_contact_select")));
         form.add(new TextField("contact_select", new Model("")));
         PageParameters params = new PageParameters();
-        params.set("mid", uid);
+        params.set("mid", posId);
         form.add(new BookmarkablePageLink<Void>("search_user_btn", SelectCRMUserPage.class, params));
         form.add(new HiddenField<String>("hidden_select_user", new PropertyModel<String>(this, "hidden_select_user")));
         form.add(new TextField<String>("selected_user", new PropertyModel<String>(this, "selected_user")));

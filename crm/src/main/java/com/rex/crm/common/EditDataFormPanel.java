@@ -78,7 +78,7 @@ public class EditDataFormPanel extends Panel {
   	   }
 		//final Map<String, IModel> models = Maps.newHashMap();
 		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
-		final String userId = ((SignIn2Session) getSession()).getUserId();
+		final String posId = ((SignIn2Session) getSession()).getPositionId();
 	   final String userName = ((SignIn2Session) getSession()).getUser();
 		String primaryKeyName = schema.getPrimaryKeyName();
 		List<Field> fields = schema.getFields();// 得到所有fields

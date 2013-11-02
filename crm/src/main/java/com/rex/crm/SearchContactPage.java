@@ -45,13 +45,13 @@ public class SearchContactPage extends WebPage {
     }
 
     public void initPage(List<Map> list) {
-        final String userId = ((SignIn2Session) getSession()).getUserId();
+        final String posId = ((SignIn2Session) getSession()).getPositionId();
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
                 logger.debug("the form was submitted!");
                 // new PropertyModel<String>(this, "selected")
-                List<Map> maplist = DAOImpl.searchContact(userId, search_target);
+                List<Map> maplist = DAOImpl.searchContact(posId, search_target);
                 setResponsePage(new SearchContactPage(maplist));
 
             }

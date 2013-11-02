@@ -48,7 +48,6 @@ public class TeamManPanel extends Panel {
         super(id);
         etId = entityId;
         currentEntityName = en;
-        final String userId = ((SignIn2Session)getSession()).getUserId();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         //team sql
         String teamSql = "";

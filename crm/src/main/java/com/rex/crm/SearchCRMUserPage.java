@@ -68,7 +68,6 @@ public class SearchCRMUserPage extends WebPage {
     }
 
     public void initPage(final String entityname, List<Map> list, final String cid, final int type) {
-        final String userId = ((SignIn2Session) getSession()).getUserId();
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {

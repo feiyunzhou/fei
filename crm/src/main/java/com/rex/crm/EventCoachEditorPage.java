@@ -68,9 +68,9 @@ public class EventCoachEditorPage extends TemplatePage{
 		Map<String, Entity> entities = Configuration.getEntityTable();
 		Entity entity = entities.get("activity");
 		setPageTitle(entity.getDisplay());
-		final String uid = ((SignIn2Session) getSession()).getUserId();
+		final String posId = ((SignIn2Session) getSession()).getPositionId();
 		final String user = ((SignIn2Session) getSession()).getUser();
-		CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(uid));
+		CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(posId));
 		Map entity_data = DAOImpl.queryEntityById(entity.getSql_ent(),String.valueOf(eventId));
 		//add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
@@ -194,7 +194,7 @@ public class EventCoachEditorPage extends TemplatePage{
 		 PopupSettings popupSettings = new PopupSettings("查找").setHeight(470)
                  .setWidth(850).setLeft(150).setTop(200);
          PageParameters params = new PageParameters();
-         params.set("mid", uid);
+         params.set("mid", posId);
 		 form.add(new BookmarkablePageLink<Void>("search_user_btn", SelectCRMUserPage.class,params ).setPopupSettings(popupSettings));
 	     //form.add(new HiddenField<String>("hidden_select_user" ,new PropertyModel<String>(this,"hidden_select_user")));
 		//地址

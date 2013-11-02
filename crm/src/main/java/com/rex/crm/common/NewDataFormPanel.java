@@ -61,7 +61,7 @@ public class NewDataFormPanel extends Panel {
         
         final Map<String, IModel> models = Maps.newHashMap();
         final String userName = ((SignIn2Session) getSession()).getUser();
-        final String userId = ((SignIn2Session) getSession()).getUserId();
+        final String posId = ((SignIn2Session) getSession()).getPositionId();
         List<Field> fields = entity.getFields();
         
         for (Field f : fields) {
@@ -345,7 +345,7 @@ public class NewDataFormPanel extends Panel {
                       values.add("'"+userName+"'");
                     }
                     if(f.getName().equalsIgnoreCase("crmuserID")){
-                    	values.add("'"+userId+"'");
+                    	values.add("'"+posId+"'");
                     }
                     fieldNames.add(f.getName());
                     
@@ -365,7 +365,7 @@ public class NewDataFormPanel extends Panel {
             		//if entity is crmuser  add loginName
                     if ("crmuser".equals(entity.getName())) {
                         long crmuserkey = -1;
-                        crmuserkey= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, userId);
+                        crmuserkey= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
                         if (crmuserkey >0 ) {
                         	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
                             //此时需发送邮件
@@ -376,9 +376,9 @@ public class NewDataFormPanel extends Panel {
                             SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ crmuser.getId(), sendEmail);
                         }
                     } else {
-                        long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, userId);
+                        long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
                         if (generatedId > 0) {
-                            DAOImpl.insert2UserRelationTable(entity.getName(), userId,
+                            DAOImpl.insert2UserRelationTable(entity.getName(), posId,
                                     String.valueOf(generatedId));
                         }
                     }

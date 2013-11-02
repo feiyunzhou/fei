@@ -39,11 +39,11 @@ public class HomePage extends TemplatePage {
         super();
         setPageTitle("主页");
         
-        final String userId = ((SignIn2Session)getSession()).getUserId();
+        final String posId = ((SignIn2Session)getSession()).getPositionId();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
-        add(new Label("num_of_account_cell",DAOImpl.getNumOfAccountOfUser(userId)));
-        add(new Label("num_of_contact_cell",DAOImpl.getNumOfContactOfUser(userId)));
-        add(new Label("num_of_activity_cell",DAOImpl.getNumOfActivityOfUser(userId)));
+        add(new Label("num_of_account_cell",DAOImpl.getNumOfAccountOfUser(posId)));
+        add(new Label("num_of_contact_cell",DAOImpl.getNumOfContactOfUser(posId)));
+        add(new Label("num_of_activity_cell",DAOImpl.getNumOfActivityOfUser(posId)));
         
         BookmarkablePageLink contact_link = new BookmarkablePageLink("contact_link", ContactPage.class);
         add(contact_link);
@@ -82,7 +82,7 @@ public class HomePage extends TemplatePage {
          * 目标医生拜访频率统计
          */
         String cap = "目标医生拜访频率统计";
-        List<Map> visitingFreq = VisitingReporter.generateVisitingFrequencyReportingByUserId(userId);
+        List<Map> visitingFreq = VisitingReporter.generateVisitingFrequencyReportingByUserId(posId);
         Entity reportEntity = Configuration.getEntityByName("contactVisitingFrequency");
         ReportingTablePanel visiting_report_panel = new ReportingTablePanel("visiting_frequency_report_panel", cap, reportEntity, visitingFreq);
         add(visiting_report_panel);
@@ -90,13 +90,13 @@ public class HomePage extends TemplatePage {
         * 目标医生拜访覆盖率统计
         */
         cap = "目标医生拜访覆盖率统计";
-        List<Map> visitingCoverList = VisitingReporter.generateVisitingCoverReportingByUserId(userId);
+        List<Map> visitingCoverList = VisitingReporter.generateVisitingCoverReportingByUserId(posId);
         Entity report_Entity = Configuration.getEntityByName("contactVisitingCoverRate");
         ReportingTablePanel visiting_reportPanel = new ReportingTablePanel("visiting_cover_report_panel", cap, report_Entity, visitingCoverList);
         add(visiting_reportPanel);
 
         cap = "区域内工作天数";
-        List<Map> workingdays = VisitingReporter.generateWorkingDayReportingByUserId(userId);
+        List<Map> workingdays = VisitingReporter.generateWorkingDayReportingByUserId(posId);
         Entity reportEntity2 = Configuration.getEntityByName("workingday");
         ReportingTablePanel report_panel = new ReportingTablePanel("working_day_report_panel", cap, reportEntity2, workingdays);
         report_panel.add(new AttributeAppender("style",new Model("display:block;"),";"));

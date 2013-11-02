@@ -32,6 +32,8 @@ public class CRMUser {
     private int isActivited;
     private long ts;
     private int pl1;
+    private int level;
+    private String position_code;
     
 	public String getName() {
 		return name;
@@ -249,6 +251,22 @@ public class CRMUser {
 		public void setPl1(int pl1) {
 			this.pl1 = pl1;
 		}
+
+        public int getLevel() {
+            return level;
+        }
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        public String getPosition_code() {
+            return position_code;
+        }
+
+        public void setPosition_code(String position_code) {
+            this.position_code = position_code;
+        }
 
 		
 	

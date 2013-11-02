@@ -121,7 +121,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 //        builder.put("dealerContact", item);
         
         item = new MenuItem();
-        item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
+        item.setCaption("<i class=\"icon-user icon-large\"></i>岗位");
         item.setDestination(UserPage.class);
         item.setId("navitem-crmuser");
         builder.put("user", item);
@@ -223,11 +223,11 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 			public void renderHead(Component component, IHeaderResponse response) {
 				super.renderHead(component, response);
 
-				 final String userId = ((SignIn2Session)getSession()).getUserId();
+				 final String posId = ((SignIn2Session)getSession()).getPositionId();
 				String callbackUrl = getCallbackUrl().toString();
 
 				Map<String, Object> map = new HashMap<>();
-				map.put("userInfo",DataProvider.getCRMUserInfoById(new String[]{userId}));
+				map.put("userInfo",DataProvider.getCRMUserInfoById(new String[]{posId}));
 				map.put("ajaxURL", callbackUrl);
 				//map.put("allUsers", DataProvider.getAllCRMUsers(new String[0]));
 				//map.put("allAccounts", DataProvider.getAllAccounts(new String[0]));

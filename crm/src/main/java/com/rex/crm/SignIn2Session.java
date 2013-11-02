@@ -24,6 +24,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
 
 import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 
 /**
@@ -37,6 +38,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 	private String user;
 	private String userId;
 	private int roleId;
+	private String positionId;
 
 	/**
 	 * Constructor
@@ -66,11 +68,14 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		{
 		    System.out.println("username:"+username + " p:"+password);
 		    
-		    CRMUser crmUser = DAOImpl.login(username, password);
-		    if(crmUser!=null && crmUser.getId() != 0){
-		        user = crmUser.getName();
-		        userId = String.valueOf(crmUser.getId());
-		        roleId = crmUser.getRole();
+		    UserInfo userinfo = DAOImpl.login(username, password);
+		    
+		    if(userinfo!=null && userinfo.getId() != 0){
+		        user = userinfo.getName();
+		        userId = String.valueOf(userinfo.getId());
+		        CRMUser postionInfo = DAOImpl.getPositionInfoByUserId(userinfo.getId());
+		        roleId = postionInfo.getRole();
+		        positionId = String.valueOf(postionInfo.getId());
 		    }
 		}
 		return user != null;
@@ -114,5 +119,11 @@ public final class SignIn2Session extends AuthenticatedWebSession
 
     public void setUser(String user) {
         this.user = user;
+    }
+    public String getPositionId() {
+        return positionId;
+    }
+    public void setPositionId(String positionId) {
+        this.positionId = positionId;
     }
 }
