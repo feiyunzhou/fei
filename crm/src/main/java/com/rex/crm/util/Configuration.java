@@ -230,16 +230,15 @@ public class Configuration {
                         field.setFieldGroup(fieldGroup);
                     }
                     
-                    String default_value = sub2.getString("default_value");
+                    String default_value = sub2.getString("default-value");
                     if(default_value !=null){
                         field.setDefault_value(default_value);
-                        System.out.println("default_value:"+field.getDefault_value());
+                        //System.out.println("default_value:"+field.getDefault_value());
                     }
                     
-                    String default_value_type = sub2.getString("default_value_type");
+                    String default_value_type = sub2.getString("default-value-type");
                     if(default_value_type !=null){
                         field.setDefault_value_type(default_value_type);
-                        System.out.println("default_value_type:"+field.getDefault_value_type());
                     }
                     
                     String childNode = sub2.getString("childNode");
