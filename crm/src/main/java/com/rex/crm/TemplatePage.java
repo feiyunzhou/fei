@@ -108,6 +108,12 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setId("navitem-coaching");
         builder.put("coaching", item);
         
+        item = new MenuItem();
+        item.setCaption("<i class=\"icon-comments-alt icon-large\"></i>岗位");
+        item.setDestination(PositionPage.class);
+        item.setId("navitem-position");
+        builder.put("position", item);
+        
 //        item = new MenuItem();
 //        item.setCaption("<i class=\"icon-truck icon-large\"></i>经销商");
 //        item.setDestination(DealerAccountPage.class);
