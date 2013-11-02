@@ -1,20 +1,18 @@
 package com.rex.crm.common;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-
 import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -28,11 +26,10 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -275,16 +272,26 @@ public class NewDataFormPanel extends Panel {
                 List<String> fieldNames = Lists.newArrayList();
                 List<String> values = Lists.newArrayList();
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                //判断属性设置
+                //找出title属性，判断实体名称，先声明
+                StringBuffer title = new StringBuffer();
+                String coacheeName = "";
+                String callName = "";
                 for (String key : models.keySet()) {
                     fieldNames.add(key);
                     logger.debug("currentFieldkey:"+key);
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
+                    if(field.getName().equals("coacheeId")){
+                    	//根据crmuserId获取对象名称
+                    	coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get(key).getObject().toString());
+                    }
+                    if(field.getName().equals("contactId")){
+                    	callName = DAOImpl.queryRelationDataById("contact",models.get(key).getObject().toString());
+                    }
                     if (models.get(key).getObject() instanceof String) {
+	                    
                       if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
                        //if the filed has formatter, we guess the field saved in data base is in long 
-                         
                         Date date = new Date();
                         try
                         {
@@ -304,7 +311,25 @@ public class NewDataFormPanel extends Panel {
                     }else if(models.get(key).getObject() instanceof Choice){
                         values.add(String.valueOf(((Choice) models.get(key).getObject()).getId()));
                     }else {
-                        values.add(String.valueOf(models.get(key).getObject()));
+                    	if(field.getName().equals("title")){
+	                    	 if(null==(String) models.get(key).getObject()){
+	                    		 if(entity.getName().equals("activity")){
+	                    			 title.append("拜访:");
+	                    			 title.append(coacheeName);
+	                    			 System.out.println("callName"+title.toString());
+	                    		 }
+	                    		 if(entity.getName().equals("coaching")){
+	                    			 title.append("辅导:");
+	                    			 title.append(callName);
+	                    			 System.out.println("coachingName:"+title.toString());
+	                    		 }
+	                    		 values.add("'" +title.toString()+ "'");
+	                    	  }else{
+		                		  values.add("'" + (String) models.get(key).getObject()+ "'");
+		                	  }
+                    	}else{
+                    		values.add(String.valueOf(models.get(key).getObject()));
+                    	}
                     }
                    
                 }
@@ -523,6 +548,9 @@ public class NewDataFormPanel extends Panel {
             if (currentField.isRequired()) {
 //              text.add(new AttributeModifier("required", new Model("required")));
               text.add(new AttributeAppender("class","required-field"));
+            }
+            if(currentField.getName().equals("title")){
+            	 text.add(new AttributeModifier("placeholder","系统可自动生成"));
             }
             if(currentField.getDataType().equals("datetime-local")){
               text.add(new AttributeModifier("value", new Model((String)model.getObject())));
