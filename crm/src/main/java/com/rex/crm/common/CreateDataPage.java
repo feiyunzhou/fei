@@ -2,6 +2,7 @@ package com.rex.crm.common;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
@@ -10,6 +11,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.util.string.StringValue;
 
+import com.google.common.collect.Maps;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.util.Configuration;
 
@@ -23,22 +25,15 @@ public class CreateDataPage extends TemplatePage {
         
         StringValue entityName = getRequest().getRequestParameters().getParameterValue("entityName");
         String name = entityName.toString();
-//        Set<String> names = getRequest().getRequestParameters().getParameterNames();
-//        Map<String,String> map = Maps.newHashMap();
-//        for(String nm:names){
-//            StringValue sv = getRequest().getRequestParameters().getParameterValue(nm);
-//            map.put(nm, sv.toString());
-//        }
-        if(null!=name){
-        	System.out.println("entityName:"+name);
-        	if(name.equals("coaching")){
-        		Map<String,Object> params= new HashMap();
-        		params.put("0", "0");
-        		initPage(name,params);
-        	}else{
-        		initPage(name,null);
-        	}
+        Set<String> names = getRequest().getRequestParameters().getParameterNames();
+        Map<String,Object> map = Maps.newHashMap();
+        for(String nm:names){
+            StringValue sv = getRequest().getRequestParameters().getParameterValue(nm);
+            map.put(nm, sv.toString());
         }
+        logger.debug("param-map:"+ map);
+        
+        initPage(name,map);
     }
    
     public CreateDataPage(String entityName,final Map<String,Object> params){

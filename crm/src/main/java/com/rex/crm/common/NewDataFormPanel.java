@@ -134,8 +134,10 @@ public class NewDataFormPanel extends Panel {
                                         default_key = Long.parseLong(String.valueOf(params.get(choiceId.trim())));  
                                     }
                                 }
+                            }else if(currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("val")){
+                                default_key = Long.parseLong(currentField.getDefault_value());
                             }
-                            
+                            logger.debug("default_key:"+default_key + " name:"+ currentField.getName());
                             
                             if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
                                  IModel<Choice> selected_model =  new Model(new Choice(default_key,""));
@@ -187,7 +189,7 @@ public class NewDataFormPanel extends Panel {
                                     list.put(p.getId(), p.getVal());
                                     ids.add(p.getId());
                                 }
-                                IModel choiceModel = new Model(1L);
+                                IModel choiceModel = new Model(default_key);
                                 models.put(currentField.getName(), choiceModel);
                                 columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this, ids, list, choiceModel));
                             }
@@ -235,26 +237,40 @@ public class NewDataFormPanel extends Panel {
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                           }
                         } else {
-                            if (currentField.getDataType().equalsIgnoreCase("textarea")) {
-                                IModel<String> textModel = new Model<String>("");
-                                models.put(currentField.getName(), textModel);
-                                columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, textModel));
-                            } else {
-                                IModel<String> textModel = new Model<String>("");
-                                
-                                if(currentField.getDataType().equals("datetime-local")){
-                                   long ts= System.currentTimeMillis();
-                                
-                                   SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                                   String date_value = dateformat.format(ts);
-                                   textModel = new Model<String>(date_value);
-                                   models.put(currentField.getName(), textModel);
-                                  columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, textModel, currentField));
-                                }else{
-                                  models.put(currentField.getName(), textModel);
-                                  columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, textModel, currentField));
+                            
+                            //set default value
+                            String defaultValue = "";
+                            if (currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("var")){
+                                 
+                                if (params != null) {
+                                    Object obj = params.get(currentField.getDefault_value());
+                                    if(obj!=null){
+                                      defaultValue = String.valueOf(obj);
+                                    }
                                 }
+                            }else if(currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("val")){
+                                defaultValue = currentField.getDefault_value();
                             }
+                            //set the default Model
+                            IModel<String> defaultModel = new Model<String>(defaultValue);
+                            if (currentField.getDataType().equalsIgnoreCase("textarea")) {
+                               
+                                columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, defaultModel));
+                            }else if(currentField.getDataType().equals("datetime-local")){
+                                
+                                if(defaultValue.isEmpty()){
+                                    long ts= System.currentTimeMillis();
+                                    SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                                    String date_value = dateformat.format(ts);
+                                    defaultModel = new Model<String>(date_value);
+                                }
+                               columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, defaultModel, currentField));
+                            }else {
+                                  
+                                  columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, defaultModel, currentField)); 
+                            }
+                            
+                            models.put(currentField.getName(), defaultModel);
                             
                         }
                     }

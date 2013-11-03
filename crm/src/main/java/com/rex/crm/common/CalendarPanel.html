@@ -72,7 +72,7 @@
 		              // change the day's background color just for fun
 		              // $(this).css('background-color', 'red');
 
-		              var selecteddate = $.fullCalendar.formatDate(date, "yyyy-MM-dd");
+		              var selecteddate = $.fullCalendar.formatDate(date, "yyyy-MM-dd'T'HH:mm");
 		             
 		              console.log(selecteddate);
 		              var roleId = userInfo.role;
@@ -82,11 +82,8 @@
 		              }else {
 		            	  entityName = "activity";
 		              }
-		              console.log("userInfo.roleId:"+userInfo.role)
-		              //location.href = '../offline/calendarEventForm.html#seg?startdate='+selecteddate+"&parentpage="+url.attr("relative");
-		              //location.href = "/"+context_name+'/mount/createEventPage?startdate='+selecteddate;
-		              //location.href ='../../mount/createEventPage?startdate='+selecteddate;
-		              location.href = create_event_page_url +"entityName="+entityName;
+		              console.log("userInfo.roleId:"+userInfo.role);
+		              location.href = create_event_page_url +"entityName="+entityName +"&start_datetime="+selecteddate+"&end_datetime="+selecteddate;
 		          }
 				
 				//events : JSON.parse(user_event_data)

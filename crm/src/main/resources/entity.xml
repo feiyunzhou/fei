@@ -729,6 +729,8 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>2</default-value>
 				<priority>1</priority>
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
@@ -1672,6 +1674,8 @@ as aActivity
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>拜访</default-value>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -1686,6 +1690,8 @@ as aActivity
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -1698,6 +1704,8 @@ as aActivity
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
@@ -1942,89 +1950,6 @@ as aActivity
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-<!-- 			<field>
-				<name>total_score</name>
-				<display>总分</display>
-				<data-type>number</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>5</priority>
-				<fieldGroup>评分信息</fieldGroup>
-			</field>
-			<field>
-				<name>planing</name>
-				<display>访前计划</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>5</priority>
-				<picklist>score1_pl</picklist>
-				<fieldGroup>评分信息</fieldGroup>
-			</field>
-			<field>
-				<name>openling</name>
-				<display>开场</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>5</priority>
-				<picklist>score1_pl</picklist>
-				<fieldGroup>评分信息</fieldGroup>
-			</field>
-			<field>
-				<name>enquery_listening</name>
-				<display>探寻聆听</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>5</priority>
-				<picklist>score1_pl</picklist>
-				<fieldGroup>评分信息</fieldGroup>
-			</field>
-			<field>
-				<name>deliverable</name>
-				<display>利益销售</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>5</priority>
-				<picklist>score1_pl</picklist>
-				<fieldGroup>评分信息</fieldGroup>
-			</field>
-			<field>
-				<name>objection_handing</name>
-				<display>异常处理</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>5</priority>
-				<picklist>score2_pl</picklist>
-				<fieldGroup>评分信息</fieldGroup>
-			</field>
-			<field>
-				<name>summary</name>
-				<display>缔结</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>5</priority>
-				<picklist>score2_pl</picklist>
-				<fieldGroup>评分信息</fieldGroup>
-			</field> -->
 		</fields>
 	</entity>
 <entity>
@@ -2120,6 +2045,8 @@ as aCoaching
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2132,6 +2059,8 @@ as aCoaching
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2318,8 +2247,8 @@ as aCoaching
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>5</priority>
-				<!-- <default_value_type>var</default_value_type>
-				<default_value>0</default_value> -->
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
 				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
@@ -2331,6 +2260,8 @@ as aCoaching
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2343,6 +2274,8 @@ as aCoaching
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2355,6 +2288,8 @@ as aCoaching
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score1_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2367,6 +2302,8 @@ as aCoaching
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score2_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2379,6 +2316,8 @@ as aCoaching
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score2_pl</picklist>
 				<fieldGroup>评分信息</fieldGroup>
