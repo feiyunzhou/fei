@@ -13,78 +13,59 @@
                 });
             </script>
             <div class="row">
-                <div class="span2 home-side-bar">
+                <div class="col-md-3">
                     <div width="100%">
-                        <div class="well sidebar-nav sidebarbox">
-                            <ul class="nav nav-list">
-                                <p class="text-left"><strong>业务概览</strong></p>
-                                <div style="width: 100%">
-                                    <div class="home-side-list">
-                                        <a wicket:id="account_link" href="#">医院</a>
-                                        <span class="home-report" wicket:id="num_of_account_cell"></span>
-                                    </div>
-                                    <div class="home-side-list">
-                                        <a wicket:id="contact_link" href="#">医生</a>
-                                        <span class="home-report" wicket:id="num_of_contact_cell"></span>
-                                    </div>
-                                    <div class="home-side-list">
-                                        <a wicket:id="activity_link" href="#">活动</a>
-                                        <span class="home-report" wicket:id="num_of_activity_cell"></span>
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-                        <div class="well sidebar-nav sidebarbox">
-                            <ul class="nav nav-list">
-                                <p class="text-left"><strong>快速创建</strong></p>
-                                <li wicket:id="account_create_li"><a wicket:id="account_create_link" href="#">医院</a></li>
-                                <li><a wicket:id="contact_create_link" href="#">医生</a></li>
-                                <li><a wicket:id="activity_create_link" href="#">活动</a></li>
+                        <div class="panel panel-success">
+                        <div class="panel-heading"><strong>业务概览</strong></div>
+						<ul class="list-group">
+							<li class="list-group-item"><a wicket:id="account_link" href="#">医院</a> <span class="home-report" wicket:id="num_of_account_cell"></span></li>
+							<li class="list-group-item"><a wicket:id="contact_link" href="#">医生</a> <span class="home-report" wicket:id="num_of_contact_cell"></span></li>
+							<li class="list-group-item"><a wicket:id="activity_link" href="#">活动</a> <span class="home-report" wicket:id="num_of_activity_cell"></span></li>
+						</ul>
+
+					   </div>
+                        
+                        <div class="panel panel-success">
+                          <div class="panel-heading"><strong>快速创建</strong></div>
+                            <ul class="list-group">
+
+                                <li class="list-group-item" wicket:id="account_create_li"><a wicket:id="account_create_link" href="#">医院</a></li>
+                                <li class="list-group-item"><a wicket:id="contact_create_link" href="#">医生</a></li>
+                                <li class="list-group-item"><a wicket:id="activity_create_link" href="#">活动</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="span9 box">
-                    <ul class="thumbnails">
-                        <li class="span9">
-                            <div class="thumbnail">
+                <div class="col-md-9 box">
+                    <div class="thumbnails">
+                        <div class="row">
+                            <div class="">
                                 <div wicket:id="visiting_frequency_report_panel"></div>	
 
                             </div>
-                        </li>
+                        </div>
 
-                        <li class="span9">
-                            <div class="thumbnail">
+                        <div class="row">
+                            <div class="">
                                 <div wicket:id="visiting_cover_report_panel"></div>	
 
                             </div>
-                        </li>
+                        </div>
 
-                        <li class="span9">
-                            <div class="thumbnail">
+                        <div class="row">
+                            <div class="">
                                 <div wicket:id="working_day_report_panel"></div>	
 
                             </div>
-                        </li>
-                        <li class="span9">
-                            <div class="thumbnail">
+                        </div>
+                        <div class="row">
+                            <div class="">
                                 <div wicket:id="num_of_visiting_per_day_report_panel"></div>	
 
                             </div>
-                        </li>
-                        <!-- 			<li class=""><div class="thumbnail">
-                                                                <h5>拜访达成率</h5>
-                                                                <canvas id="canvas"></canvas>
-                                                        </div></li>
-        
-                                                <li class=""><div class="thumbnail">
-                                                                <h5>活动类型分布</h5>
-                                                                <canvas id="canvas2"></canvas>
-                                                        </div></li>
-                                        
-                        -->
+                        </div>
 
-                    </ul>
+                    </div>
                     <!-- <span wicket:id="testpanel"></span> -->
                 </div>
             </div>

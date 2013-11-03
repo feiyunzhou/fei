@@ -10,25 +10,26 @@
                 });// end onDomReady function
             </script>
 
-            <div class="row-fluid">
-                <div class="span2"  >
-                    <div class="well sidebar-nav sidebarbox" style="background-color:#FFFFFF;">
+            <div class="row">
+                <div class="col-md-2"  >
+                    <div>
                         <div wicket:id="filterPanel"></div>
                     </div>
                 </div>
-                <div class="span10 box">
+                <div class="col-md-10">
+                    <div class="row">
                     <form wicket:id="form" class="form-search">
-                        <div class="input-append">
-                            <div class="input_wrapper">
-                                <input type="text" class="span10 earch-query" placeholder="按名称、医疗机构、主推产品查找"   wicket:id="search_input"/>
-                            </div>
-                            <div class="input_button_wrapper">
-                                <button type="submit" class="btn">查找</button>
+                      <div class="col-md-5">
+                        <div class="input-group">
+                                <input type="text" class="form-control" placeholder="按名称、医疗机构、主推产品查找"   wicket:id="search_input"/>                          
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn  btn-primary">查找</button>
                             </div>
                         </div>
+                        </div>
                     </form>
-
-                    <div>
+                    </div>
+                    <div class="row">
                         <span wicket:id="datalist">data table</span>
                     </div>
                 </div>

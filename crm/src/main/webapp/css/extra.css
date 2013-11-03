@@ -32,9 +32,9 @@ input, select, textarea {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
-input {
+/* input {
     height: 30px !important;
-}
+} */
 .form_datetime select {
     width: 206px;
 }
@@ -141,9 +141,9 @@ a:hover, a:focus {
 }
 .detailed {
 }
-.collapse{
+/* .collapse{
     background: #fff;
-}
+} */
 
 .table-column {
     float: left;
