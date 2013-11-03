@@ -37,6 +37,7 @@ import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.beans.Province;
 import com.rex.crm.beans.Resp;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.db.DAOImpl;
@@ -955,10 +956,10 @@ public class DataProvider {
     public static String login(String[] args){
         String loginName = args[0];
         String password = args[1];
-        CRMUser user = DAOImpl.login(loginName,password);
+         UserInfo user = DAOImpl.login(loginName,password);
         if(user != null){
            Gson gson = new Gson();
-           return gson.toJson(user, CRMUser.class);
+           return gson.toJson(user, UserInfo.class);
         }else{
             return "{}";
         }
