@@ -34,15 +34,15 @@ public class UserInfo {
     private int pl1;
     private int level;
     private String position_code;
-    private int postId;
-    public int getPostId()
+    private int positionId;
+    public int getPositionId()
   {
-    return postId;
+    return positionId;
   }
 
-  public void setPostId(int postId)
+  public void setPositionId(int postId)
   {
-    this.postId = postId;
+    this.positionId = postId;
   }
     
 	public String getName() {

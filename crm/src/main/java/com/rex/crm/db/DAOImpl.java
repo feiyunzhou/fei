@@ -1461,7 +1461,7 @@ public class DAOImpl
     }
     
     public static CRMUser getPositionInfoByUserId(int uid) {
-        System.out.println("登录");
+        System.out.println("登录"+uid);
         Connection conn = null;
         CRMUser user = new CRMUser();
         try {

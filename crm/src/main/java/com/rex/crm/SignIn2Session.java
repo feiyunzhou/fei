@@ -73,7 +73,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		    if(userinfo!=null && userinfo.getId() != 0){
 		        user = userinfo.getName();
 		        userId = String.valueOf(userinfo.getId());
-		        CRMUser postionInfo = DAOImpl.getPositionInfoByUserId(userinfo.getPostId());
+		        CRMUser postionInfo = DAOImpl.getPositionInfoByUserId(userinfo.getPositionId());
 		        roleId = postionInfo.getRole();
 		        positionId = String.valueOf(postionInfo.getId());
 		        System.out.println("sfdsfsfsdfsdfsdfsdfdsds" + positionId);
