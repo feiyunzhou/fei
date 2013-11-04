@@ -180,12 +180,13 @@ public class CRMUtility {
 	    public static EnumSet<Permissions> getPermissionForEntity(int roleId, String entityName) {
 
 	        EnumSet<Permissions> permission = null;
-	        
-	        if (entityName.equalsIgnoreCase("account")) {
+	        logger.debug("tntititnteitnteneitn     " + entityName);
+	        if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("crmuser")) {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
 	            }
-	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")){
+	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") 
+	            || entityName.equalsIgnoreCase("activity")){
 	            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT );
 	        }else if(entityName.equalsIgnoreCase("coaching")){
 	          if (roleId == 1) {
@@ -193,8 +194,7 @@ public class CRMUtility {
 	          }else if(roleId == 2){
 	            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
 	          }
-	        }
-	        else if(entityName.equalsIgnoreCase("crmuser")){
+	        }else if(entityName.equalsIgnoreCase("userInfo")){
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.RESETPWD);
 	            }
@@ -217,7 +217,7 @@ public class CRMUtility {
           if(roleId==1||roleId==2){
             permission = EnumSet.of(CRUDPanel.Permissions.ADD);
           }
-        }else if(entityName.equalsIgnoreCase("crmuser")){
+        }else if(entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("userInfo")){
             
             if (roleId == 1) {
                 permission = EnumSet.of(CRUDPanel.Permissions.ADD);

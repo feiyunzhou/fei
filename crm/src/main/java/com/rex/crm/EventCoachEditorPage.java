@@ -33,6 +33,7 @@ import org.apache.wicket.util.string.StringValue;
 
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.common.Entity;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
@@ -176,7 +177,7 @@ public class EventCoachEditorPage extends TemplatePage{
 						"feature_product")));
 		//辅导者
 		//获取辅导者对象
-		CRMUser crmuser = DAOImpl.getCrmUserById((int) entity_data.get("crmuserId"));
+		UserInfo crmuser = DAOImpl.getCrmUserById((int) entity_data.get("crmuserId"));
 		crmuserId = crmuser.getName();
 		form.add(new TextField("crmuserId", new PropertyModel(this,
 				"crmuserId")));

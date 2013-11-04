@@ -5,7 +5,7 @@
         <wicket:extend>
             <script>
                 $(document).ready(function() {	
-                    $("#navitem-position").addClass("active");      
+                    $("#navitem-crmuser").addClass("active");      
 
                 });// end onDomReady function
             </script>
@@ -16,11 +16,11 @@
                         <div wicket:id="filterPanel"></div>
                     </div>
                 </div>
-                <div class="span10 box" >
+                <div class="span10 box">
                     <form wicket:id="form" class="form-search">
                         <div class="input-append">
                             <div class="input_wrapper">
-                                <input type="text" class="span10 earch-query" placeholder="按名称查找" wicket:id="search_input"/>
+                                <input type="text" class="span10 earch-query" placeholder="按姓名、邮箱、角色、上级经理查看"  wicket:id="search_input"/>
                             </div>
                             <div class="input_button_wrapper">
                                 <button type="submit" class="btn">查找</button>
@@ -31,7 +31,7 @@
                         <span wicket:id="datalist">data table</span>
                     </div>
                 </div>
-            </div> 
+            </div>
 
         </wicket:extend>
     </body>

@@ -109,10 +109,10 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         builder.put("coaching", item);
         
         item = new MenuItem();
-        item.setCaption("<i class=\"icon-comments-alt icon-large\"></i>岗位");
+        item.setCaption("<i class=\" icon-sitemap icon-large\"></i>岗位");
         item.setDestination(PositionPage.class);
-        item.setId("navitem-position");
-        builder.put("position", item);
+        item.setId("navitem-crmuser");
+        builder.put("crmuser", item);
         
 //        item = new MenuItem();
 //        item.setCaption("<i class=\"icon-truck icon-large\"></i>经销商");
@@ -127,10 +127,10 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 //        builder.put("dealerContact", item);
         
         item = new MenuItem();
-        item.setCaption("<i class=\"icon-user icon-large\"></i>岗位");
+        item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
         item.setDestination(UserPage.class);
-        item.setId("navitem-crmuser");
-        builder.put("user", item);
+        item.setId("navitem-userInfo");
+        builder.put("userInfo", item);
         
         pageMenuMap = builder.build();
     	 
@@ -139,10 +139,10 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 	 * Constructor
 	 */
 	public TemplatePage() {
+	  final int roleId = ((SignIn2Session) getSession()).getRoleId();
 		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
-		
 		//TODO get function work with real id
-		List<String> menulist = DAOImpl.getMenuByUserId("test");
+		List<String> menulist = DAOImpl.getMenuByRole(roleId);
 		
 		//populate menu items. TODO componentize it. pass arg: menuList
 		ArrayList<MenuItem> menu = Lists.newArrayList();

@@ -80,7 +80,7 @@ public class SelectEntryPage extends WebPage {
                     }
                     
                     
-                }else if(entityName.equalsIgnoreCase("contact")){
+                }else if(excludeEntityName.equalsIgnoreCase("contact")){
                     
                     String sql = assembleSearchingSQL(roleId, entity);
                     
@@ -97,7 +97,7 @@ public class SelectEntryPage extends WebPage {
                     
                 }else if(excludeEntityName.equalsIgnoreCase("coaching")){
                   maplist = DAOImpl.searchCoachee(search_target,excludeId,posId);
-                }else if(entityName.equalsIgnoreCase("crmuser")){
+                }else if(excludeEntityName.equalsIgnoreCase("crmuser")){
                     //maplist = DAOImpl.searchCRMUser(search_target);
                     maplist = DAOImpl.searchManager(search_target,excludeId);
                     Map dummy = Maps.newHashMap();
@@ -105,7 +105,15 @@ public class SelectEntryPage extends WebPage {
                     dummy.put("name", "无");
                     maplist.add(dummy);
                     
-                }
+                }else if(excludeEntityName.equalsIgnoreCase("userInfo")){
+                  //maplist = DAOImpl.searchCRMUser(search_target);
+                  maplist = DAOImpl.searchCRMUser(search_target);
+                  Map dummy = Maps.newHashMap();
+                  dummy.put("id",-1);
+                  dummy.put("name", "无");
+                  maplist.add(dummy);
+                  
+              }
                 //this.setResponsePage(cls, parameters)
                 
                 setResponsePage(new SelectEntryPage(maplist,entityName,excludeEntityName,excludeId));

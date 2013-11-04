@@ -39,6 +39,7 @@ import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
 import com.rex.crm.util.SendEmail;
@@ -299,7 +300,7 @@ public class NewDataFormPanel extends Panel {
                     logger.debug("currentField:"+field);
                     if(field.getName().equals("coacheeId")){
                     	//根据crmuserId获取对象名称
-                    	coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get(key).getObject().toString());
+                    	coacheeName = DAOImpl.queryRelationDataById("position",models.get(key).getObject().toString());
                     }
                     if(field.getName().equals("contactId")){
                     	callName = DAOImpl.queryRelationDataById("contact",models.get(key).getObject().toString());
@@ -379,17 +380,18 @@ public class NewDataFormPanel extends Panel {
 //                      i++;
 //                  }
             		//if entity is crmuser  add loginName
-                    if ("crmuser".equals(entity.getName())) {
+                    if ("userInfo".equals(entity.getName())) {
                         long crmuserkey = -1;
                         crmuserkey= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
                         if (crmuserkey >0 ) {
-                        	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
+                           UserInfo userinfo = DAOImpl.getCrmUserById((int)crmuserkey);
+//                        	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
                             //此时需发送邮件
-                            long crmUserCode = crmuser.getTs();
+                            long crmUserCode = userinfo.getTs();
                             String sendEmail = String.valueOf(models.get("email").getObject());
                             //创建激活码 getUserByuserCode
                             //传递邮箱地址，用户code.
-                            SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ crmuser.getId(), sendEmail);
+                            SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ userinfo.getId(), sendEmail);
                         }
                     } else {
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
@@ -508,10 +510,9 @@ public class NewDataFormPanel extends Panel {
         public RelationTableSearchFragment(String id, String markupId,
                 MarkupContainer markupProvider, final String entityName,String excludeEntityName ,final String defaultValue, final IModel defaultModel) {
             super(id, markupId, markupProvider);
-
             PageParameters params = new PageParameters();
             params.set("en", entityName);
-            params.set("excludeName", excludeEntityName);
+            params.set("excludeName", excludeEntityName);logger.debug("dfdffdafdgadfgadfgdfgad" + excludeEntityName);
             params.set("target", (Long)defaultModel.getObject());
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params));
             HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", defaultModel);

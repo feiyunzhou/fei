@@ -516,7 +516,7 @@ public class DAOImpl
     }
     
 
-    public static List<String> getMenuByUserId(String id) {
+    public static List<String> getMenuByRole(int roleId) {
         List<String> menulist = Lists.newArrayList();
         menulist.add("home");
         menulist.add("calendar");
@@ -524,9 +524,12 @@ public class DAOImpl
         menulist.add("contact");
         menulist.add("activity");
         menulist.add("coaching");
-//        menulist.add("dealerAccount");
-//        menulist.add("dealerContact");
-        menulist.add("user");
+      if(roleId == 1){
+        menulist.add("crmuser");
+      } 
+//    menulist.add("dealerAccount");
+//    menulist.add("dealerContact");
+        menulist.add("userInfo");
         return menulist;
     }
 
@@ -1852,21 +1855,21 @@ public class DAOImpl
     }
     
     //根据crmuserid获取crm对象
-    public static CRMUser getCrmUserById(int entityId){
+    public static UserInfo getCrmUserById(int entityId){
     	System.out.println("根据crmuserID获取用户");
         Connection conn = null;
-        CRMUser user = new CRMUser();
+        UserInfo userInfo = new UserInfo();
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
-            user = run.query(conn, "SELECT * FROM crmuser where id=?", h, entityId);
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
+            userInfo = run.query(conn, "SELECT * FROM userInfo where id=?", h, entityId);
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
-        return user;
+        return userInfo;
     }
     //根据医生ID获取医生对象
     public static Contact getContactById(int entityId){

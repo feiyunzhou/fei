@@ -14,10 +14,13 @@ public class PageFactory {
         }else if(name.equalsIgnoreCase("activity")){
             return new ActivityPage();
         }else if(name.equalsIgnoreCase("crmuser")){
-            return new UserPage();
+            return new PositionPage();
         }else if(name.equalsIgnoreCase("coaching")){
           return new CoachingPage();
-          }else{
+        }else if(name.equalsIgnoreCase("userInfo")){
+          return new UserPage();
+        }
+        else{
             return new HomePage();
         }
     }

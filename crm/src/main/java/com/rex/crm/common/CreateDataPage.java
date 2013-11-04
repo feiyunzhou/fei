@@ -50,7 +50,6 @@ public class CreateDataPage extends TemplatePage {
         final Entity entity = entities.get(entityName);
         if(null!=entity){
         	add(new NewDataFormPanel("formPanel",entity,params));
-
 	         add(new AbstractAjaxBehavior(){
 	
 	            @Override

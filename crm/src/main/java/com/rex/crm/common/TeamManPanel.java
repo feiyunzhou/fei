@@ -68,7 +68,7 @@ public class TeamManPanel extends Panel {
         Entity entity=null ;
         if(en.equalsIgnoreCase("account")||en.equalsIgnoreCase("contact")){
         	 entity = Configuration.getEntityByName("crmuser");
-        	     add(new Label("title","用户"));
+        	     add(new Label("title","岗位"));
         }else{
             if(type == 0){
         	  entity = Configuration.getEntityByName("account");

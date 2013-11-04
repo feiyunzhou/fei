@@ -34,6 +34,16 @@ public class UserInfo {
     private int pl1;
     private int level;
     private String position_code;
+    private int postId;
+    public int getPostId()
+  {
+    return postId;
+  }
+
+  public void setPostId(int postId)
+  {
+    this.postId = postId;
+  }
     
 	public String getName() {
 		return name;

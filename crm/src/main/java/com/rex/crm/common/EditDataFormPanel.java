@@ -225,7 +225,8 @@ public class EditDataFormPanel extends Panel {
                             fieldNames.add(currentField.getName());
                         } else {
                             long foreignKey = 1L;
-                            foreignKey = ((Number) data.get(currentField.getName())).longValue();
+                           
+                            foreignKey = ((Number)data.get(currentField.getName())).longValue();
                             IModel choiceModel = new Model(foreignKey);
                             String fn = "";
                             if (currentField.getAlias() != null) {

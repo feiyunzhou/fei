@@ -2,60 +2,63 @@
 
 <entities>
 	<entity>
-		 <name>account</name>
-    <display>医院</display>
-    <sql>
-	select * from (select account.*\,
-	account_point_pl.val as key_type_val\,
-	account_type_pl.val as hospital_type_val\,
-	account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
-	from account
-	left join account_point_pl on account.key_type = account_point_pl.id
-	left join account_type_pl on account.hospital_type = account_type_pl.id
-	left join account_comprehensive_or_specialized_pl on
-	account.comprehensive_or_specialized =
-	account_comprehensive_or_specialized_pl.id
-	where account.id != -1 and(
-	account.id in (select accountid from accountcrmuser where
-	accountcrmuser.crmuserid = ?)
-	or account.id in (select contact.accountid from contactcrmuser left join
-	contact on contactcrmuser.contactid = contact.id where
-	contactcrmuser.crmuserid = ?))) as aAccount
+		<name>account</name>
+		<display>医院</display>
+		<sql>
+			select * from (select account.*\,
+			account_point_pl.val as key_type_val\,
+			account_type_pl.val as hospital_type_val\,
+			account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+			from account
+			left join account_point_pl on account.key_type = account_point_pl.id
+			left join account_type_pl on account.hospital_type = account_type_pl.id
+			left join account_comprehensive_or_specialized_pl on
+			account.comprehensive_or_specialized =
+			account_comprehensive_or_specialized_pl.id
+			where account.id != -1 and(
+			account.id in (select accountid from accountcrmuser where
+			accountcrmuser.crmuserid = ?)
+			or account.id in (select contact.accountid from contactcrmuser left
+			join
+			contact on contactcrmuser.contactid = contact.id where
+			contactcrmuser.crmuserid = ?))) as aAccount
 
-    </sql>
-    <sql-admin>
-	select * from (select account.*\,
-	account_point_pl.val as key_type_val\,
-	account_type_pl.val as hospital_type_val\,
-	account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
-	from account
-	left join account_point_pl on account.key_type = account_point_pl.id
-	left join account_type_pl on account.hospital_type = account_type_pl.id
-	left join account_comprehensive_or_specialized_pl on
-	account.comprehensive_or_specialized =
-	account_comprehensive_or_specialized_pl.id
-	where account.id != -1) as aAccount 
-</sql-admin>
+		</sql>
+		<sql-admin>
+			select * from (select account.*\,
+			account_point_pl.val as key_type_val\,
+			account_type_pl.val as hospital_type_val\,
+			account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+			from account
+			left join account_point_pl on account.key_type = account_point_pl.id
+			left join account_type_pl on account.hospital_type = account_type_pl.id
+			left join account_comprehensive_or_specialized_pl on
+			account.comprehensive_or_specialized =
+			account_comprehensive_or_specialized_pl.id
+			where account.id != -1) as aAccount
+		</sql-admin>
 		<sql-manager>
 
-	select * from (select account.*\,account_point_pl.val as key_type_val\,
-	account_type_pl.val as hospital_type_val \,
-	account_comprehensive_or_specialized_pl.val as
-	comprehensive_or_specialized_val
-	FROM
-	account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
-	where (account.id in (select accountid from crmdb.accountcrmuser where
-	crmuserid = ?) OR
-	account.id in (select accountid from crmdb.accountcrmuser where crmuserid in
-	(select id from crmuser where reportto = ?)) OR
-	account.id in (select accountid from crmdb.contact where id in (select contactid
-	from crmdb.contactcrmuser where crmuserid in (select id from
-	crmdb.crmuser where reportto = ?)))) AND
-	account_point_pl.id=key_type AND account.id != -1 AND
-	account_type_pl.id=hospital_type AND
-	account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized) as aAccount
-		                       
-		            
+			select * from (select account.*\,account_point_pl.val as key_type_val\,
+			account_type_pl.val as hospital_type_val \,
+			account_comprehensive_or_specialized_pl.val as
+			comprehensive_or_specialized_val
+			FROM
+			account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+			where (account.id in (select accountid from crmdb.accountcrmuser
+			where
+			crmuserid = ?) OR
+			account.id in (select accountid from crmdb.accountcrmuser where crmuserid in
+			(select id from crmuser where reportto = ?)) OR
+			account.id in (select accountid from crmdb.contact where id in (select
+			contactid
+			from crmdb.contactcrmuser where crmuserid in (select id from
+			crmdb.crmuser where reportto = ?)))) AND
+			account_point_pl.id=key_type AND account.id != -1 AND
+			account_type_pl.id=hospital_type AND
+			account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized) as aAccount
+
+
 		</sql-manager>
 
 		<sql-ent>SELECT * from (select account.* from account where
@@ -65,7 +68,7 @@
 		<fields>
 			<!-- 医院的基本信息 -->
 			<field>
-			
+
 				<name>id</name>
 				<display>ID</display>
 				<data-type>number</data-type>
@@ -73,7 +76,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<isParam>true</isParam> <!--  关联表的创建的参数 -->
+				<isParam>true</isParam> <!-- 关联表的创建的参数 -->
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -566,48 +569,50 @@
 		<name>contact</name>
 		<display>医生</display>
 		<sql>
-	select * from (select contact.*\,
-	contact_generalization_target_pl.val as product_target_val\,
-	"account.name" as accountName_val
-	from contact
-	left join contact_generalization_target_pl on contact.product_target =
-	contact_generalization_target_pl.id
-	left join account on contact.accountid = account.id
-	left join contactcrmuser on contact.id = contactcrmuser.contactid
-	where contact.id != -1 and contactcrmuser.crmuserid = ?) as aContact
+			select * from (select contact.*\,
+			contact_generalization_target_pl.val as product_target_val\,
+			"account.name" as accountName_val
+			from contact
+			left join contact_generalization_target_pl on contact.product_target =
+			contact_generalization_target_pl.id
+			left join account on contact.accountid = account.id
+			left join contactcrmuser on contact.id = contactcrmuser.contactid
+			where contact.id != -1 and contactcrmuser.crmuserid = ?) as aContact
 		</sql>
 		<sql-manager>
-	select * from (select contact.*\,
-	contact_generalization_target_pl.val as product_target_val\,
-	"account.name" as accountName_val
-	from contact
-	left join contact_generalization_target_pl on contact.product_target =
-	contact_generalization_target_pl.id
-	left join account on contact.accountId = account.id
-	where contact.id != -1 and
-	(
-	contact.id in (select contactid from contactcrmuser where crmuserid = ?) or
-	contact.id in (select contactcrmuser.contactid from crmuser
-	left join contactcrmuser on crmuser.id = contactcrmuser.crmuserid
-	where crmuser.reportto = ?))) as aContact
+			select * from (select contact.*\,
+			contact_generalization_target_pl.val as product_target_val\,
+			"account.name" as accountName_val
+			from contact
+			left join contact_generalization_target_pl on contact.product_target =
+			contact_generalization_target_pl.id
+			left join account on contact.accountId = account.id
+			where contact.id != -1 and
+			(
+			contact.id in (select contactid from contactcrmuser where crmuserid = ?) or
+			contact.id in (select contactcrmuser.contactid from crmuser
+			left join contactcrmuser on crmuser.id = contactcrmuser.crmuserid
+			where crmuser.reportto = ?))) as aContact
 		</sql-manager>
-		
+
 		<sql-admin>
-<!-- 	select contact.*\, -->
-<!-- 	contact_generalization_target_pl.val as product_target_val\, -->
-<!-- 	account.name as accountName_val -->
-<!-- 	from contact -->
-<!-- 	left join contact_generalization_target_pl on contact.product_target = -->
-<!-- 	contact_generalization_target_pl.id -->
-<!-- 	left join account on contact.accountid = account.id -->
-<!-- 	where account.id != -1 -->
-	select * from (select contact.*\,
-	contact_generalization_target_pl.val as product_target_val\,
-	"account.name" as accountName_val
-	from contact
-	left join account on contact.accountid = account.id
-	left join contact_generalization_target_pl on contact.product_target =
-	contact_generalization_target_pl.id where contact.id != -1) as aContact
+			<!-- select contact.*\, -->
+			<!-- contact_generalization_target_pl.val as product_target_val\, -->
+			<!-- account.name as accountName_val -->
+			<!-- from contact -->
+			<!-- left join contact_generalization_target_pl on contact.product_target 
+				= -->
+			<!-- contact_generalization_target_pl.id -->
+			<!-- left join account on contact.accountid = account.id -->
+			<!-- where account.id != -1 -->
+			select * from (select contact.*\,
+			contact_generalization_target_pl.val as product_target_val\,
+			"account.name" as accountName_val
+			from contact
+			left join account on contact.accountid = account.id
+			left join contact_generalization_target_pl on contact.product_target =
+			contact_generalization_target_pl.id where contact.id != -1) as
+			aContact
 
 		</sql-admin>
 
@@ -616,8 +621,9 @@
 			account.id=contact.accountId order by whenadded DESC) as
 			aContact
 		</sql-ent>
-		
-			<sql-search-by-name>select * from (select contact.*\,account.id as accountName
+
+		<sql-search-by-name>select * from (select contact.*\,account.id as
+			accountName
 			from contact\,account where contact.id=? AND
 			account.id=contact.accountId order by whenadded DESC) as
 			aContact
@@ -649,19 +655,19 @@
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<!-- Please do not change the order of this field(accountId)!! -->
-<!-- 			<field> -->
-<!-- 				<name>accountId</name> -->
-<!-- 				<display>医院ID</display> -->
-<!-- 				<data-type>number</data-type> -->
-<!-- 				<isRequired>false</isRequired> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>false</isDetailLink> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>false</isEditable> -->
-<!-- 				<priority>1</priority> -->
-<!-- 				<fieldGroup>关键信息</fieldGroup> -->
-<!-- 			</field> -->
-			
+			<!-- <field> -->
+			<!-- <name>accountId</name> -->
+			<!-- <display>医院ID</display> -->
+			<!-- <data-type>number</data-type> -->
+			<!-- <isRequired>false</isRequired> -->
+			<!-- <isPrimaryKey>false</isPrimaryKey> -->
+			<!-- <isDetailLink>false</isDetailLink> -->
+			<!-- <isVisible>true</isVisible> -->
+			<!-- <isEditable>false</isEditable> -->
+			<!-- <priority>1</priority> -->
+			<!-- <fieldGroup>关键信息</fieldGroup> -->
+			<!-- </field> -->
+
 			<field>
 				<name>accountId</name>
 				<display>医院</display>
@@ -677,24 +683,24 @@
 				<default-value-type>var</default-value-type>
 				<default-value>account.id\,account.name</default-value>
 				<fieldGroup>关键信息</fieldGroup>
-			</field>	
-			
-<!-- 			<field> -->
-<!-- 				<name>accountName</name> -->
-<!-- 				<display>医疗机构</display> -->
-<!-- 				<isRequired>false</isRequired> -->
-<!-- 				<alias>accountId</alias> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>false</isDetailLink> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>1</priority> -->
-<!-- 				<relationTable>account</relationTable> -->
-<!-- 				<fieldGroup>关键信息</fieldGroup> -->
-<!-- 			</field> -->
-			
-			 <field>
+			</field>
+
+			<!-- <field> -->
+			<!-- <name>accountName</name> -->
+			<!-- <display>医疗机构</display> -->
+			<!-- <isRequired>false</isRequired> -->
+			<!-- <alias>accountId</alias> -->
+			<!-- <data-type>text</data-type> -->
+			<!-- <isPrimaryKey>false</isPrimaryKey> -->
+			<!-- <isDetailLink>false</isDetailLink> -->
+			<!-- <isVisible>true</isVisible> -->
+			<!-- <isEditable>true</isEditable> -->
+			<!-- <priority>1</priority> -->
+			<!-- <relationTable>account</relationTable> -->
+			<!-- <fieldGroup>关键信息</fieldGroup> -->
+			<!-- </field> -->
+
+			<field>
 				<name>accountName_val</name>
 				<display>医疗机构</display>
 				<isRequired>false</isRequired>
@@ -918,19 +924,19 @@
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-            <field>
-                <name>product_target_val</name>
-                <display>主推广产品目标</display>
-                <isRequired>false</isRequired>
-                <data-type>text</data-type>
-                <isPrimaryKey>false</isPrimaryKey>
-                <isDetailLink>false</isDetailLink>
-                <isVisible>false</isVisible>
-                <isEditable>false</isEditable>
-                <isSearchable>true</isSearchable>
-                <priority>1</priority>
-                <fieldGroup>基本信息</fieldGroup>
-            </field>
+			<field>
+				<name>product_target_val</name>
+				<display>主推广产品目标</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
 
 			<field>
 				<name>visiting_target</name>
@@ -1081,52 +1087,74 @@
 			</field>
 		</fields>
 	</entity>
-		<entity>
-		<name>crmuser</name>
+	<entity>
+		<name>userInfo</name>
 		<display>用户</display>
-	    <filterField>role</filterField>
+		<filterField>pl1</filterField>
 		<sql>
-			select * from (select  crmuser.*\,
-					"crmmanager.name" as reportto_val\,
-					role.val role_val
-			from crmuser
-			left join (select * from crmuser) crmmanager on crmuser.reportto = crmmanager.id
-			left join crmdb.role on crmuser.role = role.id
-			where crmuser.id = ?) as aCrmuser
+			<!-- select * from (select userInfo.*\, -->
+			<!-- "crmmanager.name" as reportto_val\, -->
+			<!-- role.val role_val -->
+			<!-- from userInfo -->
+			<!-- left join (select * from userInfo) crmmanager on crmuser.reportto 
+				= crmmanager.id -->
+			<!-- left join crmdb.role on crmuser.role = role.id -->
+			<!-- where crmuser.id = ?) as aCrmuser -->
+<!-- 			select * from ( -->
+<!-- 			select *\, -->
+<!-- 			from userInfo -->
+<!-- 			left join crmuser on crmuser.id = userInfo.postionId -->
+<!-- 			left join crmuser on -->
+<!-- 			where id = ? -->
+<!-- 			) as Crmuser -->
+
+select * from (select * from userInfo where id = ? ) as aUserInfo
 		</sql>
 		<sql-admin>
-		
-<!-- 		select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val -->
-<!-- 		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
-			select * from (select crmuser.*\,
-			       "crmmanager.name" as reportto_val\,
-			       role.val role_val
-			from crmuser
-			left join (select * from crmuser) crmmanager on crmuser.reportto = crmmanager.id
-			left join crmdb.role on crmuser.role = role.id
-			where crmuser.id != -1	) as aCrmuser
+
+			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
+				as role_val -->
+			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
+				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
+<!-- 			select * from (select crmuser.*\, -->
+<!-- 			"crmmanager.name" as reportto_val\, -->
+<!-- 			role.val role_val -->
+<!-- 			from crmuser -->
+<!-- 			left join (select * from crmuser) crmmanager on -->
+<!-- 			crmuser.reportto = crmmanager.id -->
+<!-- 			left join crmdb.role on crmuser.role -->
+<!-- 			= role.id -->
+<!-- 			where crmuser.id != -1 ) as aCrmuser -->
+			select * from ( select * from userInfo where id != -1) as aUserInfo
 		</sql-admin>
 		<sql-manager>
-<!-- 		select * from (select crmuser.*\,b.name as reportto_val\,role.val as role_val -->
-<!-- 		                          from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
-			select * from (select crmuser.*\,
-			       "crmmanager.name" as reportto_val\,
-			       role.val role_val
-			from crmuser
-			left join (select * from crmuser) crmmanager on crmuser.reportto = crmmanager.id
-			left join crmdb.role on crmuser.role = role.id
-			where crmuser.reportto = ? or crmuser.id = ?	) as aCrmuser	
-		</sql-manager>
-<!-- 		<sql-manager-coaching>select * from (select crmuser.*\, -->
-<!-- 			       "crmmanager.name" as reportto_val\, -->
-<!-- 			       role.val role_val -->
+			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
+				as role_val -->
+			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
+				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
+<!-- 			select * from (select crmuser.*\, -->
+<!-- 			"crmmanager.name" as reportto_val\, -->
+<!-- 			role.val role_val -->
 <!-- 			from crmuser -->
-<!-- 			left join (select * from crmuser) crmmanager on crmuser.reportto = crmmanager.id -->
-<!-- 			left join crmdb.role on crmuser.role = role.id -->
-<!-- 			where crmuser.reportto = ?) as aCrmuser -->
-<!-- 		</sql-manager-coaching> -->
-		<sql-ent>select * from crmuser where id=?</sql-ent>
-		<filterField>pl2</filterField>
+<!-- 			left join (select * from crmuser) crmmanager on -->
+<!-- 			crmuser.reportto = crmmanager.id -->
+<!-- 			left join crmdb.role on crmuser.role -->
+<!-- 			= role.id -->
+<!-- 			where crmuser.reportto = ? or crmuser.id = ? ) as aCrmuser -->
+				select * from ( select * from userInfo where id = ? ) as aUserInfo 
+
+		</sql-manager>
+		<!-- <sql-manager-coaching>select * from (select crmuser.*\, -->
+		<!-- "crmmanager.name" as reportto_val\, -->
+		<!-- role.val role_val -->
+		<!-- from crmuser -->
+		<!-- left join (select * from crmuser) crmmanager on crmuser.reportto = 
+			crmmanager.id -->
+		<!-- left join crmdb.role on crmuser.role = role.id -->
+		<!-- where crmuser.reportto = ?) as aCrmuser -->
+		<!-- </sql-manager-coaching> -->
+		<sql-ent>select * from userInfo where id=?</sql-ent>
+		<!-- <filterField>pl2</filterField> -->
 		<fields>
 			<field>
 				<name>id</name>
@@ -1151,7 +1179,6 @@
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
-				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>jobTitle</name>
@@ -1178,9 +1205,7 @@
 				<picklist>sex_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
-				<fieldGroup>地址信息</fieldGroup>
 			</field>
-			
 			<field>
 				<name>email</name>
 				<display>邮箱</display>
@@ -1205,7 +1230,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<fieldGroup>关键信息</fieldGroup>
+				<fieldGroup>基本信息</fieldGroup>
 				<isBaseInfo>false</isBaseInfo>
 			</field>
 			<field>
@@ -1221,7 +1246,6 @@
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
 			<field>
 				<name>isActivited</name>
 				<display>激活状态</display>
@@ -1235,63 +1259,41 @@
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
+			<!-- <field> <name>reportto</name> <display>上级经理</display> <isRequired>false</isRequired> 
+				<data-type>text</data-type> <relationTable>crmuser</relationTable> <isSearchable>true</isSearchable> 
+				<isPrimaryKey>false</isPrimaryKey> <isDetailLink>false</isDetailLink> <isVisible>true</isVisible> 
+				<isEditable>true</isEditable> <priority>1</priority> <isBaseInfo>false</isBaseInfo> 
+				<fieldGroup>关键信息</fieldGroup> </field> <field> <name>reportto_val</name> 
+				<display>上级经理</display> <isRequired>false</isRequired> <data-type>text</data-type> 
+				<isPrimaryKey>false</isPrimaryKey> <isDetailLink>false</isDetailLink> <isVisible>false</isVisible> 
+				<isEditable>false</isEditable> <isSearchable>true</isSearchable> <priority>1</priority> 
+				<isBaseInfo>false</isBaseInfo> <fieldGroup>关键信息</fieldGroup> </field> -->
 			<field>
-				<name>reportto</name>
-				<display>上级经理</display>
-				<isRequired>false</isRequired>
+				<name>postId</name>
+				<display>岗位编码</display>
+				<isRequired>true</isRequired>
 				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
 				<relationTable>crmuser</relationTable>
-				<isSearchable>true</isSearchable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<!-- 基本信息 -->
+			<field>
+				<name>employeeNumber</name>
+				<display>雇员编码</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
-	   		    <isBaseInfo>false</isBaseInfo>
-				<fieldGroup>关键信息</fieldGroup>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			<field>
-				<name>reportto_val</name>
-				<display>上级经理</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>false</isEditable>
-				<isSearchable>true</isSearchable>
-				<priority>1</priority>
-				<isBaseInfo>false</isBaseInfo>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			
-			<field>
-				<name>role</name>
-				<display>角色</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<picklist>role</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			<field>
-				<name>role_val</name>
-				<display>角色</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>false</isEditable>
-				<isSearchable>true</isSearchable>
-				<priority>1</priority>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			
 			<field>
 				<name>pl1</name>
 				<display>状态</display>
@@ -1320,95 +1322,58 @@
 			</field>
 
 			<field>
-				<name>pl4</name>
-				<display>一级区域</display>
+				<name>province</name>
+				<display>省份</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
-				<picklist>region_level1_pl</picklist>
+				<picklist>province</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
-			</field>
-			<field>
-				<name>pl5</name>
-				<display>二级区域</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<picklist>region_level2_pl</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-
-<!-- 			基本信息 -->
-
-			<field>
-				<name>employeeNumber</name>
-				<display>雇员ID</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-			<field>
-				<name>postId</name>
-				<display>岗位编码</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<childNode>city</childNode>
 			</field>
 			<field>
 				<name>city</name>
-				<display>城市</display>
+				<display>二级区域</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
+				<picklist>city</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
+				<parentNode>province</parentNode>
 			</field>
-			<field>
-				<name>department</name>
-				<display>部门</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>	
-			<field>
-				<name>parcel</name>
-				<display>分部</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-				<!-- 附加信息 -->
+<!-- 			<field> -->
+<!-- 				<name>department</name> -->
+<!-- 				<display>部门</display> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<data-type>text</data-type> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>true</isEditable> -->
+<!-- 				<priority>2</priority> -->
+<!-- 				<fieldGroup>基本信息</fieldGroup> -->
+<!-- 			</field> -->
+<!-- 			<field> -->
+<!-- 				<name>parcel</name> -->
+<!-- 				<display>分部</display> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<data-type>text</data-type> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>true</isEditable> -->
+<!-- 				<priority>2</priority> -->
+<!-- 				<fieldGroup>基本信息</fieldGroup> -->
+<!-- 			</field> -->
+			<!-- 附加信息 -->
 			<field>
 				<name>owner</name>
 				<display>创建人</display>
@@ -1475,6 +1440,296 @@
 			</field>
 		</fields>
 	</entity>
+	<entity>
+		<name>crmuser</name>
+		<display>岗位</display>
+		<filterField>pl1</filterField>
+		<sql>
+			<!-- select * from (select userInfo.*\, -->
+			<!-- "crmmanager.name" as reportto_val\, -->
+			<!-- role.val role_val -->
+			<!-- from userInfo -->
+			<!-- left join (select * from userInfo) crmmanager on crmuser.reportto 
+				= crmmanager.id -->
+			<!-- left join crmdb.role on crmuser.role = role.id -->
+			<!-- where crmuser.id = ?) as aCrmuser -->
+			select * from (
+			select *\,
+			from userInfo
+			left join crmuser on crmuser.id = userInfo.postionId
+			left join crmuser on
+			where id = ?
+			) as Crmuser
+		</sql>
+		<sql-admin>
+
+			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
+				as role_val -->
+			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
+				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
+			select * from (select crmuser.*\,
+			"crmmanager.name" as reportto_val\,
+			role.val role_val
+			from crmuser
+			left join (select * from crmuser) crmmanager on
+			crmuser.reportto = crmmanager.id
+			left join crmdb.role on crmuser.role
+			= role.id
+			where crmuser.id != -1 ) as aCrmuser
+		</sql-admin>
+		<sql-manager>
+			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
+				as role_val -->
+			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
+				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
+			select * from (select crmuser.*\,
+			"crmmanager.name" as reportto_val\,
+			role.val role_val
+			from crmuser
+			left join (select * from crmuser) crmmanager on
+			crmuser.reportto = crmmanager.id
+			left join crmdb.role on crmuser.role
+			= role.id
+			where crmuser.reportto = ? or crmuser.id = ? ) as aCrmuser
+		</sql-manager>
+		<!-- <sql-manager-coaching>select * from (select crmuser.*\, -->
+		<!-- "crmmanager.name" as reportto_val\, -->
+		<!-- role.val role_val -->
+		<!-- from crmuser -->
+		<!-- left join (select * from crmuser) crmmanager on crmuser.reportto = 
+			crmmanager.id -->
+		<!-- left join crmdb.role on crmuser.role = role.id -->
+		<!-- where crmuser.reportto = ?) as aCrmuser -->
+		<!-- </sql-manager-coaching> -->
+		<sql-ent>select * from crmuser where id=?</sql-ent>
+		<!-- <filterField>pl2</filterField> -->
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>岗位名称</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>true</isBaseInfo>
+			</field>
+			<field>
+				<name>code</name>
+				<display>岗位编码</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>reportto</name>
+				<display>上级岗位</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<relationTable>crmuser</relationTable>
+				<isSearchable>true</isSearchable>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>false</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>reportto_val</name>
+				<display>上级经理</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isBaseInfo>false</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>role</name>
+				<display>角色</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>role</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>role_val</name>
+				<display>角色</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>pl1</name>
+				<display>状态</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>crmuser_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>pl2</name>
+				<display>产品线</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>crmuser_pl2</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>pl4</name>
+				<display>一级区域</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>region_level1_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>pl5</name>
+				<display>二级区域</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>region_level2_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+
+			<!-- 基本信息 -->
+			<field>
+				<name>city</name>
+				<display>城市</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<picklist>city</picklist>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>department</name>
+				<display>部门</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<!-- 附加信息 -->
+<!-- 			<field> -->
+<!-- 				<name>owner</name> -->
+<!-- 				<display>创建人</display> -->
+<!-- 				<data-type>text</data-type> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<field-type>auto</field-type> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>false</isEditable> -->
+<!-- 				<priority>4</priority> -->
+<!-- 				<fieldGroup>附加信息</fieldGroup> -->
+<!-- 			</field> -->
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
 
 
 	<entity>
@@ -1521,108 +1776,121 @@
 		<display>拜访</display>
 		<filterField>activity_type</filterField>
 		<sql>
-		select * from (select * from (select activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val 
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id
-left join activitycrmuser on activity.id = activitycrmuser.activityId
-where activitycrmuser.crmuserid = ?) as aactivity where event_type = 1 order by whenadded DESC) as aActivity
+			select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			where activitycrmuser.crmuserid = ?) as aactivity where event_type =
+			1 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
-	select * from (select * from (select activity.*\,
-	activity.activity_type as act_type\,
-	activity.status as act_status\,
-	activity.contactId as contactName\,
-	contact.accountId as accountName\,
-	activity_event_type_pl.val as event_type_val\,
-	account.name as accountName_val\,
-	contact.name as contactname_val
-	from activity
-	left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-	left join contact on activity.contactId = contact.id
-	left join account on contact.accountId = account.Id
-	left join activitycrmuser on activity.id = activitycrmuser.activityId
-	left join crmuser on activitycrmuser.crmuserId = crmuser.id
-	where crmuser.reportto = ? or crmuser.id = ? ) as aactivity where event_type = 1 order by whenadded DESC) as aActivity
+			select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			left join crmuser on activitycrmuser.crmuserId = crmuser.id
+			where crmuser.reportto = ? or crmuser.id = ? ) as aactivity where
+			event_type = 1 order by whenadded DESC) as aActivity
 		</sql-manager>
-		
+
 		<sql-admin>
-		
-		select * from (select activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val 
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id  where activity.event_type  = 1 order by whenadded DESC) as aActivity
+
+			select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id where
+			activity.event_type = 1 order by whenadded DESC) as aActivity
 		</sql-admin>
 		<sql-calendar>
-		select * from (select * from (select activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val 
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id
-left join activitycrmuser on activity.id = activitycrmuser.activityId
-where activitycrmuser.crmuserid = ?) as aactivity  order by whenadded DESC) as aActivity
+			select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			where activitycrmuser.crmuserid = ?) as aactivity order by whenadded
+			DESC) as aActivity
 		</sql-calendar>
 		<sql-manager-calendar>
-		select * from (select * from (select activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val 
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id
-left join activitycrmuser on activity.id = activitycrmuser.activityId
-left join crmuser on activitycrmuser.crmuserId = crmuser.id
-where  crmuser.id = ? ) as aactivity  order by whenadded DESC) as aActivity
+			select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			left join crmuser on activitycrmuser.crmuserId = crmuser.id
+			where crmuser.id = ? ) as aactivity order by whenadded DESC) as aActivity
 		</sql-manager-calendar>
-		
+
 		<sql-admin-calendar>
-		
-		select * from (select activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val 
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id order by whenadded DESC) as aActivity
+
+			select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id order by whenadded
+			DESC) as aActivity
 		</sql-admin-calendar>
-		<sql-ent>select * from (select  activity.*\,activity.activity_type as
+		<sql-ent>select * from (select activity.*\,activity.activity_type as
 			act_type\,activity.status as act_status\, activity.contactId as
 			contactName\, contact.accountId as accountName\, contact.name as cn
-from activity left join activitycrmuser on activitycrmuser.activityId=activity.id LEFT JOIN contact on contact.id = activity.contactId  where activity.id=?) 
-as aActivity
+			from activity left join activitycrmuser on
+			activitycrmuser.activityId=activity.id LEFT JOIN contact on
+			contact.id = activity.contactId where activity.id=?)
+			as aActivity
 		</sql-ent>
 		<fields>
 			<field>
@@ -1636,21 +1904,12 @@ as aActivity
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
-<!-- 			 <field>
-				<name>event_type</name>
-				<display>活动类型</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<picklist>activity_event_type_pl</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>关键信息</fieldGroup>
-			</field> -->
-			
+
+			<!-- <field> <name>event_type</name> <display>活动类型</display> <isRequired>false</isRequired> 
+				<data-type>text</data-type> <picklist>activity_event_type_pl</picklist> <isPrimaryKey>false</isPrimaryKey> 
+				<isDetailLink>false</isDetailLink> <isVisible>true</isVisible> <isEditable>true</isEditable> 
+				<priority>2</priority> <fieldGroup>关键信息</fieldGroup> </field> -->
+
 			<field>
 				<name>event_type_val</name>
 				<display>活动类型</display>
@@ -1664,7 +1923,7 @@ as aActivity
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>title</name>
 				<display>活动名称</display>
@@ -1679,7 +1938,7 @@ as aActivity
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>starttime</name>
 				<display>开始时间</display>
@@ -1708,7 +1967,7 @@ as aActivity
 				<default-value>end_datetime</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>activity_type</name>
 				<display>拜访类型</display>
@@ -1722,7 +1981,7 @@ as aActivity
 				<childNode>visiting_purpose</childNode>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>visiting_purpose</name>
 				<display>拜访目的</display>
@@ -1737,7 +1996,7 @@ as aActivity
 				<parentNode>activity_type</parentNode>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-					
+
 			<field>
 				<name>contactId</name>
 				<display>拜访医生</display>
@@ -1751,7 +2010,7 @@ as aActivity
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 
-            <field>
+			<field>
 				<name>contactname_val</name>
 				<display>拜访医生</display>
 				<data-type>number</data-type>
@@ -1778,21 +2037,12 @@ as aActivity
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
-<!-- 			<field>
-				<name>coacheeId</name>
-				<display>被辅导人</display>
-				<data-type>number</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<isBaseInfo>true</isBaseInfo>
-				<relationTable>crmuser</relationTable>
-				<fieldGroup>关键信息</fieldGroup>
-			</field> -->
-				
+
+			<!-- <field> <name>coacheeId</name> <display>被辅导人</display> <data-type>number</data-type> 
+				<isPrimaryKey>false</isPrimaryKey> <isDetailLink>false</isDetailLink> <isVisible>true</isVisible> 
+				<isEditable>true</isEditable> <priority>1</priority> <isBaseInfo>true</isBaseInfo> 
+				<relationTable>crmuser</relationTable> <fieldGroup>关键信息</fieldGroup> </field> -->
+
 			<field>
 				<name>accountName</name>
 				<display>拜访医院</display>
@@ -1820,19 +2070,19 @@ as aActivity
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
-			<!--<field>-->
-				<!--<name>participants</name>-->
-				<!--<display>参与人/相关人员</display>-->
-				<!--<data-type>text</data-type>-->
-				<!--<isPrimaryKey>false</isPrimaryKey>-->
-				<!--<isDetailLink>false</isDetailLink>-->
-				<!--<isVisible>true</isVisible>-->
-				<!--<isEditable>false</isEditable>-->
-				<!--<priority>1</priority>-->
-				<!--<isBaseInfo>true</isBaseInfo>-->
-				<!--<fieldGroup>关键信息</fieldGroup>-->
-			<!--</field>-->
+
+			<!--<field> -->
+			<!--<name>participants</name> -->
+			<!--<display>参与人/相关人员</display> -->
+			<!--<data-type>text</data-type> -->
+			<!--<isPrimaryKey>false</isPrimaryKey> -->
+			<!--<isDetailLink>false</isDetailLink> -->
+			<!--<isVisible>true</isVisible> -->
+			<!--<isEditable>false</isEditable> -->
+			<!--<priority>1</priority> -->
+			<!--<isBaseInfo>true</isBaseInfo> -->
+			<!--<fieldGroup>关键信息</fieldGroup> -->
+			<!--</field> -->
 			<!---->
 
 			<field>
@@ -1846,7 +2096,7 @@ as aActivity
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-						
+
 			<field>
 				<name>feature_product</name>
 				<display>主推产品</display>
@@ -1859,7 +2109,7 @@ as aActivity
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>status</name>
 				<display>状态</display>
@@ -1872,7 +2122,7 @@ as aActivity
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>act_status</name>
 				<display>状态</display>
@@ -1952,66 +2202,81 @@ as aActivity
 			</field>
 		</fields>
 	</entity>
-<entity>
+	<entity>
 		<name>coaching</name>
 		<display>辅导</display>
 		<filterField>feature_product</filterField>
 		<sql>
-		select distinct *  from (select * from (select activity.crmuserId as crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val 
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id
-left join activitycrmuser on activity.id = activitycrmuser.activityId
-where activitycrmuser.crmuserid = ?) as aactivity where event_type = 2 order by whenadded DESC) as aActivity
+			select distinct * from (select * from (select activity.crmuserId as
+			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			where activitycrmuser.crmuserid = ?) as aactivity where event_type =
+			2 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
-	select distinct * from (select * from (select activity.crmuserId as crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val 
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id
-left join activitycrmuser on activity.id = activitycrmuser.activityId
-left join crmuser on activitycrmuser.crmuserId = crmuser.id
-where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type = 2  order by whenadded DESC) as aActivity
+			select distinct * from (select * from (select activity.crmuserId as
+			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			left join crmuser on activitycrmuser.crmuserId = crmuser.id
+			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type
+			= 2 order by whenadded DESC) as aActivity
 		</sql-manager>
-		
+
 		<sql-admin>
-		
-		select distinct * from (select activity.crmuserId as crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
-       activity.activity_type as act_type\,
-       activity.status as act_status\,
-       activity.contactId as contactName\,
-       contact.accountId as accountName\,
-       activity_event_type_pl.val as event_type_val\,
-       account.name as accountName_val\,
-       contact.name as contactname_val  
-from activity
-left join activity_event_type_pl on activity.activity_type = activity_event_type_pl.id
-left join contact on activity.contactId = contact.id
-left join account on contact.accountId = account.Id where  activity.event_type = 2  order by whenadded DESC) as aActivity
+
+			select distinct * from (select activity.crmuserId as crmuserName\,
+			activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id where
+			activity.event_type = 2 order by whenadded DESC) as aActivity
 		</sql-admin>
-		<sql-ent>select * from (select activity.crmuserId as crmuserName\, activity.coacheeId as coacheeName\, activity.*\,activity.activity_type as
-			act_type\,activity.status as act_status\, activity.contactId as
-			contactName\, contact.accountId as accountName\, contact.name as cn
-from activity left join activitycrmuser on activitycrmuser.activityId=activity.id LEFT JOIN contact on contact.id = activity.contactId  where activity.id=?) 
-as aCoaching
+		<sql-ent>select * from (select activity.crmuserId as crmuserName\,
+			activity.coacheeId as coacheeName\,
+			activity.*\,activity.activity_type as
+			act_type\,activity.status as
+			act_status\, activity.contactId as
+			contactName\, contact.accountId as
+			accountName\, contact.name as cn
+			from activity left join activitycrmuser on
+			activitycrmuser.activityId=activity.id LEFT JOIN contact on
+			contact.id = activity.contactId where activity.id=?)
+			as aCoaching
 		</sql-ent>
-<fields>
+		<fields>
 			<field>
 				<name>id</name>
 				<display>ID</display>
@@ -2023,7 +2288,7 @@ as aCoaching
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>title</name>
 				<display>活动名称</display>
@@ -2088,7 +2353,7 @@ as aCoaching
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
-				<relationTable>crmuser</relationTable>
+				<relationTable>userInfo</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2115,7 +2380,7 @@ as aCoaching
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<relationTable>crmuser</relationTable>
+				<relationTable>userInfo</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2131,7 +2396,7 @@ as aCoaching
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
+
 			<field>
 				<name>feature_product</name>
 				<display>主推产品</display>
@@ -2335,7 +2600,7 @@ as aCoaching
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 		</fields>
-</entity>
+	</entity>
 	<entity>
 		<name>externalMeeting</name>
 		<display>日历</display>
@@ -2470,9 +2735,9 @@ as aCoaching
 
 
 
-    
-    <!-- Below are for the reporting -->
-    	<entity>
+
+	<!-- Below are for the reporting -->
+	<entity>
 		<name>contactVisitingFrequency</name>
 		<display>目标医生拜访频率</display>
 		<sql></sql>
@@ -2533,7 +2798,7 @@ as aCoaching
 		</fields>
 	</entity>
 
-    	<entity>
+	<entity>
 		<name>contactVisitingCoverRate</name>
 		<display>目标医生拜访覆盖</display>
 		<sql></sql>
@@ -2593,8 +2858,8 @@ as aCoaching
 			</field>
 		</fields>
 	</entity>
-	
-	   <entity>
+
+	<entity>
 		<name>workingday</name>
 		<display>区域内工作天数</display>
 		<sql></sql>
@@ -2634,9 +2899,9 @@ as aCoaching
 			</field>
 		</fields>
 	</entity>
-	
-	
-     <entity>
+
+
+	<entity>
 		<name>visitingPerDayReport</name>
 		<display>日均拜访量</display>
 		<sql></sql>

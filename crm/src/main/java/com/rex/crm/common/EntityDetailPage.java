@@ -29,6 +29,7 @@ import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.UserPage;
 import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
@@ -143,7 +144,7 @@ public class EntityDetailPage extends TemplatePage {
                 }else if(entityName.equals("coaching")) {
                   DAOImpl.deleteRecord(id, entityName);
                   setResponsePage(new CoachingPage());
-              }else if(entityName.equalsIgnoreCase("crmuser")){
+              }else if(entityName.equalsIgnoreCase("userInfo")){
                     if(DAOImpl.deleteRecord(id, entityName)>0){
                        DAOImpl.updateCrmUserReport(id, "-1");
                     }
@@ -171,7 +172,7 @@ public class EntityDetailPage extends TemplatePage {
             public void resetPassword(int userId){
             	if(DAOImpl.resetUserPassword(userId)>0){
             		//获取对象
-                	CRMUser crmuser = DAOImpl.getCrmUserById(userId);
+                	UserInfo crmuser = DAOImpl.getCrmUserById(userId);
                 	//发送邮件,判断成功与否
                 	if(SendEmail.sendMail(String.valueOf(crmuser.getTs())+"_"+crmuser.getId(),crmuser.getEmail())){
                 		div.add(new AttributeAppender("style",new Model("display:block"),";"));
@@ -190,6 +191,7 @@ public class EntityDetailPage extends TemplatePage {
          
 
          add(new CRUDPanel("operationBar",entity.getName(),id, CRMUtility.getPermissionForEntity(roleId, entity.getName()),actionListener));
+         logger.debug("entityentyentteyntye     " + entity.getName());
          
     }
 
