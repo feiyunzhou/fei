@@ -10,46 +10,39 @@
                      } ); */
         });
     </script>
-    <div class="">
-        <div class="">
-            <div class=""  >
-                <div class=" bor">
-                    <div class="label label-default table-custom-header pageable-header">
-                            <div class="table-title" wicket:id="table_title" >我的</div>
-                            <div class="center-block operation-bar">
-                                <div wicket:id="operationBar"></div>
-                            </div>
-                    </div>
-                </div>
-                <p/>
-                <table wicket:id="data" id="dt" style="width: 100%;" class="table table-responsive table-hover table-condensed">
-                    <thead >
-                        <tr bgcolor="#E4EFFB" >
-                            <th class="table-hide table-header-border" wicket:id="columnNameRepeater"><span  wicket:id="columnName"></span></th>
-                            <!-- <th>actions</th> -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr wicket:id="dataRowRepeater">
-                            <td class="table-hide " wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
-                            <!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
-                            <!-- <td wicket:id="name"></td> -->
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="20" wicket:id="navigator"></td>
-                        </tr>
-                    </tfoot>
-                </table>
-              
-                <wicket:fragment wicket:id="detailFragment">
-                    <a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
-                </wicket:fragment>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <strong>
+                <span wicket:id="table_title">我的</span>
+            </strong>
+            <div class="center-block operation-bar pull-right">
+                <div wicket:id="operationBar"></div>
             </div>
         </div>
+        <table wicket:id="data" id="dt" style="width: 100%;" class="table table-responsive table-hover table-condensed">
+            <thead>
+                <tr class="active">
+                    <th class="table-hide " wicket:id="columnNameRepeater"><span  wicket:id="columnName"></span></th>
+                    <!-- <th>actions</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr wicket:id="dataRowRepeater">
+                    <td class="table-hide " wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
+                    <!-- 	<td><input type="submit" wicket:id="delete" value="delete" /></td> -->
+                    <!-- <td wicket:id="name"></td> -->
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="20" wicket:id="navigator"></td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
-
+    <wicket:fragment wicket:id="detailFragment">
+        <a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
+    </wicket:fragment>
 
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">

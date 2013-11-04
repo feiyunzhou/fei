@@ -18,19 +18,21 @@
                 </div>
                 <div class="col-md-10">
                     <div class="row">
-                    <form wicket:id="form" class="form-search">
-                      <div class="col-md-5">
-                        <div class="input-group">
-                                <input type="text" class="form-control" placeholder="按名称、医疗机构、主推产品查找"   wicket:id="search_input"/>                          
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn  btn-primary">查找</button>
+                        <form wicket:id="form" class="form-search">
+                            <div class="col-md-5 panel">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="按名称、医疗机构、主推产品查找"   wicket:id="search_input"/>                          
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn  btn-primary">查找</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
                     <div class="row">
-                        <span wicket:id="datalist">data table</span>
+                        <div class="col-md-12 box">
+                            <span wicket:id="datalist">data table</span>
+                        </div>
                     </div>
                 </div>
             </div>

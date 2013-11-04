@@ -2,365 +2,365 @@
 
 /*一些通用项目*/
 .LF {
-	float: left;
+    float: left;
 }
 
 .RF {
-	float: right;
+    float: right;
 }
 
 .absolute {
-	position: absolute;
+    position: absolute;
 }
 
 .odd {
-	background-color: rgb(252, 254, 204);
+    background-color: rgb(252, 254, 204);
 }
 
 .clear {
-	clear: both;
+    clear: both;
 }
 
 .RP5 {
-	padding-right: 5px;
+    padding-right: 5px;
 }
 
 /*容器布局*/
 #mainCont { /*主div容器*/
-	/*display:none;*/
-	width: 980px;
-	margin: 18px auto;
-	border-bottom: none;
-	border-top: none;
+    /*display:none;*/
+    width: 980px;
+    margin: 18px auto;
+    border-bottom: none;
+    border-top: none;
 }
 
 #topCont { /*主容器中顶端div容器*/
-	width: 100%;
-	height: 36px;
-	margin-bottom: 16px;
-	box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
-	border-radius: 3px;
-	-webkit-border-radius: 3px;
+    width: 100%;
+    height: 36px;
+    margin-bottom: 16px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 /*topCont容器中的左侧圆角容器div，中间主容器div，右侧圆角容器div*/
 #left_rc_div {
-	width: 10px;
-	height: 38px;
-	background: url(../pics/bg/topbar_rc_left_bg.png) no-repeat;
-	background-size: 100%;
+    width: 10px;
+    height: 38px;
+    background: url(../pics/bg/topbar_rc_left_bg.png) no-repeat;
+    background-size: 100%;
 }
 
 #mid_cont {
-	width: 960px;
-	height: 38px;
-	background: url(../pics/bg/topbar_sc_middle_bg.png) repeat-x;
-	background-size: 100%;
+    width: 960px;
+    height: 38px;
+    background: url(../pics/bg/topbar_sc_middle_bg.png) repeat-x;
+    background-size: 100%;
 }
 
 #right_rc_div {
-	width: 10px;
-	height: 38px;
-	background: url(../pics/bg/topbar_rc_right_bg.png) no-repeat;
-	background-size: 100%;
+    width: 10px;
+    height: 38px;
+    background: url(../pics/bg/topbar_rc_right_bg.png) no-repeat;
+    background-size: 100%;
 }
 
 #leftCont { /*主容器中左侧div容器*/
-	width: 168px; /*height:520px;*/
-	position: relative;
-	left: 1px; /*注意，设置容器元素的定位之后，要注意元素的位置，因为它会直接影响到容器中的所有元素的布局样式，从而产生假错误*/
+    width: 168px; /*height:520px;*/
+    position: relative;
+    left: 1px; /*注意，设置容器元素的定位之后，要注意元素的位置，因为它会直接影响到容器中的所有元素的布局样式，从而产生假错误*/
 }
 
 #mainTableCont { /*主table容器*/
-	margin-bottom: 8px;
-	width: 804px;
-	vertical-align: center;
+    margin-bottom: 8px;
+    width: 804px;
+    vertical-align: center;
 }
 
 #footer {
-	width: 100%;
-	height: 26px;
-	/* border-top: 1px solid rgb(221, 221, 221); */
-	color: rgb(136, 136, 136);
-	font-size: 10px;
-	line-height: 26px;
-	text-align:'center';
+    width: 100%;
+    height: 26px;
+    /* border-top: 1px solid rgb(221, 221, 221); */
+    color: rgb(136, 136, 136);
+    font-size: 10px;
+    line-height: 26px;
+    text-align:'center';
 }
 /*-------主容器中左侧---------*/
 #leftCont a {
-	color: rgb(21, 82, 187);
-	font-size: 12px;
+    color: rgb(21, 82, 187);
+    font-size: 12px;
 }
 
 #leftCont #list_and_calendar_cont {
-	position: relative;
-	width: 168px;
-	height: 469px;
-	overflow-y: hidden;
-	overflow-x: auto;
+    position: relative;
+    width: 168px;
+    height: 469px;
+    overflow-y: hidden;
+    overflow-x: auto;
 }
 
 #leftCont_rc_down {
-	width: 100%;
-	height: 1px;
-	background: url(../pics/bg/left_list_rc_down_thin.png) no-repeat;
-	font-size: 5px;
-	line-height: 1px;
-	z-index: 99;
+    width: 100%;
+    height: 1px;
+    background: url(../pics/bg/left_list_rc_down_thin.png) no-repeat;
+    font-size: 5px;
+    line-height: 1px;
+    z-index: 99;
 }
 
 /*-------主table左侧部分---------*/
 #space_up {
-	height: 13px;
-	background: url(../pics/bg/mainTableCont_rc_up.png) no-repeat left
-		bottom;
+    height: 13px;
+    background: url(../pics/bg/mainTableCont_rc_up.png) no-repeat left
+        bottom;
 } /*details_cont的上圆角*/
 #today_link_table {
-	width: 100%;
-	font-size: 14px;
-	vertical-align: center;
-	border: none;
-	border-left: 1px solid rgb(205, 205, 205);
-	border-right: 1px solid rgb(205, 205, 205);
+    width: 100%;
+    font-size: 14px;
+    vertical-align: center;
+    border: none;
+    border-left: 1px solid rgb(205, 205, 205);
+    border-right: 1px solid rgb(205, 205, 205);
 }
 
 #today_link_table td {
-	text-align: center;
-	color: rgb(70, 65, 61);
+    text-align: center;
+    color: rgb(70, 65, 61);
 }
 /*默认支持日模式大小，月模式要调整*/
 td#period_link {
-	color: rgb(103, 106, 89);
-	height: 18px;
-	vertical-align: top;
-	vertical-align: top;
+    color: rgb(103, 106, 89);
+    height: 18px;
+    vertical-align: top;
+    vertical-align: top;
 }
 
 #period_link span {
-	line-height: 28px;
-	font-size: 17px;
+    line-height: 28px;
+    font-size: 17px;
 }
 
 /*details的相关类定义*/
 /*注意 类名前使用id选择器是提高选择器优先级问题      -----------------------------*/
 #details_cont {
-	position: relative;
-	padding-top: 2px;
-	width: 802px;
-	height: 380px;
-	border-left: 1px solid rgb(205, 205, 205);
-	border-right: 1px solid rgb(205, 205, 205);
-	overflow-y: auto;
-	overflow-x: hidden;
+    position: relative;
+    padding-top: 2px;
+    width: 802px;
+    height: 380px;
+    border-left: 1px solid rgb(205, 205, 205);
+    border-right: 1px solid rgb(205, 205, 205);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #details_cont_footer {
-	width: 100%;
-	height: 5px;
-	background: url(../pics/bg/mainTableCont_rc_down.png) no-repeat;
+    width: 100%;
+    height: 5px;
+    background: url(../pics/bg/mainTableCont_rc_down.png) no-repeat;
 }
 
 #details_cont .apt {
-	
+
 }
 
 #details_cont .account {
-	
+
 }
 
 #details_cont .contact {
-	font-size: 14px;
+    font-size: 14px;
 }
 
 #details_cont .apt_status {
-	margin: 2px 0 0 2px;
-	width: 29px;
-	height: 14px;
-	text-align: center;
-	font-size: 9px;
-	line-height: 14px;
-	text-decoration: none;
-	color: #fff;
+    margin: 2px 0 0 2px;
+    width: 29px;
+    height: 14px;
+    text-align: center;
+    font-size: 9px;
+    line-height: 14px;
+    text-decoration: none;
+    color: #fff;
 }
 
 #details_cont .apt_cancel {
-	margin-top: 1px;
-	margin-right: 2px;
-	width: 14px;
-	height: 14px;
-	text-align: center;
-	font-size: 9px;
-	line-height: 14px;
-	text-decoration: none;
-	color: #fff;
-	background: url(../pics/bg/cancel.png) no-repeat;
+    margin-top: 1px;
+    margin-right: 2px;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    font-size: 9px;
+    line-height: 14px;
+    text-decoration: none;
+    color: #fff;
+    background: url(../pics/bg/cancel.png) no-repeat;
 }
 
 #details_cont .apt_cancel img {
-	width: 14px;
-	height: 14px;
+    width: 14px;
+    height: 14px;
 }
 
 /*标示单个call或meeting的完成状态，注：未完成，粉色；完成，白色*/
 #details_cont div.done {
-	background-color: #eee; /*rgb(243,243,243);*/
+    background-color: #eee; /*rgb(243,243,243);*/
 }
 
 #details_cont .undone {
-	
+
 }
 
 /*公司logo*/
 #company_logo {
-	display: inline-block;
-	margin-left: 10px;
-	color: #FFF;
-	font-weight: bold;
-	line-height: 38px;
-	font-style: italic;
-	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.7);
+    display: inline-block;
+    margin-left: 10px;
+    color: #FFF;
+    font-weight: bold;
+    line-height: 38px;
+    font-style: italic;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.7);
 }
 
 #company_logo sup {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 /*拖拽相关*/
 #helper_container a {
-	display: block;
-	width: 166px;
-	height: 25px;
-	padding-left: 40px;
-	background: url(../pics/icons/contact.gif) no-repeat 20px center;
-	font-size: 10px;
-	line-height: 25px;
-	background-color: rgb(214, 229, 242);
-	color: rgb(102, 102, 102);
+    display: block;
+    width: 166px;
+    height: 25px;
+    padding-left: 40px;
+    background: url(../pics/icons/contact.gif) no-repeat 20px center;
+    font-size: 10px;
+    line-height: 25px;
+    background-color: rgb(214, 229, 242);
+    color: rgb(102, 102, 102);
 }
 
 #helper_container_weekly_monthly {
-	width: 114px;
-	font-size: 12px;
+    width: 114px;
+    font-size: 12px;
 }
 
 #helper_container_weekly_monthly a {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 /*重新下载相关*/
 #syn_button {
-	margin-top: 1px;
-	height: 34px;
-	line-height: 34px;
-	font-size: 12px;
-	color: #fff;
-	border-left: 1px solid #ccc;
-	padding: 0 10px;
+    margin-top: 1px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 12px;
+    color: #fff;
+    border-left: 1px solid #ccc;
+    padding: 0 10px;
 }
 
 #re_syn_button {
-	margin-top: 1px;
-	height: 34px;
-	line-height: 34px;
-	font-size: 12px;
-	color: #fff;
-	border-left: 1px solid #ccc;
-	padding: 0 10px;
+    margin-top: 1px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 12px;
+    color: #fff;
+    border-left: 1px solid #ccc;
+    padding: 0 10px;
 }
 
 #re_syn_menu {
-	display: none;
-	position: absolute;
-	width: 200px;
-	top: 0px;
-	left: 0px;
-	background-color: red;
-	z-index: 9999999;
+    display: none;
+    position: absolute;
+    width: 200px;
+    top: 0px;
+    left: 0px;
+    background-color: red;
+    z-index: 9999999;
 }
 
 #re_syn_menu_rc_up {
-	width: 100%;
-	font-size: 5px;
-	line-height: 5px;
-	height: 5px;
+    width: 100%;
+    font-size: 5px;
+    line-height: 5px;
+    height: 5px;
 }
 
 #re_syn_menu_mid_cont {
-	width: 100%;
+    width: 100%;
 }
 
 #re_syn_menu_rc_down {
-	width: 100%;
-	font-size: 5px;
-	line-height: 5px;
-	height: 5px;
+    width: 100%;
+    font-size: 5px;
+    line-height: 5px;
+    height: 5px;
 }
 
 #re_syn_menu_mid_cont a {
-	padding-left: 5px;
-	display: block;
-	width: 195px;
-	font-size: 12px;
-	line-height: 18px;
+    padding-left: 5px;
+    display: block;
+    width: 195px;
+    font-size: 12px;
+    line-height: 18px;
 }
 
 #re_syn_menu_mid_cont a:hover {
-	background-color: rgb(214, 229, 242);
-	color: rgb(51, 133, 207);
+    background-color: rgb(214, 229, 242);
+    color: rgb(51, 133, 207);
 }
 
 /*实验相关*/
 #select_cover {
-	position: absolute;
-	display: none;
-	z-index: -9999999;
+    position: absolute;
+    display: none;
+    z-index: -9999999;
 }
 /*#sys_log{ position:absolute; width:200px; height:200px; background-color:red; z-index:99999;}*/
 input.text {
-	margin-bottom: 12px;
-	width: 95%;
-	padding: .4em;
+    margin-bottom: 12px;
+    width: 95%;
+    padding: .4em;
 }
 
 h1 {
-	font-size: 1.2em;
-	margin: .6em 0;
+    font-size: 1.2em;
+    margin: .6em 0;
 }
 
 .ui-dialog .ui-state-error {
-	padding: .3em;
+    padding: .3em;
 }
 
 img {
-	float: left;
-	margin: 10px;
+    float: left;
+    margin: 10px;
 }
 
 .pics {
-	/*clear: both;*/
-	border: 5px solid #fff;
-	float: left;
-	height: 140px;
-	width: 140px;
-	margin: 10px;
-	overflow: hidden;
-	-webkit-box-shadow: 5px 5px 5px #111;
-	box-shadow: 5px 5px 5px #111;
+    /*clear: both;*/
+    border: 5px solid #fff;
+    float: left;
+    height: 140px;
+    width: 140px;
+    margin: 10px;
+    overflow: hidden;
+    -webkit-box-shadow: 5px 5px 5px #111;
+    box-shadow: 5px 5px 5px #111;
 }
 
 .rotate30 {
-	/*General*/
-	transform: rotate(-6deg);
-	/*Firefox*/
-	-moz-transform: rotate(-6deg);
-	/*Microsoft Internet Explorer*/
-	-ms-transform: rotate(-6deg);
-	/*Chrome, Safari*/
-	-webkit-transform: rotate(-6deg);
-	/*Opera*/
-	-o-transform: rotate(-6deg);
-	/*alter opacity*/
-	opacity: 0.8;
-	filter: alpha(opacity =   80);
+    /*General*/
+    transform: rotate(-6deg);
+    /*Firefox*/
+    -moz-transform: rotate(-6deg);
+    /*Microsoft Internet Explorer*/
+    -ms-transform: rotate(-6deg);
+    /*Chrome, Safari*/
+    -webkit-transform: rotate(-6deg);
+    /*Opera*/
+    -o-transform: rotate(-6deg);
+    /*alter opacity*/
+    opacity: 0.8;
+    filter: alpha(opacity =   80);
 }
 /*
 * {
@@ -371,72 +371,72 @@ img {
 }
 */
 .tilt {
-	-webkit-transform: rotate(-6deg);
-	-moz-transform: rotate(-6deg);
-	-o-transform: rotate(-6deg);
-	-ms-transform: rotate(-6deg);
-	transform: rotate(-6deg);
+    -webkit-transform: rotate(-6deg);
+    -moz-transform: rotate(-6deg);
+    -o-transform: rotate(-6deg);
+    -ms-transform: rotate(-6deg);
+    transform: rotate(-6deg);
 }
 
 .responsive-title:hover {
-	cursor: hand;
+    cursor: hand;
 }
 
 .toolbar {
-	padding: 0px;
-	display: inline-block;
-	float: right;
-	height: 20px;
+    padding: 0px;
+    display: inline-block;
+    float: right;
+    height: 20px;
 }
 
 .toolbar button {
-	height: 20px;
-	width: 20px;
+    height: 20px;
+    width: 20px;
 }
 
 #navcontainer ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 
 #navcontainer ul li {
-	display: inline;
+    display: inline;
 }
 
 #navcontainer ul li a {
-	text-decoration: none;
-	padding: .2em 1em;
-	/*color: #fff;
-  background-color: #036;*/
+    text-decoration: none;
+    padding: .2em 1em;
+    /*color: #fff;
+background-color: #036;*/
 }
 
 #navcontainer ul li a:hover {
-	color: #fff;
-	background-color: #369;
+    color: #fff;
+    background-color: #369;
 }
 
 .box {
-	/*  -moz-border-radius: 4px;
+    /*  -moz-border-radius: 4px;
 -webkit-border-radius: 4px;
 -moz-box-shadow: 2px 2px 8px #bbb,-2px 0px 8px #bbb;
 -webkit-box-shadow: 2px 2px 8px */
-	
+
 }
 
 .sidebarbox {
-/*	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
-	-webkit-box-shadow: 2px 2px 8px;
- 	-webkit-transform: rotate(-3deg);
--moz-transform: rotate(-3deg);
--ms-transform: rotate(-3deg);
-transform: rotate(-3deg); */
+    /*	-moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            -moz-box-shadow: 2px 2px 8px #bbb, -2px 0px 8px #bbb;
+            -webkit-box-shadow: 2px 2px 8px;
+            -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg);
+    transform: rotate(-3deg); */
 }
 
 .box-header {
-	/* border:none;
+    /* border:none;
 padding-top:5px;
 border-bottom: 1px solid #DEDEDE;
 border-radius:3px 3px 0 0;
@@ -455,59 +455,59 @@ background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.1) 100%
 background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.1) 100%);
 background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#1a000000',GradientType=0 );
- */
-	
+    */
+
 }
 
 .title {
-	border-bottom: 1px rgb(215,215,215) solid;
-	font-size: 20px;
-	font-weight: bold;
-	padding-bottom: 8px;
-	margin-top: 6px;
+    border-bottom: 1px rgb(215,215,215) solid;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 8px;
+    margin-top: 6px;
 }
 
 .tool-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  display: none;
-  float: left;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  list-style: none;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  *border-right-width: 2px;
-  *border-bottom-width: 2px;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -webkit-background-clip: padding-box;
-     -moz-background-clip: padding;
-          background-clip: padding-box;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
 }
 
 
 .contrib-legend .legend {
-display: inline-block;
-list-style: none;
-margin: 0 5px;
+    display: inline-block;
+    list-style: none;
+    margin: 0 5px;
 }
 
 .clearfix {
-display: block;
+    display: block;
 }
 
 .contrib-footer .contrib-info {
-font-size: 11px;
-color: #999;
-float: left;
+    font-size: 11px;
+    color: #999;
+    float: left;
 }
 
 
@@ -532,33 +532,21 @@ float: left;
 .contrib-footer{padding:0px 10px 10px 10px}.contrib-footer .contrib-info{font-size:11px;color:#999;float:left}.contrib-footer .contrib-info .octicon{margin-right:5px;color:#999}.contrib-legend{font-size:11px;color:#777;font-weight:bold;float:right}.contrib-legend span{font-weight:normal;color:#999}.contrib-legend ul.legend{display:inline-block;list-style:none;margin:0 5px}.contrib-legend ul.legend li{display:inline-block;width:10px;height:10px}#contribution-activity .blankslate{margin-top:20px}#contribution-activity .dots{margin:20px auto 0 auto;width:64px;height:64px;display:block}ul.simple-conversation-list a.meta{color:#777}li.contribution{list-style:none;padding:10px 0}li.contribution:last-child{border-bottom:none}li.contribution h3{font-size:14px;display:inline-block;margin:0}li.contribution h3 a{color:#4183C4}li.contribution .cmeta{display:block;font-size:12px;color:#aaa;font-weight:normal}li.contribution .cmeta a{color:#666}li.contribution .cmt{color:#999}li.contribution .d{color:#c00}li.contribution .a{color:#8cac29}li.contribution .num{color:#777}.contribution-status{float:right;font-size:12px;margin-top:10px}.commits-summary-list h3{margin:0}.contribution-pulls-list .cmeta{margin-left:87px}.contribution-pulls-list .state{display:block;float:left;clear:none}
 
 .contrib-footer {
-padding: 0px 10px 10px 10px;
+    padding: 0px 10px 10px 10px;
 }
 
 .center { float: none; margin-left: auto; margin-right: auto; }
 
 .form-horizontal .control-label {
-  float: left;
-  width: 80px;
-  padding-top: 5px;
-  text-align: right;
+    float: left;
+    width: 80px;
+    padding-top: 5px;
+    text-align: right;
 }
 
 .form-horizontal .controls {
-  *display: inline-block;
-  *padding-left: 20px;
-  margin-left: 100px;
-  *margin-left: 0;
-}
-
-.relationBlock {
-	 border-top: 1px solid #eaeaea;
-/*   background-color: #f8f8f8; */
-  border-bottom: 1px solid #eaeaea;
-  border-left: 1px solid #eaeaea;
-  border-right: 1px solid #eaeaea;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  margin-bottom: 17px;
+    *display: inline-block;
+    *padding-left: 20px;
+    margin-left: 100px;
+    *margin-left: 0;
 }
