@@ -516,18 +516,18 @@ public class NewDataFormPanel extends Panel {
     private class RelationTableSearchFragment extends Fragment {
 
         public RelationTableSearchFragment(String id, String markupId,
-                MarkupContainer markupProvider, final String entityName,String excludeEntityName ,final String defaultValue, final IModel defaultModel) {
+                MarkupContainer markupProvider, final String relationEntity,String entityName ,final String defaultValue, final IModel defaultModel) {
             super(id, markupId, markupProvider);
             PageParameters params = new PageParameters();
-            params.set("en", entityName);
-            params.set("excludeName", excludeEntityName);logger.debug("dfdffdafdgadfgadfgdfgad" + excludeEntityName);
+            params.set("en", relationEntity);
+            params.set("excludeName", entityName);
             params.set("target", (Long)defaultModel.getObject());
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params));
             HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", defaultModel);
-            hidden.add(new AttributeModifier("id", entityName + "_id"));
+            hidden.add(new AttributeModifier("id", relationEntity + "_id"));
             add(hidden);
             TextField<String> text = new TextField<String>("selected_value_input", new Model(defaultValue));
-            text.add(new AttributeModifier("id", entityName + "_name"));
+            text.add(new AttributeModifier("id", relationEntity + "_name"));
             add(text);
         }
     }

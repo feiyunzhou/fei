@@ -43,27 +43,27 @@ public class SelectEntryPage extends WebPage {
      *            Page parameters (ignored since this is the home page)
      */
     public SelectEntryPage() {
-        String entityName = getRequest().getRequestParameters().getParameterValue("en").toString();
-        String excludeEntityName = getRequest().getRequestParameters().getParameterValue("excludeName").toString();
+        String relationTableName = getRequest().getRequestParameters().getParameterValue("en").toString();
+        String tragetEntity = getRequest().getRequestParameters().getParameterValue("excludeName").toString();
         final String excludeId = getRequest().getRequestParameters().getParameterValue("eid").toString();
-        initPage(null,entityName,excludeEntityName,excludeId);
+        initPage(null,relationTableName,tragetEntity,excludeId);
     }
 
-    public SelectEntryPage(List<Map> maplist,String entityName,String excludeEntityName,String excludeId) {
-        initPage(maplist,entityName,excludeEntityName,excludeId);
+    public SelectEntryPage(List<Map> maplist,String relationTableName,String tragetEntity,String excludeId) {
+        initPage(maplist,relationTableName,tragetEntity,excludeId);
     }
 
-    public void initPage(List<Map> list,final String entityName,final String excludeEntityName,final String excludeId) {
+    public void initPage(List<Map> list,final String relationTableName,final String tragetEntity,final String excludeId) {
         final String posId = ((SignIn2Session) getSession()).getPositionId();
         
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
-        final Entity entity = entities.get(entityName);
+        final Entity entity = entities.get(relationTableName);
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
                 List<Map> maplist = null;
-                if(entityName.equalsIgnoreCase("account")){
+                if(relationTableName.equalsIgnoreCase("account")){
                     
                     String sql = assembleSearchingSQL(roleId, entity);
                     System.out.println(sql);
@@ -80,43 +80,54 @@ public class SelectEntryPage extends WebPage {
                     }
                     
                     
-                }else if(excludeEntityName.equalsIgnoreCase("contact")){
+                }else if(relationTableName.equalsIgnoreCase("contact")){
                     
-                    String sql = assembleSearchingSQL(roleId, entity);
-                    
-                    switch (roleId) {
-                    case 2:
-                        maplist = DAOImpl.queryEntityRelationList(sql, posId,posId);
-                        break;
-                    case 3:
-                        maplist = DAOImpl.queryEntityRelationList(sql, posId);
-                        break;
-                    case 1:
-                        maplist = DAOImpl.queryEntityRelationList(sql);
+                    if (tragetEntity.equalsIgnoreCase("activity")) {
+
+                        String sql = assembleSearchingSQL(roleId, entity);
+
+                        switch (roleId) {
+                        case 2:
+                            maplist = DAOImpl.queryEntityRelationList(sql, posId, posId);
+                            break;
+                        case 3:
+                            maplist = DAOImpl.queryEntityRelationList(sql, posId);
+                            break;
+                        case 1:
+                            maplist = DAOImpl.queryEntityRelationList(sql);
+
+                        }
+                    } else if (tragetEntity.equalsIgnoreCase("coaching")) {
+                        maplist = DAOImpl.searchCoachee(search_target, excludeId, posId);
+                    } else if (tragetEntity.equalsIgnoreCase("crmuser")) {
+                        // maplist = DAOImpl.searchCRMUser(search_target);
+                        maplist = DAOImpl.searchManager(search_target, excludeId);
+                        Map dummy = Maps.newHashMap();
+                        dummy.put("id", -1);
+                        dummy.put("name", "无");
+                        maplist.add(dummy);
+
+                    } else if (tragetEntity.equalsIgnoreCase("userInfo")) {
+                        // maplist = DAOImpl.searchCRMUser(search_target);
+                        maplist = DAOImpl.searchCRMUser(search_target);
+                        Map dummy = Maps.newHashMap();
+                        dummy.put("id", -1);
+                        dummy.put("name", "无");
+                        maplist.add(dummy);
+
                     }
                     
-                }else if(excludeEntityName.equalsIgnoreCase("coaching")){
-                  maplist = DAOImpl.searchCoachee(search_target,excludeId,posId);
-                }else if(excludeEntityName.equalsIgnoreCase("crmuser")){
-                    //maplist = DAOImpl.searchCRMUser(search_target);
-                    maplist = DAOImpl.searchManager(search_target,excludeId);
+                }else if(relationTableName.equalsIgnoreCase("crmuser")){
+                    // maplist = DAOImpl.searchCRMUser(search_target);
+                    maplist = DAOImpl.searchManager(search_target, excludeId);
                     Map dummy = Maps.newHashMap();
-                    dummy.put("id",-1);
+                    dummy.put("id", -1);
                     dummy.put("name", "无");
                     maplist.add(dummy);
-                    
-                }else if(excludeEntityName.equalsIgnoreCase("userInfo")){
-                  //maplist = DAOImpl.searchCRMUser(search_target);
-                  maplist = DAOImpl.searchCRMUser(search_target);
-                  Map dummy = Maps.newHashMap();
-                  dummy.put("id",-1);
-                  dummy.put("name", "无");
-                  maplist.add(dummy);
-                  
-              }
+                }
                 //this.setResponsePage(cls, parameters)
                 
-                setResponsePage(new SelectEntryPage(maplist,entityName,excludeEntityName,excludeId));
+                setResponsePage(new SelectEntryPage(maplist,relationTableName,tragetEntity,excludeId));
 
             }
         };
@@ -135,7 +146,7 @@ public class SelectEntryPage extends WebPage {
 
                 item.add(new AttributeAppender("data-id",new Model(uid)));
                 item.add(new AttributeAppender("data-name",new Model(name)));
-                item.add(new AttributeAppender("data-ename",entityName));
+                item.add(new AttributeAppender("data-ename",relationTableName));
                 
                 //item.add(new AttributeAppender("data-cname", new Model(cname)));
                 Label cap = new Label("name_span", new Model(name));
