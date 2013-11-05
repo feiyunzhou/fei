@@ -460,10 +460,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 }
 
 .title {
-    border-bottom: 1px rgb(215,215,215) solid;
+   /* border-bottom: 1px rgb(215,215,215) solid;*/
     font-size: 20px;
     font-weight: bold;
-    padding-bottom: 8px;
+    padding-bottom: 12px;
     margin-top: 6px;
 }
 

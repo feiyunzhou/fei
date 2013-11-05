@@ -1,10 +1,6 @@
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
 	<script>
         $(document).ready(function() {
-        		$("#1").addClass("icon-angle-down");
-        		$("#2").addClass("icon-angle-right");
-        		$("#3").addClass("icon-angle-right");
-        		$("#4").addClass("icon-angle-right");
         		var status = $("#status").text();
         		if(status=="完成"){
         			$("#editCon").hide();
@@ -28,26 +24,34 @@
         
     </script>
 
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span12">
+	<div class="">
+		<div class="">
+			<div class="">
 				<div wicket:id="fieldGroupRepeater">
-					<table >
-							<tr>
-								<td colspan="2"><h5>
-										<span wicket:id="groupname"></span>
-									    <a wicket:id="divButton"  data-toggle="collapse" ><span wicket:id="icon"   onclick="chengeicon(this)"></span></a>
-										</h5>
-								</td>
-							</tr>
-					</table>
-						<div  wicket:id="divRepeater" >
-						<div class="table table-hover table-condensed  " style="">
-							<div class="table-cell" wicket:id="dataRowRepeater">
-								<div class="table-column-view " wicket:id="columnRepeater"><div wicket:id="celldata"></div></div>
+
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+							    
+								<a wicket:id="divButton"  data-toggle="collapse" href=""><span wicket:id="groupname"></span></a>
+							</h4>
+						</div>
+						<div wicket:id="panel_body_div" class="panel-collapse collapse">
+							<div class="panel-body">
+								<div wicket:id="divRepeater">
+									<div class="table table-hover table-condensed  " style="">
+										<div class="table-cell" wicket:id="dataRowRepeater">
+											<div class="table-column-view " wicket:id="columnRepeater">
+												<div wicket:id="celldata"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
 							</div>
+						</div>
 					</div>
-					</div>
+
 				</div>
 			</div>
 		</div>

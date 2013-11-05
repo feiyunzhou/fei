@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
@@ -70,20 +71,18 @@ public class EntityDetailPanel extends Panel {
             fieldGroupRepeater.add(groupitem);
             WebMarkupContainer container = new WebMarkupContainer("divButton");
             groupitem.add(container);
-            container.add(new AttributeAppender("data-target", new Model("#2" + (gNum++)), ";"));
-            WebMarkupContainer icon = new WebMarkupContainer("icon");
-            container.add(icon);
-            icon.add(new AttributeAppender("id", new Model(gNum), ";"));
+            container.add(new Label("groupname", gn));
+            container.add(new AttributeModifier("href", "#collapse" + (gNum)));
+            WebMarkupContainer panel_body_div = new WebMarkupContainer("panel_body_div");
+            panel_body_div.add(new AttributeModifier("id", "collapse" + (gNum)));
+            if(gNum == 0){
+              panel_body_div.add(new AttributeAppender("class", new Model<String>("in")," "));
+            }
+            groupitem.add(panel_body_div);
             RepeatingView divRepeater = new RepeatingView("divRepeater");
-            groupitem.add(divRepeater);
+            panel_body_div.add(divRepeater);
             AbstractItem div = new AbstractItem(divRepeater.newChildId());
             divRepeater.add(div);
-            div.add(new AttributeAppender("id", new Model("2" + (--gNum)), ";"));
-            if (!(gNum == 0)) {
-                div.add(new AttributeAppender("class", new Model("collapse"), ";"));
-            } else {
-                div.add(new AttributeAppender("class", new Model("collapse in"), ";"));
-            }
             gNum++;
             RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
             div.add(dataRowRepeater);
@@ -99,7 +98,7 @@ public class EntityDetailPanel extends Panel {
                 visibleFields.add(f);
             }
 
-            groupitem.add(new Label("groupname", gn));
+           
 
             int num_of_row = (numOfField / this.number_of_column) + 1;
 
