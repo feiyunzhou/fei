@@ -85,7 +85,7 @@ public class NewDataFormPanel extends Panel {
         add(fieldGroupRepeater);
         for (String gn : groupNames) {
             List<Field> groupfields = addFieldGroupMap.get(gn);
-            if (groupfields == null) {
+            if (groupfields == null || gn.equalsIgnoreCase("附加信息")) {
                 continue;
             }
             RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");

@@ -104,8 +104,9 @@ public class EditDataFormPanel extends Panel {
 			logger.info("gn = "+gn+ "groupNames = "+groupNames);
 
 			List<Field> groupfields = fieldGroupMap.get(gn);
-			if (groupfields == null)
-				continue;
+			
+			if (groupfields == null ||  gn.equalsIgnoreCase("附加信息")) continue;
+			
 			AbstractItem groupitem = new AbstractItem(fieldGroupRepeater.newChildId());
 			fieldGroupRepeater.add(groupitem);
 			RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
