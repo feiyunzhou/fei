@@ -124,6 +124,14 @@ public class SelectEntryPage extends WebPage {
                     dummy.put("id", -1);
                     dummy.put("name", "无");
                     maplist.add(dummy);
+                }else if (relationTableName.equalsIgnoreCase("userInfo")) {
+                    // maplist = DAOImpl.searchCRMUser(search_target);
+                    maplist = DAOImpl.searchCRMUser(search_target);
+                    Map dummy = Maps.newHashMap();
+                    dummy.put("id", -1);
+                    dummy.put("name", "无");
+                    maplist.add(dummy);
+
                 }
                 //this.setResponsePage(cls, parameters)
                 
