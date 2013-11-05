@@ -61,7 +61,9 @@ public class HomePage extends TemplatePage {
         add(contact_create_link);
       
        
-        BookmarkablePageLink activity_create_link = new BookmarkablePageLink("activity_create_link", CreateEventPage.class);
+        param = new PageParameters();
+        param.add("entityName", "activity");
+        BookmarkablePageLink activity_create_link = new BookmarkablePageLink("activity_create_link", CreateDataPage.class,param);
         add(activity_create_link);
         
         WebMarkupContainer account_create_li = new WebMarkupContainer("account_create_li");
