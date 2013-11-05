@@ -255,9 +255,10 @@ public class Configuration {
                     if(fieldtype !=null){
                         field.setFieldType(fieldtype);
                     }
-                    
-                    
-                    
+                    String tooltip = sub2.getString("tooltip");
+                    if(tooltip!=null){
+                    	field.setTooltip(Integer.parseInt(tooltip));
+                    }
                     field.setPrimaryKey(Boolean.parseBoolean(sub2.getString("isPrimaryKey")));
                     field.setDetailLink(Boolean.parseBoolean(sub2.getString("isDetailLink"))); 
                     field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible")));

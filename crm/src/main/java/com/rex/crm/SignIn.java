@@ -25,6 +25,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 
 import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 
 
@@ -78,7 +79,7 @@ public final class SignIn extends WebPage
                  error(errmsg);
         	}else{
         		//判断用户是否激活密码是否存在()
-            	CRMUser user = DAOImpl.getUserByLoginName(getUsername());
+            	UserInfo user = DAOImpl.getUserByLoginName(getUsername());
             	if(null!=user){
             		if(user.getPl1()==1){
             			if("".equals(user.getPassword())&&user.getIsActivited()==0){

@@ -16,6 +16,7 @@ import org.apache.wicket.util.string.StringValue;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.common.ErrorPromptPage;
 import com.rex.crm.db.DAOImpl;
 
@@ -32,8 +33,8 @@ public class ActivitedUser extends WebPage{
 		logger.debug("str:"+strs[0]);
 		long createTime = Long.parseLong(strs[0]);
 		int userID =Integer.parseInt(strs[1]);
-		CRMUser crmuser = DAOImpl.getUserByActivation(userID,createTime);
-		if(crmuser.getIsActivited()==2){
+		UserInfo userInfo = DAOImpl.getUserByActivation(userID,createTime);
+		if(userInfo.getIsActivited()==2){
 			initPage(userID,createTime);
 		}else{
 			setResponsePage(new ErrorPromptPage());
@@ -41,9 +42,9 @@ public class ActivitedUser extends WebPage{
 	}
 	public void initPage(final int userID,final long createTime){
 		logger.debug("init");
-		CRMUser crmuser = DAOImpl.getUserByActivation(userID,createTime);;
-		final int userId = crmuser.getId();
-		final String userLoginName = crmuser.getLoginName();
+		UserInfo userInfo = DAOImpl.getUserByActivation(userID,createTime);;
+		final int userId = userInfo.getId();
+		final String userLoginName = userInfo.getLoginName();
 		//此时获取到对象，接收客户端的数据
 		final  Label promptLabel = new Label("prompt","操作失败重新输入！");
 		Form form = new Form("form"){
@@ -71,9 +72,9 @@ public class ActivitedUser extends WebPage{
 		};
 		add(form);
 		add(promptLabel);
-		form.add(new Label("userName",crmuser.getName()));
+		form.add(new Label("userName",userInfo.getName()));
 		IModel<String> textModel = new Model<String>("");
-		form.add(new Label("loginName",crmuser.getLoginName()));
+		form.add(new Label("loginName",userInfo.getLoginName()));
 		PasswordTextField password = new PasswordTextField("password",textModel);
 		models.put("password",textModel);
 		form.add(password);

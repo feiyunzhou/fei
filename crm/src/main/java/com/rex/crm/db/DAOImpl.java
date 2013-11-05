@@ -1759,7 +1759,7 @@ public class DAOImpl
     }
     //update user Password
     public static boolean updateCrmUserPassword(int userId,String password){
-    	String  sql=" UPDATE crmuser SET password=? where id =?";
+    	String  sql=" UPDATE userinfo SET password=? where id =?";
     	Connection conn = null;
     	String newPassword = DigestUtils.md5Hex(password);
     	int updates = 0;
@@ -1778,15 +1778,15 @@ public class DAOImpl
     	}
     	return false;
     }
-    public  static CRMUser getUserByActivation(int userID,long createTime){
+    public  static UserInfo getUserByActivation(int userID,long createTime){
     	System.out.println("根据激活码Code获取用户");
         Connection conn = null;
-        CRMUser user = new CRMUser();
+        UserInfo user = new UserInfo();
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
-            user = run.query(conn, "SELECT * FROM crmuser where ts=? and id=?", h, createTime,userID);
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
+            user = run.query(conn, "SELECT * FROM userinfo where ts=? and id=?", h, createTime,userID);
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {
@@ -1798,13 +1798,13 @@ public class DAOImpl
     //reset password
     public static int  resetUserPassword(int entityId){
     	System.out.println("reset password");
-    	String  sql=" UPDATE crmuser SET password='',isActivited= 2 where id =?";
+    	String  sql=" UPDATE userinfo SET password='',isActivited= 2 where id =?";
         Connection conn = null;
         int insert = 0;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             insert = run.update(conn, sql,entityId);
     		logger.debug("reset password success!");
         } catch (SQLException e) {
@@ -1817,12 +1817,12 @@ public class DAOImpl
     //修改用户激活状态
     public static void updateUserActivited(int entityId){
     	System.err.println("update activited");
-    	String  sql=" UPDATE crmuser SET isActivited=? where id =?";
+    	String  sql=" UPDATE userinfo SET isActivited=? where id =?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             run.update(conn, sql,1,entityId);
     		logger.debug("update activited success!");
         } catch (SQLException e) {
@@ -1888,13 +1888,13 @@ public class DAOImpl
         }
         return contact;
     }
-    public  static CRMUser getUserByLoginName(String loginName){
+    public  static UserInfo getUserByLoginName(String loginName){
         Connection conn = null;
-        CRMUser user = new CRMUser();
+        UserInfo user = new UserInfo();
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             user = run.query(conn, "SELECT * FROM userInfo where loginName=?", h, loginName);
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);

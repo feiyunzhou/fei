@@ -1,6 +1,9 @@
 package com.rex.crm.common;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
@@ -139,8 +143,30 @@ public class EditDataFormPanel extends Panel {
                     final Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
                     if (currentField.getPicklist() != null) {
                         if (j % 2 == 0) {
-                            columnitem
-                                    .add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                        	TextFragment textField = new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":");
+                            textField.add(new AttributeAppender("style", new Model("font-weight:bold;"), ";"));
+                            if(currentField.getPriority()==5){
+                          	  Properties systemPeroperties = new Properties();
+                                try {
+                                		systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/tooltipMessage.properties"));
+                        			} catch (FileNotFoundException e1) {
+  	                      			// TODO Auto-generated catch block
+  	                      			e1.printStackTrace();
+  	                      		} catch (IOException e1) {
+  	                      			// TODO Auto-generated catch block
+  	                      			e1.printStackTrace();
+  	                      		}
+                                String message="";
+                                try {
+                              	  message = new String(systemPeroperties.getProperty(String.valueOf(currentField.getTooltip())).getBytes("ISO-8859-1"),"utf-8");
+  							   } catch (UnsupportedEncodingException e) {
+  									// TODO Auto-generated catch block
+  									e.printStackTrace();
+  							  }
+                          	  textField.add(new AttributeModifier("data-original-title",message));
+                          	  textField.add(new AttributeAppender("class",new Model("tooltip-test")," "));
+                            }
+                            columnitem.add(textField);
                             if (currentField.isRequired()) {
                                 columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
                             } else {

@@ -1,5 +1,8 @@
 package com.rex.crm.common;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -119,7 +122,30 @@ public class NewDataFormPanel extends Panel {
                     if (currentField.getPicklist() != null) {
 
                         if (j % 2 == 0) {
-                          columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                          TextFragment textField = new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":");
+                          textField.add(new AttributeAppender("style", new Model("font-weight:bold;"), ";"));
+                          if(currentField.getPriority()==5){
+                        	  Properties systemPeroperties = new Properties();
+                              try {
+                              		systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/tooltipMessage.properties"));
+                      			} catch (FileNotFoundException e1) {
+	                      			// TODO Auto-generated catch block
+	                      			e1.printStackTrace();
+	                      		} catch (IOException e1) {
+	                      			// TODO Auto-generated catch block
+	                      			e1.printStackTrace();
+	                      		}
+                              String message="";
+                              try {
+                            	  message = new String(systemPeroperties.getProperty(String.valueOf(currentField.getTooltip())).getBytes("ISO-8859-1"),"utf-8");
+							   } catch (UnsupportedEncodingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+							  }
+                        	  textField.add(new AttributeModifier("data-original-title",message));
+                        	  textField.add(new AttributeAppender("class",new Model("tooltip-test")," "));
+                          }
+                          columnitem.add(textField);
                           if (currentField.isRequired()) {
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
                           }else{
@@ -291,20 +317,11 @@ public class NewDataFormPanel extends Panel {
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 //找出title属性，判断实体名称，先声明
                 StringBuffer title = new StringBuffer();
-                String coacheeName = "";
-                String callName = "";
                 for (String key : models.keySet()) {
                     fieldNames.add(key);
                     logger.debug("currentFieldkey:"+key);
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
-                    if(field.getName().equals("coacheeId")){
-                    	//根据crmuserId获取对象名称
-                    	coacheeName = DAOImpl.queryRelationDataById("position",models.get(key).getObject().toString());
-                    }
-                    if(field.getName().equals("contactId")){
-                    	callName = DAOImpl.queryRelationDataById("contact",models.get(key).getObject().toString());
-                    }
                     if (models.get(key).getObject() instanceof String) {
 	                    
                       if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
@@ -332,12 +349,14 @@ public class NewDataFormPanel extends Panel {
 	                    	 if(null==(String) models.get(key).getObject()){
 	                    		 if(entity.getName().equals("activity")){
 	                    			 title.append("拜访:");
-	                    			 title.append(coacheeName);
+	                    			 String callName = DAOImpl.queryRelationDataById("contact",models.get("contactId").getObject().toString());
+	                    			 title.append(callName);
 	                    			 System.out.println("callName"+title.toString());
 	                    		 }
 	                    		 if(entity.getName().equals("coaching")){
 	                    			 title.append("辅导:");
-	                    			 title.append(callName);
+	                    			 String coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get("coacheeId").getObject().toString());
+	                    			 title.append(coacheeName);
 	                    			 System.out.println("coachingName:"+title.toString());
 	                    		 }
 	                    		 values.add("'" +title.toString()+ "'");

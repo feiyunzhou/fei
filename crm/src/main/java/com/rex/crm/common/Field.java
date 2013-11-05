@@ -54,7 +54,8 @@ public class Field implements Serializable {
     private String parentNode;
     @Expose
     private String fieldType;
-    
+    @Expose
+    private int tooltip;
     
     public boolean isRequired() {
         return isRequired;
@@ -248,6 +249,17 @@ public class Field implements Serializable {
     {
       this.fieldType = fieldType;
     }
+
+	public int getTooltip() {
+		return tooltip;
+	}
+
+	public void setTooltip(int tooltip) {
+		this.tooltip = tooltip;
+	}
+
+
+	
     
 
 }

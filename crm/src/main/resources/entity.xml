@@ -2515,6 +2515,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<picklist>score1_pl</picklist>
+				<tooltip>1</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -2529,6 +2530,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score1_pl</picklist>
+				<tooltip>2</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -2543,6 +2545,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score1_pl</picklist>
+				<tooltip>3</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -2557,6 +2560,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score1_pl</picklist>
+				<tooltip>4</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -2571,6 +2575,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score2_pl</picklist>
+				<tooltip>5</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -2585,6 +2590,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value>0</default-value>
 				<priority>5</priority>
 				<picklist>score2_pl</picklist>
+				<tooltip>6</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -2941,5 +2947,4 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 		</fields>
 	</entity>
-
 </entities>
