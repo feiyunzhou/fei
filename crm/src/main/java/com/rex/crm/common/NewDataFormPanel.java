@@ -2,6 +2,7 @@ package com.rex.crm.common;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +45,7 @@ import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 import com.rex.crm.util.SendEmail;
 
@@ -125,25 +127,10 @@ public class NewDataFormPanel extends Panel {
                           TextFragment textField = new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":");
                           textField.add(new AttributeAppender("style", new Model("font-weight:bold;"), ";"));
                           if(currentField.getPriority()==5){
-                        	  Properties systemPeroperties = new Properties();
-                              try {
-                              		systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/tooltipMessage.properties"));
-                      			} catch (FileNotFoundException e1) {
-	                      			// TODO Auto-generated catch block
-	                      			e1.printStackTrace();
-	                      		} catch (IOException e1) {
-	                      			// TODO Auto-generated catch block
-	                      			e1.printStackTrace();
-	                      		}
-                              String message="";
-                              try {
-                            	  message = new String(systemPeroperties.getProperty(String.valueOf(currentField.getTooltip())).getBytes("ISO-8859-1"),"utf-8");
-							   } catch (UnsupportedEncodingException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-							  }
+                        	  String message = CRMUtility.getToolTipById(String.valueOf(currentField.getTooltip()));
+                              textField.add(new AttributeModifier("data-html","true"));         
                         	  textField.add(new AttributeModifier("data-original-title",message));
-                        	  textField.add(new AttributeAppender("class",new Model("tooltip-test")," "));
+                        	  textField.add(new AttributeAppender("class",new Model<String>("tooltip-test")," "));
                           }
                           columnitem.add(textField);
                           if (currentField.isRequired()) {
@@ -425,6 +412,8 @@ public class NewDataFormPanel extends Panel {
         form.add(fieldGroupRepeater);
         add(form);
     }
+
+
 
     public NewDataFormPanel(String id, IModel<?> model) {
         super(id, model);

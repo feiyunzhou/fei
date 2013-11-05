@@ -1,8 +1,12 @@
 package com.rex.crm.util;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.tuple.Pair;
@@ -23,7 +27,9 @@ import com.rex.crm.beans.CalendarEvent;
 import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.common.CRUDPanel;
+import com.rex.crm.common.Field;
 import com.rex.crm.common.IFormatter;
+import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.common.CRUDPanel.Permissions;
 
 public class CRMUtility {
@@ -253,5 +259,28 @@ public class CRMUtility {
 
 	        return hash;
 	    }
+	    
+	    
+	    public static String getToolTipById(String id) {
+	        Properties systemPeroperties = new Properties();
+	          try {
+	                systemPeroperties.load(new InputStreamReader(CRMUtility.class.getResourceAsStream("/tooltipMessage.properties"),"UTF-8"));
+	            } catch (FileNotFoundException e1) {
+	                logger.error(e1);
+	            } catch (IOException e1) {
+	                logger.error(e1);
+	            }
+	          String message="";
+	          try {
+	              message =  String.valueOf(systemPeroperties.getProperty(id));
+	           } catch (Exception e) {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+	          }
+	        return message;
+	    }
+	    
+	    
+	    
 	    
 }

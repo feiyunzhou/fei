@@ -146,23 +146,8 @@ public class EditDataFormPanel extends Panel {
                         	TextFragment textField = new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":");
                             textField.add(new AttributeAppender("style", new Model("font-weight:bold;"), ";"));
                             if(currentField.getPriority()==5){
-                          	  Properties systemPeroperties = new Properties();
-                                try {
-                                		systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/tooltipMessage.properties"));
-                        			} catch (FileNotFoundException e1) {
-  	                      			// TODO Auto-generated catch block
-  	                      			e1.printStackTrace();
-  	                      		} catch (IOException e1) {
-  	                      			// TODO Auto-generated catch block
-  	                      			e1.printStackTrace();
-  	                      		}
-                                String message="";
-                                try {
-                              	  message = new String(systemPeroperties.getProperty(String.valueOf(currentField.getTooltip())).getBytes("ISO-8859-1"),"utf-8");
-  							   } catch (UnsupportedEncodingException e) {
-  									// TODO Auto-generated catch block
-  									e.printStackTrace();
-  							  }
+                              String message = CRMUtility.getToolTipById(String.valueOf(currentField.getTooltip()));
+                              textField.add(new AttributeModifier("data-html","true"));      
                           	  textField.add(new AttributeModifier("data-original-title",message));
                           	  textField.add(new AttributeAppender("class",new Model("tooltip-test")," "));
                             }
