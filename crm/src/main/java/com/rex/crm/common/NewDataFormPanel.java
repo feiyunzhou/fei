@@ -128,8 +128,9 @@ public class NewDataFormPanel extends Panel {
                           textField.add(new AttributeAppender("style", new Model("font-weight:bold;"), ";"));
                           if(currentField.getPriority()==5){
                         	  String message = CRMUtility.getToolTipById(String.valueOf(currentField.getTooltip()));
-                              textField.add(new AttributeModifier("data-html","true"));         
-                        	  textField.add(new AttributeModifier("data-original-title",message));
+                              //textField.add(new AttributeModifier("data-html","true"));         
+                        	  textField.add(new AttributeModifier("data-content",message));
+                        	  textField.add(new AttributeModifier("title",currentField.getDisplay()));
                         	  textField.add(new AttributeAppender("class",new Model<String>("tooltip-test")," "));
                           }
                           columnitem.add(textField);
