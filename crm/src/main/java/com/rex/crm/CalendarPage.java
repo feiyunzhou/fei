@@ -28,8 +28,8 @@ public class CalendarPage extends TemplatePage
 	public CalendarPage()
 	{
 		Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get("activity");
-        setPageTitle(entity.getDisplay());
+        //Entity entity = entities.get("activity");
+        setPageTitle("日历");
        
         
         add(new CalendarPanel("datalist"));

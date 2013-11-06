@@ -48,12 +48,12 @@ import org.apache.wicket.util.template.PackageTextTemplate;
 import org.apache.wicket.behavior.AttributeAppender;
 
 import com.google.common.collect.ImmutableMap;
-
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
 import com.rex.crm.ajax.FunctionInvoker;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.common.CalendarPanel;
 import com.rex.crm.db.DAOImpl;
 
@@ -133,7 +133,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         builder.put("userInfo", item);
         
         item = new MenuItem();
-        item.setCaption("<i class=\" icon-cog icon-large\"></i>设置");
+        item.setCaption("<i class=\" icon-cog icon-large\"></i>账号管理");
         item.setDestination(UserInfoSettingPage.class);
         item.setId("navitem-userInfoSetting");
         builder.put("userInfoSetting", item);
@@ -145,8 +145,11 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 	 * Constructor
 	 */
 	public TemplatePage() {
+		
 	  final int roleId = ((SignIn2Session) getSession()).getRoleId();
 		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
+		UserInfo user = DAOImpl.getUserInfoById(Integer.parseInt(((SignIn2Session) getSession()).getUserId()));
+		add(new Label("loginName",user.getName()));
 		//TODO get function work with real id
 		List<String> menulist = DAOImpl.getMenuByRole(roleId);
 		

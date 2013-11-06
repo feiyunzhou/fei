@@ -13,6 +13,7 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 
 public class UpdateSignPassword extends UserInfoSettingPage {
@@ -29,8 +30,8 @@ public class UpdateSignPassword extends UserInfoSettingPage {
     public void initPage() {
         //获取到登录对象，将用户名传入页面，然后如何获取
         final int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
-        CRMUser user = DAOImpl.getCRMUserInfoById(userId);
-        final Label promptLabel = new Label("prompt", "输入有误,请重新输入！");
+        UserInfo user = DAOImpl.getUserInfoById(userId);
+        final Label promptLabel = new Label("prompt", "旧密码错误,请重新输入！");
         add(promptLabel);
         Form form = new Form("form") {
             @Override
@@ -38,7 +39,7 @@ public class UpdateSignPassword extends UserInfoSettingPage {
                 //首先获取form表单数据。验证旧密码是否正确。然后修改密码
                 String oldPassword = models.get("oldPassword").getObject() == null ? null : String.valueOf(models.get("oldPassword").getObject());
                 String newPassword = models.get("newPassword").getObject() == null ? null : String.valueOf(models.get("newPassword").getObject());
-                CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(((SignIn2Session) getSession()).getUserId()));
+                UserInfo crmUser = DAOImpl.getUserInfoById(Integer.parseInt(((SignIn2Session) getSession()).getUserId()));
                 logger.debug("oldPwd:" + oldPassword);
                 logger.debug("old:" + DigestUtils.md5Hex(oldPassword));
                 logger.debug("password:" + crmUser.getPassword());

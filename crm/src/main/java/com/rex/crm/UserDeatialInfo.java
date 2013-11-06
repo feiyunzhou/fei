@@ -44,7 +44,6 @@ public class UserDeatialInfo extends UserInfoSettingPage {
      */
     public UserDeatialInfo() {
         logger.debug("init userManager");
-        add(new Label("infoName", "基本信息"));
         setPageTitle("个人信息");
         initPage();
     }
@@ -53,10 +52,10 @@ public class UserDeatialInfo extends UserInfoSettingPage {
         logger.debug("sessionID:" + ((SignIn2Session) getSession()).getUserId());
         int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
         Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get("crmuser");
+        Entity entity = entities.get("userInfo");
         String primaryKeyName = entity.getPrimaryKeyName();
         //get crmUser 
-        CRMUser user = DAOImpl.getCRMUserInfoById(userId);
+        UserInfo user = DAOImpl.getUserInfoById(userId);
 
         //add and setting image and image style
 		/*if(null==user.getPhoto()){
@@ -69,7 +68,7 @@ public class UserDeatialInfo extends UserInfoSettingPage {
          RepeatingView divRepeater = new RepeatingView("userRealtionInfo");
          add(divRepeater);*/
         
-        //add prompt 
+       /* //add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
         final AbstractItem divitem = new AbstractItem(div.newChildId());
         final Label promptButton = new Label("promptButton","X");
@@ -79,7 +78,7 @@ public class UserDeatialInfo extends UserInfoSettingPage {
         div.add(new AttributeAppender("style",new Model("display:none"),";"));
         divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
         div.add(divitem);
-        add(div);	
+        add(div);	*/
         final List<String> fieldNames = Lists.newArrayList();
         //得到基本信息信息
         RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
@@ -117,8 +116,12 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                 AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model(String.valueOf(primaryKeyName)));
                 Field currentField = visibleFields.get(i * number_of_column + j / 2);
                 if (j % 2 == 0) {
-                    columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("class", new Model("red"), " ")));
-                    columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                    columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":"));
+                    if (currentField.isRequired()) {
+                        columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                    }else{
+                        columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                    }
                     fieldNames.add(currentField.getName());
                 } else {
                     String fieldName = null;
@@ -185,7 +188,6 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                 String photo = "";
                 String loginName = "";
                 int sex = 0;
-                boolean flag = true;
                 for (String k : fieldNameToModel.keySet()) {
                     logger.debug("k" + k);
                     String value = fieldNameToModel.get(k).getObject() == null ? null : String.valueOf(fieldNameToModel.get(k).getObject());
@@ -202,19 +204,10 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                     } else {
                         email = value;
                     }
-                    if(null==fieldNameToModel.get(k).getObject()){
-                    	div.add(new AttributeAppender("style",new Model("display:block"),";"));
-                		divitem.add(new AttributeAppender("style",new Model("display:block"),";"));
-                		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
-                		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-                		flag = false;
-                    }
                 }
-                if(flag){
-                	int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
-                    DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName);
-                    setResponsePage(HomePage.class);
-                }
+                int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
+                DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName);
+                setResponsePage(HomePage.class);
             }
         };
         form.add(fieldGroupRepeater);
@@ -233,9 +226,10 @@ public class UserDeatialInfo extends UserInfoSettingPage {
             if (!currentField.isEditable()) {
                 text.add(new AttributeAppender("disabled", new Model("disabled"), ";"));
             }
-            if(currentField.isRequired()){
-            	//text.add(new AttributeModifier("required", new Model("required")));
-        	}
+            if (currentField.isRequired()) {
+              //text.add(new AttributeModifier("required", new Model("required")));
+            	text.add(new AttributeAppender("class","required-field"));
+            }
             add(text);
         }
     }

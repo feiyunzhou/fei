@@ -1744,7 +1744,7 @@ public class DAOImpl
     }
     // update crmuser baseInfo
     public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex,String loginName) {
-    	String sql = "UPDATE crmuser SET name=?,cellphone=?,email=?,photo=?,sex=?,loginName=? where id=?";
+    	String sql = "UPDATE userinfo SET name=?,cellphone=?,email=?,photo=?,sex=?,loginName=? where id=?";
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
@@ -1919,5 +1919,23 @@ public class DAOImpl
             DBHelper.closeConnection(conn);
         }
         return activity;
+    }
+    public static UserInfo getUserInfoById(int id) {
+        Connection conn = null;
+        UserInfo user = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
+
+            user = run.query(conn, "SELECT * FROM userinfo where id=?", h, id);
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return user;
     }
 }

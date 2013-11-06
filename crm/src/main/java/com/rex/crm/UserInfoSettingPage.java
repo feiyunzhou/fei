@@ -40,6 +40,7 @@ public class UserInfoSettingPage extends TemplatePage{
         pageMenuMap = builder.build();
     }
 	public UserInfoSettingPage(){
+		setPageTitle("账号管理");
 		List<String> menulist = Lists.newArrayList();
     	menulist.add("userDetailInfo");
         menulist.add("updateSignPassword");
