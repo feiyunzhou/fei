@@ -2030,6 +2030,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<name>contactName</name>
 				<display>拜访医生</display>
 				<alias>contactId</alias>
+				<isRequired>true</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
