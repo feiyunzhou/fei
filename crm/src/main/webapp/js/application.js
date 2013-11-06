@@ -14,12 +14,17 @@
       selector: "a[data-toggle=tooltip]"
     })
 
-    $('.tooltip-test').tooltip()
+    /*$('.tooltip-test').tooltip({
+    	html:true
+    })*/
     $('.popover-test').popover()
 
     // popover demo
-    $("a[data-toggle=popover]")
-      .popover()
+    $(".tooltip-test")
+      .popover({
+    	  html:true,
+    	  placement:'top'
+      })
       .click(function(e) {
         e.preventDefault()
       })

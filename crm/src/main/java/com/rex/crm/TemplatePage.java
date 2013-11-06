@@ -132,6 +132,12 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setId("navitem-userInfo");
         builder.put("userInfo", item);
         
+        item = new MenuItem();
+        item.setCaption("<i class=\" icon-cog icon-large\"></i>设置");
+        item.setDestination(UserInfoSettingPage.class);
+        item.setId("navitem-userInfoSetting");
+        builder.put("userInfoSetting", item);
+        
         pageMenuMap = builder.build();
     	 
     }

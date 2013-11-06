@@ -530,6 +530,7 @@ public class DAOImpl
 //    menulist.add("dealerAccount");
 //    menulist.add("dealerContact");
         menulist.add("userInfo");
+        menulist.add("userInfoSetting");
         return menulist;
     }
 

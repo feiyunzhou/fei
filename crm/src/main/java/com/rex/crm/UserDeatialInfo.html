@@ -3,6 +3,12 @@
       xmlns:wicket="http://wicket.apache.org">
     <body>
         <wicket:extend>
+        	<script>
+              $(document).ready(function() {	
+            	  console.info("active");
+            	  $("#navitem-userdetailInfo").addClass("active"); 
+              });
+             </script>
             <div class="row-fluid big" >
             	<div wicket:id="promptDiv" class="alert" >
 					<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>

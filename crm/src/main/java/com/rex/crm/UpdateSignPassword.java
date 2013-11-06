@@ -1,9 +1,7 @@
 package com.rex.crm;
 
-import com.google.common.collect.Maps;
-import com.rex.crm.beans.CRMUser;
-import com.rex.crm.db.DAOImpl;
 import java.util.Map;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -13,7 +11,11 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-public class UpdateSignPassword extends TemplatePage {
+import com.google.common.collect.Maps;
+import com.rex.crm.beans.CRMUser;
+import com.rex.crm.db.DAOImpl;
+
+public class UpdateSignPassword extends UserInfoSettingPage {
 
     private static final long serialVersionUID = -317099683219015628L;
     private static final Logger logger = Logger.getLogger(UpdateSignPassword.class);

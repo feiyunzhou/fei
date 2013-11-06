@@ -1269,7 +1269,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable> <isSearchable>true</isSearchable> <priority>1</priority> 
 				<isBaseInfo>false</isBaseInfo> <fieldGroup>关键信息</fieldGroup> </field> -->
 			<field>
-				<name>postId</name>
+				<name>positionId</name>
 				<display>岗位编码</display>
 				<isRequired>true</isRequired>
 				<data-type>text</data-type>

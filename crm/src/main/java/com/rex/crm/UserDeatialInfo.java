@@ -23,13 +23,14 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
-public class UserDeatialInfo extends TemplatePage {
+public class UserDeatialInfo extends UserInfoSettingPage {
 
     private static final long serialVersionUID = 7459440666591284026L;
     private static final Logger logger = Logger.getLogger(UserDeatialInfo.class);
