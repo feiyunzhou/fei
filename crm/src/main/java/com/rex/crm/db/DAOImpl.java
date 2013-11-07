@@ -524,13 +524,11 @@ public class DAOImpl
         menulist.add("contact");
         menulist.add("activity");
         menulist.add("coaching");
-      if(roleId == 1){
-        menulist.add("crmuser");
-      } 
-//    menulist.add("dealerAccount");
-//    menulist.add("dealerContact");
+        if(roleId == 1){
+           menulist.add("crmuser");
+        } 
         menulist.add("userInfo");
-        menulist.add("userInfoSetting");
+       // menulist.add("userInfoSetting");
         return menulist;
     }
 

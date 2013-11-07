@@ -114,17 +114,6 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setId("navitem-crmuser");
         builder.put("crmuser", item);
         
-//        item = new MenuItem();
-//        item.setCaption("<i class=\"icon-truck icon-large\"></i>经销商");
-//        item.setDestination(DealerAccountPage.class);
-//        item.setId("navitem-dealerAccount");
-//        builder.put("dealerAccount", item);
-//        
-//        item = new MenuItem();
-//        item.setCaption("<i class=\"icon-umbrella icon-large\"></i>经销商联系人");
-//        item.setDestination(DealerContactPage.class);
-//        item.setId("navitem-dealerContact");
-//        builder.put("dealerContact", item);
         
         item = new MenuItem();
         item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
@@ -132,11 +121,11 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setId("navitem-userInfo");
         builder.put("userInfo", item);
         
-        item = new MenuItem();
-        item.setCaption("<i class=\" icon-cog icon-large\"></i>账号管理");
-        item.setDestination(UserInfoSettingPage.class);
-        item.setId("navitem-userInfoSetting");
-        builder.put("userInfoSetting", item);
+//        item = new MenuItem();
+//        item.setCaption("<i class=\" icon-cog icon-large\"></i>账号管理");
+//        item.setDestination(UserInfoSettingPage.class);
+//        item.setId("navitem-userInfoSetting");
+//        builder.put("userInfoSetting", item);
         
         pageMenuMap = builder.build();
     	 
@@ -149,7 +138,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 	  final int roleId = ((SignIn2Session) getSession()).getRoleId();
 		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
 		UserInfo user = DAOImpl.getUserInfoById(Integer.parseInt(((SignIn2Session) getSession()).getUserId()));
-		add(new Label("loginName",user.getName()));
+		
 		//TODO get function work with real id
 		List<String> menulist = DAOImpl.getMenuByRole(roleId);
 		
@@ -184,6 +173,9 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
             }
             
         });
+        BookmarkablePageLink user_settings_link = new BookmarkablePageLink("user_settings_link",UserInfoSettingPage.class);
+        add(user_settings_link);
+        user_settings_link.add(new Label("loginName",user.getName()));
         
         //end of populate menu items
 		
