@@ -193,7 +193,11 @@ public class CRMUtility {
 	            }
 	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") 
 	            || entityName.equalsIgnoreCase("activity")){
-	            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT );
+	        	if (roleId == 1) {
+		            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
+	          }else{
+	            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
+	          }
 	        }else if(entityName.equalsIgnoreCase("coaching")){
 	          if (roleId == 1) {
 	            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);

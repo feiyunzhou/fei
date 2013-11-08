@@ -163,6 +163,5 @@ public class ActivityPage extends TemplatePage
         }
        
         add(new FilterPanel("filterPanel",types ,filter,ActivityPage.class));
-	
 	}
 }

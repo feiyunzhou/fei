@@ -183,11 +183,12 @@ public class PageableTablePanel extends Panel {
                     Param p = (Param) getParent().getParent().getDefaultModelObject();
                     logger.debug(p + " id:" + p.getId() + " name:" + p.getEntityName());
 //                    Attribute att = new Attribute();
-                   if(entity.getName().equals("activity")){
+                   /*if(entity.getName().equals("activity")){
                 	   setResponsePage(new EventViewerPage(p.getId()));
                    }else{
-                	   setResponsePage(new EntityDetailPage(p.getEntityName(), p.getId()));
-                   } 
+                	   
+                   } */
+                   setResponsePage(new EntityDetailPage(p.getEntityName(), p.getId()));
                     // setResponsePage(new AccountDetailPage(id));
                 }
             }.add(new Label("caption", new Model<String>(caption))));

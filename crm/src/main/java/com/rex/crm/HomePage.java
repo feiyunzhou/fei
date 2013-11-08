@@ -61,10 +61,36 @@ public class HomePage extends TemplatePage {
         add(contact_create_link);
       
        
+       /* param = new PageParameters();
+        param.add("entityName", "activity");
+        BookmarkablePageLink activity_create_link = new BookmarkablePageLink("activity_create_link", CreateDataPage.class,param);
+        add(activity_create_link);*/
+        
+        
+        WebMarkupContainer activity_create_li = new WebMarkupContainer("activity_create_li");
         param = new PageParameters();
         param.add("entityName", "activity");
         BookmarkablePageLink activity_create_link = new BookmarkablePageLink("activity_create_link", CreateDataPage.class,param);
-        add(activity_create_link);
+        activity_create_li.setVisible(false);
+        activity_create_li.add(activity_create_link);
+        add(activity_create_li);
+        
+        if(roleId == 3){
+        	activity_create_li.setVisible(true);
+        }
+        
+        
+        WebMarkupContainer coaching_create_li = new WebMarkupContainer("coaching_create_li");
+        param = new PageParameters();
+        param.add("entityName", "coaching");
+        BookmarkablePageLink coaching_create_link = new BookmarkablePageLink("coaching_create_link", CreateDataPage.class,param);
+        coaching_create_li.setVisible(false);
+        coaching_create_li.add(coaching_create_link);
+        add(coaching_create_li);
+        
+        if(roleId == 2){
+        	coaching_create_li.setVisible(true);
+        }
         
         WebMarkupContainer account_create_li = new WebMarkupContainer("account_create_li");
         param = new PageParameters();
@@ -78,6 +104,17 @@ public class HomePage extends TemplatePage {
             account_create_li.setVisible(true);
         }
         
+        WebMarkupContainer position_create_li = new WebMarkupContainer("position_create_li");
+        param = new PageParameters();
+        param.add("entityName", "crmuser");
+        BookmarkablePageLink position_create_link = new BookmarkablePageLink("position_create_link", CreateDataPage.class,param);
+        position_create_li.setVisible(false);
+        position_create_li.add(position_create_link);
+        add(position_create_li);
+        
+        if(roleId == 1){
+        	position_create_li.setVisible(true);
+        }
         
         
         /**

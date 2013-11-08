@@ -165,6 +165,7 @@ public class EntityDetailPage extends TemplatePage {
               final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                Date time = new Date();
               String d = dateformat.format(time);
+              System.out.println("entityName:"+entityName);
               DAOImpl.doneRecord(id, entityName, d);
              setResponsePage(new EntityDetailPage(entityName,id));
             }

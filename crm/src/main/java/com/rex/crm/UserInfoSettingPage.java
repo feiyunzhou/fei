@@ -26,7 +26,7 @@ public class UserInfoSettingPage extends TemplatePage{
         ImmutableMap.Builder<String, MenuItem> builder = new ImmutableMap.Builder<String,MenuItem>();
         
         MenuItem item = new MenuItem();
-        item.setCaption("<i class=\"icon-user-md icon-large\"></i>个人信息");
+        item.setCaption("<i class=\"icon-user icon-large\"></i>个人信息");
         item.setDestination(UserDeatialInfo.class);
         item.setId("navitem-userdetailInfo");
         builder.put("userDetailInfo", item);

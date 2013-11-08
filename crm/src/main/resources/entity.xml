@@ -2147,6 +2147,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2158,6 +2159,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2169,6 +2171,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2180,6 +2183,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2188,10 +2192,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
-				<fieldGroup>附加信息</fieldGroup>
+				<priority>1</priority>
+				<field-type>auto</field-type>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_endtime</name>
@@ -2490,11 +2495,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
-				<priority>4</priority>
-				<fieldGroup>附加信息</fieldGroup>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_endtime</name>
