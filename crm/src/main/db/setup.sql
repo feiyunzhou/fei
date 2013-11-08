@@ -1,5 +1,13 @@
 USE crmdb;
 
+drop table if exists accountcrmuser;
+drop table if exists activitycrmuser;
+drop table if exists contactcrmuser;
+drop table if exists activity;
+drop table if exists contact;
+drop table if exists crmuser;
+drop table if exists account;
+
 drop table if exists account;
 CREATE TABLE account 
 (
@@ -40,9 +48,31 @@ CREATE TABLE account
     modifier VARCHAR(255),
     modify_datetime DATETIME,
     responsible_person VARCHAR(255),
+    UNIQUE INDEX `account_ix_01` (`bdm_code` ASC),
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
+drop table if exists crmuser;
+CREATE TABLE crmuser 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    code varchar(255),
+    reportto MEDIUMINT,
+    role MEDIUMINT,
+    pl1 MEDIUMINT,
+    pl2 MEDIUMINT,
+    pl4 MEDIUMINT, 
+    pl5 MEDIUMINT,
+    city VARCHAR(255),
+    department VARCHAR(255),
+    whenadded DATETIME,
+    modifier VARCHAR(255),
+    modify_datetime date,
+    owner VARCHAR(255),
+    level MEDIUMINT,
+    PRIMARY KEY USING BTREE (id)
+) ENGINE InnoDB;
 
 drop table if exists accountcrmuser;
 CREATE TABLE accountcrmuser 
@@ -54,84 +84,6 @@ CREATE TABLE accountcrmuser
     PRIMARY KEY USING BTREE (id),
     CONSTRAINT `account_crmuser_cons` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `account_crmuser_cons2` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE InnoDB;
-
-drop table if exists externalMeeting;
-CREATE TABLE externalMeeting 
-(
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    crmuserId MEDIUMINT NOT NULL,
-    endtime BIGINT,
-    starttime BIGINT NOT NULL DEFAULT 0,
-    title VARCHAR(128),
-    contactIds VARCHAR(512),
-    status MEDIUMINT,
-    activity_type MEDIUMINT,
-    PRIMARY KEY USING BTREE (id)
-) ENGINE InnoDB;
-ALTER table externalMeeting ADD coachId MEDIUMINT;
-
-drop table if exists internalMeeting;
-CREATE TABLE internalMeeting 
-(
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    crmuserId MEDIUMINT NOT NULL,
-    endtime BIGINT,
-    starttime BIGINT NOT NULL DEFAULT 0,
-    title VARCHAR(128),
-    contactId MEDIUMINT,
-    crmusermanagerId MEDIUMINT,
-    status MEDIUMINT,
-     activity_type MEDIUMINT,
-    PRIMARY KEY USING BTREE (id)
-) ENGINE InnoDB;
-
-drop table if exists activity;
-CREATE TABLE activity 
-(
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255),
-    crmuserId MEDIUMINT NOT NULL,
-    event_type MEDIUMINT NOT NULL,
-    endtime BIGINT,
-    starttime BIGINT NOT NULL DEFAULT 0,
-    title VARCHAR(128),
-    participants VARCHAR(512),
-    activity_type MEDIUMINT,
-    contactId MEDIUMINT,
-    status MEDIUMINT,
-    visiting_purpose MEDIUMINT,
-    feature_product MEDIUMINT,
-    act_endtime DATETIME,
-    owner VARCHAR(255),
-    whenadded DATETIME,
-    modifier VARCHAR(255),
-    modify_datetime DATETIME,
-    responsible_person VARCHAR(255),
-    coach VARCHAR(255),
-    location VARCHAR(255),
-    total_score MEDIUMINT,
-    planing MEDIUMINT,
-    openling MEDIUMINT,
-    enquery_listening MEDIUMINT,
-    deliverable MEDIUMINT,
-    objection_handing MEDIUMINT,
-    summary MEDIUMINT,
-    PRIMARY KEY USING BTREE (id),
-    CONSTRAINT `crmuserId_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `contactId_activity_cons` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE InnoDB;
-
-drop table if exists activitycrmuser;
-CREATE TABLE activitycrmuser 
-(
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    activityId MEDIUMINT NOT NULL,
-    crmuserId MEDIUMINT NOT NULL,
-    UNIQUE KEY(activityId,crmuserId), 
-    PRIMARY KEY USING BTREE (id),
-    CONSTRAINT `crm_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,
-     CONSTRAINT `crm_activity_cons2` FOREIGN KEY (`activityId`) REFERENCES `activity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
 ) ENGINE InnoDB;
 
 drop table if exists contact;
@@ -167,6 +119,57 @@ CREATE TABLE contact
 ) ENGINE InnoDB;
 
 
+
+drop table if exists activity;
+CREATE TABLE activity 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255),
+    crmuserId MEDIUMINT NOT NULL,
+    event_type MEDIUMINT NOT NULL,
+    endtime BIGINT,
+    starttime BIGINT NOT NULL DEFAULT 0,
+    title VARCHAR(128),
+    participants VARCHAR(512),
+    activity_type MEDIUMINT,
+    contactId MEDIUMINT,
+    coacheeId int(32),
+    status MEDIUMINT,
+    visiting_purpose MEDIUMINT,
+    feature_product MEDIUMINT,
+    act_endtime DATETIME,
+    owner VARCHAR(255),
+    whenadded DATETIME,
+    modifier VARCHAR(255),
+    modify_datetime DATETIME,
+    responsible_person VARCHAR(255),
+    coach int(32),
+    location VARCHAR(255),
+    total_score MEDIUMINT,
+    planing MEDIUMINT,
+    openling MEDIUMINT,
+    enquery_listening MEDIUMINT,
+    deliverable MEDIUMINT,
+    objection_handing MEDIUMINT,
+    summary MEDIUMINT,
+    PRIMARY KEY USING BTREE (id),
+    CONSTRAINT `crmuserId_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `contactId_activity_cons` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE InnoDB;
+
+drop table if exists activitycrmuser;
+CREATE TABLE activitycrmuser 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    activityId MEDIUMINT NOT NULL,
+    crmuserId MEDIUMINT NOT NULL,
+    UNIQUE KEY(activityId,crmuserId), 
+    PRIMARY KEY USING BTREE (id),
+    CONSTRAINT `crm_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,
+     CONSTRAINT `crm_activity_cons2` FOREIGN KEY (`activityId`) REFERENCES `activity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
+) ENGINE InnoDB;
+
+
 drop table if exists contactcrmuser;
 CREATE TABLE contactcrmuser 
 (
@@ -180,67 +183,78 @@ CREATE TABLE contactcrmuser
 ) ENGINE InnoDB;
 
 
-drop table if exists crmuser;
-CREATE TABLE crmuser 
+
+drop table if exists user_position;
+create table user_position (
+    id mediumint(9) auto_increment,
+    userId int(32),
+    positionId int(32),
+    primary key (id),
+    unique index user_position_unique (userId,positionId)
+)ENGINE InnoDB;
+
+DROP TABLE IF EXISTS `userInfo`;
+CREATE TABLE `userInfo` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `department` varchar(255) DEFAULT NULL,
+  `division` varchar(255) DEFAULT NULL,
+  `cellPhone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `employeeNumber` varchar(255) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `jobTitle` varchar(255) DEFAULT NULL,
+  `pl1` mediumint(9) DEFAULT NULL,
+  `pl2` mediumint(9) DEFAULT NULL,
+  `role` mediumint(9) DEFAULT NULL,
+  `pl4` mediumint(9) DEFAULT NULL,
+  `pl5` mediumint(9) DEFAULT NULL,
+  `sex` mediumint(9) DEFAULT NULL,
+  `loginName` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `sessionKey` varchar(255) DEFAULT NULL,
+  `lastLoginTime` bigint(20) DEFAULT NULL,
+  `whenadded` datetime DEFAULT NULL,
+  `parcel` varchar(255) DEFAULT NULL,
+  `modifier` varchar(255) DEFAULT NULL,
+  `modify_datetime` datetime DEFAULT NULL,
+  `owner` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `isActivited` mediumint(9) DEFAULT NULL,
+  `ts` bigint(20) DEFAULT NULL,
+  `positionId` mediumint(9) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE InnoDB;
+
+
+drop table if exists externalMeeting;
+CREATE TABLE externalMeeting 
 (
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    department VARCHAR(255),
-    division VARCHAR(255),
-    cellPhone VARCHAR(255),
-    email VARCHAR(255),
-    employeeNumber VARCHAR(255),
-    photo VARCHAR(255),
-    jobTitle VARCHAR(255),
-    pl1 MEDIUMINT,
-    pl2 MEDIUMINT,
-    role MEDIUMINT,
-    pl4 MEDIUMINT,
-    pl5 MEDIUMINT,
-    sex MEDIUMINT,
-    loginName VARCHAR(255),
-    password VARCHAR(255),
-    sessionKey VARCHAR(255),
-    lastLoginTime BIGINT,
-    whenadded DATETIME,
-    reportto MEDIUMINT,
-    parcel VARCHAR(255),
-    modifier VARCHAR(255),
-    modify_datetime date,
-    owner VARCHAR(255),
-    postId VARCHAR(255),
-    city VARCHAR(255),
-    isActivited BOOL,
+    crmuserId MEDIUMINT NOT NULL,
+    endtime BIGINT,
+    starttime BIGINT NOT NULL DEFAULT 0,
+    title VARCHAR(128),
+    contactIds VARCHAR(512),
+    status MEDIUMINT,
+    activity_type MEDIUMINT,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+ALTER table externalMeeting ADD coachId MEDIUMINT;
 
-
-DROP TABLE IF EXISTS `area`;
-CREATE TABLE `area` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `val` varchar(20) DEFAULT NULL,
-   `externalId` varchar(20) DEFAULT NULL,
-  `parentId` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `area_parentid_cons` FOREIGN KEY (`parentId`) REFERENCES `city` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
-) ENGINE InnoDB;
-
-DROP TABLE IF EXISTS `city`;
-CREATE TABLE `city` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `val` varchar(20) DEFAULT NULL,
-   `externalId` varchar(20) DEFAULT NULL,
-  `parentId` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-   CONSTRAINT `city_parentid_cons` FOREIGN KEY (`parentId`) REFERENCES `province` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
-) ENGINE InnoDB;
-
-DROP TABLE IF EXISTS `province`;
-CREATE TABLE `province` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `val` varchar(20) DEFAULT NULL,
-  `externalId` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+drop table if exists internalMeeting;
+CREATE TABLE internalMeeting 
+(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    crmuserId MEDIUMINT NOT NULL,
+    endtime BIGINT,
+    starttime BIGINT NOT NULL DEFAULT 0,
+    title VARCHAR(128),
+    contactId MEDIUMINT,
+    crmusermanagerId MEDIUMINT,
+    status MEDIUMINT,
+     activity_type MEDIUMINT,
+    PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 
 

@@ -155,15 +155,16 @@ CREATE TABLE activity_visiting_purpose_pl
   id MEDIUMINT NOT NULL  AUTO_INCREMENT,
   val VARCHAR(255),
   activity_type MEDIUMINT,
+  parentId  MEDIUMINT,
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
-INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('传递产品知识',1);
-INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('处方观念沟通',1);
-INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('病例沟通',1);
-INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('会议安排',2);
-INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('会议跟进',2);
-INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('交接工作',2);
-INSERT INTO activity_visiting_purpose_pl (val,activity_type) VALUES('了解竞争',2);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type,parentId) VALUES('传递产品知识',1,1);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type,parentId) VALUES('处方观念沟通',1,1);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type,parentId) VALUES('病例沟通',1,1);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type,parentId) VALUES('会议安排',2,2);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type,parentId) VALUES('会议跟进',2,2);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type,parentId) VALUES('交接工作',2,2);
+INSERT INTO activity_visiting_purpose_pl (val,activity_type,parentId) VALUES('了解竞争',2,2);
 
 -- 拜访目的1
 drop table if exists sales_visiting_purpose_pl;
@@ -494,9 +495,72 @@ INSERT INTO activity_types (val) VALUES('外部会议');
 INSERT INTO activity_types (val) VALUES('内部会议');
 
 
+DROP TABLE IF EXISTS `score1_pl`;
+CREATE TABLE `score1_pl` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `score1_pl` VALUES (0,'0'),(1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5'),(6,'6'),(7,'7'),(8,'8'),(9,'9'),(10,'10'),(11,'11'),(12,'12'),(13,'13'),(14,'14'),(15,'15');
+
+
+DROP TABLE IF EXISTS `score2_pl`;
+CREATE TABLE `score2_pl` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `score2_pl` VALUES (0,'0'),(1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5'),(6,'6'),(7,'7'),(8,'8'),(9,'9'),(10,'10'),(11,'11'),(12,'12'),(13,'13'),(14,'14'),(15,'15'),(16,'16'),(17,'17'),(18,'18'),(19,'19'),(20,'20');
+
+
+DROP TABLE IF EXISTS `crmuser_activited`;
+CREATE TABLE `crmdb`.`crmuser_activited` (
+  `id` MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
+  `val` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`)
+  )ENGINE=InnoDB;
+INSERT INTO `crmdb`.`crmuser_activited` (`id`, `val`) VALUES ('1', '已激活');
+INSERT INTO `crmdb`.`crmuser_activited` (`id`, `val`) VALUES ('2', '未激活');
+
+
+DROP TABLE IF EXISTS `area`;
+DROP TABLE IF EXISTS `city`;
+DROP TABLE IF EXISTS `province`;
+
+DROP TABLE IF EXISTS `area`;
+CREATE TABLE `area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+   `externalId` varchar(20) DEFAULT NULL,
+  `parentId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `area_parentid_cons` FOREIGN KEY (`parentId`) REFERENCES `city` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
+) ENGINE InnoDB;
+
+DROP TABLE IF EXISTS `city`;
+CREATE TABLE `city` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+   `externalId` varchar(20) DEFAULT NULL,
+  `parentId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+   CONSTRAINT `city_parentid_cons` FOREIGN KEY (`parentId`) REFERENCES `province` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
+) ENGINE InnoDB;
+
+DROP TABLE IF EXISTS `province`;
+CREATE TABLE `province` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+  `externalId` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE InnoDB;
+
+
 insert into crmuser (id,name) values(-1,"dummy");
 insert into account (id,name) values(-1,"dummy");
 insert into contact (id,name,accountId) values(-1,"dummy",-1);
+
+
 
 
 

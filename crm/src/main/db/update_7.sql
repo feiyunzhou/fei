@@ -37,7 +37,23 @@ CREATE TABLE `userInfo` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
 
-INSERT INTO `userInfo` VALUES (-1,'dummy',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,-1),(99,'Admin Name',NULL,'医疗设备部',NULL,'admin@qq.com',NULL,'','职员',1,1,1,1,1,1,'admin','827ccb0eea8a706c4c34a16891f84e7b','53856',NULL,NULL,-1,NULL,'Admin Name','2013-10-20 23:28:00',NULL,NULL,'1',1,1382615122318,99),(100,'sales rep',NULL,NULL,NULL,'sales@qq.com',NULL,NULL,NULL,1,1,3,1,1,1,'sales','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,'2013-10-14 18:58:00',101,NULL,'李99','2013-10-19 19:02:00','李99',NULL,NULL,1,1382613388598,100),(101,'sales manager1',NULL,NULL,NULL,'2632783@qq.com',NULL,NULL,NULL,1,1,2,1,1,1,'salesman','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,'2013-10-14 18:58:00',-1,NULL,'Admin Name','2013-10-26 12:20:00','李99',NULL,NULL,1,1382611111318,101);
+INSERT INTO `userInfo` (id,name,loginname,password,role,isActivited,ts,positionId) VALUES 
+(-1,'无','dummy','827ccb0eea8a706c4c34a16891f84e7b',1,2,1386766666,-1),
+(1,'Admin Nam','admin','827ccb0eea8a706c4c34a16891f84e7b',1,2,1386766666,1),
+(2,'Sales Manager','salesman','827ccb0eea8a706c4c34a16891f84e7b',2,2,1386766666,2),
+(3,'Sales','sales','827ccb0eea8a706c4c34a16891f84e7b',3,2,1386766666,3);
+
+insert into crmuser (id,name,code,reportto,role) values
+(-1,'无','BJ',0,-1),
+(1,'管理员','BJ231011001',-1,1),
+(2,'北区地区经理01','BJ131011001',1,2),
+(3,'北区代表001','BJ131001001',2,3);
+
+
 
 ALTER table crmuser ADD level MEDIUMINT;
 ALTER table crmuser ADD position_code varchar(255);
+
+
+
+

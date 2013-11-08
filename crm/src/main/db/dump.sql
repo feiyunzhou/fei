@@ -51,8 +51,8 @@ CREATE TABLE `account` (
   `tel` varchar(255) DEFAULT NULL,
   `fax` varchar(255) DEFAULT NULL,
   `market_classification` mediumint(9) DEFAULT NULL,
-  `province` varchar(255) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
+  `province` int(11) DEFAULT NULL,
+  `city` int(11) DEFAULT NULL,
   `districts` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `owner` varchar(255) DEFAULT NULL,
@@ -60,8 +60,9 @@ CREATE TABLE `account` (
   `modifier` varchar(255) DEFAULT NULL,
   `modify_datetime` datetime DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `account_ix_01` (`bdm_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +71,6 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (-1,'dummy',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,150 +219,6 @@ INSERT INTO `account_medicaltype_pl` VALUES (1,'麻药目标医院'),(2,'慢痛�
 UNLOCK TABLES;
 
 --
--- Table structure for table `account_pl1`
---
-
-DROP TABLE IF EXISTS `account_pl1`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_pl1` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_pl1`
---
-
-LOCK TABLES `account_pl1` WRITE;
-/*!40000 ALTER TABLE `account_pl1` DISABLE KEYS */;
-INSERT INTO `account_pl1` VALUES (1,'有效'),(2,'无效'),(3,'终止'),(4,'候选');
-/*!40000 ALTER TABLE `account_pl1` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_pl2`
---
-
-DROP TABLE IF EXISTS `account_pl2`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_pl2` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_pl2`
---
-
-LOCK TABLES `account_pl2` WRITE;
-/*!40000 ALTER TABLE `account_pl2` DISABLE KEYS */;
-INSERT INTO `account_pl2` VALUES (1,'A'),(2,'B'),(3,'C'),(4,'D');
-/*!40000 ALTER TABLE `account_pl2` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_pl3`
---
-
-DROP TABLE IF EXISTS `account_pl3`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_pl3` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_pl3`
---
-
-LOCK TABLES `account_pl3` WRITE;
-/*!40000 ALTER TABLE `account_pl3` DISABLE KEYS */;
-INSERT INTO `account_pl3` VALUES (1,'是'),(2,'否');
-/*!40000 ALTER TABLE `account_pl3` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_pl4`
---
-
-DROP TABLE IF EXISTS `account_pl4`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_pl4` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_pl4`
---
-
-LOCK TABLES `account_pl4` WRITE;
-/*!40000 ALTER TABLE `account_pl4` DISABLE KEYS */;
-INSERT INTO `account_pl4` VALUES (1,'一级城市'),(2,'二级城市'),(3,'战略城市');
-/*!40000 ALTER TABLE `account_pl4` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_pl5`
---
-
-DROP TABLE IF EXISTS `account_pl5`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_pl5` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_pl5`
---
-
-LOCK TABLES `account_pl5` WRITE;
-/*!40000 ALTER TABLE `account_pl5` DISABLE KEYS */;
-INSERT INTO `account_pl5` VALUES (1,'北中国'),(2,'南中国'),(3,'东中国');
-/*!40000 ALTER TABLE `account_pl5` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `account_pl6`
---
-
-DROP TABLE IF EXISTS `account_pl6`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `account_pl6` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account_pl6`
---
-
-LOCK TABLES `account_pl6` WRITE;
-/*!40000 ALTER TABLE `account_pl6` DISABLE KEYS */;
-INSERT INTO `account_pl6` VALUES (1,'麻药目标医院'),(2,'慢痛目标医院'),(3,'其他');
-/*!40000 ALTER TABLE `account_pl6` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `account_point_pl`
 --
 
@@ -450,7 +306,7 @@ CREATE TABLE `accountcrmuser` (
   KEY `account_crmuser_cons2` (`crmuserId`),
   CONSTRAINT `account_crmuser_cons` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `account_crmuser_cons2` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -480,6 +336,7 @@ CREATE TABLE `activity` (
   `participants` varchar(512) DEFAULT NULL,
   `activity_type` mediumint(9) DEFAULT NULL,
   `contactId` mediumint(9) DEFAULT NULL,
+  `coacheeId` int(32) DEFAULT NULL,
   `status` mediumint(9) DEFAULT NULL,
   `visiting_purpose` mediumint(9) DEFAULT NULL,
   `feature_product` mediumint(9) DEFAULT NULL,
@@ -489,7 +346,7 @@ CREATE TABLE `activity` (
   `modifier` varchar(255) DEFAULT NULL,
   `modify_datetime` datetime DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
-  `coach` varchar(255) DEFAULT NULL,
+  `coach` int(32) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `total_score` mediumint(9) DEFAULT NULL,
   `planing` mediumint(9) DEFAULT NULL,
@@ -503,7 +360,7 @@ CREATE TABLE `activity` (
   KEY `contactId_activity_cons` (`contactId`),
   CONSTRAINT `crmuserId_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `contactId_activity_cons` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -670,6 +527,7 @@ CREATE TABLE `activity_visiting_purpose_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   `activity_type` mediumint(9) DEFAULT NULL,
+  `parentId` mediumint(9) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -680,7 +538,7 @@ CREATE TABLE `activity_visiting_purpose_pl` (
 
 LOCK TABLES `activity_visiting_purpose_pl` WRITE;
 /*!40000 ALTER TABLE `activity_visiting_purpose_pl` DISABLE KEYS */;
-INSERT INTO `activity_visiting_purpose_pl` VALUES (1,'传递产品知识',1),(2,'处方观念沟通',1),(3,'病例沟通',1),(4,'会议安排',2),(5,'会议跟进',2),(6,'交接工作',2),(7,'了解竞争',2);
+INSERT INTO `activity_visiting_purpose_pl` VALUES (1,'传递产品知识',1,1),(2,'处方观念沟通',1,1),(3,'病例沟通',2,2),(4,'会议安排',2,2),(5,'会议跟进',2,2),(6,'交接工作',2,2),(7,'了解竞争',2,2);
 /*!40000 ALTER TABLE `activity_visiting_purpose_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -737,6 +595,33 @@ INSERT INTO `appinfo` VALUES (1,'爱奇艺'),(2,'影视圈'),(3,'多米音乐'),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `area`
+--
+
+DROP TABLE IF EXISTS `area`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+  `externalId` varchar(20) DEFAULT NULL,
+  `parentId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `area_parentid_cons` (`parentId`),
+  CONSTRAINT `area_parentid_cons` FOREIGN KEY (`parentId`) REFERENCES `city` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `area`
+--
+
+LOCK TABLES `area` WRITE;
+/*!40000 ALTER TABLE `area` DISABLE KEYS */;
+/*!40000 ALTER TABLE `area` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `boolean_pl`
 --
 
@@ -768,11 +653,14 @@ DROP TABLE IF EXISTS `city`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `city` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `provinceId` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+  `externalId` varchar(20) DEFAULT NULL,
+  `parentId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `city_parentid_cons` (`parentId`),
+  CONSTRAINT `city_parentid_cons` FOREIGN KEY (`parentId`) REFERENCES `province` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=344 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -781,7 +669,7 @@ CREATE TABLE `city` (
 
 LOCK TABLES `city` WRITE;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES (1,'牡丹江','1'),(2,'济宁','2'),(3,'日照','2'),(4,'泰安','2'),(5,'青岛','2');
+INSERT INTO `city` VALUES (1,'北京市','110100',1),(2,'石家庄市','130100',3),(3,'唐山市','130200',3),(4,'秦皇岛市','130300',3),(5,'邯郸市','130400',3),(6,'邢台市','130500',3),(7,'保定市','130600',3),(8,'张家口市','130700',3),(9,'承德市','130800',3),(10,'沧州市','130900',3),(11,'廊坊市','131000',3),(12,'衡水市','131100',3),(13,'太原市','140100',4),(14,'大同市','140200',4),(15,'阳泉市','140300',4),(16,'长治市','140400',4),(17,'晋城市','140500',4),(18,'朔州市','140600',4),(19,'晋中市','140700',4),(20,'运城市','140800',4),(21,'忻州市','140900',4),(22,'临汾市','141000',4),(23,'吕梁市','141100',4),(24,'呼和浩特市','150100',5),(25,'包头市','150200',5),(26,'乌海市','150300',5),(27,'赤峰市','150400',5),(28,'通辽市','150500',5),(29,'鄂尔多斯市','150600',5),(30,'呼伦贝尔市','150700',5),(31,'巴彦淖尔市','150800',5),(32,'乌兰察布市','150900',5),(33,'兴安盟','152200',5),(34,'锡林郭勒盟','152500',5),(35,'阿拉善盟','152900',5),(36,'沈阳市','210100',6),(37,'大连市','210200',6),(38,'鞍山市','210300',6),(39,'抚顺市','210400',6),(40,'本溪市','210500',6),(41,'丹东市','210600',6),(42,'锦州市','210700',6),(43,'营口市','210800',6),(44,'阜新市','210900',6),(45,'辽阳市','211000',6),(46,'盘锦市','211100',6),(47,'铁岭市','211200',6),(48,'朝阳市','211300',6),(49,'葫芦岛市','211400',6),(50,'长春市','220100',7),(51,'吉林市','220200',7),(52,'四平市','220300',7),(53,'辽源市','220400',7),(54,'通化市','220500',7),(55,'白山市','220600',7),(56,'松原市','220700',7),(57,'白城市','220800',7),(58,'延边朝鲜族自治州','222400',7),(59,'哈尔滨市','230100',8),(60,'齐齐哈尔市','230200',8),(61,'鸡西市','230300',8),(62,'鹤岗市','230400',8),(63,'双鸭山市','230500',8),(64,'大庆市','230600',8),(65,'伊春市','230700',8),(66,'佳木斯市','230800',8),(67,'七台河市','230900',8),(68,'牡丹江市','231000',8),(69,'黑河市','231100',8),(70,'绥化市','231200',8),(71,'大兴安岭地区','232700',8),(72,'市辖区','310100',9),(73,'县','310200',9),(74,'南京市','320100',10),(75,'无锡市','320200',10),(76,'徐州市','320300',10),(77,'常州市','320400',10),(78,'苏州市','320500',10),(79,'南通市','320600',10),(80,'连云港市','320700',10),(81,'淮安市','320800',10),(82,'盐城市','320900',10),(83,'扬州市','321000',10),(84,'镇江市','321100',10),(85,'泰州市','321200',10),(86,'宿迁市','321300',10),(87,'杭州市','330100',11),(88,'宁波市','330200',11),(89,'温州市','330300',11),(90,'嘉兴市','330400',11),(91,'湖州市','330500',11),(92,'绍兴市','330600',11),(93,'金华市','330700',11),(94,'衢州市','330800',11),(95,'舟山市','330900',11),(96,'台州市','331000',11),(97,'丽水市','331100',11),(98,'合肥市','340100',12),(99,'芜湖市','340200',12),(100,'蚌埠市','340300',12),(101,'淮南市','340400',12),(102,'马鞍山市','340500',12),(103,'淮北市','340600',12),(104,'铜陵市','340700',12),(105,'安庆市','340800',12),(106,'黄山市','341000',12),(107,'滁州市','341100',12),(108,'阜阳市','341200',12),(109,'宿州市','341300',12),(110,'巢湖市','341400',12),(111,'六安市','341500',12),(112,'亳州市','341600',12),(113,'池州市','341700',12),(114,'宣城市','341800',12),(115,'福州市','350100',13),(116,'厦门市','350200',13),(117,'莆田市','350300',13),(118,'三明市','350400',13),(119,'泉州市','350500',13),(120,'漳州市','350600',13),(121,'南平市','350700',13),(122,'龙岩市','350800',13),(123,'宁德市','350900',13),(124,'南昌市','360100',14),(125,'景德镇市','360200',14),(126,'萍乡市','360300',14),(127,'九江市','360400',14),(128,'新余市','360500',14),(129,'鹰潭市','360600',14),(130,'赣州市','360700',14),(131,'吉安市','360800',14),(132,'宜春市','360900',14),(133,'抚州市','361000',14),(134,'上饶市','361100',14),(135,'济南市','370100',15),(136,'青岛市','370200',15),(137,'淄博市','370300',15),(138,'枣庄市','370400',15),(139,'东营市','370500',15),(140,'烟台市','370600',15),(141,'潍坊市','370700',15),(142,'济宁市','370800',15),(143,'泰安市','370900',15),(144,'威海市','371000',15),(145,'日照市','371100',15),(146,'莱芜市','371200',15),(147,'临沂市','371300',15),(148,'德州市','371400',15),(149,'聊城市','371500',15),(150,'滨州市','371600',15),(151,'荷泽市','371700',15),(152,'郑州市','410100',16),(153,'开封市','410200',16),(154,'洛阳市','410300',16),(155,'平顶山市','410400',16),(156,'安阳市','410500',16),(157,'鹤壁市','410600',16),(158,'新乡市','410700',16),(159,'焦作市','410800',16),(160,'濮阳市','410900',16),(161,'许昌市','411000',16),(162,'漯河市','411100',16),(163,'三门峡市','411200',16),(164,'南阳市','411300',16),(165,'商丘市','411400',16),(166,'信阳市','411500',16),(167,'周口市','411600',16),(168,'驻马店市','411700',16),(169,'武汉市','420100',17),(170,'黄石市','420200',17),(171,'十堰市','420300',17),(172,'宜昌市','420500',17),(173,'襄樊市','420600',17),(174,'鄂州市','420700',17),(175,'荆门市','420800',17),(176,'孝感市','420900',17),(177,'荆州市','421000',17),(178,'黄冈市','421100',17),(179,'咸宁市','421200',17),(180,'随州市','421300',17),(181,'恩施土家族苗族自治州','422800',17),(182,'省直辖行政单位','429000',17),(183,'长沙市','430100',18),(184,'株洲市','430200',18),(185,'湘潭市','430300',18),(186,'衡阳市','430400',18),(187,'邵阳市','430500',18),(188,'岳阳市','430600',18),(189,'常德市','430700',18),(190,'张家界市','430800',18),(191,'益阳市','430900',18),(192,'郴州市','431000',18),(193,'永州市','431100',18),(194,'怀化市','431200',18),(195,'娄底市','431300',18),(196,'湘西土家族苗族自治州','433100',18),(197,'广州市','440100',19),(198,'韶关市','440200',19),(199,'深圳市','440300',19),(200,'珠海市','440400',19),(201,'汕头市','440500',19),(202,'佛山市','440600',19),(203,'江门市','440700',19),(204,'湛江市','440800',19),(205,'茂名市','440900',19),(206,'肇庆市','441200',19),(207,'惠州市','441300',19),(208,'梅州市','441400',19),(209,'汕尾市','441500',19),(210,'河源市','441600',19),(211,'阳江市','441700',19),(212,'清远市','441800',19),(213,'东莞市','441900',19),(214,'中山市','442000',19),(215,'潮州市','445100',19),(216,'揭阳市','445200',19),(217,'云浮市','445300',19),(218,'南宁市','450100',20),(219,'柳州市','450200',20),(220,'桂林市','450300',20),(221,'梧州市','450400',20),(222,'北海市','450500',20),(223,'防城港市','450600',20),(224,'钦州市','450700',20),(225,'贵港市','450800',20),(226,'玉林市','450900',20),(227,'百色市','451000',20),(228,'贺州市','451100',20),(229,'河池市','451200',20),(230,'来宾市','451300',20),(231,'崇左市','451400',20),(232,'海口市','460100',21),(233,'三亚市','460200',21),(234,'省直辖县级行政单位','469000',21),(235,'市辖区','500100',22),(236,'县','500200',22),(237,'市','500300',22),(238,'成都市','510100',23),(239,'自贡市','510300',23),(240,'攀枝花市','510400',23),(241,'泸州市','510500',23),(242,'德阳市','510600',23),(243,'绵阳市','510700',23),(244,'广元市','510800',23),(245,'遂宁市','510900',23),(246,'内江市','511000',23),(247,'乐山市','511100',23),(248,'南充市','511300',23),(249,'眉山市','511400',23),(250,'宜宾市','511500',23),(251,'广安市','511600',23),(252,'达州市','511700',23),(253,'雅安市','511800',23),(254,'巴中市','511900',23),(255,'资阳市','512000',23),(256,'阿坝藏族羌族自治州','513200',23),(257,'甘孜藏族自治州','513300',23),(258,'凉山彝族自治州','513400',23),(259,'贵阳市','520100',24),(260,'六盘水市','520200',24),(261,'遵义市','520300',24),(262,'安顺市','520400',24),(263,'铜仁地区','522200',24),(264,'黔西南布依族苗族自治州','522300',24),(265,'毕节地区','522400',24),(266,'黔东南苗族侗族自治州','522600',24),(267,'黔南布依族苗族自治州','522700',24),(268,'昆明市','530100',25),(269,'曲靖市','530300',25),(270,'玉溪市','530400',25),(271,'保山市','530500',25),(272,'昭通市','530600',25),(273,'丽江市','530700',25),(274,'思茅市','530800',25),(275,'临沧市','530900',25),(276,'楚雄彝族自治州','532300',25),(277,'红河哈尼族彝族自治州','532500',25),(278,'文山壮族苗族自治州','532600',25),(279,'西双版纳傣族自治州','532800',25),(280,'大理白族自治州','532900',25),(281,'德宏傣族景颇族自治州','533100',25),(282,'怒江傈僳族自治州','533300',25),(283,'迪庆藏族自治州','533400',25),(284,'拉萨市','540100',26),(285,'昌都地区','542100',26),(286,'山南地区','542200',26),(287,'日喀则地区','542300',26),(288,'那曲地区','542400',26),(289,'阿里地区','542500',26),(290,'林芝地区','542600',26),(291,'西安市','610100',27),(292,'铜川市','610200',27),(293,'宝鸡市','610300',27),(294,'咸阳市','610400',27),(295,'渭南市','610500',27),(296,'延安市','610600',27),(297,'汉中市','610700',27),(298,'榆林市','610800',27),(299,'安康市','610900',27),(300,'商洛市','611000',27),(301,'兰州市','620100',28),(302,'嘉峪关市','620200',28),(303,'金昌市','620300',28),(304,'白银市','620400',28),(305,'天水市','620500',28),(306,'武威市','620600',28),(307,'张掖市','620700',28),(308,'平凉市','620800',28),(309,'酒泉市','620900',28),(310,'庆阳市','621000',28),(311,'定西市','621100',28),(312,'陇南市','621200',28),(313,'临夏回族自治州','622900',28),(314,'甘南藏族自治州','623000',28),(315,'西宁市','630100',29),(316,'海东地区','632100',29),(317,'海北藏族自治州','632200',29),(318,'黄南藏族自治州','632300',29),(319,'海南藏族自治州','632500',29),(320,'果洛藏族自治州','632600',29),(321,'玉树藏族自治州','632700',29),(322,'海西蒙古族藏族自治州','632800',29),(323,'银川市','640100',30),(324,'石嘴山市','640200',30),(325,'吴忠市','640300',30),(326,'固原市','640400',30),(327,'中卫市','640500',30),(328,'乌鲁木齐市','650100',31),(329,'克拉玛依市','650200',31),(330,'吐鲁番地区','652100',31),(331,'哈密地区','652200',31),(332,'昌吉回族自治州','652300',31),(333,'博尔塔拉蒙古自治州','652700',31),(334,'巴音郭楞蒙古自治州','652800',31),(335,'阿克苏地区','652900',31),(336,'克孜勒苏柯尔克孜自治州','653000',31),(337,'喀什地区','653100',31),(338,'和田地区','653200',31),(339,'伊犁哈萨克自治州','654000',31),(340,'塔城地区','654200',31),(341,'阿勒泰地区','654300',31),(342,'省直辖行政单位','659000',31),(343,'天津',NULL,2);
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -830,8 +718,8 @@ CREATE TABLE `contact` (
   `status` varchar(255) DEFAULT NULL,
   `market_classification` mediumint(9) DEFAULT NULL,
   `grade` mediumint(9) DEFAULT NULL,
-  `province` varchar(255) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
+  `province` int(11) DEFAULT NULL,
+  `city` int(11) DEFAULT NULL,
   `districts` varchar(255) DEFAULT NULL,
   `duty` mediumint(9) DEFAULT NULL,
   `job_title` mediumint(9) DEFAULT NULL,
@@ -845,7 +733,7 @@ CREATE TABLE `contact` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `account_id_cons` (`accountId`),
   CONSTRAINT `account_id_cons` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -854,7 +742,6 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (-1,'dummy',-1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1003,150 +890,6 @@ INSERT INTO `contact_market_classification_pl` VALUES (1,'战略城市'),(2,'一
 UNLOCK TABLES;
 
 --
--- Table structure for table `contact_pl1`
---
-
-DROP TABLE IF EXISTS `contact_pl1`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contact_pl1` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contact_pl1`
---
-
-LOCK TABLES `contact_pl1` WRITE;
-/*!40000 ALTER TABLE `contact_pl1` DISABLE KEYS */;
-INSERT INTO `contact_pl1` VALUES (1,'肿瘤科'),(2,'内科'),(3,'外科'),(4,'中医科'),(5,'化疗科'),(6,'关怀科'),(7,'牙科'),(8,'急症科'),(9,'骨科'),(10,'肝胆外科'),(11,'血液科'),(12,'风湿科'),(13,'呼吸科');
-/*!40000 ALTER TABLE `contact_pl1` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `contact_pl2`
---
-
-DROP TABLE IF EXISTS `contact_pl2`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contact_pl2` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contact_pl2`
---
-
-LOCK TABLES `contact_pl2` WRITE;
-/*!40000 ALTER TABLE `contact_pl2` DISABLE KEYS */;
-INSERT INTO `contact_pl2` VALUES (1,'主任'),(2,'主治医师'),(3,'科室主任'),(4,'采购'),(5,'科室主任'),(6,'院长');
-/*!40000 ALTER TABLE `contact_pl2` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `contact_pl3`
---
-
-DROP TABLE IF EXISTS `contact_pl3`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contact_pl3` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contact_pl3`
---
-
-LOCK TABLES `contact_pl3` WRITE;
-/*!40000 ALTER TABLE `contact_pl3` DISABLE KEYS */;
-INSERT INTO `contact_pl3` VALUES (1,'住院医师'),(2,'主治医师'),(3,'副主任医师'),(4,'主任医师'),(5,'护士'),(6,'主管护师'),(7,'药师'),(8,'技师');
-/*!40000 ALTER TABLE `contact_pl3` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `contact_pl4`
---
-
-DROP TABLE IF EXISTS `contact_pl4`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contact_pl4` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contact_pl4`
---
-
-LOCK TABLES `contact_pl4` WRITE;
-/*!40000 ALTER TABLE `contact_pl4` DISABLE KEYS */;
-INSERT INTO `contact_pl4` VALUES (1,'奥施康定'),(2,'奇曼丁'),(3,'意施丁'),(4,'综合'),(5,'麻药'),(6,'慢痛');
-/*!40000 ALTER TABLE `contact_pl4` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `contact_pl5`
---
-
-DROP TABLE IF EXISTS `contact_pl5`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contact_pl5` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contact_pl5`
---
-
-LOCK TABLES `contact_pl5` WRITE;
-/*!40000 ALTER TABLE `contact_pl5` DISABLE KEYS */;
-INSERT INTO `contact_pl5` VALUES (1,'有效'),(2,'无效');
-/*!40000 ALTER TABLE `contact_pl5` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `contact_pl6`
---
-
-DROP TABLE IF EXISTS `contact_pl6`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contact_pl6` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `val` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contact_pl6`
---
-
-LOCK TABLES `contact_pl6` WRITE;
-/*!40000 ALTER TABLE `contact_pl6` DISABLE KEYS */;
-INSERT INTO `contact_pl6` VALUES (1,'A'),(2,'B'),(3,'C'),(4,'D');
-/*!40000 ALTER TABLE `contact_pl6` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `contact_status_pl`
 --
 
@@ -1186,7 +929,7 @@ CREATE TABLE `contactcrmuser` (
   KEY `crm_contact_cons1` (`crmuserId`),
   CONSTRAINT `crm_contact_cons1` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `crm_contact_cons2` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1208,34 +951,22 @@ DROP TABLE IF EXISTS `crmuser`;
 CREATE TABLE `crmuser` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `department` varchar(255) DEFAULT NULL,
-  `division` varchar(255) DEFAULT NULL,
-  `cellPhone` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `employeeNumber` varchar(255) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `jobTitle` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `reportto` mediumint(9) DEFAULT NULL,
+  `role` mediumint(9) DEFAULT NULL,
   `pl1` mediumint(9) DEFAULT NULL,
   `pl2` mediumint(9) DEFAULT NULL,
-  `role` mediumint(9) DEFAULT NULL,
   `pl4` mediumint(9) DEFAULT NULL,
   `pl5` mediumint(9) DEFAULT NULL,
-  `sex` mediumint(9) DEFAULT NULL,
-  `loginName` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `sessionKey` varchar(255) DEFAULT NULL,
-  `lastLoginTime` bigint(20) DEFAULT NULL,
-  `whenadded` datetime DEFAULT NULL,
-  `reportto` mediumint(9) DEFAULT NULL,
-  `parcel` varchar(255) DEFAULT NULL,
-  `modifier` varchar(255) DEFAULT NULL,
-  `modify_datetime` datetime DEFAULT NULL,
-  `owner` varchar(255) DEFAULT NULL,
-  `postId` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
-  `isActivited` tinyint(1) DEFAULT NULL,
+  `department` varchar(255) DEFAULT NULL,
+  `whenadded` datetime DEFAULT NULL,
+  `modifier` varchar(255) DEFAULT NULL,
+  `modify_datetime` date DEFAULT NULL,
+  `owner` varchar(255) DEFAULT NULL,
+  `level` mediumint(9) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1244,8 +975,32 @@ CREATE TABLE `crmuser` (
 
 LOCK TABLES `crmuser` WRITE;
 /*!40000 ALTER TABLE `crmuser` DISABLE KEYS */;
-INSERT INTO `crmuser` VALUES (-1,'dummy',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(99,'Admin Name',NULL,'医疗设备部',NULL,'admin@qq.com',NULL,'','职员',1,1,1,1,1,1,'admin','827ccb0eea8a706c4c34a16891f84e7b','53856',NULL,NULL,-1,NULL,'Admin Name','2013-10-20 23:28:00',NULL,NULL,'1',NULL),(100,'sales rep',NULL,NULL,NULL,'sales@qq.com',NULL,NULL,NULL,1,1,3,1,1,1,'sales','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,'2013-10-14 18:58:00',101,NULL,'李99','2013-10-19 19:02:00','李99',NULL,NULL,NULL),(101,'sales manager',NULL,NULL,NULL,'man@qq.com',NULL,NULL,NULL,1,1,2,1,1,1,'salesman','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,'2013-10-14 18:58:00',-1,NULL,'Admin Name','2013-10-20 23:28:00','李99',NULL,NULL,NULL);
+INSERT INTO `crmuser` VALUES (-1,'无','BJ',0,-1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1,'管理员','BJ231011001',-1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'北区地区经理01','BJ131011001',1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'北区代表001','BJ131001001',2,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'北区地区经理03','BJ131021003',-1,2,1,1,1,1,'1',NULL,'2013-11-09 00:02:00','Admin Nam','2013-11-09',NULL,NULL),(5,'北区代表018','BJ131011017',-1,1,1,1,1,1,'1',NULL,'2013-11-09 00:03:00','Admin Nam','2013-11-09',NULL,NULL);
 /*!40000 ALTER TABLE `crmuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `crmuser_activited`
+--
+
+DROP TABLE IF EXISTS `crmuser_activited`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `crmuser_activited` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `crmuser_activited`
+--
+
+LOCK TABLES `crmuser_activited` WRITE;
+/*!40000 ALTER TABLE `crmuser_activited` DISABLE KEYS */;
+INSERT INTO `crmuser_activited` VALUES (1,'已激活'),(2,'未激活');
+/*!40000 ALTER TABLE `crmuser_activited` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1381,13 +1136,13 @@ INSERT INTO `dl` VALUES (1,'N2',2,'2013-10-09 14:42:28'),(2,'N3',3,'2013-10-20 1
 UNLOCK TABLES;
 
 --
--- Table structure for table `externalmeeting`
+-- Table structure for table `externalMeeting`
 --
 
-DROP TABLE IF EXISTS `externalmeeting`;
+DROP TABLE IF EXISTS `externalMeeting`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `externalmeeting` (
+CREATE TABLE `externalMeeting` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `crmuserId` mediumint(9) NOT NULL,
   `endtime` bigint(20) DEFAULT NULL,
@@ -1398,27 +1153,26 @@ CREATE TABLE `externalmeeting` (
   `activity_type` mediumint(9) DEFAULT NULL,
   `coachId` mediumint(9) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `externalmeeting`
+-- Dumping data for table `externalMeeting`
 --
 
-LOCK TABLES `externalmeeting` WRITE;
-/*!40000 ALTER TABLE `externalmeeting` DISABLE KEYS */;
-INSERT INTO `externalmeeting` VALUES (32,20,1375804800000,1375804800000,'拜访','[7,167]',2,2,0);
-/*!40000 ALTER TABLE `externalmeeting` ENABLE KEYS */;
+LOCK TABLES `externalMeeting` WRITE;
+/*!40000 ALTER TABLE `externalMeeting` DISABLE KEYS */;
+/*!40000 ALTER TABLE `externalMeeting` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `internalmeeting`
+-- Table structure for table `internalMeeting`
 --
 
-DROP TABLE IF EXISTS `internalmeeting`;
+DROP TABLE IF EXISTS `internalMeeting`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `internalmeeting` (
+CREATE TABLE `internalMeeting` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `crmuserId` mediumint(9) NOT NULL,
   `endtime` bigint(20) DEFAULT NULL,
@@ -1433,12 +1187,12 @@ CREATE TABLE `internalmeeting` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `internalmeeting`
+-- Dumping data for table `internalMeeting`
 --
 
-LOCK TABLES `internalmeeting` WRITE;
-/*!40000 ALTER TABLE `internalmeeting` DISABLE KEYS */;
-/*!40000 ALTER TABLE `internalmeeting` ENABLE KEYS */;
+LOCK TABLES `internalMeeting` WRITE;
+/*!40000 ALTER TABLE `internalMeeting` DISABLE KEYS */;
+/*!40000 ALTER TABLE `internalMeeting` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1449,10 +1203,11 @@ DROP TABLE IF EXISTS `province`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `province` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `val` varchar(20) DEFAULT NULL,
+  `externalId` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1461,8 +1216,33 @@ CREATE TABLE `province` (
 
 LOCK TABLES `province` WRITE;
 /*!40000 ALTER TABLE `province` DISABLE KEYS */;
-INSERT INTO `province` VALUES (1,'黑龙江'),(2,'山东');
+INSERT INTO `province` VALUES (1,'北京市','110000'),(2,'天津市','120000'),(3,'河北省','130000'),(4,'山西省','140000'),(5,'内蒙古','150000'),(6,'辽宁省','210000'),(7,'吉林省','220000'),(8,'黑龙江','230000'),(9,'上海市','310000'),(10,'江苏省','320000'),(11,'浙江省','330000'),(12,'安徽省','340000'),(13,'福建省','350000'),(14,'江西省','360000'),(15,'山东省','370000'),(16,'河南省','410000'),(17,'湖北省','420000'),(18,'湖南省','430000'),(19,'广东省','440000'),(20,'广 西','450000'),(21,'海南省','460000'),(22,'重庆市','500000'),(23,'四川省','510000'),(24,'贵州省','520000'),(25,'云南省','530000'),(26,'西 藏','540000'),(27,'陕西省','610000'),(28,'甘肃省','620000'),(29,'青海省','630000'),(30,'宁 夏','640000'),(31,'新 疆','650000'),(32,'台湾省','710000'),(33,'香 港','810000'),(34,'澳 门','820000');
 /*!40000 ALTER TABLE `province` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `province1`
+--
+
+DROP TABLE IF EXISTS `province1`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `province1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(6) NOT NULL,
+  `val` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `province1`
+--
+
+LOCK TABLES `province1` WRITE;
+/*!40000 ALTER TABLE `province1` DISABLE KEYS */;
+INSERT INTO `province1` VALUES (1,'110000','北京市'),(2,'120000','天津市'),(3,'130000','河北省'),(4,'140000','山西省'),(5,'150000','内蒙古'),(6,'210000','辽宁省'),(7,'220000','吉林省'),(8,'230000','黑龙江'),(9,'310000','上海市'),(10,'320000','江苏省'),(11,'330000','浙江省'),(12,'340000','安徽省'),(13,'350000','福建省'),(14,'360000','江西省'),(15,'370000','山东省'),(16,'410000','河南省'),(17,'420000','湖北省'),(18,'430000','湖南省'),(19,'440000','广东省'),(20,'450000','广 西'),(21,'460000','海南省'),(22,'500000','重庆市'),(23,'510000','四川省'),(24,'520000','贵州省'),(25,'530000','云南省'),(26,'540000','西 藏'),(27,'610000','陕西省'),(28,'620000','甘肃省'),(29,'630000','青海省'),(30,'640000','宁 夏'),(31,'650000','新 疆'),(32,'710000','台湾省'),(33,'810000','香 港'),(34,'820000','澳 门');
+/*!40000 ALTER TABLE `province1` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1562,6 +1342,54 @@ INSERT INTO `sales_visiting_purpose_pl` VALUES (1,'会议安排'),(2,'会议跟�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `score1_pl`
+--
+
+DROP TABLE IF EXISTS `score1_pl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `score1_pl` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `score1_pl`
+--
+
+LOCK TABLES `score1_pl` WRITE;
+/*!40000 ALTER TABLE `score1_pl` DISABLE KEYS */;
+INSERT INTO `score1_pl` VALUES (0,'0'),(1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5'),(6,'6'),(7,'7'),(8,'8'),(9,'9'),(10,'10'),(11,'11'),(12,'12'),(13,'13'),(14,'14'),(15,'15');
+/*!40000 ALTER TABLE `score1_pl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `score2_pl`
+--
+
+DROP TABLE IF EXISTS `score2_pl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `score2_pl` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `score2_pl`
+--
+
+LOCK TABLES `score2_pl` WRITE;
+/*!40000 ALTER TABLE `score2_pl` DISABLE KEYS */;
+INSERT INTO `score2_pl` VALUES (0,'0'),(1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5'),(6,'6'),(7,'7'),(8,'8'),(9,'9'),(10,'10'),(11,'11'),(12,'12'),(13,'13'),(14,'14'),(15,'15'),(16,'16'),(17,'17'),(18,'18'),(19,'19'),(20,'20');
+/*!40000 ALTER TABLE `score2_pl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sex_pl`
 --
 
@@ -1633,6 +1461,81 @@ LOCK TABLES `test_sub` WRITE;
 INSERT INTO `test_sub` VALUES (1,1,'ONEONE'),(2,2,'TWOTWO');
 /*!40000 ALTER TABLE `test_sub` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `userInfo`
+--
+
+DROP TABLE IF EXISTS `userInfo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userInfo` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `department` varchar(255) DEFAULT NULL,
+  `division` varchar(255) DEFAULT NULL,
+  `cellPhone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `employeeNumber` varchar(255) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `jobTitle` varchar(255) DEFAULT NULL,
+  `pl1` mediumint(9) DEFAULT NULL,
+  `pl2` mediumint(9) DEFAULT NULL,
+  `role` mediumint(9) DEFAULT NULL,
+  `pl4` mediumint(9) DEFAULT NULL,
+  `pl5` mediumint(9) DEFAULT NULL,
+  `sex` mediumint(9) DEFAULT NULL,
+  `loginName` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `sessionKey` varchar(255) DEFAULT NULL,
+  `lastLoginTime` bigint(20) DEFAULT NULL,
+  `whenadded` datetime DEFAULT NULL,
+  `parcel` varchar(255) DEFAULT NULL,
+  `modifier` varchar(255) DEFAULT NULL,
+  `modify_datetime` datetime DEFAULT NULL,
+  `owner` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `isActivited` mediumint(9) DEFAULT NULL,
+  `ts` bigint(20) DEFAULT NULL,
+  `positionId` mediumint(9) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userInfo`
+--
+
+LOCK TABLES `userInfo` WRITE;
+/*!40000 ALTER TABLE `userInfo` DISABLE KEYS */;
+INSERT INTO `userInfo` VALUES (-1,'无',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'dummy','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1386766666,-1),(1,'Admin Nam',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'admin','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1386766666,1),(2,'Sales Manager',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,2,NULL,NULL,NULL,'salesman','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1386766666,2),(3,'Sales',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,3,NULL,NULL,NULL,'sales','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1386766666,3);
+/*!40000 ALTER TABLE `userInfo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_position`
+--
+
+DROP TABLE IF EXISTS `user_position`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_position` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `userId` int(32) DEFAULT NULL,
+  `positionId` int(32) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_position_unique` (`userId`,`positionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_position`
+--
+
+LOCK TABLES `user_position` WRITE;
+/*!40000 ALTER TABLE `user_position` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_position` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1643,4 +1546,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-20 23:29:22
+-- Dump completed on 2013-11-09  0:19:24
