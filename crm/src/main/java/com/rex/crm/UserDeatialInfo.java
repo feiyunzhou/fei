@@ -68,17 +68,17 @@ public class UserDeatialInfo extends UserInfoSettingPage {
          RepeatingView divRepeater = new RepeatingView("userRealtionInfo");
          add(divRepeater);*/
         
-       /* //add prompt 
+        //add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
-        final AbstractItem divitem = new AbstractItem(div.newChildId());
+        final AbstractItem group = new AbstractItem(div.newChildId());
         final Label promptButton = new Label("promptButton","X");
-        divitem.add(promptButton);
-        final Label promptLabel = new Label("prompt","红色字体字段为必填项，请输入!");
-        divitem.add(promptLabel);
+        group.add(promptButton);
+        final Label promptLabel = new Label("prompt","提示:操作已成功！");
+        group.add(promptLabel);
         div.add(new AttributeAppender("style",new Model("display:none"),";"));
-        divitem.add(new AttributeAppender("style",new Model("display:none"),";"));
-        div.add(divitem);
-        add(div);	*/
+        group.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(group);
+        add(div);
         final List<String> fieldNames = Lists.newArrayList();
         //得到基本信息信息
         RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
@@ -206,14 +206,17 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                     }
                 }
                 int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
-                DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName);
-                setResponsePage(HomePage.class);
+                if(DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName)){
+                	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                	group.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                };
+        		//setResponsePage(HomePage.class);
             }
         };
         form.add(fieldGroupRepeater);
         add(form);
-        add(new Label("successFlag", "恭喜您!操作成功!"));
-        add(new AttributeAppender("style", new Model("dispaly:block;"), ";"));
     }
 
     private class TextInputFragment extends Fragment {

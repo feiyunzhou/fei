@@ -52,7 +52,10 @@
                         </div>
                 </div> -->
                 <div  class="row-fluid center">
-                    <div wicket:id="successFlag" style="display:none"></div>
+                    <div wicket:id="promptDiv" class="alert  alert-success" >
+	 					<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
+						<span wicket:id="prompt" ><strong></strong></span>
+					</div>
                     <form wicket:id="form" class="form-horizontal">
                         <div wicket:id="fieldGroupRepeater">
                             <div>

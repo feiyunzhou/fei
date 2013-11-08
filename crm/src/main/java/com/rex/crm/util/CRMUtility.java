@@ -191,13 +191,18 @@ public class CRMUtility {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
 	            }
-	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") 
-	            || entityName.equalsIgnoreCase("activity")){
+	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar")){
+	        	 if(roleId==1){
+	        		 permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DEL);
+	        	 }else{
+	        		 permission = EnumSet.of(CRUDPanel.Permissions.EDIT);
+	        	 }
+	        }else if(entityName.equalsIgnoreCase("activity")){
 	        	if (roleId == 1) {
 		            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
-	          }else{
-	            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
-	          }
+	        	}else if(roleId==3){
+	        		permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
+	        	}
 	        }else if(entityName.equalsIgnoreCase("coaching")){
 	          if (roleId == 1) {
 	            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);

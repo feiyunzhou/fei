@@ -1742,13 +1742,13 @@ public class DAOImpl
         return inferiors;
     }
     // update crmuser baseInfo
-    public static void updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex,String loginName) {
+    public static boolean updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex,String loginName) {
     	String sql = "UPDATE userinfo SET name=?,cellphone=?,email=?,photo=?,sex=?,loginName=? where id=?";
         Connection conn = null;
+        int inserts = 0;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            int inserts = 0;
             inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,loginName,userId);
             System.out.println("updateCrmUser:" + inserts);
         } catch (Exception e) {
@@ -1756,6 +1756,10 @@ public class DAOImpl
         } finally {
             DBHelper.closeConnection(conn);
         }
+        if(inserts>0){
+    		return true;
+    	}
+    	return false;
     }
     //update user Password
     public static boolean updateCrmUserPassword(int userId,String password){

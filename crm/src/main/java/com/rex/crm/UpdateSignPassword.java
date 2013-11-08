@@ -8,6 +8,8 @@ import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -31,8 +33,19 @@ public class UpdateSignPassword extends UserInfoSettingPage {
         //获取到登录对象，将用户名传入页面，然后如何获取
         final int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
         UserInfo user = DAOImpl.getUserInfoById(userId);
-        final Label promptLabel = new Label("prompt", "旧密码错误,请重新输入！");
-        add(promptLabel);
+        final Label prompt = new Label("prompt", "旧密码错误,请重新输入！");
+        add(prompt);
+        //add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem group = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        group.add(promptButton);
+        final Label promptLabel = new Label("prompt","提示:操作已成功！");
+        group.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        group.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(group);
+        add(div);
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
@@ -48,7 +61,10 @@ public class UpdateSignPassword extends UserInfoSettingPage {
                     logger.debug("true");
                     //修改密码
                     if (DAOImpl.updateCrmUserPassword(userId, newPassword)) {
-                        setResponsePage(HomePage.class);
+                    	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    	group.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
                     };
                 } else {
                     logger.debug("false");
