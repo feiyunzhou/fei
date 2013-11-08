@@ -11,13 +11,10 @@
     <div class="">
         <div class="">
             <div class="" >
-                <div class="bor" >
-                    <div class="label label-default table-custom-header">
-
-                        <div class="table-title">
-                            <span wicket:id="title"></span>
-                        </div>
-                        <div class="pull-right operation-bar btn-group-right">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <span wicket:id="title"></span>
+                        <div class="pull-right operation-bar btn-group-right team-btn">
                             <div class="btn-group-team">
                                 <a id="add_relation_link" wicket:id="add_users_link" target="_blank" class="btn btn-sm  btn-mini btn-info">添加</a>
                             </div>
@@ -26,13 +23,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="team-table">
                     <form wicket:id="form">
                         <span wicket:id="group">
-                            <table id="dt" style="width: 100%" class="table table-hover  table-condensed">
+                            <table id="dt" style="width: 100%" class="table table-responsive table-hover table-condensed">
                                 <thead>
-                                    <tr  bgcolor="#E4EFFB">
+                                    <tr class="active">
                                         <th class="table-hide " wicket:id="columnNameRepeater">
                                             <span wicket:id="columnName"></span></th>
                                         <th class="table-check">
