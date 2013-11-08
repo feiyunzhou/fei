@@ -450,7 +450,7 @@ public class DAOImpl
             try {
                 conn = DBHelper.getConnection();
                 QueryRunner run = new QueryRunner();
-                int inserts = run.update(conn, sql, cId);
+                int inserts = run.update(conn, sql, cId,userId);
 
                 logger.info(String.format("%s row inserted into insertRelationOfEntityIDCRMUserID!", inserts));
 
@@ -1630,7 +1630,7 @@ public class DAOImpl
       }
       if(excludeId == null) excludeId = "-1";
       
-      String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (crmuser.reportto="+userId+") AND (name like '%"+search_target+"%' OR reportto like '%"+search_target+"%' OR  code like '%"+search_target+"%')) as a";
+      String sql = "select * from (select * from userInfo where (userInfo.id !="+excludeId+") AND (userInfo.id !=-1)  AND (name like '%"+search_target+"%' )) as a";
       logger.debug("searchManager:"+ sql );
       Connection conn = null;
       List lMap = Lists.newArrayList();

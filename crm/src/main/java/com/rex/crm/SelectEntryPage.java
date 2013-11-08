@@ -97,8 +97,6 @@ public class SelectEntryPage extends WebPage {
                             maplist = DAOImpl.queryEntityRelationList(sql);
 
                         }
-                    } else if (tragetEntity.equalsIgnoreCase("coaching")) {
-                        maplist = DAOImpl.searchCoachee(search_target, excludeId, posId);
                     }else if (tragetEntity.equalsIgnoreCase("crmuser")) {
                         // maplist = DAOImpl.searchCRMUser(search_target);
                         maplist = DAOImpl.searchManager(search_target, excludeId);
@@ -127,7 +125,11 @@ public class SelectEntryPage extends WebPage {
                     
                 }else if (relationTableName.equalsIgnoreCase("userInfo")) {
                     // maplist = DAOImpl.searchCRMUser(search_target);
-                    maplist = DAOImpl.searchCRMUser(search_target);
+                  if (tragetEntity.equalsIgnoreCase("coaching")) {
+                    maplist = DAOImpl.searchCoachee(search_target, excludeId, posId);
+                }  else {
+                  maplist = DAOImpl.searchCRMUser(search_target);
+                }
                     Map dummy = Maps.newHashMap();
                     dummy.put("id", -1);
                     dummy.put("name", "无");
