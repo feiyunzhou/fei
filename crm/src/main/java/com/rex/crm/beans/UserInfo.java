@@ -39,10 +39,9 @@ public class UserInfo {
   {
     return positionId;
   }
-
-  public void setPositionId(int postId)
+  public void setPositionId(int positionId)
   {
-    this.positionId = postId;
+    this.positionId = positionId;
   }
     
 	public String getName() {

@@ -177,7 +177,7 @@ public class EventCoachEditorPage extends TemplatePage{
 						"feature_product")));
 		//辅导者
 		//获取辅导者对象
-		UserInfo crmuser = DAOImpl.getCrmUserById((int) entity_data.get("crmuserId"));
+		CRMUser crmuser = DAOImpl.getCrmUserById((int) entity_data.get("crmuserId"));
 		crmuserId = crmuser.getName();
 		form.add(new TextField("crmuserId", new PropertyModel(this,
 				"crmuserId")));

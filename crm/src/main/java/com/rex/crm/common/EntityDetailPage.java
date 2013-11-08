@@ -25,6 +25,7 @@ import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
 import com.rex.crm.CoachingPage;
 import com.rex.crm.ContactPage;
+import com.rex.crm.PositionPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.UserPage;
@@ -96,12 +97,17 @@ public class EntityDetailPage extends TemplatePage {
          }
          if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
+//             add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),1));
              WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
              add(con2); 
              con2.setVisible(false);
+             WebMarkupContainer con3 = new WebMarkupContainer("teamPanel3");
+             add(con3); 
+             con3.setVisible(false);
          }else if(entityName.equalsIgnoreCase("crmuser")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new TeamManPanel("teamPanel2",entityName,String.valueOf(lid),1));
+             add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
          }
          else{
              WebMarkupContainer con = new WebMarkupContainer("teamPanel");
@@ -110,6 +116,9 @@ public class EntityDetailPage extends TemplatePage {
              WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
              add(con2);
              con2.setVisible(false);
+             WebMarkupContainer con3 = new WebMarkupContainer("teamPanel3");
+             add(con3);
+             con3.setVisible(false);
          }
 
          add(new AbstractAjaxBehavior(){
@@ -149,10 +158,10 @@ public class EntityDetailPage extends TemplatePage {
                        DAOImpl.updateCrmUserReport(id, "-1");
                     }
                     setResponsePage(new UserPage());
-                }else if(entityName.equals("coaching")) {
-                    DAOImpl.deleteRecord(id, "activity");
+                }else if(entityName.equals("crmuser")) {
+                    DAOImpl.deleteRecord(id, entityName);
                     
-                    setResponsePage(new CoachingPage());
+                    setResponsePage(new PositionPage());
                 }
             }
 
@@ -173,7 +182,7 @@ public class EntityDetailPage extends TemplatePage {
             public void resetPassword(int userId){
             	if(DAOImpl.resetUserPassword(userId)>0){
             		//获取对象
-                	UserInfo crmuser = DAOImpl.getCrmUserById(userId);
+                	CRMUser crmuser = DAOImpl.getCrmUserById(userId);
                 	//发送邮件,判断成功与否
                 	if(SendEmail.sendMail(String.valueOf(crmuser.getTs())+"_"+crmuser.getId(),crmuser.getEmail())){
                 		div.add(new AttributeAppender("style",new Model("display:block"),";"));
@@ -192,7 +201,6 @@ public class EntityDetailPage extends TemplatePage {
          
 
          add(new CRUDPanel("operationBar",entity.getName(),id, CRMUtility.getPermissionForEntity(roleId, entity.getName()),actionListener));
-         logger.debug("entityentyentteyntye     " + entity.getName());
          
     }
 

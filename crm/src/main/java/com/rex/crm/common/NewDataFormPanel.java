@@ -25,6 +25,8 @@ import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Fragment;
@@ -34,6 +36,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.file.File;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -60,6 +63,7 @@ public class NewDataFormPanel extends Panel {
     private static int NUM_OF_COLUMN = 1;
     private Map<String, IModel> parentModels = Maps.newHashMap();
     private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
+    private List<FileUploadField> fileFields = Lists.newArrayList();
     
     
     public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
@@ -68,6 +72,8 @@ public class NewDataFormPanel extends Panel {
         final Map<String, IModel> models = Maps.newHashMap();
         final String userName = ((SignIn2Session) getSession()).getUser();
         final String posId = ((SignIn2Session) getSession()).getPositionId();
+        final String userId = ((SignIn2Session) getSession()).getUserId();
+//        final String userId = ((SignIn2Session) getSession()).getUserId();
         List<Field> fields = entity.getFields();
         
         for (Field f : fields) {
@@ -271,7 +277,12 @@ public class NewDataFormPanel extends Panel {
                             if (currentField.getDataType().equalsIgnoreCase("textarea")) {
                                
                                 columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, defaultModel));
-                            }else if(currentField.getDataType().equals("datetime-local")){
+                            }
+                            else if(currentField.getDataType().equalsIgnoreCase("file")){
+                              models.put(currentField.getName(),defaultModel);
+                              columnitem.add(new FileUploadFragment("celldatafield", "fileUplodeFragment", this, defaultModel));
+                          }
+                            else if(currentField.getDataType().equals("datetime-local")){
                                 
                                 if(defaultValue.isEmpty()){
                                     long ts= System.currentTimeMillis();
@@ -280,8 +291,8 @@ public class NewDataFormPanel extends Panel {
                                     defaultModel = new Model<String>(date_value);
                                 }
                                columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, defaultModel, currentField));
-                            }else {
-                                  
+                            }
+                            else {
                                   columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, defaultModel, currentField)); 
                             }
                             
@@ -310,6 +321,20 @@ public class NewDataFormPanel extends Panel {
                     logger.debug("currentFieldkey:"+key);
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
+                    
+                    if(field.getDataType().equalsIgnoreCase("file")){
+                      if(fileFields.size()>0){
+                      final  FileUpload upload = fileFields.get(0).getFileUpload();
+                      if(upload != null) {
+                        try{ 
+                          upload.writeTo(new File("D:\\tmp\\"+upload.getClientFileName()));
+                        } catch(IOException e){
+                            e.printStackTrace();
+                        }
+                      }
+                      }
+                    }
+                    
                     if (models.get(key).getObject() instanceof String) {
 	                    
                       if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
@@ -391,7 +416,7 @@ public class NewDataFormPanel extends Panel {
                         long crmuserkey = -1;
                         crmuserkey= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
                         if (crmuserkey >0 ) {
-                           UserInfo userinfo = DAOImpl.getCrmUserById((int)crmuserkey);
+                           UserInfo userinfo = DAOImpl.getUserById((int)crmuserkey);
 //                        	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
                             //此时需发送邮件
                             long crmUserCode = userinfo.getTs();
@@ -403,7 +428,7 @@ public class NewDataFormPanel extends Panel {
                     } else {
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
                         if (generatedId > 0) {
-                            DAOImpl.insert2UserRelationTable(entity.getName(), posId,
+                            DAOImpl.insert2UserRelationTable(entity.getName(),posId,userId,
                                     String.valueOf(generatedId));
                         }
                     }
@@ -532,6 +557,17 @@ public class NewDataFormPanel extends Panel {
             add(text);
         }
     }
+    
+    private class FileUploadFragment extends Fragment{
+      public FileUploadFragment(String id, String markupId, MarkupContainer markupProvider,IModel model)
+      {
+        super(id, markupId, markupProvider);
+        // TODO Auto-generated constructor stub 
+        FileUploadField fileupload = new FileUploadField("fileUplode", model);
+        add(fileupload);
+        fileFields.add(fileupload);
+      }
+    }
 
     private class TextInputFragment extends Fragment {
 
@@ -539,34 +575,6 @@ public class NewDataFormPanel extends Panel {
                 MarkupContainer markupProvider, IModel model, Field currentField) {
             super(id, markupId, markupProvider);
             TextField<String> text = new TextField<String>("input", model);
-//            if (!currentField.isEditable()) {
-//                Calendar calendar = Calendar.getInstance();
-//                final SimpleDateFormat dateformat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
-//                Date time = (Date) calendar.getTime();
-//                if (currentField.getName().equals("accountId")||currentField.getName().equals("act_endtime")) {
-//                    add(text);
-//                } 
-////                else {
-////                    if (currentField.getName().equals("modify_datetime")) {
-////                        String modify_datetime = dateformat.format(time);
-////                        IModel modifiedTimeModel = new Model(){
-////							@Override
-////							public Serializable getObject() {
-////								Date time = new Date(System.currentTimeMillis());
-////								return  dateformat.format(time);
-////							}
-////
-////                        };
-////                        text.add(new AttributeModifier("value", modifiedTimeModel));
-////                    } else if (currentField.getName().equals("whenadded")) {
-////                        String whenadded = dateformat.format(time);
-////                        text.add(new AttributeModifier("value", whenadded));
-////                    } else {
-////                        text.add(new AttributeModifier("value", new Model(user)));
-////                    }
-////                }
-//                text.add(new AttributeModifier("readonly", new Model("realonly")));
-//            }
             
             if (currentField.getDataType().equals("tel") || currentField.getDataType().equals("fax")) {
                 text.add(new AttributeModifier("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));

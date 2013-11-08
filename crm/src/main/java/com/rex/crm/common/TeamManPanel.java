@@ -49,12 +49,27 @@ public class TeamManPanel extends Panel {
         etId = entityId;
         currentEntityName = en;
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
+        final String userId = ((SignIn2Session)getSession()).getUserId();
         //team sql
         String teamSql = "";
         if(en.equalsIgnoreCase("account")){
-          teamSql = "select * from (select a.*,b.id as rid from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?) as atable";
+          if(type == 0){
+            //for the 岗位列表
+            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoId from crmuser as a inner join accountcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.accountId = ?) as atable";
+        }
+//          else if (type == 1){
+//          //for the 用户列表
+//          teamSql = "select  * from userinfo inner join  (select  a.id as aid, b.id as rid from crmuser as a inner join accountcrmuser as b ON a.id = b.crmuserId where b.accountId = ?) as c on userinfo.positionId = c.aid";
+//        } 
         }else if(en.equalsIgnoreCase("contact")){
-            teamSql = "select * from (select a.*,b.id as rid from crmuser as a inner join contactcrmuser as b on a.id=b.crmuserId where b.contactId=?) as atable";
+            if(type == 0){
+                //for the 岗位列表
+                teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoId from crmuser as a inner join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
+            }
+//            else if (type == 1){
+//              //for the 用户列表
+//              teamSql = "select  * from userinfo inner join  (select  a.id as aid, b.id as rid from crmuser as a inner join contactcrmuser as b ON a.id = b.crmuserId where b.contactId = ?) as c on userinfo.positionId = c.aid";
+//            } 
         }else if(en.equalsIgnoreCase("crmuser")){
             if(type == 0){
                 //for the 医院列表
@@ -63,12 +78,22 @@ public class TeamManPanel extends Panel {
                 //for the 医生列表
                 teamSql = "select * from (select a.*,b.id as rid from contact as a inner join contactcrmuser as b on a.id=b.contactId where b.crmuserId=?) as atable";
             }
+            else if (type == 2){
+              //for the 用户列表
+              teamSql = "select * from (select * from  userInfo where positionId = ? ) as atable";
+            }
         }
         List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
         Entity entity=null ;
         if(en.equalsIgnoreCase("account")||en.equalsIgnoreCase("contact")){
-        	 entity = Configuration.getEntityByName("crmuser");
-        	     add(new Label("title","岗位"));
+          if(type == 0){
+            entity = Configuration.getEntityByName("crmuser");
+            add(new Label("title","岗位"));
+            }else if(type == 1){
+              entity = Configuration.getEntityByName("userInfo");
+              add(new Label("title","用户"));
+            } 
+          
         }else{
             if(type == 0){
         	  entity = Configuration.getEntityByName("account");
@@ -76,12 +101,14 @@ public class TeamManPanel extends Panel {
             }else if(type == 1){
                 entity = Configuration.getEntityByName("contact");
                 add(new Label("title","医生"));
+            }else if (type == 2){
+              entity = Configuration.getEntityByName("userInfo");
+              add(new Label("title","用户"));
             }
         }
         
         List<Field> fields = entity.getFields();
         final String entityName = entity.getName();
-        
         Form form = new Form("form");
         add(form);
         if(roleId != 1){
@@ -105,6 +132,9 @@ public class TeamManPanel extends Panel {
                    teamtable = "accountcrmuser";
                }else if(type == 1){
                    teamtable = "contactcrmuser";
+               }else if(type == 2){
+                 
+                 
                }
            }
             
@@ -132,7 +162,7 @@ public class TeamManPanel extends Panel {
 
                 @Override
                 public void onClick() {
-                  this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId,type));
+                  this.setResponsePage(new SearchCRMUserPage(currentEntityName,entityId,userId,type));
                 }
                 
             });

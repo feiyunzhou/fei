@@ -805,7 +805,7 @@ public class DataProvider {
         String id = args[0];
         Map<String, Entity> entities = Configuration.getEntityTable();
         Entity entity = entities.get("activity");
-        UserInfo user = DAOImpl.getCrmUserById(Integer.parseInt(id));
+        CRMUser user = DAOImpl.getCrmUserById(Integer.parseInt(id));
         int roleId = user.getRole();
         String sql = null;
         switch(roleId){

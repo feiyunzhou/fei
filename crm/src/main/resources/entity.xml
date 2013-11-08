@@ -21,7 +21,7 @@
 			or account.id in (select contact.accountid from contactcrmuser left
 			join
 			contact on contactcrmuser.contactid = contact.id where
-			contactcrmuser.crmuserid = ?))) as aAccount
+			contactcrmuser.crmuserid = ?))ORDER BY CONVERT( name USING gbk ))  as aAccount
 
 		</sql>
 		<sql-admin>
@@ -35,7 +35,7 @@
 			left join account_comprehensive_or_specialized_pl on
 			account.comprehensive_or_specialized =
 			account_comprehensive_or_specialized_pl.id
-			where account.id != -1) as aAccount
+			where account.id != -1 ORDER BY CONVERT( name USING gbk )) as aAccount
 		</sql-admin>
 		<sql-manager>
 
@@ -56,13 +56,13 @@
 			crmdb.crmuser where reportto = ?)))) AND
 			account_point_pl.id=key_type AND account.id != -1 AND
 			account_type_pl.id=hospital_type AND
-			account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized) as aAccount
+			account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized ORDER BY CONVERT( name USING gbk )) as aAccount
 
 
 		</sql-manager>
 
 		<sql-ent>SELECT * from (select account.* from account where
-			account.id=? order by whenadded DESC) as aAccount
+			account.id=? ORDER BY CONVERT( name USING gbk )      ) as aAccount
 		</sql-ent>
 		<filterField>grade</filterField>
 		<fields>
@@ -804,7 +804,7 @@
 			</field>
 			<field>
 				<name>grade</name>
-				<display>分级</display>
+				<display>医生分级</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -1310,19 +1310,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			<field>
-				<name>pl2</name>
-				<display>产品线</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<picklist>crmuser_pl2</picklist>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
+<!-- 			<field> -->
+<!-- 				<name>pl2</name> -->
+<!-- 				<display>产品线</display> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<data-type>text</data-type> -->
+<!-- 				<picklist>crmuser_pl2</picklist> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>true</isEditable> -->
+<!-- 				<priority>2</priority> -->
+<!-- 				<fieldGroup>基本信息</fieldGroup> -->
+<!-- 			</field> -->
 
 			<field>
 				<name>province</name>
@@ -1352,44 +1352,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>基本信息</fieldGroup>
 				<parentNode>province</parentNode>
 			</field>
-<!-- 			<field> -->
-<!-- 				<name>department</name> -->
-<!-- 				<display>部门</display> -->
-<!-- 				<isRequired>false</isRequired> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>false</isDetailLink> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>2</priority> -->
-<!-- 				<fieldGroup>基本信息</fieldGroup> -->
-<!-- 			</field> -->
-<!-- 			<field> -->
-<!-- 				<name>parcel</name> -->
-<!-- 				<display>分部</display> -->
-<!-- 				<isRequired>false</isRequired> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>false</isDetailLink> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>2</priority> -->
-<!-- 				<fieldGroup>基本信息</fieldGroup> -->
-<!-- 			</field> -->
 			<!-- 附加信息 -->
-			<field>
-				<name>owner</name>
-				<display>创建人</display>
-				<data-type>text</data-type>
-				<isRequired>false</isRequired>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<field-type>auto</field-type>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>4</priority>
-				<fieldGroup>附加信息</fieldGroup>
-			</field>
 			<field>
 				<name>whenadded</name>
 				<display>创建时间</display>
@@ -1448,52 +1411,22 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<display>岗位</display>
 		<filterField>pl1</filterField>
 		<sql>
-			<!-- select * from (select userInfo.*\, -->
-			<!-- "crmmanager.name" as reportto_val\, -->
-			<!-- role.val role_val -->
-			<!-- from userInfo -->
-			<!-- left join (select * from userInfo) crmmanager on crmuser.reportto 
-				= crmmanager.id -->
-			<!-- left join crmdb.role on crmuser.role = role.id -->
-			<!-- where crmuser.id = ?) as aCrmuser -->
-			select * from (
-			select *\,
-			from userInfo
-			left join crmuser on crmuser.id = userInfo.postionId
-			left join crmuser on
-			where id = ?
-			) as Crmuser
+			select * from
+				( 
+					select * from crmuser where id = ?
+   				 ) as aCrmuser
 		</sql>
 		<sql-admin>
-
-			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
-				as role_val -->
-			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
-				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
-			select * from (select crmuser.*\,
-			"crmmanager.name" as reportto_val\,
-			role.val role_val
-			from crmuser
-			left join (select * from crmuser) crmmanager on
-			crmuser.reportto = crmmanager.id
-			left join crmdb.role on crmuser.role
-			= role.id
-			where crmuser.id != -1 ) as aCrmuser
+			select * from 
+			(select crmuser.*\,"crmmanager.name" as reportto_val
+				from crmuser
+				left join (select * from crmuser) crmmanager on
+				crmuser.reportto = crmmanager.id
+				where crmuser.id != -1 
+			) as aCrmuser
 		</sql-admin>
 		<sql-manager>
-			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
-				as role_val -->
-			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
-				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
-			select * from (select crmuser.*\,
-			"crmmanager.name" as reportto_val\,
-			role.val role_val
-			from crmuser
-			left join (select * from crmuser) crmmanager on
-			crmuser.reportto = crmmanager.id
-			left join crmdb.role on crmuser.role
-			= role.id
-			where crmuser.reportto = ? or crmuser.id = ? ) as aCrmuser
+			select * from (select * from crmuser where id = ? or reportto = ?) as aCrmuser
 		</sql-manager>
 		<!-- <sql-manager-coaching>select * from (select crmuser.*\, -->
 		<!-- "crmmanager.name" as reportto_val\, -->
@@ -1505,7 +1438,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<!-- where crmuser.reportto = ?) as aCrmuser -->
 		<!-- </sql-manager-coaching> -->
 		<sql-ent>select * from crmuser where id=?</sql-ent>
-		<!-- <filterField>pl2</filterField> -->
 		<fields>
 			<field>
 				<name>id</name>
@@ -1560,7 +1492,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			<field>
 				<name>reportto_val</name>
-				<display>上级经理</display>
+				<display>上级岗位</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -1571,6 +1503,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority>
 				<isBaseInfo>false</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>pl1</name>
+				<display>状态</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>crmuser_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>role</name>
@@ -1599,16 +1544,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
-				<name>pl1</name>
-				<display>状态</display>
+				<name>userInfoId</name>
+				<display>用户名称</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
-				<picklist>crmuser_pl1</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1666,32 +1610,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			<field>
-				<name>department</name>
-				<display>部门</display>
-				<isRequired>false</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-			<!-- 附加信息 -->
 <!-- 			<field> -->
-<!-- 				<name>owner</name> -->
-<!-- 				<display>创建人</display> -->
-<!-- 				<data-type>text</data-type> -->
+<!-- 				<name>department</name> -->
+<!-- 				<display>部门</display> -->
 <!-- 				<isRequired>false</isRequired> -->
+<!-- 				<data-type>text</data-type> -->
 <!-- 				<isPrimaryKey>false</isPrimaryKey> -->
 <!-- 				<isDetailLink>false</isDetailLink> -->
-<!-- 				<field-type>auto</field-type> -->
 <!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>false</isEditable> -->
-<!-- 				<priority>4</priority> -->
-<!-- 				<fieldGroup>附加信息</fieldGroup> -->
+<!-- 				<isEditable>true</isEditable> -->
+<!-- 				<priority>2</priority> -->
+<!-- 				<fieldGroup>基本信息</fieldGroup> -->
 <!-- 			</field> -->
+			<!-- 附加信息 -->
 			<field>
 				<name>whenadded</name>
 				<display>创建时间</display>
@@ -2212,6 +2143,146 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		</fields>
 	</entity>
 	<entity>
+		<name>dataManagement</name>
+		<display>上传数据</display>
+		<sql>select * from dataManagement</sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField>数据类型</filterField>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>Id</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>record_type</name>
+				<display>数据类型</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<picklist>record_type_pl</picklist>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>action</name>
+				<display>操作</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<picklist>action_type_pl</picklist>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>import_template</name>
+				<display>导入模版</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<picklist>import_type_pl</picklist>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>import_file_path</name>
+				<display>导入文件路径</display>
+				<data-type>file</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>export_template</name>
+				<display>导出模版</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<picklist>export_type_pl</picklist>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>export_file_path</name>
+				<display>导出文件路径</display>
+				<data-type>file</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>statuss</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<picklist>status_type_pl</picklist>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>operator</name>
+				<display>操作者</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<field-type>auto</field-type>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>createddate</name>
+				<display>操作申请时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<field-type>auto</field-type>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifieddate</name>
+				<display>最后修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>2</priority>
+<!-- 				<field-type>auto</field-type> -->
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	
+	<entity>
 		<name>coaching</name>
 		<display>辅导</display>
 		<filterField>feature_product</filterField>
@@ -2250,7 +2321,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
-			left join crmuser on activitycrmuser.crmuserId = crmuser.id
+			left join crmuser on activitycrmuser.crmuserid = crmuser.id
+			left join userinfo on activitycrmuser.position_id = userinfo.id
 			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type
 			= 2 order by whenadded DESC) as aActivity
 		</sql-manager>
@@ -2372,7 +2444,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isBaseInfo>true</isBaseInfo>

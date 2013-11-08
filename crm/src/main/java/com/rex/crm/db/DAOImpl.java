@@ -427,7 +427,7 @@ public class DAOImpl
     }
     
     
-    public static void insertRelationOfEntityIDCRMUserID(String entityName, String cId, String userId,int type) throws Exception {
+    public static void insertRelationOfEntityIDCRMUserID(String entityName, String cId, String userId ,int type) throws Exception {
         int contactId = Integer.parseInt(cId);
         int uid = Integer.parseInt(userId);
         if (contactId != 0 && uid != 0) {
@@ -450,7 +450,7 @@ public class DAOImpl
             try {
                 conn = DBHelper.getConnection();
                 QueryRunner run = new QueryRunner();
-                int inserts = run.update(conn, sql, cId, userId);
+                int inserts = run.update(conn, sql, cId);
 
                 logger.info(String.format("%s row inserted into insertRelationOfEntityIDCRMUserID!", inserts));
 
@@ -524,9 +524,12 @@ public class DAOImpl
         menulist.add("contact");
         menulist.add("activity");
         menulist.add("coaching");
-        if(roleId == 1){
-           menulist.add("crmuser");
-        } 
+     if(roleId == 1){
+       menulist.add("dataManagement");
+     }
+        menulist.add("crmuser");
+//    menulist.add("dealerAccount");
+//    menulist.add("dealerContact");
         menulist.add("userInfo");
        // menulist.add("userInfoSetting");
         return menulist;
@@ -1117,7 +1120,6 @@ public class DAOImpl
         String valuesql = Joiner.on(",").join(values);
         fieldssql = fieldssql + ",isActivited,ts";
    	 	valuesql =  valuesql + ",2,"+System.currentTimeMillis();
-   	 	fieldssql = fieldssql.replaceAll("user-city", "city");
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
    	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
@@ -1213,16 +1215,18 @@ public class DAOImpl
     }
     
 
-    public static void insert2UserRelationTable(String entityName, String userId, String entityId){
+    public static void insert2UserRelationTable(String entityName, String positionId,String userId , String entityId){
         String sql = null;
         if(entityName.equalsIgnoreCase("account")){
-            sql = "INSERT INTO accountcrmuser ( accountId, crmuserId) VALUES ("+entityId+","+userId+")";
+            sql = "INSERT INTO accountcrmuser ( accountId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if(entityName.equalsIgnoreCase("contact")){
-            sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+userId+")";
+            sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if(entityName.equalsIgnoreCase("activity")){
-            sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+userId+")";
+            sql = "INSERT INTO activitycrmuser ( activityId, crmuserId,position_id) VALUES ("+entityId+","+positionId+","+userId+")";
         }else if (entityName.equalsIgnoreCase("coaching")){
-          sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+userId+")";
+          sql = "INSERT INTO activitycrmuser ( activityId,crmuserId, position_id) VALUES ("+entityId+","+positionId+","+userId+")";
+        }else if (entityName.equalsIgnoreCase("userInfo")){
+          sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }
         if(sql == null) {
             logger.error("entityName error");
@@ -1501,7 +1505,7 @@ public class DAOImpl
             search_target = "";
         }
         String sql = "select * from (select contact.id as cid,contact.name as cname,account.name as aname from contact,account,contactcrmuser where contactcrmuser.crmuserId="+userId+" AND contactcrmuser.contactId = contact.id AND contact.accountId=account.id AND (contact.name like '%"+search_target+"%' OR account.name like '%"+search_target+"%')) as a";
-        logger.debug(sql );
+        logger.debug("weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee             "+sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
@@ -1578,7 +1582,7 @@ public class DAOImpl
     	if(search_target == null|| search_target.equalsIgnoreCase("*")){
 	          search_target = "";
     	}
-        String sql = "select * from (select * from crmuser where (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
+        String sql = "select * from (select * from crmuser where (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR code like '%"+search_target+"%' OR reportto like '%"+search_target+"%')) as a";
         logger.debug(sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
@@ -1602,7 +1606,7 @@ public class DAOImpl
         }
         if(excludeId == null) excludeId = "-1";
         
-        String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (role=2) AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
+        String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR reportto like '%"+search_target+"%' )) as a";
         logger.debug("searchManager:"+ sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
@@ -1626,7 +1630,7 @@ public class DAOImpl
       }
       if(excludeId == null) excludeId = "-1";
       
-      String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (crmuser.reportto="+userId+") AND (name like '%"+search_target+"%' OR email like '%"+search_target+"%' OR cellPhone like '%"+search_target+"%')) as a";
+      String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (crmuser.reportto="+userId+") AND (name like '%"+search_target+"%' OR reportto like '%"+search_target+"%' OR  code like '%"+search_target+"%')) as a";
       logger.debug("searchManager:"+ sql );
       Connection conn = null;
       List lMap = Lists.newArrayList();
@@ -1850,9 +1854,8 @@ public class DAOImpl
         return false;
     }
     
-    //根据crmuserid获取crm对象
-    public static UserInfo getCrmUserById(int entityId){
-    	System.out.println("根据crmuserID获取用户");
+    public static UserInfo getUserById(int entityId){
+      System.out.println("根据crmuserID获取用户" + entityId);
         Connection conn = null;
         UserInfo userInfo = new UserInfo();
         try {
@@ -1860,6 +1863,23 @@ public class DAOImpl
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             userInfo = run.query(conn, "SELECT * FROM userInfo where id=?", h, entityId);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return userInfo;
+    }
+    //根据crmuserid获取crm对象
+    public static CRMUser getCrmUserById(int entityId){
+    	System.out.println("根据crmuserID获取用户" + entityId);
+        Connection conn = null;
+        CRMUser userInfo = new CRMUser();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            userInfo = run.query(conn, "SELECT * FROM crmuser where id=?", h, entityId);
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {

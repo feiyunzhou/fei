@@ -115,11 +115,10 @@ public class SelectEntryPage extends WebPage {
                         dummy.put("name", "无");
                         maplist.add(dummy);
 
+                    }else if(tragetEntity.equalsIgnoreCase("crmuser")){
+                    //maplist = DAOImpl.searchCRMUser(search_target);
+                    maplist = DAOImpl.searchManager(search_target,posId);
                     }
-                    
-                }else if(relationTableName.equalsIgnoreCase("crmuser")){
-                    // maplist = DAOImpl.searchCRMUser(search_target);
-                    maplist = DAOImpl.searchManager(search_target, excludeId);
                     Map dummy = Maps.newHashMap();
                     dummy.put("id", -1);
                     dummy.put("name", "无");

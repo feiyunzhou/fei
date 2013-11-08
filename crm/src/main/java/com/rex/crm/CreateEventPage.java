@@ -34,6 +34,7 @@ import org.apache.wicket.util.string.StringValue;
 
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.common.Entity;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
@@ -87,6 +88,7 @@ public class CreateEventPage extends TemplatePage {
         setPageTitle(entity.getDisplay());
         final String posId = ((SignIn2Session) getSession()).getPositionId();
         final String user = ((SignIn2Session) getSession()).getUser();
+        final String userId = ((SignIn2Session) getSession()).getUserId();
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         CRMUser crmUser = DAOImpl.getCRMUserInfoById(Integer.parseInt(posId));
         final String crmUserName = crmUser.getName();
@@ -203,14 +205,14 @@ public class CreateEventPage extends TemplatePage {
                         if (generatedkey > 0) {
                             if (event_type == 1) {
                                 //if it is a visiting, we only send this event to the owner;
-                                DAOImpl.insert2UserRelationTable("activity", posId, String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity", posId, userId ,String.valueOf(generatedkey));
                             } else if (event_type == 2) {
                                 //if it is a coaching, we need send this event to the manager and sales
                                 //add new record for the manager
                                 logger.debug("key:" + String.valueOf(generatedkey));
-                                DAOImpl.insert2UserRelationTable("activity", posId, String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity", posId,userId, String.valueOf(generatedkey));
                                 //add new record for the sales
-                                DAOImpl.insert2UserRelationTable("activity", hidden_select_user, String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity", hidden_select_user,userId, String.valueOf(generatedkey));
                             }
                         }
                     } catch (NumberFormatException e) {

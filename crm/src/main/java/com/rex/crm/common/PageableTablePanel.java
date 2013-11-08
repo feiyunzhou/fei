@@ -68,7 +68,7 @@ public class PageableTablePanel extends Panel {
         datacontainer.add(columnNameRepeater);
         int count=0;
         for (Field f : entity.getFields()) {
-            if (!f.isVisible()|| f.getPriority() >1)
+            if (!f.isVisible()|| f.getPriority() >1||f.getName().equalsIgnoreCase("userInfoId"))
                 continue;
             AbstractItem item = new AbstractItem(columnNameRepeater.newChildId());
             if(count==0){
@@ -88,7 +88,7 @@ public class PageableTablePanel extends Panel {
                 item.add(columnRepeater);
                 final String rowId = String.valueOf(map.get(primaryKeyName));
                 for (Field f : fields) {
-                    if (!f.isVisible() || f.getPriority() >1)
+                    if (!f.isVisible() || f.getPriority() >1||f.getName().equalsIgnoreCase("userInfoId"))
                         continue;
                     AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model() {
                         @Override

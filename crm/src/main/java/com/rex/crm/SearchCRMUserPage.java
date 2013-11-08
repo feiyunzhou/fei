@@ -37,6 +37,7 @@ public class SearchCRMUserPage extends WebPage {
     private String search_target;
     List<String> selectedUserIds = Lists.newArrayList();
     private String entityId;
+    private String uid;
 //     private String entityName;
     private int type = 0;
 
@@ -48,26 +49,32 @@ public class SearchCRMUserPage extends WebPage {
     public SearchCRMUserPage() {
         StringValue value = this.getRequest().getRequestParameters().getParameterValue("cid");
         StringValue entityname = getRequest().getRequestParameters().getParameterValue("entityname");
+        StringValue postId = this.getRequest().getRequestParameters().getParameterValue("positionId");
         if (value != null) {
             entityId = value.toString();
         }
-        initPage(entityname.toString(), null, entityId, type);
+        if(postId != null){
+          uid = postId.toString();
+        }
+        initPage(entityname.toString(), null, entityId,uid, type);
     }
 
-    public SearchCRMUserPage(String entityName, String entityId, int type) {
+    public SearchCRMUserPage(String entityName, String entityId, String uid, int type) {
         //logger.debug("sdfsfsdfdsf:"+entityName);
         this.entityId = entityId;
         this.type = type;
-        initPage(entityName, null, entityId, type);
+        this.uid=uid;
+        initPage(entityName, null, entityId,uid, type);
     }
 
-    public SearchCRMUserPage(List<Map> maplist, String entityName, String cid, int type) {
+    public SearchCRMUserPage(List<Map> maplist, String entityName, String cid, String uid,int type) {
         entityId = cid;
         this.type = type;
-        initPage(entityName, maplist, cid, type);
+        this.uid = uid;
+        initPage(entityName, maplist, cid,uid, type);
     }
 
-    public void initPage(final String entityname, List<Map> list, final String cid, final int type) {
+    public void initPage(final String entityname, List<Map> list, final String cid, final String uid, final int type) {
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
@@ -86,7 +93,7 @@ public class SearchCRMUserPage extends WebPage {
                 }
 
 
-                setResponsePage(new SearchCRMUserPage(maplist, entityname, cid, type));
+                setResponsePage(new SearchCRMUserPage(maplist, entityname, cid,uid, type));
 
             }
         };
@@ -101,9 +108,9 @@ public class SearchCRMUserPage extends WebPage {
             protected void onSubmit() {
 
                 logger.debug("seletedUserIds:" + selectedUserIds);
-                for (String uid : selectedUserIds) {
+                for (String positionId : selectedUserIds) {
                     try {
-                        DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, cid, uid, type);
+                        DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, cid,positionId ,type);
 
                     } catch (Exception e) {
                     }
@@ -134,14 +141,14 @@ public class SearchCRMUserPage extends WebPage {
         if (list != null) {
             for (Map map : list) {
 
-                int uid = ((Number) map.get("id")).intValue();
+                int positionId = ((Number) map.get("id")).intValue();
                 String name = (String) map.get("name");
                 String cellPhone = (String) map.get("cellPhone");
                 String division = (String) map.get("division");
                 String email = (String) map.get("email");
                 AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
                 dataRowRepeater.add(item);
-                Check chk = new Check("checkbox", new Model(String.valueOf(uid)));
+                Check chk = new Check("checkbox", new Model(String.valueOf(positionId)));
                 item.add(chk);
                 WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
                 item.add(container_label);
