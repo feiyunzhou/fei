@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -72,7 +73,7 @@ public class PageableTablePanel extends Panel {
             item.add(new Label("columnName", f.getDisplay()));
         }
         // end of set column name
-        final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 3) {
+        final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 15) {
             @Override
             protected void populateItem(ListItem<String> item) {
                 String key = item.getDefaultModelObjectAsString();
@@ -130,7 +131,8 @@ public class PageableTablePanel extends Panel {
         };
         
         datacontainer.add(listview);
-        PagingNavigator nav = new PagingNavigator("navigator", listview);
+        //PagingNavigator nav = new PagingNavigator("navigator", listview);
+        AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
         nav.setOutputMarkupId(true); 
 
         datacontainer.add(nav);
