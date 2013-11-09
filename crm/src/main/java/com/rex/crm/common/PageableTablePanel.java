@@ -1,23 +1,19 @@
 package com.rex.crm.common;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.core.request.handler.PageProvider;
-import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -26,9 +22,6 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.rex.crm.CreateEventPage;
-import com.rex.crm.EventViewerPage;
-import com.rex.crm.PageFactory;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -59,7 +52,7 @@ public class PageableTablePanel extends Panel {
             tableData.put(key, map);
         }
 
-        WebMarkupContainer datacontainer = new WebMarkupContainer("data");
+        final WebMarkupContainer datacontainer = new WebMarkupContainer("data");
         datacontainer.setOutputMarkupId(true);
         add(datacontainer);
 
@@ -79,7 +72,7 @@ public class PageableTablePanel extends Panel {
             item.add(new Label("columnName", f.getDisplay()));
         }
         // end of set column name
-        PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 15) {
+        final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 3) {
             @Override
             protected void populateItem(ListItem<String> item) {
                 String key = item.getDefaultModelObjectAsString();
@@ -102,7 +95,7 @@ public class PageableTablePanel extends Panel {
                     });
                     if (f.isDetailLink()) {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
-                        if(value.equals("null")||value.equals("")){
+                        if(value.equals("null")||value.isEmpty()){
                           value = "无";
                         }
                         columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
@@ -112,19 +105,19 @@ public class PageableTablePanel extends Panel {
                         if (f.getPicklist() != null) {
                             // get option from picklist
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryPickListByIdCached(f.getPicklist(), String.valueOf(map.get(f.getName()))));
-                            if(value.equals("null")||value.equals("")){
+                            if(value.equals("null")||value.isEmpty()){
                               value = "无";
                             }
                             columnitem.add(new Label("celldata", value));
                         } else if(f.getRelationTable() != null){
                             String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName()))));
-                            if(value.equals("null")||value.equals("")){
+                            if(value.equals("null")||value.isEmpty()){
                               value = "无";
                             }
                             columnitem.add(new Label("celldata", value));
                         }else {
                             String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
-                            if(value.equals("null")||value.equals("")){
+                            if(value.equals("null")||value.isEmpty()){
                               value = "无";
                             }
                             columnitem.add(new Label("celldata", value));
@@ -137,18 +130,15 @@ public class PageableTablePanel extends Panel {
         };
         
         datacontainer.add(listview);
-        datacontainer.add(new AjaxPagingNavigator("navigator", listview));
+        PagingNavigator nav = new PagingNavigator("navigator", listview);
+        nav.setOutputMarkupId(true); 
+
+        datacontainer.add(nav);
         datacontainer.setVersioned(false);
         
         ICRUDActionListener actionListener = new DefaultCRUDActionListener(){
             @Override
-            public void create() {
-//                if(entity.getName().equals("activity")){
-//                    setResponsePage(new CreateEventPage(1));
-//                }else{
-//                    setResponsePage(new CreateDataPage(entity.getName(),params));                          
-//                }   
-                
+            public void create() { 
                 setResponsePage(new CreateDataPage(entity.getName(),params));     
             }    
         };

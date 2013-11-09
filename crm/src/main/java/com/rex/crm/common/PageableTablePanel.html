@@ -19,7 +19,8 @@
                 <div wicket:id="operationBar"></div>
             </div>
         </div>
-        <table wicket:id="data" id="dt" style="width: 100%;" class="table table-responsive table-hover table-condensed">
+        <div wicket:id="data">
+        <table  id="dt" style="width: 100%;" class="table table-responsive table-hover table-condensed">
             <thead>
                 <tr class="active">
                     <th class="table-hide " wicket:id="columnNameRepeater"><span  wicket:id="columnName"></span></th>
@@ -33,12 +34,14 @@
                     <!-- <td wicket:id="name"></td> -->
                 </tr>
             </tbody>
-            <tfoot>
+           <tfoot>
                 <tr>
-                    <td colspan="20" wicket:id="navigator"></td>
+                   <td colspan="20"><div  wicket:id="navigator"></div></td>
                 </tr>
             </tfoot>
         </table>
+         
+        </div>
     </div>
     <wicket:fragment wicket:id="detailFragment">
         <a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
