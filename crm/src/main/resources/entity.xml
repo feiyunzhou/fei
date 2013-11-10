@@ -660,7 +660,7 @@ where crmuser.reportto=? and
 			account.id=contact.accountId order by whenadded DESC) as
 			aContact
 		</sql-search-by-name>
-		<filterField>department</filterField>
+		<filterField>grade</filterField>
 
 		<fields>
 			<field>
@@ -1575,6 +1575,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<isSearchable>true</isSearchable>
+				<default-value-type>val</default-value-type>
+				<default-value>3</default-value>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
