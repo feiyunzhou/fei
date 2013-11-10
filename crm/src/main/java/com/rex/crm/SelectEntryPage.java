@@ -55,7 +55,7 @@ public class SelectEntryPage extends WebPage {
 
     public void initPage(List<Map> list,final String relationTableName,final String tragetEntity,final String excludeId) {
         final String posId = ((SignIn2Session) getSession()).getPositionId();
-        
+        final String userId = ((SignIn2Session) getSession()).getUserId();
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
         final Entity entity = entities.get(relationTableName);
@@ -114,22 +114,23 @@ public class SelectEntryPage extends WebPage {
                         maplist.add(dummy);
 
                     }
-                }
-                    else if(relationTableName.equalsIgnoreCase("crmuser")){
+                } else if(relationTableName.equalsIgnoreCase("crmuser")){
                     //maplist = DAOImpl.searchCRMUser(search_target);
+                  if (tragetEntity.equalsIgnoreCase("crmuser")){
                     maplist = DAOImpl.searchManager(search_target,posId);
-                    Map dummy = Maps.newHashMap();
-                    dummy.put("id", -1);
-                    dummy.put("name", "无");
-                    maplist.add(dummy);
                     
+                  }else if(tragetEntity.equalsIgnoreCase("coaching")){
+                    String sql = assembleSearchingSQL(roleId, entity);
+                    maplist  = DAOImpl.queryEntityRelationList(sql,posId,posId);
+                  }
+                  Map dummy = Maps.newHashMap();
+                  dummy.put("id", -1);
+                  dummy.put("name", "无");
+                  maplist.add(dummy);
                 }else if (relationTableName.equalsIgnoreCase("userInfo")) {
-                    // maplist = DAOImpl.searchCRMUser(search_target);
-                  if (tragetEntity.equalsIgnoreCase("coaching")) {
-                    maplist = DAOImpl.searchCoachee(search_target, excludeId, posId);
-                }  else {
-                  maplist = DAOImpl.searchCRMUser(search_target);
-                }
+                    String sql = assembleSearchingSQL(roleId, entity);
+                     maplist  = DAOImpl.queryEntityRelationList(sql,userId);
+                  
                     Map dummy = Maps.newHashMap();
                     dummy.put("id", -1);
                     dummy.put("name", "无");

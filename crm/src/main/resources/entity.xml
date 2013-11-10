@@ -2383,7 +2383,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			left join crmuser on activitycrmuser.crmuserid = crmuser.id
-			left join userinfo on activitycrmuser.position_id = userinfo.id
 			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type
 			= 2 order by whenadded DESC) as aActivity
 		</sql-manager>
@@ -2522,7 +2521,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<relationTable>userInfo</relationTable>
+				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
