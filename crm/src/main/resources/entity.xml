@@ -70,11 +70,11 @@
 			<field>
 
 				<name>id</name>
-				<display>ID</display>
+				<display>医院编码</display>
 				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<isParam>true</isParam> <!-- 关联表的创建的参数 -->
 				<priority>0</priority>
@@ -495,6 +495,18 @@
 				<parentNode>province</parentNode>
 			</field>
 			<field>
+				<name>districts</name>
+				<display>医院区县</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
 				<name>address</name>
 				<display>医院详细地址</display>
 				<isRequired>false</isRequired>
@@ -643,11 +655,11 @@
 		<fields>
 			<field>
 				<name>id</name>
-				<display>ID</display>
+				<display>CRM医生编码</display>
 				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
@@ -1234,7 +1246,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			<field>
 				<name>cellPhone</name>
-				<display>手机号码</display>
+				<display>移动电话号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>基本信息</fieldGroup>
+				<isBaseInfo>false</isBaseInfo>
+			</field>
+			<field>
+				<name>office_tel</name>
+				<display>工作电话号码</display>
 				<isRequired>false</isRequired>
 				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
