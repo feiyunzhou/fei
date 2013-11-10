@@ -63,6 +63,7 @@ public class SendEmail {
   	        Transport.send(newMessage);
   	        transport.close();  
   	        logger.info("accpcui@163.com发送邮件到"+sendEmail+",已发送成功！");
+  	        
   	        return  true;  
   		} catch (Exception e) {
   			System.err.println("邮件发送失败！"+e);  
