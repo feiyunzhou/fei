@@ -1967,7 +1967,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<parentNode>activity_type</parentNode>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-
+			
+			<field>
+				<name>whetherCoach</name>
+				<display>是否协防</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_whethercoach_pl</picklist>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>contactId</name>
 				<display>拜访医生</display>
