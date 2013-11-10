@@ -256,6 +256,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -268,6 +269,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -280,6 +282,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -292,6 +295,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -304,6 +308,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -316,6 +321,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -328,6 +334,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -340,6 +347,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -352,6 +360,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -364,6 +373,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -576,8 +586,8 @@
 			left join contact_generalization_target_pl on contact.product_target =
 			contact_generalization_target_pl.id
 			left join account on contact.accountid = account.id
-			left join contactcrmuser on contact.id = contactcrmuser.contactid
-			where contact.id != -1 and contactcrmuser.crmuserid = ?) as aContact
+			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
+			where contact.id != -1 and accountcrmuser.crmuserid = ?) as aContact
 		</sql>
 		<sql-manager>
 			select * from (select contact.*\,

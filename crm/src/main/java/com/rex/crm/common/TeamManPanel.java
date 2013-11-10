@@ -20,6 +20,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -55,7 +57,7 @@ public class TeamManPanel extends Panel {
         if(en.equalsIgnoreCase("account")){
           if(type == 0){
             //for the 岗位列表
-            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a inner join accountcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.accountId = ?) as atable";
+            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a left join accountcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.accountId = ?) as atable";
         }
 //          else if (type == 1){
 //          //for the 用户列表
@@ -64,7 +66,7 @@ public class TeamManPanel extends Panel {
         }else if(en.equalsIgnoreCase("contact")){
             if(type == 0){
                 //for the 岗位列表
-                teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a inner join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
+                teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a left join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
             }
 //            else if (type == 1){
 //              //for the 用户列表
@@ -73,10 +75,10 @@ public class TeamManPanel extends Panel {
         }else if(en.equalsIgnoreCase("crmuser")){
             if(type == 0){
                 //for the 医院列表
-               teamSql = "select * from (select a.*,b.id as rid from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?) as atable";
+               teamSql = "select * from (select a.*,b.id as rid from account as a left join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?) as atable";
             }else if(type == 1){
                 //for the 医生列表
-                teamSql = "select * from (select a.*,b.id as rid from contact as a inner join contactcrmuser as b on a.id=b.contactId where b.crmuserId=?) as atable";
+                teamSql = "select * from (select contact.* from account as a left join accountcrmuser as b ON a.id = b.accountId left join contact on b.accountId = contact.accountId where b.crmuserId = ?) as atable";
             }
             else if (type == 2){
               //for the 用户列表
@@ -202,6 +204,9 @@ public class TeamManPanel extends Panel {
 //        group.add(new Check("checkboxs", new Model()));
         RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
         group.add(dataRowRepeater);
+//        final PageableListView<Map> listview = new PageableListView<Map>("dataRowRepeater",Model.ofList(mapList), 15) {
+//          @Override
+//          protected void populateItem(ListItem<Map> item) {
         for (int i = 0; i < mapList.size(); i++)
         {
             Map map = (Map)mapList.get(i);
@@ -254,7 +259,7 @@ public class TeamManPanel extends Panel {
                     }
                 }
                 columnRepeater.add(columnitem);
-            }
+              }
             
             WebMarkupContainer container_label = new WebMarkupContainer("checkbox_label");
             item.add(container_label);
