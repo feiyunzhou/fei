@@ -55,7 +55,7 @@ public class TeamManPanel extends Panel {
         if(en.equalsIgnoreCase("account")){
           if(type == 0){
             //for the 岗位列表
-            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoId from crmuser as a inner join accountcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.accountId = ?) as atable";
+            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a inner join accountcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.accountId = ?) as atable";
         }
 //          else if (type == 1){
 //          //for the 用户列表
@@ -64,7 +64,7 @@ public class TeamManPanel extends Panel {
         }else if(en.equalsIgnoreCase("contact")){
             if(type == 0){
                 //for the 岗位列表
-                teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoId from crmuser as a inner join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
+                teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a inner join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
             }
 //            else if (type == 1){
 //              //for the 用户列表
