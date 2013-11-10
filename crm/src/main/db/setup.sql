@@ -73,6 +73,13 @@ CREATE TABLE crmuser
     level MEDIUMINT,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+insert into crmuser (id,name,code,reportto,role) values
+(-1,'无','BJ',0,-1),
+(1,'管理员','BJ231011001',-1,1),
+(2,'北区地区经理01','BJ131011001',1,2),
+(3,'北区代表001','BJ131001001',2,3);
+
+
 
 drop table if exists accountcrmuser;
 CREATE TABLE accountcrmuser 
@@ -227,6 +234,12 @@ CREATE TABLE userInfo (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE InnoDB;
 
+INSERT INTO `userInfo` (id,name,loginname,password,role,isActivited,ts,positionId,pl1) VALUES 
+(-1,'无','dummy','827ccb0eea8a706c4c34a16891f84e7b',1,2,1386766666,-1,1),
+(1,'Admin Nam','admin','827ccb0eea8a706c4c34a16891f84e7b',1,2,1386766666,1,1),
+(2,'Sales Manager','salesman','827ccb0eea8a706c4c34a16891f84e7b',2,2,1386766666,2,1),
+(3,'Sales','sales','827ccb0eea8a706c4c34a16891f84e7b',3,2,1386766666,3,1);
+
 
 drop table if exists externalMeeting;
 CREATE TABLE externalMeeting 
@@ -257,6 +270,61 @@ CREATE TABLE internalMeeting
      activity_type MEDIUMINT,
     PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
+
+
+DROP TABLE IF EXISTS `data_exchange_teample`;
+DROP TABLE IF EXISTS `data_exchange_operation`;
+DROP TABLE IF EXISTS data_exchange_status;
+DROP TABLE IF EXISTS `record_type`;
+
+DROP TABLE IF EXISTS `record_type`;
+CREATE TABLE `record_type` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL,
+  `val` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `val` (`val`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+INSERT INTO `record_type` VALUES (1,0,'Account'),(2,0,'Contact'),(3,0,'Call'),(4,0,'Coaching'),(5,0,'AccuntTeam'),(6,0,'ContactTeam');
+
+DROP TABLE IF EXISTS data_exchange_status;
+CREATE TABLE data_exchange_status (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  version bigint(20) NOT NULL,
+  val varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `val` (`val`)
+) ENGINE=InnoDB;
+INSERT INTO `data_exchange_status` VALUES (1,0,'Pending'),(2,0,'Abort'),(3,0,'Completed'),(4,0,'Cancelled');
+
+DROP TABLE IF EXISTS `data_exchange_operation`;
+CREATE TABLE `data_exchange_operation` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL,
+  `val` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `val` (`val`)
+) ENGINE=InnoDB;
+INSERT INTO `data_exchange_operation` VALUES (1,0,'Import'),(2,0,'Export');
+
+
+DROP TABLE IF EXISTS `data_exchange_teample`;
+CREATE TABLE `data_exchange_teample` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `operation_id` bigint(20) NOT NULL,
+  `type_id` bigint(20) NOT NULL,
+  `template` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `FK8AE35445D557144C` (`type_id`),
+  KEY `FK8AE35445199BCB6C` (`operation_id`),
+  CONSTRAINT `FK8AE35445199BCB6C` FOREIGN KEY (`operation_id`) REFERENCES `data_exchange_operation` (`id`),
+  CONSTRAINT `FK8AE35445D557144C` FOREIGN KEY (`type_id`) REFERENCES `record_type` (`id`)
+) ENGINE=InnoDB;
+
+INSERT INTO `data_exchange_teample` VALUES (1,1,'Account Full Import Template 1.0',1,1,'<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<Configuration>\r\n    <BatchSize>1000</BatchSize>\r\n    <EntityName>Account</EntityName>\r\n    <ExternalId>BdmCode</ExternalId>\r\n    <FileName>account.csv</FileName>\r\n    <Database>crm_mysql</Database>\r\n    <Fields>\r\n        <ColumnName>记录行ID</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>BdmCode</FieldName>\r\n    </Fields>\r\n    \r\n    <Fields>\r\n        <ColumnName>年诊疗人数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfTreatPerYear</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>成立时间</ColumnName>\r\n        <DataType>Date</DataType>\r\n        <FieldName>DateOfEstablish</FieldName>\r\n        <Format>m/d/yy</Format>\r\n    </Fields>\r\n<!--  <Format>yyyy-MM-dd</Format> -->    \r\n\r\n    <Fields>\r\n        <ColumnName>客户名称</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Name</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医院行政级别</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>AdministrativLevel</FieldName>\r\n        <LookupEntityName>AccountAdministrativLevelPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医院分级</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>Grade</FieldName>\r\n        <LookupEntityName>AccountGradePl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医院类型</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>HospitalType</FieldName>\r\n        <LookupEntityName>AccountTypePl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>地方军队医院</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>LocalOrArmy</FieldName>\r\n        <LookupEntityName>AccountLocalOrArmyPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>综合专科医院</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>ComprehensiveOrSpecialized</FieldName>\r\n        <LookupEntityName>AccountComprehensiveOrSpecializedPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>重点医院</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>KeyType</FieldName>\r\n        <LookupEntityName>AccountPointPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>状态</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>Status</FieldName>\r\n        <LookupEntityName>AccountStatusPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>法人</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>DutyOfficer</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医生数量</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfDoctors</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>助理医师人数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfAssistantDoctors</FieldName>\r\n    </Fields>\r\n    \r\n    <Fields>\r\n        <ColumnName>员工总数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfStaff</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>门诊人数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfOutpatient</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>总病床数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>TotalNumOfSickbed</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>麻醉科医生数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfAnesthesiaDoctor</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>疼痛学组医生数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfPainDoctor</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>手术量年</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfSurgeryPerYear</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>手术间</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfSurgeryRoom</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>阿片类用药量</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfUsingOpiatesMedicine</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>阿片类注射剂量</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfUsingOpiatesInjection</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>注册资金</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>RegisteredCapital</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>主要电话号码</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Tel</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>主要传真号码</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Fax</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>市场分类</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>MarketClassification</FieldName>\r\n        <LookupEntityName>AccountMarketClassificationPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>医院省份</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Province</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医院区县</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Districts</FieldName>\r\n    </Fields>\r\n    \r\n    <Fields>\r\n        <ColumnName>医院详细地址</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Address</FieldName>\r\n    </Fields>\r\n</Configuration>');
 
 
 

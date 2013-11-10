@@ -62,7 +62,7 @@ CREATE TABLE `account` (
   `responsible_person` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `account_ix_01` (`bdm_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,6 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (2,'TEST',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 00:22:00','Admin Nam','2013-11-09 00:22:00','Admin Nam'),(3,'a',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(4,'b',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(5,'c',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(6,'d',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(7,'e',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(8,'f',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(9,'g',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(10,'h',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(11,'i',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(12,'j',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(13,'k',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 14:15:00','Admin Nam','2013-11-09 14:15:00','Admin Nam'),(14,'T',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 23:24:00','Admin Nam','2013-11-09 23:24:00','Admin Nam'),(15,'TOT',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 23:25:00','Admin Nam','2013-11-09 23:25:00','Admin Nam'),(16,'TXT',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 23:25:00','Admin Nam','2013-11-09 23:25:00','Admin Nam'),(17,'TAB',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 23:25:00','Admin Nam','2013-11-09 23:25:00','Admin Nam'),(18,'TBT',NULL,'1','1',1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,'Admin Nam','2013-11-09 23:25:00','Admin Nam','2013-11-09 23:25:00','Admin Nam');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +306,7 @@ CREATE TABLE `accountcrmuser` (
   KEY `account_crmuser_cons2` (`crmuserId`),
   CONSTRAINT `account_crmuser_cons` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `account_crmuser_cons2` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -316,7 +315,6 @@ CREATE TABLE `accountcrmuser` (
 
 LOCK TABLES `accountcrmuser` WRITE;
 /*!40000 ALTER TABLE `accountcrmuser` DISABLE KEYS */;
-INSERT INTO `accountcrmuser` VALUES (3,2,1),(15,2,3),(4,3,1),(16,3,3),(5,4,1),(17,4,3),(6,5,1),(18,5,3),(7,6,1),(19,6,3),(8,7,1),(20,7,3),(9,8,1),(21,8,3),(10,9,1),(22,9,3),(11,10,1),(23,10,3),(12,11,1),(24,11,3),(13,12,1),(25,12,3),(14,13,1),(26,13,3),(27,14,1),(28,15,1),(29,16,1),(30,17,1),(31,18,1);
 /*!40000 ALTER TABLE `accountcrmuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,7 +360,7 @@ CREATE TABLE `activity` (
   KEY `contactId_activity_cons` (`contactId`),
   CONSTRAINT `crmuserId_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `contactId_activity_cons` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -560,7 +558,7 @@ CREATE TABLE `activitycrmuser` (
   KEY `crm_activity_cons` (`crmuserId`),
   CONSTRAINT `crm_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `crm_activity_cons2` FOREIGN KEY (`activityId`) REFERENCES `activity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -735,7 +733,7 @@ CREATE TABLE `contact` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `account_id_cons` (`accountId`),
   CONSTRAINT `account_id_cons` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -744,7 +742,6 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (2,'aaa',2,'2',1,NULL,NULL,NULL,NULL,NULL,'1',1,1,1,1,NULL,1,1,NULL,'1','Admin Nam','2013-11-09 00:22:00','Admin Nam','2013-11-09 00:22:00','Admin Nam'),(3,'aaaa',3,'2',1,NULL,NULL,NULL,NULL,NULL,'1',1,1,1,1,NULL,1,1,NULL,'1','Sales','2013-11-10 11:25:00','Sales','2013-11-10 11:25:00','Sales');
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -932,7 +929,7 @@ CREATE TABLE `contactcrmuser` (
   KEY `crm_contact_cons1` (`crmuserId`),
   CONSTRAINT `crm_contact_cons1` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `crm_contact_cons2` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -941,7 +938,6 @@ CREATE TABLE `contactcrmuser` (
 
 LOCK TABLES `contactcrmuser` WRITE;
 /*!40000 ALTER TABLE `contactcrmuser` DISABLE KEYS */;
-INSERT INTO `contactcrmuser` VALUES (3,2,1),(4,3,3);
 /*!40000 ALTER TABLE `contactcrmuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -970,7 +966,7 @@ CREATE TABLE `crmuser` (
   `owner` varchar(255) DEFAULT NULL,
   `level` mediumint(9) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -979,7 +975,7 @@ CREATE TABLE `crmuser` (
 
 LOCK TABLES `crmuser` WRITE;
 /*!40000 ALTER TABLE `crmuser` DISABLE KEYS */;
-INSERT INTO `crmuser` VALUES (-1,'无','BJ',0,-1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1,'管理员','BJ231011001',-1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'北区地区经理01','BJ131011001',1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'北区代表001','BJ131001001',2,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'北区地区经理03','BJ131021003',-1,2,1,1,1,1,'1',NULL,'2013-11-09 00:02:00','Admin Nam','2013-11-09',NULL,NULL),(5,'北区代表018','BJ131011017',-1,1,1,1,1,1,'1',NULL,'2013-11-09 00:03:00','Admin Nam','2013-11-09',NULL,NULL),(6,'北区岗位2','BJ00002',2,3,1,1,1,1,'1',NULL,'2013-11-10 14:04:00','Admin Nam','2013-11-10',NULL,NULL);
+INSERT INTO `crmuser` VALUES (-1,'无','BJ',0,-1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1,'管理员','BJ231011001',-1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'北区地区经理01','BJ131011001',1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'北区代表001','BJ131001001',2,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `crmuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1053,6 +1049,91 @@ LOCK TABLES `crmuser_pl2` WRITE;
 /*!40000 ALTER TABLE `crmuser_pl2` DISABLE KEYS */;
 INSERT INTO `crmuser_pl2` VALUES (1,'麻药'),(2,'慢痛'),(3,'全部');
 /*!40000 ALTER TABLE `crmuser_pl2` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_exchange_operation`
+--
+
+DROP TABLE IF EXISTS `data_exchange_operation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_exchange_operation` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL,
+  `val` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `val` (`val`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_exchange_operation`
+--
+
+LOCK TABLES `data_exchange_operation` WRITE;
+/*!40000 ALTER TABLE `data_exchange_operation` DISABLE KEYS */;
+INSERT INTO `data_exchange_operation` VALUES (1,0,'Import'),(2,0,'Export');
+/*!40000 ALTER TABLE `data_exchange_operation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_exchange_status`
+--
+
+DROP TABLE IF EXISTS `data_exchange_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_exchange_status` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL,
+  `val` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `val` (`val`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_exchange_status`
+--
+
+LOCK TABLES `data_exchange_status` WRITE;
+/*!40000 ALTER TABLE `data_exchange_status` DISABLE KEYS */;
+INSERT INTO `data_exchange_status` VALUES (1,0,'Pending'),(2,0,'Abort'),(3,0,'Completed'),(4,0,'Cancelled');
+/*!40000 ALTER TABLE `data_exchange_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_exchange_teample`
+--
+
+DROP TABLE IF EXISTS `data_exchange_teample`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data_exchange_teample` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `operation_id` bigint(20) NOT NULL,
+  `type_id` bigint(20) NOT NULL,
+  `template` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `FK8AE35445D557144C` (`type_id`),
+  KEY `FK8AE35445199BCB6C` (`operation_id`),
+  CONSTRAINT `FK8AE35445199BCB6C` FOREIGN KEY (`operation_id`) REFERENCES `data_exchange_operation` (`id`),
+  CONSTRAINT `FK8AE35445D557144C` FOREIGN KEY (`type_id`) REFERENCES `record_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_exchange_teample`
+--
+
+LOCK TABLES `data_exchange_teample` WRITE;
+/*!40000 ALTER TABLE `data_exchange_teample` DISABLE KEYS */;
+INSERT INTO `data_exchange_teample` VALUES (1,1,'Account Full Import Template 1.0',1,1,'<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<Configuration>\r\n    <BatchSize>1000</BatchSize>\r\n    <EntityName>Account</EntityName>\r\n    <ExternalId>BdmCode</ExternalId>\r\n    <FileName>account.csv</FileName>\r\n    <Database>crm_mysql</Database>\r\n    <Fields>\r\n        <ColumnName>记录行ID</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>BdmCode</FieldName>\r\n    </Fields>\r\n    \r\n    <Fields>\r\n        <ColumnName>年诊疗人数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfTreatPerYear</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>成立时间</ColumnName>\r\n        <DataType>Date</DataType>\r\n        <FieldName>DateOfEstablish</FieldName>\r\n        <Format>m/d/yy</Format>\r\n    </Fields>\r\n<!--  <Format>yyyy-MM-dd</Format> -->    \r\n\r\n    <Fields>\r\n        <ColumnName>客户名称</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Name</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医院行政级别</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>AdministrativLevel</FieldName>\r\n        <LookupEntityName>AccountAdministrativLevelPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医院分级</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>Grade</FieldName>\r\n        <LookupEntityName>AccountGradePl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医院类型</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>HospitalType</FieldName>\r\n        <LookupEntityName>AccountTypePl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>地方军队医院</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>LocalOrArmy</FieldName>\r\n        <LookupEntityName>AccountLocalOrArmyPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>综合专科医院</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>ComprehensiveOrSpecialized</FieldName>\r\n        <LookupEntityName>AccountComprehensiveOrSpecializedPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>重点医院</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>KeyType</FieldName>\r\n        <LookupEntityName>AccountPointPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>状态</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>Status</FieldName>\r\n        <LookupEntityName>AccountStatusPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>法人</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>DutyOfficer</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医生数量</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfDoctors</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>助理医师人数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfAssistantDoctors</FieldName>\r\n    </Fields>\r\n    \r\n    <Fields>\r\n        <ColumnName>员工总数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfStaff</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>门诊人数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfOutpatient</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>总病床数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>TotalNumOfSickbed</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>麻醉科医生数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfAnesthesiaDoctor</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>疼痛学组医生数</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfPainDoctor</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>手术量年</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfSurgeryPerYear</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>手术间</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfSurgeryRoom</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>阿片类用药量</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfUsingOpiatesMedicine</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>阿片类注射剂量</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>NumOfUsingOpiatesInjection</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>注册资金</ColumnName>\r\n        <DataType>Integer</DataType>\r\n        <FieldName>RegisteredCapital</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>主要电话号码</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Tel</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>主要传真号码</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Fax</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>市场分类</ColumnName>\r\n        <DataType>Lookup</DataType>\r\n        <FieldName>MarketClassification</FieldName>\r\n        <LookupEntityName>AccountMarketClassificationPl</LookupEntityName>\r\n        <LookupFieldName>Val</LookupFieldName>\r\n        <TargetFieldName>Id</TargetFieldName>\r\n    </Fields>    \r\n\r\n    <Fields>\r\n        <ColumnName>医院省份</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Province</FieldName>\r\n    </Fields>\r\n\r\n    <Fields>\r\n        <ColumnName>医院区县</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Districts</FieldName>\r\n    </Fields>\r\n    \r\n    <Fields>\r\n        <ColumnName>医院详细地址</ColumnName>\r\n        <DataType>String</DataType>\r\n        <FieldName>Address</FieldName>\r\n    </Fields>\r\n</Configuration>');
+/*!40000 ALTER TABLE `data_exchange_teample` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1247,6 +1328,32 @@ LOCK TABLES `province1` WRITE;
 /*!40000 ALTER TABLE `province1` DISABLE KEYS */;
 INSERT INTO `province1` VALUES (1,'110000','北京市'),(2,'120000','天津市'),(3,'130000','河北省'),(4,'140000','山西省'),(5,'150000','内蒙古'),(6,'210000','辽宁省'),(7,'220000','吉林省'),(8,'230000','黑龙江'),(9,'310000','上海市'),(10,'320000','江苏省'),(11,'330000','浙江省'),(12,'340000','安徽省'),(13,'350000','福建省'),(14,'360000','江西省'),(15,'370000','山东省'),(16,'410000','河南省'),(17,'420000','湖北省'),(18,'430000','湖南省'),(19,'440000','广东省'),(20,'450000','广 西'),(21,'460000','海南省'),(22,'500000','重庆市'),(23,'510000','四川省'),(24,'520000','贵州省'),(25,'530000','云南省'),(26,'540000','西 藏'),(27,'610000','陕西省'),(28,'620000','甘肃省'),(29,'630000','青海省'),(30,'640000','宁 夏'),(31,'650000','新 疆'),(32,'710000','台湾省'),(33,'810000','香 港'),(34,'820000','澳 门');
 /*!40000 ALTER TABLE `province1` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `record_type`
+--
+
+DROP TABLE IF EXISTS `record_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `record_type` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL,
+  `val` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `val` (`val`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `record_type`
+--
+
+LOCK TABLES `record_type` WRITE;
+/*!40000 ALTER TABLE `record_type` DISABLE KEYS */;
+INSERT INTO `record_type` VALUES (1,0,'Account'),(2,0,'Contact'),(3,0,'Call'),(4,0,'Coaching'),(5,0,'AccuntTeam'),(6,0,'ContactTeam');
+/*!40000 ALTER TABLE `record_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1513,7 +1620,7 @@ CREATE TABLE `userInfo` (
 
 LOCK TABLES `userInfo` WRITE;
 /*!40000 ALTER TABLE `userInfo` DISABLE KEYS */;
-INSERT INTO `userInfo` VALUES (-1,'无',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'dummy','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,-1),(1,'Admin Nam',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'admin','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,1),(2,'Sales Manager',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,2,NULL,NULL,NULL,'salesman','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,2),(3,'Sales',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,3,NULL,NULL,NULL,'sales','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,3),(4,'tester',NULL,NULL,NULL,'2632783@qq.com',NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,1,'tester','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,'2013-11-10 14:12:00',NULL,'Admin Nam','2013-11-10 14:12:00',NULL,1,1,1,1384063975035,6);
+INSERT INTO `userInfo` VALUES (-1,'无',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'dummy','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,-1),(1,'Admin Nam',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'admin','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,1),(2,'Sales Manager',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,2,NULL,NULL,NULL,'salesman','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,2),(3,'Sales',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,3,NULL,NULL,NULL,'sales','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,3);
 /*!40000 ALTER TABLE `userInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1551,4 +1658,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-10 14:56:29
+-- Dump completed on 2013-11-10 17:15:03
