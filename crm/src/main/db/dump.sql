@@ -355,11 +355,12 @@ CREATE TABLE `activity` (
   `deliverable` mediumint(9) DEFAULT NULL,
   `objection_handing` mediumint(9) DEFAULT NULL,
   `summary` mediumint(9) DEFAULT NULL,
+  `whetherCoach` mediumint(9) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `crmuserId_activity_cons` (`crmuserId`),
   KEY `contactId_activity_cons` (`contactId`),
-  CONSTRAINT `crmuserId_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `contactId_activity_cons` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `contactId_activity_cons` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `crmuserId_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -407,7 +408,7 @@ CREATE TABLE `activity_event_type_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -416,7 +417,7 @@ CREATE TABLE `activity_event_type_pl` (
 
 LOCK TABLES `activity_event_type_pl` WRITE;
 /*!40000 ALTER TABLE `activity_event_type_pl` DISABLE KEYS */;
-INSERT INTO `activity_event_type_pl` VALUES (1,'拜访'),(2,'辅导');
+INSERT INTO `activity_event_type_pl` VALUES (1,'拜访'),(2,'拜访辅导'),(3,'科室会辅导');
 /*!40000 ALTER TABLE `activity_event_type_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -540,6 +541,30 @@ LOCK TABLES `activity_visiting_purpose_pl` WRITE;
 /*!40000 ALTER TABLE `activity_visiting_purpose_pl` DISABLE KEYS */;
 INSERT INTO `activity_visiting_purpose_pl` VALUES (1,'传递产品知识',1,1),(2,'处方观念沟通',1,1),(3,'病例沟通',2,2),(4,'会议安排',2,2),(5,'会议跟进',2,2),(6,'交接工作',2,2),(7,'了解竞争',2,2);
 /*!40000 ALTER TABLE `activity_visiting_purpose_pl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `activity_whethercoach_pl`
+--
+
+DROP TABLE IF EXISTS `activity_whethercoach_pl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_whethercoach_pl` (
+  `id` mediumint(9) NOT NULL,
+  `val` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activity_whethercoach_pl`
+--
+
+LOCK TABLES `activity_whethercoach_pl` WRITE;
+/*!40000 ALTER TABLE `activity_whethercoach_pl` DISABLE KEYS */;
+INSERT INTO `activity_whethercoach_pl` VALUES (1,'否'),(2,'协防半天'),(3,'协防一天');
+/*!40000 ALTER TABLE `activity_whethercoach_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -730,7 +755,9 @@ CREATE TABLE `contact` (
   `modifier` varchar(255) DEFAULT NULL,
   `modify_datetime` datetime DEFAULT NULL,
   `responsible_person` varchar(255) DEFAULT NULL,
+  `contactCode` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `contactCode_UNIQUE` (`contactCode`),
   KEY `account_id_cons` (`accountId`),
   CONSTRAINT `account_id_cons` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -756,7 +783,7 @@ CREATE TABLE `contact_department_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -765,7 +792,7 @@ CREATE TABLE `contact_department_pl` (
 
 LOCK TABLES `contact_department_pl` WRITE;
 /*!40000 ALTER TABLE `contact_department_pl` DISABLE KEYS */;
-INSERT INTO `contact_department_pl` VALUES (1,'ICU'),(2,'内科'),(3,'外科'),(4,'中医科'),(5,'化疗科'),(6,'关怀科'),(7,'牙科'),(8,'急症科'),(9,'骨科'),(10,'肝胆外科'),(11,'血液科'),(12,'风湿科'),(13,'呼吸科');
+INSERT INTO `contact_department_pl` VALUES (1,'ICU'),(2,'内科'),(3,'外科'),(4,'中医科'),(5,'化疗科'),(6,'关怀科'),(7,'牙科'),(8,'急症科'),(9,'骨科'),(10,'肝胆外科'),(11,'血液科'),(12,'风湿科'),(13,'呼吸科'),(14,'保健科'),(15,'采购科'),(16,'传染科'),(17,'创伤外科'),(18,'儿科'),(19,'耳鼻喉科'),(20,'方便门诊'),(21,'放化疗科'),(22,'放疗科'),(23,'放射科'),(24,'妇产科'),(25,'妇科'),(26,'感染科'),(27,'肛肠科'),(28,'姑息科'),(29,'国际医疗科'),(30,'核医学科'),(31,'呼吸内科'),(32,'护理科'),(33,'急诊科'),(34,'介入科'),(35,'康复科'),(36,'口腔科'),(37,'老干科'),(38,'麻醉科'),(39,'泌尿外科'),(40,'脑外科'),(41,'内分泌科'),(42,'宁养科'),(43,'皮肤科'),(44,'普外科'),(45,'其他'),(46,'乳腺外科'),(47,'烧伤整形科'),(48,'神经科'),(49,'神经内科'),(50,'神经外科'),(51,'肾内科'),(52,'生物治疗科'),(53,'特需科'),(54,'疼痛科'),(55,'微创科'),(56,'胃肠外科'),(57,'消化科'),(58,'消化内科'),(59,'消化外科'),(60,'心内科'),(61,'心胸外科'),(62,'血管外科'),(63,'血透科'),(64,'药剂科'),(65,'医保办'),(66,'医务科'),(67,'整形美容科'),(68,'质控科'),(69,'中西医结合科'),(70,'肿瘤科'),(71,'肿瘤内科'),(72,'肿瘤外科'),(73,'综合科');
 /*!40000 ALTER TABLE `contact_department_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -780,7 +807,7 @@ CREATE TABLE `contact_duty_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -789,7 +816,7 @@ CREATE TABLE `contact_duty_pl` (
 
 LOCK TABLES `contact_duty_pl` WRITE;
 /*!40000 ALTER TABLE `contact_duty_pl` DISABLE KEYS */;
-INSERT INTO `contact_duty_pl` VALUES (1,'主任'),(2,'主治医师'),(3,'科室主任'),(4,'采购'),(5,'科室主任'),(6,'院长'),(7,'副院长'),(8,'药剂科主任');
+INSERT INTO `contact_duty_pl` VALUES (1,'主任'),(2,'主治医师'),(3,'科室主任'),(4,'采购'),(5,'科室主任'),(6,'院长'),(7,'副院长'),(8,'药剂科主任'),(9,'医生'),(10,'副主任'),(11,'院长助理'),(12,'书记'),(13,'副书记'),(14,'护士'),(15,'护士长'),(16,'库管'),(17,'采购科科长'),(18,'药师'),(19,'药剂科副主任'),(20,'医务科科长'),(21,'医务科副科长'),(22,'医保办主任'),(23,'科教科主任'),(24,'信息卡科长'),(25,'其他');
 /*!40000 ALTER TABLE `contact_duty_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -852,7 +879,7 @@ CREATE TABLE `contact_job_title_pl` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `val` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -861,7 +888,7 @@ CREATE TABLE `contact_job_title_pl` (
 
 LOCK TABLES `contact_job_title_pl` WRITE;
 /*!40000 ALTER TABLE `contact_job_title_pl` DISABLE KEYS */;
-INSERT INTO `contact_job_title_pl` VALUES (1,'住院医师'),(2,'主治医师'),(3,'副主任医师'),(4,'主任医师'),(5,'护士'),(6,'主管护师'),(7,'药师'),(8,'技师');
+INSERT INTO `contact_job_title_pl` VALUES (1,'住院医师'),(2,'主治医师'),(3,'副主任医师'),(4,'主任医师'),(5,'护士'),(6,'主管护士'),(7,'药师'),(8,'技师'),(9,'副主任护士'),(10,'主任护师'),(11,'主管药师'),(12,'副主任药师'),(13,'主任药师'),(14,'主管技师'),(15,'副主任技师'),(16,'主任技师'),(17,'其他');
 /*!40000 ALTER TABLE `contact_job_title_pl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1574,13 +1601,38 @@ INSERT INTO `test_sub` VALUES (1,1,'ONEONE'),(2,2,'TWOTWO');
 UNLOCK TABLES;
 
 --
--- Table structure for table `userInfo`
+-- Table structure for table `user_position`
 --
 
-DROP TABLE IF EXISTS `userInfo`;
+DROP TABLE IF EXISTS `user_position`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `userInfo` (
+CREATE TABLE `user_position` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `userId` int(32) DEFAULT NULL,
+  `positionId` int(32) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_position_unique` (`userId`,`positionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_position`
+--
+
+LOCK TABLES `user_position` WRITE;
+/*!40000 ALTER TABLE `user_position` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_position` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userinfo`
+--
+
+DROP TABLE IF EXISTS `userinfo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userinfo` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `department` varchar(255) DEFAULT NULL,
@@ -1610,43 +1662,19 @@ CREATE TABLE `userInfo` (
   `isActivited` mediumint(9) DEFAULT NULL,
   `ts` bigint(20) DEFAULT NULL,
   `positionId` mediumint(9) DEFAULT NULL,
+  `office_tel` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `userInfo`
+-- Dumping data for table `userinfo`
 --
 
-LOCK TABLES `userInfo` WRITE;
-/*!40000 ALTER TABLE `userInfo` DISABLE KEYS */;
-INSERT INTO `userInfo` VALUES (-1,'无',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'dummy','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,-1),(1,'Admin Nam',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'admin','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,1),(2,'Sales Manager',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,2,NULL,NULL,NULL,'salesman','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,2),(3,'Sales',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,3,NULL,NULL,NULL,'sales','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,3);
-/*!40000 ALTER TABLE `userInfo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user_position`
---
-
-DROP TABLE IF EXISTS `user_position`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_position` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `userId` int(32) DEFAULT NULL,
-  `positionId` int(32) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_position_unique` (`userId`,`positionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_position`
---
-
-LOCK TABLES `user_position` WRITE;
-/*!40000 ALTER TABLE `user_position` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user_position` ENABLE KEYS */;
+LOCK TABLES `userinfo` WRITE;
+/*!40000 ALTER TABLE `userinfo` DISABLE KEYS */;
+INSERT INTO `userinfo` VALUES (-1,'无',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'dummy','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,-1,NULL),(1,'Admin Nam',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1,NULL,NULL,NULL,'admin','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,1,NULL),(2,'Sales Manager',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,2,NULL,NULL,NULL,'salesman','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,2,NULL),(3,'Sales',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,3,NULL,NULL,NULL,'sales','827ccb0eea8a706c4c34a16891f84e7b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,1386766666,3,NULL);
+/*!40000 ALTER TABLE `userinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -1658,4 +1686,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-10 17:15:03
+-- Dump completed on 2013-11-10 17:20:44
