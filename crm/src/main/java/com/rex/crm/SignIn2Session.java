@@ -76,8 +76,6 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		        CRMUser postionInfo = DAOImpl.getPositionInfoByUserId(userinfo.getPositionId());
 		        roleId = postionInfo.getRole();
 		        positionId = String.valueOf(postionInfo.getId());
-		        System.out.println("sfdsfsfsdfsdfzszsszsszszsdfsdfdsds" + roleId);
-		        System.out.println("sfdsfsfsdfsdfsdfsdfdsds" + positionId);
 		    }
 		}
 		return user != null;

@@ -89,7 +89,7 @@ public class ContactPage extends TemplatePage
                    datalist = DAOImpl.queryEntityRelationList(sql);
                    break;
                 case UserRole.USER_ROLE_MANAGER:
-                    datalist = DAOImpl.queryEntityRelationList(sql, posId,posId);
+                    datalist = DAOImpl.queryEntityRelationList(sql, posId);
                     break;
                 case UserRole.USER_ROLE_SALES:
                     datalist = DAOImpl.queryEntityRelationList(sql, posId);
@@ -127,7 +127,7 @@ public class ContactPage extends TemplatePage
                     tdata = DAOImpl.queryEntityRelationList(sql);
                     break;
                 case UserRole.USER_ROLE_MANAGER:
-                    tdata = DAOImpl.queryEntityRelationList(sql, posId,posId);
+                    tdata = DAOImpl.queryEntityRelationList(sql, posId);
                     break;
                 case UserRole.USER_ROLE_SALES:
                     tdata = DAOImpl.queryEntityRelationList(sql, posId);
@@ -146,7 +146,7 @@ public class ContactPage extends TemplatePage
                     tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft);
                     break;
                   case UserRole.USER_ROLE_MANAGER:
-                    tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, posId,posId);
+                    tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, posId);
                     break;
                   case UserRole.USER_ROLE_SALES:
                     tdata =DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, posId);
@@ -166,7 +166,7 @@ public class ContactPage extends TemplatePage
             types =  DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist());
             break;
           case UserRole.USER_ROLE_MANAGER:
-            types =  DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), posId,posId);
+            types =  DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), posId);
             break;
           case UserRole.USER_ROLE_SALES:
             types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), posId);

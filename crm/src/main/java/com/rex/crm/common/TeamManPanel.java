@@ -78,7 +78,7 @@ public class TeamManPanel extends Panel {
                teamSql = "select * from (select a.*,b.id as rid from account as a left join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?) as atable";
             }else if(type == 1){
                 //for the 医生列表
-                teamSql = "select * from (select contact.* from account as a left join accountcrmuser as b ON a.id = b.accountId left join contact on b.accountId = contact.accountId where b.crmuserId = ?) as atable";
+                teamSql = "select * from (select contact . * from contact left join accountcrmuser on accountcrmuser.accountId=contact.accountId where accountcrmuser.crmuserId = ?) as atable";
             }
             else if (type == 2){
               //for the 用户列表

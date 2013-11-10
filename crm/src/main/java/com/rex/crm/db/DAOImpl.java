@@ -1215,18 +1215,16 @@ public class DAOImpl
     }
     
 
-    public static void insert2UserRelationTable(String entityName, String positionId,String userId , String entityId){
+    public static void insert2UserRelationTable(String entityName, String positionId, String entityId){
         String sql = null;
-        if(entityName.equalsIgnoreCase("account")){
+        if(entityName.equalsIgnoreCase("account_delect")){//暂不需要
             sql = "INSERT INTO accountcrmuser ( accountId, crmuserId) VALUES ("+entityId+","+positionId+")";
-        }else if(entityName.equalsIgnoreCase("contact")){
+        }else if(entityName.equalsIgnoreCase("contact_delect")){//暂不需要
             sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if(entityName.equalsIgnoreCase("activity")){
-            sql = "INSERT INTO activitycrmuser ( activityId, crmuserId,position_id) VALUES ("+entityId+","+positionId+","+userId+")";
+            sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if (entityName.equalsIgnoreCase("coaching")){
-          sql = "INSERT INTO activitycrmuser ( activityId,crmuserId, position_id) VALUES ("+entityId+","+positionId+","+userId+")";
-        }else if (entityName.equalsIgnoreCase("userInfo")){
-          sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+positionId+")";
+          sql = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+entityId+","+positionId+")";
         }
         if(sql == null) {
             logger.error("entityName error");

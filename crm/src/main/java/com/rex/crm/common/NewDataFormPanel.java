@@ -428,7 +428,7 @@ public class NewDataFormPanel extends Panel {
                     } else {
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
                         if (generatedId > 0) {
-                            DAOImpl.insert2UserRelationTable(entity.getName(),posId,userId,
+                            DAOImpl.insert2UserRelationTable(entity.getName(),posId,
                                     String.valueOf(generatedId));
                         }
                     }
