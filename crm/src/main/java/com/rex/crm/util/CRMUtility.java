@@ -3,10 +3,12 @@ package com.rex.crm.util;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.tuple.Pair;
@@ -21,6 +23,7 @@ import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
+import com.google.gson.Gson;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
@@ -31,10 +34,13 @@ import com.rex.crm.common.Field;
 import com.rex.crm.common.IFormatter;
 import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.common.CRUDPanel.Permissions;
+import com.rex.crm.userlog.LogObj;
 
 public class CRMUtility {
 
-    private static final Logger logger = Logger.getLogger(CRMUtility.class);
+       private static final Logger logger = Logger.getLogger(CRMUtility.class);
+    
+       public static final String STAT_LOG_IN_OUT = "logInOut";
     
 	   public static ImmutableListMultimap<Integer, Account> categorizeAccountsByCityIds(List<Account> accounts){
 	    	Function<Account, Integer> idFunction = new Function<Account, Integer>() {
@@ -289,7 +295,15 @@ public class CRMUtility {
 	        return message;
 	    }
 	    
-	    
+	   
+	    public static void printStat(String type, LogObj object,Type typeOfSrc){
+	        
+	        UUID uuid  =  UUID.randomUUID(); 
+	        object.setUuid(uuid.toString());
+	        Gson gson = new Gson();   
+            String js = gson.toJson(object, typeOfSrc);
+	        logger.info("STAT."+type +"="+js);
+	    }
 	    
 	    
 }

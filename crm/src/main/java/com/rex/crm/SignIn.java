@@ -27,6 +27,8 @@ import org.apache.wicket.util.value.ValueMap;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.userlog.LogInOut;
+import com.rex.crm.util.CRMUtility;
 
 
 /**
@@ -89,9 +91,17 @@ public final class SignIn extends WebPage
                           }else{
               	        	// Sign the user in
               	            if (session.signIn(getUsername(),getPassword()))
-              	            {
-              	                    setResponsePage(getApplication().getHomePage());
-              	            }
+                            {
+
+                                LogInOut loginout = new LogInOut();
+
+                                loginout.setLoginName(session.getUser());
+                                loginout.setLogints(System.currentTimeMillis());
+                                loginout.setSessionId(session.getId());
+                                CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
+
+                                setResponsePage(getApplication().getHomePage());
+                            }
               	            else
               	            {
               	                // Get the error message from the properties file associated with the Component

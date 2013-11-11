@@ -1937,6 +1937,7 @@ public class DAOImpl
         }
         return activity;
     }
+    
     public static UserInfo getUserInfoById(int id) {
         Connection conn = null;
         UserInfo user = null;
@@ -1954,5 +1955,29 @@ public class DAOImpl
         }
 
         return user;
+    }
+    
+    
+    public static void insertLogInfor(String sessionId,String loginName , int type){
+        String sql = null;
+        if(type == 0){
+            sql = "INSERT INTO loginhistory ( sessionId, loginName,loginTime) VALUES (?,?,?)";
+        }else if(type == 1){
+            sql = "INSERT INTO loginhistory ( sessionId, loginName,logoutTime) VALUES (?,?,?)";
+        }
+      
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql,sessionId,loginName,new Date());
+
+            System.out.println("inserted:" + inserts);
+        } catch (Exception e) {
+            logger.error("failed to insertLogInfor", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
     }
 }
