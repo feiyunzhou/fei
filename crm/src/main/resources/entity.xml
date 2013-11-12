@@ -593,12 +593,13 @@
 		<sql>
 			select * from (select contact.*\,
 			contact_generalization_target_pl.val as product_target_val\,
-			"account.name" as accountName_val
+			"account.name" as accountName_val\,contact_department_pl.val as department_val 
 			from contact
 			left join contact_generalization_target_pl on contact.product_target =
 			contact_generalization_target_pl.id
 			left join account on contact.accountid = account.id
 			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
+			left join contact_department_pl on contact.department = contact_department_pl.id
 			where contact.id != -1 and accountcrmuser.crmuserid = ?) as aContact
 		</sql>
 		<sql-manager>
