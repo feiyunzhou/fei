@@ -22,6 +22,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -47,6 +49,12 @@ public class AccountTeam implements Serializable
   @Basic(optional = false)
   @Column(name = "id")
   private Integer id;
+  @JoinColumn(name = "crmuserId", referencedColumnName = "id")
+  @ManyToOne(optional = false)
+  private Position position;
+  @JoinColumn(name = "accountId", referencedColumnName = "id")
+  @ManyToOne(optional = false)
+  private Account account;
 
   public AccountTeam()
   {
@@ -65,6 +73,26 @@ public class AccountTeam implements Serializable
   public void setId(Integer id)
   {
     this.id = id;
+  }
+
+  public Position getPosition()
+  {
+    return position;
+  }
+
+  public void setPosition(Position position)
+  {
+    this.position = position;
+  }
+
+  public Account getAccount()
+  {
+    return account;
+  }
+
+  public void setAccount(Account account)
+  {
+    this.account = account;
   }
 
   @Override

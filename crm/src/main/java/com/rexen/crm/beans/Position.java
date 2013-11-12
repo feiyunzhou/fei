@@ -102,9 +102,9 @@ public class Position implements Serializable
   private String owner;
   @Column(name = "level")
   private Integer level;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuserId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
   private List<ContactTeam> contactTeamList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuserId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
   private List<AccountTeam> accountTeamList;
 
   public Position()

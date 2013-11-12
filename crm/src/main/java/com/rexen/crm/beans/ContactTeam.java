@@ -51,10 +51,10 @@ public class ContactTeam implements Serializable
   private Integer id;
   @JoinColumn(name = "contactId", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private Contact contactId;
+  private Contact contact;
   @JoinColumn(name = "crmuserId", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private Position crmuserId;
+  private Position position;
 
   public ContactTeam()
   {
@@ -75,24 +75,24 @@ public class ContactTeam implements Serializable
     this.id = id;
   }
 
-  public Contact getContactId()
+  public Contact getContact()
   {
-    return contactId;
+    return contact;
   }
 
-  public void setContactId(Contact contactId)
+  public void setContact(Contact contact)
   {
-    this.contactId = contactId;
+    this.contact = contact;
   }
 
-  public Position getCrmuserId()
+  public Position getPosition()
   {
-    return crmuserId;
+    return position;
   }
 
-  public void setCrmuserId(Position crmuserId)
+  public void setPosition(Position position)
   {
-    this.crmuserId = crmuserId;
+    this.position = position;
   }
 
   @Override

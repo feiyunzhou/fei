@@ -59,7 +59,7 @@ public class RecordType implements Serializable
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "recordType")
   private List<DataExchangeTeample> dataExchangeTeampleList;
 
   public RecordType()

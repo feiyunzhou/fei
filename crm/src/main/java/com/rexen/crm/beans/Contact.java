@@ -128,11 +128,11 @@ public class Contact implements Serializable
   private Date modifyDatetime;
   @Column(name = "responsible_person")
   private String responsiblePerson;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "contactId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
   private List<ContactTeam> contactTeamList;
   @JoinColumn(name = "accountId", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private Account accountId;
+  private Account account;
 
   public Contact()
   {
@@ -400,14 +400,14 @@ public class Contact implements Serializable
     this.contactTeamList = contactTeamList;
   }
 
-  public Account getAccountId()
+  public Account getAccount()
   {
-    return accountId;
+    return account;
   }
 
-  public void setAccountId(Account accountId)
+  public void setAccount(Account account)
   {
-    this.accountId = accountId;
+    this.account = account;
   }
 
   @Override

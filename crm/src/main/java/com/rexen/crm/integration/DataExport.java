@@ -50,7 +50,7 @@ public class DataExport
   {
     Object example = null;
 
-    String class_name = "com.rexen.crm.bean." + config.getEntityName();
+    String class_name = "com.rexen.crm.beans." + config.getEntityName();
     Class c = Class.forName(class_name);
     example = c.newInstance();
 

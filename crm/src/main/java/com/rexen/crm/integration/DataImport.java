@@ -90,7 +90,7 @@ public class DataImport
   {
     Object o = null;
 
-    String class_name = "com.rexen.crm.bean." + config.getEntityName();
+    String class_name = "com.rexen.crm.beans." + config.getEntityName();
     Class c = Class.forName(class_name);
     o = c.newInstance();
 

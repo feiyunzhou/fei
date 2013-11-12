@@ -64,10 +64,10 @@ public class DataExchangeTeample implements Serializable
   private String template;
   @JoinColumn(name = "type_id", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private RecordType typeId;
+  private RecordType recordType;
   @JoinColumn(name = "operation_id", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private DataExchangeOperation operationId;
+  private DataExchangeOperation dataExchangeOperation;
 
   public DataExchangeTeample()
   {
@@ -126,24 +126,24 @@ public class DataExchangeTeample implements Serializable
     this.template = template;
   }
 
-  public RecordType getTypeId()
+  public RecordType getRecordType()
   {
-    return typeId;
+    return recordType;
   }
 
-  public void setTypeId(RecordType typeId)
+  public void setRecordType(RecordType recordType)
   {
-    this.typeId = typeId;
+    this.recordType = recordType;
   }
 
-  public DataExchangeOperation getOperationId()
+  public DataExchangeOperation getDataExchangeOperation()
   {
-    return operationId;
+    return dataExchangeOperation;
   }
 
-  public void setOperationId(DataExchangeOperation operationId)
+  public void setDataExchangeOperation(DataExchangeOperation dataExchangeOperation)
   {
-    this.operationId = operationId;
+    this.dataExchangeOperation = dataExchangeOperation;
   }
 
   @Override

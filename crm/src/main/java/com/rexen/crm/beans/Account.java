@@ -166,9 +166,9 @@ public class Account implements Serializable
   private Date modifyDatetime;
   @Column(name = "responsible_person")
   private String responsiblePerson;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
   private List<Contact> contactList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
   private List<AccountTeam> accountTeamList;
 
   public Account()

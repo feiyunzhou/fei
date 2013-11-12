@@ -59,7 +59,7 @@ public class DataExchangeOperation implements Serializable
   @Basic(optional = false)
   @Column(name = "val")
   private String val;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "operationId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "dataExchangeOperation")
   private List<DataExchangeTeample> dataExchangeTeampleList;
 
   public DataExchangeOperation()
