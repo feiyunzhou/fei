@@ -1,25 +1,12 @@
 /*
- * Copyright 2013 Ralf.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package com.rexen.crm.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,12 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -89,7 +74,7 @@ public class Account implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private Integer id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
@@ -100,56 +85,56 @@ public class Account implements Serializable
   @Column(name = "grade")
   private String grade;
   @Column(name = "hospital_type")
-  private int hospitalType;
+  private Integer hospitalType;
   @Column(name = "local_or_army")
-  private int localOrArmy;
+  private Integer localOrArmy;
   @Column(name = "comprehensive_or_specialized")
-  private int comprehensiveOrSpecialized;
+  private Integer comprehensiveOrSpecialized;
   @Column(name = "key_type")
-  private int keyType;
+  private Integer keyType;
   @Column(name = "status")
-  private int status;
+  private Integer status;
   @Column(name = "duty_officer")
   private String dutyOfficer;
   @Column(name = "num_of_doctors")
-  private int numOfDoctors;
+  private Integer numOfDoctors;
   @Column(name = "num_of_assistant_doctors")
-  private int numOfAssistantDoctors;
+  private Integer numOfAssistantDoctors;
   @Column(name = "num_of_staff")
-  private int numOfStaff;
+  private Integer numOfStaff;
   @Column(name = "num_of_treat_per_year")
-  private int numOfTreatPerYear;
+  private Integer numOfTreatPerYear;
   @Column(name = "num_of_outpatient")
-  private int numOfOutpatient;
+  private Integer numOfOutpatient;
   @Column(name = "total_num_of_sickbed")
-  private int totalNumOfSickbed;
+  private Integer totalNumOfSickbed;
   @Column(name = "num_of_anesthesia_doctor")
-  private int numOfAnesthesiaDoctor;
+  private Integer numOfAnesthesiaDoctor;
   @Column(name = "num_of_pain_doctor")
-  private int numOfPainDoctor;
+  private Integer numOfPainDoctor;
   @Column(name = "num_of_surgery_per_year")
-  private int numOfSurgeryPerYear;
+  private Integer numOfSurgeryPerYear;
   @Column(name = "num_of_surgery_room")
-  private int numOfSurgeryRoom;
+  private Integer numOfSurgeryRoom;
   @Column(name = "num_of_using_opiates_medicine")
-  private int numOfUsingOpiatesMedicine;
+  private Integer numOfUsingOpiatesMedicine;
   @Column(name = "num_of_using_opiates_injection")
-  private int numOfUsingOpiatesInjection;
+  private Integer numOfUsingOpiatesInjection;
   @Column(name = "date_of_establish")
   @Temporal(TemporalType.TIMESTAMP)
   private Date dateOfEstablish;
   @Column(name = "registered_capital")
-  private int registeredCapital;
+  private Integer registeredCapital;
   @Column(name = "tel")
   private String tel;
   @Column(name = "fax")
   private String fax;
   @Column(name = "market_classification")
-  private int marketClassification;
+  private Integer marketClassification;
   @Column(name = "province")
-  private int province;
+  private Integer province;
   @Column(name = "city")
-  private int city;
+  private Integer city;
   @Column(name = "districts")
   private String districts;
   @Column(name = "address")
@@ -166,32 +151,28 @@ public class Account implements Serializable
   private Date modifyDatetime;
   @Column(name = "responsible_person")
   private String responsiblePerson;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-  private List<Contact> contactList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-  private List<AccountTeam> accountTeamList;
 
   public Account()
   {
   }
 
-  public Account(int id)
+  public Account(Integer id)
   {
     this.id = id;
   }
 
-  public Account(int id, String name)
+  public Account(Integer id, String name)
   {
     this.id = id;
     this.name = name;
   }
 
-  public int getId()
+  public Integer getId()
   {
     return id;
   }
 
-  public void setId(int id)
+  public void setId(Integer id)
   {
     this.id = id;
   }
@@ -236,52 +217,52 @@ public class Account implements Serializable
     this.grade = grade;
   }
 
-  public int getHospitalType()
+  public Integer getHospitalType()
   {
     return hospitalType;
   }
 
-  public void setHospitalType(int hospitalType)
+  public void setHospitalType(Integer hospitalType)
   {
     this.hospitalType = hospitalType;
   }
 
-  public int getLocalOrArmy()
+  public Integer getLocalOrArmy()
   {
     return localOrArmy;
   }
 
-  public void setLocalOrArmy(int localOrArmy)
+  public void setLocalOrArmy(Integer localOrArmy)
   {
     this.localOrArmy = localOrArmy;
   }
 
-  public int getComprehensiveOrSpecialized()
+  public Integer getComprehensiveOrSpecialized()
   {
     return comprehensiveOrSpecialized;
   }
 
-  public void setComprehensiveOrSpecialized(int comprehensiveOrSpecialized)
+  public void setComprehensiveOrSpecialized(Integer comprehensiveOrSpecialized)
   {
     this.comprehensiveOrSpecialized = comprehensiveOrSpecialized;
   }
 
-  public int getKeyType()
+  public Integer getKeyType()
   {
     return keyType;
   }
 
-  public void setKeyType(int keyType)
+  public void setKeyType(Integer keyType)
   {
     this.keyType = keyType;
   }
 
-  public int getStatus()
+  public Integer getStatus()
   {
     return status;
   }
 
-  public void setStatus(int status)
+  public void setStatus(Integer status)
   {
     this.status = status;
   }
@@ -296,122 +277,122 @@ public class Account implements Serializable
     this.dutyOfficer = dutyOfficer;
   }
 
-  public int getNumOfDoctors()
+  public Integer getNumOfDoctors()
   {
     return numOfDoctors;
   }
 
-  public void setNumOfDoctors(int numOfDoctors)
+  public void setNumOfDoctors(Integer numOfDoctors)
   {
     this.numOfDoctors = numOfDoctors;
   }
 
-  public int getNumOfAssistantDoctors()
+  public Integer getNumOfAssistantDoctors()
   {
     return numOfAssistantDoctors;
   }
 
-  public void setNumOfAssistantDoctors(int numOfAssistantDoctors)
+  public void setNumOfAssistantDoctors(Integer numOfAssistantDoctors)
   {
     this.numOfAssistantDoctors = numOfAssistantDoctors;
   }
 
-  public int getNumOfStaff()
+  public Integer getNumOfStaff()
   {
     return numOfStaff;
   }
 
-  public void setNumOfStaff(int numOfStaff)
+  public void setNumOfStaff(Integer numOfStaff)
   {
     this.numOfStaff = numOfStaff;
   }
 
-  public int getNumOfTreatPerYear()
+  public Integer getNumOfTreatPerYear()
   {
     return numOfTreatPerYear;
   }
 
-  public void setNumOfTreatPerYear(int numOfTreatPerYear)
+  public void setNumOfTreatPerYear(Integer numOfTreatPerYear)
   {
     this.numOfTreatPerYear = numOfTreatPerYear;
   }
 
-  public int getNumOfOutpatient()
+  public Integer getNumOfOutpatient()
   {
     return numOfOutpatient;
   }
 
-  public void setNumOfOutpatient(int numOfOutpatient)
+  public void setNumOfOutpatient(Integer numOfOutpatient)
   {
     this.numOfOutpatient = numOfOutpatient;
   }
 
-  public int getTotalNumOfSickbed()
+  public Integer getTotalNumOfSickbed()
   {
     return totalNumOfSickbed;
   }
 
-  public void setTotalNumOfSickbed(int totalNumOfSickbed)
+  public void setTotalNumOfSickbed(Integer totalNumOfSickbed)
   {
     this.totalNumOfSickbed = totalNumOfSickbed;
   }
 
-  public int getNumOfAnesthesiaDoctor()
+  public Integer getNumOfAnesthesiaDoctor()
   {
     return numOfAnesthesiaDoctor;
   }
 
-  public void setNumOfAnesthesiaDoctor(int numOfAnesthesiaDoctor)
+  public void setNumOfAnesthesiaDoctor(Integer numOfAnesthesiaDoctor)
   {
     this.numOfAnesthesiaDoctor = numOfAnesthesiaDoctor;
   }
 
-  public int getNumOfPainDoctor()
+  public Integer getNumOfPainDoctor()
   {
     return numOfPainDoctor;
   }
 
-  public void setNumOfPainDoctor(int numOfPainDoctor)
+  public void setNumOfPainDoctor(Integer numOfPainDoctor)
   {
     this.numOfPainDoctor = numOfPainDoctor;
   }
 
-  public int getNumOfSurgeryPerYear()
+  public Integer getNumOfSurgeryPerYear()
   {
     return numOfSurgeryPerYear;
   }
 
-  public void setNumOfSurgeryPerYear(int numOfSurgeryPerYear)
+  public void setNumOfSurgeryPerYear(Integer numOfSurgeryPerYear)
   {
     this.numOfSurgeryPerYear = numOfSurgeryPerYear;
   }
 
-  public int getNumOfSurgeryRoom()
+  public Integer getNumOfSurgeryRoom()
   {
     return numOfSurgeryRoom;
   }
 
-  public void setNumOfSurgeryRoom(int numOfSurgeryRoom)
+  public void setNumOfSurgeryRoom(Integer numOfSurgeryRoom)
   {
     this.numOfSurgeryRoom = numOfSurgeryRoom;
   }
 
-  public int getNumOfUsingOpiatesMedicine()
+  public Integer getNumOfUsingOpiatesMedicine()
   {
     return numOfUsingOpiatesMedicine;
   }
 
-  public void setNumOfUsingOpiatesMedicine(int numOfUsingOpiatesMedicine)
+  public void setNumOfUsingOpiatesMedicine(Integer numOfUsingOpiatesMedicine)
   {
     this.numOfUsingOpiatesMedicine = numOfUsingOpiatesMedicine;
   }
 
-  public int getNumOfUsingOpiatesInjection()
+  public Integer getNumOfUsingOpiatesInjection()
   {
     return numOfUsingOpiatesInjection;
   }
 
-  public void setNumOfUsingOpiatesInjection(int numOfUsingOpiatesInjection)
+  public void setNumOfUsingOpiatesInjection(Integer numOfUsingOpiatesInjection)
   {
     this.numOfUsingOpiatesInjection = numOfUsingOpiatesInjection;
   }
@@ -426,12 +407,12 @@ public class Account implements Serializable
     this.dateOfEstablish = dateOfEstablish;
   }
 
-  public int getRegisteredCapital()
+  public Integer getRegisteredCapital()
   {
     return registeredCapital;
   }
 
-  public void setRegisteredCapital(int registeredCapital)
+  public void setRegisteredCapital(Integer registeredCapital)
   {
     this.registeredCapital = registeredCapital;
   }
@@ -456,32 +437,32 @@ public class Account implements Serializable
     this.fax = fax;
   }
 
-  public int getMarketClassification()
+  public Integer getMarketClassification()
   {
     return marketClassification;
   }
 
-  public void setMarketClassification(int marketClassification)
+  public void setMarketClassification(Integer marketClassification)
   {
     this.marketClassification = marketClassification;
   }
 
-  public int getProvince()
+  public Integer getProvince()
   {
     return province;
   }
 
-  public void setProvince(int province)
+  public void setProvince(Integer province)
   {
     this.province = province;
   }
 
-  public int getCity()
+  public Integer getCity()
   {
     return city;
   }
 
-  public void setCity(int city)
+  public void setCity(Integer city)
   {
     this.city = city;
   }
@@ -556,32 +537,34 @@ public class Account implements Serializable
     this.responsiblePerson = responsiblePerson;
   }
 
-  @XmlTransient
-  public List<Contact> getContactList()
+  @Override
+  public int hashCode()
   {
-    return contactList;
+    int hash = 0;
+    hash += (id != null ? id.hashCode() : 0);
+    return hash;
   }
 
-  public void setContactList(List<Contact> contactList)
+  @Override
+  public boolean equals(Object object)
   {
-    this.contactList = contactList;
-  }
-
-  @XmlTransient
-  public List<AccountTeam> getAccountTeamList()
-  {
-    return accountTeamList;
-  }
-
-  public void setAccountTeamList(List<AccountTeam> accountTeamList)
-  {
-    this.accountTeamList = accountTeamList;
+    // TODO: Warning - this method won't work in the case the id fields are not set
+    if (!(object instanceof Account))
+    {
+      return false;
+    }
+    Account other = (Account) object;
+    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
+    {
+      return false;
+    }
+    return true;
   }
 
   @Override
   public String toString()
   {
-    return "com.rexen.crm.beans.Account[ id=" + id + " ]";
+    return "com.rexen.crm.bean.Account[ id=" + id + " ]";
   }
   
 }

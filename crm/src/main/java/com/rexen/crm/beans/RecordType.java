@@ -22,7 +22,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,10 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Ralf
  */
 @Entity
-@Table(name = "data_exchange_teample")
+@Table(name = "record_type")
 @XmlRootElement
-
-public class DataExchangeTeample implements Serializable
+public class RecordType implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
@@ -45,16 +43,12 @@ public class DataExchangeTeample implements Serializable
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
-  @Basic(optional = false)
-  @Lob
-  @Column(name = "template")
-  private String template;
 
-  public DataExchangeTeample()
+  public RecordType()
   {
   }
 
-  public DataExchangeTeample(int id)
+  public RecordType(int id)
   {
     this.id = id;
   }
@@ -77,15 +71,5 @@ public class DataExchangeTeample implements Serializable
   public void setName(String name)
   {
     this.name = name;
-  }
-
-  public String getTemplate()
-  {
-    return template;
-  }
-
-  public void setTemplate(String template)
-  {
-    this.template = template;
   }
 }
