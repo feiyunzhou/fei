@@ -39,6 +39,7 @@
     <class>com.rexen.crm.beans.DataExchangeTeample</class>
     <class>com.rexen.crm.beans.Position</class>
     <class>com.rexen.crm.beans.RecordType</class>
+    <class>com.rexen.crm.beans.CallExport</class>
     <shared-cache-mode>ALL</shared-cache-mode>
     <validation-mode>NONE</validation-mode>
     <properties>
