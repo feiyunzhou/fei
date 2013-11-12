@@ -129,6 +129,7 @@ public class DataExport
         {
           case "String":
           {
+            System.out.println("cast " + field.getFieldName());
             buffer.add((String) value);
             break;
           }

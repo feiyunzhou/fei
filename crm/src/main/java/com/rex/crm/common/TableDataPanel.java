@@ -101,7 +101,8 @@ public class TableDataPanel extends Panel {
                 }else{
                     setResponsePage(new CreateDataPage(entity.getName(),null));                          
                 }   
-            }    
+            }
+
         };
         
         add(new CRUDPanel("operationBar",entityName,null,EnumSet.of(CRUDPanel.Permissions.ADD),actionListener));

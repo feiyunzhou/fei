@@ -196,6 +196,13 @@ public class EntityDetailPage extends TemplatePage {
                 	};*/
             	};
             }
+
+            @Override
+            public void downLoadBtn() throws Exception
+            {
+              // TODO Auto-generated method stub
+              
+            }
             
          };
          

@@ -34,11 +34,8 @@
     <class>com.rexen.crm.beans.ContactPl6</class>
     <class>com.rexen.crm.beans.ContactStatusPl</class>
     <class>com.rexen.crm.beans.ContactTeam</class>
-    <class>com.rexen.crm.beans.DataExchangeOperation</class>
-    <class>com.rexen.crm.beans.DataExchangeStatus</class>
     <class>com.rexen.crm.beans.DataExchangeTeample</class>
     <class>com.rexen.crm.beans.Position</class>
-    <class>com.rexen.crm.beans.RecordType</class>
     <class>com.rexen.crm.beans.User</class>
     <shared-cache-mode>ALL</shared-cache-mode>
     <validation-mode>NONE</validation-mode>

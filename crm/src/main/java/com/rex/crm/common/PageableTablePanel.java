@@ -1,8 +1,14 @@
 package com.rex.crm.common;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.net.HttpRetryException;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.MarkupContainer;
@@ -23,10 +29,12 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.rex.crm.ActivitySelectPage;
+import com.rex.crm.AccountPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
+import com.rexen.crm.integration.DataAccessObject;
+import com.rexen.crm.integration.DataExportDelegate;
 
 public class PageableTablePanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
@@ -102,7 +110,7 @@ public class PageableTablePanel extends Panel {
                         }
                         columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
                         columnitem.add(new AttributeAppender("class", new Model("table-first-link"), " "));
-//                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"删除"));
+//                        columnitem.add(new ButtonFragment("celldata","buttonFragment",this,"鍒犻櫎"));
                     } else {
                         if (f.getPicklist() != null) {
                             // get option from picklist
@@ -142,14 +150,19 @@ public class PageableTablePanel extends Panel {
         ICRUDActionListener actionListener = new DefaultCRUDActionListener(){
             @Override
             public void create() { 
-            	if(entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
-            		setResponsePage(new ActivitySelectPage());   
-            	}else{
-            		setResponsePage(new CreateDataPage(entity.getName(),params));   
-            	}
+                setResponsePage(new CreateDataPage(entity.getName(),params));     
+            }
+
+            @Override
+            public void downLoadBtn() throws Exception { 
+              DataExportDelegate dataExport = new  DataExportDelegate();
+//              String template = DAOImpl.selectTemplate(); 
+             HttpServletResponse response = (HttpServletResponse)getRequestCycle().getResponse().getContainerResponse();
+              dataExport.export("Account Full Import Template 1.0", response);
+              setResponsePage(new AccountPage());
             }    
         };
-       
+        
         add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName()),actionListener));
         
     	add(new NewDataFormPanel("formPanel",entity,null));

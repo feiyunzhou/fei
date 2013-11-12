@@ -135,16 +135,24 @@ public class CRUDPanel extends Panel {
              }
             	
             	if (userPerms.contains(Permissions.DOWNLOAD)) {
-                Fragment addfrag = new Fragment("downloadCon","downLoadFragment",this);
-                addfrag.add(new Link("downLoad_btn") {
+                Fragment downLoadfrag = new Fragment("downloadCon","downLoadFragment",this);
+                downLoadfrag.add(new Link("downLoad_btn") {
 
                     @Override
                     public void onClick() {
                      
-                      listener.downLoadBtn();
+                      try
+                      {
+                        listener.downLoadBtn();
+                      }
+                      catch (Exception e)
+                      {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                      }
                     }
                 });
-                 add(addfrag);
+                 add(downLoadfrag);
              }else{
                  add(new Fragment("downloadCon","emptyFragment",this));
              }

@@ -2,7 +2,7 @@ package com.rex.crm.common;
 
 import java.io.Serializable;
 
-public class DefaultCRUDActionListener implements ICRUDActionListener, Serializable {
+public abstract class DefaultCRUDActionListener implements ICRUDActionListener, Serializable {
 
     @Override
     public void create() { 
@@ -22,11 +22,11 @@ public class DefaultCRUDActionListener implements ICRUDActionListener, Serializa
     	
     }
     @Override
-    public void doneBtn(){
+    public void doneBtn() {
       
     }
     @Override
-    public void downLoadBtn(){
+    public void downLoadBtn() throws Exception{
       
     }
 }

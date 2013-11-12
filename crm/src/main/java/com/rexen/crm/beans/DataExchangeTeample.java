@@ -37,13 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "data_exchange_teample")
 @XmlRootElement
-@NamedQueries(
-{
-  @NamedQuery(name = "DataExchangeTeample.findAll", query = "SELECT d FROM DataExchangeTeample d"),
-  @NamedQuery(name = "DataExchangeTeample.findById", query = "SELECT d FROM DataExchangeTeample d WHERE d.id = :id"),
-  @NamedQuery(name = "DataExchangeTeample.findByVersion", query = "SELECT d FROM DataExchangeTeample d WHERE d.version = :version"),
-  @NamedQuery(name = "DataExchangeTeample.findByName", query = "SELECT d FROM DataExchangeTeample d WHERE d.name = :name")
-})
+
 public class DataExchangeTeample implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -51,10 +45,7 @@ public class DataExchangeTeample implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private Long id;
-  @Basic(optional = false)
-  @Column(name = "version")
-  private long version;
+  private int id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
@@ -62,48 +53,24 @@ public class DataExchangeTeample implements Serializable
   @Lob
   @Column(name = "template")
   private String template;
-  @JoinColumn(name = "type_id", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private RecordType recordType;
-  @JoinColumn(name = "operation_id", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private DataExchangeOperation dataExchangeOperation;
+
 
   public DataExchangeTeample()
   {
   }
 
-  public DataExchangeTeample(Long id)
+  public DataExchangeTeample(int id)
   {
     this.id = id;
   }
-
-  public DataExchangeTeample(Long id, long version, String name, String template)
-  {
-    this.id = id;
-    this.version = version;
-    this.name = name;
-    this.template = template;
-  }
-
-  public Long getId()
+  public int getId()
   {
     return id;
   }
 
-  public void setId(Long id)
+  public void setId(int id)
   {
     this.id = id;
-  }
-
-  public long getVersion()
-  {
-    return version;
-  }
-
-  public void setVersion(long version)
-  {
-    this.version = version;
   }
 
   public String getName()
@@ -126,49 +93,6 @@ public class DataExchangeTeample implements Serializable
     this.template = template;
   }
 
-  public RecordType getRecordType()
-  {
-    return recordType;
-  }
-
-  public void setRecordType(RecordType recordType)
-  {
-    this.recordType = recordType;
-  }
-
-  public DataExchangeOperation getDataExchangeOperation()
-  {
-    return dataExchangeOperation;
-  }
-
-  public void setDataExchangeOperation(DataExchangeOperation dataExchangeOperation)
-  {
-    this.dataExchangeOperation = dataExchangeOperation;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object)
-  {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof DataExchangeTeample))
-    {
-      return false;
-    }
-    DataExchangeTeample other = (DataExchangeTeample) object;
-    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-    {
-      return false;
-    }
-    return true;
-  }
 
   @Override
   public String toString()
