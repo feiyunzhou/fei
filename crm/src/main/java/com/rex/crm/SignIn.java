@@ -85,7 +85,7 @@ public final class SignIn extends WebPage
             	System.out.println("isActivited:"+user.getIsActivited());
             	if(null!=user){
             		if(user.getPl1()==1){
-            			if(user.getIsActivited()==2){
+            			if(user.getIsActivited()==1){
                           	 // Get the error message from the properties file associated with the Component
                               String errmsg = getString("loginError", null, "此用户未激活!");
                               error(errmsg);
@@ -99,7 +99,7 @@ public final class SignIn extends WebPage
                                 loginout.setLoginName(session.getUser());
                                 loginout.setLogints(System.currentTimeMillis());
                                 loginout.setSessionId(session.getId());
-//                                CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
+                                CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
 
                                 setResponsePage(getApplication().getHomePage());
                             }

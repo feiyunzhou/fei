@@ -184,7 +184,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
                 loginout.setLoginName(session.getUser());
                 loginout.setLogints(System.currentTimeMillis());
                 loginout.setSessionId(session.getId());
-//                CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
+                CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
                 session.invalidate();
                 this.setResponsePage(SignIn.class);    
             }
