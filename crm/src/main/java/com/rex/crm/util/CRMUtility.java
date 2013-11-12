@@ -31,6 +31,7 @@ import com.rex.crm.beans.Contact;
 import com.rex.crm.common.CRUDPanel;
 import com.rex.crm.common.IFormatter;
 import com.rex.crm.common.CRUDPanel.Permissions;
+import com.rex.crm.userlog.LogInOut;
 import com.rex.crm.userlog.LogObj;
 
 public class CRMUtility {
@@ -301,6 +302,7 @@ public class CRMUtility {
             String js = gson.toJson(object, typeOfSrc);
 	        logger.info("STAT."+type +"="+js);
 	    }
+
 	    
 	    
 }

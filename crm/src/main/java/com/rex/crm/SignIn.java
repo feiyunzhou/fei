@@ -97,7 +97,7 @@ public final class SignIn extends WebPage
                                 loginout.setLoginName(session.getUser());
                                 loginout.setLogints(System.currentTimeMillis());
                                 loginout.setSessionId(session.getId());
-                                CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
+//                                CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
 
                                 setResponsePage(getApplication().getHomePage());
                             }
