@@ -366,7 +366,7 @@ public class NewDataFormPanel extends Panel {
 	                    			 title.append(callName);
 	                    			 System.out.println("callName"+title.toString());
 	                    		 }
-	                    		 if(entity.getName().equals("coaching")){
+	                    		 if(entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
 	                    			 title.append("辅导:");
 	                    			 String coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get("coacheeId").getObject().toString());
 	                    			 title.append(coacheeName);
@@ -432,7 +432,12 @@ public class NewDataFormPanel extends Panel {
                                     String.valueOf(generatedId));
                         }
                     }
-                    setResponsePage(PageFactory.createPage(entity.getName()));
+                    if(entity.getName().equalsIgnoreCase("willCoaching")){
+                    	setResponsePage(PageFactory.createPage("coaching"));
+                    }else{
+                    	setResponsePage(PageFactory.createPage(entity.getName()));
+                    }
+                    
             }
         };
         form.add(fieldGroupRepeater);

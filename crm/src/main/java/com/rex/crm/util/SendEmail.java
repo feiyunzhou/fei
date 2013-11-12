@@ -20,27 +20,20 @@ public class SendEmail {
 	private static final Logger logger = Logger.getLogger(SendEmail.class);
 	  //发送有邮件方法
   	public static boolean sendMail(String code,String sendEmail){
+  		System.out.println("sendEmail:"+sendEmail);
   	      Session sendMailSession = null;
           SMTPTransport transport = null;
           StringBuilder emailContent = new StringBuilder("Please click on this link to activate:");
-          Properties systemPeroperties = new Properties();
-          try {
-          	systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/system.properties"));
-  		} catch (FileNotFoundException e1) {
-  			// TODO Auto-generated catch block
-  			e1.printStackTrace();
-  		} catch (IOException e1) {
-  			// TODO Auto-generated catch block
-  			e1.printStackTrace();
-  		}
-          emailContent.append(systemPeroperties.getProperty("http"));
-          emailContent.append(systemPeroperties.getProperty("url"));
+          ReadFileUtil readFileUtil = new ReadFileUtil();
+          System.out.println();
+          emailContent.append(readFileUtil.readFileAttribure("http"));
+          emailContent.append(readFileUtil.readFileAttribure("url"));
           emailContent.append("/");
-          emailContent.append(systemPeroperties.getProperty("project"));
+          emailContent.append(readFileUtil.readFileAttribure("project"));
           emailContent.append("/");
-          emailContent.append(systemPeroperties.getProperty("jumpage"));
+          emailContent.append(readFileUtil.readFileAttribure("jumpage"));
           emailContent.append("?");
-          emailContent.append(systemPeroperties.getProperty("parameter"));
+          emailContent.append(readFileUtil.readFileAttribure("parameter"));
           emailContent.append("=");
           emailContent.append(code);
           Properties props = new Properties();

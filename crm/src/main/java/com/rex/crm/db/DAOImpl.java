@@ -1170,6 +1170,10 @@ public class DAOImpl
         	 
         	 fieldssql = fieldssql + ",event_type";
              valuesql = valuesql + "," +1;
+         }else if(entityName.equals("willCoaching")){
+        	 entityName= "activity";
+             fieldssql = fieldssql + ",event_type";
+             valuesql = valuesql + "," +3;
          }
          logger.debug("fieldssql sql is:"+fieldssql);
          logger.debug("valuesql sql is:"+valuesql);

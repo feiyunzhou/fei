@@ -23,6 +23,7 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.ActivitySelectPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -141,7 +142,11 @@ public class PageableTablePanel extends Panel {
         ICRUDActionListener actionListener = new DefaultCRUDActionListener(){
             @Override
             public void create() { 
-                setResponsePage(new CreateDataPage(entity.getName(),params));     
+            	if(entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+            		setResponsePage(new ActivitySelectPage());   
+            	}else{
+            		setResponsePage(new CreateDataPage(entity.getName(),params));   
+            	}
             }    
         };
        

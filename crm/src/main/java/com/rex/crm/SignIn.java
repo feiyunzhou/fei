@@ -68,7 +68,8 @@ public final class SignIn extends WebPage
     	/**
          * sign 
          */
-        public final void onSubmit()
+        @SuppressWarnings("unused")
+		public final void onSubmit()
         {
         	//get session info
         	SignIn2Session session = getMysession();
@@ -81,9 +82,10 @@ public final class SignIn extends WebPage
         	}else{
         		//判断用户是否激活密码是否存在()
             	UserInfo user = DAOImpl.getUserByLoginName(getUsername());
+            	System.out.println("isActivited:"+user.getIsActivited());
             	if(null!=user){
             		if(user.getPl1()==1){
-            			if("".equals(user.getPassword())&&user.getIsActivited()==2){
+            			if(user.getIsActivited()==2){
                           	 // Get the error message from the properties file associated with the Component
                               String errmsg = getString("loginError", null, "此用户未激活!");
                               error(errmsg);

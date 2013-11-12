@@ -76,13 +76,15 @@
 		              console.log(selecteddate);
 		              var roleId = userInfo.role;
 		              var entityName = "";
-		              if(roleId==2){
-		            	  entityName = "coaching";
-		              }else {
-		            	  entityName = "activity";
+		              if(roleId!=1){
+		            	  if(roleId==2){
+			            	  entityName = "coaching";
+			              }else {
+			            	  entityName = "activity";
+			              }
+			              console.log("userInfo.roleId:"+userInfo.role);
+			              location.href = create_event_page_url +"entityName="+entityName +"&start_datetime="+selecteddate+"&end_datetime="+selecteddate;
 		              }
-		              console.log("userInfo.roleId:"+userInfo.role);
-		              location.href = create_event_page_url +"entityName="+entityName +"&start_datetime="+selecteddate+"&end_datetime="+selecteddate;
 		          }
 				
 				//events : JSON.parse(user_event_data)

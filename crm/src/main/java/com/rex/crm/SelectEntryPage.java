@@ -130,7 +130,6 @@ public class SelectEntryPage extends WebPage {
                 }else if (relationTableName.equalsIgnoreCase("userInfo")) {
                     String sql = assembleSearchingSQL(roleId, entity);
                      maplist  = DAOImpl.queryEntityRelationList(sql,userId);
-                  
                     Map dummy = Maps.newHashMap();
                     dummy.put("id", -1);
                     dummy.put("name", "无");

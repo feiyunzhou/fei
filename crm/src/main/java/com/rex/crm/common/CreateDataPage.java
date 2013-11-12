@@ -48,6 +48,7 @@ public class CreateDataPage extends TemplatePage {
         Map<String, Entity> entities = Configuration.getEntityTable();
         //if (entityName == null) entityName="contact";
         final Entity entity = entities.get(entityName);
+        System.out.println("entityName:"+entity);
         if(null!=entity){
         	add(new NewDataFormPanel("formPanel",entity,params));
 	         add(new AbstractAjaxBehavior(){

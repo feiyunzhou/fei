@@ -3,6 +3,7 @@ package com.rex.crm.common;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -16,8 +17,11 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
+import com.google.common.collect.Maps;
+import com.rex.crm.ActivitySelectPage;
 import com.rex.crm.CreateEventPage;
 import com.rex.crm.EventViewerPage;
 import com.rex.crm.SignIn2Session;
@@ -31,9 +35,6 @@ public class CalendarPanel extends Panel {
     public CalendarPanel(String id) {
         super(id);       
         //TODO Get permission info of user from database.
-
-        //add(new CRUDPanel("operationBar","calendar",EnumSet.of(CRUDPanel.Permissions.ADD)));
-
     }
     
     
@@ -46,16 +47,7 @@ public class CalendarPanel extends Panel {
         final String posId = ((SignIn2Session)getSession()).getPositionId();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         map.put("user_event_data", com.rex.crm.ajax.DataProvider.getEventsByUserId(new String[]{posId}));
-        PageParameters params = new PageParameters();
-        WebPage page = null;
-        if(roleId==1){
-        	page = new CreateEventPage();
-        }else if(roleId==2){
-        	page = new CreateDataPage(null,null);   
-        }else{
-        	page = new CreateDataPage(null,null);   
-        }
-        System.out.println("page:"+page);
+        WebPage page = new ActivitySelectPage();
         CharSequence pageUrl = getRequestCycle().urlFor(new RenderPageRequestHandler(new PageProvider(page)));
         String url = pageUrl.toString();
         url =  url.substring(0, url.indexOf("?")+1);

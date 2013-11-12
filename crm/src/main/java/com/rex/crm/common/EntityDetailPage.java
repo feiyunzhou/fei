@@ -182,7 +182,7 @@ public class EntityDetailPage extends TemplatePage {
             public void resetPassword(int userId){
             	if(DAOImpl.resetUserPassword(userId)>0){
             		//获取对象
-                	CRMUser crmuser = DAOImpl.getCrmUserById(userId);
+                	UserInfo crmuser = DAOImpl.getUserInfoById(userId);
                 	//发送邮件,判断成功与否
                 	if(SendEmail.sendMail(String.valueOf(crmuser.getTs())+"_"+crmuser.getId(),crmuser.getEmail())){
                 		div.add(new AttributeAppender("style",new Model("display:block"),";"));

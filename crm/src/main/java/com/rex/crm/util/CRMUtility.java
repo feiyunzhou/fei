@@ -204,6 +204,8 @@ public class CRMUtility {
 	        }else if(entityName.equalsIgnoreCase("activity")){
 	        	if (roleId == 1) {
 		            permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
+	        	}else if(roleId==2){
+	        		permission = null;
 	        	}else if(roleId==3){
 	        		permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
 	        	}
