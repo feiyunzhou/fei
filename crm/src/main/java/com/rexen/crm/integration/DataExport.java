@@ -27,7 +27,6 @@ import org.jumpmind.symmetric.csv.CsvWriter;
  *
  * @author Ralf
  */
-
 public class DataExport
 {
 
@@ -43,7 +42,14 @@ public class DataExport
 
     config = (Configuration) unmarshaller.unmarshal(file);
 
-    dao = new DataAccessObject(config.getDatabase());
+    dao = new DataAccessObject("crm_mysql");
+  }
+
+  public DataExport(Configuration config, DataAccessObject dao) throws JAXBException
+  {
+    this.config = config;
+
+    this.dao = dao;
   }
 
   public byte[] export() throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException
@@ -59,6 +65,7 @@ public class DataExport
     if (data != null && data.length > 0)
     {
       ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+      ByteArrayOutputStream output = new ByteArrayOutputStream();
 
       CsvWriter csv = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
 
@@ -78,9 +85,7 @@ public class DataExport
 
       csv.flush();
 
-      FileOutputStream file_output_stream = new FileOutputStream(config.getEntityName() + ".zip");
-
-      ZipOutputStream zip_output_stream = new ZipOutputStream(file_output_stream);
+      ZipOutputStream zip_output_stream = new ZipOutputStream(output);
       zip_output_stream.setLevel(9);
       ZipEntry zip_entry = new ZipEntry(config.getEntityName() + ".csv");
 
@@ -91,10 +96,7 @@ public class DataExport
       zip_output_stream.flush();
       zip_output_stream.close();
 
-      file_output_stream.flush();
-      file_output_stream.close();
-
-      return buffer.toByteArray();
+      return output.toByteArray();
     }
 
     return null;
@@ -120,7 +122,7 @@ public class DataExport
       Object value = m.invoke(o, new Object[]
       {
       });
-      
+
       if (value != null)
       {
         switch (field.getDataType())

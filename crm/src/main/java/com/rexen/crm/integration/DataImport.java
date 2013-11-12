@@ -39,7 +39,7 @@ public class DataImport
 
     config = (Configuration) unmarshaller.unmarshal(file);
 
-    dao = new DataAccessObject(config.getDatabase());
+    dao = new DataAccessObject("crm_mysql");
   }
 
   public void load() throws IOException, Exception
