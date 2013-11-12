@@ -233,11 +233,19 @@ public class CRMUtility {
             if (roleId == 1) {
                 permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
             }
-        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")){
-            permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar")){
+        	permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        }else if(entityName.equalsIgnoreCase("activity")){
+        	if(roleId == 3){
+        		permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        	}else{
+        		permission = null;
+        	}
         }else if(entityName.equalsIgnoreCase("coaching")){
-          if(roleId==1||roleId==2){
-            permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
+          if(roleId==1){
+        	  permission = EnumSet.of(CRUDPanel.Permissions.DOWNLOAD);
+          }else if(roleId ==2){
+        	  permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
           }
         }else if(entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("userInfo")||entityName.equalsIgnoreCase("data_exchange_teample")){
             

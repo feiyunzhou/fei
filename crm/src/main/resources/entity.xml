@@ -2000,7 +2000,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			
 			<field>
 				<name>whetherCoach</name>
-				<display>是否协防</display>
+				<display>是否协访</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -2408,8 +2408,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
-			where activitycrmuser.crmuserid = ?) as aactivity where event_type =
-			2 order by whenadded DESC) as aActivity
+			where activitycrmuser.crmuserid = ?) as aactivity where (event_type =
+			2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
 			select distinct * from (select * from (select activity.crmuserId as
@@ -2428,8 +2428,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			left join crmuser on activitycrmuser.crmuserid = crmuser.id
-			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type
-			= 2 order by whenadded DESC) as aActivity
+			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
+			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql-manager>
 
 		<sql-admin>
@@ -2549,7 +2549,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isBaseInfo>true</isBaseInfo>
@@ -2946,7 +2946,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
-				<relationTable>userInfo</relationTable>
+				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2973,7 +2973,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<relationTable>userInfo</relationTable>
+				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>

@@ -1227,7 +1227,7 @@ public class DAOImpl
             sql = "INSERT INTO contactcrmuser ( contactId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if(entityName.equalsIgnoreCase("activity")){
             sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+positionId+")";
-        }else if (entityName.equalsIgnoreCase("coaching")){
+        }else if (entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willCoaching")){
           sql = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+entityId+","+positionId+")";
         }
         if(sql == null) {
