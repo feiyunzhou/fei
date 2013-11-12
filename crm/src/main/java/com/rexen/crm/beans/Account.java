@@ -89,7 +89,7 @@ public class Account implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private Integer id;
+  private int id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
@@ -100,56 +100,56 @@ public class Account implements Serializable
   @Column(name = "grade")
   private String grade;
   @Column(name = "hospital_type")
-  private Integer hospitalType;
+  private int hospitalType;
   @Column(name = "local_or_army")
-  private Integer localOrArmy;
+  private int localOrArmy;
   @Column(name = "comprehensive_or_specialized")
-  private Integer comprehensiveOrSpecialized;
+  private int comprehensiveOrSpecialized;
   @Column(name = "key_type")
-  private Integer keyType;
+  private int keyType;
   @Column(name = "status")
-  private Integer status;
+  private int status;
   @Column(name = "duty_officer")
   private String dutyOfficer;
   @Column(name = "num_of_doctors")
-  private Integer numOfDoctors;
+  private int numOfDoctors;
   @Column(name = "num_of_assistant_doctors")
-  private Integer numOfAssistantDoctors;
+  private int numOfAssistantDoctors;
   @Column(name = "num_of_staff")
-  private Integer numOfStaff;
+  private int numOfStaff;
   @Column(name = "num_of_treat_per_year")
-  private Integer numOfTreatPerYear;
+  private int numOfTreatPerYear;
   @Column(name = "num_of_outpatient")
-  private Integer numOfOutpatient;
+  private int numOfOutpatient;
   @Column(name = "total_num_of_sickbed")
-  private Integer totalNumOfSickbed;
+  private int totalNumOfSickbed;
   @Column(name = "num_of_anesthesia_doctor")
-  private Integer numOfAnesthesiaDoctor;
+  private int numOfAnesthesiaDoctor;
   @Column(name = "num_of_pain_doctor")
-  private Integer numOfPainDoctor;
+  private int numOfPainDoctor;
   @Column(name = "num_of_surgery_per_year")
-  private Integer numOfSurgeryPerYear;
+  private int numOfSurgeryPerYear;
   @Column(name = "num_of_surgery_room")
-  private Integer numOfSurgeryRoom;
+  private int numOfSurgeryRoom;
   @Column(name = "num_of_using_opiates_medicine")
-  private Integer numOfUsingOpiatesMedicine;
+  private int numOfUsingOpiatesMedicine;
   @Column(name = "num_of_using_opiates_injection")
-  private Integer numOfUsingOpiatesInjection;
+  private int numOfUsingOpiatesInjection;
   @Column(name = "date_of_establish")
   @Temporal(TemporalType.TIMESTAMP)
   private Date dateOfEstablish;
   @Column(name = "registered_capital")
-  private Integer registeredCapital;
+  private int registeredCapital;
   @Column(name = "tel")
   private String tel;
   @Column(name = "fax")
   private String fax;
   @Column(name = "market_classification")
-  private Integer marketClassification;
+  private int marketClassification;
   @Column(name = "province")
-  private Integer province;
+  private int province;
   @Column(name = "city")
-  private Integer city;
+  private int city;
   @Column(name = "districts")
   private String districts;
   @Column(name = "address")
@@ -175,23 +175,23 @@ public class Account implements Serializable
   {
   }
 
-  public Account(Integer id)
+  public Account(int id)
   {
     this.id = id;
   }
 
-  public Account(Integer id, String name)
+  public Account(int id, String name)
   {
     this.id = id;
     this.name = name;
   }
 
-  public Integer getId()
+  public int getId()
   {
     return id;
   }
 
-  public void setId(Integer id)
+  public void setId(int id)
   {
     this.id = id;
   }
@@ -236,52 +236,52 @@ public class Account implements Serializable
     this.grade = grade;
   }
 
-  public Integer getHospitalType()
+  public int getHospitalType()
   {
     return hospitalType;
   }
 
-  public void setHospitalType(Integer hospitalType)
+  public void setHospitalType(int hospitalType)
   {
     this.hospitalType = hospitalType;
   }
 
-  public Integer getLocalOrArmy()
+  public int getLocalOrArmy()
   {
     return localOrArmy;
   }
 
-  public void setLocalOrArmy(Integer localOrArmy)
+  public void setLocalOrArmy(int localOrArmy)
   {
     this.localOrArmy = localOrArmy;
   }
 
-  public Integer getComprehensiveOrSpecialized()
+  public int getComprehensiveOrSpecialized()
   {
     return comprehensiveOrSpecialized;
   }
 
-  public void setComprehensiveOrSpecialized(Integer comprehensiveOrSpecialized)
+  public void setComprehensiveOrSpecialized(int comprehensiveOrSpecialized)
   {
     this.comprehensiveOrSpecialized = comprehensiveOrSpecialized;
   }
 
-  public Integer getKeyType()
+  public int getKeyType()
   {
     return keyType;
   }
 
-  public void setKeyType(Integer keyType)
+  public void setKeyType(int keyType)
   {
     this.keyType = keyType;
   }
 
-  public Integer getStatus()
+  public int getStatus()
   {
     return status;
   }
 
-  public void setStatus(Integer status)
+  public void setStatus(int status)
   {
     this.status = status;
   }
@@ -296,122 +296,122 @@ public class Account implements Serializable
     this.dutyOfficer = dutyOfficer;
   }
 
-  public Integer getNumOfDoctors()
+  public int getNumOfDoctors()
   {
     return numOfDoctors;
   }
 
-  public void setNumOfDoctors(Integer numOfDoctors)
+  public void setNumOfDoctors(int numOfDoctors)
   {
     this.numOfDoctors = numOfDoctors;
   }
 
-  public Integer getNumOfAssistantDoctors()
+  public int getNumOfAssistantDoctors()
   {
     return numOfAssistantDoctors;
   }
 
-  public void setNumOfAssistantDoctors(Integer numOfAssistantDoctors)
+  public void setNumOfAssistantDoctors(int numOfAssistantDoctors)
   {
     this.numOfAssistantDoctors = numOfAssistantDoctors;
   }
 
-  public Integer getNumOfStaff()
+  public int getNumOfStaff()
   {
     return numOfStaff;
   }
 
-  public void setNumOfStaff(Integer numOfStaff)
+  public void setNumOfStaff(int numOfStaff)
   {
     this.numOfStaff = numOfStaff;
   }
 
-  public Integer getNumOfTreatPerYear()
+  public int getNumOfTreatPerYear()
   {
     return numOfTreatPerYear;
   }
 
-  public void setNumOfTreatPerYear(Integer numOfTreatPerYear)
+  public void setNumOfTreatPerYear(int numOfTreatPerYear)
   {
     this.numOfTreatPerYear = numOfTreatPerYear;
   }
 
-  public Integer getNumOfOutpatient()
+  public int getNumOfOutpatient()
   {
     return numOfOutpatient;
   }
 
-  public void setNumOfOutpatient(Integer numOfOutpatient)
+  public void setNumOfOutpatient(int numOfOutpatient)
   {
     this.numOfOutpatient = numOfOutpatient;
   }
 
-  public Integer getTotalNumOfSickbed()
+  public int getTotalNumOfSickbed()
   {
     return totalNumOfSickbed;
   }
 
-  public void setTotalNumOfSickbed(Integer totalNumOfSickbed)
+  public void setTotalNumOfSickbed(int totalNumOfSickbed)
   {
     this.totalNumOfSickbed = totalNumOfSickbed;
   }
 
-  public Integer getNumOfAnesthesiaDoctor()
+  public int getNumOfAnesthesiaDoctor()
   {
     return numOfAnesthesiaDoctor;
   }
 
-  public void setNumOfAnesthesiaDoctor(Integer numOfAnesthesiaDoctor)
+  public void setNumOfAnesthesiaDoctor(int numOfAnesthesiaDoctor)
   {
     this.numOfAnesthesiaDoctor = numOfAnesthesiaDoctor;
   }
 
-  public Integer getNumOfPainDoctor()
+  public int getNumOfPainDoctor()
   {
     return numOfPainDoctor;
   }
 
-  public void setNumOfPainDoctor(Integer numOfPainDoctor)
+  public void setNumOfPainDoctor(int numOfPainDoctor)
   {
     this.numOfPainDoctor = numOfPainDoctor;
   }
 
-  public Integer getNumOfSurgeryPerYear()
+  public int getNumOfSurgeryPerYear()
   {
     return numOfSurgeryPerYear;
   }
 
-  public void setNumOfSurgeryPerYear(Integer numOfSurgeryPerYear)
+  public void setNumOfSurgeryPerYear(int numOfSurgeryPerYear)
   {
     this.numOfSurgeryPerYear = numOfSurgeryPerYear;
   }
 
-  public Integer getNumOfSurgeryRoom()
+  public int getNumOfSurgeryRoom()
   {
     return numOfSurgeryRoom;
   }
 
-  public void setNumOfSurgeryRoom(Integer numOfSurgeryRoom)
+  public void setNumOfSurgeryRoom(int numOfSurgeryRoom)
   {
     this.numOfSurgeryRoom = numOfSurgeryRoom;
   }
 
-  public Integer getNumOfUsingOpiatesMedicine()
+  public int getNumOfUsingOpiatesMedicine()
   {
     return numOfUsingOpiatesMedicine;
   }
 
-  public void setNumOfUsingOpiatesMedicine(Integer numOfUsingOpiatesMedicine)
+  public void setNumOfUsingOpiatesMedicine(int numOfUsingOpiatesMedicine)
   {
     this.numOfUsingOpiatesMedicine = numOfUsingOpiatesMedicine;
   }
 
-  public Integer getNumOfUsingOpiatesInjection()
+  public int getNumOfUsingOpiatesInjection()
   {
     return numOfUsingOpiatesInjection;
   }
 
-  public void setNumOfUsingOpiatesInjection(Integer numOfUsingOpiatesInjection)
+  public void setNumOfUsingOpiatesInjection(int numOfUsingOpiatesInjection)
   {
     this.numOfUsingOpiatesInjection = numOfUsingOpiatesInjection;
   }
@@ -426,12 +426,12 @@ public class Account implements Serializable
     this.dateOfEstablish = dateOfEstablish;
   }
 
-  public Integer getRegisteredCapital()
+  public int getRegisteredCapital()
   {
     return registeredCapital;
   }
 
-  public void setRegisteredCapital(Integer registeredCapital)
+  public void setRegisteredCapital(int registeredCapital)
   {
     this.registeredCapital = registeredCapital;
   }
@@ -456,32 +456,32 @@ public class Account implements Serializable
     this.fax = fax;
   }
 
-  public Integer getMarketClassification()
+  public int getMarketClassification()
   {
     return marketClassification;
   }
 
-  public void setMarketClassification(Integer marketClassification)
+  public void setMarketClassification(int marketClassification)
   {
     this.marketClassification = marketClassification;
   }
 
-  public Integer getProvince()
+  public int getProvince()
   {
     return province;
   }
 
-  public void setProvince(Integer province)
+  public void setProvince(int province)
   {
     this.province = province;
   }
 
-  public Integer getCity()
+  public int getCity()
   {
     return city;
   }
 
-  public void setCity(Integer city)
+  public void setCity(int city)
   {
     this.city = city;
   }
@@ -576,30 +576,6 @@ public class Account implements Serializable
   public void setAccountTeamList(List<AccountTeam> accountTeamList)
   {
     this.accountTeamList = accountTeamList;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object)
-  {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof Account))
-    {
-      return false;
-    }
-    Account other = (Account) object;
-    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-    {
-      return false;
-    }
-    return true;
   }
 
   @Override

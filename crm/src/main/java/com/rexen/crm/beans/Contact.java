@@ -78,14 +78,14 @@ public class Contact implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private Integer id;
+  private int id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
   @Column(name = "department")
   private String department;
   @Column(name = "sex")
-  private Integer sex;
+  private int sex;
   @Column(name = "native_place")
   private String nativePlace;
   @Column(name = "office_tel")
@@ -99,21 +99,21 @@ public class Contact implements Serializable
   @Column(name = "status")
   private String status;
   @Column(name = "market_classification")
-  private Integer marketClassification;
+  private int marketClassification;
   @Column(name = "grade")
-  private Integer grade;
+  private int grade;
   @Column(name = "province")
-  private Integer province;
+  private int province;
   @Column(name = "city")
-  private Integer city;
+  private int city;
   @Column(name = "districts")
   private String districts;
   @Column(name = "duty")
-  private Integer duty;
+  private int duty;
   @Column(name = "job_title")
-  private Integer jobTitle;
+  private int jobTitle;
   @Column(name = "visiting_target")
-  private Integer visitingTarget;
+  private int visitingTarget;
   @Column(name = "product_target")
   private String productTarget;
   @Column(name = "owner")
@@ -138,23 +138,23 @@ public class Contact implements Serializable
   {
   }
 
-  public Contact(Integer id)
+  public Contact(int id)
   {
     this.id = id;
   }
 
-  public Contact(Integer id, String name)
+  public Contact(int id, String name)
   {
     this.id = id;
     this.name = name;
   }
 
-  public Integer getId()
+  public int getId()
   {
     return id;
   }
 
-  public void setId(Integer id)
+  public void setId(int id)
   {
     this.id = id;
   }
@@ -179,12 +179,12 @@ public class Contact implements Serializable
     this.department = department;
   }
 
-  public Integer getSex()
+  public int getSex()
   {
     return sex;
   }
 
-  public void setSex(Integer sex)
+  public void setSex(int sex)
   {
     this.sex = sex;
   }
@@ -249,42 +249,42 @@ public class Contact implements Serializable
     this.status = status;
   }
 
-  public Integer getMarketClassification()
+  public int getMarketClassification()
   {
     return marketClassification;
   }
 
-  public void setMarketClassification(Integer marketClassification)
+  public void setMarketClassification(int marketClassification)
   {
     this.marketClassification = marketClassification;
   }
 
-  public Integer getGrade()
+  public int getGrade()
   {
     return grade;
   }
 
-  public void setGrade(Integer grade)
+  public void setGrade(int grade)
   {
     this.grade = grade;
   }
 
-  public Integer getProvince()
+  public int getProvince()
   {
     return province;
   }
 
-  public void setProvince(Integer province)
+  public void setProvince(int province)
   {
     this.province = province;
   }
 
-  public Integer getCity()
+  public int getCity()
   {
     return city;
   }
 
-  public void setCity(Integer city)
+  public void setCity(int city)
   {
     this.city = city;
   }
@@ -299,32 +299,32 @@ public class Contact implements Serializable
     this.districts = districts;
   }
 
-  public Integer getDuty()
+  public int getDuty()
   {
     return duty;
   }
 
-  public void setDuty(Integer duty)
+  public void setDuty(int duty)
   {
     this.duty = duty;
   }
 
-  public Integer getJobTitle()
+  public int getJobTitle()
   {
     return jobTitle;
   }
 
-  public void setJobTitle(Integer jobTitle)
+  public void setJobTitle(int jobTitle)
   {
     this.jobTitle = jobTitle;
   }
 
-  public Integer getVisitingTarget()
+  public int getVisitingTarget()
   {
     return visitingTarget;
   }
 
-  public void setVisitingTarget(Integer visitingTarget)
+  public void setVisitingTarget(int visitingTarget)
   {
     this.visitingTarget = visitingTarget;
   }
@@ -408,30 +408,6 @@ public class Contact implements Serializable
   public void setAccount(Account account)
   {
     this.account = account;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object)
-  {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof Contact))
-    {
-      return false;
-    }
-    Contact other = (Contact) object;
-    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-    {
-      return false;
-    }
-    return true;
   }
 
   @Override
