@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultiset;
@@ -30,9 +29,7 @@ import com.rex.crm.beans.CalendarEvent;
 import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.common.CRUDPanel;
-import com.rex.crm.common.Field;
 import com.rex.crm.common.IFormatter;
-import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.common.CRUDPanel.Permissions;
 import com.rex.crm.userlog.LogObj;
 

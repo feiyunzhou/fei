@@ -1,4 +1,4 @@
-package com.rex.crm.db.dao;
+package com.rexen.crm.beans;
 
 public interface UserRole
 {

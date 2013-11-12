@@ -19,7 +19,7 @@ import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
 
 import com.rex.crm.db.DAOImpl;
-import com.rex.crm.db.dao.UserRole;
+import com.rexen.crm.beans.UserRole;
 import com.rex.crm.util.Configuration;
 
 

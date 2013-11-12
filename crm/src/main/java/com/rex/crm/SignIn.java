@@ -24,7 +24,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 
-import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.userlog.LogInOut;
