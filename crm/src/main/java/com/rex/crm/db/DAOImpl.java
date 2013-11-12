@@ -525,7 +525,7 @@ public class DAOImpl
         menulist.add("activity");
         menulist.add("coaching");
      if(roleId == 1){
-       menulist.add("dataManagement");
+       menulist.add("data_exchange_teample");
      }
         menulist.add("crmuser");
 //    menulist.add("dealerAccount");

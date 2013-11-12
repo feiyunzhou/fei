@@ -193,7 +193,7 @@ public class CRMUtility {
 
 	        EnumSet<Permissions> permission = null;
 	        logger.debug("tntititnteitnteneitn     " + entityName);
-	        if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("crmuser")) {
+	        if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("data_exchange_teample")) {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
 	            }
@@ -230,15 +230,15 @@ public class CRMUtility {
         EnumSet<Permissions> permission = null;
         if (entityName.equalsIgnoreCase("account")) {
             if (roleId == 1) {
-                permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+                permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
             }
         }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar") || entityName.equalsIgnoreCase("activity")){
             permission = EnumSet.of(CRUDPanel.Permissions.ADD);
         }else if(entityName.equalsIgnoreCase("coaching")){
           if(roleId==1||roleId==2){
-            permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+            permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
           }
-        }else if(entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("userInfo")||entityName.equalsIgnoreCase("dataManagement")){
+        }else if(entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("userInfo")||entityName.equalsIgnoreCase("data_exchange_teample")){
             
             if (roleId == 1) {
                 permission = EnumSet.of(CRUDPanel.Permissions.ADD);

@@ -276,7 +276,7 @@ public class NewDataFormPanel extends Panel {
                             IModel<String> defaultModel = new Model<String>(defaultValue);
                             if (currentField.getDataType().equalsIgnoreCase("textarea")) {
                                
-                                columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, defaultModel));
+                                columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, defaultModel, currentField));
                             }
                             else if(currentField.getDataType().equalsIgnoreCase("file")){
                               models.put(currentField.getName(),defaultModel);
@@ -532,10 +532,14 @@ public class NewDataFormPanel extends Panel {
     }
     private class TextareaFrag extends Fragment {
 
-        public TextareaFrag(String id, String markupId, MarkupContainer markupProvider, IModel model) {
+        public TextareaFrag(String id, String markupId, MarkupContainer markupProvider, IModel model, Field currentField) {
             super(id, markupId, markupProvider);
             // TODO Auto-generated constructor stub
-            add(new TextArea<String>("address", model));
+            TextArea<String> textArea =  new TextArea<String>("address", model);
+            add(textArea);
+            if (currentField.isRequired()) {
+              textArea.add(new AttributeAppender("class","required-field"));
+          }
         }
     }
 

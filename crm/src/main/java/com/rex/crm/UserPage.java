@@ -168,7 +168,6 @@ public class UserPage extends TemplatePage
           break;
           case UserRole.USER_ROLE_SALES:
           tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft,  userId);
-          System.out.println("dddddddddddddddddddddddddddddddddddddddddddddd                         " + userId);
           break;
         }
         

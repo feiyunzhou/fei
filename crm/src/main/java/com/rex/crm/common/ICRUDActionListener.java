@@ -7,5 +7,6 @@ public interface ICRUDActionListener {
     public void delete();
     public void resetPassword(int userId);
     public void doneBtn();
+    public void downLoadBtn();
 }
 
