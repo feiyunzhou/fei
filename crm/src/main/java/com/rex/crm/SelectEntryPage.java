@@ -122,6 +122,8 @@ public class SelectEntryPage extends WebPage {
                   }else if(tragetEntity.equalsIgnoreCase("coaching")){
                     String sql = assembleSearchingSQL(roleId, entity);
                     maplist  = DAOImpl.queryEntityRelationList(sql,posId,posId);
+                  }else if(tragetEntity.equalsIgnoreCase("userInfo")){
+                    maplist = DAOImpl.searchCRMUser(search_target);
                   }
                   Map dummy = Maps.newHashMap();
                   dummy.put("id", -1);
