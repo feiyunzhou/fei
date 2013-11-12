@@ -1,7 +1,5 @@
 package com.rex.crm.util;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -13,7 +11,6 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
-import com.rex.crm.common.NewDataFormPanel;
 import com.sun.mail.smtp.SMTPTransport;
 
 public class SendEmail {
@@ -24,7 +21,7 @@ public class SendEmail {
   	      Session sendMailSession = null;
           SMTPTransport transport = null;
           StringBuilder emailContent = new StringBuilder("Please click on this link to activate:");
-          ReadFileUtil readFileUtil = new ReadFileUtil();
+          CRMUtility readFileUtil = new CRMUtility();
           System.out.println();
           emailContent.append(readFileUtil.readFileAttribure("http"));
           emailContent.append(readFileUtil.readFileAttribure("url"));

@@ -14,9 +14,9 @@
       selector: "a[data-toggle=tooltip]"
     })
 
-    /*$('.tooltip-test').tooltip({
+    $('.tooltip-test').tooltip({
     	html:true
-    })*/
+    })
     $('.popover-test').popover()
 
     // popover demo

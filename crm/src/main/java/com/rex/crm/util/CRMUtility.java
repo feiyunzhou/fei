@@ -30,6 +30,7 @@ import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.common.CRUDPanel;
 import com.rex.crm.common.IFormatter;
+import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.common.CRUDPanel.Permissions;
 import com.rex.crm.userlog.LogInOut;
 import com.rex.crm.userlog.LogObj;
@@ -305,6 +306,15 @@ public class CRMUtility {
 	        logger.info("STAT."+type +"="+js);
 	    }
 
-	    
+	    public static String readFileAttribure(String fieldName){
+			 Properties systemPeroperties = new Properties();
+	     	 try {
+				systemPeroperties.load(NewDataFormPanel.class.getResourceAsStream("/crm.properties"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	     	return systemPeroperties.getProperty(fieldName);
+		}
 	    
 }

@@ -183,7 +183,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
             }
             
         });
-        BookmarkablePageLink user_settings_link = new BookmarkablePageLink("user_settings_link",UserInfoSettingPage.class);
+        BookmarkablePageLink user_settings_link = new BookmarkablePageLink("user_settings_link",UserDeatialInfo.class);
         add(user_settings_link);
         user_settings_link.add(new Label("loginName",user.getName()));
         
