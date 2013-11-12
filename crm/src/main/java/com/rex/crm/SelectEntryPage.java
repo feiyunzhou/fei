@@ -122,18 +122,28 @@ public class SelectEntryPage extends WebPage {
                     String sql = assembleSearchingSQL(roleId, entity);
                     if(roleId==1){
                       maplist  = DAOImpl.queryEntityRelationList(sql);
+                      Map dummy = Maps.newHashMap();
+                      dummy.put("id", -1);
+                      dummy.put("name", "无");
+                      maplist.add(dummy);
                     }else if(roleId == 2){
-                      maplist  = DAOImpl.queryEntityRelationList(sql,posId,posId);
+                      sql = entity.getSqlManagerCoaching();
+                      maplist  = DAOImpl.queryEntityRelationList(sql,posId);
                     }else if(roleId == 3){
                       maplist  = DAOImpl.queryEntityRelationList(sql,posId);
+                      Map dummy = Maps.newHashMap();
+                      dummy.put("id", -1);
+                      dummy.put("name", "无");
+                      maplist.add(dummy);
                     }
                   }else if(tragetEntity.equalsIgnoreCase("userInfo")){
                     maplist = DAOImpl.searchCRMUser(search_target);
+                    Map dummy = Maps.newHashMap();
+                    dummy.put("id", -1);
+                    dummy.put("name", "无");
+                    maplist.add(dummy);
                   }
-                  Map dummy = Maps.newHashMap();
-                  dummy.put("id", -1);
-                  dummy.put("name", "无");
-                  maplist.add(dummy);
+                  
                 }else if (relationTableName.equalsIgnoreCase("userInfo")) {
                     String sql = assembleSearchingSQL(roleId, entity);
                      maplist  = DAOImpl.queryEntityRelationList(sql,userId);

@@ -27,6 +27,12 @@ public class Entity implements Serializable{
     @Expose
     private String sqlManager; 
     @Expose
+    private String sqlCoaching;
+    @Expose
+    private String sqlAdminCoaching;  //for the admin to query all data
+    @Expose
+    private String sqlManagerCoaching; 
+    @Expose
     private String sqlManagerCalendar; 
     @Expose
     private String sqlCalendar; 
@@ -206,4 +212,34 @@ public class Entity implements Serializable{
     public String getSqlCalendar() {
       return sqlCalendar;
     }
+    public String getSqlCoaching()
+    {
+      return sqlCoaching;
+    }
+
+    public void setSqlCoaching(String sqlCoaching)
+    {
+      this.sqlCoaching = sqlCoaching;
+    }
+
+    public String getSqlAdminCoaching()
+    {
+      return sqlAdminCoaching;
+    }
+
+    public void setSqlAdminCoaching(String sqlAdminCoaching)
+    {
+      this.sqlAdminCoaching = sqlAdminCoaching;
+    }
+
+    public String getSqlManagerCoaching()
+    {
+      return sqlManagerCoaching;
+    }
+
+    public void setSqlManagerCoaching(String sqlManagerCoaching)
+    {
+      this.sqlManagerCoaching = sqlManagerCoaching;
+    }
+
 }

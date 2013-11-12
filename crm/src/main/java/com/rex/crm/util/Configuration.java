@@ -179,6 +179,9 @@ public class Configuration {
                 entity.setSqlManagerCalendar(sub.getString("sql-manager-calendar"));
                 entity.setSqlAdminCalendar(sub.getString("sql-admin-calendar"));
                 entity.setSqlCalendar(sub.getString("sql-calendar"));
+                entity.setSqlManagerCoaching(sub.getString("sql-manager-coaching"));
+                entity.setSqlAdminCoaching(sub.getString("sql-admin-coaching"));
+                entity.setSqlCoaching(sub.getString("sql-coaching"));
                 String filterField = sub.getString("filterField");
                 if(filterField !=null){
                     entity.setFilterField(filterField);

@@ -119,12 +119,19 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setId("navitem-data_exchange_teample");
         builder.put("data_exchange_teample", item);
         
+        item = new MenuItem();
+        item.setCaption("<i class=\"icon-book icon-large\"></i>报表");
+        item.setDestination(ReportPage.class);
+        item.setId("navitem-callreport");
+        builder.put("callreport", item);
         
         item = new MenuItem();
         item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
         item.setDestination(UserPage.class);
         item.setId("navitem-userInfo");
         builder.put("userInfo", item);
+        
+        
         
 //        item = new MenuItem();
 //        item.setCaption("<i class=\" icon-cog icon-large\"></i>账号管理");
