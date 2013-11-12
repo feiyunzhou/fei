@@ -16,7 +16,6 @@
 package com.rexen.crm.integration;
 
 import com.rexen.crm.beans.DataExchangeTeample;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
@@ -30,6 +29,7 @@ import javax.xml.bind.Unmarshaller;
  *
  * @author Ralf
  */
+
 public class DataExportDelegate
 {
 

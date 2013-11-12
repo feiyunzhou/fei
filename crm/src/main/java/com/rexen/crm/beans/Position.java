@@ -68,24 +68,24 @@ public class Position implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private Integer id;
+  private int id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
   @Column(name = "code")
   private String code;
   @Column(name = "reportto")
-  private Integer reportto;
+  private int reportto;
   @Column(name = "role")
-  private Integer role;
+  private int role;
   @Column(name = "pl1")
-  private Integer pl1;
+  private int pl1;
   @Column(name = "pl2")
-  private Integer pl2;
+  private int pl2;
   @Column(name = "pl4")
-  private Integer pl4;
+  private int pl4;
   @Column(name = "pl5")
-  private Integer pl5;
+  private int pl5;
   @Column(name = "city")
   private String city;
   @Column(name = "department")
@@ -101,7 +101,7 @@ public class Position implements Serializable
   @Column(name = "owner")
   private String owner;
   @Column(name = "level")
-  private Integer level;
+  private int level;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
   private List<ContactTeam> contactTeamList;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
@@ -111,23 +111,23 @@ public class Position implements Serializable
   {
   }
 
-  public Position(Integer id)
+  public Position(int id)
   {
     this.id = id;
   }
 
-  public Position(Integer id, String name)
+  public Position(int id, String name)
   {
     this.id = id;
     this.name = name;
   }
 
-  public Integer getId()
+  public int getId()
   {
     return id;
   }
 
-  public void setId(Integer id)
+  public void setId(int id)
   {
     this.id = id;
   }
@@ -152,62 +152,62 @@ public class Position implements Serializable
     this.code = code;
   }
 
-  public Integer getReportto()
+  public int getReportto()
   {
     return reportto;
   }
 
-  public void setReportto(Integer reportto)
+  public void setReportto(int reportto)
   {
     this.reportto = reportto;
   }
 
-  public Integer getRole()
+  public int getRole()
   {
     return role;
   }
 
-  public void setRole(Integer role)
+  public void setRole(int role)
   {
     this.role = role;
   }
 
-  public Integer getPl1()
+  public int getPl1()
   {
     return pl1;
   }
 
-  public void setPl1(Integer pl1)
+  public void setPl1(int pl1)
   {
     this.pl1 = pl1;
   }
 
-  public Integer getPl2()
+  public int getPl2()
   {
     return pl2;
   }
 
-  public void setPl2(Integer pl2)
+  public void setPl2(int pl2)
   {
     this.pl2 = pl2;
   }
 
-  public Integer getPl4()
+  public int getPl4()
   {
     return pl4;
   }
 
-  public void setPl4(Integer pl4)
+  public void setPl4(int pl4)
   {
     this.pl4 = pl4;
   }
 
-  public Integer getPl5()
+  public int getPl5()
   {
     return pl5;
   }
 
-  public void setPl5(Integer pl5)
+  public void setPl5(int pl5)
   {
     this.pl5 = pl5;
   }
@@ -272,12 +272,12 @@ public class Position implements Serializable
     this.owner = owner;
   }
 
-  public Integer getLevel()
+  public int getLevel()
   {
     return level;
   }
 
-  public void setLevel(Integer level)
+  public void setLevel(int level)
   {
     this.level = level;
   }
@@ -302,30 +302,6 @@ public class Position implements Serializable
   public void setAccountTeamList(List<AccountTeam> accountTeamList)
   {
     this.accountTeamList = accountTeamList;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object)
-  {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof Position))
-    {
-      return false;
-    }
-    Position other = (Position) object;
-    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-    {
-      return false;
-    }
-    return true;
   }
 
   @Override
