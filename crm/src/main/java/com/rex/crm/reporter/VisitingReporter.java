@@ -79,6 +79,8 @@ public class VisitingReporter {
         
         int rate_of_achieving = num_of_visiting_per_day*100/metric_of_visiting_per_day;
         
+        map.put("Chart4", rate_of_achieving);
+        
         if(rate_of_achieving<100){
             map.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+rate_of_achieving+"%</strong></span>");
         }else{
@@ -108,15 +110,18 @@ public class VisitingReporter {
         	}else{
         		rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).floatValue();
         	}
+               
         	int int_rate_of_achieving = (int)rate_of_achieving;
+                mapData.put("Chart1", int_rate_of_achieving);
+                
             if(int_rate_of_achieving<100){
                 mapData.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+int_rate_of_achieving+"%</strong></span>");
             }else{
                 mapData.put("rate_of_achieving", int_rate_of_achieving+"%");
             }
-            
+             
         }
-
+        
         return dataList;
         
     }
@@ -146,6 +151,7 @@ public class VisitingReporter {
         		rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).intValue();
             //int int_rate_of_achieving = (int)rate_of_achieving;
         	}
+                mapData.put("Chart2b",rate_of_achieving);
             if(rate_of_achieving<100){
                 mapData.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+rate_of_achieving+"%</strong></span>");
             }else{
@@ -158,9 +164,11 @@ public class VisitingReporter {
         		rate_of_visiting_cover = ((Number)mapData.get("rate_of_visiting_cover")).intValue();
             //int int_rate_of_achieving = (int)rate_of_achieving;
         	}
+            mapData.put("Chart2a",rate_of_visiting_cover);
             //int rate_of_visiting_cover = ((Number)mapData.get("rate_of_visiting_cover")).intValue();
             mapData.put("rate_of_visiting_cover", rate_of_visiting_cover+"%");
         }
+        
         return dataList;        
     }
     
@@ -186,7 +194,7 @@ public class VisitingReporter {
             int rate_of_achieving = ((Number)mapData.get("rate_of_achieving")).intValue();
             //int int_rate_of_achieving = (int)rate_of_achieving;
            // mapData.put("rate_of_achieving", rate_of_achieving+"%");
-            
+            mapData.put("Chart3", rate_of_achieving);
             if(rate_of_achieving<100){
                 mapData.put("rate_of_achieving", "<span style=\"color:#F37E7E\"><strong>"+rate_of_achieving+"%</strong></span>");
             }else{

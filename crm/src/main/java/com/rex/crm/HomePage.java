@@ -1,32 +1,20 @@
 package com.rex.crm;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.list.AbstractItem;
-import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import com.google.common.collect.Maps;
-import com.rex.crm.common.CalendarPanel;
-import com.rex.crm.common.TeamManPanel;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
-import com.rex.crm.common.EntityDetailPanel;
-import com.rex.crm.common.FilterPanel;
-import com.rex.crm.common.NewDataFormPanel;
-import com.rex.crm.common.Relation;
-import com.rex.crm.common.RelationDataPanel;
-import com.rex.crm.common.TableDataPanel;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.reporter.ReportingTablePanel;
 import com.rex.crm.reporter.VisitingReporter;
@@ -154,5 +142,81 @@ public class HomePage extends TemplatePage {
         }
         
         
+        
+        IModel<Integer> textModel1 = new Model<>(0);
+        try
+        {
+            textModel1 = new Model<>(Integer.parseInt(visitingFreq.get(0).get("Chart1").toString()));
+        }
+        catch (Exception e)
+        {
+            System.out.println("无数据");
+        }
+        finally
+        {
+            add(new TextField("data001").add(new AttributeModifier("value", textModel1)));
+        }
+        
+        
+//        IModel<Integer> textModel2a = new Model<>(0);
+//        try
+//        {
+//            textModel2a = new Model<>(Integer.parseInt(visitingCoverList.get(0).get("Chart2a").toString()));
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println("无数据");
+//        }
+//        finally
+//        {
+//            add(new TextField("data002a").add(new AttributeModifier("value", textModel2a)));
+//        }
+        
+        
+        IModel<Integer> textModel2b = new Model<>(0);
+        try
+        {
+            textModel2b = new Model<>(Integer.parseInt(visitingCoverList.get(0).get("Chart2b").toString()));
+        }
+        catch (Exception e)
+        {
+            System.out.println("无数据");
+        }
+        finally
+        {
+            add(new TextField("data002b").add(new AttributeModifier("value", textModel2b)));
+        }
+
+        
+        IModel<Integer> textModel3 = new Model<>(0);
+        try
+        {
+             textModel3 = new Model<>(Integer.parseInt(workingdays.get(0).get("Chart3").toString()));
+        }
+        catch (Exception e)
+        {
+            System.out.println("无数据");
+        }
+        finally
+        {
+            add(new TextField("data003").add(new AttributeModifier("value", textModel3)));
+        }
+        
+        
+        IModel<Integer> textModel4 = new Model<>(0);
+        try
+        {
+             textModel4 = new Model<>(Integer.parseInt(visitingPerDay.get(0).get("Chart4").toString()));
+        }
+        catch (Exception e)
+        {
+            System.out.println("无数据");
+        }
+        finally
+        {
+            add(new TextField("data004").add(new AttributeModifier("value", textModel4)));
+        }
+        
+
     }
 }

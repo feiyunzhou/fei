@@ -268,7 +268,10 @@ public class EditDataFormPanel extends Panel {
                             }
                 		} else {
                 			String value = (String) data.get(currentField.getName());
-                			columnitem.add(new RadioChoiceFragment("editdata", "radioChoiceFragment", this,value,currentField));
+                			IModel<String> textModel = new Model<String>(value);
+                			RadioChoiceFragment RadioChoice = new RadioChoiceFragment("editdata", "radioChoiceFragment", this,textModel,value,currentField);
+                			fieldNameToModel.put(currentField.getName(),textModel);
+                			columnitem.add(RadioChoice);
                 		}
                     } else {
                         if (j % 2 == 0) {
@@ -527,13 +530,12 @@ public class EditDataFormPanel extends Panel {
                 });
     }
     private class RadioChoiceFragment extends Fragment{
-    	public RadioChoiceFragment(String id, String markupId,MarkupContainer markupProvider,String value,final Field currentField){
+    	public  RadioChoiceFragment(String id, String markupId,MarkupContainer markupProvider, IModel model,String value,final Field currentField){
     		super(id, markupId, markupProvider);
-    		Model visibleModel = new Model();
 			List lsVisible = Arrays.asList(new String[]{"否", "是"});
-			RadioChoice<String> raVisible = new RadioChoice("radioChoiceinput", visibleModel, lsVisible).setSuffix(" "); 
+			RadioChoice<String> raVisible = new RadioChoice("radioChoiceinput", model, lsVisible).setSuffix(" "); 
 			raVisible.setModelValue(new String[]{"0", "1"});
-			visibleModel.setObject(value);
+			model.setObject(value);
 			add(raVisible);
     	}
     }
