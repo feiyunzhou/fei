@@ -1,17 +1,6 @@
 /*
- * Copyright 2013 Ralf.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package com.rexen.crm.beans;
 
@@ -33,8 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,34 +29,9 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "contact")
-@XmlRootElement
 @NamedQueries(
 {
-  @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c"),
-  @NamedQuery(name = "Contact.findById", query = "SELECT c FROM Contact c WHERE c.id = :id"),
-  @NamedQuery(name = "Contact.findByName", query = "SELECT c FROM Contact c WHERE c.name = :name"),
-  @NamedQuery(name = "Contact.findByDepartment", query = "SELECT c FROM Contact c WHERE c.department = :department"),
-  @NamedQuery(name = "Contact.findBySex", query = "SELECT c FROM Contact c WHERE c.sex = :sex"),
-  @NamedQuery(name = "Contact.findByNativePlace", query = "SELECT c FROM Contact c WHERE c.nativePlace = :nativePlace"),
-  @NamedQuery(name = "Contact.findByOfficeTel", query = "SELECT c FROM Contact c WHERE c.officeTel = :officeTel"),
-  @NamedQuery(name = "Contact.findByOfficeFax", query = "SELECT c FROM Contact c WHERE c.officeFax = :officeFax"),
-  @NamedQuery(name = "Contact.findByCellphone", query = "SELECT c FROM Contact c WHERE c.cellphone = :cellphone"),
-  @NamedQuery(name = "Contact.findByEmail", query = "SELECT c FROM Contact c WHERE c.email = :email"),
-  @NamedQuery(name = "Contact.findByStatus", query = "SELECT c FROM Contact c WHERE c.status = :status"),
-  @NamedQuery(name = "Contact.findByMarketClassification", query = "SELECT c FROM Contact c WHERE c.marketClassification = :marketClassification"),
-  @NamedQuery(name = "Contact.findByGrade", query = "SELECT c FROM Contact c WHERE c.grade = :grade"),
-  @NamedQuery(name = "Contact.findByProvince", query = "SELECT c FROM Contact c WHERE c.province = :province"),
-  @NamedQuery(name = "Contact.findByCity", query = "SELECT c FROM Contact c WHERE c.city = :city"),
-  @NamedQuery(name = "Contact.findByDistricts", query = "SELECT c FROM Contact c WHERE c.districts = :districts"),
-  @NamedQuery(name = "Contact.findByDuty", query = "SELECT c FROM Contact c WHERE c.duty = :duty"),
-  @NamedQuery(name = "Contact.findByJobTitle", query = "SELECT c FROM Contact c WHERE c.jobTitle = :jobTitle"),
-  @NamedQuery(name = "Contact.findByVisitingTarget", query = "SELECT c FROM Contact c WHERE c.visitingTarget = :visitingTarget"),
-  @NamedQuery(name = "Contact.findByProductTarget", query = "SELECT c FROM Contact c WHERE c.productTarget = :productTarget"),
-  @NamedQuery(name = "Contact.findByOwner", query = "SELECT c FROM Contact c WHERE c.owner = :owner"),
-  @NamedQuery(name = "Contact.findByWhenadded", query = "SELECT c FROM Contact c WHERE c.whenadded = :whenadded"),
-  @NamedQuery(name = "Contact.findByModifier", query = "SELECT c FROM Contact c WHERE c.modifier = :modifier"),
-  @NamedQuery(name = "Contact.findByModifyDatetime", query = "SELECT c FROM Contact c WHERE c.modifyDatetime = :modifyDatetime"),
-  @NamedQuery(name = "Contact.findByResponsiblePerson", query = "SELECT c FROM Contact c WHERE c.responsiblePerson = :responsiblePerson")
+  @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c")
 })
 public class Contact implements Serializable
 {
@@ -128,11 +90,15 @@ public class Contact implements Serializable
   private Date modifyDatetime;
   @Column(name = "responsible_person")
   private String responsiblePerson;
+  @Column(name = "contactCode")
+  private String contactCode;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
-  private List<ContactTeam> contactTeamList;
+  private List<Contactcrmuser> contactcrmuserList;
   @JoinColumn(name = "accountId", referencedColumnName = "id")
   @ManyToOne(optional = false)
   private Account account;
+  @OneToMany(mappedBy = "contact")
+  private List<Activity> activityList;
 
   public Contact()
   {
@@ -389,15 +355,24 @@ public class Contact implements Serializable
     this.responsiblePerson = responsiblePerson;
   }
 
-  @XmlTransient
-  public List<ContactTeam> getContactTeamList()
+  public String getContactCode()
   {
-    return contactTeamList;
+    return contactCode;
   }
 
-  public void setContactTeamList(List<ContactTeam> contactTeamList)
+  public void setContactCode(String contactCode)
   {
-    this.contactTeamList = contactTeamList;
+    this.contactCode = contactCode;
+  }
+
+  public List<Contactcrmuser> getContactcrmuserList()
+  {
+    return contactcrmuserList;
+  }
+
+  public void setContactcrmuserList(List<Contactcrmuser> contactcrmuserList)
+  {
+    this.contactcrmuserList = contactcrmuserList;
   }
 
   public Account getAccount()
@@ -410,10 +385,13 @@ public class Contact implements Serializable
     this.account = account;
   }
 
-  @Override
-  public String toString()
+  public List<Activity> getActivityList()
   {
-    return "com.rexen.crm.beans.Contact[ id=" + id + " ]";
+    return activityList;
   }
-  
+
+  public void setActivityList(List<Activity> activityList)
+  {
+    this.activityList = activityList;
+  }
 }

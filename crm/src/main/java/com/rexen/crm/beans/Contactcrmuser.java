@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -20,12 +22,12 @@ import javax.persistence.Table;
  * @author Ralf
  */
 @Entity
-@Table(name = "contact_market_classification_pl")
+@Table(name = "contactcrmuser")
 @NamedQueries(
 {
-  @NamedQuery(name = "ContactMarketClassificationPl.findAll", query = "SELECT c FROM ContactMarketClassificationPl c")
+  @NamedQuery(name = "Contactcrmuser.findAll", query = "SELECT c FROM Contactcrmuser c")
 })
-public class ContactMarketClassificationPl implements Serializable
+public class Contactcrmuser implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
@@ -33,14 +35,18 @@ public class ContactMarketClassificationPl implements Serializable
   @Basic(optional = false)
   @Column(name = "id")
   private int id;
-  @Column(name = "val")
-  private String val;
+  @JoinColumn(name = "contactId", referencedColumnName = "id")
+  @ManyToOne(optional = false)
+  private Contact contact;
+  @JoinColumn(name = "crmuserId", referencedColumnName = "id")
+  @ManyToOne(optional = false)
+  private Crmuser crmuser;
 
-  public ContactMarketClassificationPl()
+  public Contactcrmuser()
   {
   }
 
-  public ContactMarketClassificationPl(int id)
+  public Contactcrmuser(int id)
   {
     this.id = id;
   }
@@ -55,13 +61,23 @@ public class ContactMarketClassificationPl implements Serializable
     this.id = id;
   }
 
-  public String getVal()
+  public Contact getContact()
   {
-    return val;
+    return contact;
   }
 
-  public void setVal(String val)
+  public void setContact(Contact contact)
   {
-    this.val = val;
+    this.contact = contact;
+  }
+
+  public Crmuser getCrmuser()
+  {
+    return crmuser;
+  }
+
+  public void setCrmuser(Crmuser crmuser)
+  {
+    this.crmuser = crmuser;
   }
 }

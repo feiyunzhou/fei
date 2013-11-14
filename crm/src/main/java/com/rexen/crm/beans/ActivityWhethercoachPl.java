@@ -8,8 +8,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -20,27 +18,26 @@ import javax.persistence.Table;
  * @author Ralf
  */
 @Entity
-@Table(name = "contact_market_classification_pl")
+@Table(name = "activity_whethercoach_pl")
 @NamedQueries(
 {
-  @NamedQuery(name = "ContactMarketClassificationPl.findAll", query = "SELECT c FROM ContactMarketClassificationPl c")
+  @NamedQuery(name = "ActivityWhethercoachPl.findAll", query = "SELECT a FROM ActivityWhethercoachPl a")
 })
-public class ContactMarketClassificationPl implements Serializable
+public class ActivityWhethercoachPl implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
   private int id;
   @Column(name = "val")
   private String val;
 
-  public ContactMarketClassificationPl()
+  public ActivityWhethercoachPl()
   {
   }
 
-  public ContactMarketClassificationPl(int id)
+  public ActivityWhethercoachPl(int id)
   {
     this.id = id;
   }

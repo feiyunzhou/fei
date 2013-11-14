@@ -20,12 +20,12 @@ import javax.persistence.Table;
  * @author Ralf
  */
 @Entity
-@Table(name = "contact_market_classification_pl")
+@Table(name = "activity_status")
 @NamedQueries(
 {
-  @NamedQuery(name = "ContactMarketClassificationPl.findAll", query = "SELECT c FROM ContactMarketClassificationPl c")
+  @NamedQuery(name = "ActivityStatus.findAll", query = "SELECT a FROM ActivityStatus a")
 })
-public class ContactMarketClassificationPl implements Serializable
+public class ActivityStatus implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
@@ -36,11 +36,11 @@ public class ContactMarketClassificationPl implements Serializable
   @Column(name = "val")
   private String val;
 
-  public ContactMarketClassificationPl()
+  public ActivityStatus()
   {
   }
 
-  public ContactMarketClassificationPl(int id)
+  public ActivityStatus(int id)
   {
     this.id = id;
   }

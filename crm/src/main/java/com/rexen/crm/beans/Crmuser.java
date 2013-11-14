@@ -1,17 +1,6 @@
 /*
- * Copyright 2013 Ralf.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package com.rexen.crm.beans;
 
@@ -31,8 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,28 +27,11 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "crmuser")
-@XmlRootElement
 @NamedQueries(
 {
-  @NamedQuery(name = "Position.findAll", query = "SELECT p FROM Position p"),
-  @NamedQuery(name = "Position.findById", query = "SELECT p FROM Position p WHERE p.id = :id"),
-  @NamedQuery(name = "Position.findByName", query = "SELECT p FROM Position p WHERE p.name = :name"),
-  @NamedQuery(name = "Position.findByCode", query = "SELECT p FROM Position p WHERE p.code = :code"),
-  @NamedQuery(name = "Position.findByReportto", query = "SELECT p FROM Position p WHERE p.reportto = :reportto"),
-  @NamedQuery(name = "Position.findByRole", query = "SELECT p FROM Position p WHERE p.role = :role"),
-  @NamedQuery(name = "Position.findByPl1", query = "SELECT p FROM Position p WHERE p.pl1 = :pl1"),
-  @NamedQuery(name = "Position.findByPl2", query = "SELECT p FROM Position p WHERE p.pl2 = :pl2"),
-  @NamedQuery(name = "Position.findByPl4", query = "SELECT p FROM Position p WHERE p.pl4 = :pl4"),
-  @NamedQuery(name = "Position.findByPl5", query = "SELECT p FROM Position p WHERE p.pl5 = :pl5"),
-  @NamedQuery(name = "Position.findByCity", query = "SELECT p FROM Position p WHERE p.city = :city"),
-  @NamedQuery(name = "Position.findByDepartment", query = "SELECT p FROM Position p WHERE p.department = :department"),
-  @NamedQuery(name = "Position.findByWhenadded", query = "SELECT p FROM Position p WHERE p.whenadded = :whenadded"),
-  @NamedQuery(name = "Position.findByModifier", query = "SELECT p FROM Position p WHERE p.modifier = :modifier"),
-  @NamedQuery(name = "Position.findByModifyDatetime", query = "SELECT p FROM Position p WHERE p.modifyDatetime = :modifyDatetime"),
-  @NamedQuery(name = "Position.findByOwner", query = "SELECT p FROM Position p WHERE p.owner = :owner"),
-  @NamedQuery(name = "Position.findByLevel", query = "SELECT p FROM Position p WHERE p.level = :level")
+  @NamedQuery(name = "Crmuser.findAll", query = "SELECT c FROM Crmuser c")
 })
-public class Position implements Serializable
+public class Crmuser implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
@@ -102,21 +72,25 @@ public class Position implements Serializable
   private String owner;
   @Column(name = "level")
   private int level;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
-  private List<ContactTeam> contactTeamList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
-  private List<AccountTeam> accountTeamList;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuser")
+  private List<Activitycrmuser> activitycrmuserList;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuser")
+  private List<Contactcrmuser> contactcrmuserList;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuser")
+  private List<Activity> activityList;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuser")
+  private List<Accountcrmuser> accountcrmuserList;
 
-  public Position()
+  public Crmuser()
   {
   }
 
-  public Position(int id)
+  public Crmuser(int id)
   {
     this.id = id;
   }
 
-  public Position(int id, String name)
+  public Crmuser(int id, String name)
   {
     this.id = id;
     this.name = name;
@@ -282,32 +256,43 @@ public class Position implements Serializable
     this.level = level;
   }
 
-  @XmlTransient
-  public List<ContactTeam> getContactTeamList()
+  public List<Activitycrmuser> getActivitycrmuserList()
   {
-    return contactTeamList;
+    return activitycrmuserList;
   }
 
-  public void setContactTeamList(List<ContactTeam> contactTeamList)
+  public void setActivitycrmuserList(List<Activitycrmuser> activitycrmuserList)
   {
-    this.contactTeamList = contactTeamList;
+    this.activitycrmuserList = activitycrmuserList;
   }
 
-  @XmlTransient
-  public List<AccountTeam> getAccountTeamList()
+  public List<Contactcrmuser> getContactcrmuserList()
   {
-    return accountTeamList;
+    return contactcrmuserList;
   }
 
-  public void setAccountTeamList(List<AccountTeam> accountTeamList)
+  public void setContactcrmuserList(List<Contactcrmuser> contactcrmuserList)
   {
-    this.accountTeamList = accountTeamList;
+    this.contactcrmuserList = contactcrmuserList;
   }
 
-  @Override
-  public String toString()
+  public List<Activity> getActivityList()
   {
-    return "com.rexen.crm.beans.Position[ id=" + id + " ]";
+    return activityList;
   }
-  
+
+  public void setActivityList(List<Activity> activityList)
+  {
+    this.activityList = activityList;
+  }
+
+  public List<Accountcrmuser> getAccountcrmuserList()
+  {
+    return accountcrmuserList;
+  }
+
+  public void setAccountcrmuserList(List<Accountcrmuser> accountcrmuserList)
+  {
+    this.accountcrmuserList = accountcrmuserList;
+  }
 }

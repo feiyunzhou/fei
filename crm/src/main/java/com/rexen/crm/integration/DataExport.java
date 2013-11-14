@@ -42,7 +42,7 @@ public class DataExport
 
     config = (Configuration) unmarshaller.unmarshal(file);
 
-    dao = new DataAccessObject("crm_mysql");
+    dao = new DataAccessObject(config.getDatabase());
   }
 
   public DataExport(Configuration config, DataAccessObject dao) throws JAXBException
@@ -56,7 +56,7 @@ public class DataExport
   {
     Object example = null;
 
-    String class_name = "com.rexen.crm.beans." + config.getEntityName();
+    String class_name = "com.rexen.crm.bean." + config.getEntityName();
     Class c = Class.forName(class_name);
     example = c.newInstance();
 
@@ -65,7 +65,6 @@ public class DataExport
     if (data != null && data.length > 0)
     {
       ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-      ByteArrayOutputStream output = new ByteArrayOutputStream();
 
       CsvWriter csv = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
 
@@ -85,7 +84,9 @@ public class DataExport
 
       csv.flush();
 
-      ZipOutputStream zip_output_stream = new ZipOutputStream(output);
+      FileOutputStream file_output_stream = new FileOutputStream(config.getEntityName() + ".zip");
+
+      ZipOutputStream zip_output_stream = new ZipOutputStream(file_output_stream);
       zip_output_stream.setLevel(9);
       ZipEntry zip_entry = new ZipEntry(config.getEntityName() + ".csv");
 
@@ -96,7 +97,10 @@ public class DataExport
       zip_output_stream.flush();
       zip_output_stream.close();
 
-      return output.toByteArray();
+      file_output_stream.flush();
+      file_output_stream.close();
+
+      return buffer.toByteArray();
     }
 
     return null;
@@ -129,7 +133,6 @@ public class DataExport
         {
           case "String":
           {
-            System.out.println("cast " + field.getFieldName());
             buffer.add((String) value);
             break;
           }
@@ -194,6 +197,57 @@ public class DataExport
             }
             break;
           }
+          case "Lookup":
+          {
+            try
+            {
+              int id = ((Integer) value);
+
+              Class c = Class.forName("com.rexen.crm.bean." + field.getLookupEntityName());
+              Object example = c.newInstance();
+
+              String setter_name = "set" + field.getTargetFieldName();
+              Method setter = getMethod(c, setter_name);
+              setter.invoke(example, new Object[]
+              {
+                id
+              });
+
+              example = dao.find(example);
+
+              if (example != null)
+              {
+                String getter_name = "get" + field.getLookupFieldName();
+                Method getter = c.getMethod(getter_name, new Class[]
+                {
+                });
+                String lookup_value = (String) getter.invoke(example, new Object[]
+                {
+                });
+
+                if (lookup_value != null)
+                {
+                  buffer.add(lookup_value);
+                }
+                else
+                {
+                  buffer.add("");
+                }
+              }
+              else
+              {
+                buffer.add("");
+              }
+
+            }
+            catch (Exception e)
+            {
+              System.out.println("error: " + field.getColumnName() + ", " + field.getTargetFieldName() + ", " + field.getLookupEntityName() + ", " + field.getLookupFieldName());
+              e.printStackTrace();
+              buffer.add("");
+            }
+
+          }
         }
       }
       else
@@ -209,5 +263,17 @@ public class DataExport
   {
     DataExport exporter = new DataExport(args[0]);
     exporter.export();
+  }
+
+  public Method getMethod(Class c, String methodName)
+  {
+    HashMap<String, Method> methods = new HashMap<>();
+
+    for (Method m : c.getMethods())
+    {
+      methods.put(m.getName(), m);
+    }
+
+    return methods.get(methodName);
   }
 }
