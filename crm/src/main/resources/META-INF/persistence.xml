@@ -17,8 +17,20 @@
     <class>com.rexen.crm.beans.AccountPl6</class>
     <class>com.rexen.crm.beans.AccountPointPl</class>
     <class>com.rexen.crm.beans.AccountStatusPl</class>
-    <class>com.rexen.crm.beans.AccountTeam</class>
     <class>com.rexen.crm.beans.AccountTypePl</class>
+    <class>com.rexen.crm.beans.Accountcrmuser</class>
+    <class>com.rexen.crm.beans.Activity</class>
+    <class>com.rexen.crm.beans.ActivityActivityTypesPl</class>
+    <class>com.rexen.crm.beans.ActivityEventTypePl</class>
+    <class>com.rexen.crm.beans.ActivityFeatureProductPl</class>
+    <class>com.rexen.crm.beans.ActivityStatus</class>
+    <class>com.rexen.crm.beans.ActivityStatusPl</class>
+    <class>com.rexen.crm.beans.ActivityTypes</class>
+    <class>com.rexen.crm.beans.ActivityVisitingPurposePl</class>
+    <class>com.rexen.crm.beans.ActivityWhethercoachPl</class>
+    <class>com.rexen.crm.beans.Activitycrmuser</class>
+    <class>com.rexen.crm.beans.CallExport</class>
+    <class>com.rexen.crm.beans.City</class>
     <class>com.rexen.crm.beans.Contact</class>
     <class>com.rexen.crm.beans.ContactDepartmentPl</class>
     <class>com.rexen.crm.beans.ContactDutyPl</class>
@@ -33,13 +45,17 @@
     <class>com.rexen.crm.beans.ContactPl5</class>
     <class>com.rexen.crm.beans.ContactPl6</class>
     <class>com.rexen.crm.beans.ContactStatusPl</class>
-    <class>com.rexen.crm.beans.ContactTeam</class>
+    <class>com.rexen.crm.beans.Contactcrmuser</class>
+    <class>com.rexen.crm.beans.Crmuser</class>
+    <class>com.rexen.crm.beans.CrmuserActivited</class>
+    <class>com.rexen.crm.beans.CrmuserPl1</class>
+    <class>com.rexen.crm.beans.CrmuserPl2</class>
     <class>com.rexen.crm.beans.DataExchangeOperation</class>
     <class>com.rexen.crm.beans.DataExchangeStatus</class>
     <class>com.rexen.crm.beans.DataExchangeTeample</class>
-    <class>com.rexen.crm.beans.Position</class>
+    <class>com.rexen.crm.beans.Province</class>
     <class>com.rexen.crm.beans.RecordType</class>
-    <class>com.rexen.crm.beans.CallExport</class>
+    <class>com.rexen.crm.beans.Userinfo</class>
     <shared-cache-mode>ALL</shared-cache-mode>
     <validation-mode>NONE</validation-mode>
     <properties>

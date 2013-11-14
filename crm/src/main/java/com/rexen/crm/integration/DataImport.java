@@ -39,7 +39,7 @@ public class DataImport
 
     config = (Configuration) unmarshaller.unmarshal(file);
 
-    dao = new DataAccessObject("crm_mysql");
+    dao = new DataAccessObject(config.getDatabase());
   }
 
   public void load() throws IOException, Exception
@@ -90,16 +90,9 @@ public class DataImport
   {
     Object o = null;
 
-    String class_name = "com.rexen.crm.beans." + config.getEntityName();
+    String class_name = "com.rexen.crm.bean." + config.getEntityName();
     Class c = Class.forName(class_name);
     o = c.newInstance();
-
-    HashMap<String, Method> methods = new HashMap<>();
-
-    for (Method m : o.getClass().getMethods())
-    {
-      methods.put(m.getName(), m);
-    }
 
     for (FieldConfiguration field : config.getFields())
     {
@@ -110,7 +103,7 @@ public class DataImport
         s = s.trim();
       }
 
-      Method setter = methods.get("set" + field.getFieldName());
+      Method setter = queryMethod(c, "set" + field.getFieldName());
 
       switch (field.getDataType())
       {
@@ -186,11 +179,9 @@ public class DataImport
               Object example = c.newInstance();
 
               String method_name = "set" + field.getLookupFieldName();
-              Method method = c.getMethod(method_name, new Class[]
-              {
-                String.class
-              });
-
+              
+              Method method = queryMethod(c, method_name);
+              
               method.invoke(example, new Object[]
               {
                 s
@@ -201,9 +192,9 @@ public class DataImport
               if (result != null)
               {
                 method_name = "get" + field.getTargetFieldName();
-                method = c.getMethod(method_name, new Class[]
-                {
-                });
+                
+                method = queryMethod(c, method_name);
+                
                 int lookup_value = (int) method.invoke(result, new Object[]
                 {
                 });
@@ -236,4 +227,16 @@ public class DataImport
     DataImport loader = new DataImport(args[0]);
     loader.load();
   }
+  
+  public Method queryMethod(Class c, String methodName)
+  {
+    HashMap<String, Method> methods = new HashMap<>();
+
+    for (Method m : c.getMethods())
+    {
+      methods.put(m.getName().toLowerCase(), m);
+    }
+
+    return methods.get(methodName.toLowerCase());
+  }  
 }

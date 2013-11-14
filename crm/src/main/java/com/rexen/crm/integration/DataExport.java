@@ -110,18 +110,11 @@ public class DataExport
   {
     ArrayList<String> buffer = new ArrayList<>();
 
-    HashMap<String, Method> methods = new HashMap<>();
-
-    for (Method m : o.getClass().getMethods())
-    {
-      methods.put(m.getName(), m);
-    }
-
     for (FieldConfiguration field : config.getFields())
     {
       String method_name = "get" + field.getFieldName();
 
-      Method m = methods.get(method_name);
+      Method m = queryMethod(o.getClass(), method_name);
 
       Object value = m.invoke(o, new Object[]
       {
@@ -203,11 +196,14 @@ public class DataExport
             {
               int id = ((Integer) value);
 
+              //System.out.println(field.getTargetFieldName())
+
               Class c = Class.forName("com.rexen.crm.bean." + field.getLookupEntityName());
               Object example = c.newInstance();
-
+              
               String setter_name = "set" + field.getTargetFieldName();
-              Method setter = getMethod(c, setter_name);
+              Method setter = queryMethod(c, setter_name);
+
               setter.invoke(example, new Object[]
               {
                 id
@@ -218,9 +214,9 @@ public class DataExport
               if (example != null)
               {
                 String getter_name = "get" + field.getLookupFieldName();
-                Method getter = c.getMethod(getter_name, new Class[]
-                {
-                });
+                
+                Method getter = queryMethod(c, getter_name);
+                
                 String lookup_value = (String) getter.invoke(example, new Object[]
                 {
                 });
@@ -246,7 +242,6 @@ public class DataExport
               e.printStackTrace();
               buffer.add("");
             }
-
           }
         }
       }
@@ -265,15 +260,15 @@ public class DataExport
     exporter.export();
   }
 
-  public Method getMethod(Class c, String methodName)
+  public Method queryMethod(Class c, String methodName)
   {
     HashMap<String, Method> methods = new HashMap<>();
 
     for (Method m : c.getMethods())
     {
-      methods.put(m.getName(), m);
+      methods.put(m.getName().toLowerCase(), m);
     }
 
-    return methods.get(methodName);
+    return methods.get(methodName.toLowerCase());
   }
 }
