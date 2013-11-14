@@ -100,15 +100,33 @@ public class Activity implements Serializable
   private int summary;
   @Column(name = "whetherCoach")
   private int whetherCoach;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
-  private List<Activitycrmuser> activitycrmuserList;
-  @JoinColumn(name = "crmuserId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Crmuser crmuser;
-  @JoinColumn(name = "contactId", referencedColumnName = "id")
-  @ManyToOne
-  private Contact contact;
 
+  @Column(name = "crmuserId")
+  private int crmuserId;
+
+  public int getCrmuserId()
+  {
+    return crmuserId;
+  }
+
+  public void setCrmuserId(int crmuserId)
+  {
+    this.crmuserId = crmuserId;
+  }
+
+  public int getContactId()
+  {
+    return contactId;
+  }
+
+  public void setContactId(int contactId)
+  {
+    this.contactId = contactId;
+  }
+  @Column(name = "contactId")
+  private int contactId;
+  
+  
   public Activity()
   {
   }
@@ -403,35 +421,5 @@ public class Activity implements Serializable
   public void setWhetherCoach(int whetherCoach)
   {
     this.whetherCoach = whetherCoach;
-  }
-
-  public List<Activitycrmuser> getActivitycrmuserList()
-  {
-    return activitycrmuserList;
-  }
-
-  public void setActivitycrmuserList(List<Activitycrmuser> activitycrmuserList)
-  {
-    this.activitycrmuserList = activitycrmuserList;
-  }
-
-  public Crmuser getCrmuser()
-  {
-    return crmuser;
-  }
-
-  public void setCrmuser(Crmuser crmuser)
-  {
-    this.crmuser = crmuser;
-  }
-
-  public Contact getContact()
-  {
-    return contact;
-  }
-
-  public void setContact(Contact contact)
-  {
-    this.contact = contact;
   }
 }

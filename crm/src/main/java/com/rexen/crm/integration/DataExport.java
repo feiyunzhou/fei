@@ -262,6 +262,8 @@ public class DataExport
 
   public Method queryMethod(Class c, String methodName)
   {
+    
+    System.out.println("query method: " + c.getName() + "." + methodName);
     HashMap<String, Method> methods = new HashMap<>();
 
     for (Method m : c.getMethods())

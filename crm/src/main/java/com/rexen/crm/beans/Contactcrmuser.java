@@ -35,12 +35,31 @@ public class Contactcrmuser implements Serializable
   @Basic(optional = false)
   @Column(name = "id")
   private int id;
-  @JoinColumn(name = "contactId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Contact contact;
-  @JoinColumn(name = "crmuserId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Crmuser crmuser;
+
+  @Column(name = "contactId")
+  private int contactId;
+  @Column(name = "crmuserId")
+  private int crmuserId;
+
+  public int getContactId()
+  {
+    return contactId;
+  }
+
+  public void setContactId(int contactId)
+  {
+    this.contactId = contactId;
+  }
+
+  public int getCrmuserId()
+  {
+    return crmuserId;
+  }
+
+  public void setCrmuserId(int crmuserId)
+  {
+    this.crmuserId = crmuserId;
+  }
 
   public Contactcrmuser()
   {
@@ -59,25 +78,5 @@ public class Contactcrmuser implements Serializable
   public void setId(int id)
   {
     this.id = id;
-  }
-
-  public Contact getContact()
-  {
-    return contact;
-  }
-
-  public void setContact(Contact contact)
-  {
-    this.contact = contact;
-  }
-
-  public Crmuser getCrmuser()
-  {
-    return crmuser;
-  }
-
-  public void setCrmuser(Crmuser crmuser)
-  {
-    this.crmuser = crmuser;
   }
 }

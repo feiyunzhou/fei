@@ -72,14 +72,6 @@ public class Crmuser implements Serializable
   private String owner;
   @Column(name = "level")
   private int level;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuser")
-  private List<Activitycrmuser> activitycrmuserList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuser")
-  private List<Contactcrmuser> contactcrmuserList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuser")
-  private List<Activity> activityList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "crmuser")
-  private List<Accountcrmuser> accountcrmuserList;
 
   public Crmuser()
   {
@@ -254,45 +246,5 @@ public class Crmuser implements Serializable
   public void setLevel(int level)
   {
     this.level = level;
-  }
-
-  public List<Activitycrmuser> getActivitycrmuserList()
-  {
-    return activitycrmuserList;
-  }
-
-  public void setActivitycrmuserList(List<Activitycrmuser> activitycrmuserList)
-  {
-    this.activitycrmuserList = activitycrmuserList;
-  }
-
-  public List<Contactcrmuser> getContactcrmuserList()
-  {
-    return contactcrmuserList;
-  }
-
-  public void setContactcrmuserList(List<Contactcrmuser> contactcrmuserList)
-  {
-    this.contactcrmuserList = contactcrmuserList;
-  }
-
-  public List<Activity> getActivityList()
-  {
-    return activityList;
-  }
-
-  public void setActivityList(List<Activity> activityList)
-  {
-    this.activityList = activityList;
-  }
-
-  public List<Accountcrmuser> getAccountcrmuserList()
-  {
-    return accountcrmuserList;
-  }
-
-  public void setAccountcrmuserList(List<Accountcrmuser> accountcrmuserList)
-  {
-    this.accountcrmuserList = accountcrmuserList;
   }
 }

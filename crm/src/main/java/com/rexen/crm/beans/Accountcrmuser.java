@@ -35,13 +35,33 @@ public class Accountcrmuser implements Serializable
   @Basic(optional = false)
   @Column(name = "id")
   private int id;
-  @JoinColumn(name = "crmuserId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Crmuser crmuser;
-  @JoinColumn(name = "accountId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Account account;
 
+  @Column(name = "crmuserId")
+  private int crmuserId;
+  @Column(name = "accountId")
+  private int accountId;
+
+  public int getCrmuserId()
+  {
+    return crmuserId;
+  }
+
+  public void setCrmuserId(int crmuserId)
+  {
+    this.crmuserId = crmuserId;
+  }
+
+  public int getAccountId()
+  {
+    return accountId;
+  }
+
+  public void setAccountId(int accountId)
+  {
+    this.accountId = accountId;
+  }
+  
+  
   public Accountcrmuser()
   {
   }
@@ -59,25 +79,5 @@ public class Accountcrmuser implements Serializable
   public void setId(int id)
   {
     this.id = id;
-  }
-
-  public Crmuser getCrmuser()
-  {
-    return crmuser;
-  }
-
-  public void setCrmuser(Crmuser crmuser)
-  {
-    this.crmuser = crmuser;
-  }
-
-  public Account getAccount()
-  {
-    return account;
-  }
-
-  public void setAccount(Account account)
-  {
-    this.account = account;
   }
 }

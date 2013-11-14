@@ -41,6 +41,20 @@ public class DataImport
 
     dao = new DataAccessObject(config.getDatabase());
   }
+  
+    public DataImport(String configuration, String filePath) throws JAXBException
+  {
+    File file = new File(configuration);
+    JAXBContext context = JAXBContext.newInstance(Configuration.class);
+
+    Unmarshaller unmarshaller = context.createUnmarshaller();
+
+    config = (Configuration) unmarshaller.unmarshal(file);
+    config.setFileName(filePath);
+
+    dao = new DataAccessObject(config.getDatabase());
+  }
+
 
   public void load() throws IOException, Exception
   {
@@ -90,7 +104,7 @@ public class DataImport
   {
     Object o = null;
 
-    String class_name = "com.rexen.crm.bean." + config.getEntityName();
+    String class_name = "com.rexen.crm.beans." + config.getEntityName();
     Class c = Class.forName(class_name);
     o = c.newInstance();
 

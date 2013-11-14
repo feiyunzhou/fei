@@ -50,9 +50,6 @@ public class City implements Serializable
   private String val;
   @Column(name = "externalId")
   private String externalId;
-  @JoinColumn(name = "parentId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Province province;
 
   public City()
   {
@@ -91,15 +88,5 @@ public class City implements Serializable
   public void setExternalId(String externalId)
   {
     this.externalId = externalId;
-  }
-
-  public Province getProvince()
-  {
-    return province;
-  }
-
-  public void setProvince(Province province)
-  {
-    this.province = province;
   }
 }

@@ -51,8 +51,6 @@ public class Province implements Serializable
   private String val;
   @Column(name = "externalId")
   private String externalId;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "province")
-  private List<City> cityList;
 
   public Province()
   {
@@ -91,15 +89,5 @@ public class Province implements Serializable
   public void setExternalId(String externalId)
   {
     this.externalId = externalId;
-  }
-
-  public List<City> getCityList()
-  {
-    return cityList;
-  }
-
-  public void setCityList(List<City> cityList)
-  {
-    this.cityList = cityList;
   }
 }

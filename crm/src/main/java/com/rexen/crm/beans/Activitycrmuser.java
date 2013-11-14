@@ -24,23 +24,42 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "activitycrmuser")
 @NamedQueries(
-{
+  {
   @NamedQuery(name = "Activitycrmuser.findAll", query = "SELECT a FROM Activitycrmuser a")
 })
 public class Activitycrmuser implements Serializable
 {
+
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
   private int id;
-  @JoinColumn(name = "activityId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Activity activity;
-  @JoinColumn(name = "crmuserId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Crmuser crmuser;
+  @Column(name = "activityId")
+  private int activityId;
+  @Column(name = "crmuserId")
+  private int crmuserId;
+
+  public int getActivityId()
+  {
+    return activityId;
+  }
+
+  public void setActivityId(int activityId)
+  {
+    this.activityId = activityId;
+  }
+
+  public int getCrmuserId()
+  {
+    return crmuserId;
+  }
+
+  public void setCrmuserId(int crmuserId)
+  {
+    this.crmuserId = crmuserId;
+  }
 
   public Activitycrmuser()
   {
@@ -59,25 +78,5 @@ public class Activitycrmuser implements Serializable
   public void setId(int id)
   {
     this.id = id;
-  }
-
-  public Activity getActivity()
-  {
-    return activity;
-  }
-
-  public void setActivity(Activity activity)
-  {
-    this.activity = activity;
-  }
-
-  public Crmuser getCrmuser()
-  {
-    return crmuser;
-  }
-
-  public void setCrmuser(Crmuser crmuser)
-  {
-    this.crmuser = crmuser;
   }
 }
