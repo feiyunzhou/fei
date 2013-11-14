@@ -34,7 +34,7 @@ public class ActivitedUser extends WebPage{
 		long createTime = Long.parseLong(strs[0]);
 		int userID =Integer.parseInt(strs[1]);
 		UserInfo userInfo = DAOImpl.getUserByActivation(userID,createTime);
-		if(userInfo.getIsActivited()==2){
+		if(userInfo.IsActivited()==0){
 			initPage(userID,createTime);
 		}else{
 			setResponsePage(new ErrorPromptPage());

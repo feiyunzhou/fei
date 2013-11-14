@@ -35,6 +35,7 @@ public class UserInfo {
     private int level;
     private String position_code;
     private int positionId;
+    private String office_tel;
     public int getPositionId()
   {
     return positionId;
@@ -140,7 +141,7 @@ public class UserInfo {
 		this.photo = photo;
 	}
 
-	public int getIsActivited() {
+	public int IsActivited() {
 		return isActivited;
 	}
 
@@ -276,7 +277,13 @@ public class UserInfo {
         public void setPosition_code(String position_code) {
             this.position_code = position_code;
         }
-
+		public String getOffice_tel() {
+			return office_tel;
+		}
+		public void setOffice_tel(String office_tel) {
+			this.office_tel = office_tel;
+		}
+        
 		
 	
 }

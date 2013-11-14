@@ -82,10 +82,9 @@ public final class SignIn extends WebPage
         	}else{
         		//判断用户是否激活密码是否存在()
             	UserInfo user = DAOImpl.getUserByLoginName(getUsername());
-            	System.out.println("isActivited:"+user.getIsActivited());
             	if(null!=user){
             		if(user.getPl1()==1){
-            			if(user.getIsActivited()==1){
+            			if(user.IsActivited()==0){
                           	 // Get the error message from the properties file associated with the Component
                               String errmsg = getString("loginError", null, "此用户未激活!");
                               error(errmsg);
