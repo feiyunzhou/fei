@@ -55,11 +55,17 @@
     <class>com.rexen.crm.beans.DataExchangeTeample</class>
     <class>com.rexen.crm.beans.Province</class>
     <class>com.rexen.crm.beans.RecordType</class>
+    <class>com.rexen.crm.beans.RegionLevel1Pl</class>
+    <class>com.rexen.crm.beans.RegionLevel2Pl</class>
+    <class>com.rexen.crm.beans.Role</class>
+    <class>com.rexen.crm.beans.Score1Pl</class>
+    <class>com.rexen.crm.beans.Score2Pl</class>
+    <class>com.rexen.crm.beans.SexPl</class>
     <class>com.rexen.crm.beans.Userinfo</class>
     <shared-cache-mode>ALL</shared-cache-mode>
     <validation-mode>NONE</validation-mode>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.0.101:3306/crmdb?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/crmdb?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8"/>
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="crm"/>

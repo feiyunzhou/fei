@@ -115,11 +115,7 @@ public class Account implements Serializable
   private Date modifyDatetime;
   @Column(name = "responsible_person")
   private String responsiblePerson;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-  private List<Contact> contactList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-  private List<Accountcrmuser> accountcrmuserList;
-
+  
   public Account()
   {
   }
@@ -504,24 +500,4 @@ public class Account implements Serializable
   {
     this.responsiblePerson = responsiblePerson;
   }
-
-  public List<Contact> getContactList()
-  {
-    return contactList;
-  }
-
-  public void setContactList(List<Contact> contactList)
-  {
-    this.contactList = contactList;
-  }
-
-  public List<Accountcrmuser> getAccountcrmuserList()
-  {
-    return accountcrmuserList;
-  }
-
-  public void setAccountcrmuserList(List<Accountcrmuser> accountcrmuserList)
-  {
-    this.accountcrmuserList = accountcrmuserList;
-  }  
 }

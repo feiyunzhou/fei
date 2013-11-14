@@ -175,7 +175,7 @@ public class DataImport
           {
             try
             {
-              c = Class.forName("com.rexen.crm.bean." + field.getLookupEntityName());
+              c = Class.forName("com.rexen.crm.beans." + field.getLookupEntityName());
               Object example = c.newInstance();
 
               String method_name = "set" + field.getLookupFieldName();

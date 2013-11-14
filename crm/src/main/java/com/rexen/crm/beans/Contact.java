@@ -92,13 +92,18 @@ public class Contact implements Serializable
   private String responsiblePerson;
   @Column(name = "contactCode")
   private String contactCode;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
-  private List<Contactcrmuser> contactcrmuserList;
-  @JoinColumn(name = "accountId", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Account account;
-  @OneToMany(mappedBy = "contact")
-  private List<Activity> activityList;
+  @Column(name = "accountId")
+  private int accountId;
+
+  public int getAccountId()
+  {
+    return accountId;
+  }
+
+  public void setAccountId(int accountId)
+  {
+    this.accountId = accountId;
+  }
 
   public Contact()
   {
@@ -363,35 +368,5 @@ public class Contact implements Serializable
   public void setContactCode(String contactCode)
   {
     this.contactCode = contactCode;
-  }
-
-  public List<Contactcrmuser> getContactcrmuserList()
-  {
-    return contactcrmuserList;
-  }
-
-  public void setContactcrmuserList(List<Contactcrmuser> contactcrmuserList)
-  {
-    this.contactcrmuserList = contactcrmuserList;
-  }
-
-  public Account getAccount()
-  {
-    return account;
-  }
-
-  public void setAccount(Account account)
-  {
-    this.account = account;
-  }
-
-  public List<Activity> getActivityList()
-  {
-    return activityList;
-  }
-
-  public void setActivityList(List<Activity> activityList)
-  {
-    this.activityList = activityList;
   }
 }

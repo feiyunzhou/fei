@@ -56,7 +56,7 @@ public class DataExport
   {
     Object example = null;
 
-    String class_name = "com.rexen.crm.bean." + config.getEntityName();
+    String class_name = "com.rexen.crm.beans." + config.getEntityName();
     Class c = Class.forName(class_name);
     example = c.newInstance();
 
@@ -198,7 +198,7 @@ public class DataExport
 
               //System.out.println(field.getTargetFieldName())
 
-              Class c = Class.forName("com.rexen.crm.bean." + field.getLookupEntityName());
+              Class c = Class.forName("com.rexen.crm.beans." + field.getLookupEntityName());
               Object example = c.newInstance();
               
               String setter_name = "set" + field.getTargetFieldName();
