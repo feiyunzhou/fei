@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -31,6 +32,7 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -256,6 +258,18 @@ public class EditDataFormPanel extends Panel {
                             fieldNameToModel.put(fn, choiceModel);
                             columnitem.add(new RelationTableSearchFragment("editdata", "relationTableSearchFragment", this, currentField.getRelationTable(), schema.getName(), value, choiceModel, entityId));
                         }
+                    } else if (currentField.getDataType().equals("radio")){
+                		if (j % 2 == 0) {
+                            columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
+                            if (currentField.isRequired()) {
+                              columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                            }else{
+                              columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                            }
+                		} else {
+                			String value = (String) data.get(currentField.getName());
+                			columnitem.add(new RadioChoiceFragment("editdata", "radioChoiceFragment", this,value,currentField));
+                		}
                     } else {
                         if (j % 2 == 0) {
                             columnitem
@@ -512,7 +526,17 @@ public class EditDataFormPanel extends Panel {
                     
                 });
     }
-
+    private class RadioChoiceFragment extends Fragment{
+    	public RadioChoiceFragment(String id, String markupId,MarkupContainer markupProvider,String value,final Field currentField){
+    		super(id, markupId, markupProvider);
+    		Model visibleModel = new Model();
+			List lsVisible = Arrays.asList(new String[]{"否", "是"});
+			RadioChoice<String> raVisible = new RadioChoice("radioChoiceinput", visibleModel, lsVisible).setSuffix(" "); 
+			raVisible.setModelValue(new String[]{"0", "1"});
+			visibleModel.setObject(value);
+			add(raVisible);
+    	}
+    }
     private class Textarea extends Fragment {
 
         public Textarea(String id, String markupId, MarkupContainer markupProvider, IModel<String> value) {

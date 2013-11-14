@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -23,18 +25,24 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.Radio;
+import org.apache.wicket.markup.html.form.RadioChoice;
+import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.file.File;
 
@@ -64,8 +72,6 @@ public class NewDataFormPanel extends Panel {
     private Map<String, IModel> parentModels = Maps.newHashMap();
     private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
     private List<FileUploadField> fileFields = Lists.newArrayList();
-    
-    
     public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
         super(id);
         
@@ -216,6 +222,24 @@ public class NewDataFormPanel extends Panel {
                             }
 
                         }
+                    } else if (currentField.getDataType().equals("radio")){
+                		if (j % 2 == 0) {
+                            columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
+                            if (currentField.isRequired()) {
+                              columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
+                            }else{
+                              columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
+                            }
+                		} else {
+                			//new Radio("radio");
+                			Model visibleModel = new Model();
+                			List lsVisible = Arrays.asList(new String[]{"否", "是"});
+                			RadioChoice<String> raVisible = new RadioChoice("celldatafield", visibleModel, lsVisible).setSuffix(" "); 
+                			raVisible.setModelValue(new String[]{"0", "1"});
+                			visibleModel.setObject("否");
+                			models.put(currentField.getName(),visibleModel);
+                			columnitem.add(raVisible);
+                		}
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {
                           columnitem.add(new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold"), ";")));
@@ -336,7 +360,6 @@ public class NewDataFormPanel extends Panel {
                     }
                     
                     if (models.get(key).getObject() instanceof String) {
-	                    
                       if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
                        //if the filed has formatter, we guess the field saved in data base is in long 
                         Date date = new Date();
@@ -350,10 +373,9 @@ public class NewDataFormPanel extends Panel {
                         }
                           values.add(String.valueOf(date.getTime()));
                       
-                      }else{
-                          values.add("'" + (String) models.get(key).getObject()+ "'");
+                      }else {
+    	                	  values.add("'" + (String) models.get(key).getObject()+ "'");
                       }
-                      
                      
                     }else if(models.get(key).getObject() instanceof Choice){
                         values.add(String.valueOf(((Choice) models.get(key).getObject()).getId()));
