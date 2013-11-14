@@ -42,20 +42,14 @@ public class DataImport
     dao = new DataAccessObject(config.getDatabase());
   }
   
-    public DataImport(String configuration, String filePath) throws JAXBException
+    public DataImport(Configuration config, DataAccessObject dao) throws JAXBException
   {
-    File file = new File(configuration);
-    JAXBContext context = JAXBContext.newInstance(Configuration.class);
+    this.config = config;
 
-    Unmarshaller unmarshaller = context.createUnmarshaller();
-
-    config = (Configuration) unmarshaller.unmarshal(file);
-    config.setFileName(filePath);
-
-    dao = new DataAccessObject(config.getDatabase());
+    this.dao = dao;
   }
 
-
+  
   public void load() throws IOException, Exception
   {
     CsvReader reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
