@@ -172,7 +172,6 @@ public class ReportPage extends TemplatePage
         }
         
       }
-
     }
     add(new PageableTablePanel("datalist", entity, tdata, null));
 

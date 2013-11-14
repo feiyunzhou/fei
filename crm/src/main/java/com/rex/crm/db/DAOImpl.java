@@ -524,9 +524,9 @@ public class DAOImpl
         menulist.add("contact");
         menulist.add("activity");
         menulist.add("coaching");
-        menulist.add("callreport");
      if(roleId == 1){
        menulist.add("data_exchange_teample");
+       menulist.add("callreport");
      }
         menulist.add("crmuser");
 //    menulist.add("dealerAccount");

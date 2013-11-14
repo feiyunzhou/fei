@@ -114,7 +114,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setId("navitem-crmuser");
         builder.put("crmuser", item);
         item = new MenuItem();
-        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>数据交换模板");
+        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>模板");
         item.setDestination(DataManagement.class);
         item.setId("navitem-data_exchange_teample");
         builder.put("data_exchange_teample", item);

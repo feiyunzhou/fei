@@ -3539,13 +3539,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<entity>
 		<name>callreport</name>
 		<display>报表</display>
-		<sql>select * from call_export</sql>
-		<sql-admin>select * from call_export</sql-admin>
-		<sql-ent>select * from call_export</sql-ent>
+		<sql>select * from crmdb.call_export</sql>
+		<sql-admin>select * from crmdb.call_export</sql-admin>
+		<sql-ent>select * from crmdb.call_export</sql-ent>
 		<filterField></filterField>
 		<fields>
 			<field>
-				<name>Activity_id</name>
+				<name>id</name>
 				<display>活动Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
@@ -3674,7 +3674,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 			</field>
 			<field>
 				<name>position_role</name>
@@ -3732,7 +3732,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 			</field><field>
 				<name>Contact_duty</name>
 				<display>医生职称</display>

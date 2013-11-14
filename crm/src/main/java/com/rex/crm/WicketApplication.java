@@ -29,7 +29,7 @@ public class WicketApplication extends WebApplication
 	@Override
     public RuntimeConfigurationType getConfigurationType() {
         // TODO Auto-generated method stub
-        return RuntimeConfigurationType.DEVELOPMENT;
+        return RuntimeConfigurationType.DEPLOYMENT;
     }
 
     /**
