@@ -113,11 +113,18 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setDestination(PositionPage.class);
         item.setId("navitem-crmuser");
         builder.put("crmuser", item);
+       
+////        item = new MenuItem();
+////        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>模板");
+////        item.setDestination(DataManagement.class);
+////        item.setId("navitem-data_exchange_teample");
+////        builder.put("data_exchange_teample", item);
+//        
         item = new MenuItem();
-        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>模板");
-        item.setDestination(DataManagement.class);
-        item.setId("navitem-data_exchange_teample");
-        builder.put("data_exchange_teample", item);
+        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>数据传输");
+        item.setDestination(DataPage.class);
+        item.setId("navitem-DownLoadPage");
+        builder.put("DownLoadPage", item);
         
         item = new MenuItem();
         item.setCaption("<i class=\"icon-book icon-large\"></i>报表");

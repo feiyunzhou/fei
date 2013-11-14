@@ -55,18 +55,8 @@ public class UserDeatialInfo extends UserInfoSettingPage {
         Entity entity = entities.get("userInfo");
         String primaryKeyName = entity.getPrimaryKeyName();
         //get crmUser 
-        UserInfo user = DAOImpl.getUserInfoById(userId);
+        UserInfo user = DAOImpl.getUserInfoById(userId); 
 
-        //add and setting image and image style
-		/*if(null==user.getPhoto()){
-         Image image = new Image("userphoto","src/main/webapp/image/userDefaultImg.jpg");
-         }
-         WebMarkupContainer image = new WebMarkupContainer("userphoto");
-         image.add(new AttributeAppender("src","http://localhost:8080/crm/image/1.jpeg"));
-         //image.add(new AttributeAppender("src","http://localhost:8080/crm/"+user.getPhoto()));
-         add(image);
-         RepeatingView divRepeater = new RepeatingView("userRealtionInfo");
-         add(divRepeater);*/
         
         //add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
@@ -159,23 +149,6 @@ public class UserDeatialInfo extends UserInfoSettingPage {
             }
         }
         //add user photo
-		/*final FileUploadField fileUploadField =new FileUploadField("image");
-         Form imgForm = new Form("imgForm"){
-         @Override
-         protected void onSubmit() {
-         final FileUpload upload = fileUploadField.getFileUpload();
-         if(upload !=null){
-         try {
-         upload.writeTo(new File(""));
-         } catch (IOException e) {
-         e.printStackTrace();
-         }
-         }
-         }
-         };
-         imgForm.add(fileUploadField);
-         imgForm.setMultiPart(true);
-         add(imgForm);*/
         //create edit userForm
         
         Form form = new Form("form") {

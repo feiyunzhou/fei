@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org">
+    <body>
+        <wicket:extend>
+            <script>
+                $(document).ready(function() {	
+                    $("#navitem-upLoad").addClass("active");      
+
+                });// end onDomReady function
+            </script>
+
+                    <div class="row">
+                        <div class="col-md-12 box">
+                            <form wicket:id="form">
+								<span wicket:id="group">
+						                <table>
+						                <tr>
+						                  <td><b>选择</b></td>
+						                  <td><b>模板名称</b></td>
+						                </tr>
+										<tr wicket:id="target">
+											<td><input type="radio" wicket:id="radio"/></td>
+											<td><span wicket:id="name">[this is where name will be]</span></td>
+										</tr>
+										<tr>
+							              	<td colspan="2" align="center" > <input type="submit" value="submit" /></td>
+							            </tr>
+							            </table>
+								</span>
+								
+							</form>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+        </wicket:extend>
+    </body>
+</html>

@@ -525,14 +525,12 @@ public class DAOImpl
         menulist.add("activity");
         menulist.add("coaching");
      if(roleId == 1){
-       menulist.add("data_exchange_teample");
+//       menulist.add("data_exchange_teample");
        menulist.add("callreport");
+       menulist.add("DownLoadPage");
      }
         menulist.add("crmuser");
-//    menulist.add("dealerAccount");
-//    menulist.add("dealerContact");
         menulist.add("userInfo");
-       // menulist.add("userInfoSetting");
         return menulist;
     }
 
