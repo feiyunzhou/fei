@@ -2011,7 +2011,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			
 			<field>
-				<name>whether_Coach</name>
+				<name>whether_coach</name>
 				<display>是否协访</display>
 				<data-type>radio</data-type>
 				<isPrimaryKey>false</isPrimaryKey>

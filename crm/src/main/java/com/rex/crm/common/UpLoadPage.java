@@ -85,7 +85,7 @@ public class UpLoadPage extends DataPage{
           FileUpload contactFileUpload = contact.getFileUpload();
           if(contactFileUpload != null){
             String contactFileName = "D:\\tmp\\"+contactFileUpload.getClientFileName();
-            String template = "Contact  Full Import Template 1.0";
+            String template = "Contact Import Template 1.0";
             try{ 
               contactFileUpload.writeTo(new File(contactFileName));
               da.load(template, contactFileName);
@@ -96,7 +96,7 @@ public class UpLoadPage extends DataPage{
           FileUpload positionFileUpload = position.getFileUpload();
           if(positionFileUpload != null){
             String positionFileName = "D:\\tmp\\"+positionFileUpload.getClientFileName();
-            String template = "Position Full Import Template 1.0";
+            String template = "Position Import Template 1.0";
             try{ 
               positionFileUpload.writeTo(new File(positionFileName));
               da.load(template, positionFileName);
@@ -107,21 +107,10 @@ public class UpLoadPage extends DataPage{
           FileUpload accountTeamyFileUpload = accountTeam.getFileUpload();
           if(accountTeamyFileUpload != null){
             String accountTeamFileName = "D:\\tmp\\"+accountTeamyFileUpload.getClientFileName();
-            String template = "Account Export Full Template 1.0";
+            String template = "Account Team Import Template 1.0";
             try{ 
               accountTeamyFileUpload.writeTo(new File(accountTeamFileName));
               da.load(template, accountTeamFileName);
-            } catch(Exception e){
-                e.printStackTrace();
-            }
-          }
-          FileUpload userInfoFileUpload = userInfo.getFileUpload();
-          if(contactFileUpload != null){
-            String userInfoFileName = "D:\\tmp\\"+userInfoFileUpload.getClientFileName();
-            String template = "Account Export Full Template 1.0";
-            try{ 
-              userInfoFileUpload.writeTo(new File(userInfoFileName));
-              da.load(template, userInfoFileName);
             } catch(Exception e){
                 e.printStackTrace();
             }
