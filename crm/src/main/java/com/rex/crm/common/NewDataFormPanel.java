@@ -208,7 +208,6 @@ public class NewDataFormPanel extends Panel {
                                 models.put(currentField.getName(), selected_model);
                                 columnitem.add(selector);
                             } else {
-
                                 List<Choice> pickList = DAOImpl.queryPickList(currentField.getPicklist());
                                 Map<Long, String> list = Maps.newHashMap();
                                 List<Long> ids = Lists.newArrayList();

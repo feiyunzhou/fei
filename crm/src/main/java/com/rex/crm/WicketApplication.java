@@ -15,6 +15,8 @@ import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.util.file.File;
 
 import com.rex.crm.common.CreateDataPage;
+import com.rex.crm.common.EditDataPage;
+import com.rex.crm.common.EntityDetailPage;
 
 /**
  * Application object for your web application. If you want to run this application without deploying, run the Start class.
@@ -67,6 +69,7 @@ public class WicketApplication extends WebApplication
 	 	     mountPage("/mount/ActivitedUser", ActivitedUser.class);
 	 	     mountPage("/mount/CreateDataPage", CreateDataPage.class);
 	 	     mountPage("/mount/ActivitySelectPage",ActivitySelectPage.class);
+	 	     mountPage("/mount/EntityDetailPage",EntityDetailPage.class);
 	         // Register the authorization strategy
 	         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy()
 	         {

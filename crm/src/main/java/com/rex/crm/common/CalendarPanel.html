@@ -54,7 +54,15 @@
 		            } */
 		            
 		           // location.href = "/"+context_name+'/mount/eventViewer?eventid='+calEvent.id;
-		            location.href = event_view_page_url+'eventid='+calEvent.id;
+		            var entityName = null;
+		            if(calEvent.act_type==1){
+		            	entityName = "activity"
+		            }else if (calEvent.act_type==2){
+		            	entityName = "coaching";
+		            }else{
+		            	entityName = "willCoaching"
+		            }
+		            location.href = event_view_page_url+'eventid='+calEvent.id+'&entityName='+entityName;
 
 		          },
 		          dayClick : function(date, allDay, jsEvent, view) {

@@ -2011,7 +2011,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			
 			<field>
-				<name>whetherCoach</name>
+				<name>whether_Coach</name>
 				<display>是否协访</display>
 				<data-type>radio</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -2596,7 +2596,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<relationTable>crmuser</relationTable>
+				<relationTable>userInfo</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2638,6 +2638,54 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountId</name>
+				<display>医院</display>
+				<isRequired>true</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>account</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>account.id\,account.name</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountName_val</name>
+				<display>医疗机构</display>
+				<isRequired>false</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isSearchable>true</isSearchable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>department</name>
+				<display>科室</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>2</default-value>
+				<priority>1</priority>
+				<picklist>contact_department_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>status</name>
@@ -3000,7 +3048,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isBaseInfo>true</isBaseInfo>
@@ -3017,7 +3065,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<relationTable>crmuser</relationTable>
+				<relationTable>userInfo</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -3033,7 +3081,54 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-
+			
+			<field>
+				<name>accountId</name>
+				<display>医院</display>
+				<isRequired>true</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>account</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>account.id\,account.name</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountName_val</name>
+				<display>医疗机构</display>
+				<isRequired>false</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isSearchable>true</isSearchable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>department</name>
+				<display>科室</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>2</default-value>
+				<priority>1</priority>
+				<picklist>contact_department_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 			<field>
 				<name>feature_product</name>
 				<display>主推产品</display>
@@ -3152,6 +3247,23 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>4</priority>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>planing</name>
+				<display>访前计划</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<picklist>score1_pl</picklist>
+				<tooltip>1</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>openling</name>
 				<display>开始</display>
@@ -3163,7 +3275,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>5</priority>
-				<picklist>score1_pl</picklist>
+				<picklist>activity_score3_pl</picklist>
 				<tooltip>7</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
@@ -3178,8 +3290,23 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>5</priority>
-				<picklist>score1_pl</picklist>
+				<picklist>activity_score5_pl</picklist>
 				<tooltip>8</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>objection_handing</name>
+				<display>异常处理</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>score2_pl</picklist>
+				<tooltip>5</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 			<field>
@@ -3193,7 +3320,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>5</priority>
-				<picklist>score1_pl</picklist>
+				<picklist>activity_score4_pl</picklist>
 				<tooltip>9</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
@@ -3554,7 +3681,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority>
 			</field>
 			<field>
-				<name>Activity_whetherCoach</name>
+				<name>whether_coach</name>
 				<display>是否协防</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>

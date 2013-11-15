@@ -52,7 +52,7 @@ public class CalendarPanel extends Panel {
         String url = pageUrl.toString();
         url =  url.substring(0, url.indexOf("?")+1);
         map.put("create_event_page_url", url);
-        CharSequence viewPageUrl = getRequestCycle().urlFor(new RenderPageRequestHandler(new PageProvider(new EventViewerPage())));
+        CharSequence viewPageUrl = getRequestCycle().urlFor(new RenderPageRequestHandler(new PageProvider(new EntityDetailPage())));
         url = viewPageUrl.toString();
         url =  url.substring(0, url.indexOf("?")+1);
         map.put("event_view_page_url", url);

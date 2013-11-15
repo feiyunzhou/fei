@@ -41,8 +41,46 @@ public class EntityDetailPage extends TemplatePage {
     private static final long serialVersionUID = -2613412283023068638L;
 
     private static int NUM_OF_COLUMN  = 3;
-    
+    public EntityDetailPage(){
+    	String entityId = this.getRequest().getRequestParameters().getParameterValue("eventid").toString();
+  	  	String nameForEntity = this.getRequest().getRequestParameters().getParameterValue("entityName").toString();
+  	  	if(null==entityId&&null==nameForEntity){
+  	  		System.out.println("null");
+	    	RepeatingView div = new RepeatingView("promptDiv");
+	        AbstractItem groupitem = new AbstractItem(div.newChildId());
+	        Label promptButton = new Label("promptButton","X");
+	        groupitem.add(promptButton);
+	        final Label promptLabel = new Label("prompt","提示:操作已成功！");
+	        groupitem.add(promptLabel);
+	        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+	        groupitem.add(new AttributeAppender("style",new Model("display:none"),";"));
+	        div.add(groupitem);
+	        add(div);
+	        add(new Label("name","null"));
+	        WebMarkupContainer operationBar = new WebMarkupContainer("operationBar");
+	    	add(operationBar);
+	        WebMarkupContainer detailed = new WebMarkupContainer("detailed");
+	    	add(detailed);
+	    	WebMarkupContainer teamPanel = new WebMarkupContainer("teamPanel");
+	    	add(teamPanel);
+	    	WebMarkupContainer teamPanel2 = new WebMarkupContainer("teamPanel2");
+	    	add(teamPanel2);
+	    	WebMarkupContainer teamPanel3 = new WebMarkupContainer("teamPanel3");
+	    	add(teamPanel3);
+	    	RepeatingView relationRepeater = new RepeatingView("relationRepeater");
+	    	AbstractItem relationItem = new AbstractItem(relationRepeater.newChildId());
+	    	relationItem.add(new Label("relationPanel",""));
+	    	add(relationRepeater);
+  	  	}else{
+  	  		System.out.println("entity:"+nameForEntity+":"+entityId);
+  	  		initPage(nameForEntity.toString(),entityId.toString());
+  	  	}
+
+    }
     public EntityDetailPage(final String entityName, final String id){
+    	initPage(entityName,id);
+    }
+    public void initPage(final String entityName, final String id){
         this.setPageTitle("详细信息");
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -64,7 +102,9 @@ public class EntityDetailPage extends TemplatePage {
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
-        if(entity.getName().equals("activity")||entity.getName().equals("coaching")){
+        System.out.println("entityName:"+entity.getName());
+        if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+        	System.out.println("name:"+map.get("title"));
         	add(new Label("name",String.valueOf(map.get("title"))));
         }else{
         	add(new Label("name",String.valueOf(map.get("name"))));
