@@ -53,7 +53,7 @@ public class CRUDPanel extends Panel {
         	  add(new Fragment("resetPwdCon","emptyFragment",this));
         	  add(new Fragment("doneCon","emptyFragment",this));
         	  add(new Fragment("downloadCon","emptyFragment",this));
-        	  add(new Fragment("uploadCon","emptyFragment",this));
+        	 //add(new Fragment("uploadCon","emptyFragment",this));
         } else {
             
             if (userPerms.contains(Permissions.ADD)) {

@@ -162,9 +162,14 @@ public class EditDataFormPanel extends Panel {
                             }
                             fieldNames.add(currentField.getName());
                         } else {
-
+                            
+                            // it is a cascading picklist
                             if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
-                                String value = data.get(currentField.getName()).toString();
+                                String value = "-1";
+                                if(data.get(currentField.getName()) != null){ 
+                                   value = data.get(currentField.getName()).toString();
+                                }
+                                
                                 IModel<Choice> selected_model = new Model(new Choice(Long.parseLong(value), ""));
                                 IModel<List<? extends Choice>> choices_models = null;
 
@@ -219,7 +224,11 @@ public class EditDataFormPanel extends Panel {
                                     list.put(p.getId(), p.getVal());
                                     ids.add(p.getId());
                                 }
-                                String value = data.get(currentField.getName()).toString();
+                                 
+                                String value = "-1";
+                                if(data.get(currentField.getName())!=null){
+                                   value = data.get(currentField.getName()).toString();
+                                }
                                 IModel choiceModel = new Model(Long.parseLong(value));
 
                                
@@ -469,7 +478,7 @@ public class EditDataFormPanel extends Panel {
     private class DropDownChoiceFragment extends Fragment {
         public DropDownChoiceFragment(String id, String markupId, MarkupContainer markupProvider, final List<Long> ids, final Map<Long, String> list, IModel model) {
             super(id, markupId, markupProvider);
-            add(new DropDownChoice<Long>("dropDownInput", model, ids, new IChoiceRenderer<Long>() {
+            add((new DropDownChoice<Long>("dropDownInput", model, ids, new IChoiceRenderer<Long>() {
                 @Override
                 public Object getDisplayValue(Long id) {
                     // TODO Auto-generated method stub
@@ -480,7 +489,7 @@ public class EditDataFormPanel extends Panel {
                 public String getIdValue(Long id, int index) {
                     return String.valueOf(id);
                 }
-            }));
+            }).setNullValid(true)));
         }
 		
         public DropDownChoiceFragment(String id, String markupId,MarkupContainer markupProvider,
@@ -520,21 +529,26 @@ public class EditDataFormPanel extends Panel {
         } 
 	}
     private DropDownChoice createDropDownListFromPickList(String markupId,IModel choices,IModel default_model) {
-        return new DropDownChoice<Choice>(markupId, default_model, choices,
+        
+        DropDownChoice<Choice> choice = new DropDownChoice<Choice>(markupId, default_model, choices,
                 new IChoiceRenderer<Choice>() {
-                    @Override
-                    public Object getDisplayValue(Choice choice) {
-                        // TODO Auto-generated method stub
-                        return choice.getVal();
-                    }
-                    @Override
-                    public String getIdValue(Choice choice, int index) {
-                        // TODO Auto-generated method stub
-                        return String.valueOf(choice.getId());
-                    }
-                    
-                    
-                });
+            @Override
+            public Object getDisplayValue(Choice choice) {
+                // TODO Auto-generated method stub
+                return choice.getVal();
+            }
+            @Override
+            public String getIdValue(Choice choice, int index) {
+                // TODO Auto-generated method stub
+                return String.valueOf(choice.getId());
+            }
+            
+            
+        });
+        
+        choice.setNullValid(true);
+        
+        return choice;
     }
     private class RadioChoiceFragment extends Fragment{
     	public  RadioChoiceFragment(String id, String markupId,MarkupContainer markupProvider, IModel model,String value,final Field currentField){

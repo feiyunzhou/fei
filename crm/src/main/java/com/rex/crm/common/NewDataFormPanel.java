@@ -504,7 +504,7 @@ public class NewDataFormPanel extends Panel {
                 final Map<Long, String> list, IModel model) {
             super(id, markupId, markupProvider);
 
-            add(new DropDownChoice<Long>("dropDownInput", model, ids,
+            add((new DropDownChoice<Long>("dropDownInput", model, ids,
                     new IChoiceRenderer<Long>() {
                         @Override
                         public Object getDisplayValue(Long id) {
@@ -516,13 +516,14 @@ public class NewDataFormPanel extends Panel {
                         public String getIdValue(Long id, int index) {
                             return String.valueOf(id);
                         }
-                    }));
+                    })).setNullValid(true));
         }
         
         public DropDownChoiceFragment(String id, String markupId,MarkupContainer markupProvider,
                 IModel choices,IModel default_model,final Entity entity, final Field currentField){
             super(id, markupId, markupProvider);
             DropDownChoice dropDown = createDropDownListFromPickList("dropDownInput",choices,default_model);
+            dropDown.setNullValid(true);
             add(dropDown);
             
             if(currentField.getChildNode()!=null){
