@@ -34,6 +34,7 @@ import com.rex.crm.AccountPage;
 import com.rex.crm.ActivitySelectPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.CRMUtility;
 import com.rexen.crm.integration.DataAccessObject;
 import com.rexen.crm.integration.DataExport;
@@ -208,13 +209,14 @@ public class PageableTablePanel extends Panel {
                 public void onClick() {
                     Param p = (Param) getParent().getParent().getDefaultModelObject();
                     logger.debug(p + " id:" + p.getId() + " name:" + p.getEntityName());
-//                    Attribute att = new Attribute();
-                   /*if(entity.getName().equals("activity")){
-                	   setResponsePage(new EventViewerPage(p.getId()));
-                   }else{
-                	   
-                   } */
-                   setResponsePage(new EntityDetailPage(p.getEntityName(), p.getId()));
+                    String entityName = p.getEntityName();
+                    if(entity.getName().equals("coaching")){
+                    	Activity coaching = DAOImpl.getActivityById(Integer.parseInt(p.getId()));
+                    	if(coaching.getEvent_type()==3){
+                    		entityName = "willCoaching"; 
+                    	}
+                    }
+                    setResponsePage(new EntityDetailPage(entityName, p.getId()));
                     // setResponsePage(new AccountDetailPage(id));
                 }
             }.add(new Label("caption", new Model<String>(caption))));

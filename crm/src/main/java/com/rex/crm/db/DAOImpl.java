@@ -1925,7 +1925,7 @@ public class DAOImpl
         return user;
     }
     public static Activity getActivityById(int entityId){
-    	System.out.println("根据crmuserID获取用户");
+    	System.out.println("根据活动ID获取用户");
         Connection conn = null;
         Activity activity = new Activity();
         try {

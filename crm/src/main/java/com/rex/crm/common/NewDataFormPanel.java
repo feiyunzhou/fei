@@ -336,6 +336,7 @@ public class NewDataFormPanel extends Panel {
                 logger.debug(models);
                 List<String> fieldNames = Lists.newArrayList();
                 List<String> values = Lists.newArrayList();
+                int total_score = 0;
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 //找出title属性，判断实体名称，先声明
                 StringBuffer title = new StringBuffer();
@@ -344,7 +345,9 @@ public class NewDataFormPanel extends Panel {
                     logger.debug("currentFieldkey:"+key);
                     Field field = entity.getFieldByName(key);
                     logger.debug("currentField:"+field);
-                    
+                    if(field.getPriority()==5){
+                    	total_score+=Integer.parseInt(models.get(key).getObject().toString());
+                    }
                     if(field.getDataType().equalsIgnoreCase("file")){
                       if(fileFields.size()>0){
                       final  FileUpload upload = fileFields.get(0).getFileUpload();
@@ -416,11 +419,14 @@ public class NewDataFormPanel extends Panel {
                     }
                     if(f.getName().equalsIgnoreCase("crmuserID")){
                     	values.add("'"+posId+"'");
-                    }
+                    } 
                     fieldNames.add(f.getName());
                     
                   }
-                  
+                  if(entity.getName().equals("willCoaching")||entity.getName().equals("coaching")){
+                	  values.add(""+total_score+"");
+              		  fieldNames.add("total_score");
+                  }
 //                  int i=0;
 //                  for(String fn:fieldNames){
 //                    System.out.println(i+":::"+fn);

@@ -77,7 +77,7 @@ public class EditDataFormPanel extends Panel {
 	 */
 	public EditDataFormPanel(String id, final Entity schema,  Map data,final String entityId ) {
 		super(id);
-        if(schema.getName().equals("activity")||schema.getName().equals("coaching")){
+        if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equals("willCoaching")){
       	   add(new Label("name",String.valueOf(data.get("title"))));
          }else{
       	   add(new Label("name",String.valueOf(data.get("name"))));
@@ -324,11 +324,15 @@ public class EditDataFormPanel extends Panel {
 				List<String> values = Lists.newArrayList();
 				List<String> names = Lists.newArrayList();
 				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+				int total_score = 0;
 				for (String k : fieldNameToModel.keySet()) {
 					names.add(k);
 					Field field = schema.getFieldByName(k);
 					IModel currentModel = fieldNameToModel.get(k);
                     logger.debug("currentField:"+field.getName());
+                    if(field.getPriority()==5){
+                    	total_score+=Integer.parseInt(fieldNameToModel.get(k).getObject().toString());
+                    }
                     //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
 					Object obj = currentModel.getObject() ;
 					String value = null;
@@ -379,8 +383,11 @@ public class EditDataFormPanel extends Panel {
                  }
 				
                 String table_name  = schema.getName();
-                if(table_name.equalsIgnoreCase("coaching")){
+                if(table_name.equalsIgnoreCase("coaching")||table_name.equalsIgnoreCase("willCoaching")){
                     table_name = "activity";
+                    names.add("total_score");
+                    values.add(""+total_score+"");
+        		    
                 }
                 
 //                 int i=0;
