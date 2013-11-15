@@ -20,14 +20,14 @@
     $('.popover-test').popover()
 
     // popover demo
-    $(".tooltip-test")
+    /*$(".tooltip-test")
       .popover({
     	  html:true,
     	  placement:'top'
       })
       .click(function(e) {
         e.preventDefault()
-      })
+      })*/
 
   })
 

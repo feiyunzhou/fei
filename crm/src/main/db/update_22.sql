@@ -5,7 +5,7 @@ UPDATE `crmdb`.`activity_visiting_purpose_pl` SET `activity_type`='1', `parentId
 
 ALTER TABLE `crmdb`.`activity` 
 ADD COLUMN `accountId` MEDIUMINT(9) NULL AFTER `coachTime`,
-ADD COLUMN `department` MEDIUMINT(9) NULL AFTER `accountId`;
+ADD COLUMN `department` MEDIUMINT(9) NULL AFTER `accountId`,
 ADD COLUMN `whether_coach` VARCHAR(255) NULL AFTER `department`;
 
 CREATE TABLE `crmdb`.`activity_score3_pl` (
