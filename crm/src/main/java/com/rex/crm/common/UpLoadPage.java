@@ -74,7 +74,7 @@ public class UpLoadPage extends DataPage{
           FileUpload accountFileUpload = accountFF.getFileUpload();
           if(accountFileUpload != null){
             String template = "Account Full Import Template 1.0";
-            String accountFileName = "D:\\tmp\\"+accountFileUpload.getClientFileName();
+            String accountFileName = "/root/crm/"+accountFileUpload.getClientFileName();
             try{ 
               accountFileUpload.writeTo(new File(accountFileName));
               da.load(template, accountFileName);
@@ -84,7 +84,7 @@ public class UpLoadPage extends DataPage{
           }
           FileUpload contactFileUpload = contact.getFileUpload();
           if(contactFileUpload != null){
-            String contactFileName = "D:\\tmp\\"+contactFileUpload.getClientFileName();
+            String contactFileName = "/root/crm/"+contactFileUpload.getClientFileName();
             String template = "Contact Import Template 1.0";
             try{ 
               contactFileUpload.writeTo(new File(contactFileName));
@@ -95,7 +95,7 @@ public class UpLoadPage extends DataPage{
           }
           FileUpload positionFileUpload = position.getFileUpload();
           if(positionFileUpload != null){
-            String positionFileName = "D:\\tmp\\"+positionFileUpload.getClientFileName();
+            String positionFileName = "/root/crm/"+positionFileUpload.getClientFileName();
             String template = "Position Import Template 1.0";
             try{ 
               positionFileUpload.writeTo(new File(positionFileName));
@@ -106,7 +106,7 @@ public class UpLoadPage extends DataPage{
           }
           FileUpload accountTeamyFileUpload = accountTeam.getFileUpload();
           if(accountTeamyFileUpload != null){
-            String accountTeamFileName = "D:\\tmp\\"+accountTeamyFileUpload.getClientFileName();
+            String accountTeamFileName = "/root/crm/"+accountTeamyFileUpload.getClientFileName();
             String template = "Account Team Import Template 1.0";
             try{ 
               accountTeamyFileUpload.writeTo(new File(accountTeamFileName));
