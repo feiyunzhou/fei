@@ -104,4 +104,17 @@ public class FieldConfiguration
   {
     this.targetFieldName = targetFieldName;
   }
+  
+  private boolean autoReference;
+  
+  @XmlElement(name = "AutoReference")
+  public boolean isAutoReference()
+  {
+    return autoReference;
+  }
+
+  public void setAutoReference(boolean autoReference)
+  {
+    this.autoReference = autoReference;
+  }
 }

@@ -60,8 +60,13 @@ public class CreateConfiguration
     fc4.setLookupEntityName("Department");
     fc4.setLookupFieldName("Name");
     fc4.setTargetFieldName("Id");
+    fc4.setAutoReference(true);
 
     configuration.getFields().add(fc4);
+    configuration.setDatabase("crm_mysql");
+    configuration.setMax(1000000);
+    configuration.setBatchSize(1000);
+    
 
 
     File file = new File("configuration.xml");

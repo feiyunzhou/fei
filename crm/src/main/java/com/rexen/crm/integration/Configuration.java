@@ -101,6 +101,4 @@ public class Configuration
   {
     this.max = max;
   }
-  
-  
 }

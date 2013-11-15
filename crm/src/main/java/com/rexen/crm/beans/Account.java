@@ -47,9 +47,9 @@ public class Account extends DataObject implements Serializable
   @Column(name = "bdm_code")
   private String bdmCode;
   @Column(name = "administrativ_level")
-  private String administrativLevel;
+  private int administrativLevel;
   @Column(name = "grade")
-  private String grade;
+  private int grade;
   @Column(name = "hospital_type")
   private int hospitalType;
   @Column(name = "local_or_army")
@@ -163,22 +163,22 @@ public class Account extends DataObject implements Serializable
     this.bdmCode = bdmCode;
   }
 
-  public String getAdministrativLevel()
+  public int getAdministrativLevel()
   {
     return administrativLevel;
   }
 
-  public void setAdministrativLevel(String administrativLevel)
+  public void setAdministrativLevel(int administrativLevel)
   {
     this.administrativLevel = administrativLevel;
   }
 
-  public String getGrade()
+  public int getGrade()
   {
     return grade;
   }
 
-  public void setGrade(String grade)
+  public void setGrade(int grade)
   {
     this.grade = grade;
   }

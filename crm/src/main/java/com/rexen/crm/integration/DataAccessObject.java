@@ -21,7 +21,6 @@ import org.eclipse.persistence.jpa.JpaHelper;
  *
  * @author Kamala
  */
-
 public class DataAccessObject
 {
 
@@ -36,14 +35,14 @@ public class DataAccessObject
       jpa = JpaHelper.getEntityManager(Persistence.createEntityManagerFactory(unitName).createEntityManager());
       jpa.setFlushMode(FlushModeType.COMMIT);
     }
-    catch(Exception e)
+    catch (Exception e)
     {
       logger.log(Priority.ERROR, "DataAccessObject(String unitName:" + unitName + ")", e);
       throw e;
     }
   }
 
-  public void update(Object[] data, String[] keys) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException 
+  public void update(Object[] data, String[] keys) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException
   {
     if (data != null && data.length > 0)
     {
@@ -295,9 +294,11 @@ public class DataAccessObject
           value
         });
       }
-      catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
+      catch (Exception e)
       {
-
+        System.out.println("getter name: " + getterName);
+        System.out.println("setter name: " + setterName);
+        e.printStackTrace();
       }
     }
   }

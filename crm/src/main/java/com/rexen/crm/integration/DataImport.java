@@ -75,7 +75,9 @@ public class DataImport
         {
           config.getExternalId()
         });
+        
         System.out.println("commit " + buffer.size());
+        
         buffer.clear();
       }
     }
@@ -95,11 +97,11 @@ public class DataImport
                                                  IllegalAccessException, IllegalArgumentException,
                                                  InvocationTargetException, ClassNotFoundException, InstantiationException
   {
-    Object o = null;
+    Object record = null;
 
     String class_name = "com.rexen.crm.beans." + config.getEntityName();
     Class c = Class.forName(class_name);
-    o = c.newInstance();
+    record = c.newInstance();
 
     for (FieldConfiguration field : config.getFields())
     {
@@ -111,8 +113,7 @@ public class DataImport
       }
 
       Method setter = queryMethod(c, "set" + field.getFieldName());
-
-
+      
       if (setter != null)
       {
         switch (field.getDataType())
@@ -124,7 +125,7 @@ public class DataImport
           {
             if (s != null && s.length() > 0)
             {
-              setter.invoke(o, new Object[]
+              setter.invoke(record, new Object[]
               {
                 s
               });
@@ -146,7 +147,7 @@ public class DataImport
             {
               i = 0;
             }
-            setter.invoke(o, new Object[]
+            setter.invoke(record, new Object[]
             {
               i
             });
@@ -164,7 +165,7 @@ public class DataImport
               {
                 DateFormat format = new SimpleDateFormat(field.getFormat());
                 date = format.parse(s);
-                setter.invoke(o, new Object[]
+                setter.invoke(record, new Object[]
                 {
                   date
                 });
@@ -185,12 +186,12 @@ public class DataImport
             {
               try
               {
-                c = Class.forName("com.rexen.crm.beans." + field.getLookupEntityName());
-                Object example = c.newInstance();
+                Class lookup_entiry_class = Class.forName("com.rexen.crm.beans." + field.getLookupEntityName());
+                Object example = lookup_entiry_class.newInstance();
 
                 String method_name = "set" + field.getLookupFieldName();
 
-                Method method = queryMethod(c, method_name);
+                Method method = queryMethod(lookup_entiry_class, method_name);
 
                 method.invoke(example, new Object[]
                 {
@@ -201,19 +202,45 @@ public class DataImport
 
                 if (result != null)
                 {
-                  method_name = "get" + field.getTargetFieldName();
+                  Method getter = queryMethod(lookup_entiry_class, "get" + field.getTargetFieldName());
 
-                  method = queryMethod(c, method_name);
-
-                  int lookup_value = (int) method.invoke(result, new Object[]
+                  int lookup_value = (Integer) getter.invoke(result, new Object[]
                   {
                   });
 
-                  setter.invoke(o, new Object[]
+                  setter.invoke(record, new Object[]
                   {
                     lookup_value
                   });
+                }
+                else
+                {
+                  System.out.println(field.getFieldName() +  " isAutoReference: " + field.isAutoReference());
+                  if(field.isAutoReference())
+                  {
+                    try
+                    {
+                      System.out.println("isAutoReference");
+                      
+                      Object lookup_object = lookup_entiry_class.newInstance();
 
+                      Method lookup_setter = queryMethod(c, "set" + field.getLookupFieldName());
+                      lookup_setter.invoke(lookup_object, new Object[]{s});
+
+                      dao.append(new Object[]{lookup_object});
+
+                      lookup_object = dao.find(lookup_object);
+
+                      Method getter = queryMethod(c, "get" + field.getTargetFieldName());
+                      int lookup_value = (Integer)getter.invoke(lookup_object, new Object[]{});
+
+                      setter.invoke(record, new Object[]{lookup_value});
+                    }
+                    catch(Exception e)
+                    {
+                      e.printStackTrace();
+                    }
+                  }
                 }
               }
               catch (Exception e)
@@ -228,14 +255,19 @@ public class DataImport
            */
         }
       }
+      else
+      {
+        System.out.println("method not found: " + c.getName() + ".set" + field.getFieldName() + "\n");
+      }
     }
 
-    return o;
+    return record;
   }
 
   public static void main(String args[]) throws JAXBException, IOException,
                                                 Exception
   {
+    System.out.println("template: " + args[0]);
     DataImport loader = new DataImport(args[0]);
     loader.load();
   }
@@ -243,7 +275,7 @@ public class DataImport
   public Method queryMethod(Class c, String methodName)
   {
     System.out.println("query method: " + c.getName() + "." + methodName);
-
+    
     HashMap<String, Method> methods = new HashMap<>();
 
     for (Method m : c.getMethods())

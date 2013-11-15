@@ -48,7 +48,7 @@ public class Contact extends DataObject implements Serializable
   @Column(name = "name")
   private String name;
   @Column(name = "department")
-  private String department;
+  private int department;
   @Column(name = "sex")
   private int sex;
   @Column(name = "native_place")
@@ -143,12 +143,12 @@ public class Contact extends DataObject implements Serializable
     this.name = name;
   }
 
-  public String getDepartment()
+  public int getDepartment()
   {
     return department;
   }
 
-  public void setDepartment(String department)
+  public void setDepartment(int department)
   {
     this.department = department;
   }

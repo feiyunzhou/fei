@@ -4,11 +4,10 @@
  */
 package com.rexen.crm.beans;
 
+import com.rexen.crm.integration.DataObject;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,13 +23,14 @@ import javax.persistence.TemporalType;
  *
  * @author Ralf
  */
+
 @Entity
 @Table(name = "crmuser")
 @NamedQueries(
 {
   @NamedQuery(name = "Crmuser.findAll", query = "SELECT c FROM Crmuser c")
 })
-public class Crmuser implements Serializable
+public class Crmuser extends DataObject implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
@@ -57,7 +56,7 @@ public class Crmuser implements Serializable
   @Column(name = "pl5")
   private int pl5;
   @Column(name = "city")
-  private String city;
+  private int city;
   @Column(name = "department")
   private String department;
   @Column(name = "whenadded")
@@ -178,12 +177,12 @@ public class Crmuser implements Serializable
     this.pl5 = pl5;
   }
 
-  public String getCity()
+  public int getCity()
   {
     return city;
   }
 
-  public void setCity(String city)
+  public void setCity(int city)
   {
     this.city = city;
   }
