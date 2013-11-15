@@ -63,7 +63,7 @@ import com.rex.crm.util.CRMUtility;
  * 
  * @author Dong
  */
-public abstract class DataPage extends AuthenticatedWebPage {
+public  class DataPage extends TemplatePage {
 	/** title of the current page. */
 	private String pageTitle = "DataPageTest";
 	 private static final Logger logger = Logger.getLogger(DataPage.class);
@@ -94,9 +94,9 @@ public abstract class DataPage extends AuthenticatedWebPage {
 	public DataPage() {
 		
 //	  final int roleId = ((SignIn2Session) getSession()).getRoleId();
-		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
+//		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
 //		UserInfo user = DAOImpl.getUserInfoById(Integer.parseInt(((SignIn2Session) getSession()).getUserId()));
-		
+	  setPageTitle("数据管理");
 		//TODO get function work with real id
 	    List<String> menulist = Lists.newArrayList();
   	    menulist.add("upLoad");
@@ -105,7 +105,7 @@ public abstract class DataPage extends AuthenticatedWebPage {
 	      for(String key:menulist){
 	          menu.add(pageMenuMap.get(key));
 	      }
-	      ListView lv = new ListView("datamenu", menu) {
+	      ListView lv = new ListView("dataMenu", menu) {
             @Override
             protected void populateItem(ListItem item) {
                 MenuItem menuitem = (MenuItem) item.getModelObject();

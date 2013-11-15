@@ -7,6 +7,7 @@ package com.rexen.crm.beans;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.rexen.crm.integration.DataObject;
+
 /**
  *
  * @author Ralf
@@ -33,7 +36,7 @@ import javax.persistence.TemporalType;
 {
   @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c")
 })
-public class Contact implements Serializable
+public class Contact extends DataObject implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id

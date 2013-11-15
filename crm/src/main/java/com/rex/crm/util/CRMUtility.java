@@ -249,8 +249,12 @@ public class CRMUtility {
             if (roleId == 1) {
                 permission = EnumSet.of(CRUDPanel.Permissions.ADD);
             }
-        }
-        
+        }else if(entityName.equalsIgnoreCase("upLoad")){
+          
+          if (roleId == 1) {
+              permission = EnumSet.of(CRUDPanel.Permissions.DOWNLOAD);
+          }
+      }
         return permission;
     }
 	    public static String MD5Base64(String src) {

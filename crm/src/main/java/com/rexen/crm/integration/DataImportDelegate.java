@@ -68,7 +68,7 @@ public class DataImportDelegate
   }
 
   public void load(String template, String filePath) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, JAXBException, IOException, Exception 
-  {
+  {//模板名 文件路径
     Configuration config = getConfiguration(template);
 
     if (config != null)

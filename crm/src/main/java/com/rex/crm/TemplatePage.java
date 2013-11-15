@@ -53,6 +53,8 @@ import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
 import com.rex.crm.ajax.FunctionInvoker;
 import com.rex.crm.beans.UserInfo;
+import com.rex.crm.common.DownLoadPage;
+import com.rex.crm.common.UpLoadPage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.userlog.LogInOut;
 import com.rex.crm.util.CRMUtility;
@@ -121,8 +123,8 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 ////        builder.put("data_exchange_teample", item);
 //        
         item = new MenuItem();
-        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>数据传输");
-        item.setDestination(DataPage.class);
+        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>数据管理");
+        item.setDestination(UpLoadPage.class);
         item.setId("navitem-DownLoadPage");
         builder.put("DownLoadPage", item);
         

@@ -4,6 +4,7 @@
  */
 package com.rexen.crm.integration;
 
+import java.awt.List;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,10 +19,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
 import org.jumpmind.symmetric.csv.CsvWriter;
+
+import com.rex.crm.common.Entity;
+import com.rex.crm.common.Field;
 
 /**
  *
@@ -32,17 +38,25 @@ public class DataExport
 
   private DataAccessObject dao;
   private Configuration config = null;
+  private Entity entity;
+  private java.util.List<Entity> maplist;
 
   public DataExport(String configuration) throws JAXBException
   {
     File file = new File(configuration);
     JAXBContext context = JAXBContext.newInstance(Configuration.class);
-
+//
     Unmarshaller unmarshaller = context.createUnmarshaller();
-
+//
     config = (Configuration) unmarshaller.unmarshal(file);
 
     dao = new DataAccessObject(config.getDatabase());
+  }
+  public DataExport(Entity entity ,java.util.List maplist) throws JAXBException
+  {
+    this.entity = entity;
+
+    this.maplist = maplist;
   }
 
   public DataExport(Configuration config, DataAccessObject dao) throws JAXBException
@@ -61,7 +75,9 @@ public class DataExport
     example = c.newInstance();
 
     Object[] data = dao.find(example, config.getMax());
-
+    
+    System.out.println("record count " + data.length);
+    
     if (data != null && data.length > 0)
     {
       ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -84,11 +100,69 @@ public class DataExport
 
       csv.flush();
 
-      FileOutputStream file_output_stream = new FileOutputStream(config.getEntityName() + ".zip");
+      ByteArrayOutputStream out = new ByteArrayOutputStream();
+      
+      //FileOutputStream file_output_stream = new FileOutputStream(config.getEntityName() + ".zip");
+
+      ZipOutputStream zip_output_stream = new ZipOutputStream(out);
+      zip_output_stream.setLevel(9);
+      ZipEntry zip_entry = new ZipEntry(config.getEntityName() + ".csv");
+
+      zip_output_stream.putNextEntry(zip_entry);
+
+      zip_output_stream.write(buffer.toByteArray());
+
+      zip_output_stream.flush();
+      zip_output_stream.close();
+
+      //file_output_stream.flush();
+      //file_output_stream.close();
+
+      return out.toByteArray();
+    }
+
+    return null;
+  }
+  
+  public byte[] exportData() throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException
+  {
+    Object example = null;
+
+    String class_name = entity.getName();
+    Class c = Class.forName(class_name);
+    example = c.newInstance();
+
+    Object[] data = dao.find(example, config.getMax());
+    
+    System.out.println("record count " + data.length);
+    
+    if (data != null && data.length > 0)
+    {
+      ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+      CsvWriter csv = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
+
+      ArrayList<String> heads = new ArrayList<>();
+
+      for (Field field : entity.getFields())
+      {
+        heads.add(field.getName());
+      }
+
+      csv.writeRecord(heads.toArray(new String[entity.getFields().size()]));
+
+      for (Object o : data)
+      {
+        csv.writeRecord(convertData(o,entity));
+      }
+
+      csv.flush();
+
+      FileOutputStream file_output_stream = new FileOutputStream(entity.getName() + ".zip");
 
       ZipOutputStream zip_output_stream = new ZipOutputStream(file_output_stream);
       zip_output_stream.setLevel(9);
-      ZipEntry zip_entry = new ZipEntry(config.getEntityName() + ".csv");
+      ZipEntry zip_entry = new ZipEntry(entity.getName() + ".csv");
 
       zip_output_stream.putNextEntry(zip_entry);
 
@@ -105,6 +179,7 @@ public class DataExport
 
     return null;
   }
+  
 
   private String[] convert(Object o) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
   {
@@ -244,6 +319,33 @@ public class DataExport
             }
           }
         }
+      }
+      else
+      {
+        buffer.add("");
+      }
+    }
+
+    return buffer.toArray(new String[buffer.size()]);
+  }
+  
+  private String[] convertData(Object o,Entity entity) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+  {
+    ArrayList<String> buffer = new ArrayList<>();
+
+    for (Field field : entity.getFields())
+    {
+      String method_name = "get" + field.getName();
+
+      Method m = queryMethod(o.getClass(), method_name);
+
+      Object value = m.invoke(o, new Object[]
+      {
+      });
+
+      if (value != null)
+      {
+            buffer.add((String) value);
       }
       else
       {

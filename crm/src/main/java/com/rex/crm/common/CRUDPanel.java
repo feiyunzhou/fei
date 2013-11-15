@@ -36,7 +36,7 @@ public class CRUDPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
 
     public enum Permissions {
-        ADD, DEL, EDIT,NONE,RESETPWD,DONE,DOWNLOAD;
+        ADD, DEL, EDIT,NONE,RESETPWD,DONE,DOWNLOAD,UPLOAD;
 
     }
 
@@ -53,6 +53,7 @@ public class CRUDPanel extends Panel {
         	  add(new Fragment("resetPwdCon","emptyFragment",this));
         	  add(new Fragment("doneCon","emptyFragment",this));
         	  add(new Fragment("downloadCon","emptyFragment",this));
+        	  add(new Fragment("uploadCon","emptyFragment",this));
         } else {
             
             if (userPerms.contains(Permissions.ADD)) {
@@ -135,8 +136,9 @@ public class CRUDPanel extends Panel {
              }
             	
             	if (userPerms.contains(Permissions.DOWNLOAD)) {
+            	  //downLoad_account_btn
                 Fragment downLoadfrag = new Fragment("downloadCon","downLoadFragment",this);
-                downLoadfrag.add(new Link("downLoad_btn") {
+                downLoadfrag.add(new Link("downLoad_account_btn") {
 
                     @Override
                     public void onClick() {

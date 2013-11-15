@@ -16,9 +16,12 @@
 package com.rexen.crm.integration;
 
 import com.rexen.crm.beans.DataExchangeTeample;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
@@ -66,6 +69,10 @@ public class DataExportDelegate
         e.printStackTrace();
       }
     }
+    else
+    {
+      System.out.println("template not found!");
+    }
 
     return config;
   }
@@ -84,7 +91,8 @@ public class DataExportDelegate
       response.setHeader("Content-Disposition", "attachment;filename=" + config.getEntityName() + ".zip");
       ServletOutputStream out = response.getOutputStream();
       out.write(buffer);
-
+      
+      System.out.println("buffer size " + buffer.length);
       out.flush();
       out.close();
     }

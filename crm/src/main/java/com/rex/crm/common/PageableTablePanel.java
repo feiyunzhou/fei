@@ -1,5 +1,6 @@
 package com.rex.crm.common;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -35,13 +36,14 @@ import com.rex.crm.SignIn2Session;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rexen.crm.integration.DataAccessObject;
+import com.rexen.crm.integration.DataExport;
 import com.rexen.crm.integration.DataExportDelegate;
 
 public class PageableTablePanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
     private static final Logger logger = Logger.getLogger(PageableTablePanel.class);
     
-    public PageableTablePanel(String id, final Entity entity, List mapList,final Map<String,Object> params) {
+    public PageableTablePanel(String id, final Entity entity, final List mapList,final Map<String,Object> params) {
         super(id);
 
         add(new Label("table_title",entity.getDisplay()));
@@ -159,11 +161,21 @@ public class PageableTablePanel extends Panel {
             }
             @Override
             public void downLoadBtn() throws Exception { 
-              DataExportDelegate dataExport = new  DataExportDelegate();
-//              String template = DAOImpl.selectTemplate(); 
-             HttpServletResponse response = (HttpServletResponse)getRequestCycle().getResponse().getContainerResponse();
-             dataExport.export("Account Full Import Template 1.0", response);
-              setResponsePage(new AccountPage());
+//              DataExportDelegate dataExport = new  DataExportDelegate();
+////              String template = DAOImpl.selectTemplate(); 
+//             HttpServletResponse response = (HttpServletResponse)getRequestCycle().getResponse().getContainerResponse();
+//             dataExport.export("Account Export Full Template 1.0", response);
+//             
+             DataExport exp = new DataExport(entity,mapList);
+             exp.exportData();
+//             File.createTempFile(prefix, suffix)
+              
+              
+              
+              
+              
+              
+             //setResponsePage(new AccountPage());
             }    
         };
         
