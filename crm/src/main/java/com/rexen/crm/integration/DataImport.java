@@ -41,15 +41,14 @@ public class DataImport
 
     dao = new DataAccessObject(config.getDatabase());
   }
-  
-    public DataImport(Configuration config, DataAccessObject dao) throws JAXBException
+
+  public DataImport(Configuration config, DataAccessObject dao) throws JAXBException
   {
     this.config = config;
 
     this.dao = dao;
   }
 
-  
   public void load() throws IOException, Exception
   {
     CsvReader reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
@@ -113,116 +112,121 @@ public class DataImport
 
       Method setter = queryMethod(c, "set" + field.getFieldName());
 
-      switch (field.getDataType())
+
+      if (setter != null)
       {
-        /**
-         * *****************************************************************************************************************************************************************************************************
-         */
-        case "String":
+        switch (field.getDataType())
         {
-          if (s != null && s.length() > 0)
+          /**
+           * *****************************************************************************************************************************************************************************************************
+           */
+          case "String":
           {
-            setter.invoke(o, new Object[]
+            if (s != null && s.length() > 0)
             {
-              s
-            });
-          }
-          break;
-        }
-        /**
-         * *****************************************************************************************************************************************************************************************************
-         */
-        case "Integer":
-        {
-          int i = 0;
-
-          try
-          {
-            i = Integer.valueOf(s);
-          }
-          catch (Exception e)
-          {
-            i = 0;
-          }
-          setter.invoke(o, new Object[]
-          {
-            i
-          });
-          break;
-        }
-        /**
-         * *****************************************************************************************************************************************************************************************************
-         */
-        case "Date":
-        {
-          Date date = null;
-          if (s != null && s.length() >= field.getFormat().length() - 2)
-          {
-            try
-            {
-              DateFormat format = new SimpleDateFormat(field.getFormat());
-              date = format.parse(s);
               setter.invoke(o, new Object[]
-              {
-                date
-              });
-            }
-            catch (Exception e)
-            {
-              e.printStackTrace();
-            }
-          }
-          break;
-        }
-        /**
-         * *****************************************************************************************************************************************************************************************************
-         */
-        case "Lookup":
-        {
-          if (s != null && s.length() > 0)
-          {
-            try
-            {
-              c = Class.forName("com.rexen.crm.beans." + field.getLookupEntityName());
-              Object example = c.newInstance();
-
-              String method_name = "set" + field.getLookupFieldName();
-              
-              Method method = queryMethod(c, method_name);
-              
-              method.invoke(example, new Object[]
               {
                 s
               });
+            }
+            break;
+          }
+          /**
+           * *****************************************************************************************************************************************************************************************************
+           */
+          case "Integer":
+          {
+            int i = 0;
 
-              Object result = dao.find(example);
-
-              if (result != null)
-              {
-                method_name = "get" + field.getTargetFieldName();
-                
-                method = queryMethod(c, method_name);
-                
-                int lookup_value = (int) method.invoke(result, new Object[]
-                {
-                });
-
-                setter.invoke(o, new Object[]
-                {
-                  lookup_value
-                });
-              }
+            try
+            {
+              i = Integer.valueOf(s);
             }
             catch (Exception e)
             {
-              e.printStackTrace();
+              i = 0;
             }
+            setter.invoke(o, new Object[]
+            {
+              i
+            });
+            break;
           }
-          break;
+          /**
+           * *****************************************************************************************************************************************************************************************************
+           */
+          case "Date":
+          {
+            Date date = null;
+            if (s != null && s.length() >= field.getFormat().length() - 2)
+            {
+              try
+              {
+                DateFormat format = new SimpleDateFormat(field.getFormat());
+                date = format.parse(s);
+                setter.invoke(o, new Object[]
+                {
+                  date
+                });
+              }
+              catch (Exception e)
+              {
+                e.printStackTrace();
+              }
+            }
+            break;
+          }
+          /**
+           * *****************************************************************************************************************************************************************************************************
+           */
+          case "Lookup":
+          {
+            if (s != null && s.length() > 0)
+            {
+              try
+              {
+                c = Class.forName("com.rexen.crm.beans." + field.getLookupEntityName());
+                Object example = c.newInstance();
+
+                String method_name = "set" + field.getLookupFieldName();
+
+                Method method = queryMethod(c, method_name);
+
+                method.invoke(example, new Object[]
+                {
+                  s
+                });
+
+                Object result = dao.find(example);
+
+                if (result != null)
+                {
+                  method_name = "get" + field.getTargetFieldName();
+
+                  method = queryMethod(c, method_name);
+
+                  int lookup_value = (int) method.invoke(result, new Object[]
+                  {
+                  });
+
+                  setter.invoke(o, new Object[]
+                  {
+                    lookup_value
+                  });
+
+                }
+              }
+              catch (Exception e)
+              {
+                e.printStackTrace();
+              }
+            }
+            break;
+          }
+          /**
+           * *****************************************************************************************************************************************************************************************************
+           */
         }
-        /**
-         * *****************************************************************************************************************************************************************************************************
-         */
       }
     }
 
@@ -235,10 +239,11 @@ public class DataImport
     DataImport loader = new DataImport(args[0]);
     loader.load();
   }
-  
+
   public Method queryMethod(Class c, String methodName)
   {
     System.out.println("query method: " + c.getName() + "." + methodName);
+
     HashMap<String, Method> methods = new HashMap<>();
 
     for (Method m : c.getMethods())
@@ -247,5 +252,5 @@ public class DataImport
     }
 
     return methods.get(methodName.toLowerCase());
-  }  
+  }
 }

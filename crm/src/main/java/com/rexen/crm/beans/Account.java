@@ -31,18 +31,17 @@ import com.rexen.crm.integration.DataObject;
 @Entity
 @Table(name = "account")
 @NamedQueries(
-{
+  {
   @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
 })
-public class Account extends DataObject implements Serializable 
+public class Account extends DataObject implements Serializable
 {
+
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Basic(optional = false)
   @Column(name = "id")
   private int id;
-  @Basic(optional = false)
   @Column(name = "name")
   private String name;
   @Column(name = "bdm_code")
@@ -118,7 +117,7 @@ public class Account extends DataObject implements Serializable
   private Date modifyDatetime;
   @Column(name = "responsible_person")
   private String responsiblePerson;
-  
+
   public Account()
   {
   }
