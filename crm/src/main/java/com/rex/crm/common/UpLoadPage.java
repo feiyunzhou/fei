@@ -62,34 +62,66 @@ public class UpLoadPage extends DataPage{
 
     final FileUploadField contact = new FileUploadField("contact");
 
-    final FileUploadField activity = new FileUploadField("activity");
-
     final FileUploadField position = new FileUploadField("position");
 
+    final FileUploadField accountTeam = new FileUploadField("accountTeam");
+
+    final FileUploadField userInfo = new FileUploadField("userInfo");
 	  Form form = new Form("form") {
       @Override
       protected void onSubmit() {
         DataImportDelegate da = new DataImportDelegate();
           FileUpload accountFileUpload = accountFF.getFileUpload();
-          
           if(accountFileUpload != null){
-            String template = "Account Export Full Template 1.0";
+            String template = "Account Full Import Template 1.0";
             String accountFileName = "D:\\tmp\\"+accountFileUpload.getClientFileName();
             try{ 
               accountFileUpload.writeTo(new File(accountFileName));
-              System.out.println("file path: " + accountFileName);
-              da.load("Account Full Import Template 1.0", accountFileName);
+              da.load(template, accountFileName);
             } catch(Exception e){
                 e.printStackTrace();
             }
           }
           FileUpload contactFileUpload = contact.getFileUpload();
           if(contactFileUpload != null){
-            String contactFileName = "D:\\tmp\\"+accountFileUpload.getClientFileName();
-            String template = "Account Export Full Template 1.0";
+            String contactFileName = "D:\\tmp\\"+contactFileUpload.getClientFileName();
+            String template = "Contact  Full Import Template 1.0";
             try{ 
               contactFileUpload.writeTo(new File(contactFileName));
               da.load(template, contactFileName);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+          }
+          FileUpload positionFileUpload = position.getFileUpload();
+          if(positionFileUpload != null){
+            String positionFileName = "D:\\tmp\\"+positionFileUpload.getClientFileName();
+            String template = "Position Full Import Template 1.0";
+            try{ 
+              positionFileUpload.writeTo(new File(positionFileName));
+              da.load(template, positionFileName);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+          }
+          FileUpload accountTeamyFileUpload = accountTeam.getFileUpload();
+          if(accountTeamyFileUpload != null){
+            String accountTeamFileName = "D:\\tmp\\"+accountTeamyFileUpload.getClientFileName();
+            String template = "Account Export Full Template 1.0";
+            try{ 
+              accountTeamyFileUpload.writeTo(new File(accountTeamFileName));
+              da.load(template, accountTeamFileName);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+          }
+          FileUpload userInfoFileUpload = userInfo.getFileUpload();
+          if(contactFileUpload != null){
+            String userInfoFileName = "D:\\tmp\\"+userInfoFileUpload.getClientFileName();
+            String template = "Account Export Full Template 1.0";
+            try{ 
+              userInfoFileUpload.writeTo(new File(userInfoFileName));
+              da.load(template, userInfoFileName);
             } catch(Exception e){
                 e.printStackTrace();
             }
@@ -98,13 +130,13 @@ public class UpLoadPage extends DataPage{
       }
      
     };
-
           add(form);
           form.add(accountFF);
           form.add(contact);
-          form.add(activity);
           form.add(position);
-        
+          form.add(accountTeam);
+          form.add(userInfo);
+          form.setMultiPart(true);
           
           
 	}

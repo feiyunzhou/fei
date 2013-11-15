@@ -45,7 +45,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-          setResponsePage(new UpLoadPage());
+         setResponsePage(new DownLoadPage());
           }
       });
         add(new Link("contact") {
@@ -65,7 +65,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-          setResponsePage(new UpLoadPage());
+         setResponsePage(new DownLoadPage());
           }
       });
         add(new Link("position") {
@@ -85,7 +85,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-          setResponsePage(new UpLoadPage());
+         setResponsePage(new DownLoadPage());
           }
       });
         add(new Link("activity") {
@@ -105,36 +105,16 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-          setResponsePage(new UpLoadPage());
+         setResponsePage(new DownLoadPage());
           }
       });
-//        add(new Link("accountTeam") {
-  //
-//          @Override
-//          public void onClick() {
-//            DataExportDelegate dataExport = new  DataExportDelegate();
-////          String template = DAOImpl.selectTemplate();
-//          String teample = "Account Team Export Full Template 1.0";
-//         HttpServletResponse response = (HttpServletResponse)getRequestCycle().getResponse().getContainerResponse();
-//         try
-//        {
-//          dataExport.export(teample, response);
-//        }
-//        catch (Exception e)
-//        {
-//          // TODO Auto-generated catch block
-//          e.printStackTrace();
-//        }
-//          setResponsePage(new UpLoadPage());
-//          }
-//      });
-        add(new Link("activityCrmuser") {
+        add(new Link("accountCrmuser") {
 
           @Override
           public void onClick() {
             DataExportDelegate dataExport = new  DataExportDelegate();
 //          String template = DAOImpl.selectTemplate();
-          String teample = "ActivityUser Export Full Template 1.0";
+          String teample = "Account Team Export Full Template 1.0";
          HttpServletResponse response = (HttpServletResponse)getRequestCycle().getResponse().getContainerResponse();
          try
         {
@@ -145,7 +125,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-          setResponsePage(new UpLoadPage());
+         setResponsePage(new DownLoadPage());
           }
       });  
 	}
