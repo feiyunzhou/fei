@@ -36,6 +36,7 @@ public class UserInfo {
     private String position_code;
     private int positionId;
     private String office_tel;
+    private int num_of_signIn;
     public int getPositionId()
   {
     return positionId;
@@ -282,6 +283,12 @@ public class UserInfo {
 		}
 		public void setOffice_tel(String office_tel) {
 			this.office_tel = office_tel;
+		}
+		public int getNum_of_signIn() {
+			return num_of_signIn;
+		}
+		public void setNum_of_signIn(int num_of_signIn) {
+			this.num_of_signIn = num_of_signIn;
 		}
         
 		

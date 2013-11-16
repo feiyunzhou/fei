@@ -41,6 +41,7 @@ import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.beans.Province;
 import com.rex.crm.beans.UserInfo;
+import com.rex.crm.beans.UserPosition;
 import com.rex.crm.common.Entity;
 import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.Configuration;
@@ -1117,8 +1118,8 @@ public class DAOImpl
     public static long createNewCrmUser(String entityName,List<String> fieldNames,List<String> values,String userId){
     	String fieldssql = Joiner.on(",").join(fieldNames);
         String valuesql = Joiner.on(",").join(values);
-        fieldssql = fieldssql + ",isActivited,ts";
-   	 	valuesql =  valuesql + ",0,"+System.currentTimeMillis();
+        fieldssql = fieldssql + ",isActivited,num_of_signIn,password,ts";
+   	 	valuesql =  valuesql + ",1,0,'"+DigestUtils.md5Hex("12345")+"',"+System.currentTimeMillis();
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
    	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
@@ -1821,7 +1822,6 @@ public class DAOImpl
     }
     //修改用户激活状态
     public static void updateUserActivited(int entityId){
-    	System.err.println("update activited");
     	String  sql=" UPDATE userinfo SET isActivited=? where id =?";
         Connection conn = null;
         try {
@@ -1982,5 +1982,36 @@ public class DAOImpl
         } finally {
             DBHelper.closeConnection(conn);
         }
+    }
+    //update signIn number
+    public static void addSignInNumber(int userId,int number){
+    	String  sql=" UPDATE userinfo SET num_of_signIn=? where id =?";
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
+            run.update(conn, sql,number,userId);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+    }
+    public static List<UserPosition>  getPositionsByUserId(int userId){
+    	 List<UserPosition> users = Lists.newArrayList();
+         ResultSetHandler<List<UserPosition>> h = new BeanListHandler<UserPosition>(UserPosition.class);
+         Connection conn = null;
+         try {
+             QueryRunner run = new QueryRunner();
+             conn = DBHelper.getConnection();
+             users = run.query(conn, "select * from user_position where userId=?", h, userId);
+         } catch (Exception e) {
+             logger.error("failed to get userPostion table data", e);
+         } finally {
+             DBHelper.closeConnection(conn);
+         }
+
+         return users;
     }
 }

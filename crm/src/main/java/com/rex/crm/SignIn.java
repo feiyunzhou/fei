@@ -16,6 +16,8 @@
  */
 package com.rex.crm;
 
+import java.util.List;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -25,6 +27,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 
 import com.rex.crm.beans.UserInfo;
+import com.rex.crm.beans.UserPosition;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.userlog.LogInOut;
 import com.rex.crm.util.CRMUtility;
@@ -92,15 +95,23 @@ public final class SignIn extends WebPage
               	        	// Sign the user in
               	            if (session.signIn(getUsername(),getPassword()))
                             {
-
                                 LogInOut loginout = new LogInOut();
-
                                 loginout.setLoginName(session.getUser());
                                 loginout.setLogints(System.currentTimeMillis());
                                 loginout.setSessionId(session.getId());
                                 CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
-
-                                setResponsePage(getApplication().getHomePage());
+                                if(user.getNum_of_signIn()==0){
+                                	 setResponsePage(new UpdateSignPassword());
+                                }else{
+                                	//根据userId查找用户岗位。如果岗位有多个则选择岗位
+                                	List<UserPosition> positions = DAOImpl.getPositionsByUserId(user.getId());
+                                	if(positions.size()>1){
+                                		setResponsePage(new SelectPositionPage(positions));
+                                	}else{
+                                		setResponsePage(getApplication().getHomePage());
+                                	}
+                                }
+                                DAOImpl.addSignInNumber(user.getId(),user.getNum_of_signIn()+1);
                             }
               	            else
               	            {

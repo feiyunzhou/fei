@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org">
+    <body>
+        <wicket:extend>
+            <div class="row footer">
+           		<h4>请选择登录岗位:</h4>
+           		<div wicket:id="dataRowRepeater">
+                    <div  wicket:id="columnRepeater"><span wicket:id="celldatafield"></span></div>
+                </div>
+      		</div>
+      		 <wicket:fragment wicket:id="buttonFragment">
+       		 	<A wicket:id="button" class="btn btn-lg btn-info" href="#"><span wicket:id="positionName"></span></A>
+    		</wicket:fragment>
+        </wicket:extend>
+    </body>
+</html>

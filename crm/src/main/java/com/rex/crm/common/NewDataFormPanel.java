@@ -140,9 +140,9 @@ public class NewDataFormPanel extends Panel {
                           textField.add(new AttributeAppender("style", new Model("font-weight:bold;"), ";"));
                           if(currentField.getPriority()==5){
                         	  String message = CRMUtility.getToolTipById(String.valueOf(currentField.getTooltip()));
-                              //textField.add(new AttributeModifier("data-html","true"));         
+                              textField.add(new AttributeModifier("data-content",message));         
                         	  textField.add(new AttributeAppender("class",new Model<String>("icon-question-sign")," "));
-                        	  textField.add(new AttributeModifier("title",message));
+                        	  textField.add(new AttributeModifier("title",currentField.getDisplay()));
                         	  textField.add(new AttributeAppender("class",new Model<String>("tooltip-test")," "));
                           }
                           columnitem.add(textField);
@@ -442,7 +442,7 @@ public class NewDataFormPanel extends Panel {
                     if ("userInfo".equals(entity.getName())) {
                         long crmuserkey = -1;
                         crmuserkey= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
-                        if (crmuserkey >0 ) {
+                        /*if (crmuserkey >0 ) {
                            UserInfo userinfo = DAOImpl.getUserById((int)crmuserkey);
 //                        	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
                             //此时需发送邮件
@@ -451,7 +451,7 @@ public class NewDataFormPanel extends Panel {
                             //创建激活码 getUserByuserCode
                             //传递邮箱地址，用户code.
                             SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ userinfo.getId(), sendEmail);
-                        }
+                        }*/
                     } else {
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
                         if (generatedId > 0) {

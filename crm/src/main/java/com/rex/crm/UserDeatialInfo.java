@@ -123,7 +123,9 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                         fieldName = user.getLoginName();
                     } else if (currentField.getName().equals("sex")) {
                         fieldName = "" + user.getSex();
-                    } else {
+                    } else if (currentField.getName().equals("office_tel")){
+                    	fieldName = "" + user.getOffice_tel();
+                    }else {
                         fieldName = user.getEmail();
                     }
                     if (currentField.getName().equals("sex")) {

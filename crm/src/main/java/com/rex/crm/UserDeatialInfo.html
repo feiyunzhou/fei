@@ -27,7 +27,6 @@
                }
               
              </script>
-            <div class="row-fluid big" >
                 <div  class="row-fluid center">
                     <div wicket:id="promptDiv" class="alert  alert-success" >
 	 					<span wicket:id="promptButton" class="close" data-dismiss="alert"></span>
@@ -36,7 +35,7 @@
                     <form wicket:id="form" class="form-horizontal">
                         <div wicket:id="fieldGroupRepeater">
                                 <div wicket:id="dataRowRepeater" class="form-group">
-                                    <div class="table-column-view " wicket:id="columnRepeater"><div wicket:id="editdata" class="form_datetime"></div></div>
+                                    <div class="table-column " wicket:id="columnRepeater"><div wicket:id="editdata" class="form_datetime"></div></div>
                                 </div>
                         </div>
                         <div class="btn-group user-btn action-btn">
@@ -47,15 +46,14 @@
                         </div>
                     </form>
                 </div>
-            </div>
             <wicket:fragment wicket:id="textInputFragment">
-                <input wicket:id="input" type="text" />
+                <input wicket:id="input" type="text" class="form-control input-sm" />
             </wicket:fragment>
             <wicket:fragment wicket:id="textFragment">
-                <span wicket:id="celldata"></span>
+                <span wicket:id="celldata" ></span>
             </wicket:fragment>
             <wicket:fragment wicket:id="dropDownFragment">
-                <select wicket:id="dropDownInput"></select>
+                <select wicket:id="dropDownInput" class="form-control input-sm" ></select>
             </wicket:fragment>
         </wicket:extend>
     </body>
