@@ -14,6 +14,7 @@ import org.apache.wicket.request.component.IRequestableComponent;
 import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.util.file.File;
 
+import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.EditDataPage;
 import com.rex.crm.common.EntityDetailPage;
@@ -70,7 +71,7 @@ public class WicketApplication extends WebApplication
 	 	     mountPage("/mount/CreateDataPage", CreateDataPage.class);
 	 	     mountPage("/mount/ActivitySelectPage",ActivitySelectPage.class);
 	 	     mountPage("/mount/EntityDetailPage",EntityDetailPage.class);
-	 	    mountPage("/mount/AdminTreePage",AdminTreePage.class);
+	 	     mountPage("/mount/AdminTreePage",AdminTreePage.class);
 	 	    
 	         // Register the authorization strategy
 	         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy()

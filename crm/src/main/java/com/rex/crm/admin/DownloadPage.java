@@ -1,21 +1,22 @@
-package com.rex.crm.common;
+package com.rex.crm.admin;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.markup.html.link.Link;
-import com.rex.crm.DataPage;
 import com.rex.crm.SignIn2Session;
 import com.rexen.crm.integration.DataExportDelegate;
+import com.rex.crm.common.Entity;
 import com.rex.crm.util.Configuration;
 
 
 /**
  * @author Feiyun Zhou 
  */
-public class DownLoadPage extends DataPage{
-    public DownLoadPage(){
+public class DownloadPage extends AdminTemplatePage{
+    
+    public DownloadPage(){
        init();
     }
 
@@ -45,7 +46,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-         setResponsePage(new DownLoadPage());
+         setResponsePage(new DownloadPage());
           }
       });
         add(new Link("contact") {
@@ -65,7 +66,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-         setResponsePage(new DownLoadPage());
+         setResponsePage(new DownloadPage());
           }
       });
         add(new Link("position") {
@@ -85,7 +86,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-         setResponsePage(new DownLoadPage());
+         setResponsePage(new DownloadPage());
           }
       });
         add(new Link("activity") {
@@ -105,7 +106,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-         setResponsePage(new DownLoadPage());
+         setResponsePage(new DownloadPage());
           }
       });
         add(new Link("accountCrmuser") {
@@ -125,7 +126,7 @@ public class DownLoadPage extends DataPage{
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
-         setResponsePage(new DownLoadPage());
+         setResponsePage(new DownloadPage());
           }
       });  
 	}

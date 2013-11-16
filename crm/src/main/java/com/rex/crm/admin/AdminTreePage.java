@@ -1,4 +1,4 @@
-package com.rex.crm;
+package com.rex.crm.admin;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -43,7 +43,7 @@ import com.rex.crm.util.Configuration;
 /**
  * @author Feiyun Zhou
  */
-public class AdminTreePage extends TemplatePage
+public class AdminTreePage extends AdminTemplatePage
 {
   private String search_target = "";
 

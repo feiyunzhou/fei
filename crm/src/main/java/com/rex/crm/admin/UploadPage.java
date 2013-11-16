@@ -1,20 +1,19 @@
-package com.rex.crm.common;
+package com.rex.crm.admin;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.util.file.File;
 
-import com.rex.crm.DataPage;
 import com.rexen.crm.integration.DataImportDelegate;
 
 /**
  * @author Feiyun Zhou
  */
-public class UpLoadPage extends DataPage
+public class UploadPage extends AdminTemplatePage
 {
 
-  public UpLoadPage()
+  public UploadPage()
   {
     init();
   }

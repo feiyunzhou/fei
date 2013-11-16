@@ -24,7 +24,6 @@ import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
 import com.rex.crm.ContactPage;
 import com.rex.crm.CreateEventPage;
-import com.rex.crm.UserPage;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;

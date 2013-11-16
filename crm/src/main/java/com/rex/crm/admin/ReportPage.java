@@ -1,4 +1,4 @@
-package com.rex.crm;
+package com.rex.crm.admin;
 
 import java.util.List;
 import java.util.Map;
@@ -16,23 +16,24 @@ import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.db.DAOImpl;
 import com.rexen.crm.beans.UserRole;
 import com.rex.crm.util.Configuration;
+import com.rex.crm.SignIn2Session;
 
 /**
  * @author Feiyun Zhou
  */
-public class UserPage extends TemplatePage
+public class ReportPage extends AdminTemplatePage
 {
   private String search_target = "";
 
   /**
    * Constructor
    */
-  public UserPage()
+  public ReportPage()
   {
     initPage(null, null);
   }
 
-  public UserPage(final Map<String, Boolean> filter, List tdata)
+  public ReportPage(final Map<String, Boolean> filter, List tdata)
   {
     initPage(filter, tdata);
   }
@@ -40,7 +41,7 @@ public class UserPage extends TemplatePage
   public void initPage(final Map<String, Boolean> filter, List tdata)
   {
     Map<String, Entity> entities = Configuration.getEntityTable();
-    final Entity entity = entities.get("userInfo");
+    final Entity entity = entities.get("callreport");
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
     final String userId = ((SignIn2Session) getSession()).getUserId();
     setPageTitle(entity.getDisplay());
@@ -140,7 +141,7 @@ public class UserPage extends TemplatePage
           tdata = DAOImpl.queryEntityRelationList(sql);
           break;
           case UserRole.USER_ROLE_MANAGER:
-          tdata = DAOImpl.queryEntityRelationList(sql, userId);
+          tdata = DAOImpl.queryEntityRelationList(sql, userId );
           break;
           case UserRole.USER_ROLE_SALES:
           tdata = DAOImpl.queryEntityRelationList(sql, userId);
@@ -172,25 +173,8 @@ public class UserPage extends TemplatePage
         }
         
       }
-
     }
     add(new PageableTablePanel("datalist", entity, tdata, null));
-
-    // for the side bar
-    List<Pair<String, Map<String, Object>>> types = null;
-    switch (roleId)
-    {
-      case UserRole.USER_ROLE_ADMINISTRATOR:
-      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist());
-      break;
-      case UserRole.USER_ROLE_MANAGER:
-      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(),userId);
-      break;
-      case UserRole.USER_ROLE_SALES:
-      types = DAOImpl.queryFilters(sql,entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), userId);
-      break;
-    }
-    add(new FilterPanel("filterPanel", types, filter, UserPage.class));
 
   }
 }

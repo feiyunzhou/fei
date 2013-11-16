@@ -528,13 +528,13 @@ public class DAOImpl
         menulist.add("activity");
         menulist.add("coaching");
      if(roleId == 1){
-//       menulist.add("data_exchange_teample");
-       menulist.add("callreport");
-       menulist.add("DownLoadPage");
+       //menulist.add("data_exchange_teample");
+       //menulist.add("callreport");
+       //menulist.add("DownLoadPage");
        menulist.add("admintree");
      }
-        menulist.add("crmuser");
-        menulist.add("userInfo");
+         //menulist.add("crmuser");
+         //menulist.add("userInfo");
         return menulist;
     }
 

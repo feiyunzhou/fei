@@ -49,12 +49,11 @@ import org.apache.wicket.behavior.AttributeAppender;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
 import com.rex.crm.ajax.FunctionInvoker;
 import com.rex.crm.beans.UserInfo;
-import com.rex.crm.common.DownLoadPage;
-import com.rex.crm.common.UpLoadPage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.userlog.LogInOut;
 import com.rex.crm.util.CRMUtility;
@@ -110,11 +109,11 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         item.setId("navitem-coaching");
         builder.put("coaching", item);
         
-        item = new MenuItem();
-        item.setCaption("<i class=\" icon-sitemap icon-large\"></i>岗位");
-        item.setDestination(PositionPage.class);
-        item.setId("navitem-crmuser");
-        builder.put("crmuser", item);
+//        item = new MenuItem();
+//        item.setCaption("<i class=\" icon-sitemap icon-large\"></i>岗位");
+//        item.setDestination(PositionPage.class);
+//        item.setId("navitem-crmuser");
+//        builder.put("crmuser", item);
        
 ////        item = new MenuItem();
 ////        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>模板");
@@ -122,29 +121,29 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 ////        item.setId("navitem-data_exchange_teample");
 ////        builder.put("data_exchange_teample", item);
 //        
-        item = new MenuItem();
-        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>数据管理");
-        item.setDestination(UpLoadPage.class);
-        item.setId("navitem-DownLoadPage");
-        builder.put("DownLoadPage", item);
-        
-        item = new MenuItem();
-        item.setCaption("<i class=\"icon-book icon-large\"></i>报表");
-        item.setDestination(ReportPage.class);
-        item.setId("navitem-callreport");
-        builder.put("callreport", item);
-        
+//        item = new MenuItem();
+//        item.setCaption("<i class=\" icon-upload-alt icon-large\"></i>数据管理");
+//        item.setDestination(UpLoadPage.class);
+//        item.setId("navitem-DownLoadPage");
+//        builder.put("DownLoadPage", item);
+//        
+//        item = new MenuItem();
+//        item.setCaption("<i class=\"icon-book icon-large\"></i>报表");
+//        item.setDestination(ReportPage.class);
+//        item.setId("navitem-callreport");
+//        builder.put("callreport", item);
+//        
         item = new MenuItem();
         item.setCaption("<i class=\"icon-book icon-large\"></i>数据");
         item.setDestination(AdminTreePage.class);
         item.setId("navitem-admintree");
         builder.put("admintree", item);
         
-        item = new MenuItem();
-        item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
-        item.setDestination(UserPage.class);
-        item.setId("navitem-userInfo");
-        builder.put("userInfo", item);
+//        item = new MenuItem();
+//        item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
+//        item.setDestination(UserPage.class);
+//        item.setId("navitem-userInfo");
+//        builder.put("userInfo", item);
         
         
         

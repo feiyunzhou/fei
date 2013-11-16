@@ -2,6 +2,9 @@ package com.rex.crm;
 
 import org.apache.wicket.Page;
 
+import com.rex.crm.admin.PositionPage;
+import com.rex.crm.admin.UserPage;
+
 public class PageFactory {
   
     public static Page createPage(String name){
