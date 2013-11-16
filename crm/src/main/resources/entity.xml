@@ -70,7 +70,7 @@
 			<field>
 
 				<name>id</name>
-				<display>医院编码</display>
+				<display>编码</display>
 				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -167,7 +167,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_local_or_army_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -180,7 +180,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_comprehensive_or_specialized_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -206,7 +206,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_point_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -219,7 +219,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -668,7 +668,7 @@ where crmuser.reportto=? and
 		<fields>
 			<field>
 				<name>id</name>
-				<display>CRM医生编码</display>
+				<display>编码</display>
 				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -813,7 +813,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -830,7 +830,7 @@ where crmuser.reportto=? and
 			</field>
 			<field>
 				<name>cellphone</name>
-				<display>移动电话号码</display>
+				<display>手机号码</display>
 				<isRequired>false</isRequired>
 				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -849,7 +849,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -1301,7 +1301,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			<field>
 				<name>cellPhone</name>
-				<display>移动电话号码</display>
+				<display>手机号码</display>
 				<isRequired>false</isRequired>
 				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -1923,7 +1923,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<fields>
 			<field>
 				<name>id</name>
-				<display>拜访编码</display>
+				<display>编码</display>
 				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1961,8 +1961,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<default-value-type>val</default-value-type>
-				<default-value>拜访</default-value>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2018,7 +2016,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -2032,7 +2030,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_visiting_purpose_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<isBaseInfo>true</isBaseInfo>
 				<parentNode>activity_type</parentNode>
 				<fieldGroup>基本信息</fieldGroup>
@@ -2164,7 +2162,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_status_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 
@@ -2495,7 +2493,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<fields>
 			<field>
 				<name>id</name>
-				<display>辅导编码</display>
+				<display>编码</display>
 				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -2608,7 +2606,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2635,7 +2633,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_coachtime_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -2667,7 +2665,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2683,7 +2681,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>2</default-value>
-				<priority>1</priority>
+				<priority>2</priority>
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2696,7 +2694,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_status_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -3924,8 +3922,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
-			</field><field>
+				<priority>2</priority>
+			</field>
+			<field>
 				<name>comprehensive_or_specialized</name>
 				<display>综合/专科医院</display>
 				<data-type>text</data-type>
@@ -3943,7 +3942,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 			</field><field>
 				<name>Account_status</name>
 				<display>状态</display>

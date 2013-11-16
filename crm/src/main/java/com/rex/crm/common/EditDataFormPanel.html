@@ -36,7 +36,7 @@
                                     
                                 </div>
                                 <div class="table-content panel-body">
-                                    <div  class="table-cell"  wicket:id="dataRowRepeater">
+                                    <div  class="table-cell form-group"  wicket:id="dataRowRepeater">
                                         <div class="table-column " wicket:id="columnRepeater"><div wicket:id="editdata" class="form_datetime"></div></div>
                                     </div>
                                 </div>
@@ -60,20 +60,24 @@
 		<span wicket:id="add"></span>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="textInputFragment">
-		<input wicket:id="input" />
+		<input wicket:id="input" class="form-control input-sm" />
 	</wicket:fragment>
 	<wicket:fragment wicket:id="dropDownFragment">
-		<select wicket:id="dropDownInput"></select>
+		<select wicket:id="dropDownInput" class="form-control input-sm" ></select>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="textAreaFragment">
-		<textarea  wicket:id="address" row="2" cols="40" ></textarea >
+		<textarea  wicket:id="address" row="2" cols="40"  class="form-control input-sm" ></textarea >
 	</wicket:fragment>
 	<wicket:fragment wicket:id="radioChoiceFragment">
 		<span  wicket:id="radioChoiceinput" ></span>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="relationTableSearchFragment">
-		<input type="text" required="required" readonly wicket:id="selected_value_input" class="input input-small" />
-		<input type="hidden" class="input" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
-		<a href="#" class="" wicket:id="search_btn" id="search_click"  title="查找"><i class="icon-search"></i></a>
+       <div class="input-group">
+		<input type="text" required="required" readonly wicket:id="selected_value_input" class="form-control input-sm"/>
+		<span class="input-group-addon input-sm"> 
+		   <a href="#" class="" wicket:id="search_btn" id="search_click"  title="查找">查找</a>
+        </span>
+        <input type="hidden" class="form-control  input-sm" style="width:0px;height:0px;" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
+        </div>
 	</wicket:fragment>
 </wicket:panel>

@@ -571,7 +571,7 @@ public class NewDataFormPanel extends Panel {
             TextArea<String> textArea =  new TextArea<String>("address", model);
             add(textArea);
             if (currentField.isRequired()) {
-              textArea.add(new AttributeAppender("class","required-field"));
+              textArea.add(new AttributeAppender("class",new Model("required-field")," "));
           }
         }
     }
@@ -618,7 +618,7 @@ public class NewDataFormPanel extends Panel {
             }
             if (currentField.isRequired()) {
 //              text.add(new AttributeModifier("required", new Model("required")));
-              text.add(new AttributeAppender("class","required-field"));
+              text.add(new AttributeAppender("class",new Model("required-field")," "));
             }
             if(currentField.getName().equals("title")){
             	 text.add(new AttributeModifier("placeholder","系统可自动生成"));

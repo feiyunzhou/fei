@@ -57,7 +57,7 @@
                             
                         </div>
                         <div class="table-content panel-body">
-                            <div class="table-cell" wicket:id="dataRowRepeater">
+                            <div class="table-cell form-group" wicket:id="dataRowRepeater">
                                 <div class="table-column " wicket:id="columnRepeater"><div wicket:id="celldatafield" class="form_datetime"></div></div>
                             </div>
                         </div>
@@ -78,20 +78,27 @@
         <span wicket:id="add" ></span>
     </wicket:fragment>
     <wicket:fragment wicket:id="textAreaFragment">
-        <textarea  wicket:id="address" cols="30" rows="2" ></textarea >
+        <textarea  wicket:id="address" cols="30" rows="2" class="form-control input-sm" ></textarea >
     </wicket:fragment>
     <wicket:fragment wicket:id="textInputFragment">
-        <input wicket:id="input" />
+        <input wicket:id="input" class="form-control  input-sm"/>
     </wicket:fragment>
     <wicket:fragment wicket:id="fileUplodeFragment"> 
-        <input type="file" wicket:id="fileUplode"/> 
+        <input type="file" class="form-control input-sm" wicket:id="fileUplode"/> 
     </wicket:fragment>
     <wicket:fragment wicket:id="dropDownFragment">
-        <select wicket:id="dropDownInput"></select>
+        <select class="form-control input-sm" wicket:id="dropDownInput"></select>
     </wicket:fragment>
     <wicket:fragment wicket:id="relationTableSearchFragment">
-        <input type="text"  required="required"  wicket:id="selected_value_input" disabled="disabled" class="input input-small" />
-        <input type="hidden" class="input" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
-        <a href="#" class="search-btn" wicket:id="search_btn" id="search_click"  title="鎼滅储" target="_blank"><i class="icon-search"></i></a>
-    </wicket:fragment>
+  <div class="input-group">
+   <input type="text" required="required" wicket:id="selected_value_input" disabled="disabled" class="form-control input-sm" />
+         
+         <span class="input-group-addon input-sm"> 
+             <a wicket:id="search_btn" id="search_click" target="_blank">
+                <!--  <i class="icon-search"></i> -->查找
+            </a>
+        </span>
+        <input type="hidden" class="form-control  input-sm" style="width:0px;height:0px;" wicket:id="selected_id_hidden" />&nbsp;&nbsp; 
+  </div>
+ </wicket:fragment>
 </wicket:panel>
