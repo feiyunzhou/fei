@@ -184,7 +184,7 @@ public class EditDataFormPanel extends Panel {
                                         @Override
                                         public List<? extends Choice> getObject() {
                                             IModel pm = parentModels.get(currentField.getParentNode());
-                                            if (pm != null) {
+                                            if (pm != null && pm.getObject() !=null && pm.getObject() instanceof Choice) {
                                                 choices = DAOImpl.queryPickListByFilter(currentField.getPicklist(), "parentId", String.valueOf(((Choice) pm.getObject()).getId()));
 
                                             } else {

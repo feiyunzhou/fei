@@ -33,7 +33,7 @@ public class CRMUser {
     private long ts;
     private int pl1;
     private int level;
-    private String position_code;
+    private String code;
     
 	public String getName() {
 		return name;
@@ -260,12 +260,12 @@ public class CRMUser {
             this.level = level;
         }
 
-        public String getPosition_code() {
-            return position_code;
+        public String getCode() {
+            return code;
         }
 
-        public void setPosition_code(String position_code) {
-            this.position_code = position_code;
+        public void setCode(String code) {
+            this.code = code;
         }
 
 		

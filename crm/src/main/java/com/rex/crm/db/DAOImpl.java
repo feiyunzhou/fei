@@ -404,6 +404,8 @@ public class DAOImpl
         return user;
     }
 
+    
+    
     public static void insertRelationOfAccountIDCRMUserID(int accountId, int userId) throws Exception {
         // Account account = accountIndexTable.get(accountId);
         CRMUser user = DAOImpl.getCRMUserInfoById(userId);
@@ -529,6 +531,7 @@ public class DAOImpl
 //       menulist.add("data_exchange_teample");
        menulist.add("callreport");
        menulist.add("DownLoadPage");
+       menulist.add("admintree");
      }
         menulist.add("crmuser");
         menulist.add("userInfo");
@@ -1507,7 +1510,6 @@ public class DAOImpl
             search_target = "";
         }
         String sql = "select * from (select contact.id as cid,contact.name as cname,account.name as aname from contact,account,contactcrmuser where contactcrmuser.crmuserId="+userId+" AND contactcrmuser.contactId = contact.id AND contact.accountId=account.id AND (contact.name like '%"+search_target+"%' OR account.name like '%"+search_target+"%')) as a";
-        logger.debug("weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee             "+sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
@@ -1738,11 +1740,34 @@ public class DAOImpl
             u.setId(user.getId());
             u.setRole(user.getRole());
             u.setLoginName(user.getLoginName());
+            u.setCode(user.getCode());
             inferiors.add(u);
         }
         
         return inferiors;
     }
+    
+    public static List<CRMUser> getCRMUserWithoutSuperior() {
+       
+        List<CRMUser> users = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
+
+            users = run.query(conn, "SELECT * FROM crmuser where (reportto=0 OR reportto=-1 OR (reportto is NULL)) AND id != -1", h);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all crm users", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return users;
+    }
+    
+    
     // update crmuser baseInfo
     public static boolean updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex,String loginName) {
     	String sql = "UPDATE userinfo SET name=?,cellphone=?,email=?,photo=?,sex=?,loginName=? where id=?";
@@ -1859,6 +1884,7 @@ public class DAOImpl
         return false;
     }
     
+    
     public static UserInfo getUserById(int entityId){
       System.out.println("根据crmuserID获取用户" + entityId);
         Connection conn = null;
@@ -1875,6 +1901,11 @@ public class DAOImpl
         }
         return userInfo;
     }
+    public static CRMUser getCrmUserById(String entityId){
+        int id = Integer.parseInt(entityId);
+        return getCrmUserById(id);
+    }
+    
     //根据crmuserid获取crm对象
     public static CRMUser getCrmUserById(int entityId){
     	System.out.println("根据crmuserID获取用户" + entityId);

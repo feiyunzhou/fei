@@ -135,10 +135,19 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         builder.put("callreport", item);
         
         item = new MenuItem();
+        item.setCaption("<i class=\"icon-book icon-large\"></i>数据");
+        item.setDestination(AdminTreePage.class);
+        item.setId("navitem-admintree");
+        builder.put("admintree", item);
+        
+        item = new MenuItem();
         item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
         item.setDestination(UserPage.class);
         item.setId("navitem-userInfo");
         builder.put("userInfo", item);
+        
+        
+        
         
         
         
