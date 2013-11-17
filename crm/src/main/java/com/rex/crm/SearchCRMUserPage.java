@@ -52,6 +52,7 @@ public class SearchCRMUserPage extends WebPage {
         StringValue value = this.getRequest().getRequestParameters().getParameterValue("cid");
         StringValue entityname = getRequest().getRequestParameters().getParameterValue("entityname");
         StringValue postId = this.getRequest().getRequestParameters().getParameterValue("positionId");
+        
         if (value != null) {
             entityId = value.toString();
         }
@@ -61,7 +62,7 @@ public class SearchCRMUserPage extends WebPage {
         initPage(entityname.toString(), null, entityId,uid, type);
     }
 
-    public SearchCRMUserPage(String entityName, String entityId, String uid, int type) {
+    public SearchCRMUserPage(String entityName, final String entityId, String uid, int type) {
         //logger.debug("sdfsfsdfdsf:"+entityName);
         this.entityId = entityId;
         this.type = type;
@@ -69,14 +70,14 @@ public class SearchCRMUserPage extends WebPage {
         initPage(entityName, null, entityId,uid, type);
     }
 
-    public SearchCRMUserPage(List<Map> maplist, String entityName, String cid, String uid,int type) {
-        entityId = cid;
+    public SearchCRMUserPage(List<Map> maplist, String entityName, final String entityId, String uid,int type) {
+        this.entityId = entityId;
         this.type = type;
         this.uid = uid;
-        initPage(entityName, maplist, cid,uid, type);
+        initPage(entityName, maplist, entityId,uid, type);
     }
 
-    public void initPage(final String entityname, List<Map> list, final String cid, final String uid, final int type) {
+    public void initPage(final String entityname, List<Map> list, final String entityId, final String uid, final int type) {
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
@@ -95,7 +96,7 @@ public class SearchCRMUserPage extends WebPage {
                 }
 
 
-                setResponsePage(new SearchCRMUserPage(maplist, entityname, cid,uid, type));
+                setResponsePage(new SearchCRMUserPage(maplist, entityname, entityId,uid, type));
 
             }
         };
@@ -106,22 +107,6 @@ public class SearchCRMUserPage extends WebPage {
 
 
         Form users_sbumission_form = new Form("users_sbumission_form");
-//        {
-//            @Override
-//            protected void onSubmit() {
-//
-//                logger.debug("seletedUserIds:" + selectedUserIds);
-//                for (String positionId : selectedUserIds) {
-//                    try {
-//                        DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, cid,positionId ,type);
-//
-//                    } catch (Exception e) {
-//                    }
-//                }
-//                setResponsePage(new EntityDetailPage(entityname, cid));
-//
-//            }
-//        };
         
         users_sbumission_form.add(new AjaxButton("ajax-button", users_sbumission_form)
         {
@@ -131,14 +116,14 @@ public class SearchCRMUserPage extends WebPage {
                 logger.debug("seletedUserIds:" + selectedUserIds);
               for (String positionId : selectedUserIds) {
                   try {
-                      DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, cid,positionId ,type);
+                      DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, entityId,positionId ,type);
 
                   } catch (Exception e) {
                   
                   }
               }
               
-              target.appendJavaScript("alert('test'); window.close();");
+              target.appendJavaScript(" window.opener.location.href='./EntityDetailPage?entityName="+entityname+"&id="+entityId+"'; window.close();");
             }
 
             @Override

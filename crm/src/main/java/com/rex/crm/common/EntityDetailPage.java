@@ -17,6 +17,7 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 
@@ -42,7 +43,7 @@ public class EntityDetailPage extends TemplatePage {
 
     private static int NUM_OF_COLUMN  = 3;
     public EntityDetailPage(){
-    	String entityId = this.getRequest().getRequestParameters().getParameterValue("eventid").toString();
+    	String entityId = this.getRequest().getRequestParameters().getParameterValue("id").toString();
   	  	String nameForEntity = this.getRequest().getRequestParameters().getParameterValue("entityName").toString();
   	  	if(null==entityId&&null==nameForEntity){
   	  		System.out.println("null");
@@ -146,7 +147,11 @@ public class EntityDetailPage extends TemplatePage {
              con3.setVisible(false);
          }else if(entityName.equalsIgnoreCase("crmuser")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
-             add(new TeamManPanel("teamPanel2",entityName,String.valueOf(lid),1));
+             //add(new TeamManPanel("teamPanel2",entityName,String.valueOf(lid),1));
+            // WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
+            // add(con2); 
+             //con2.setVisible(false);
+             add(new EmptyPanel("teamPanel2"));
              add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
          }
          else{
