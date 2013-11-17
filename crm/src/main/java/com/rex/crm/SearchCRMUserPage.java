@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
@@ -103,22 +105,50 @@ public class SearchCRMUserPage extends WebPage {
 
 
 
-        Form users_sbumission_form = new Form("users_sbumission_form") {
+        Form users_sbumission_form = new Form("users_sbumission_form");
+//        {
+//            @Override
+//            protected void onSubmit() {
+//
+//                logger.debug("seletedUserIds:" + selectedUserIds);
+//                for (String positionId : selectedUserIds) {
+//                    try {
+//                        DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, cid,positionId ,type);
+//
+//                    } catch (Exception e) {
+//                    }
+//                }
+//                setResponsePage(new EntityDetailPage(entityname, cid));
+//
+//            }
+//        };
+        
+        users_sbumission_form.add(new AjaxButton("ajax-button", users_sbumission_form)
+        {
             @Override
-            protected void onSubmit() {
-
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+            {
                 logger.debug("seletedUserIds:" + selectedUserIds);
-                for (String positionId : selectedUserIds) {
-                    try {
-                        DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, cid,positionId ,type);
+              for (String positionId : selectedUserIds) {
+                  try {
+                      DAOImpl.insertRelationOfEntityIDCRMUserID(entityname, cid,positionId ,type);
 
-                    } catch (Exception e) {
-                    }
-                }
-                setResponsePage(new EntityDetailPage(entityname, cid));
-
+                  } catch (Exception e) {
+                  
+                  }
+              }
+              
+              target.appendJavaScript("alert('test'); window.close();");
             }
-        };
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form)
+            {
+                // repaint the feedback panel so errors are shown
+                //target.add(feedback);
+            }
+        });
+        
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         add(users_sbumission_form);
         CheckGroup group = new CheckGroup("group", new PropertyModel(this, "selectedUserIds"));

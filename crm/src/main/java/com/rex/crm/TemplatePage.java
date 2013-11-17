@@ -50,6 +50,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.rex.crm.admin.AdminTreePage;
+import com.rex.crm.admin.DownloadPage;
+import com.rex.crm.admin.PositionPage;
+import com.rex.crm.admin.ReportPage;
+import com.rex.crm.admin.UploadPage;
+import com.rex.crm.admin.UserPage;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
 import com.rex.crm.ajax.FunctionInvoker;
@@ -133,11 +138,11 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 //        item.setId("navitem-callreport");
 //        builder.put("callreport", item);
 //        
-        item = new MenuItem();
-        item.setCaption("<i class=\"icon-book icon-large\"></i>数据");
-        item.setDestination(AdminTreePage.class);
-        item.setId("navitem-admintree");
-        builder.put("admintree", item);
+//        item = new MenuItem();
+//        item.setCaption("<i class=\"icon-book icon-large\"></i>数据");
+//        item.setDestination(AdminTreePage.class);
+//        item.setId("navitem-admintree");
+//        builder.put("admintree", item);
         
 //        item = new MenuItem();
 //        item.setCaption("<i class=\"icon-user icon-large\"></i>用户");
@@ -210,6 +215,24 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         BookmarkablePageLink user_settings_link = new BookmarkablePageLink("user_settings_link",UserDeatialInfo.class);
         add(user_settings_link);
         user_settings_link.add(new Label("loginName",user.getName()));
+        
+        BookmarkablePageLink adminTreePage = new BookmarkablePageLink("adminTreePage",AdminTreePage.class );
+        add(adminTreePage);
+     
+        BookmarkablePageLink positionPage = new BookmarkablePageLink("positionPage",PositionPage.class );
+        add(positionPage);
+        
+        BookmarkablePageLink reportPage = new BookmarkablePageLink("reportPage",ReportPage.class );
+        add(reportPage);
+        
+        BookmarkablePageLink uploadPage = new BookmarkablePageLink("uploadPage",UploadPage.class );
+        add(uploadPage);
+        
+        BookmarkablePageLink downloadPage = new BookmarkablePageLink("downloadPage",DownloadPage.class );
+        add(downloadPage);
+        
+        BookmarkablePageLink userPage = new BookmarkablePageLink("userPage",UserPage.class );
+        add(userPage);
         
         //end of populate menu items
 		

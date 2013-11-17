@@ -41,23 +41,6 @@ public class AdminTemplatePage extends TemplatePage
   public AdminTemplatePage()
   {
 
-      BookmarkablePageLink adminTreePage = new BookmarkablePageLink("adminTreePage",AdminTreePage.class );
-      add(adminTreePage);
-   
-      BookmarkablePageLink positionPage = new BookmarkablePageLink("positionPage",PositionPage.class );
-      add(positionPage);
-      
-      BookmarkablePageLink reportPage = new BookmarkablePageLink("reportPage",ReportPage.class );
-      add(reportPage);
-      
-      BookmarkablePageLink uploadPage = new BookmarkablePageLink("uploadPage",UploadPage.class );
-      add(uploadPage);
-      
-      BookmarkablePageLink downloadPage = new BookmarkablePageLink("downloadPage",DownloadPage.class );
-      add(downloadPage);
-      
-      BookmarkablePageLink userPage = new BookmarkablePageLink("userPage",UserPage.class );
-      add(userPage);
   }
 
 }

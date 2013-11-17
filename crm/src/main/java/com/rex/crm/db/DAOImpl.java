@@ -531,7 +531,7 @@ public class DAOImpl
        //menulist.add("data_exchange_teample");
        //menulist.add("callreport");
        //menulist.add("DownLoadPage");
-       menulist.add("admintree");
+       //menulist.add("admintree");
      }
          //menulist.add("crmuser");
          //menulist.add("userInfo");
