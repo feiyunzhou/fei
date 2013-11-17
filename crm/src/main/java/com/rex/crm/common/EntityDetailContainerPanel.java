@@ -17,6 +17,7 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
@@ -105,30 +106,19 @@ public class EntityDetailContainerPanel   extends Panel {
            item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),params));
            
          }
-         if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("account")){
+         if(entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
-//             add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),1));
-             WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
-             add(con2); 
-             con2.setVisible(false);
-             WebMarkupContainer con3 = new WebMarkupContainer("teamPanel3");
-             add(con3); 
-             con3.setVisible(false);
+             add(new EmptyPanel("teamPanel2"));
+             add(new EmptyPanel("teamPanel3"));
          }else if(entityName.equalsIgnoreCase("crmuser")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
-             add(new TeamManPanel("teamPanel2",entityName,String.valueOf(lid),1));
+             add(new EmptyPanel("teamPanel2"));
              add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
          }
          else{
-             WebMarkupContainer con = new WebMarkupContainer("teamPanel");
-             add(con); 
-             con.setVisible(false);
-             WebMarkupContainer con2 = new WebMarkupContainer("teamPanel2");
-             add(con2);
-             con2.setVisible(false);
-             WebMarkupContainer con3 = new WebMarkupContainer("teamPanel3");
-             add(con3);
-             con3.setVisible(false);
+             add(new EmptyPanel("teamPanel"));
+             add(new EmptyPanel("teamPanel2"));
+             add(new EmptyPanel("teamPanel3"));
          }
 
          add(new AbstractAjaxBehavior(){

@@ -603,19 +603,6 @@
 			where contact.id != -1 and accountcrmuser.crmuserid = ?) as aContact
 		</sql>
 		<sql-manager>
-<!-- 			select * from (select contact.*\, -->
-<!-- 			contact_generalization_target_pl.val as product_target_val\, -->
-<!-- 			"account.name" as accountName_val -->
-<!-- 			from contact -->
-<!-- 			left join contact_generalization_target_pl on contact.product_target = -->
-<!-- 			contact_generalization_target_pl.id -->
-<!-- 			left join account on contact.accountId = account.id -->
-<!-- 			where contact.id != -1 and -->
-<!-- 			( -->
-<!-- 			contact.id in (select contactid from contactcrmuser where crmuserid = ?) or -->
-<!-- 			contact.id in (select contactcrmuser.contactid from crmuser -->
-<!-- 			left join contactcrmuser on crmuser.id = contactcrmuser.crmuserid -->
-<!-- 			where crmuser.reportto = ?))) as aContact -->
 select * from (select  aContact.*\,contact_generalization_target_pl.val as product_target_val\,
 "account.name" as accountName_val from (select distinct contact.id as cid\,contact.*
 from contact\, accountcrmuser\,crmuser 

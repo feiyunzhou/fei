@@ -31,6 +31,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -169,7 +170,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 	 */
 	public TemplatePage() {
 		
-	  final int roleId = ((SignIn2Session) getSession()).getRoleId();
+	    final int roleId = ((SignIn2Session) getSession()).getRoleId();
 		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
 		UserInfo user = DAOImpl.getUserInfoById(Integer.parseInt(((SignIn2Session) getSession()).getUserId()));
 		
@@ -212,27 +213,35 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
             }
             
         });
+        
+       
         BookmarkablePageLink user_settings_link = new BookmarkablePageLink("user_settings_link",UserDeatialInfo.class);
         add(user_settings_link);
         user_settings_link.add(new Label("loginName",user.getName()));
         
+        
+        WebMarkupContainer admin_menu = new WebMarkupContainer("admin_menu"); 
+        add(admin_menu);
         BookmarkablePageLink adminTreePage = new BookmarkablePageLink("adminTreePage",AdminTreePage.class );
-        add(adminTreePage);
+        admin_menu.add(adminTreePage);
      
         BookmarkablePageLink positionPage = new BookmarkablePageLink("positionPage",PositionPage.class );
-        add(positionPage);
+        admin_menu.add(positionPage);
         
         BookmarkablePageLink reportPage = new BookmarkablePageLink("reportPage",ReportPage.class );
-        add(reportPage);
+        admin_menu.add(reportPage);
         
         BookmarkablePageLink uploadPage = new BookmarkablePageLink("uploadPage",UploadPage.class );
-        add(uploadPage);
+        admin_menu.add(uploadPage);
         
         BookmarkablePageLink downloadPage = new BookmarkablePageLink("downloadPage",DownloadPage.class );
-        add(downloadPage);
+        admin_menu.add(downloadPage);
         
         BookmarkablePageLink userPage = new BookmarkablePageLink("userPage",UserPage.class );
-        add(userPage);
+        admin_menu.add(userPage);
+        
+        admin_menu.setVisible(false);
+        if(roleId == 1) admin_menu.setVisible(true);
         
         //end of populate menu items
 		
