@@ -348,18 +348,6 @@ public class NewDataFormPanel extends Panel {
                     if(field.getPriority()==5){
                     	total_score+=Integer.parseInt(models.get(key).getObject().toString());
                     }
-                    if(field.getDataType().equalsIgnoreCase("file")){
-                      if(fileFields.size()>0){
-                      final  FileUpload upload = fileFields.get(0).getFileUpload();
-                      if(upload != null) {
-                        try{ 
-                          upload.writeTo(new File("D:\\tmp\\"+upload.getClientFileName()));
-                        } catch(IOException e){
-                            e.printStackTrace();
-                        }
-                      }
-                      }
-                    }
                     
                     if (models.get(key).getObject() instanceof String) {
                       if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
@@ -427,17 +415,6 @@ public class NewDataFormPanel extends Panel {
                 	  values.add(""+total_score+"");
               		  fieldNames.add("total_score");
                   }
-//                  int i=0;
-//                  for(String fn:fieldNames){
-//                    System.out.println(i+":::"+fn);
-//                    i++;
-//                  }
-//                  i = 0;
-//                  
-//                  for(String v:values){
-//                      System.out.println(i+":::"+v);
-//                      i++;
-//                  }
             		//if entity is crmuser  add loginName
                     if ("userInfo".equals(entity.getName())) {
                         long crmuserkey = -1;
@@ -455,7 +432,7 @@ public class NewDataFormPanel extends Panel {
                     } else {
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
                         if (generatedId > 0) {
-                            DAOImpl.insert2UserRelationTable(entity.getName(),posId,
+                            DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,
                                     String.valueOf(generatedId));
                         }
                     }

@@ -435,6 +435,9 @@ public class DAOImpl
         int uid = Integer.parseInt(userId);
         if (contactId != 0 && uid != 0) {
             String sql = "";
+            long ts= System.currentTimeMillis();
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date_value = dateformat.format(ts);
             if(entityName.equalsIgnoreCase("contact")){
                 sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("account")){
@@ -442,18 +445,24 @@ public class DAOImpl
             }else if(entityName.equalsIgnoreCase("crmuser")){
                 if(type == 0){
                     sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
-                }else{
+                }else if(type == 1){
                     sql = "INSERT INTO contactcrmuser (crmuserId,contactId) VALUES (?,?)";
+                }else{
+                    sql = "INSERT INTO user_position (userId,positionId,status,createtime) VALUES (?,?,?,?)";
                 }
-                
-               
             }
-      
+            logger.debug("ddfdfdafdagafgsf   " + sql );
+            int status = 1;
             Connection conn = null;
             try {
                 conn = DBHelper.getConnection();
                 QueryRunner run = new QueryRunner();
-                int inserts = run.update(conn, sql, cId,userId);
+                int inserts = 0;
+                if(type == 2){
+                  inserts = run.update(conn, sql, userId,cId,status,date_value);
+                }else {
+                  inserts = run.update(conn, sql, cId,userId);
+                }
 
                 logger.info(String.format("%s row inserted into insertRelationOfEntityIDCRMUserID!", inserts));
 
@@ -1222,8 +1231,11 @@ public class DAOImpl
     }
     
 
-    public static void insert2UserRelationTable(String entityName, String positionId, String entityId){
+    public static void insert2UserRelationTable(String entityName,String userId,String positionId, String entityId){
         String sql = null;
+        long ts= System.currentTimeMillis();
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date_value = dateformat.format(ts);
         if(entityName.equalsIgnoreCase("account_delect")){//暂不需要
             sql = "INSERT INTO accountcrmuser ( accountId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if(entityName.equalsIgnoreCase("contact_delect")){//暂不需要
@@ -1232,6 +1244,9 @@ public class DAOImpl
             sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if (entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willCoaching")){
           sql = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+entityId+","+positionId+")";
+        }else if (entityName.equalsIgnoreCase("userInfo")){
+          updateUserInfoPositionByUserId(userId); 
+          sql = "INSERT INTO user_position ( userId,positionId,status,isPrimary,createtime) VALUES ("+userId+","+positionId+",1,1,'"+date_value+"')";
         }
         if(sql == null) {
             logger.error("entityName error");
@@ -1286,7 +1301,38 @@ public class DAOImpl
         }
     }
     
-    
+    public static void updateUserInfoPositionByUserId( String userId) {
+      String sql = "";
+         sql = "UPDATE  user_position SET status = 2 where userId = " + userId;
+       logger.debug("UPDATE sql is:"+sql);
+       Connection conn = null;
+       try {
+           conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int inserts = 0;
+           inserts += run.update(conn, sql);
+       } catch (Exception e) {
+           logger.error("failed to add new calendar event", e);
+       } finally {
+           DBHelper.closeConnection(conn);
+       }
+   }
+    public static void updateUserInfoPositionByPositionId( String positionId) {
+      String sql = "";
+         sql = "UPDATE  user_position SET status = 2 where positionId = " + positionId;
+       logger.debug("UPDATE sql is:"+sql);
+       Connection conn = null;
+       try {
+           conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int inserts = 0;
+           inserts += run.update(conn, sql);
+       } catch (Exception e) {
+           logger.error("failed to add new calendar event", e);
+       } finally {
+           DBHelper.closeConnection(conn);
+       }
+   }
     public static void doneRecord(String id,String entityName, String time ) {
     	String sql = "";
       
@@ -1604,6 +1650,27 @@ public class DAOImpl
         return lMap;
     }
     
+    public static List searchUser(String search_target) {
+      if(search_target == null|| search_target.equalsIgnoreCase("*")){
+            search_target = "";
+      }
+        String sql = "select * from (select * from userInfo where (userInfo.id !=-1) AND (name like '%"+search_target+"%' OR sex like '%"+search_target+"%' OR positionId like '%"+search_target+"%')) as a";
+        logger.debug(sql );
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return lMap;
+    }
     public static List searchManager(String search_target,String excludeId) {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
               search_target = "";
@@ -1910,18 +1977,18 @@ public class DAOImpl
     public static CRMUser getCrmUserById(int entityId){
     	System.out.println("根据crmuserID获取用户" + entityId);
         Connection conn = null;
-        CRMUser userInfo = new CRMUser();
+        CRMUser crmuser = new CRMUser();
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
-            userInfo = run.query(conn, "SELECT * FROM crmuser where id=?", h, entityId);
+            crmuser = run.query(conn, "SELECT * FROM crmuser where id=?", h, entityId);
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
-        return userInfo;
+        return crmuser;
     }
     //根据医生ID获取医生对象
     public static Contact getContactById(int entityId){

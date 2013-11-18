@@ -74,8 +74,8 @@ public class EditDataFormPanel extends Panel {
 	 * @param data
 	 * @param entityId
 	 * @param relationIds
-	 */
-	public EditDataFormPanel(String id, final Entity schema,  Map data,final String entityId ) {
+	 */ 
+	public EditDataFormPanel(String id, final Entity schema,  final Map data,final String entityId ) {
 		super(id);
         if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equals("willCoaching")){
       	   add(new Label("name",String.valueOf(data.get("title"))));
@@ -86,6 +86,7 @@ public class EditDataFormPanel extends Panel {
 		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
 		final String posId = ((SignIn2Session) getSession()).getPositionId();
 	   final String userName = ((SignIn2Session) getSession()).getUser();
+	   final String userId = ((SignIn2Session) getSession()).getUserId();
 		String primaryKeyName = schema.getPrimaryKeyName();
 		List<Field> fields = schema.getFields();// 得到所有fields
 		final List<String> fieldNames = Lists.newArrayList();
@@ -238,8 +239,7 @@ public class EditDataFormPanel extends Panel {
                         }
                     } else if (currentField.getRelationTable() != null) {
                         if (j % 2 == 0) {
-                            columnitem
-                                    .add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
+                            columnitem.add(new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                             if (currentField.isRequired()) {
                                 columnitem.add(new AttributeAppender("class", new Model("tag"), " ")).add(new AttributeAppender("style", new Model("color:red"), ";"));
                             } else {
@@ -398,20 +398,17 @@ public class EditDataFormPanel extends Panel {
                     values.add(""+total_score+"");
         		    
                 }
-                
-//                 int i=0;
-//                 for(String fn:names){
-//                 System.out.println(i+":::"+fn);
-//                 i++;
-//                 }
-//                 i = 0;
-//                
-//                 for(String v:values){
-//                 System.out.println(i+":::"+v);
-//                 i++;
-//                 }
-                
-				DAOImpl.updateRecord(entityId,table_name,names,values);
+                        
+				if(!table_name.equalsIgnoreCase("userInfo")){
+				  DAOImpl.updateRecord(entityId,table_name,names,values);
+				}else{
+				  if(String.valueOf(data.get("positionId")).equals(String.valueOf(fieldNameToModel.get("positionId")))){
+				    DAOImpl.updateRecord(entityId,table_name,names,values);
+				  }
+				  DAOImpl.updateUserInfoPositionByPositionId(String.valueOf(data.get("positionId"))); 
+				  DAOImpl.insert2UserRelationTable(table_name,entityId,String.valueOf(fieldNameToModel.get("positionId").getObject()),null);
+				  DAOImpl.updateRecord(entityId,table_name,names,values);
+        }
 				setResponsePage(new EntityDetailPage(schema.getName(),entityId));
 			}
 		};
@@ -506,11 +503,7 @@ public class EditDataFormPanel extends Panel {
 
                     @Override
                     protected void onUpdate(AjaxRequestTarget target) {
-                        //System.out.println("TTTT:"+field.get("name"));
-                        //System.out.println("childDropDownComponent:"+childDropDownComponent);
                         target.add(childDropDownComponent.get( currentField.getChildNode()));
-                        //System.out.println("currentfield code:"+String.valueOf(((Choice)parentModels.get(field.get("name")).getObject()).getCode()));
-                            //System.out.println("DDDD:"+table.get(field.get("childNode")).get("childNode"));
                             if( entity.getFieldByName(currentField.getChildNode()).getChildNode() != null ){
                               
                                parentModels.get(entity.getFieldByName(currentField.getChildNode()).getName()).setObject(new Choice(-1L,""));

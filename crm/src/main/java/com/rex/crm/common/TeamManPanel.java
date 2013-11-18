@@ -82,7 +82,7 @@ public class TeamManPanel extends Panel {
             }
             else if (type == 2){
               //for the 用户列表
-              teamSql = "select * from (select * from  userInfo where positionId = ? ) as atable";
+              teamSql = "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
             }
         }
         List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
@@ -134,9 +134,8 @@ public class TeamManPanel extends Panel {
                    teamtable = "accountcrmuser";
                }else if(type == 1){
                    teamtable = "contactcrmuser";
-               }else if(type == 2){
-                 
-                 
+               }else {//if(type == 2)
+                 teamtable = "user_position";
                }
            }
             
@@ -201,12 +200,8 @@ public class TeamManPanel extends Panel {
             columnNameRepeater.add(item);
             item.add(new Label("columnName", f.getDisplay())); 
         }
-//        group.add(new Check("checkboxs", new Model()));
         RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
         group.add(dataRowRepeater);
-//        final PageableListView<Map> listview = new PageableListView<Map>("dataRowRepeater",Model.ofList(mapList), 15) {
-//          @Override
-//          protected void populateItem(ListItem<Map> item) {
         for (int i = 0; i < mapList.size(); i++)
         {
             Map map = (Map)mapList.get(i);

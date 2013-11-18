@@ -1328,6 +1328,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
+				<name>status</name>
+				<display>用户状态</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>contact_status_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
 				<name>isActivited</name>
 				<display>激活状态</display>
 				<data-type>text</data-type>

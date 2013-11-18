@@ -88,10 +88,13 @@ public class SearchCRMUserPage extends WebPage {
                     maplist = DAOImpl.searchCRMUser(search_target);
                 } else {
                     if (type == 0) {
-
                         maplist = DAOImpl.searchCRMAccount(search_target);
-                    } else {
-                        maplist = DAOImpl.searchCRMContact(search_target);
+                    }else if (type == 1) {
+                      maplist = DAOImpl.searchCRMContact(search_target);
+                    }else if(type == 2){
+                      maplist = DAOImpl.searchUser(search_target);
+                    } else{
+                      maplist = DAOImpl.searchCRMUser(search_target);
                     }
                 }
 
