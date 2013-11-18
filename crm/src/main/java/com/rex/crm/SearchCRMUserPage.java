@@ -61,7 +61,6 @@ public class SearchCRMUserPage extends WebPage {
         }
         initPage(entityname.toString(), null, entityId,uid, type);
     }
-
     public SearchCRMUserPage(String entityName, final String entityId, String uid, int type) {
         //logger.debug("sdfsfsdfdsf:"+entityName);
         this.entityId = entityId;
