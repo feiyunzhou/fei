@@ -21,7 +21,7 @@ public class UploadPage extends AdminTemplatePage
   public void init()
   {
 
-    final FileUploadField accountFF = new FileUploadField("account");
+    final FileUploadField account = new FileUploadField("account");
 
     final FileUploadField contact = new FileUploadField("contact");
 
@@ -29,14 +29,14 @@ public class UploadPage extends AdminTemplatePage
 
     final FileUploadField accountTeam = new FileUploadField("accountTeam");
 
-    final FileUploadField userInfo = new FileUploadField("userInfo");
+//    final FileUploadField userInfo = new FileUploadField("userInfo");
     Form form = new Form("form")
     {
       @Override
       protected void onSubmit()
       {
         DataImportDelegate da = new DataImportDelegate();
-        FileUpload accountFileUpload = accountFF.getFileUpload();
+        FileUpload accountFileUpload = account.getFileUpload();
         if (accountFileUpload != null)
         {
           String template = "Account Full Import Template 1.0";
@@ -100,11 +100,11 @@ public class UploadPage extends AdminTemplatePage
       }
     };
     add(form);
-    form.add(accountFF);
+    form.add(account);
     form.add(contact);
     form.add(position);
     form.add(accountTeam);
-    form.add(userInfo);
+//    form.add(userInfo);
     form.setMultiPart(true);
 
 

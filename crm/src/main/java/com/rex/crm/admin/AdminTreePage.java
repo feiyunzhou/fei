@@ -53,7 +53,6 @@ public class AdminTreePage extends AdminTemplatePage
   public AdminTreePage()
   {
       StringValue positionId = getRequest().getRequestParameters().getParameterValue("positionId");
-      
      if(positionId.isEmpty() || positionId.isNull()){
          initPage(null);
      }else{
