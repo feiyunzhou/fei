@@ -20,6 +20,7 @@ public class SelectPositionPage extends TemplatePage{
 	 * Constructor
 	 */
 	public SelectPositionPage(List<UserPosition> list){
+		super.setPageTitle("选岗");
 	    //遍历数组，添加按钮
     	RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
 		AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
