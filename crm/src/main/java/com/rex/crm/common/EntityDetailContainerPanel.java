@@ -109,16 +109,16 @@ public class EntityDetailContainerPanel   extends Panel {
          if(entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new EmptyPanel("teamPanel2"));
-             add(new EmptyPanel("teamPanel3"));
+             add(new EmptyPanel("teamPanel4"));
          }else if(entityName.equalsIgnoreCase("crmuser")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new EmptyPanel("teamPanel2"));
-             add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
+             add(new TeamManPanel("teamPanel4",entityName,String.valueOf(lid),3));
          }
          else{
              add(new EmptyPanel("teamPanel"));
              add(new EmptyPanel("teamPanel2"));
-             add(new EmptyPanel("teamPanel3"));
+             add(new EmptyPanel("teamPanel4"));
          }
 
          add(new AbstractAjaxBehavior(){
