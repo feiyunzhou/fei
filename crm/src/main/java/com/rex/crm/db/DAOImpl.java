@@ -451,7 +451,6 @@ public class DAOImpl
                     sql = "INSERT INTO user_position (userId,positionId,status,createtime) VALUES (?,?,?,?)";
                 }
             }
-            logger.debug("ddfdfdafdagafgsf   " + sql );
             int status = 1;
             Connection conn = null;
             try {

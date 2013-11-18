@@ -66,7 +66,6 @@ public final class SignIn2Session extends AuthenticatedWebSession
 	{
 		if (user == null)
 		{
-		    System.out.println("username:"+username + " p:"+password);
 		    
 		    UserInfo userinfo = DAOImpl.login(username, password);
 		    

@@ -12,21 +12,16 @@
 
     <relation>
 		<from>crmuser</from>
-		<name>crmuser2contact</name>
-		<display>拜访</display>
+		<name>crmuseruserInfo</name>
+		<display>用户</display>
 		<sql>
-		select * from (select contact.*\,
-			contact_generalization_target_pl.val as product_target_val\,
-			"account.name" as accountName_val\,contact_department_pl.val as department_val 
-			from contact
-			left join contact_generalization_target_pl on contact.product_target =
-			contact_generalization_target_pl.id
-			left join account on contact.accountid = account.id
-			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
-			left join contact_department_pl on contact.department = contact_department_pl.id
-			where contact.id != -1 and accountcrmuser.crmuserid = ?) as aContact
+		select * from (select userinfo.*\,user_position.status as status
+		 from  user_position 
+		 left join userInfo on
+		  userInfo.id = user_position.userId where user_position.positionId = ? 
+		 ) as atable
 		</sql>
-		<to>contact</to>
+		<to>userInfo</to>
 	</relation>
 
     <relation>

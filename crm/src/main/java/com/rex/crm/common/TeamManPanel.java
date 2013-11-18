@@ -80,9 +80,13 @@ public class TeamManPanel extends Panel {
                 //for the 医生列表
                 teamSql = "select * from (select contact . * from contact left join accountcrmuser on accountcrmuser.accountId=contact.accountId where accountcrmuser.crmuserId = ?) as atable";
             }
-            else if (type == 2){
-              //for the 用户列表
-              teamSql = "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
+//            else if (type == 2){
+//              //for the 用户列表
+//              teamSql = "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
+//            }
+            else if (type == 3){
+              //for the 下属岗位
+              teamSql = "select * from (select * from  crmuser where reportto = ?  ) as atable";
             }
         }
         List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
@@ -103,9 +107,14 @@ public class TeamManPanel extends Panel {
             }else if(type == 1){
                 entity = Configuration.getEntityByName("contact");
                 add(new Label("title","医生"));
-            }else if (type == 2){
-              entity = Configuration.getEntityByName("userInfo");
-              add(new Label("title","用户"));
+            }
+//            else if (type == 2){
+//              entity = Configuration.getEntityByName("userInfo");
+//              add(new Label("title","用户"));
+//            }
+            else if (type == 3){
+              entity = Configuration.getEntityByName("crmuser");
+              add(new Label("title","下属岗位"));
             }
         }
         
@@ -118,7 +127,7 @@ public class TeamManPanel extends Panel {
             add(con);
             con.setVisible(false);
             //con.add(new AttributeAppender("style", new Model("display:none;"), ";"));
-      
+       
         }else{
         
            add(new SubmitLink("remove_team_member_click",form){

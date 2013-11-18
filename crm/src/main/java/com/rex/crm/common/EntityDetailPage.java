@@ -46,7 +46,6 @@ public class EntityDetailPage extends TemplatePage {
     	String entityId = this.getRequest().getRequestParameters().getParameterValue("id").toString();
   	  	String nameForEntity = this.getRequest().getRequestParameters().getParameterValue("entityName").toString();
   	  	if(null==entityId&&null==nameForEntity){
-  	  		System.out.println("null");
 	    	RepeatingView div = new RepeatingView("promptDiv");
 	        AbstractItem groupitem = new AbstractItem(div.newChildId());
 	        Label promptButton = new Label("promptButton","X");
@@ -66,8 +65,10 @@ public class EntityDetailPage extends TemplatePage {
 	    	add(teamPanel);
 	    	WebMarkupContainer teamPanel2 = new WebMarkupContainer("teamPanel2");
 	    	add(teamPanel2);
-	    	WebMarkupContainer teamPanel3 = new WebMarkupContainer("teamPanel3");
-	    	add(teamPanel3);
+//	    	WebMarkupContainer teamPanel3 = new WebMarkupContainer("teamPanel3");
+//	    	add(teamPanel3);
+	    	WebMarkupContainer teamPanel4 = new WebMarkupContainer("teamPanel4");
+        add(teamPanel4);
 	    	RepeatingView relationRepeater = new RepeatingView("relationRepeater");
 	    	AbstractItem relationItem = new AbstractItem(relationRepeater.newChildId());
 	    	relationItem.add(new Label("relationPanel",""));
@@ -139,16 +140,19 @@ public class EntityDetailPage extends TemplatePage {
          if(entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new EmptyPanel("teamPanel2"));
-             add(new EmptyPanel("teamPanel3"));
+//             add(new EmptyPanel("teamPanel3"));
+             add(new EmptyPanel("teamPanel4"));
          }else if(entityName.equalsIgnoreCase("crmuser")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new EmptyPanel("teamPanel2"));
-             add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
+//             add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
+             add(new TeamManPanel("teamPanel4",entityName,String.valueOf(lid),3));
          }
          else{
              add(new EmptyPanel("teamPanel"));
              add(new EmptyPanel("teamPanel2"));
-             add(new EmptyPanel("teamPanel3"));
+//             add(new EmptyPanel("teamPanel3"));
+             add(new EmptyPanel("teamPanel4"));
          }
 
          add(new AbstractAjaxBehavior(){
