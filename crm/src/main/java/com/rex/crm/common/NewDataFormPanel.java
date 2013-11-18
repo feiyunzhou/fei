@@ -152,7 +152,10 @@ public class NewDataFormPanel extends Panel {
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
                           }
                         } else {
-                            long default_key = 1L;
+                        	long default_key = 1L;
+                        	if(currentField.isExistsDefaultValue()){
+                        		default_key = 0L;
+                        	}
                             if (currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("var")){
                                 if (params != null) {
                                     
@@ -167,7 +170,7 @@ public class NewDataFormPanel extends Panel {
                             logger.debug("default_key:"+default_key + " name:"+ currentField.getName());
                             
                             if (currentField.getParentNode() != null || currentField.getChildNode() != null) {
-                                 IModel<Choice> selected_model =  new Model(new Choice(default_key,""));
+                                IModel<Choice> selected_model =  new Model(new Choice(default_key,""));
                                 IModel<List<? extends Choice>> choices_models = null;
                                 
                                 if(currentField.getChildNode()!=null && currentField.getParentNode() == null ){
@@ -217,7 +220,7 @@ public class NewDataFormPanel extends Panel {
                                 }
                                 IModel choiceModel = new Model(default_key);
                                 models.put(currentField.getName(), choiceModel);
-                                columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this, ids, list, choiceModel));
+                                columnitem.add(new DropDownChoiceFragment("celldatafield", "dropDownFragment", this, ids, list, choiceModel,entity,currentField));
                             }
 
                         }
@@ -478,29 +481,36 @@ public class NewDataFormPanel extends Panel {
 
         public DropDownChoiceFragment(String id, String markupId,
                 MarkupContainer markupProvider, final List<Long> ids,
-                final Map<Long, String> list, IModel model) {
+                final Map<Long, String> list, IModel model,final Entity entity,final Field currentField) {
             super(id, markupId, markupProvider);
-
-            add((new DropDownChoice<Long>("dropDownInput", model, ids,
+            DropDownChoice dropDownChoice = (new DropDownChoice<Long>("dropDownInput", model, ids,
                     new IChoiceRenderer<Long>() {
-                        @Override
-                        public Object getDisplayValue(Long id) {
-                            // TODO Auto-generated method stub
-                            return list.get(id);
-                        }
+                @Override
+                public Object getDisplayValue(Long id) {
+                    // TODO Auto-generated method stub
+                    return list.get(id);
+                }
 
-                        @Override
-                        public String getIdValue(Long id, int index) {
-                            return String.valueOf(id);
-                        }
-                    })).setNullValid(true));
+                @Override
+                public String getIdValue(Long id, int index) {
+                    return String.valueOf(id);
+                }
+            }));
+            dropDownChoice.setNullValid(true);
+            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+            	dropDownChoice.add(new AttributeAppender("class",new Model("required-pickList")," "));
+            }
+            add(dropDownChoice);
         }
         
         public DropDownChoiceFragment(String id, String markupId,MarkupContainer markupProvider,
-                IModel choices,IModel default_model,final Entity entity, final Field currentField){
+                IModel choices,IModel default_model,final Entity entity,final Field currentField){
             super(id, markupId, markupProvider);
             DropDownChoice dropDown = createDropDownListFromPickList("dropDownInput",choices,default_model);
             dropDown.setNullValid(true);
+            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+            	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
+            }
             add(dropDown);
             
             if(currentField.getChildNode()!=null){

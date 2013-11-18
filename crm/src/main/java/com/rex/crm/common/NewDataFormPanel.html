@@ -19,7 +19,18 @@
                 }
                 
               });
-            
+            var checkflag = true;
+            $( '.required-pickList').each(function( index ) {
+                console.log( index + ": " + $( this ).text() );
+                if(jQuery.isEmptyObject($(this).val())){
+                	checkflag = false;
+                }
+                
+              });
+            if(!checkflag){
+            	alert("下拉列表为必选字段,请检查选择！");
+                return false;
+            }
             if(isValidated){
             	if($("#crmuser_name").length > 0 && jQuery.isEmptyObject($("#crmuser_name").val())){
               	  	alert("请查询添入岗位编码！");

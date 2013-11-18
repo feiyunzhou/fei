@@ -56,7 +56,8 @@ public class Field implements Serializable {
     private String fieldType;
     @Expose
     private int tooltip;
-    
+    @Expose
+    private boolean isExistsDefaultValue;
     public boolean isRequired() {
         return isRequired;
     }
@@ -258,8 +259,12 @@ public class Field implements Serializable {
 		this.tooltip = tooltip;
 	}
 
+	public boolean isExistsDefaultValue() {
+		return isExistsDefaultValue;
+	}
 
-	
-    
+	public void setExistsDefaultValue(boolean isExistsDefaultValue) {
+		this.isExistsDefaultValue = isExistsDefaultValue;
+	}
 
 }
