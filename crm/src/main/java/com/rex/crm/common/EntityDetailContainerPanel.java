@@ -113,7 +113,7 @@ public class EntityDetailContainerPanel   extends Panel {
          }else if(entityName.equalsIgnoreCase("crmuser")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new EmptyPanel("teamPanel2"));
-             add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
+             add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),3));
          }
          else{
              add(new EmptyPanel("teamPanel"));

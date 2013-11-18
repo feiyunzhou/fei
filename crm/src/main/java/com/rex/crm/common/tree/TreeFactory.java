@@ -45,6 +45,7 @@ public class TreeFactory {
         Node root = new Node();
         root.setTitle("Root");
         root.setFolder(true);
+        root.setKey("-1");
         List<CRMUser> crmusers =  DAOImpl.getCRMUserWithoutSuperior();
         
         if(crmusers !=null && crmusers.size()>0){
