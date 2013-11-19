@@ -593,7 +593,7 @@
 		<sql>
 			select * from (select contact.*\,
 			contact_generalization_target_pl.val as product_target_val\,
-			"account.name" as accountName_val\,contact_department_pl.val as department_val 
+			account.name as accountName_val\,contact_department_pl.val as department_val 
 			from contact
 			left join contact_generalization_target_pl on contact.product_target =
 			contact_generalization_target_pl.id
@@ -604,7 +604,7 @@
 		</sql>
 		<sql-manager>
 select * from (select  aContact.*\,contact_generalization_target_pl.val as product_target_val\,
-"account.name" as accountName_val from (select distinct contact.id as cid\,contact.*
+account.name as accountName_val from (select distinct contact.id as cid\,contact.*
 from contact\, accountcrmuser\,crmuser 
 where crmuser.reportto=? and
 	  contact.accountId = accountcrmuser.accountId and
@@ -627,7 +627,7 @@ where crmuser.reportto=? and
 			<!-- where account.id != -1 -->
 			select * from (select contact.*\,
 			contact_generalization_target_pl.val as product_target_val\,
-			"account.name" as accountName_val\,contact_department_pl.val as department_val 
+			account.name as accountName_val\,contact_department_pl.val as department_val 
 			from contact
 			left join account on contact.accountid = account.id
 			left join contact_generalization_target_pl on contact.product_target =
@@ -1572,12 +1572,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<relationTable>crmuser</relationTable>
-				<isSearchable>true</isSearchable>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<isBaseInfo>false</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -1591,7 +1589,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<isSearchable>false</isSearchable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<isBaseInfo>false</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -1619,7 +1617,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<isSearchable>true</isSearchable>
 				<default-value-type>val</default-value-type>
 				<default-value>3</default-value>
 				<priority>1</priority>
@@ -1634,7 +1631,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<isSearchable>false</isSearchable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>

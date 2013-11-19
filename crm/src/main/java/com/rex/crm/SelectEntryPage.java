@@ -1,7 +1,10 @@
 package com.rex.crm;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -18,6 +21,7 @@ import org.apache.wicket.util.string.StringValue;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
@@ -57,7 +61,7 @@ public class SelectEntryPage extends WebPage {
         final String posId = ((SignIn2Session) getSession()).getPositionId();
         final String userId = ((SignIn2Session) getSession()).getUserId();
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
-        Map<String, Entity> entities = Configuration.getEntityTable();
+        final Map<String, Entity> entities = Configuration.getEntityTable();
         final Entity entity = entities.get(relationTableName);
         Form form = new Form("form") {
             @Override
@@ -87,12 +91,57 @@ public class SelectEntryPage extends WebPage {
                         String sql = assembleSearchingSQL(roleId, entity);
 
                         switch (roleId) {
-                        case 2:
-                            maplist = DAOImpl.queryEntityRelationList(sql, posId, posId);
-                            break;
-                        case 3:
-                            maplist = DAOImpl.queryEntityRelationList(sql, posId);
-                            break;
+                        case 2:{
+                                 maplist = DAOImpl.queryEntityRelationList(sql, posId, posId);
+                                 
+                                 break;
+                              }
+                        case 3:{
+                                 maplist = DAOImpl.queryEntityRelationList(sql, posId);
+                                 
+                                 Entity activityEnt = entities.get("activity");
+                                 String actSQL = activityEnt.getSql();
+                                 actSQL  = "select contactName,count(contactName) as ct from ("+ actSQL + ") as bact where status=2 group by contactName";
+                                 logger.debug("number_of_act:"+actSQL);
+                                 
+                                 List<Map> num_of_act_per_contact = DAOImpl.queryEntityRelationList(actSQL, posId);
+           
+                                 Map<String,Map> activity_contact_map = Maps.newHashMap();
+                                 for(Map map:num_of_act_per_contact){
+                                     activity_contact_map.put(String.valueOf(map.get("contactName")),map);
+                                 }
+                                 
+                                 
+                                // Map<String,Map> contact_map = Maps.newHashMap();
+                                 for(Map map:maplist){
+                                    String contactId = String.valueOf(map.get("id"));
+                                    if(activity_contact_map.containsKey(contactId)){
+                                        map.put("num_of_visiting", activity_contact_map.get(contactId).get("ct"));
+                                    }
+                                 }
+                                 
+                                 //sorting
+                                 //Collections.s`
+                                 Collections.sort(maplist,new Comparator<Map>(){
+
+                                            @Override
+                                            public int compare(Map o1, Map o2) {
+                                                Object obj1 = o1.get("num_of_visiting");
+                                                Object obj2 = o2.get("num_of_visiting");
+                                                if(obj1 == null || obj2 == null) return 0;
+                                                
+                                                 long  v1 =  (long)o1.get("num_of_visiting");
+                                                 long  v2 =  (long)o2.get("num_of_visiting");
+                                                 
+                                                 return (int)(v2-v1);
+                                               
+                                            }
+                                     
+                                 });
+                                 
+                                 
+                                 break;
+                              }
                         case 1:
                             maplist = DAOImpl.queryEntityRelationList(sql);
 
@@ -166,6 +215,7 @@ public class SelectEntryPage extends WebPage {
         add(dataRowRepeater);
 
         if (list != null) {
+            List<Field> searchableFields = entity.getSearchableFields();
             for (Map map : list) {
                 int uid = ((Number) map.get("id")).intValue();
                 String name = (String) map.get("name");
@@ -180,6 +230,31 @@ public class SelectEntryPage extends WebPage {
                 Label cap = new Label("name_span", new Model(name));
                 item.add(cap);
                 
+                
+                RepeatingView column_repeater = new RepeatingView("column_repeater");
+                item.add(column_repeater);
+                for(Field f:searchableFields){
+                    Object obj = map.get(f.getName());
+                    if(!f.getName().equalsIgnoreCase("name") && obj != null){
+                        AbstractItem column_item = new AbstractItem(column_repeater.newChildId());
+                        column_repeater.add(column_item); 
+                     
+                        String celldata =String.valueOf(obj);
+                        column_item.add(new Label("celldata",celldata));
+                    }
+                } 
+                
+               
+
+                Object obj =  map.get("num_of_visiting");               
+                if (obj != null) {
+                    AbstractItem column_item = new AbstractItem(column_repeater.newChildId());
+                    column_repeater.add(column_item);
+                    String num_of_visiting = String.valueOf(obj);
+                    column_item.add(new Label("celldata", num_of_visiting + "（拜访次数）"));
+                }
+                    
+               
                 
             }
         }
