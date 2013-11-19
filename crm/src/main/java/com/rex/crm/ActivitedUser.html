@@ -34,33 +34,29 @@
                 </div>
             </div >
             <form wicket:id="form"  class="form-horizontal">
-                <div class="table-cell">
-                    <label class="table-column tag" ></label>
-                    <div class="table-column-view ">
+                <div class="form-group">
+                    <label  class="col-sm-3 control-label"></label>
+                    <div class="col-sm-9 ">
                         <span wicket:id="userName"></span>您好
                     </div>
                 </div> 
                 <div class="table-cell">
-                    <label class="table-column tag" >您的登录名:</label>
-                    <div class="table-column-view ">
+                    <label  class="col-sm-3 control-label">您的登录名:</label>
+                    <div class="col-sm-9 ">
                         <span wicket:id="loginName"></span>
                     </div>
                 </div> 
                 <div class="table-cell">
-                    <label class="table-column tag" >请输入密码:</label>
-                    <div class="table-column-view ">
-                        <div class="form_datetime">
-                            <input type="password" id="password" wicket:id="password"  placeholder="Please enter the password" />
+                    <label  class="col-sm-3 control-label">请输入密码:</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="password" wicket:id="password"  placeholder="Please enter the password" />
                         </div>
-                    </div>
                 </div>
                 <div class="table-cell">
-                    <label class="table-column tag" >请重复密码:</label>
-                    <div class="table-column-view ">
-                        <div class="form_datetime">
-                            <input type="password" id="newPassword" wicket:id="newPassword"  placeholder="Enter the password again" onchange="checkPasswords();" />
+                    <label  class="col-sm-3 control-label">请重复密码:</label>
+                        <div class="col-sm-9">
+                            <input type="password"  class="form-control"  id="newPassword" wicket:id="newPassword"  placeholder="Enter the password again" onchange="checkPasswords();" />
                         </div>
-                    </div>
                 </div>
                 <div class="btn-toolbar center">
                     <div class="btn-group action-btn">                                

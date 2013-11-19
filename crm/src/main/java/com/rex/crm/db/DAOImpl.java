@@ -2111,4 +2111,23 @@ public class DAOImpl
 
          return users;
     }
+    //用户初次登录修改关键信息
+    public static boolean updateKeyUserInfoMessage(String phone,String email,String password,int userId){
+    	String sql = "UPDATE userinfo SET cellphone=?,email=?,password=? where id=?";
+        Connection conn = null;
+        int inserts = 0;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            inserts += run.update(conn, sql, phone,email,DigestUtils.md5Hex(password),userId);
+        } catch (Exception e) {
+            logger.error("failed to userInfo", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        if(inserts>0){
+    		return true;
+    	}
+    	return false;
+    } 
 }

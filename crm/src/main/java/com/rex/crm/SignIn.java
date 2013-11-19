@@ -101,7 +101,7 @@ public final class SignIn extends WebPage
                                 loginout.setSessionId(session.getId());
                                 CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
                                 if(user.getNum_of_signIn()==0){
-                                	 setResponsePage(new UpdateSignPassword());
+                                	 setResponsePage(new SettingKeyUserInfoPage(user));
                                 }else{
                                 	//根据userId查找用户岗位。如果岗位有多个则选择岗位
                                 	List<UserPosition> positions = DAOImpl.getPositionsByUserId(user.getId());
@@ -110,8 +110,8 @@ public final class SignIn extends WebPage
                                 	}else{
                                 		setResponsePage(getApplication().getHomePage());
                                 	}
+                                	DAOImpl.addSignInNumber(user.getId(),user.getNum_of_signIn()+1);
                                 }
-                                DAOImpl.addSignInNumber(user.getId(),user.getNum_of_signIn()+1);
                             }
               	            else
               	            {
