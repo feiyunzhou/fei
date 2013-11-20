@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.base.Splitter;
 import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 
 public class TreeFactory {
@@ -23,10 +24,22 @@ public class TreeFactory {
              node.setChildren(children);
              int i = 0;
              for(CRMUser user:crmusers){
+                 List<UserInfo> userInfo= DAOImpl.getUserByPositionId(user.getId());
+                 String username = "无";
+                 for(UserInfo userinfo :userInfo){
+                    username = userinfo.getName();
+                   if(userinfo.getName().equalsIgnoreCase(null)){
+                     username =  "无";
+                   }else{
+                     username = userinfo.getName();
+                   }
+                 }
                  Node nd = new Node();
                  children[i++] = nd;
                  nd.setKey(String.valueOf(user.getId()));
-                 nd.setTitle(user.getCode());
+                 
+                 String title = user.getCode() +"-" + username;
+                 nd.setTitle(title);
                  nd.setType("crmuser");  
                  //System.out.println(user.getCode()+":"+user.getId());
                  appendChildren(nd);

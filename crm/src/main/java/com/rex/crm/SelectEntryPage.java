@@ -50,14 +50,15 @@ public class SelectEntryPage extends WebPage {
         String relationTableName = getRequest().getRequestParameters().getParameterValue("en").toString();
         String tragetEntity = getRequest().getRequestParameters().getParameterValue("excludeName").toString();
         final String excludeId = getRequest().getRequestParameters().getParameterValue("eid").toString();
-        initPage(null,relationTableName,tragetEntity,excludeId);
+        String target = getRequest().getRequestParameters().getParameterValue("target").toString();
+        initPage(null,relationTableName,tragetEntity,excludeId,target);
     }
 
-    public SelectEntryPage(List<Map> maplist,String relationTableName,String tragetEntity,String excludeId) {
-        initPage(maplist,relationTableName,tragetEntity,excludeId);
+    public SelectEntryPage(List<Map> maplist,String relationTableName,String tragetEntity,String excludeId,String target) {
+        initPage(maplist,relationTableName,tragetEntity,excludeId,target);
     }
 
-    public void initPage(List<Map> list,final String relationTableName,final String tragetEntity,final String excludeId) {
+    public void initPage(List<Map> list,final String relationTableName,final String tragetEntity,final String excludeId,final String target) {
         final String posId = ((SignIn2Session) getSession()).getPositionId();
         final String userId = ((SignIn2Session) getSession()).getUserId();
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
@@ -186,7 +187,11 @@ public class SelectEntryPage extends WebPage {
                       maplist.add(dummy);
                     }
                   }else if(tragetEntity.equalsIgnoreCase("userInfo")){
-                    maplist = DAOImpl.searchCRMUser(search_target);
+                   if(target.equalsIgnoreCase("-1")){
+                     maplist = DAOImpl.searchPositionCRMUser(search_target);
+                   }else {
+                     maplist = DAOImpl.searchCRMUser(search_target);
+                   }
                     Map dummy = Maps.newHashMap();
                     dummy.put("id", -1);
                     dummy.put("name", "无");
@@ -204,7 +209,7 @@ public class SelectEntryPage extends WebPage {
                 }
                 //this.setResponsePage(cls, parameters)
                 
-                setResponsePage(new SelectEntryPage(maplist,relationTableName,tragetEntity,excludeId));
+                setResponsePage(new SelectEntryPage(maplist,relationTableName,tragetEntity,excludeId,target));
 
             }
         };

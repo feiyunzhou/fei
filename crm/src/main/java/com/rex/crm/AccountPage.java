@@ -177,10 +177,10 @@ public class AccountPage extends TemplatePage
       types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist());
       break;
       case UserRole.USER_ROLE_MANAGER:
-      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), positionId, positionId, positionId);
+      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(),positionId, positionId, positionId);
       break;
       case UserRole.USER_ROLE_SALES:
-      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), positionId, positionId);
+      types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(),positionId, positionId);
     }
 
     add(new FilterPanel("filterPanel", types, filter, AccountPage.class));

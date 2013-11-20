@@ -25,7 +25,9 @@ import org.apache.wicket.request.Request;
 
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
+import com.rex.crm.beans.UserPosition;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.db.model.Crmuser;
 
 /**
  * Session class for signin example. Holds and authenticates users.
@@ -72,9 +74,10 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		    if(userinfo!=null && userinfo.getId() != 0){
 		        user = userinfo.getName();
 		        userId = String.valueOf(userinfo.getId());
-		        CRMUser postionInfo = DAOImpl.getPositionInfoByUserId(userinfo.getPositionId());
-		        roleId = postionInfo.getRole();
-		        positionId = String.valueOf(postionInfo.getId());
+		        UserPosition userPosition = DAOImpl.getActivityPositionInfoByUserId(userinfo.getId());
+		        CRMUser crmuser = DAOImpl.getCRMUserInfoById(userPosition.getPositionId());
+		        positionId = String.valueOf(userPosition.getPositionId());
+		        roleId = crmuser.getRole();
 		    }
 		}
 		return user != null;

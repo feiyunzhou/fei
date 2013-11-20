@@ -108,7 +108,10 @@ public final class SignIn extends WebPage
                                 	if(positions.size()>1){
                                 		System.out.println("assds");
                                 		setResponsePage(new SelectPositionPage(positions));
-                                	}else{
+                                	}else {
+                                	  if(session.getPositionId().equals(-1)){
+                                	    setResponsePage(new NullPosition(null));
+                                	  }
                                 		setResponsePage(getApplication().getHomePage());
                                 	}
                                 	DAOImpl.addSignInNumber(user.getId(),user.getNum_of_signIn()+1);

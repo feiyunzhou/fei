@@ -28,6 +28,8 @@ public class UploadPage extends AdminTemplatePage
 
     final FileUploadField position = new FileUploadField("position");
 
+    final FileUploadField user = new FileUploadField("user");
+    
     final FileUploadField accountTeam = new FileUploadField("accountTeam");
 
 //    final FileUploadField userInfo = new FileUploadField("userInfo");
@@ -101,6 +103,21 @@ public class UploadPage extends AdminTemplatePage
 		   }
         }
 
+        FileUpload userFileUpload = user.getFileUpload();
+        if (userFileUpload != null)
+        {
+          String userFileName = "d:\\" + userFileUpload.getClientFileName();
+          String template = "UserInfo Import Template 1.0";
+          try
+          {
+            userFileUpload.writeTo(new File(userFileName));
+            da.load(template, userFileName);
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
+        }
       }
     };
     add(form);
@@ -108,7 +125,7 @@ public class UploadPage extends AdminTemplatePage
     form.add(contact);
     form.add(position);
     form.add(accountTeam);
-//    form.add(userInfo);
+    form.add(user);
     form.setMultiPart(true);
 
 

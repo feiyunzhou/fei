@@ -16,13 +16,15 @@
 			account.comprehensive_or_specialized =
 			account_comprehensive_or_specialized_pl.id
 			where account.id != -1 and(
-			account.id in (select accountid from accountcrmuser where
-			accountcrmuser.crmuserid = ?)
-			or account.id in (select contact.accountid from contactcrmuser left
-			join
-			contact on contactcrmuser.contactid = contact.id where
-			contactcrmuser.crmuserid = ?))ORDER BY CONVERT( name USING gbk ))  as aAccount
-
+			account.id in (select accountid from accountcrmuser 
+			left join user_position on user_position.userId = accountcrmuser.crmuserid
+			where accountcrmuser.crmuserid = ? and user_position.status=1)
+			or account.id in (select contact.accountid from contactcrmuser
+			left join contact on contactcrmuser.contactid = contact.id
+			left join accountcrmuser on accountcrmuser.accountid = contact.accountId
+			left join user_position on user_position.positionId = accountcrmuser.crmuserid
+			where contactcrmuser.crmuserid = ?
+			))ORDER BY CONVERT( name USING gbk ))  as aAccount
 		</sql>
 		<sql-admin>
 			select * from (select account.*\,
@@ -38,9 +40,8 @@
 			where account.id != -1 ORDER BY CONVERT( name USING gbk )) as aAccount
 		</sql-admin>
 		<sql-manager>
-
 			select * from (select account.*\,account_point_pl.val as key_type_val\,
-			account_type_pl.val as hospital_type_val \,
+			account_type_pl.val as hospital_type_val\,
 			account_comprehensive_or_specialized_pl.val as
 			comprehensive_or_specialized_val
 			FROM
@@ -49,7 +50,10 @@
 			where
 			crmuserid = ?) OR
 			account.id in (select accountid from crmdb.accountcrmuser where crmuserid in
-			(select id from crmuser where reportto = ?)) OR
+			(select crmuser.id from crmuser
+			left join user_position on crmuser.id = user_position.positionId
+			where user_position.status = 1 and crmuser.reportto = ?
+			)) OR
 			account.id in (select accountid from crmdb.contact where id in (select
 			contactid
 			from crmdb.contactcrmuser where crmuserid in (select id from
@@ -57,8 +61,6 @@
 			account_point_pl.id=key_type AND account.id != -1 AND
 			account_type_pl.id=hospital_type AND
 			account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized ORDER BY CONVERT( name USING gbk )) as aAccount
-
-
 		</sql-manager>
 
 		<sql-ent>SELECT * from (select account.* from account where
@@ -599,19 +601,21 @@
 			contact_generalization_target_pl.id
 			left join account on contact.accountid = account.id
 			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
+			left join user_position on user_position.positionId = accountcrmuser.crmuserId
 			left join contact_department_pl on contact.department = contact_department_pl.id
-			where contact.id != -1 and accountcrmuser.crmuserid = ?) as aContact
+			where contact.id != -1 and accountcrmuser.crmuserid = ? and user_position.status = 1) as aContact
 		</sql>
 		<sql-manager>
-select * from (select  aContact.*\,contact_generalization_target_pl.val as product_target_val\,
-account.name as accountName_val from (select distinct contact.id as cid\,contact.*
+select distinct * from (select  aContact.*\,contact_generalization_target_pl.val as product_target_val\,
+"account.name" as accountName_val from (select distinct contact.id as cid\,contact.*
 from contact\, accountcrmuser\,crmuser 
 where crmuser.reportto=? and
 	  contact.accountId = accountcrmuser.accountId and
 	  crmuser.id = accountcrmuser.crmuserId ) as aContact
 	left join contact_generalization_target_pl on aContact.product_target = 
 		contact_generalization_target_pl.id 
-	left join account on aContact.accountId = account.id  ) as cCountcat
+	left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
+	left join user_position on user_position.positionId = accountcrmuser.crmuserId and user_position.status = 1 ) as cCountcat
 
 		</sql-manager>
 
@@ -633,9 +637,7 @@ where crmuser.reportto=? and
 			left join contact_generalization_target_pl on contact.product_target =
 			contact_generalization_target_pl.id 
 			left join contact_department_pl on contact.department = contact_department_pl.id
-			where contact.id != -1) as
-			aContact
-
+			where contact.id != -1 ) as aContact
 		</sql-admin>
 
 		<sql-ent>select * from (select contact.*\,account.id as accountName
@@ -1504,20 +1506,31 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<sql>
 			select * from
 				( 
-					select * from crmuser where id = ?
+					select crmuser.*\,userInfo.name as userInfoName from crmuser 
+					left join (select * from user_position where status = 1) as userposition
+					 on crmuser.id = userposition.positionId
+					left join userInfo on userInfo.id = user_position.userId
+					where (id = ?) and (user_position.status = 1)
    				 ) as aCrmuser
 		</sql>
 		<sql-admin>
 			select * from 
-			(select crmuser.*\,"crmmanager.name" as reportto_val
+			(select crmuser.*\,"crmmanager.name" as reportto_val\,userInfo.name as userInfoName
 				from crmuser
 				left join (select * from crmuser) crmmanager on
 				crmuser.reportto = crmmanager.id
-				where crmuser.id != -1 
+				left join (select * from user_position where status = 1) as userposition on userposition.positionId = crmuser.id
+				left join userInfo on userposition.userId = userInfo.id
+				where crmuser.id != -1
 			) as aCrmuser
 		</sql-admin>
 		<sql-manager>
-			select * from (select * from crmuser where id = ? or reportto = ?) as aCrmuser
+			select * from (select crmuser.*\,userInfo.name as userInfoName
+			 from crmuser
+			left join (select * from user_position where status = 1) as userposition
+			 on userposition.positionId = crmuser.id
+			left join userInfo on userInfo.id = user_position.userId
+			 where id = ? or reportto = ?) as aCrmuser
 		</sql-manager>
 		<!-- <sql-manager-coaching>select * from (select crmuser.*\, -->
 		<!-- "crmmanager.name" as reportto_val\, -->

@@ -407,7 +407,8 @@ public class EditDataFormPanel extends Panel {
 				    DAOImpl.updateRecord(entityId,table_name,names,values);
 				  }
 				  DAOImpl.updateUserInfoPositionByPositionId(String.valueOf(data.get("positionId"))); 
-				  DAOImpl.insert2UserRelationTable(table_name,entityId,String.valueOf(fieldNameToModel.get("positionId").getObject()),null);
+//				  DAOImpl.updatePositionByPositionId(String.valueOf(data.get("positionId")));
+				  DAOImpl.insertUserPositionRelationTable(table_name,entityId,String.valueOf(fieldNameToModel.get("positionId").getObject()),null);
 				  DAOImpl.updateRecord(entityId,table_name,names,values);
         }
 				setResponsePage(new EntityDetailPage(schema.getName(),entityId));

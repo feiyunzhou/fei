@@ -1244,7 +1244,6 @@ public class DAOImpl
         }else if (entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willCoaching")){
           sql = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if (entityName.equalsIgnoreCase("userInfo")){
-          updateUserInfoPositionByUserId(userId); 
           sql = "INSERT INTO user_position ( userId,positionId,status,isPrimary,createtime) VALUES ("+userId+","+positionId+",1,1,'"+date_value+"')";
         }
         if(sql == null) {
@@ -1316,6 +1315,42 @@ public class DAOImpl
            DBHelper.closeConnection(conn);
        }
    }
+    public static void insertUserPositionRelationTable(String entityName,String userId,String positionId, String entityId) {
+      String sql = "";
+      long ts= System.currentTimeMillis();
+      SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      String date_value = dateformat.format(ts);
+      sql = "INSERT INTO user_position ( userId,positionId,status,isPrimary,createtime) VALUES ("+userId+","+positionId+",1,1,'"+date_value+"')";
+       logger.debug("UPDATE sql is:"+sql);
+       Connection conn = null;
+       try {
+           conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int inserts = 0;
+           inserts += run.update(conn, sql);
+       } catch (Exception e) {
+           logger.error("failed to add new calendar event", e);
+       } finally {
+           DBHelper.closeConnection(conn);
+       }
+   }
+    public static void updatePositionByUserId( String userId) {
+      String sql = "";
+         sql = "UPDATE  userInfo SET positionId = -1 where id = " + userId;
+       logger.debug("UPDATE sql is:"+sql);
+       Connection conn = null;
+       try {
+           conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+           int inserts = 0;
+           inserts += run.update(conn, sql);
+       } catch (Exception e) {
+           logger.error("failed to add new calendar event", e);
+       } finally {
+           DBHelper.closeConnection(conn);
+       }
+   }
+    
     public static void updateUserInfoPositionByPositionId( String positionId) {
       String sql = "";
          sql = "UPDATE  user_position SET status = 2 where positionId = " + positionId;
@@ -1332,6 +1367,22 @@ public class DAOImpl
            DBHelper.closeConnection(conn);
        }
    }
+//    public static void updatePositionByPositionId( String positionId) {
+//      String sql = "";
+//         sql = "UPDATE  userInfo SET positionId = -1 where positionId = " + positionId;
+//       logger.debug("UPDATE sql is:"+sql);
+//       Connection conn = null;
+//       try {
+//           conn = DBHelper.getConnection();
+//           QueryRunner run = new QueryRunner();
+//           int inserts = 0;
+//           inserts += run.update(conn, sql);
+//       } catch (Exception e) {
+//           logger.error("failed to add new calendar event", e);
+//       } finally {
+//           DBHelper.closeConnection(conn);
+//       }
+//   }
     public static void doneRecord(String id,String entityName, String time ) {
     	String sql = "";
       
@@ -1518,7 +1569,7 @@ public class DAOImpl
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
-            user = run.query(conn, "SELECT * FROM crmuser where id=?", h,  uid);
+            user = run.query(conn, "SELECT * FROM crmuser where id=? ", h,  uid);
 
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
@@ -1528,6 +1579,25 @@ public class DAOImpl
 
         return user;
     }
+    
+    public static UserPosition getActivityPositionInfoByUserId(int uid) {
+      System.out.println("登录"+uid);
+      Connection conn = null;
+      UserPosition user = new UserPosition();
+      try {
+          conn = DBHelper.getConnection();
+          QueryRunner run = new QueryRunner();
+          ResultSetHandler<UserPosition> h = new BeanHandler<UserPosition>(UserPosition.class);
+          user = run.query(conn, "SELECT * FROM user_position where userId=? and status = 1 ", h,  uid);
+
+      } catch (SQLException e) {
+          logger.error("failed to get all accounts", e);
+      } finally {
+          DBHelper.closeConnection(conn);
+      }
+
+      return user;
+  }
 
     public static boolean isSessionValid(String sessionId, String sessionKey) {      
         boolean res = false;
@@ -1632,6 +1702,29 @@ public class DAOImpl
 	          search_target = "";
     	}
         String sql = "select * from (select * from crmuser where (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR code like '%"+search_target+"%' OR reportto like '%"+search_target+"%')) as a";
+        logger.debug(sql );
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return lMap;
+    }
+    
+    public static List searchPositionCRMUser(String search_target) {
+      if(search_target == null|| search_target.equalsIgnoreCase("*")){
+            search_target = "";
+      }
+      
+        String sql = "SELECT * FROM (select * from (select  crmuser.*, user_position.positionId from  crmuser  left join user_position ON crmuser.id = user_position.positionId where user_position.positionId is null ) as crmuserposition where (crmuserposition.id !=-1 )AND (name like '%"+search_target+"%' OR code like '%"+search_target+"%' OR reportto like '%"+search_target+"%')) as a";
         logger.debug(sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
@@ -2021,6 +2114,29 @@ public class DAOImpl
         }
         return user;
     }
+    
+    public  static List<UserInfo> getUserByPositionId(int userId){
+      Connection conn = null;
+      List<UserInfo> inferiors = Lists.newArrayList();
+      List<UserInfo> users = Lists.newArrayList();
+      try {
+          conn = DBHelper.getConnection();
+          QueryRunner run = new QueryRunner();
+          ResultSetHandler<List<UserInfo>> h = new BeanListHandler<UserInfo>(UserInfo.class);
+          users = run.query(conn, "SELECT * FROM userInfo left  join user_position on userInfo.id = user_position.userId where (user_position.status=1) and (userInfo.id = ?)", h, userId);
+      } catch (SQLException e) {
+          logger.error("failed to get all accounts", e);
+      } finally {
+          DBHelper.closeConnection(conn);
+      }
+      for(UserInfo userInfo:users){
+        UserInfo u = new UserInfo();
+        u.setName(userInfo.getName());
+        inferiors.add(u);
+      }
+      return inferiors;
+  }
+    
     public static Activity getActivityById(int entityId){
     	System.out.println("根据活动ID获取用户");
         Connection conn = null;
@@ -2035,7 +2151,7 @@ public class DAOImpl
         } finally {
             DBHelper.closeConnection(conn);
         }
-        return activity;
+        return activity; 
     }
     
     public static UserInfo getUserInfoById(int id) {
