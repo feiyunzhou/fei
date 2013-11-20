@@ -17,7 +17,6 @@ package com.rexen.crm.integration;
 
 import com.rexen.crm.beans.DataExchangeTeample;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;

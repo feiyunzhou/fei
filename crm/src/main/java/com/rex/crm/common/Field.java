@@ -5,266 +5,314 @@ import java.io.Serializable;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
-public class Field implements Serializable {
+public class Field implements Serializable
+{
 
-    @Expose
-    private boolean isPrimaryKey;
-    @Expose
-    private String id;
-    @Expose
-    private boolean isRequired;
-    @Expose
-    private String display;
-    private String dataType;
-    @Expose
-    private String name;
-    @Expose
-    private boolean isDetailLink;
-    @Expose
-    private boolean isVisible;
-    @Expose
-    private String picklist = null;
-    @Expose
-    private boolean isEditable;
-    @Expose
-    private boolean isParam;
-    
-    @Expose
-    private boolean isSearchable;
-    @Expose
-    private String formatter;
-    @Expose
-    private int priority;
-    @Expose
-    private String relationTable = null;
-    @Expose
-    private String fieldGroup = "基本信息";
-    
-    @Expose
-    private String alias = null;
-    @Expose 
-    private boolean isBaseInfo = false;
-    @Expose
-    private String default_value = null;
-    @Expose
-    private String default_value_type = null;
-    @Expose
-    private String childNode;
-    @Expose
-    private String parentNode;
-    @Expose
-    private String fieldType;
-    @Expose
-    private int tooltip;
-    @Expose
-    private boolean isExistsDefaultValue;
-    public boolean isRequired() {
-        return isRequired;
-    }
+  @Expose
+  private boolean isPrimaryKey;
+  @Expose
+  private String id;
+  @Expose
+  private boolean isRequired;
+  @Expose
+  private String display;
+  private String dataType;
+  @Expose
+  private String name;
+  @Expose
+  private boolean isDetailLink;
+  @Expose
+  private boolean isVisible;
+  @Expose
+  private String picklist = null;
+  @Expose
+  private boolean isEditable;
+  @Expose
+  private boolean isParam;
+  @Expose
+  private boolean isSearchable;
+  @Expose
+  private String formatter;
+  @Expose
+  private int priority;
+  @Expose
+  private String relationTable = null;
+  @Expose
+  private String fieldGroup = "基本信息";
+  @Expose
+  private String alias = null;
+  @Expose
+  private boolean isBaseInfo = false;
+  @Expose
+  private String default_value = null;
+  @Expose
+  private String default_value_type = null;
+  @Expose
+  private String childNode;
+  @Expose
+  private String parentNode;
+  @Expose
+  private String fieldType;
+  @Expose
+  private int tooltip;
+  @Expose
+  private boolean isExistsDefaultValue;
 
-    public void setRequired(boolean isRequired) {
-        this.isRequired = isRequired;
-    }
+  public boolean isRequired()
+  {
+    return isRequired;
+  }
 
-    public boolean isPrimaryKey() {
-        return isPrimaryKey;
-    }
+  public void setRequired(boolean isRequired)
+  {
+    this.isRequired = isRequired;
+  }
 
-    public void setPrimaryKey(boolean isPrimaryKey) {
-        this.isPrimaryKey = isPrimaryKey;
-    }
+  public boolean isPrimaryKey()
+  {
+    return isPrimaryKey;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public void setPrimaryKey(boolean isPrimaryKey)
+  {
+    this.isPrimaryKey = isPrimaryKey;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId()
+  {
+    return id;
+  }
 
-    public String getDisplay() {
-        return display;
-    }
+  public void setId(String id)
+  {
+    this.id = id;
+  }
 
-    public void setDisplay(String display) {
-        this.display = display;
-    }
+  public String getDisplay()
+  {
+    return display;
+  }
 
-    public String getDataType() {
-        return dataType;
-    }
+  public void setDisplay(String display)
+  {
+    this.display = display;
+  }
 
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
-    }
+  public String getDataType()
+  {
+    return dataType;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setDataType(String dataType)
+  {
+    this.dataType = dataType;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName()
+  {
+    return name;
+  }
 
-    @Override
-    public String toString() {
-        GsonBuilder gb = new GsonBuilder(); 
-       
-        return  gb.excludeFieldsWithoutExposeAnnotation().create().toJson(this);
-    }
+  public void setName(String name)
+  {
+    this.name = name;
+  }
 
-    public boolean isDetailLink() {
-        return isDetailLink;
-    }
+  @Override
+  public String toString()
+  {
+    GsonBuilder gb = new GsonBuilder();
 
-    public void setDetailLink(boolean isDetailLink) {
-        this.isDetailLink = isDetailLink;
-    }
+    return gb.excludeFieldsWithoutExposeAnnotation().create().toJson(this);
+  }
 
-    public boolean isVisible() {
-        return isVisible;
-    }
+  public boolean isDetailLink()
+  {
+    return isDetailLink;
+  }
 
-    public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
+  public void setDetailLink(boolean isDetailLink)
+  {
+    this.isDetailLink = isDetailLink;
+  }
 
-    public String getPicklist() {
-        return picklist;
-    }
+  public boolean isVisible()
+  {
+    return isVisible;
+  }
 
-    public void setPicklist(String picklist) {
-        this.picklist = picklist;
-    }
+  public void setVisible(boolean isVisible)
+  {
+    this.isVisible = isVisible;
+  }
 
-    public boolean isEditable() {
-        return isEditable;
-    }
+  public String getPicklist()
+  {
+    return picklist;
+  }
 
-    public void setEditable(boolean isEditable) {
-        this.isEditable = isEditable;
-    }
+  public void setPicklist(String picklist)
+  {
+    this.picklist = picklist;
+  }
 
-    public String getFormatter() {
-        return formatter;
-    }
+  public boolean isEditable()
+  {
+    return isEditable;
+  }
 
-    public void setFormatter(String formatter) {
-        this.formatter = formatter;
-    }
+  public void setEditable(boolean isEditable)
+  {
+    this.isEditable = isEditable;
+  }
 
-    public int getPriority() {
-        return priority;
-    }
+  public String getFormatter()
+  {
+    return formatter;
+  }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
+  public void setFormatter(String formatter)
+  {
+    this.formatter = formatter;
+  }
 
-    public String getRelationTable() {
-        return relationTable;
-    }
+  public int getPriority()
+  {
+    return priority;
+  }
 
-    public void setRelationTable(String relationTable) {
-        this.relationTable = relationTable;
-    }
+  public void setPriority(int priority)
+  {
+    this.priority = priority;
+  }
 
-    public String getAlias() {
-        return alias;
-    }
+  public String getRelationTable()
+  {
+    return relationTable;
+  }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
+  public void setRelationTable(String relationTable)
+  {
+    this.relationTable = relationTable;
+  }
 
-    public String getFieldGroup() {
-        return fieldGroup;
-    }
+  public String getAlias()
+  {
+    return alias;
+  }
 
-    public void setFieldGroup(String fieldGroup) {
-        this.fieldGroup = fieldGroup;
-    }
+  public void setAlias(String alias)
+  {
+    this.alias = alias;
+  }
 
-	public boolean isBaseInfo() {
-		return isBaseInfo;
-	}
+  public String getFieldGroup()
+  {
+    return fieldGroup;
+  }
 
-	public void setBaseInfo(boolean isBaseInfo) {
-		this.isBaseInfo = isBaseInfo;
-	}
+  public void setFieldGroup(String fieldGroup)
+  {
+    this.fieldGroup = fieldGroup;
+  }
 
-    public boolean isSearchable() {
-        return isSearchable;
-    }
+  public boolean isBaseInfo()
+  {
+    return isBaseInfo;
+  }
 
-    public void setSearchable(boolean isSearchable) {
-        this.isSearchable = isSearchable;
-    }
+  public void setBaseInfo(boolean isBaseInfo)
+  {
+    this.isBaseInfo = isBaseInfo;
+  }
 
-    public String getDefault_value() {
-        return default_value;
-    }
+  public boolean isSearchable()
+  {
+    return isSearchable;
+  }
 
-    public void setDefault_value(String default_value) {
-        this.default_value = default_value;
-    }
+  public void setSearchable(boolean isSearchable)
+  {
+    this.isSearchable = isSearchable;
+  }
 
-    public String getDefault_value_type() {
-        return default_value_type;
-    }
+  public String getDefault_value()
+  {
+    return default_value;
+  }
 
-    public void setDefault_value_type(String default_value_type) {
-        this.default_value_type = default_value_type;
-    }
+  public void setDefault_value(String default_value)
+  {
+    this.default_value = default_value;
+  }
 
-    public boolean isParam() {
-        return isParam;
-    }
+  public String getDefault_value_type()
+  {
+    return default_value_type;
+  }
 
-    public void setParam(boolean isParam) {
-        this.isParam = isParam;
-    }
+  public void setDefault_value_type(String default_value_type)
+  {
+    this.default_value_type = default_value_type;
+  }
 
-    public String getChildNode() {
-        return childNode;
-    }
+  public boolean isParam()
+  {
+    return isParam;
+  }
 
-    public void setChildNode(String childNode) {
-        this.childNode = childNode;
-    }
+  public void setParam(boolean isParam)
+  {
+    this.isParam = isParam;
+  }
 
-    public String getParentNode() {
-        return parentNode;
-    }
+  public String getChildNode()
+  {
+    return childNode;
+  }
 
-    public void setParentNode(String parentNode) {
-        this.parentNode = parentNode;
-    }
+  public void setChildNode(String childNode)
+  {
+    this.childNode = childNode;
+  }
 
-    public String getFieldType()
-    {
-      return fieldType;
-    }
+  public String getParentNode()
+  {
+    return parentNode;
+  }
 
-    public void setFieldType(String fieldType)
-    {
-      this.fieldType = fieldType;
-    }
+  public void setParentNode(String parentNode)
+  {
+    this.parentNode = parentNode;
+  }
 
-	public int getTooltip() {
-		return tooltip;
-	}
+  public String getFieldType()
+  {
+    return fieldType;
+  }
 
-	public void setTooltip(int tooltip) {
-		this.tooltip = tooltip;
-	}
+  public void setFieldType(String fieldType)
+  {
+    this.fieldType = fieldType;
+  }
 
-	public boolean isExistsDefaultValue() {
-		return isExistsDefaultValue;
-	}
+  public int getTooltip()
+  {
+    return tooltip;
+  }
 
-	public void setExistsDefaultValue(boolean isExistsDefaultValue) {
-		this.isExistsDefaultValue = isExistsDefaultValue;
-	}
+  public void setTooltip(int tooltip)
+  {
+    this.tooltip = tooltip;
+  }
 
+  public boolean isExistsDefaultValue()
+  {
+    return isExistsDefaultValue;
+  }
+
+  public void setExistsDefaultValue(boolean isExistsDefaultValue)
+  {
+    this.isExistsDefaultValue = isExistsDefaultValue;
+  }
 }
