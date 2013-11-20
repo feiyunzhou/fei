@@ -1355,15 +1355,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			<!-- <field> <name>reportto</name> <display>上级经理</display> <isRequired>false</isRequired> 
-				<data-type>text</data-type> <relationTable>crmuser</relationTable> <isSearchable>true</isSearchable> 
-				<isPrimaryKey>false</isPrimaryKey> <isDetailLink>false</isDetailLink> <isVisible>true</isVisible> 
-				<isEditable>true</isEditable> <priority>1</priority> <isBaseInfo>false</isBaseInfo> 
-				<fieldGroup>关键信息</fieldGroup> </field> <field> <name>reportto_val</name> 
-				<display>上级经理</display> <isRequired>false</isRequired> <data-type>text</data-type> 
-				<isPrimaryKey>false</isPrimaryKey> <isDetailLink>false</isDetailLink> <isVisible>false</isVisible> 
-				<isEditable>false</isEditable> <isSearchable>true</isSearchable> <priority>1</priority> 
-				<isBaseInfo>false</isBaseInfo> <fieldGroup>关键信息</fieldGroup> </field> -->
 			<field>
 				<name>positionId</name>
 				<display>岗位编码</display>
@@ -1377,6 +1368,20 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<relationTable>crmuser</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+<!-- 			<field> -->
+<!-- 				<name>agencyPositionId</name> -->
+<!-- 				<display>代理岗位</display> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<data-type>text</data-type> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>true</isEditable> -->
+<!-- 				<priority>1</priority> -->
+<!-- 				<relationTable>crmuser</relationTable> -->
+<!-- 				<fieldGroup>关键信息</fieldGroup> -->
+<!-- 			</field> -->
 			<!-- 基本信息 -->
 			<field>
 				<name>employeeNumber</name>
@@ -1403,19 +1408,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-<!-- 			<field> -->
-<!-- 				<name>pl2</name> -->
-<!-- 				<display>产品线</display> -->
-<!-- 				<isRequired>false</isRequired> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<picklist>crmuser_pl2</picklist> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>false</isDetailLink> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>2</priority> -->
-<!-- 				<fieldGroup>基本信息</fieldGroup> -->
-<!-- 			</field> -->
 
 			<field>
 				<name>province</name>
@@ -1557,13 +1549,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>name</name>
 				<display>岗位名称</display>
-				<isRequired>true</isRequired>
+				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
 			</field>
@@ -1573,7 +1565,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isRequired>true</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
+				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
@@ -2127,20 +2119,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 
-			<!--<field> -->
-			<!--<name>participants</name> -->
-			<!--<display>参与人/相关人员</display> -->
-			<!--<data-type>text</data-type> -->
-			<!--<isPrimaryKey>false</isPrimaryKey> -->
-			<!--<isDetailLink>false</isDetailLink> -->
-			<!--<isVisible>true</isVisible> -->
-			<!--<isEditable>false</isEditable> -->
-			<!--<priority>1</priority> -->
-			<!--<isBaseInfo>true</isBaseInfo> -->
-			<!--<fieldGroup>关键信息</fieldGroup> -->
-			<!--</field> -->
-			<!---->
-
 			<field>
 				<name>act_type</name>
 				<display>拜访类型</display>
@@ -2311,66 +2289,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-<!-- 			<field> -->
-<!-- 				<name>action</name> -->
-<!-- 				<display>操作</display> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>true</isDetailLink> -->
-<!-- 				<picklist>action_type_pl</picklist> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>3</priority> -->
-<!-- 				<fieldGroup>关键信息</fieldGroup> -->
-<!-- 			</field> -->
-<!-- 			<field> -->
-<!-- 				<name>import_template</name> -->
-<!-- 				<display>导入模版</display> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>true</isDetailLink> -->
-<!-- 				<picklist>import_type_pl</picklist> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>1</priority> -->
-<!-- 				<fieldGroup>关键信息</fieldGroup> -->
-<!-- 			</field> -->
-			
-<!-- 			<field> -->
-<!-- 				<name>export_template</name> -->
-<!-- 				<display>导出模版</display> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>true</isDetailLink> -->
-<!-- 				<picklist>export_type_pl</picklist> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>1</priority> -->
-<!-- 				<fieldGroup>关键信息</fieldGroup> -->
-<!-- 			</field> -->
-<!-- 			<field> -->
-<!-- 				<name>export_file_path</name> -->
-<!-- 				<display>导出文件路径</display> -->
-<!-- 				<data-type>file</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>true</isDetailLink> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>1</priority> -->
-<!-- 				<fieldGroup>关键信息</fieldGroup> -->
-<!-- 			</field> -->
-<!-- 			<field> -->
-<!-- 				<name>statuss</name> -->
-<!-- 				<display>状态</display> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>true</isDetailLink> -->
-<!-- 				<picklist>status_type_pl</picklist> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>1</priority> -->
-<!-- 				<fieldGroup>关键信息</fieldGroup> -->
-<!-- 			</field> -->
 			<field>
 				<name>operation_id</name>
 				<display>操作</display>
@@ -2408,30 +2326,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-<!-- 			<field> -->
-<!-- 				<name>createddate</name> -->
-<!-- 				<display>操作申请时间</display> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>true</isDetailLink> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>2</priority> -->
-<!-- 				<field-type>auto</field-type> -->
-<!-- 				<fieldGroup>附加信息</fieldGroup> -->
-<!-- 			</field> -->
-<!-- 			<field> -->
-<!-- 				<name>modifieddate</name> -->
-<!-- 				<display>最后修改时间</display> -->
-<!-- 				<data-type>text</data-type> -->
-<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
-<!-- 				<isDetailLink>true</isDetailLink> -->
-<!-- 				<isVisible>true</isVisible> -->
-<!-- 				<isEditable>false</isEditable> -->
-<!-- 				<priority>2</priority> -->
-<!--  				<field-type>auto</field-type> -->
-<!-- 				<fieldGroup>附加信息</fieldGroup> -->
-<!-- 			</field> -->
 		</fields>
 	</entity>
 	
@@ -2910,7 +2804,60 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 		</fields>
 	</entity>
-	
+	<entity>
+		<name>product</name>
+		<display>产品</display>
+		<filterField></filterField>
+		<sql> select * from product</sql>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>产品名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>description</name>
+				<display>产品规格</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+					<name>parentid</name>
+					<display>产品线</display>
+					<isRequired>false</isRequired>
+					<data-type>text</data-type>
+					<picklist>crmuser_pl2</picklist>
+					<isPrimaryKey>false</isPrimaryKey>
+					<isDetailLink>false</isDetailLink>
+					<isVisible>true</isVisible>
+					<isEditable>true</isEditable>
+					<priority>1</priority>
+					<fieldGroup>关键信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
 	<entity>
 		<name>willCoaching</name>
 		<display>辅导</display>

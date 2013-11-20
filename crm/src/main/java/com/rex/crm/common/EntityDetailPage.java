@@ -103,6 +103,8 @@ public class EntityDetailPage extends TemplatePage {
         if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
         	System.out.println("name:"+map.get("title"));
         	add(new Label("name",String.valueOf(map.get("title"))));
+        }else if(entity.getName().equals("crmuser")){
+          add(new Label("name",String.valueOf(map.get("code"))));
         }else{
         	add(new Label("name",String.valueOf(map.get("name"))));
         }
