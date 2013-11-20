@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <BatchSize>1000</BatchSize>
+    <EntityName>Accountcrmuser</EntityName>
+    <FileName>account_crmuser_import.csv</FileName>
+    <ExternalId>ExternalId</ExternalId>
+    <Database>crm_mysql</Database>
+    <Max>100000</Max>
+    <Fields>
+        <ColumnName>ExternalId</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>ExternalId</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>BDM编码</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>accountId</FieldName>
+        <LookupEntityName>Account</LookupEntityName>
+        <LookupFieldName>BdmCode</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>岗位编码</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>crmuserid</FieldName>
+        <LookupEntityName>Crmuser</LookupEntityName>
+        <LookupFieldName>Code</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+</Configuration>

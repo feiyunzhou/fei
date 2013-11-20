@@ -106,6 +106,7 @@ public final class SignIn extends WebPage
                                 	//根据userId查找用户岗位。如果岗位有多个则选择岗位
                                 	List<UserPosition> positions = DAOImpl.getPositionsByUserId(user.getId());
                                 	if(positions.size()>1){
+                                		System.out.println("assds");
                                 		setResponsePage(new SelectPositionPage(positions));
                                 	}else{
                                 		setResponsePage(getApplication().getHomePage());

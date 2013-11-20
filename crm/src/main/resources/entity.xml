@@ -2001,6 +2001,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isRequired>true</isRequired>
 				<childNode>visiting_purpose</childNode>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2031,6 +2032,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isBaseInfo>true</isBaseInfo>
 				<parentNode>activity_type</parentNode>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			
@@ -2149,6 +2151,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>activity_feature_product_pl</picklist>
 				<priority>1</priority>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			
@@ -2162,6 +2165,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<picklist>activity_status_pl</picklist>
 				<priority>2</priority>
+				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2176,6 +2180,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
@@ -2623,6 +2628,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>activity_feature_product_pl</picklist>
 				<priority>1</priority>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			
@@ -2638,6 +2644,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>2</priority>
 				<isBaseInfo>true</isBaseInfo>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			
@@ -2676,7 +2683,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>department</name>
 				<display>科室</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -2699,6 +2706,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>activity_status_pl</picklist>
 				<priority>2</priority>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2711,6 +2719,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>3</priority>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -3120,7 +3129,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>department</name>
 				<display>科室</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -3143,6 +3152,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>activity_feature_product_pl</picklist>
 				<priority>1</priority>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3156,6 +3166,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>activity_coachtime_pl</picklist>
 				<priority>1</priority>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3168,6 +3179,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<picklist>activity_status_pl</picklist>
 				<priority>1</priority>
+				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -3180,6 +3192,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>

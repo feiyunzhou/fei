@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <BatchSize>1000</BatchSize>
+    <EntityName>Accountcrmuser</EntityName>
+    <FileName>account_position.csv</FileName>
+    <ExternalId>Id</ExternalId>
+    <Database>crm_mysql</Database>
+    <Max>100000</Max>
+    <Fields>
+        <ColumnName>Id</ColumnName>
+        <DataType>Integer</DataType>
+        <FieldName>Id</FieldName>
+    </Fields>
+    
+       <Fields>
+        <ColumnName>accountId</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>accountId</FieldName>
+        <LookupEntityName>Account</LookupEntityName>
+        <LookupFieldName>Name</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+   
+      <Fields>
+        <ColumnName>crmuser</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>crmuserid</FieldName>
+        <LookupEntityName>Crmuser</LookupEntityName>
+        <LookupFieldName>name</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+</Configuration>

@@ -152,6 +152,7 @@ public class EditDataFormPanel extends Panel {
                             if(currentField.getPriority()==5){
                               String message = CRMUtility.getToolTipById(String.valueOf(currentField.getTooltip()));
                               textField.add(new AttributeModifier("data-content",message));
+                              textField.add(new AttributeAppender("class",new Model<String>("icon-question-sign")," "));
                         	  textField.add(new AttributeModifier("title",currentField.getDisplay()));
                           	  textField.add(new AttributeAppender("class",new Model("tooltip-test")," "));
                             }
@@ -234,7 +235,7 @@ public class EditDataFormPanel extends Panel {
 
                                
                                 fieldNameToModel.put(currentField.getName(), choiceModel);
-                                columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids, list, choiceModel));
+                                columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids, list, choiceModel,currentField));
                             }
                         }
                     } else if (currentField.getRelationTable() != null) {
@@ -473,9 +474,9 @@ public class EditDataFormPanel extends Panel {
     }
 
     private class DropDownChoiceFragment extends Fragment {
-        public DropDownChoiceFragment(String id, String markupId, MarkupContainer markupProvider, final List<Long> ids, final Map<Long, String> list, IModel model) {
+        public DropDownChoiceFragment(String id, String markupId, MarkupContainer markupProvider, final List<Long> ids, final Map<Long, String> list, IModel model,Field currentField) {
             super(id, markupId, markupProvider);
-            add((new DropDownChoice<Long>("dropDownInput", model, ids, new IChoiceRenderer<Long>() {
+            DropDownChoice dropDown = (new DropDownChoice<Long>("dropDownInput", model, ids, new IChoiceRenderer<Long>() {
                 @Override
                 public Object getDisplayValue(Long id) {
                     // TODO Auto-generated method stub
@@ -486,7 +487,14 @@ public class EditDataFormPanel extends Panel {
                 public String getIdValue(Long id, int index) {
                     return String.valueOf(id);
                 }
-            }).setNullValid(true)));
+            }));
+            if(currentField.getPriority()==5){
+            	dropDown.setNullValid(false);
+            }else{
+            	dropDown.setNullValid(true);
+            }
+            add(dropDown);
+            
         }
 		
         public DropDownChoiceFragment(String id, String markupId,MarkupContainer markupProvider,
@@ -518,7 +526,14 @@ public class EditDataFormPanel extends Panel {
                     
                  });
              }
-            
+            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+            	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
+            }
+            if(currentField.getPriority()==5){
+            	dropDown.setNullValid(false);
+            }else{
+            	dropDown.setNullValid(true);
+            }
         } 
 	}
     private DropDownChoice createDropDownListFromPickList(String markupId,IModel choices,IModel default_model) {
@@ -540,7 +555,6 @@ public class EditDataFormPanel extends Panel {
         });
         
         choice.setNullValid(true);
-        
         return choice;
     }
     private class RadioChoiceFragment extends Fragment{

@@ -34,7 +34,6 @@ public class CalendarPanel extends Panel {
 
     public CalendarPanel(String id) {
         super(id);       
-        //TODO Get permission info of user from database.
     }
     
     

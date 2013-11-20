@@ -71,7 +71,7 @@ public class HomePage extends TemplatePage {
         WebMarkupContainer coaching_create_li = new WebMarkupContainer("coaching_create_li");
         param = new PageParameters();
         param.add("entityName", "coaching");
-        BookmarkablePageLink coaching_create_link = new BookmarkablePageLink("coaching_create_link", CreateDataPage.class,param);
+        BookmarkablePageLink coaching_create_link = new BookmarkablePageLink("coaching_create_link", ActivitySelectPage.class,param);
         coaching_create_li.setVisible(false);
         coaching_create_li.add(coaching_create_link);
         add(coaching_create_li);

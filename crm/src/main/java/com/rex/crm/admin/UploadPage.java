@@ -5,6 +5,7 @@ import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.util.file.File;
 
+import com.rex.crm.util.CRMUtility;
 import com.rexen.crm.integration.DataImportDelegate;
 
 /**
@@ -37,14 +38,17 @@ public class UploadPage extends AdminTemplatePage
       {
         DataImportDelegate da = new DataImportDelegate();
         FileUpload accountFileUpload = account.getFileUpload();
+        CRMUtility util = new CRMUtility();
+        StringBuffer FileName = new StringBuffer(util.readFileAttribure("uploadpath"));
+        
         if (accountFileUpload != null)
         {
           String template = "Account Full Import Template 1.0";
-          String accountFileName = "/root/crm/" + accountFileUpload.getClientFileName();
+          FileName.append(accountFileUpload.getClientFileName());
           try
           {
-            accountFileUpload.writeTo(new File(accountFileName));
-            da.load(template, accountFileName);
+            accountFileUpload.writeTo(new File(FileName.toString()));
+            da.load(template, FileName.toString());
           }
           catch (Exception e)
           {
@@ -54,12 +58,12 @@ public class UploadPage extends AdminTemplatePage
         FileUpload contactFileUpload = contact.getFileUpload();
         if (contactFileUpload != null)
         {
-          String contactFileName = "/root/crm/" + contactFileUpload.getClientFileName();
+          FileName.append(contactFileUpload.getClientFileName());
           String template = "Contact Import Template 1.0";
           try
           {
-            contactFileUpload.writeTo(new File(contactFileName));
-            da.load(template, contactFileName);
+            contactFileUpload.writeTo(new File(FileName.toString()));
+            da.load(template, FileName.toString());
           }
           catch (Exception e)
           {
@@ -69,12 +73,12 @@ public class UploadPage extends AdminTemplatePage
         FileUpload positionFileUpload = position.getFileUpload();
         if (positionFileUpload != null)
         {
-          String positionFileName = "/root/crm/" + positionFileUpload.getClientFileName();
+          FileName.append(positionFileUpload.getClientFileName());
           String template = "Position Import Template 1.0";
           try
           {
-            positionFileUpload.writeTo(new File(positionFileName));
-            da.load(template, positionFileName);
+            positionFileUpload.writeTo(new File(FileName.toString()));
+            da.load(template, FileName.toString());
           }
           catch (Exception e)
           {
@@ -84,17 +88,17 @@ public class UploadPage extends AdminTemplatePage
         FileUpload accountTeamyFileUpload = accountTeam.getFileUpload();
         if (accountTeamyFileUpload != null)
         {
-          String accountTeamFileName = "/root/crm/" + accountTeamyFileUpload.getClientFileName();
-          String template = "Account Team Import Template 1.0";
-          try
-          {
-            accountTeamyFileUpload.writeTo(new File(accountTeamFileName));
-            da.load(template, accountTeamFileName);
-          }
-          catch (Exception e)
-          {
-            e.printStackTrace();
-          }
+    		FileName.append(accountTeamyFileUpload.getClientFileName());
+	        String template = "Account Team Import Template 1.0";
+            try
+           {
+            accountTeamyFileUpload.writeTo(new File(FileName.toString()));
+            da.load(template, FileName.toString());
+           }
+		   catch (Exception e)
+		   {
+		       e.printStackTrace();
+		   }
         }
 
       }

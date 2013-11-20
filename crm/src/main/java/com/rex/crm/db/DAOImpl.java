@@ -2102,7 +2102,7 @@ public class DAOImpl
          try {
              QueryRunner run = new QueryRunner();
              conn = DBHelper.getConnection();
-             users = run.query(conn, "select * from user_position where userId=?", h, userId);
+             users = run.query(conn, "select * from user_position where status =1 and userId=?", h, userId);
          } catch (Exception e) {
              logger.error("failed to get userPostion table data", e);
          } finally {

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <BatchSize>1000</BatchSize>
+    <EntityName>Contact</EntityName>
+    <FileName>contact_import.csv</FileName>
+    <ExternalId>ContactCode</ExternalId>
+    <Database>crm_mysql</Database>
+    <Max>100000</Max>
+
+    <Fields>
+        <ColumnName>Code</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>ContactCode</FieldName>
+    </Fields>
+
+    <Fields>
+        <ColumnName>目标医生姓名</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>name</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>医生级别</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>grade</FieldName>
+        <LookupEntityName>ContactGradePl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>职称</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>jobtitle</FieldName>
+        <LookupEntityName>ContactJobTitlePl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+
+    <Fields>
+        <ColumnName>行政职务（如有）</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>duty</FieldName>
+        <LookupEntityName>ContactDutyPl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+     <Fields>
+        <ColumnName>医院ID</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>accountid</FieldName>
+        <LookupEntityName>Account</LookupEntityName>
+        <LookupFieldName>BdmCode</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+     <Fields>
+        <ColumnName>科室</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>department</FieldName>
+        <LookupEntityName>ContactDepartmentPl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>id</TargetFieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>性别</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>sex</FieldName>
+        <LookupEntityName>SexPl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+
+    <Fields>
+        <ColumnName>手机</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>cellphone</FieldName>
+    </Fields>
+</Configuration>

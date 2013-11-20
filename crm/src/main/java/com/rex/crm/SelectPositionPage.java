@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
@@ -15,12 +16,11 @@ import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserPosition;
 import com.rex.crm.db.DAOImpl;
 
-public class SelectPositionPage extends TemplatePage{
+public class SelectPositionPage extends WebPage{
 	/**
 	 * Constructor
 	 */
 	public SelectPositionPage(List<UserPosition> list){
-		super.setPageTitle("选岗");
 	    //遍历数组，添加按钮
     	RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
 		AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
@@ -31,7 +31,7 @@ public class SelectPositionPage extends TemplatePage{
     		//根据岗位ID获取岗位名称
     		CRMUser user = DAOImpl.getCRMUserInfoById(position.getPositionId());
     		AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model());
-    		ButtonFragment btnFragment = new ButtonFragment("celldatafield","buttonFragment",this,user.getName(),String.valueOf(position.getPositionId()));
+    		ButtonFragment btnFragment = new ButtonFragment("celldatafield","buttonFragment",this,user.getName(),String.valueOf(position.getPositionId()),user.getRole());
     		columnitem.add(btnFragment);
     		columnRepeater.add(columnitem);
     	}
@@ -40,14 +40,15 @@ public class SelectPositionPage extends TemplatePage{
 	}
 	  private class ButtonFragment extends Fragment {
 
-	        public ButtonFragment(String id, String markupId,MarkupContainer markupProvider,String value,final String positionId){
+	        public ButtonFragment(String id, String markupId,MarkupContainer markupProvider,String value,final String positionId,final int roleId){
 	        	super(id, markupId, markupProvider);
 	        	Link link = new Link("button"){
 	        		@Override
 	                 public void onClick() {
 	        			 SignIn2Session   session =  (SignIn2Session) getSession();
 	                     session.setPositionId(positionId);
-	                 	setResponsePage(getApplication().getHomePage());
+	                     session.setRoleId(roleId);
+	                 	 setResponsePage(getApplication().getHomePage());
 	                 }
 	        	};
 	        	link.add(new Label("positionName",value));

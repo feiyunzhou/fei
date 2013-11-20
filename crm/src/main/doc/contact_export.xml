@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <BatchSize>1000</BatchSize>
+    <EntityName>Contact</EntityName>
+    <FileName>contact.csv</FileName>
+    <ExternalId>contactCode</ExternalId>
+    <Database>crm_mysql</Database>
+    <Max>100000</Max>
+    <Fields>
+        <ColumnName>contactCode</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>contactCode</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>duty</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>duty</FieldName>
+        <LookupEntityName>ContactDutyPl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>grade</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>grade</FieldName>
+        <LookupEntityName>ContactGradePl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+    
+    
+    
+    <Fields>
+        <ColumnName>marketclassification</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>marketclassification</FieldName>
+        <LookupEntityName>ContactMarketClassificationPl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+   
+    <Fields>
+        <ColumnName>jobtitle</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>jobtitle</FieldName>
+        <LookupEntityName>ContactJobTitlePl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+   
+    <Fields>
+        <ColumnName>accountId</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>accountId</FieldName>
+        <LookupEntityName>Account</LookupEntityName>
+        <LookupFieldName>Name</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+    
+    
+    
+     <Fields>
+        <ColumnName>city</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>city</FieldName>
+        <LookupEntityName>City</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+    
+    <Fields>
+        <ColumnName>sex</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>sex</FieldName>
+        <LookupEntityName>SexPl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+   
+   
+   
+    <Fields>
+        <ColumnName>province</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>province</FieldName>
+        <LookupEntityName>Province</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>cellphone</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>cellphone</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>contactCode</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>contactCode</FieldName>
+    </Fields>
+     <Fields>
+        <ColumnName>科室</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>department</FieldName>
+        <LookupEntityName>ContactDepartmentPl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>id</TargetFieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>districts</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>districts</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>email</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>email</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>modifier</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>modifier</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>name</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>name</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>nativeplace</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>nativeplace</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>officefax</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>officefax</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>officetel</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>officetel</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>owner</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>owner</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>producttarget</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>producttarget</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>responsibleperson</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>responsibleperson</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>status</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>status</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>modifydatetime</ColumnName>
+        <DataType>Date</DataType>
+        <FieldName>modifydatetime</FieldName>
+        <Format>m/d/yy</Format>
+    </Fields>
+    <Fields>
+        <ColumnName>whenadded</ColumnName>
+        <DataType>Date</DataType>
+        <FieldName>whenadded</FieldName>
+        <Format>m/d/yy</Format>
+    </Fields>
+    
+    
+    
+    
+    
+</Configuration>

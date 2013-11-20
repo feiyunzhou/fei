@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Configuration>
+    <BatchSize>1000</BatchSize>
+    <EntityName>Activity</EntityName>
+    <ExternalId>Id</ExternalId>
+    <FileName>Activity.csv</FileName>
+    <Database>crm_mysql</Database>
+    <Max>100000</Max>
+    <Fields>
+        <ColumnName>Id</ColumnName>
+        <DataType>Integer</DataType>
+        <FieldName>Id</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>Name</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>Name</FieldName>
+    </Fields>
+
+    <Fields>
+        <ColumnName>crmuserId</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>crmuserId</FieldName>
+        <LookupEntityName>Userinfo</LookupEntityName>
+        <LookupFieldName>Name</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>  
+    <Fields>
+        <ColumnName>eventtype</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>eventtype</FieldName>
+        <LookupEntityName>ActivityEventTypePl</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>    
+     <Fields>
+        <ColumnName>starttime</ColumnName>
+        <DataType>Date</DataType>
+        <FieldName>starttime</FieldName>
+        <Format>m/d/yy</Format>
+    </Fields>
+    <Fields>
+        <ColumnName>endtime</ColumnName>
+        <DataType>Date</DataType>
+        <FieldName>endtime</FieldName>
+        <Format>m/d/yy</Format>
+    </Fields>
+    <Fields>
+        <ColumnName>title</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>title</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>participants</ColumnName>
+        <DataType>String</DataType>
+        <FieldName>participants</FieldName>
+    </Fields>
+    <Fields>
+        <ColumnName>activitytype</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>activitytype</FieldName>
+        
+        <LookupEntityName>ActivityTypes</LookupEntityName>
+        <LookupFieldName>val</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>    
+</Configuration>

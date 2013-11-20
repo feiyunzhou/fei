@@ -1,0 +1,10 @@
+use crmdb;
+ALTER TABLE `crmdb`.`data_exchange_teample` 
+DROP FOREIGN KEY `FK8AE35445D557144C`,
+DROP FOREIGN KEY `FK8AE35445199BCB6C`;
+ALTER TABLE `crmdb`.`data_exchange_teample` 
+DROP COLUMN `type_id`,
+DROP COLUMN `operation_id`,
+DROP COLUMN `version`,
+DROP INDEX `FK8AE35445199BCB6C` ,
+DROP INDEX `FK8AE35445D557144C` ;

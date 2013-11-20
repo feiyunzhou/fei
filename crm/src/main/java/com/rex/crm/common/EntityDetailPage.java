@@ -97,12 +97,7 @@ public class EntityDetailPage extends TemplatePage {
         groupitem.add(new AttributeAppender("style",new Model("display:none"),";"));
         div.add(groupitem);
         add(div);
-        /*final Label promptButton = new Label("promptButton","X");
-        final Label promptLabel = new Label("prompt","提示:操作已成功！");
-        add(promptButton);
-        add(promptLabel);*/
         long lid = Long.parseLong(id);
-       // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
         System.out.println("entityName:"+entity.getName());
         if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){

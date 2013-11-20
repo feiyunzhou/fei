@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Configuration>
+    <BatchSize>1000</BatchSize>
+    <Database>crm_mysql</Database>
+    <EntityName>Account</EntityName>
+    <ExternalId>ExternalId</ExternalId>
+    <Fields>
+        <AutoReference>false</AutoReference>
+        <ColumnName>Id</ColumnName>
+        <DataType>Integer</DataType>
+        <FieldName>Id</FieldName>
+    </Fields>
+    <Fields>
+        <AutoReference>false</AutoReference>
+        <ColumnName>ExternalId</ColumnName>
+        <DataType>Integer</DataType>
+        <FieldName>ExternalId</FieldName>
+    </Fields>
+    <Fields>
+        <AutoReference>false</AutoReference>
+        <ColumnName>StartTime</ColumnName>
+        <DataType>Date</DataType>
+        <FieldName>StartTime</FieldName>
+        <Format>YYYY-MM-DD</Format>
+    </Fields>
+    <Fields>
+        <AutoReference>true</AutoReference>
+        <ColumnName>Department</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>DepartmentId</FieldName>
+        <LookupEntityName>Department</LookupEntityName>
+        <LookupFieldName>Name</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+    <FileName>account.csv</FileName>
+    <Max>1000000</Max>
+</Configuration>

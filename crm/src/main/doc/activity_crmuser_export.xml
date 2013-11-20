@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <BatchSize>1000</BatchSize>
+    <EntityName>Activitycrmuser</EntityName>
+    <FileName>activity_crmuser.csv</FileName>
+    <ExternalId>Id</ExternalId>
+    <Database>crm_mysql</Database>
+    <Max>100000</Max>
+    <Fields>
+        <ColumnName>Id</ColumnName>
+        <DataType>Integer</DataType>
+        <FieldName>Id</FieldName>
+    </Fields>
+    
+       <Fields>
+        <ColumnName>activityid</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>activityid</FieldName>
+        <LookupEntityName>Activity</LookupEntityName>
+        <LookupFieldName>Name</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+   
+      <Fields>
+        <ColumnName>crmuserid</ColumnName>
+        <DataType>Lookup</DataType>
+        <FieldName>crmuserid</FieldName>
+        <LookupEntityName>Userinfo</LookupEntityName>
+        <LookupFieldName>name</LookupFieldName>
+        <TargetFieldName>Id</TargetFieldName>
+    </Fields>
+   
+    
+    
+</Configuration>

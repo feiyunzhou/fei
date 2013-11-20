@@ -291,8 +291,9 @@ public class NewDataFormPanel extends Panel {
                                  
                                 if (params != null) {
                                     Object obj = params.get(currentField.getDefault_value());
+                                    String dataTime = String.valueOf(obj).split("T")[0].concat("T08:00");
                                     if(obj!=null){
-                                      defaultValue = String.valueOf(obj);
+                                      defaultValue = String.valueOf(dataTime);
                                     }
                                 }
                             }else if(currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("val")){
@@ -496,7 +497,11 @@ public class NewDataFormPanel extends Panel {
                     return String.valueOf(id);
                 }
             }));
-            dropDownChoice.setNullValid(true);
+            if(currentField.getPriority()==5){
+            	dropDownChoice.setNullValid(false);
+            }else{
+            	dropDownChoice.setNullValid(true);
+            }
             if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
             	dropDownChoice.add(new AttributeAppender("class",new Model("required-pickList")," "));
             }
@@ -507,10 +512,6 @@ public class NewDataFormPanel extends Panel {
                 IModel choices,IModel default_model,final Entity entity,final Field currentField){
             super(id, markupId, markupProvider);
             DropDownChoice dropDown = createDropDownListFromPickList("dropDownInput",choices,default_model);
-            dropDown.setNullValid(true);
-            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
-            	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
-            }
             add(dropDown);
             
             if(currentField.getChildNode()!=null){
@@ -529,6 +530,9 @@ public class NewDataFormPanel extends Panel {
                     }
                  });
              }
+            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+            	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
+            }
         } 
     }
 
