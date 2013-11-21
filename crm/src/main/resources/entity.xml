@@ -1502,7 +1502,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 					left join (select * from user_position where status = 1) as userposition
 					 on crmuser.id = userposition.positionId
 					left join userInfo on userInfo.id = user_position.userId
-					where (id = ?) and (user_position.status = 1)
+					where (id = ?) and (user_position.status = 1) ORDER BY CONVERT( crmuser.code USING gbk )
    				 ) as aCrmuser
 		</sql>
 		<sql-admin>
@@ -1513,7 +1513,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				crmuser.reportto = crmmanager.id
 				left join (select * from user_position where status = 1) as userposition on userposition.positionId = crmuser.id
 				left join userInfo on userposition.userId = userInfo.id
-				where crmuser.id != -1
+				where crmuser.id != -1 ORDER BY CONVERT( crmuser.code USING gbk )
 			) as aCrmuser
 		</sql-admin>
 		<sql-manager>
@@ -1522,7 +1522,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join (select * from user_position where status = 1) as userposition
 			 on userposition.positionId = crmuser.id
 			left join userInfo on userInfo.id = user_position.userId
-			 where id = ? or reportto = ?) as aCrmuser
+			 where id = ? or reportto = ? ORDER BY CONVERT( crmuser.code USING gbk )) as aCrmuser
 		</sql-manager>
 		<!-- <sql-manager-coaching>select * from (select crmuser.*\, -->
 		<!-- "crmmanager.name" as reportto_val\, -->
@@ -1664,6 +1664,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
+<!-- 				<childNode>product</childNode> -->
+			</field>
+			<field>
+				<name>product</name>
+				<display>产品名称</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>product</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+<!-- 				<parentNode>pl2</parentNode> -->
 			</field>
 			<field>
 				<name>pl4</name>
@@ -2808,7 +2823,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<name>product</name>
 		<display>产品</display>
 		<filterField></filterField>
-		<sql> select * from product</sql>
+		<sql> select product.*\,crmuser_pl2.val  from product left join crmuser_pl2 on product.parentid = crmuser_pl2.id</sql>
+		<sql-ent>select * from product where id = ?</sql-ent>
 		<fields>
 			<field>
 				<name>id</name>
@@ -2823,10 +2839,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			<field>
 				<name>name</name>
+				<isRequired>true</isRequired>
 				<display>产品名称</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
+				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
@@ -2846,9 +2863,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 					<name>parentid</name>
 					<display>产品线</display>
-					<isRequired>false</isRequired>
+					<isRequired>true</isRequired>
 					<data-type>text</data-type>
 					<picklist>crmuser_pl2</picklist>
+					<default-value-type>val</default-value-type>
+					<default-value>0</default-value>
 					<isPrimaryKey>false</isPrimaryKey>
 					<isDetailLink>false</isDetailLink>
 					<isVisible>true</isVisible>

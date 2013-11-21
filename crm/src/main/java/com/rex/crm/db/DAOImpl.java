@@ -865,7 +865,12 @@ public class DAOImpl
     }
 
     public static List<Choice> queryPickList(String picklist) {
-        String query = "select id, val from " + picklist;
+        String query = null;
+        if(picklist.equalsIgnoreCase("product")){
+          query =  "select id, name from " + picklist;
+        }else{
+          query =  "select id, val from " + picklist;
+        }
         List<Choice> choices = Lists.newArrayList();
         Connection conn = null;
         try {
@@ -885,7 +890,12 @@ public class DAOImpl
     }
     
     public static List<Choice> queryPickListByFilter(String picklist,String filterName, String filterValue) {
-        String query = "select id, val from " + picklist + " where "+filterName+"=?";
+      String query = null;
+      if(picklist.equalsIgnoreCase("product")){
+         query = "select id, name from " + picklist + " where "+filterName+"=?";
+      }else{
+        query = "select id, val from " + picklist + " where "+filterName+"=?"; 
+      }
         List<Choice> choices = Lists.newArrayList();
         Connection conn = null;
         try {
@@ -2123,7 +2133,7 @@ public class DAOImpl
           conn = DBHelper.getConnection();
           QueryRunner run = new QueryRunner();
           ResultSetHandler<List<UserInfo>> h = new BeanListHandler<UserInfo>(UserInfo.class);
-          users = run.query(conn, "SELECT * FROM userInfo left  join user_position on userInfo.id = user_position.userId where (user_position.status=1) and (userInfo.id = ?)", h, userId);
+          users = run.query(conn, "SELECT * FROM userInfo left  join user_position on userInfo.id = user_position.userId where (user_position.status=1) and (user_position.positionId = ?)", h, userId);
       } catch (SQLException e) {
           logger.error("failed to get all accounts", e);
       } finally {

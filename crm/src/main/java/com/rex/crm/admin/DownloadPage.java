@@ -129,5 +129,25 @@ public class DownloadPage extends AdminTemplatePage{
          setResponsePage(new DownloadPage());
           }
       });  
+        add(new Link("userPosition") {
+
+          @Override
+          public void onClick() {
+            DataExportDelegate dataExport = new  DataExportDelegate();
+//          String template = DAOImpl.selectTemplate();
+          String teample = "UserPosition Team Export Full Template 1.0";
+         HttpServletResponse response = (HttpServletResponse)getRequestCycle().getResponse().getContainerResponse();
+         try
+        {
+          dataExport.export(teample, response);
+        }
+        catch (Exception e)
+        {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+         setResponsePage(new DownloadPage());
+          }
+      }); 
 	}
 }

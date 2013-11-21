@@ -216,8 +216,13 @@ public class NewDataFormPanel extends Panel {
                                 Map<Long, String> list = Maps.newHashMap();
                                 List<Long> ids = Lists.newArrayList();
                                 for (Choice p : pickList) {
-                                    list.put(p.getId(), p.getVal());
-                                    ids.add(p.getId());
+                                   if(currentField.getName().equals("product")){
+                                     list.put(p.getId(), p.getName());
+                                     ids.add(p.getId());
+                                   }else{
+                                     list.put(p.getId(), p.getVal());
+                                     ids.add(p.getId());
+                                   }
                                 }
                                 IModel choiceModel = new Model(default_key);
                                 models.put(currentField.getName(), choiceModel);

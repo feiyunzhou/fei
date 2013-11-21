@@ -31,6 +31,8 @@ public class UploadPage extends AdminTemplatePage
     final FileUploadField user = new FileUploadField("user");
     
     final FileUploadField accountTeam = new FileUploadField("accountTeam");
+    
+    final FileUploadField userPosition = new FileUploadField("userPosition");
 
 //    final FileUploadField userInfo = new FileUploadField("userInfo");
     Form form = new Form("form")
@@ -101,7 +103,7 @@ public class UploadPage extends AdminTemplatePage
 		   {
 		       e.printStackTrace();
 		   }
-        }
+      }
 
         FileUpload userFileUpload = user.getFileUpload();
         if (userFileUpload != null)
@@ -118,6 +120,22 @@ public class UploadPage extends AdminTemplatePage
             e.printStackTrace();
           }
         }
+        
+        FileUpload userPositionFileUpload = userPosition.getFileUpload();
+        if (userPositionFileUpload != null)
+        {
+        FileName.append(userPositionFileUpload.getClientFileName());
+          String template = "UsrePosition Import Template 1.0";
+            try
+           {
+              userPositionFileUpload.writeTo(new File(FileName.toString()));
+            da.load(template, FileName.toString());
+           }
+       catch (Exception e)
+       {
+           e.printStackTrace();
+       }
+      }
       }
     };
     add(form);
@@ -126,6 +144,7 @@ public class UploadPage extends AdminTemplatePage
     form.add(position);
     form.add(accountTeam);
     form.add(user);
+    form.add(userPosition);
     form.setMultiPart(true);
 
 

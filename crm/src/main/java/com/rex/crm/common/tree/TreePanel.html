@@ -28,6 +28,18 @@
 				    }
 				}
 			});
+			$("#btnCollapseAll").click(function(){
+                $("#tree").dynatree("getRoot").visit(function(node){
+                        node.expand(false);
+                });
+                return false;
+        	});
+           $("#btnExpandAll").click(function(){
+                $("#tree").dynatree("getRoot").visit(function(node){
+                        node.expand(true);
+                });
+                return false;
+        	});
 			// Now get the root node object
 			var tree = $("#tree").dynatree("getTree");
 			var rootNode = $("#tree").dynatree("getRoot");
@@ -40,5 +52,10 @@
 		});
 	</script>
 	
-	<div id="tree"></div>
+	<div id="tree">
+		<div class="btn-group  btn-block ">
+		<button type="button" class="btn btn-default" id="btnExpandAll">展开全部</button>
+		<button type="button" class="btn btn-default" id="btnCollapseAll">关闭全部</button>
+		</div>
+	</div>
 </wicket:panel>

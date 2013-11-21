@@ -195,7 +195,7 @@ public class CRMUtility {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
 	            }
-	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar")){
+	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar")|| entityName.equalsIgnoreCase("product")){
 	        	 if(roleId==1){
 	        		 permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DEL);
 	        	 }else{
@@ -230,7 +230,7 @@ public class CRMUtility {
     public static EnumSet<Permissions> getPermissionOfEntityList(int roleId, String entityName) {
 
         EnumSet<Permissions> permission = null;
-        if (entityName.equalsIgnoreCase("account")) {
+        if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("product")) {
             if (roleId == 1) {
                 permission = EnumSet.of(CRUDPanel.Permissions.ADD);
             }
