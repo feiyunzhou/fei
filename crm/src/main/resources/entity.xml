@@ -4385,7 +4385,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-                        <field>
+            <field>
 				<name>reporttto</name>
 				<display>RSM</display>
 				<data-type>text</data-type>
@@ -4405,7 +4405,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-                        <field>
+            <field>
 				<name>city</name>
 				<display>城市</display>
 				<data-type>text</data-type>
@@ -4415,7 +4415,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-                        <field>
+            <field>
 				<name>regoin2</name>
 				<display>二级区域</display>
 				<data-type>text</data-type>
@@ -4425,7 +4425,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-                        <field>
+            <field>
 				<name>regoin1</name>
 				<display>一级区域</display>
 				<data-type>text</data-type>
@@ -4446,7 +4446,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-                        <field>
+            <field>
 				<name>BDMCode</name>
 				<display>BDM编码</display>
 				<data-type>text</data-type>
@@ -4476,7 +4476,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 			</field>
-                        <field>
+            <field>
 				<name>userName</name>
 				<display>代表姓名</display>
 				<data-type>text</data-type>

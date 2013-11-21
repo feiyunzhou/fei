@@ -304,7 +304,7 @@ public class EditDataFormPanel extends Panel {
                                 IModel<String> textModel = new Model<String>(value);
                                 
                                 fieldNameToModel.put(currentField.getName(), textModel);
-                                columnitem.add(new Textarea("editdata", "textAreaFragment", this, textModel));
+                                columnitem.add(new Textarea("editdata", "textAreaFragment", this, textModel,currentField));
                             }else if(currentField.getDataType().equals("bjgtextarea")){
                             	IModel<String> textModel = new Model<String>(value);
                                 
@@ -318,7 +318,8 @@ public class EditDataFormPanel extends Panel {
                                  IModel<String> textModel = new Model<String>(value);
                                 //textModel = new Model<String>(date_value);
                                 fieldNameToModel.put(currentField.getName(), textModel);
-                               columnitem.add(new TextInputFragment("editdata", "textInputFragment", this, textModel,value, currentField));
+                                TextInputFragment textInput = new TextInputFragment("editdata", "textInputFragment", this, textModel,value, currentField);
+                                columnitem.add(textInput);
                                 
                             }else {
                                 IModel<String> textModel = new Model<String>("");
@@ -499,6 +500,10 @@ public class EditDataFormPanel extends Panel {
             }else{
             	dropDown.setNullValid(true);
             }
+            if (currentField.isRequired()) {
+                //text.add(new AttributeModifier("required", new Model("required")));
+            	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
+            }
             add(dropDown);
             
         }
@@ -575,11 +580,14 @@ public class EditDataFormPanel extends Panel {
     }
     private class Textarea extends Fragment {
 
-        public Textarea(String id, String markupId, MarkupContainer markupProvider, IModel<String> value) {
+        public Textarea(String id, String markupId, MarkupContainer markupProvider, IModel<String> value,Field currentField) {
             super(id, markupId, markupProvider);
             // TODO Auto-generated constructor stub
-            add(new TextArea<String>("address", value));
-
+            TextArea textArea = new TextArea<String>("address", value);            
+            if (currentField.isRequired()) {
+                textArea.add(new AttributeAppender("class",new Model("required-field")," "));
+              }
+            add(textArea);
         }
 
     }
@@ -610,7 +618,10 @@ public class EditDataFormPanel extends Panel {
             }
             if (currentField.isRequired()) {
                 //text.add(new AttributeModifier("required", new Model("required")));
-                text.add(new AttributeAppender("class","required-field"));
+                text.add(new AttributeAppender("class",new Model("required-field")," "));
+            }
+            if(currentField.getDataType().equals("datetime-local")){
+            	text.add(new AttributeModifier("id",currentField.getName()));
             }
         }
     }
