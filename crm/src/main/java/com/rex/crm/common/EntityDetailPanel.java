@@ -148,7 +148,7 @@ public class EntityDetailPanel extends Panel {
                                 columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
                             }
                         }
-                    } else {
+                    }else {
                         if (j % 2 == 0) {
                             columnitem.add(new Label("celldata", currentField.getDisplay() + ":").add(new AttributeAppender("style", new Model("font-weight:bold;"), ";")));
                             columnitem.add(new AttributeAppender("class", new Model("tag"), " "));
@@ -157,7 +157,15 @@ public class EntityDetailPanel extends Panel {
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
                             String value = CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(rawvalue));
                             value = (value == null) ? "" : value;
-                            columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
+                            
+                            if (currentField.getDataType().equalsIgnoreCase("bjgtextarea")){
+                            	Label label = new Label("celldata", value);
+                            	label.setEscapeModelStrings(false);
+                            	label.add(new AttributeAppender("class",new Model("labelWidth")," "));
+                            	columnitem.add(label);
+                            }else{
+                            	columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
+                            }
                         }
                     }
                     columnRepeater.add(columnitem);

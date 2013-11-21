@@ -1553,8 +1553,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
@@ -4067,6 +4067,209 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>radio</data-type>
 				<priority>1</priority>
 			</filed>
+		</fields>
+	</entity>
+		<entity>
+		<name>alert</name>
+		<display>预警</display>
+		<filterField>priority</filterField>
+		<sql>
+			select * from alert
+		</sql>
+		<sql-manager>
+			SELECT * from (select * from alert where
+			 alert.id = ? ORDER BY whenadded DESC) as aAlert
+		</sql-manager>
+
+		<sql-admin>
+			SELECT * from  alert
+		</sql-admin>
+		<sql-ent>
+			SELECT * from (select alert.* from alert where alert.id = ?
+			ORDER BY whenadded DESC) as aAlert
+		</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>name</name>
+				<display>标题</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>publishDate</name>
+				<display>公布日期</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>expired</name>
+				<display>截止日期</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>priority</name>
+				<display>优先级</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>alert_priority_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>towhom</name>
+				<display>公布对象</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>alert_publicObject_pl</picklist>
+				<priority>0</priority>
+				<isRequired>false</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>description</name>
+				<display>预警说明</display>
+				<isRequired>true</isRequired>
+				<data-type>bjgtextarea</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>todolist</name>
+		<display>To Do List</display>
+		<sql>SELECT * FROM crmdb.activity_alert</sql>
+		<sql-admin>SELECT * FROM crmdb.activity_alert</sql-admin>
+		<sql-ent>SELECT * FROM crmdb.activity_alert</sql-ent>
+		<filterField></filterField>
+		<fields>
+                   
+                       <field>
+				<name>id</name>
+				<display>活动Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>title</name>
+				<display>活动标题</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+                                <name>time</name>
+				<display>时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			
 		</fields>
 	</entity>
 </entities>

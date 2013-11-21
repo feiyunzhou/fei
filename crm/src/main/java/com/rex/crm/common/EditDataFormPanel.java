@@ -305,6 +305,11 @@ public class EditDataFormPanel extends Panel {
                                 
                                 fieldNameToModel.put(currentField.getName(), textModel);
                                 columnitem.add(new Textarea("editdata", "textAreaFragment", this, textModel));
+                            }else if(currentField.getDataType().equals("bjgtextarea")){
+                            	IModel<String> textModel = new Model<String>(value);
+                                
+                                fieldNameToModel.put(currentField.getName(), textModel);
+                                columnitem.add(new BigtextareaFrag("editdata", "bjgtextAreaFragment", this, textModel,currentField));
                             } else if(currentField.getDataType().equals("datetime-local")){
                                 
                                  SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -578,7 +583,20 @@ public class EditDataFormPanel extends Panel {
         }
 
     }
+    
+    private class  BigtextareaFrag extends Fragment {
 
+        public BigtextareaFrag(String id, String markupId, MarkupContainer markupProvider, IModel model, Field currentField) {
+            super(id, markupId, markupProvider);
+            // TODO Auto-generated constructor stub
+            TextArea<String> textArea =  new TextArea<String>("description", model);
+            add(textArea);
+            if (currentField.isRequired()) {
+              textArea.add(new AttributeAppender("class",new Model("required-field")," "));
+            }
+        }
+    }
+    
     private class TextInputFragment extends Fragment {
         public TextInputFragment(String id, String markupId, MarkupContainer markupProvider, IModel model, String value, Field currentField) {
             super(id, markupId, markupProvider);

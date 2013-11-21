@@ -1,3 +1,6 @@
+.labelWidth{
+	min-width:800px;
+}
 .upload-btn {
     margin-bottom: 10px;
 }

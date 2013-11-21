@@ -18,10 +18,12 @@ public class PageFactory {
             return new ActivityPage();
         }else if(name.equalsIgnoreCase("crmuser")){
             return new PositionPage();
-        }else if(name.equalsIgnoreCase("coaching")){
+        }else if(name.equalsIgnoreCase("coaching")||name.equalsIgnoreCase("willCoaching")){
           return new CoachingPage();
         }else if(name.equalsIgnoreCase("userInfo")){
           return new UserPage();
+        }else if(name.equals("alert")){
+        	return new AlertPage();
         }
         else{
             return new HomePage();

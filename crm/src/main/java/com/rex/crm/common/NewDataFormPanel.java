@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
@@ -305,10 +306,13 @@ public class NewDataFormPanel extends Panel {
                                
                                 columnitem.add(new TextareaFrag("celldatafield", "textAreaFragment", this, defaultModel, currentField));
                             }
+                            else if (currentField.getDataType().equalsIgnoreCase("bjgtextarea")){
+                            	columnitem.add(new BigtextareaFrag("celldatafield", "bjgtextAreaFragment", this, defaultModel, currentField));
+                            }
                             else if(currentField.getDataType().equalsIgnoreCase("file")){
                               models.put(currentField.getName(),defaultModel);
                               columnitem.add(new FileUploadFragment("celldatafield", "fileUplodeFragment", this, defaultModel));
-                          }
+                            }
                             else if(currentField.getDataType().equals("datetime-local")){
                                 
                                 if(defaultValue.isEmpty()){
@@ -341,6 +345,7 @@ public class NewDataFormPanel extends Panel {
                 List<String> fieldNames = Lists.newArrayList();
                 List<String> values = Lists.newArrayList();
                 int total_score = 0;
+                String password = "";
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 //找出title属性，判断实体名称，先声明
                 StringBuffer title = new StringBuffer();
@@ -371,6 +376,10 @@ public class NewDataFormPanel extends Panel {
     	                	  values.add("'" + (String) models.get(key).getObject()+ "'");
                       }
                      
+                      if(field.getName().equals("loginName")){
+                    	  
+                  		password = (String) models.get("loginName").getObject();
+              		  }
                     }else if(models.get(key).getObject() instanceof Choice){
                         values.add(String.valueOf(((Choice) models.get(key).getObject()).getId()));
                     }else {
@@ -421,6 +430,8 @@ public class NewDataFormPanel extends Panel {
                   }
             		//if entity is crmuser  add loginName
                     if ("userInfo".equals(entity.getName())) {
+                    	values.add("'"+DigestUtils.md5Hex(password)+"'");
+                    	fieldNames.add("password");
                         long crmuserkey = -1;
                         crmuserkey= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
                         /*if (crmuserkey >0 ) {
@@ -440,11 +451,7 @@ public class NewDataFormPanel extends Panel {
                                     String.valueOf(generatedId));
                         }
                     }
-                    if(entity.getName().equalsIgnoreCase("willCoaching")){
-                    	setResponsePage(PageFactory.createPage("coaching"));
-                    }else{
                     	setResponsePage(PageFactory.createPage(entity.getName()));
-                    }
                     
             }
         };
@@ -563,9 +570,28 @@ public class NewDataFormPanel extends Panel {
             add(textArea);
             if (currentField.isRequired()) {
               textArea.add(new AttributeAppender("class",new Model("required-field")," "));
-          }
+            }
+            /*if(currentField.getName().equals("description")){
+            	textArea.add(new AttributeAppender("")
+            }*/
         }
     }
+    private class 	BigtextareaFrag extends Fragment {
+
+        public BigtextareaFrag(String id, String markupId, MarkupContainer markupProvider, IModel model, Field currentField) {
+            super(id, markupId, markupProvider);
+            // TODO Auto-generated constructor stub
+            TextArea<String> textArea =  new TextArea<String>("description", model);
+            add(textArea);
+            if (currentField.isRequired()) {
+              textArea.add(new AttributeAppender("class",new Model("required-field")," "));
+            }
+            /*if(currentField.getName().equals("description")){
+            	textArea.add(new AttributeAppender("")
+            }*/
+        }
+    }
+
 
     private class RelationTableSearchFragment extends Fragment {
 

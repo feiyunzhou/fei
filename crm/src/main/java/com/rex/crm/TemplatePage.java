@@ -247,8 +247,29 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         
         BookmarkablePageLink dataImportPage = new BookmarkablePageLink("dataImportPage",DataImportPage.class );
         admin_menu.add(dataImportPage);
+        BookmarkablePageLink alertPage = new BookmarkablePageLink("alertPage",AlertPage.class );
+        admin_menu.add(alertPage);
         
-               
+        BookmarkablePageLink areaPage = new BookmarkablePageLink("areaPage",AreaPage.class );
+        admin_menu.add(areaPage);
+        
+        BookmarkablePageLink applicationPage = new BookmarkablePageLink("applicationPage",AreaPage.class );
+        admin_menu.add(applicationPage);
+        
+        BookmarkablePageLink flowPage = new BookmarkablePageLink("flowPage",AreaPage.class );
+        admin_menu.add(flowPage);
+        
+        BookmarkablePageLink jurisdictionPage = new BookmarkablePageLink("jurisdictionPage",AreaPage.class );
+        admin_menu.add(jurisdictionPage);
+        
+        BookmarkablePageLink contentPage = new BookmarkablePageLink("contentPage",AreaPage.class );
+        admin_menu.add(contentPage);
+        
+        BookmarkablePageLink integrationPage = new BookmarkablePageLink("integrationPage",AreaPage.class );
+        admin_menu.add(integrationPage);
+        
+        
+
         admin_menu.setVisible(false);
         if(roleId == 1) admin_menu.setVisible(true);
         

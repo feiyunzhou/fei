@@ -24,6 +24,7 @@ import org.apache.wicket.model.Model;
 import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
+import com.rex.crm.AlertPage;
 import com.rex.crm.CoachingPage;
 import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
@@ -191,8 +192,10 @@ public class EntityDetailPage extends TemplatePage {
                     setResponsePage(new UserPage());
                 }else if(entityName.equals("crmuser")) {
                     DAOImpl.deleteRecord(id, entityName);
-                    
                     setResponsePage(new PositionPage());
+                }else if(entityName.equals("alert")){
+                	DAOImpl.deleteRecord(id, entityName);
+                	setResponsePage(new AlertPage());
                 }
             }
 

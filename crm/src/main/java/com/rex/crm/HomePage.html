@@ -15,15 +15,24 @@
             <div class="row">
                 <div class="col-md-3">
                     <div width="100%">
+                        
+                         <div class="panel panel-success">
+                          <div class="panel-heading"><strong>全局搜索</strong></div>
+                            <form wicket:id="form" class="form-search">
+                             <input type="text" class="form-control" placeholder="搜索" wicket:id="search_input"  />
+                                    <button type="submit" class="btn btn-primary btn-block">查找</button>
+                            </form>
+                         </div>
+                        
                         <div class="panel panel-success">
-                        <div class="panel-heading"><strong>业务概览</strong></div>
+                            <div class="panel-heading"><strong>业务概览</strong></div>
 						<ul class="list-group">
 							<li class="list-group-item"><a wicket:id="account_link" href="#">医院</a> <span class="home-report" wicket:id="num_of_account_cell"></span></li>
 							<li class="list-group-item"><a wicket:id="contact_link" href="#">医生</a> <span class="home-report" wicket:id="num_of_contact_cell"></span></li>
 							<li class="list-group-item"><a wicket:id="activity_link" href="#">活动</a> <span class="home-report" wicket:id="num_of_activity_cell"></span></li>
 						</ul>
 
-					   </div>
+		        </div>
                         
                         <div class="panel panel-success">
                           <div class="panel-heading"><strong>快速创建</strong></div>
@@ -36,7 +45,31 @@
                                 <li class="list-group-item" wicket:id="position_create_li"><a wicket:id="position_create_link" href="#">岗位</a></li>
                             </ul>
                         </div>
+                      
+                        
+                        <div class="panel panel-success">
+                         
+                                <span wicket:id="datalistAct">data table</span>
+<!--                                <li class="list-group-item"><span  wicket:id="activity_name"></span><span class="home-report" wicket:id="day_name"></span></li>-->
+<!--                                <li class="list-group-item">2</li>
+                                <li class="list-group-item">3</li>
+                                <li class="list-group-item">4</li>
+                                <li class="list-group-item">5</li>
+                                <li class="list-group-item">6</li>-->
+                                
+                        </div>
+                        
                     </div>
+                </div>
+                
+                <div class="col-md-9 box">
+                    <div class="row">
+                        <div class="data-table">
+                            <div class="col-md-12 box">
+                                <span wicket:id="datalist">data table</span>
+                            </div>
+                        </div>
+                    </div>   
                 </div>
                 
                  <div class="col-md-2 box">

@@ -217,6 +217,10 @@ public class CRMUtility {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.RESETPWD);
 	            }
+	        }else if(entityName.equalsIgnoreCase("alert")){
+	        	if(roleId == 1){
+	        		permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
+	        	}
 	        }
 	        
 	        return permission;
@@ -250,6 +254,10 @@ public class CRMUtility {
             if (roleId == 1) {
                 permission = EnumSet.of(CRUDPanel.Permissions.ADD);
             }
+        }else if(entityName.equalsIgnoreCase("alert")){
+        	if(roleId == 1){
+        		permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        	}
         }
 //        else if(entityName.equalsIgnoreCase("upLoad")){
 //          
