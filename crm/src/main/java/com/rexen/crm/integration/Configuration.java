@@ -101,4 +101,17 @@ public class Configuration
   {
     this.max = max;
   }
+  
+  private String encoded;
+  
+  @XmlElement(name = "Encoded")
+  public String getEncoded()
+  {
+    return encoded;
+  }
+
+  public void setEncoded(String encoded)
+  {
+    this.encoded = encoded;
+  }
 }

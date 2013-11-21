@@ -4,6 +4,7 @@
  */
 package com.rexen.crm.beans;
 
+import com.rexen.crm.integration.DataObject;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -28,7 +29,7 @@ import javax.persistence.TemporalType;
 {
   @NamedQuery(name = "Userinfo.findAll", query = "SELECT u FROM Userinfo u")
 })
-public class Userinfo implements Serializable
+public class Userinfo extends DataObject implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
@@ -92,7 +93,7 @@ public class Userinfo implements Serializable
   @Column(name = "isActivited")
   private int isActivited;
   @Column(name = "ts")
-  private int ts;
+  private long ts;
   @Column(name = "positionId")
   private int positionId;
   @Column(name = "office_tel")
@@ -383,12 +384,12 @@ public class Userinfo implements Serializable
     this.isActivited = isActivited;
   }
 
-  public int getTs()
+  public long getTs()
   {
     return ts;
   }
 
-  public void setTs(int ts)
+  public void setTs(long ts)
   {
     this.ts = ts;
   }

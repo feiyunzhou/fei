@@ -4,6 +4,11 @@
  */
 package com.rexen.crm.integration;
 
+import org.jumpmind.symmetric.csv.CsvReader;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -14,10 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import org.jumpmind.symmetric.csv.CsvReader;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * <p/>
@@ -51,7 +53,28 @@ public class DataImport
 
   public void load() throws IOException, Exception
   {
-    CsvReader reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
+    CsvReader reader = null;
+
+    String encoded = config.getEncoded();
+
+    if (encoded != null && encoded.length() > 0)
+    {
+      try
+      {
+        reader = new CsvReader(config.getFileName(), ',', Charset.forName(encoded));
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+        reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
+      }
+    }
+    else
+    {
+      reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
+    }
+
+    //CsvReader reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
 
     reader.readHeaders();
 
@@ -75,9 +98,9 @@ public class DataImport
         {
           config.getExternalId()
         });
-        
+
         System.out.println("commit " + buffer.size());
-        
+
         buffer.clear();
       }
     }
@@ -88,6 +111,7 @@ public class DataImport
       {
         config.getExternalId()
       });
+      
       System.out.println("commit " + buffer.size());
       buffer.clear();
     }
@@ -113,7 +137,7 @@ public class DataImport
       }
 
       Method setter = queryMethod(c, "set" + field.getFieldName());
-      
+
       if (setter != null)
       {
         switch (field.getDataType())
@@ -215,28 +239,36 @@ public class DataImport
                 }
                 else
                 {
-                  System.out.println(field.getFieldName() +  " isAutoReference: " + field.isAutoReference());
-                  if(field.isAutoReference())
+                  if (field.isAutoReference())
                   {
                     try
                     {
-                      System.out.println("isAutoReference");
-                      
                       Object lookup_object = lookup_entiry_class.newInstance();
 
                       Method lookup_setter = queryMethod(c, "set" + field.getLookupFieldName());
-                      lookup_setter.invoke(lookup_object, new Object[]{s});
+                      lookup_setter.invoke(lookup_object, new Object[]
+                      {
+                        s
+                      });
 
-                      dao.append(new Object[]{lookup_object});
+                      dao.append(new Object[]
+                      {
+                        lookup_object
+                      });
 
                       lookup_object = dao.find(lookup_object);
 
                       Method getter = queryMethod(c, "get" + field.getTargetFieldName());
-                      int lookup_value = (Integer)getter.invoke(lookup_object, new Object[]{});
+                      int lookup_value = (Integer) getter.invoke(lookup_object, new Object[]
+                      {
+                      });
 
-                      setter.invoke(record, new Object[]{lookup_value});
+                      setter.invoke(record, new Object[]
+                      {
+                        lookup_value
+                      });
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                       e.printStackTrace();
                     }
@@ -248,6 +280,28 @@ public class DataImport
                 e.printStackTrace();
               }
             }
+            break;
+          }
+          case "Password":
+          {
+            if (s != null && s.length() > 0)
+            {
+              setter.invoke(record, new Object[]
+              {
+                DigestUtils.md5Hex(s)
+              });
+            }
+            break;
+
+          }
+          case "AutoTimeMillis":
+          {
+            long i = System.currentTimeMillis();
+
+            setter.invoke(record, new Object[]
+            {
+              i
+            });
             break;
           }
           /**
@@ -264,8 +318,7 @@ public class DataImport
     return record;
   }
 
-  public static void main(String args[]) throws JAXBException, IOException,
-                                                Exception
+  public static void main(String args[]) throws Exception
   {
     System.out.println("template: " + args[0]);
     DataImport loader = new DataImport(args[0]);
@@ -275,7 +328,7 @@ public class DataImport
   public Method queryMethod(Class c, String methodName)
   {
     System.out.println("query method: " + c.getName() + "." + methodName);
-    
+
     HashMap<String, Method> methods = new HashMap<>();
 
     for (Method m : c.getMethods())

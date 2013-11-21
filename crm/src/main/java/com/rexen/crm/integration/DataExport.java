@@ -68,9 +68,28 @@ public class DataExport
     if (data != null && data.length > 0)
     {
       ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-      CsvWriter csv = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
-
+      
+      CsvWriter writer = null;
+      
+      String encoded = config.getEncoded();
+      
+      if(encoded != null && encoded.length() > 0)
+      {
+        try
+        {
+          writer = new CsvWriter(buffer, ',', Charset.forName(encoded));
+        }
+        catch(Exception e)
+        {
+          //e.printStackTrace();
+          writer = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
+        }
+      }
+      else
+      {
+        writer = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
+      }
+      
       ArrayList<String> heads = new ArrayList<>();
 
       for (FieldConfiguration field : config.getFields())
@@ -78,32 +97,30 @@ public class DataExport
         heads.add(field.getColumnName());
       }
 
-      csv.writeRecord(heads.toArray(new String[config.getFields().size()]));
+      writer.writeRecord(heads.toArray(new String[config.getFields().size()]));
 
       for (Object o : data)
       {
-        csv.writeRecord(convert(o));
+        writer.writeRecord(convert(o));
       }
 
-      csv.flush();
+      writer.flush();
 
       ByteArrayOutputStream out = new ByteArrayOutputStream();
-      
-      //FileOutputStream file_output_stream = new FileOutputStream(config.getEntityName() + ".zip");
+      try (ZipOutputStream zip_output_stream = new ZipOutputStream(out))
+      {
+        zip_output_stream.setLevel(9);
+        ZipEntry zip_entry = new ZipEntry(config.getEntityName() + ".csv");
 
-      ZipOutputStream zip_output_stream = new ZipOutputStream(out);
-      zip_output_stream.setLevel(9);
-      ZipEntry zip_entry = new ZipEntry(config.getEntityName() + ".csv");
+        zip_output_stream.putNextEntry(zip_entry);
 
-      zip_output_stream.putNextEntry(zip_entry);
+        zip_output_stream.write(buffer.toByteArray());
 
-      zip_output_stream.write(buffer.toByteArray());
+        zip_output_stream.flush();
+      }
 
-      zip_output_stream.flush();
-      zip_output_stream.close();
-
-      //file_output_stream.flush();
-      //file_output_stream.close();
+      //out.flush();
+      //out.close();
 
       return out.toByteArray();
     }
