@@ -51,6 +51,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.rex.crm.admin.AdminTreePage;
+import com.rex.crm.admin.DataImportPage;
 import com.rex.crm.admin.DownloadPage;
 import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.ProductPage;
@@ -243,6 +244,11 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         
         BookmarkablePageLink productPage = new BookmarkablePageLink("productPage",ProductPage.class );
         admin_menu.add(productPage);
+        
+        BookmarkablePageLink dataImportPage = new BookmarkablePageLink("dataImportPage",DataImportPage.class );
+        admin_menu.add(dataImportPage);
+        
+               
         admin_menu.setVisible(false);
         if(roleId == 1) admin_menu.setVisible(true);
         

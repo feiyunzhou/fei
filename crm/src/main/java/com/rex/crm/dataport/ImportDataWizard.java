@@ -51,131 +51,43 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
  */
 public class ImportDataWizard extends Wizard
 {
-	/**
-	 * The confirmation step.
-	 */
-	private final class ConfirmationStep extends StaticContentStep
-	{
-		/**
-		 * Construct.
-		 */
-		public ConfirmationStep()
-		{
-			super(true);
-			IModel<User> userModel = new Model<User>(user);
-			setTitleModel(new ResourceModel("confirmation.title"));
-			setSummaryModel(new StringResourceModel("confirmation.summary", this, userModel));
-			setContentModel(new StringResourceModel("confirmation.content", this, userModel));
-		}
-	}
+
 
 	/**
 	 * The user details step.
 	 */
-	private final class UserDetailsStep extends WizardStep
+	private final class SelectEntityNameStep extends WizardStep
 	{
 		/**
 		 * Construct.
 		 */
-		public UserDetailsStep()
+		public SelectEntityNameStep()
 		{
-			setTitleModel(new ResourceModel("confirmation.title"));
-			setSummaryModel(new StringResourceModel("userdetails.summary", this, new Model<User>(
-				user)));
-			add(new RequiredTextField<String>("user.firstName"));
-			add(new RequiredTextField<String>("user.lastName"));
-			add(new TextField<String>("user.department"));
-			add(new CheckBox("assignRoles"));
+			//add(new )
 		}
 	}
 
 	/**
 	 * The user name step.
 	 */
-	private final class UserNameStep extends WizardStep
+	private final class SelectFileStep extends WizardStep
 	{
 		/**
 		 * Construct.
 		 */
-		public UserNameStep()
+		public SelectFileStep()
 		{
-			super(new ResourceModel("username.title"), new ResourceModel("username.summary"));
-
-			add(new RequiredTextField<String>("user.userName"));
-
-			FormComponent<String> email = new RequiredTextField<String>("user.email").add(EmailAddressValidator.getInstance());
-			add(email);
-
-			TextField<String> emailRepeat = new TextField<String>("emailRepeat",
-				new Model<String>());
-			add(emailRepeat);
-
-			add(new EqualInputValidator(email, emailRepeat));
+			
 		}
 	}
 
-	/**
-	 * The user details step.
-	 */
-	private final class UserRolesStep extends WizardStep implements ICondition
-	{
-		/**
-		 * Construct.
-		 */
-		public UserRolesStep()
-		{
-			super(new ResourceModel("userroles.title"), null);
-			setSummaryModel(new StringResourceModel("userroles.summary", this,
-				new Model<User>(user)));
-			final ListMultipleChoice<String> rolesChoiceField = new ListMultipleChoice<String>(
-				"user.roles", allRoles);
-			add(rolesChoiceField);
-			final TextField<String> rolesSetNameField = new TextField<String>("user.rolesSetName");
-			add(rolesSetNameField);
-			add(new AbstractFormValidator()
-			{
-				@Override
-				public FormComponent[] getDependentFormComponents()
-				{
-					// name and roles don't have anything to validate,
-					// so might as well just skip them here
-					return null;
-				}
-
-				@Override
-				public void validate(Form<?> form)
-				{
-					String rolesInput = rolesChoiceField.getInput();
-					if (rolesInput != null && (!"".equals(rolesInput)))
-					{
-						if ("".equals(rolesSetNameField.getInput()))
-						{
-							rolesSetNameField.error(new ValidationError().addKey("error.noSetNameForRoles"));
-						}
-					}
-				}
-			});
-		}
-
-		/**
-		 * @see org.apache.wicket.extensions.wizard.WizardModel.ICondition#evaluate()
-		 */
-		@Override
-		public boolean evaluate()
-		{
-			return assignRoles;
-		}
-	}
 
 	/** cheap ass roles database. */
 	private static final List<String> allRoles = Arrays.asList("admin", "user", "moderator",
 		"joker", "slacker");
-
-	/** Whether the assign roles step should be executed. */
-	private boolean assignRoles = false;
-
+	
 	/** The user we are editing. */
-	private User user;
+	private String entityName;
 
 	/**
 	 * Construct.
@@ -187,39 +99,15 @@ public class ImportDataWizard extends Wizard
 	{
 		super(id);
 
-		// create a blank user
-		user = new User();
-
 		setDefaultModel(new CompoundPropertyModel<ImportDataWizard>(this));
 		WizardModel model = new WizardModel();
-		model.add(new UserNameStep());
-		model.add(new UserDetailsStep());
-		model.add(new UserRolesStep());
-		model.add(new ConfirmationStep());
+		model.add(new SelectEntityNameStep());
+		model.add(new SelectFileStep());
 
 		// initialize the wizard with the wizard model we just built
 		init(model);
 	}
 
-	/**
-	 * Gets user.
-	 * 
-	 * @return user
-	 */
-	public User getUser()
-	{
-		return user;
-	}
-
-	/**
-	 * Gets assignRoles.
-	 * 
-	 * @return assignRoles
-	 */
-	public boolean isAssignRoles()
-	{
-		return assignRoles;
-	}
 
 	/**
 	 * @see org.apache.wicket.extensions.wizard.Wizard#onCancel()
@@ -227,7 +115,7 @@ public class ImportDataWizard extends Wizard
 	@Override
 	public void onCancel()
 	{
-		
+	    System.out.println("Canceled");
 	}
 
 	/**
@@ -236,28 +124,7 @@ public class ImportDataWizard extends Wizard
 	@Override
 	public void onFinish()
 	{
-		
+		System.out.println("Finished");
 	}
 
-	/**
-	 * Sets assignRoles.
-	 * 
-	 * @param assignRoles
-	 *            assignRoles
-	 */
-	public void setAssignRoles(boolean assignRoles)
-	{
-		this.assignRoles = assignRoles;
-	}
-
-	/**
-	 * Sets user.
-	 * 
-	 * @param user
-	 *            user
-	 */
-	public void setUser(User user)
-	{
-		this.user = user;
-	}
 }
