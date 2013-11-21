@@ -4,14 +4,8 @@
  */
 package com.rexen.crm.integration;
 
-import org.jumpmind.symmetric.csv.CsvReader;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
@@ -19,13 +13,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.jumpmind.symmetric.csv.CsvReader;
 
 /**
  * <p/>
  *
  * @author Kamala
  */
+
 public class DataImport
 {
 
@@ -53,65 +52,54 @@ public class DataImport
 
   public void load() throws IOException, Exception
   {
-    CsvReader reader = null;
-
-    String encoded = config.getEncoded();
-
-    if (encoded != null && encoded.length() > 0)
+    try
     {
-      try
-      {
-        reader = new CsvReader(config.getFileName(), ',', Charset.forName(encoded));
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
-        reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
-      }
-    }
-    else
-    {
-      reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
-    }
+      CsvReader reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
 
-    //CsvReader reader = new CsvReader(config.getFileName(), ',', Charset.forName("UTF-8"));
+      reader.readHeaders();
 
-    reader.readHeaders();
+      ArrayList<Object> buffer = new ArrayList<>();
 
-    ArrayList<Object> buffer = new ArrayList<>();
-
-    while (reader.readRecord())
-    {
-      try
+      while (reader.readRecord())
       {
-        Object o = convert(reader);
-        buffer.add(o);
-      }
-      catch (Exception e)
-      {
-        e.printStackTrace();
+        try
+        {
+          Object o = convert(reader);
+          buffer.add(o);
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+
+          log("DataImport", "load", e.getMessage(), config.getEntityName() + ": " + reader.getRawRecord());
+        }
+
+        if (buffer.size() > config.getBatchSize())
+        {
+          commit(buffer.toArray(new Object[buffer.size()]));
+          System.out.println("commit " + buffer.size());
+
+          buffer.clear();
+        }
       }
 
-      if (buffer.size() > config.getBatchSize())
+      if (buffer.size() > 0)
       {
-        merge(buffer.toArray());
+        commit(buffer.toArray(new Object[buffer.size()]));
         
         System.out.println("commit " + buffer.size());
-
+        
         buffer.clear();
       }
     }
-
-    if (buffer.size() > 0)
+    catch (Exception e)
     {
-      merge(buffer.toArray());
-
-      System.out.println("commit " + buffer.size());
-      buffer.clear();
+      e.printStackTrace();
+      log("DataImport", "load", e.getMessage(), null);
     }
   }
 
-  private void merge(Object[] data) throws Exception
+  private void commit(Object[] data) throws Exception
   {
     String operation = config.getOperation();
 
@@ -119,12 +107,11 @@ public class DataImport
     {
       operation = "Merge";
     }
-    
+
     switch (operation)
     {
       case "Merge":
       {
-        System.out.println("begin merge");
         dao.merge(data, new String[]
         {
           config.getExternalId()
@@ -134,20 +121,17 @@ public class DataImport
       }
       case "Delete":
       {
-        System.out.println("begin delete");
         dao.delete(data, new String[]
         {
           config.getExternalId()
         });
-
+        
         break;
       }
     }
   }
 
-  public Object convert(CsvReader reader) throws IOException,
-                                                 IllegalAccessException, IllegalArgumentException,
-                                                 InvocationTargetException, ClassNotFoundException, InstantiationException
+  public Object convert(CsvReader reader) throws Exception
   {
     Object record = null;
 
@@ -320,7 +304,6 @@ public class DataImport
               });
             }
             break;
-
           }
           case "AutoTimeMillis":
           {
@@ -337,25 +320,22 @@ public class DataImport
            */
         }
       }
-      else
-      {
-        System.out.println("method not found: " + c.getName() + ".set" + field.getFieldName() + "\n");
-      }
     }
 
     return record;
   }
 
-  public static void main(String args[]) throws Exception
+  public static void main(String args[]) throws JAXBException, IOException,
+                                                Exception
   {
     System.out.println("template: " + args[0]);
     DataImport loader = new DataImport(args[0]);
     loader.load();
   }
 
-  public Method queryMethod(Class c, String methodName)
+  public Method queryMethod(Class c, String methodName) throws Exception
   {
-    System.out.println("query method: " + c.getName() + "." + methodName);
+    Method method = null;
 
     HashMap<String, Method> methods = new HashMap<>();
 
@@ -364,6 +344,39 @@ public class DataImport
       methods.put(m.getName().toLowerCase(), m);
     }
 
-    return methods.get(methodName.toLowerCase());
+    if (methods.keySet().contains(methodName.toLowerCase()))
+    {
+      method = methods.get(methodName.toLowerCase());
+    }
+    else
+    {
+      throw new Exception("method not found: " + c.getName() + "." + methodName);
+    }
+
+    return method;
+  }
+
+  private void log(String objectName, String methodName, String stackTrace, String message)
+  {
+    LogMessage logMessage;
+    logMessage = new LogMessage();
+
+    logMessage.setObjectName(objectName);
+    logMessage.setMethodName(methodName);
+    logMessage.setStackTrace(stackTrace);
+    logMessage.setMessage(message);
+    logMessage.setCreated(new Date());
+
+    dao.append(new Object[]
+    {
+      logMessage
+    });
+
+    System.out.println("raise error in " + objectName + "." + methodName + ".");
+    System.out.println("message is " + message);
+    if (stackTrace != null)
+    {
+      System.out.println("stack track is " + stackTrace);
+    }
   }
 }
