@@ -452,8 +452,14 @@ public class NewDataFormPanel extends Panel {
                     } else {
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
                         if (generatedId > 0) {
-                            DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,
-                                    String.valueOf(generatedId));
+                           if(entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+                             DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,models.get("coacheeId").getObject().toString(),
+                                 String.valueOf(generatedId));
+                           }else{
+                             DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,"string",
+                                 String.valueOf(generatedId));
+                           }
+                           
                         }
                     }
                     	setResponsePage(PageFactory.createPage(entity.getName()));

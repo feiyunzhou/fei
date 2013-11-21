@@ -30,3 +30,5 @@ on a.status =asp.id
 left join account_administrativ_level_pl aalp on
 a.administrativ_level=aalp.id
 where up.status=1 order by id
+ALTER TABLE `crmdb`.`userinfo` 
+DROP COLUMN `positionId`;

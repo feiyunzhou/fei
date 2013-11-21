@@ -177,6 +177,7 @@ public class SelectEntryPage extends WebPage {
                       dummy.put("name", "无");
                       maplist.add(dummy);
                     }else if(roleId == 2){
+                      logger.debug("dfaaaaaaaaaaaaa" + entity +entity.getSqlManagerCoaching());
                       sql = entity.getSqlManagerCoaching();
                       maplist  = DAOImpl.queryEntityRelationList(sql,posId);
                     }else if(roleId == 3){
@@ -200,7 +201,10 @@ public class SelectEntryPage extends WebPage {
                   
                 }else if (relationTableName.equalsIgnoreCase("userInfo")) {
                     String sql = assembleSearchingSQL(roleId, entity);
-                     maplist  = DAOImpl.queryEntityRelationList(sql,userId);
+//                    if(){
+                      maplist  = DAOImpl.queryEntityRelationList(sql,userId);
+//                    }
+//                     maplist  = DAOImpl.queryEntityRelationList(sql,userId);
                     Map dummy = Maps.newHashMap();
                     dummy.put("id", -1);
                     dummy.put("name", "无");

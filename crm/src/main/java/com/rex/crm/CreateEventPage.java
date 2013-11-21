@@ -205,14 +205,14 @@ public class CreateEventPage extends TemplatePage {
                         if (generatedkey > 0) {
                             if (event_type == 1) {
                                 //if it is a visiting, we only send this event to the owner;
-                                DAOImpl.insert2UserRelationTable("activity",userId, posId ,String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity",userId, posId ,String.valueOf(coacheeId),String.valueOf(generatedkey));
                             } else if (event_type == 2) {
                                 //if it is a coaching, we need send this event to the manager and sales
                                 //add new record for the manager
                                 logger.debug("key:" + String.valueOf(generatedkey));
-                                DAOImpl.insert2UserRelationTable("activity",userId, posId, String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity",userId, posId,String.valueOf(coacheeId), String.valueOf(generatedkey));
                                 //add new record for the sales
-                                DAOImpl.insert2UserRelationTable("activity", userId,hidden_select_user, String.valueOf(generatedkey));
+                                DAOImpl.insert2UserRelationTable("activity", userId,hidden_select_user,String.valueOf(coacheeId), String.valueOf(generatedkey));
                             }
                         }
                     } catch (NumberFormatException e) {

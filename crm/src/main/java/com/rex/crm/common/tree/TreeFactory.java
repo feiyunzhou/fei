@@ -38,7 +38,7 @@ public class TreeFactory {
                  children[i++] = nd;
                  nd.setKey(String.valueOf(user.getId()));
                  
-                 String title = user.getCode() +"-" + username;
+                 String title = user.getName() +"-" + username;
                  nd.setTitle(title);
                  nd.setType("crmuser");  
                  //System.out.println(user.getCode()+":"+user.getId());

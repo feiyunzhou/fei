@@ -1191,7 +1191,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <!-- 			left join crmdb.role on crmuser.role -->
 <!-- 			= role.id -->
 <!-- 			where crmuser.id != -1 ) as aCrmuser -->
-			select * from ( select * from userInfo where id != -1) as aUserInfo
+			select * from (select userInfo.*\, user_position.positionId as positionId from userInfo left join user_position on userInfo.id = user_position.userId
+			 where userInfo.id != -1 ORDER BY CONVERT( userInfo.name USING gbk ) )as aUserInfo
 		</sql-admin>
 		<sql-manager>
 			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
@@ -1207,18 +1208,18 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <!-- 			left join crmdb.role on crmuser.role -->
 <!-- 			= role.id -->
 <!-- 			where crmuser.reportto = ? or crmuser.id = ? ) as aCrmuser -->
-				select * from ( select * from userInfo where id = ? ) as aUserInfo 
+				select * from ( select * from userInfo where id = ? and reportto = ?) as aUserInfo 
 
 		</sql-manager>
-		<!-- <sql-manager-coaching>select * from (select crmuser.*\, -->
-		<!-- "crmmanager.name" as reportto_val\, -->
-		<!-- role.val role_val -->
-		<!-- from crmuser -->
-		<!-- left join (select * from crmuser) crmmanager on crmuser.reportto = 
-			crmmanager.id -->
-		<!-- left join crmdb.role on crmuser.role = role.id -->
-		<!-- where crmuser.reportto = ?) as aCrmuser -->
-		<!-- </sql-manager-coaching> -->
+<!-- 		<sql-manager-coaching>select * from (select crmuser.*\, -->
+<!-- 		"crmmanager.name" as reportto_val\, -->
+<!-- 		role.val role_val -->
+<!-- 		from crmuser -->
+<!-- 		left join (select * from crmuser) crmmanager on crmuser.reportto =  -->
+<!-- 			crmmanager.id -->
+<!-- 		left join crmdb.role on crmuser.role = role.id -->
+<!-- 		where crmuser.reportto = ?) as aCrmuser -->
+<!-- 		</sql-manager-coaching> -->
 		<sql-ent>select * from userInfo where id=?</sql-ent>
 		<!-- <filterField>pl2</filterField> -->
 		<fields>
@@ -1363,12 +1364,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<relationTable>crmuser</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
 <!-- 			<field> -->
 <!-- 				<name>agencyPositionId</name> -->
 <!-- 				<display>代理岗位</display> -->
@@ -1524,15 +1524,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join userInfo on userInfo.id = user_position.userId
 			 where id = ? or reportto = ? ORDER BY CONVERT( crmuser.code USING gbk )) as aCrmuser
 		</sql-manager>
-		<!-- <sql-manager-coaching>select * from (select crmuser.*\, -->
-		<!-- "crmmanager.name" as reportto_val\, -->
-		<!-- role.val role_val -->
-		<!-- from crmuser -->
-		<!-- left join (select * from crmuser) crmmanager on crmuser.reportto = 
-			crmmanager.id -->
-		<!-- left join crmdb.role on crmuser.role = role.id -->
-		<!-- where crmuser.reportto = ?) as aCrmuser -->
-		<!-- </sql-manager-coaching> -->
+		<sql-manager-coaching>select * from (select crmuser.*\,
+		"crmmanager.name" as reportto_val\,
+		role.val role_val
+		from crmuser
+		left join (select * from crmuser) crmmanager on crmuser.reportto = 
+			crmmanager.id
+		left join crmdb.role on crmuser.role = role.id
+		where crmuser.reportto = ?) as aCrmuser
+		</sql-manager-coaching>
 		<sql-ent>select * from crmuser where id=?</sql-ent>
 		<fields>
 			<field>
@@ -1548,14 +1548,14 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			<field>
 				<name>name</name>
-				<display>岗位名称</display>
+				<display>岗位编码</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>false</isEditable>
-				<priority>2</priority>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
 			</field>
@@ -1566,9 +1566,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -1776,7 +1776,69 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		</fields>
 	</entity>
 
-
+<entity>
+	<name>user_position</name>
+	<display>用户岗位关系</display>
+	<sql>select * from user_position</sql>
+	<fields>
+		<field>
+			<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
+		</field>
+		<field>
+				<name>userId</name>
+				<display>用户Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>positionId</name>
+				<display>岗位Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<picklist>contact_status_pl</picklist>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键本信息</fieldGroup>
+			</field>
+			<field>
+				<name>isPrimary</name>
+				<display>是否主岗</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键本信息</fieldGroup>
+			</field>
+	</fields>
+</entity>
 	<entity>
 		<name>city</name>
 		<display>城市</display>
@@ -2389,7 +2451,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
 			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql-manager>
-
+		<sql-manager-coaching>
+		  select * from (select * from crmuser  where crmuser.reportto = ?) as crmUSER
+		 </sql-manager-coaching>
 		<sql-admin>
 
 			select distinct * from (select activity.crmuserId as crmuserName\,
@@ -2526,7 +2590,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<relationTable>userInfo</relationTable>
+				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>

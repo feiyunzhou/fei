@@ -1240,7 +1240,7 @@ public class DAOImpl
     }
     
 
-    public static void insert2UserRelationTable(String entityName,String userId,String positionId, String entityId){
+    public static void insert2UserRelationTable(String entityName,String userId,String positionId,String coacheeId,String entityId){
         String sql = null;
         long ts= System.currentTimeMillis();
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -1253,6 +1253,7 @@ public class DAOImpl
             sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if (entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willCoaching")){
           sql = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+entityId+","+positionId+")";
+          insertActivityCrmuserTable(coacheeId,positionId);
         }else if (entityName.equalsIgnoreCase("userInfo")){
           sql = "INSERT INTO user_position ( userId,positionId,status,isPrimary,createtime) VALUES ("+userId+","+positionId+",1,1,'"+date_value+"')";
         }
@@ -1276,6 +1277,28 @@ public class DAOImpl
         }
     }
     
+    public static void insertActivityCrmuserTable(String coaheeId,String positionId){
+      String sql  = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+coaheeId+","+positionId+")";
+        
+      if(sql == null) {
+          logger.error("entityName error");
+          return;
+      }
+      
+      Connection conn = null;
+      try {
+          conn = DBHelper.getConnection();
+          QueryRunner run = new QueryRunner();
+          int inserts = 0;
+          inserts += run.update(conn, sql);
+
+          System.out.println("inserted:" + inserts);
+      } catch (Exception e) {
+          logger.error("failed to add new calendar event", e);
+      } finally {
+          DBHelper.closeConnection(conn);
+      }
+  }
     public static void updateRecord(String id,String entityName, List<String> fieldNames, List<String> values ) {
     	 String sql = "";
     	 int i=0;

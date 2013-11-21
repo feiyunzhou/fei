@@ -57,7 +57,7 @@ public class TeamManPanel extends Panel {
         if(en.equalsIgnoreCase("account")){
           if(type == 0){
             //for the 岗位列表
-            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a left join accountcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.accountId = ?) as atable";
+            teamSql = "select * from (select  crmuser . *, accountcrmuser.id as rid,userinfo.name as userInfoName from crmuser  left join accountcrmuser  ON crmuser.id = accountcrmuser.crmuserId left join user_position on user_position.positionId = accountcrmuser.crmuserId inner join userinfo on userinfo.id = user_position.userId where accountcrmuser.accountId = ?) as atable";
         }
 //          else if (type == 1){
 //          //for the 用户列表
@@ -72,7 +72,17 @@ public class TeamManPanel extends Panel {
 //              //for the 用户列表
 //              teamSql = "select  * from userinfo inner join  (select  a.id as aid, b.id as rid from crmuser as a inner join contactcrmuser as b ON a.id = b.crmuserId where b.contactId = ?) as c on userinfo.positionId = c.aid";
 //            } 
-        }else if(en.equalsIgnoreCase("crmuser")){
+        }else if(en.equalsIgnoreCase("userInfo")){
+          if(type == 0){
+            //for the 岗位列表
+            teamSql = "select * from (select * from user_position where userId = ?) as atable";
+//            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a left join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
+        }
+//        else if (type == 1){
+//          //for the 用户列表
+//          teamSql = "select  * from userinfo inner join  (select  a.id as aid, b.id as rid from crmuser as a inner join contactcrmuser as b ON a.id = b.crmuserId where b.contactId = ?) as c on userinfo.positionId = c.aid";
+//        } 
+    }else if(en.equalsIgnoreCase("crmuser")){
             if(type == 0){
                 //for the 医院列表
                teamSql = "select * from (select a.*,b.id as rid from account as a left join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?) as atable";
@@ -99,7 +109,9 @@ public class TeamManPanel extends Panel {
               entity = Configuration.getEntityByName("userInfo");
               add(new Label("title","用户"));
             } 
-          
+          }else if(en.equalsIgnoreCase("userInfo")){
+          entity = Configuration.getEntityByName("user_position");
+          add(new Label("title"," 用户岗位关系"));
         }else{
             if(type == 0){
         	  entity = Configuration.getEntityByName("account");

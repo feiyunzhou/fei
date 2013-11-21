@@ -86,7 +86,7 @@ public class UserPage extends AdminTemplatePage
           datalist = DAOImpl.queryEntityRelationList(sql);
           break;
           case UserRole.USER_ROLE_MANAGER:
-           datalist = DAOImpl.queryEntityRelationList(sql,userId);
+           datalist = DAOImpl.queryEntityRelationList(sql,userId,userId);
           break;
           case UserRole.USER_ROLE_SALES:
           datalist = DAOImpl.queryEntityRelationList(sql, userId);
@@ -126,7 +126,7 @@ public class UserPage extends AdminTemplatePage
         tdata = DAOImpl.queryEntityRelationList(sql);
         break;
         case UserRole.USER_ROLE_MANAGER:
-        tdata = DAOImpl.queryEntityRelationList(sql, userId);
+        tdata = DAOImpl.queryEntityRelationList(sql, userId,userId);
         break;
         case UserRole.USER_ROLE_SALES:
         tdata = DAOImpl.queryEntityRelationList(sql, userId);
@@ -141,7 +141,7 @@ public class UserPage extends AdminTemplatePage
           tdata = DAOImpl.queryEntityRelationList(sql);
           break;
           case UserRole.USER_ROLE_MANAGER:
-          tdata = DAOImpl.queryEntityRelationList(sql, userId);
+          tdata = DAOImpl.queryEntityRelationList(sql, userId,userId);
           break;
           case UserRole.USER_ROLE_SALES:
           tdata = DAOImpl.queryEntityRelationList(sql, userId);
@@ -165,7 +165,7 @@ public class UserPage extends AdminTemplatePage
           tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft);
           break;
           case UserRole.USER_ROLE_MANAGER:
-          tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, userId);
+          tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft, userId,userId);
           break;
           case UserRole.USER_ROLE_SALES:
           tdata = DAOImpl.queryEntityWithFilter(sql, entity.getFilterField(), ft,  userId);
