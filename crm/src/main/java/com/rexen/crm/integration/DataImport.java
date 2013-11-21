@@ -94,11 +94,8 @@ public class DataImport
 
       if (buffer.size() > config.getBatchSize())
       {
-        dao.merge(buffer.toArray(), new String[]
-        {
-          config.getExternalId()
-        });
-
+        merge(buffer.toArray());
+        
         System.out.println("commit " + buffer.size());
 
         buffer.clear();
@@ -107,13 +104,44 @@ public class DataImport
 
     if (buffer.size() > 0)
     {
-      dao.merge(buffer.toArray(), new String[]
-      {
-        config.getExternalId()
-      });
-      
+      merge(buffer.toArray());
+
       System.out.println("commit " + buffer.size());
       buffer.clear();
+    }
+  }
+
+  private void merge(Object[] data) throws Exception
+  {
+    String operation = config.getOperation();
+
+    if (operation == null || operation.length() <= 0)
+    {
+      operation = "Merge";
+    }
+    
+    switch (operation)
+    {
+      case "Merge":
+      {
+        System.out.println("begin merge");
+        dao.merge(data, new String[]
+        {
+          config.getExternalId()
+        });
+
+        break;
+      }
+      case "Delete":
+      {
+        System.out.println("begin delete");
+        dao.delete(data, new String[]
+        {
+          config.getExternalId()
+        });
+
+        break;
+      }
     }
   }
 

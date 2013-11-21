@@ -79,7 +79,7 @@ public class DataAccessObject
     }
   }
 
-  public void delete(Object[] data) throws Exception
+  private void delete(Object[] data) throws Exception
   {
     if (data != null && data.length > 0)
     {
@@ -101,6 +101,25 @@ public class DataAccessObject
         throw e;
       }
     }
+  }
+  
+  public void delete(Object[] data, String[] keys) throws Exception
+  {
+    ArrayList<Object> buffer = new ArrayList<>();
+    
+    for(Object o : data)
+    {
+      Object sample = o.getClass().newInstance();
+      copy(o, sample, keys);
+      
+      sample = find(sample);
+      if(sample != null)
+      {
+        buffer.add(sample);
+      }
+    }
+    
+    delete(buffer.toArray());
   }
 
   public void append(Object[] data)

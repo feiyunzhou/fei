@@ -114,4 +114,17 @@ public class Configuration
   {
     this.encoded = encoded;
   }
+  
+  private String operation;
+  
+  @XmlElement(name = "Operation")
+  public String getOperation()
+  {
+    return operation;
+  }
+
+  public void setOperation(String operation)
+  {
+    this.operation = operation;
+  }
 }
