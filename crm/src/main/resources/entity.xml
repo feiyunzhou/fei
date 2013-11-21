@@ -1277,7 +1277,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>email</name>
 				<display>邮箱</display>
-				<isRequired>true</isRequired>
+				<isRequired>false</isRequired>
 				<data-type>email</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1985,6 +1985,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>starttime</name>
 				<display>开始时间</display>
+				<isRequired>true</isRequired>
 				<data-type>datetime-local</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -1999,6 +2000,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>endtime</name>
 				<display>结束时间</display>
+				<isRequired>true</isRequired>
 				<data-type>datetime-local</data-type>
 				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -2455,6 +2457,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>var</default-value-type>
 				<default-value>start_datetime</default-value>
 				<priority>1</priority>
+				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2469,6 +2472,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>var</default-value-type>
 				<default-value>end_datetime</default-value>
 				<priority>1</priority>
+				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2989,6 +2993,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>var</default-value-type>
 				<default-value>start_datetime</default-value>
 				<priority>1</priority>
+				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -3003,6 +3008,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>var</default-value-type>
 				<default-value>end_datetime</default-value>
 				<priority>1</priority>
+				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -4251,14 +4257,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	</entity>
 	<entity>
 		<name>todolist</name>
-		<display>To Do List</display>
+		<display>待进行活动</display>
 		<sql>SELECT * FROM crmdb.activity_alert</sql>
 		<sql-admin>SELECT * FROM crmdb.activity_alert</sql-admin>
 		<sql-ent>SELECT * FROM crmdb.activity_alert</sql-ent>
 		<filterField></filterField>
 		<fields>
-                   
-                       <field>
+             <field>
 				<name>id</name>
 				<display>活动Id</display>
 				<data-type>text</data-type>
@@ -4279,7 +4284,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority>
 			</field>
 			<field>
-                                <name>time</name>
+                <name>time</name>
 				<display>时间</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>

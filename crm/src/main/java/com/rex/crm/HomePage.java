@@ -251,18 +251,7 @@ public class HomePage extends TemplatePage {
         
     final Entity entityAct = entities.get("todolist"); 
     
-    
-//    
-//    String sql2="SELECT id," +
-//"title" +
-//"FROM crmdb.activity act" +
-//"where event_type=1 and status=1 order by a";
-    
     String sql2="SELECT * FROM crmdb.activity_alert ";
-    
-//    String sql2="Select * from activity";
-    System.out.print("!!!!!!!!!!!!!!!!!!!"+sql2);
-    
     
     List tdataAct = DAOImpl.queryEntityRelationList(sql2);
     add(new PageableTablePanel("datalistAct", entityAct, tdataAct, null));
