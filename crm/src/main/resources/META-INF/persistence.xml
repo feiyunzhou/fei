@@ -61,7 +61,9 @@
     <class>com.rexen.crm.beans.Score1Pl</class>
     <class>com.rexen.crm.beans.Score2Pl</class>
     <class>com.rexen.crm.beans.SexPl</class>
+    <class>com.rexen.crm.beans.UserPosition</class>
     <class>com.rexen.crm.beans.Userinfo</class>
+    <class>com.rexen.crm.integration.LogMessage</class>
     <shared-cache-mode>ALL</shared-cache-mode>
     <validation-mode>NONE</validation-mode>
     <properties>
