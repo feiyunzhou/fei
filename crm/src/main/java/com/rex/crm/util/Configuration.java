@@ -1,43 +1,37 @@
 package com.rex.crm.util;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.SubnodeConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 
-import com.google.common.base.Function;
+
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.ImmutableMap.Builder;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import com.rex.crm.beans.City;
-import com.rex.crm.beans.Province;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.Reaction;
 import com.rex.crm.common.Relation;
 
 public class Configuration {
+    private static final Logger logger = Logger.getLogger(Configuration.class);
     private static VelocityEngine ve;
     private static Map<String,Entity> entities = null;
     private static Multimap<String,Relation> relations = null;
 
-
-
+    
     public static VelocityEngine getVelocityEngine() {
 
         if (ve == null) {

@@ -1,6 +1,8 @@
 package com.rex.crm.util;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -36,9 +38,9 @@ import com.rex.crm.userlog.LogInOut;
 import com.rex.crm.userlog.LogObj;
 
 public class CRMUtility {
-
        private static final Logger logger = Logger.getLogger(CRMUtility.class);
-    
+       private static String configPath = null;
+       private static Properties commonProps = null;
        public static final String STAT_LOG_IN_OUT = "logInOut";
     
 	   public static ImmutableListMultimap<Integer, Account> categorizeAccountsByCityIds(List<Account> accounts){
@@ -335,5 +337,112 @@ public class CRMUtility {
 			}
 	     	return systemPeroperties.getProperty(fieldName);
 		}
+	    
+	    
+
+	    public static String getConfigPath() {
+	        if (configPath == null) {
+	            synchronized (Configuration.class) {
+	                String OS = System.getProperty("os.name").toLowerCase();
+	                if (OS.indexOf("win") >= 0) {
+	                    logger.debug("This is a Windows");
+	                    configPath = "C:\\var\\crm\\config";
+	                } else {
+	                    logger.debug("This is not a Windows");
+	                    configPath = "/var/crm/config";
+	                }
+
+	            }
+	        }
+
+	        return configPath;
+	    }
+	    
+	    
+	    
+	    public static Properties getCommProps(){
+	        if (commonProps == null) {
+	            synchronized (Configuration.class) {
+	                commonProps = new Properties();
+	                try {
+	                    String cfgPath = getConfigPath();
+	                    File file = new File(cfgPath + File.separator + "common.cfg");
+	                    if(file.exists()){
+	                        commonProps.load(new FileReader(cfgPath + File.separator + "common.cfg"));
+	                    }else{
+	                        commonProps.loadFromXML(Configuration.class.getResourceAsStream("/common.cfg"));
+	                    }
+	                } catch (IOException e) {
+	                    // TODO Auto-generated catch block
+	                    e.printStackTrace();
+	                }
+	          }
+	        }
+
+	        return commonProps;
+	    }
+	      
+	    
+	    public static String getJCRHost(){
+	         Properties prop= getCommProps();
+	         String value = (String) prop.get("jcr_host");
+	         return value;
+	    }
+	    
+	     public static String getPicturesPath(){
+	         Properties prop= getCommProps();
+	         String media_files_path = (String) prop.get("media_files_path");
+	         return media_files_path;
+	     }
+	     
+	     public static String getPictureHost(){
+	            Properties prop= getCommProps();
+	             String value = (String) prop.get("picture_host");
+	             return value;
+	        }
+	     
+	     public static String getReportEngineHome(){
+	         Properties prop= getCommProps();
+	          String value = (String) prop.get("report_engine_home");
+	          return value;
+	     }
+	     
+	     public static String getReportLog(){
+	         Properties prop= getCommProps();
+	          String value = (String) prop.get("report_engine_log");
+	          return value;
+	     }
+	     
+	     public static String getReportDesignFolder(){
+	         Properties prop= getCommProps();
+	          String value = (String) prop.get("report_design_folder");
+	          return value;
+	     }
+	     
+	     public static String getReportOutputFolder(){
+	         Properties prop= getCommProps();
+	          String value = (String) prop.get("report_output_folder");
+	          return value;
+	     }
+
+	     public static String getReportImagesFolder(){
+	         Properties prop= getCommProps();
+	          String value = (String) prop.get("report_images_folder");
+	          return value;
+	     }
+	     
+	     
+	     public static String getReportBaseImgURL(){
+	         Properties prop= getCommProps();
+	          String value = (String) prop.get("report_base_img_url");
+	          return value;
+	     }
+	     
+	     public static String getReportBaseURL(){
+	         Properties prop= getCommProps();
+	          String value = (String) prop.get("report_base_url");
+	          return value;
+	     }
+
 	    
 }
