@@ -22,10 +22,10 @@ import com.rexen.crm.integration.DataImport;
 public class DataImporter {
 
     public void importPositionData(String filename) throws IOException{
-       Entity positionEntity = Configuration.getEntityByName("crmuser");
-       List<Field> fields = positionEntity.getFields();
+       Entity entity = Configuration.getEntityByName("account");
+       List<Field> fields = entity.getFields();
        
-       CsvReader reader = new CsvReader(filename, ';', Charset.forName("UTF-8"));
+       CsvReader reader = new CsvReader(filename, ',', Charset.forName("UTF-8"));
 
        boolean header = reader.readHeaders();
        //reader.getHeaders();
@@ -58,7 +58,7 @@ public class DataImporter {
     
     public static void main(String args[]) throws JAXBException, IOException, Exception {
         DataImporter importer = new DataImporter();
-        importer.importPositionData("/Users/feiyunzhou/Downloads/pos.csv");
+        importer.importPositionData("/Users/feiyunzhou/git/tiger/tigerp/crm/src/main/doc/account_import.csv");
     }
 
 }

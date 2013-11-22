@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:wicket="http://wicket.apache.org">
-    <body>
-        <wicket:extend>
-            <script>
-                $(document).ready(function() {	
-                    $("#uploadPage").addClass("active");      
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<body>
+ <wicket:extend>
+  <script>
+   $(document).ready(function() {
+           $("#uploadPage").addClass("active");
 
-                });// end onDomReady function
-            </script>
-                    <div class="center-block">
-                    <div class="col-md-8">
-                        <div wicket:id="wizard"></div>
-            		</div>
-                   </div>
+    });// end onDomReady function
+   </script>
+  <div class="col-md-3 center-block">
+   <div class="">
+    <form class ="" wicket:id="form">
+     <select class="form-control" wicket:id="entityName">
+     </select>
 
-        </wicket:extend>
-		
-    </body>
+     <p />
+     <input type="file" class="form-control" wicket:id="fileUpload" />
+     <p />
+     <input type="submit" class="btn btn-primary" value="提交" />
+    </form>
+
+   </div>
+  </div>
+
+ </wicket:extend>
+
+</body>
 </html>

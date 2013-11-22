@@ -19,26 +19,26 @@ package com.rex.crm.dataport;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.extensions.wizard.StaticContentStep;
+import org.apache.log4j.Logger;
 import org.apache.wicket.extensions.wizard.Wizard;
 import org.apache.wicket.extensions.wizard.WizardModel;
-import org.apache.wicket.extensions.wizard.WizardModel.ICondition;
 import org.apache.wicket.extensions.wizard.WizardStep;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.ListMultipleChoice;
-import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
-import org.apache.wicket.markup.html.form.validation.EqualInputValidator;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
+
+
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.validation.ValidationError;
-import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.apache.wicket.util.file.File;
+
+
+
+import com.google.common.collect.Lists;
+import com.rex.crm.beans.Choice;
+import com.rex.crm.util.CRMUtility;
 
 
 /**
@@ -51,7 +51,19 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
  */
 public class ImportDataWizard extends Wizard
 {
-
+    private static final Logger logger = Logger.getLogger(ImportDataWizard.class);
+    private static final  List<Choice> choiceList = Lists.newArrayList();
+    static {
+        choiceList.add(new Choice(0L, "contact"));
+        choiceList.add(new Choice(1L, "account"));
+        choiceList.add(new Choice(2L, "accountTeam"));
+        choiceList.add(new Choice(3L, "position"));
+        choiceList.add(new Choice(4L, "userInfo"));
+        
+    }
+    private FileUploadField fileUpload;
+    private String entityName;
+    private Choice selected_entity = choiceList.get(0);
 
 	/**
 	 * The user details step.
@@ -63,7 +75,12 @@ public class ImportDataWizard extends Wizard
 		 */
 		public SelectEntityNameStep()
 		{
-			//add(new )
+			//add( new Label("entityName", new PropertyModel(this,"entityName")));
+		   
+		    IModel choices = Model.ofList(choiceList);
+		    
+		    DropDownChoice dropdown = createDropDownListFromPickList("entityName", choices, new Model(selected_entity));
+		    add(dropdown);
 		}
 	}
 
@@ -77,17 +94,14 @@ public class ImportDataWizard extends Wizard
 		 */
 		public SelectFileStep()
 		{
-			
+		    //final FileUploadField position = new FileUploadField("position");
+		    fileUpload = new FileUploadField("fileUpload");
+		    
+		    add(fileUpload);
+		    
 		}
 	}
 
-
-	/** cheap ass roles database. */
-	private static final List<String> allRoles = Arrays.asList("admin", "user", "moderator",
-		"joker", "slacker");
-	
-	/** The user we are editing. */
-	private String entityName;
 
 	/**
 	 * Construct.
@@ -104,8 +118,10 @@ public class ImportDataWizard extends Wizard
 		model.add(new SelectEntityNameStep());
 		model.add(new SelectFileStep());
 
+		
 		// initialize the wizard with the wizard model we just built
 		init(model);
+		getForm().setMultiPart(true);
 	}
 
 
@@ -125,6 +141,55 @@ public class ImportDataWizard extends Wizard
 	public void onFinish()
 	{
 		System.out.println("Finished");
+		logger.debug("selecte entity:"+ selected_entity.getId());
+		
+		
+		List<FileUpload> uploadedFile = fileUpload.getFileUploads();
+		
+        if (uploadedFile != null && uploadedFile.size()>0) {
+
+            // write to a new file
+            File newFile = new File(CRMUtility.readFileAttribure("uploadpath") + uploadedFile.get(0).getClientFileName());
+
+            if (newFile.exists()) {
+                newFile.delete();
+            }
+
+            try {
+                newFile.createNewFile();
+                uploadedFile.get(0).writeTo(newFile);
+
+                info("saved file: " + uploadedFile.get(0).getClientFileName());
+            } catch (Exception e) {
+                throw new IllegalStateException("Error");
+            }
+        }
+        
 	}
+		
+	
+	   private DropDownChoice createDropDownListFromPickList(String markupId,IModel choices,IModel default_model) {
+	        
+	        DropDownChoice<Choice> choice = new DropDownChoice<Choice>(markupId, default_model, choices,
+	                new IChoiceRenderer<Choice>() {
+	            @Override
+	            public Object getDisplayValue(Choice choice) {
+	                // TODO Auto-generated method stub
+	                return choice.getVal();
+	            }
+	            @Override
+	            public String getIdValue(Choice choice, int index) {
+	                // TODO Auto-generated method stub
+	                return String.valueOf(choice.getId());
+	            }
+	            
+	            
+	        });
+	        
+	        choice.setNullValid(true);
+	        return choice;
+	    }
+		
+	
 
 }
