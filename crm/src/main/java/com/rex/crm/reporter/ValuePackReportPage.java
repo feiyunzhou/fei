@@ -3,12 +3,16 @@ package com.rex.crm.reporter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.Response;
 import org.eclipse.birt.report.engine.api.EngineConstants;
 import org.eclipse.birt.report.engine.api.EngineException;
 import org.eclipse.birt.report.engine.api.HTMLRenderOption;
@@ -87,9 +91,26 @@ public class ValuePackReportPage extends TemplatePage{
            tempfileos.close();
            //add(new DocumentInlineFrame("report_frame", new FileResourceStream(tmpfile)));
             //add(new WebMarkupContainer("report_frame"));
-           WebMarkupContainer mag_report_frame = new WebMarkupContainer("report_frame");
-           add(mag_report_frame);
-           mag_report_frame.add( new AttributeModifier("src",new Model(CRMUtility.getReportBaseURL()+tmpfile.getName())));
+          // WebMarkupContainer mag_report_frame = new WebMarkupContainer("report_frame");
+          // add(mag_report_frame);
+          // mag_report_frame.add( new AttributeModifier("src",new Model(CRMUtility.getReportBaseURL()+tmpfile.getName())));
+           
+           add(
+                   new WebComponent("report_container") {
+
+                       @Override
+                       protected void onComponentTag(ComponentTag tag) {
+                           Response response = getRequestCycle().getResponse();
+                           try {
+                               String report_html = com.google.common.io.Files.toString(tmpfile, Charset.forName("utf-8"));
+                               response.write(report_html);
+                           } catch (IOException e) {
+                               // TODO Auto-generated catch block
+                               e.printStackTrace();
+                           }
+
+                       }
+           });
            
 	    } catch (EngineException e) {
             // TODO Auto-generated catch block
