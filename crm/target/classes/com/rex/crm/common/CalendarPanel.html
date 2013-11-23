@@ -1,0 +1,241 @@
+<wicket:panel>
+ <link rel='stylesheet' href='fullcalendar/jquery-ui.min.css' />
+<link href='fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='fullcalendar/jquery.min.js'></script>
+<script src='fullcalendar/jquery-ui.custom.min.js'></script>
+<script src='fullcalendar/fullcalendar.js'></script>
+	<script>
+		$(document).ready(function() {
+			$('#calendar').fullCalendar({
+				// put your options and callbacks here
+// 			    theme: true,
+				header : {
+					left : 'prev,next today',
+					center : 'title',
+					right : 'month,agendaWeek,agendaDay'
+				},
+				height : 500,
+				selectable : true,
+				selectHelper : true,
+				editable : true,
+				
+				monthNames : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+		          monthNamesShort : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ],
+		          dayNames : [ '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天' ],
+		          dayNamesShort : [ '周日','周一', '周二', '周三', '周四', '周五', '周六' ],
+		          columnFormat : {
+		              month : 'ddd',
+		              week : 'M/d ddd',
+		              day : 'M/d dddd'
+		          },
+		          titleFormat : {
+		              month : 'yyyy年MMMM',
+		              week : "yyyy年",
+		              day : 'yyyy年'
+		          },
+		          buttonText : {
+		              today : '今天',
+		              month : '月',
+		              week : '周',
+		              day : '日'
+		          },
+		          eventAfterRender : function( event, element, view ) {
+		              //cell.prepend('<span class=\"newEventSpan pull-left\" style="display:none"><a class="newEventLink" href="#">新建</a></span>');
+		              //cell.css("min-height", "");
+		              //element.children().first().append("<i class=\"icon-tasks pull-right\"></i>");
+		          },
+		          eventClick: function(calEvent, jsEvent, view) {
+		            console.log(calEvent);
+		           /*  if(calEvent.act_type == 1){
+		                location.href = "activityDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
+		            }else if(calEvent.act_type == 2 || calEvent.act_type == 3){
+		                location.href = "meetingDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
+		            } */
+		            
+		           // location.href = "/"+context_name+'/mount/eventViewer?eventid='+calEvent.id;
+		            var entityName = null;
+		            if(calEvent.act_type==1){
+		            	entityName = "activity"
+		            }else if (calEvent.act_type==2){
+		            	entityName = "coaching";
+		            }else{
+		            	entityName = "willCoaching"
+		            }
+		            location.href = event_view_page_url+'id='+calEvent.id+'&entityName='+entityName;
+
+		          },
+		          dayClick : function(date, allDay, jsEvent, view) {
+		        	  if (allDay) {
+		                  console.log('Clicked on the entire day: ' + date);
+		              } else {
+		                  console.log('Clicked on the slot: ' + date);
+		              }
+
+		              console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+		              console.log('Current view: ' + view.name);
+
+		              // change the day's background color just for fun
+		              // $(this).css('background-color', 'red');
+		              var selecteddate = $.fullCalendar.formatDate(date, "yyyy-MM-dd'T'HH:mm");
+		             
+		              console.log(selecteddate);
+		              var roleId = userInfo.role;
+		              var entityName = "";
+		              if(roleId!=1){
+		            	  if(roleId==2){
+			            	  entityName = "coaching";
+			              }else {
+			            	  entityName = "activity";
+			              }
+			              console.log("userInfo.roleId:"+userInfo.role);
+			              location.href = create_event_page_url +"entityName="+entityName +"&start_datetime="+selecteddate+"&end_datetime="+selecteddate;
+		              }
+		          }
+				
+				//events : JSON.parse(user_event_data)
+
+			});
+            //userInfo = JSON.parse(userInfo);
+            console.log(userInfo);
+            renderCalendarWithDataRemotely(userInfo);
+
+            function renderCalendarWithDataRemotely(ui) {
+                ACTIVITY_UTIL.queryRemoteActivities(ui,function(data) {
+                    var calendarEvents = ACTIVITY_UTIL.convertActivityTableData2CallendarEvents(data);
+                    //console.log(calendarEvents);
+                    //renderCalendar(calendarEvents);
+                    appendCalendarEvent(calendarEvents);
+                }, function(status) {
+                    //renderCalendarWithDataLocally();
+                    console.log("failed to get remote event data");
+                });//END of queryRemoteActivities
+            }
+
+            function appendCalendarEvent(event) {
+                
+                
+                var eventlen = event.length;
+                for ( var i = 0; i < eventlen; i++) {
+                    $('#calendar').fullCalendar('renderEvent', event[i], true);
+                }
+                $('#calendar').fullCalendar('render');
+            }
+
+
+            renderSelect4Inferiors();
+            
+            function renderSelect4Inferiors(){
+
+                CRMUSER_UTIL.getInferiorsRemotely(userInfo.id,function(data){
+                    //console.log("BBBBBBBBBBBB:"+data.length);
+                   // if(data.length === 0){
+                        $("#inforior_select_control").show();
+                     
+                    var objs =  [];
+                    var selfobj = {};
+                    selfobj.name =  "自己";
+                    selfobj.id =   userInfo.id;
+                    objs.push(selfobj);
+                    for(var i=0;i<data.length;i++){
+                        //ignore self because we added it above
+                        if(data[i].id == userInfo.id) continue;
+                        var obj = {};
+                        obj.name = data[i].name ;
+                        obj.id =   data[i].id;
+                        objs.push(obj);
+                        
+                       
+                    }
+
+                    
+                    for(var i=0;i<objs.length;i++){
+                    	 $("#crmuser_select").append("<option value='"+objs[i].id+"'>"+objs[i].name+"</option>");
+                    }
+                 /*    $('#crmuser_select').select2({
+                         data : {
+                             results : objs ,
+                             text : 'name'
+                         },
+                         formatSelection : selectformat,
+                         formatResult : selectformat
+                     }); */
+                    // $("#crmuser_select").select2("val", userInfo.id);
+
+
+                    $("#crmuser_select").change(function(e){
+                      /*   console.log("change " + JSON.stringify({
+                            val : e.val,
+                            added : e.added,
+                            removed : e.removed,
+                            defaultContact : e.defaultContact
+                        })); */
+
+                        //firstly, remove all events from the calendar
+                        $('#calendar').fullCalendar('removeEvents', function filter(event) {
+                          //console.log("remove" + event.id);
+                          return true;
+                       });
+                        
+                        var userIdex = {};
+                        userIdex.id = $(this).children('option:selected').val();
+                        renderCalendarWithDataRemotely(userIdex);
+
+                    });
+
+
+                },function(error){
+                      console.log("failed to render select2");
+                });
+
+
+            }
+
+            function selectformat(item) {
+                return item.name;
+            }
+
+		});
+	</script>
+	<script src="js/activityutil.js"></script>
+	<script src="js/activityUI.js"></script>
+	<script src="js/contactutil.js"></script>
+	<script src="js/crmuserutil.js"></script>
+	<script src='js/dataclient2.js'></script>
+
+	<div class="">
+		<div class="row">
+			<div class="col-md-12">
+               <form  class="form-horizontal" role="form">
+				<div id="inforior_select_control" style="display:none;" class="form-group">
+					<label class="col-md-2 control-label" for="inforior">视图：</label>
+					<div class="col-md-3">
+						<!-- <input type="hidden" id="crmuser_select" style="width: 200px" tabindex="-1" class="select2-offscreen input"> -->
+						<select id="crmuser_select" class="form-control"></select>
+					</div>
+				</div>
+				</form>
+
+			</div>
+		</div>
+		<div class="row" style="margin-top:15px;">
+			<div class="col-md-11">
+				<div>
+					<div id="calendar"></div>
+				</div>
+			</div>
+
+			<div class="col-md-1">
+
+				<span class="label legend" style="border-left-color: #2B60DE;">拜访</span> 
+				<span class="label legend" style="border-left-color: #E18B6B;">辅导</span> 
+				<!-- <span class="label" style="background-color: #ff8c00">内部会议</span>
+				<span class="label" style="background-color: #6698FF">其他</span> -->
+				<hr />
+				<span class="label legend" style="border-left-color: #659EC7;">完成</span>
+
+			</div>
+		</div>
+	</div>
+</wicket:panel>

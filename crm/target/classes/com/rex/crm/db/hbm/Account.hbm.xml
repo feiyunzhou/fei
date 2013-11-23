@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-5-4 16:43:32 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.rex.crm.db.model.Account" table="account" catalog="crmdb">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" not-null="true" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" />
+        </property>
+        <property name="cityId" type="java.lang.Integer">
+            <column name="cityId" />
+        </property>
+        <property name="classification" type="string">
+            <column name="classification" />
+        </property>
+        <property name="isKeyAccount" type="java.lang.Boolean">
+            <column name="isKeyAccount" />
+        </property>
+        <property name="level" type="string">
+            <column name="level" />
+        </property>
+        <property name="photo" type="string">
+            <column name="photo" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="128" />
+        </property>
+        <property name="tele" type="string">
+            <column name="tele" />
+        </property>
+    </class>
+</hibernate-mapping>

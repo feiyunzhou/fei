@@ -3,6 +3,7 @@ package com.rex.crm;
 import org.apache.wicket.Page;
 
 import com.rex.crm.admin.PositionPage;
+import com.rex.crm.admin.ProductPage;
 import com.rex.crm.admin.UserPage;
 
 public class PageFactory {
@@ -22,8 +23,10 @@ public class PageFactory {
           return new CoachingPage();
         }else if(name.equalsIgnoreCase("userInfo")){
           return new UserPage();
-        }else if(name.equals("alert")){
+        }else if(name.equalsIgnoreCase("alert")){
         	return new AlertPage();
+        }else if(name.equalsIgnoreCase("product")){
+        	return new ProductPage();
         }
         else{
             return new HomePage();

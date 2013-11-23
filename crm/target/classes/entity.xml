@@ -1,0 +1,4555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entities>
+	<entity>
+		<name>account</name>
+		<display>医院</display>
+		<sql>
+			select * from (select account.*\,
+			account_point_pl.val as key_type_val\,
+			account_type_pl.val as hospital_type_val\,
+			account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+			from account
+			left join account_point_pl on account.key_type = account_point_pl.id
+			left join account_type_pl on account.hospital_type = account_type_pl.id
+			left join account_comprehensive_or_specialized_pl on
+			account.comprehensive_or_specialized =
+			account_comprehensive_or_specialized_pl.id
+			where account.id != -1 and(
+			account.id in (select accountid from accountcrmuser 
+			left join user_position on user_position.userId = accountcrmuser.crmuserid
+			where accountcrmuser.crmuserid = ? and user_position.status=1)
+			or account.id in (select contact.accountid from contactcrmuser
+			left join contact on contactcrmuser.contactid = contact.id
+			left join accountcrmuser on accountcrmuser.accountid = contact.accountId
+			left join user_position on user_position.positionId = accountcrmuser.crmuserid
+			where contactcrmuser.crmuserid = ?
+			))ORDER BY CONVERT( name USING gbk ))  as aAccount
+		</sql>
+		<sql-admin>
+			select * from (select account.*\,
+			account_point_pl.val as key_type_val\,
+			account_type_pl.val as hospital_type_val\,
+			account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+			from account
+			left join account_point_pl on account.key_type = account_point_pl.id
+			left join account_type_pl on account.hospital_type = account_type_pl.id
+			left join account_comprehensive_or_specialized_pl on
+			account.comprehensive_or_specialized =
+			account_comprehensive_or_specialized_pl.id
+			where account.id != -1 ORDER BY CONVERT( name USING gbk )) as aAccount
+		</sql-admin>
+		<sql-manager>
+			select * from (select account.*\,account_point_pl.val as key_type_val\,
+			account_type_pl.val as hospital_type_val\,
+			account_comprehensive_or_specialized_pl.val as
+			comprehensive_or_specialized_val
+			FROM
+			account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+			where (account.id in (select accountid from crmdb.accountcrmuser
+			where
+			crmuserid = ?) OR
+			account.id in (select accountid from crmdb.accountcrmuser where crmuserid in
+			(select crmuser.id from crmuser
+			left join user_position on crmuser.id = user_position.positionId
+			where user_position.status = 1 and crmuser.reportto = ?
+			)) OR
+			account.id in (select accountid from crmdb.contact where id in (select
+			contactid
+			from crmdb.contactcrmuser where crmuserid in (select id from
+			crmdb.crmuser where reportto = ?)))) AND
+			account_point_pl.id=key_type AND account.id != -1 AND
+			account_type_pl.id=hospital_type AND
+			account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized ORDER BY CONVERT( name USING gbk )) as aAccount
+		</sql-manager>
+
+		<sql-ent>SELECT * from (select account.* from account where
+			account.id=? ORDER BY CONVERT( name USING gbk )      ) as aAccount
+		</sql-ent>
+		<filterField>grade</filterField>
+		<fields>
+			<!-- 医院的基本信息 -->
+			<field>
+
+				<name>id</name>
+				<display>编码</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<isParam>true</isParam> <!-- 关联表的创建的参数 -->
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>医院名称</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isParam>true</isParam>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>bdm_code</name>
+				<display>BDM医院编码</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>administrativ_level</name>
+				<display>医院行政级别</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_administrativ_level_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>grade</name>
+				<display>医院分级</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_grade_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>hospital_type</name>
+				<display>医院类型</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_type_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>hospital_type_val</name>
+				<display>医院类型</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>local_or_army</name>
+				<display>地方/军队医院</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_local_or_army_pl</picklist>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>comprehensive_or_specialized</name>
+				<display>综合/专科医院 </display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_comprehensive_or_specialized_pl</picklist>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>comprehensive_or_specialized_val</name>
+				<display>综合医院／专科医院 </display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>key_type</name>
+				<display>重点医院</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_point_pl</picklist>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>key_type_val</name>
+				<display>重点医院</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>number</data-type>
+				<isRequired>false</isRequired>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_status_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<!-- 医院基本信息 -->
+			<field>
+				<name>duty_officer</name>
+				<display>院长（法人）</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>num_of_doctors</name>
+				<display>医生数量</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_assistant_doctors</name>
+				<display>助理医师人数</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_staff</name>
+				<display>员工总数</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_treat_per_year</name>
+				<display>年诊疗人数</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_outpatient</name>
+				<display>门诊人数</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>total_num_of_sickbed</name>
+				<display>总病床数</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_anesthesia_doctor</name>
+				<display>麻醉科医生数</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_pain_doctor</name>
+				<display>疼痛学组医生数 </display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_surgery_per_year</name>
+				<display>手术量/年</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_surgery_room</name>
+				<display>手术间</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_using_opiates_medicine</name>
+				<display>阿片类用药量</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_using_opiates_injection</name>
+				<display>阿片类注射剂量(￥)</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>date_of_establish</name>
+				<display>成立时间</display>
+				<isRequired>false</isRequired>
+				<data-type>Date</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>registered_capital</name>
+				<display>注册资金</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>tel</name>
+				<display>主要电话号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>fax</name>
+				<display>主要传真号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>market_classification</name>
+				<display>市场分类</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_market_classification_pl</picklist>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>province</name>
+				<display>医院省份</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<picklist>province</picklist>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<fieldGroup>基本信息</fieldGroup>
+				<isParam>true</isParam>
+				<priority>2</priority>
+				<childNode>city</childNode>
+			</field>
+			<field>
+				<name>city</name>
+				<display>医院城市</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<picklist>city</picklist>
+				<isParam>true</isParam>
+				<fieldGroup>基本信息</fieldGroup>
+				<parentNode>province</parentNode>
+			</field>
+			<field>
+				<name>districts</name>
+				<display>医院区县</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>address</name>
+				<display>医院详细地址</display>
+				<isRequired>false</isRequired>
+				<data-type>textarea</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<!-- 附加信息 -->
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<field-type>auto</field-type>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>responsible_person</name>
+				<display>负责人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+
+	<entity>
+		<name>contact</name>
+		<display>医生</display>
+		<sql>
+			select * from (select contact.*\,
+			contact_generalization_target_pl.val as product_target_val\,
+			account.name as accountName_val\,contact_department_pl.val as department_val 
+			from contact
+			left join contact_generalization_target_pl on contact.product_target =
+			contact_generalization_target_pl.id
+			left join account on contact.accountid = account.id
+			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
+			left join user_position on user_position.positionId = accountcrmuser.crmuserId
+			left join contact_department_pl on contact.department = contact_department_pl.id
+			where contact.id != -1 and accountcrmuser.crmuserid = ? and user_position.status = 1) as aContact
+		</sql>
+		<sql-manager>
+select distinct * from (select  aContact.*\,contact_generalization_target_pl.val as product_target_val\,
+"account.name" as accountName_val from (select distinct contact.id as cid\,contact.*
+from contact\, accountcrmuser\,crmuser 
+where crmuser.reportto=? and
+	  contact.accountId = accountcrmuser.accountId and
+	  crmuser.id = accountcrmuser.crmuserId ) as aContact
+	left join contact_generalization_target_pl on aContact.product_target = 
+		contact_generalization_target_pl.id 
+	left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
+	left join user_position on user_position.positionId = accountcrmuser.crmuserId and user_position.status = 1 ) as cCountcat
+
+		</sql-manager>
+
+		<sql-admin>
+			<!-- select contact.*\, -->
+			<!-- contact_generalization_target_pl.val as product_target_val\, -->
+			<!-- account.name as accountName_val -->
+			<!-- from contact -->
+			<!-- left join contact_generalization_target_pl on contact.product_target 
+				= -->
+			<!-- contact_generalization_target_pl.id -->
+			<!-- left join account on contact.accountid = account.id -->
+			<!-- where account.id != -1 -->
+			select * from (select contact.*\,
+			contact_generalization_target_pl.val as product_target_val\,
+			account.name as accountName_val\,contact_department_pl.val as department_val 
+			from contact
+			left join account on contact.accountid = account.id
+			left join contact_generalization_target_pl on contact.product_target =
+			contact_generalization_target_pl.id 
+			left join contact_department_pl on contact.department = contact_department_pl.id
+			where contact.id != -1 ) as aContact
+		</sql-admin>
+
+		<sql-ent>select * from (select contact.*\,account.id as accountName
+			from contact\,account where contact.id=? AND
+			account.id=contact.accountId order by whenadded DESC) as
+			aContact
+		</sql-ent>
+
+		<sql-search-by-name>select * from (select contact.*\,account.id as
+			accountName
+			from contact\,account where contact.id=? AND
+			account.id=contact.accountId order by whenadded DESC) as
+			aContact
+		</sql-search-by-name>
+		<filterField>grade</filterField>
+
+		<fields>
+			<field>
+				<name>id</name>
+				<display>编码</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>姓名</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<!-- Please do not change the order of this field(accountId)!! -->
+			<!-- <field> -->
+			<!-- <name>accountId</name> -->
+			<!-- <display>医院ID</display> -->
+			<!-- <data-type>number</data-type> -->
+			<!-- <isRequired>false</isRequired> -->
+			<!-- <isPrimaryKey>false</isPrimaryKey> -->
+			<!-- <isDetailLink>false</isDetailLink> -->
+			<!-- <isVisible>true</isVisible> -->
+			<!-- <isEditable>false</isEditable> -->
+			<!-- <priority>1</priority> -->
+			<!-- <fieldGroup>关键信息</fieldGroup> -->
+			<!-- </field> -->
+
+			<field>
+				<name>accountId</name>
+				<display>医院</display>
+				<isRequired>true</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>account</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>account.id\,account.name</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<!-- <field> -->
+			<!-- <name>accountName</name> -->
+			<!-- <display>医疗机构</display> -->
+			<!-- <isRequired>false</isRequired> -->
+			<!-- <alias>accountId</alias> -->
+			<!-- <data-type>text</data-type> -->
+			<!-- <isPrimaryKey>false</isPrimaryKey> -->
+			<!-- <isDetailLink>false</isDetailLink> -->
+			<!-- <isVisible>true</isVisible> -->
+			<!-- <isEditable>true</isEditable> -->
+			<!-- <priority>1</priority> -->
+			<!-- <relationTable>account</relationTable> -->
+			<!-- <fieldGroup>关键信息</fieldGroup> -->
+			<!-- </field> -->
+
+			<field>
+				<name>accountName_val</name>
+				<display>医疗机构</display>
+				<isRequired>false</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isSearchable>true</isSearchable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>native_place</name>
+				<display>籍贯</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>department</name>
+				<display>科室</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>2</default-value>
+				<priority>1</priority>
+				<picklist>contact_department_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>department_val</name>
+				<display>科室</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>2</default-value>
+				<priority>1</priority>
+				<isSearchable>true</isSearchable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>sex</name>
+				<display>性别</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>sex_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>office_tel</name>
+				<display>工作电话号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>office_fax</name>
+				<display>工作传真号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>cellphone</name>
+				<display>手机号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>email</name>
+				<display>电子邮件</display>
+				<isRequired>false</isRequired>
+				<data-type>email</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>grade</name>
+				<display>医生分级</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>contact_grade_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>contact_status_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>market_classification</name>
+				<display>市场分类</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<picklist>contact_market_classification_pl</picklist>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>province</name>
+				<display>医院省份</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<picklist>province</picklist>
+				<childNode>city</childNode>
+				<fieldGroup>基本信息</fieldGroup>
+				<default-value-type>var</default-value-type>
+				<default-value>account.province</default-value>
+			</field>
+			<field>
+				<name>city</name>
+				<display>医院城市</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<picklist>city</picklist>
+				<parentNode>province</parentNode>
+				<fieldGroup>基本信息</fieldGroup>
+				<default-value-type>var</default-value-type>
+				<default-value>account.city</default-value>
+			</field>
+			<field>
+				<name>districts</name>
+				<display>医院区县</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>duty</name>
+				<display>职务</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>contact_duty_pl</picklist>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>job_title</name>
+				<display>职称</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<picklist>contact_job_title_pl</picklist>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>product_target</name>
+				<display>主推广产品目标</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>contact_generalization_target_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>product_target_val</name>
+				<display>主推广产品目标</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>visiting_target</name>
+				<display>拜访目标次数</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>num_of_monthlySurgery</name>
+				<display>手术量/月</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_monthlyAnalgesia</name>
+				<display>镇痛泵台数/月</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<pattern>number</pattern>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<!-- 附加信息 -->
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isRequired>false</isRequired>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>responsible_person</name>
+				<display>负责人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+
+	<entity>
+		<name>coach</name>
+		<display>用户</display>
+		<sql>select * from crmuser where ? is NOT NULL limit 10</sql>
+		<sql-ent>select * from crmuser where ? is NOT NULL limit 10</sql-ent>
+		<filterField>pl2</filterField>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>姓名</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>cellPhone</name>
+				<display>手机号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
+			</field>
+			<field>
+				<name>email</name>
+				<display>邮箱</display>
+				<isRequired>false</isRequired>
+				<data-type>email</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>地址信息</fieldGroup>
+			</field>
+			<field>
+				<name>jobTitle</name>
+				<display>职位</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>userInfo</name>
+		<display>用户</display>
+		<filterField>pl1</filterField>
+		<sql>
+			<!-- select * from (select userInfo.*\, -->
+			<!-- "crmmanager.name" as reportto_val\, -->
+			<!-- role.val role_val -->
+			<!-- from userInfo -->
+			<!-- left join (select * from userInfo) crmmanager on crmuser.reportto 
+				= crmmanager.id -->
+			<!-- left join crmdb.role on crmuser.role = role.id -->
+			<!-- where crmuser.id = ?) as aCrmuser -->
+<!-- 			select * from ( -->
+<!-- 			select *\, -->
+<!-- 			from userInfo -->
+<!-- 			left join crmuser on crmuser.id = userInfo.postionId -->
+<!-- 			left join crmuser on -->
+<!-- 			where id = ? -->
+<!-- 			) as Crmuser -->
+
+select * from (select * from userInfo where id = ? ) as aUserInfo
+		</sql>
+		<sql-admin>
+
+			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
+				as role_val -->
+			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
+				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
+<!-- 			select * from (select crmuser.*\, -->
+<!-- 			"crmmanager.name" as reportto_val\, -->
+<!-- 			role.val role_val -->
+<!-- 			from crmuser -->
+<!-- 			left join (select * from crmuser) crmmanager on -->
+<!-- 			crmuser.reportto = crmmanager.id -->
+<!-- 			left join crmdb.role on crmuser.role -->
+<!-- 			= role.id -->
+<!-- 			where crmuser.id != -1 ) as aCrmuser -->
+			select * from (select userInfo.*\, user_position.positionId as positionId from userInfo left join user_position on userInfo.id = user_position.userId
+			 where userInfo.id != -1 ORDER BY CONVERT( userInfo.name USING gbk ) )as aUserInfo
+		</sql-admin>
+		<sql-manager>
+			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
+				as role_val -->
+			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
+				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
+<!-- 			select * from (select crmuser.*\, -->
+<!-- 			"crmmanager.name" as reportto_val\, -->
+<!-- 			role.val role_val -->
+<!-- 			from crmuser -->
+<!-- 			left join (select * from crmuser) crmmanager on -->
+<!-- 			crmuser.reportto = crmmanager.id -->
+<!-- 			left join crmdb.role on crmuser.role -->
+<!-- 			= role.id -->
+<!-- 			where crmuser.reportto = ? or crmuser.id = ? ) as aCrmuser -->
+				select * from ( select * from userInfo where id = ? and reportto = ?) as aUserInfo 
+
+		</sql-manager>
+<!-- 		<sql-manager-coaching>select * from (select crmuser.*\, -->
+<!-- 		"crmmanager.name" as reportto_val\, -->
+<!-- 		role.val role_val -->
+<!-- 		from crmuser -->
+<!-- 		left join (select * from crmuser) crmmanager on crmuser.reportto =  -->
+<!-- 			crmmanager.id -->
+<!-- 		left join crmdb.role on crmuser.role = role.id -->
+<!-- 		where crmuser.reportto = ?) as aCrmuser -->
+<!-- 		</sql-manager-coaching> -->
+		<sql-ent>select * from userInfo where id=?</sql-ent>
+		<!-- <filterField>pl2</filterField> -->
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>姓名</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>true</isBaseInfo>
+			</field>
+			<field>
+				<name>jobTitle</name>
+				<display>职位</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>sex</name>
+				<display>性别</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>sex_pl</picklist>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>true</isBaseInfo>
+			</field>
+			<field>
+				<name>email</name>
+				<display>邮箱</display>
+				<isRequired>false</isRequired>
+				<data-type>email</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>true</isBaseInfo>
+				<isSearchable>true</isSearchable>
+			</field>
+			<field>
+				<name>cellPhone</name>
+				<display>手机号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>基本信息</fieldGroup>
+				<isBaseInfo>false</isBaseInfo>
+			</field>
+			<field>
+				<name>office_tel</name>
+				<display>工作电话号码</display>
+				<isRequired>false</isRequired>
+				<data-type>tel</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>基本信息</fieldGroup>
+				<isBaseInfo>false</isBaseInfo>
+			</field>
+			<field>
+				<name>loginName</name>
+				<display>用户登录名</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>用户状态</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>contact_status_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>isActivited</name>
+				<display>激活状态</display>
+				<data-type>text</data-type>
+				<isRequired>false</isRequired>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<picklist>crmuser_activited</picklist>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>positionId</name>
+				<display>岗位编码</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<relationTable>crmuser</relationTable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+<!-- 			<field> -->
+<!-- 				<name>agencyPositionId</name> -->
+<!-- 				<display>代理岗位</display> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<data-type>text</data-type> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>true</isEditable> -->
+<!-- 				<priority>1</priority> -->
+<!-- 				<relationTable>crmuser</relationTable> -->
+<!-- 				<fieldGroup>关键信息</fieldGroup> -->
+<!-- 			</field> -->
+			<!-- 基本信息 -->
+			<field>
+				<name>employeeNumber</name>
+				<display>雇员编码</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>pl1</name>
+				<display>状态</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>crmuser_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>province</name>
+				<display>省份</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>province</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+				<childNode>city</childNode>
+			</field>
+			<field>
+				<name>city</name>
+				<display>二级区域</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>city</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+				<parentNode>province</parentNode>
+			</field>
+			<!-- 附加信息 -->
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>photo</name>
+				<display>图片</display>
+				<data-type>String</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<isBaseInfo>true</isBaseInfo>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>crmuser</name>
+		<display>岗位</display>
+		<filterField>pl1</filterField>
+		<sql>
+			select * from
+				( 
+					select crmuser.*\,userInfo.name as userInfoName from crmuser 
+					left join (select * from user_position where status = 1) as userposition
+					 on crmuser.id = userposition.positionId
+					left join userInfo on userInfo.id = user_position.userId
+					where (id = ?) and (user_position.status = 1) ORDER BY CONVERT( crmuser.code USING gbk )
+   				 ) as aCrmuser
+		</sql>
+		<sql-admin>
+			select * from 
+			(select crmuser.*\,"crmmanager.name" as reportto_val\,userInfo.name as userInfoName
+				from crmuser
+				left join (select * from crmuser) crmmanager on
+				crmuser.reportto = crmmanager.id
+				left join (select * from user_position where status = 1) as userposition on userposition.positionId = crmuser.id
+				left join userInfo on userposition.userId = userInfo.id
+				where crmuser.id != -1 ORDER BY CONVERT( crmuser.code USING gbk )
+			) as aCrmuser
+		</sql-admin>
+		<sql-manager>
+			select * from (select crmuser.*\,userInfo.name as userInfoName
+			 from crmuser
+			left join (select * from user_position where status = 1) as userposition
+			 on userposition.positionId = crmuser.id
+			left join userInfo on userInfo.id = user_position.userId
+			 where id = ? or reportto = ? ORDER BY CONVERT( crmuser.code USING gbk )) as aCrmuser
+		</sql-manager>
+		<sql-manager-coaching>select * from (select crmuser.*\,
+		"crmmanager.name" as reportto_val\,
+		role.val role_val
+		from crmuser
+		left join (select * from crmuser) crmmanager on crmuser.reportto = 
+			crmmanager.id
+		left join crmdb.role on crmuser.role = role.id
+		where crmuser.reportto = ?) as aCrmuser
+		</sql-manager-coaching>
+		<sql-ent>select * from crmuser where id=?</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>岗位编码</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+				<isBaseInfo>true</isBaseInfo>
+			</field>
+			<field>
+				<name>code</name>
+				<display>岗位编码</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>reportto</name>
+				<display>上级岗位</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<relationTable>crmuser</relationTable>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>false</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>reportto_val</name>
+				<display>上级岗位</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isBaseInfo>false</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>pl1</name>
+				<display>状态</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>crmuser_pl1</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>role</name>
+				<display>角色</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>role</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>3</default-value>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>role_val</name>
+				<display>角色</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>userInfoName</name>
+				<display>用户名称</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>pl2</name>
+				<display>产品线</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>crmuser_pl2</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+<!-- 				<childNode>product</childNode> -->
+			</field>
+			<field>
+				<name>product</name>
+				<display>产品名称</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>product</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+<!-- 				<parentNode>pl2</parentNode> -->
+			</field>
+			<field>
+				<name>pl4</name>
+				<display>一级区域</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>region_level1_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>pl5</name>
+				<display>二级区域</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>region_level2_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+
+			<!-- 基本信息 -->
+			<field>
+				<name>city</name>
+				<display>城市</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<picklist>city</picklist>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+<!-- 			<field> -->
+<!-- 				<name>department</name> -->
+<!-- 				<display>部门</display> -->
+<!-- 				<isRequired>false</isRequired> -->
+<!-- 				<data-type>text</data-type> -->
+<!-- 				<isPrimaryKey>false</isPrimaryKey> -->
+<!-- 				<isDetailLink>false</isDetailLink> -->
+<!-- 				<isVisible>true</isVisible> -->
+<!-- 				<isEditable>true</isEditable> -->
+<!-- 				<priority>2</priority> -->
+<!-- 				<fieldGroup>基本信息</fieldGroup> -->
+<!-- 			</field> -->
+			<!-- 附加信息 -->
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+
+<entity>
+	<name>user_position</name>
+	<display>用户岗位关系</display>
+	<sql>select * from user_position</sql>
+	<fields>
+		<field>
+			<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
+		</field>
+		<field>
+				<name>userId</name>
+				<display>用户Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>positionId</name>
+				<display>岗位Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<picklist>contact_status_pl</picklist>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键本信息</fieldGroup>
+			</field>
+			<field>
+				<name>isPrimary</name>
+				<display>是否主岗</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键本信息</fieldGroup>
+			</field>
+	</fields>
+</entity>
+	<entity>
+		<name>city</name>
+		<display>城市</display>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>城市</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>provinceId</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>activity</name>
+		<display>拜访</display>
+		<filterField>activity_type</filterField>
+		<sql>
+			select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			where activitycrmuser.crmuserid = ?) as aactivity where event_type =
+			1 order by whenadded DESC) as aActivity
+		</sql>
+		<sql-manager>
+			select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			left join crmuser on activitycrmuser.crmuserId = crmuser.id
+			where crmuser.reportto = ? or crmuser.id = ? ) as aactivity where
+			event_type = 1 order by whenadded DESC) as aActivity
+		</sql-manager>
+
+		<sql-admin>
+
+			select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id where
+			activity.event_type = 1 order by whenadded DESC) as aActivity
+		</sql-admin>
+		<sql-calendar>
+			select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			where activitycrmuser.crmuserid = ?) as aactivity order by whenadded
+			DESC) as aActivity
+		</sql-calendar>
+		<sql-manager-calendar>
+			select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			left join crmuser on activitycrmuser.crmuserId = crmuser.id
+			where crmuser.id = ? ) as aactivity order by whenadded DESC) as aActivity
+		</sql-manager-calendar>
+
+		<sql-admin-calendar>
+
+			select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id order by whenadded
+			DESC) as aActivity
+		</sql-admin-calendar>
+		<sql-ent>select * from (select activity.*\,activity.activity_type as
+			act_type\,activity.status as act_status\, activity.contactId as
+			contactName\, contact.accountId as accountName\, contact.name as cn
+			from activity left join activitycrmuser on
+			activitycrmuser.activityId=activity.id LEFT JOIN contact on
+			contact.id = activity.contactId where activity.id=?)
+			as aActivity
+		</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>编码</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<!-- <field> <name>event_type</name> <display>活动类型</display> <isRequired>false</isRequired> 
+				<data-type>text</data-type> <picklist>activity_event_type_pl</picklist> <isPrimaryKey>false</isPrimaryKey> 
+				<isDetailLink>false</isDetailLink> <isVisible>true</isVisible> <isEditable>true</isEditable> 
+				<priority>2</priority> <fieldGroup>关键信息</fieldGroup> </field> -->
+
+			<field>
+				<name>event_type_val</name>
+				<display>活动类型</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>title</name>
+				<display>活动名称</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<isRequired>true</isRequired>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<isRequired>true</isRequired>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>activity_type</name>
+				<display>拜访类型</display>
+				<data-type>text</data-type>
+				<picklist>activity_activity_types_pl</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isRequired>true</isRequired>
+				<childNode>visiting_purpose</childNode>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>whether_coach</name>
+				<display>是否协访</display>
+				<data-type>radio</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>visiting_purpose</name>
+				<display>拜访目的</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_visiting_purpose_pl</picklist>
+				<priority>2</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<parentNode>activity_type</parentNode>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
+			
+			
+			
+			<field>
+				<name>contactId</name>
+				<display>拜访医生</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>contactname_val</name>
+				<display>拜访医生</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>contactName</name>
+				<display>拜访医生</display>
+				<alias>contactId</alias>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>contact</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<!-- <field> <name>coacheeId</name> <display>被辅导人</display> <data-type>number</data-type> 
+				<isPrimaryKey>false</isPrimaryKey> <isDetailLink>false</isDetailLink> <isVisible>true</isVisible> 
+				<isEditable>true</isEditable> <priority>1</priority> <isBaseInfo>true</isBaseInfo> 
+				<relationTable>crmuser</relationTable> <fieldGroup>关键信息</fieldGroup> </field> -->
+
+			<field>
+				<name>accountName</name>
+				<display>拜访医院</display>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<relationTable>account</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>accountName_val</name>
+				<display>拜访医院</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>act_type</name>
+				<display>拜访类型</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>feature_product</name>
+				<display>主推产品</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_feature_product_pl</picklist>
+				<priority>1</priority>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_status_pl</picklist>
+				<priority>2</priority>
+				<isRequired>true</isRequired>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+
+			<field>
+				<name>act_status</name>
+				<display>状态</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+				<isRequired>true</isRequired>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<field-type>auto</field-type>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<field-type>auto</field-type>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<field-type>auto</field-type>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<field-type>auto</field-type>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>responsible_person</name>
+				<display>负责人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<field-type>auto</field-type>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_endtime</name>
+				<display>活动结束时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>data_exchange_teample</name>
+		<display>数据模板</display>
+		<sql>select * from data_exchange_teample</sql>
+		<sql-admin></sql-admin>
+		<sql-ent>select * from data_exchange_teample where data_exchange_teample.id = ? </sql-ent>
+		<filterField>数据版本</filterField>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>Id</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<display>名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>version</name>
+				<display>数据版本</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>operation_id</name>
+				<display>操作</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>data_exchange_operation</picklist>
+				<priority>1</priority>
+<!-- 				<field-type>auto</field-type> -->
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>type_id</name>
+				<display>类型</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>data_exchange_status</picklist>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>template</name>
+				<display>模板</display>
+				<data-type>textarea</data-type>
+				<isRequired>true</isRequired>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	
+	<entity>
+		<name>coaching</name>
+		<display>辅导</display>
+		<filterField>feature_product</filterField>
+		<sql>
+			select distinct * from (select * from (select activity.crmuserId as
+			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			where activitycrmuser.crmuserid = ?) as aactivity where (event_type =
+			2) or (event_type = 3) order by whenadded DESC) as aActivity
+		</sql>
+		<sql-manager>
+			select distinct * from (select * from (select activity.crmuserId as
+			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			left join crmuser on activitycrmuser.crmuserid = crmuser.id
+			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
+			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
+		</sql-manager>
+		<sql-manager-coaching>
+		  select * from (select * from crmuser  where crmuser.reportto = ?) as crmUSER
+		 </sql-manager-coaching>
+		<sql-admin>
+
+			select distinct * from (select activity.crmuserId as crmuserName\,
+			activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id where
+			activity.event_type = 2 order by whenadded DESC) as aActivity
+		</sql-admin>
+		<sql-ent>select * from (select activity.crmuserId as crmuserName\,
+			activity.coacheeId as coacheeName\,
+			activity.*\,activity.activity_type as
+			act_type\,activity.status as
+			act_status\, activity.contactId as
+			contactName\, contact.accountId as
+			accountName\, contact.name as cn
+			from activity left join activitycrmuser on
+			activitycrmuser.activityId=activity.id LEFT JOIN contact on
+			contact.id = activity.contactId where activity.id=?)
+			as aCoaching
+		</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>编码</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>title</name>
+				<display>活动名称</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
+				<priority>1</priority>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
+				<priority>1</priority>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>crmuserId</name>
+				<display>辅导人Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<field-type>auto</field-type>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>crmuserName</name>
+				<display>辅导人</display>
+				<isRequired>true</isRequired>
+				<alias>crmuserId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<relationTable>userInfo</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>coacheeId</name>
+				<display>被辅导人Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>coacheeName</name>
+				<display>被辅导人</display>
+				<isRequired>true</isRequired>
+				<alias>coacheeId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>crmuser</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>participants</name>
+				<display>参与人/相关人员</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>2</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>feature_product</name>
+				<display>主推产品</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_feature_product_pl</picklist>
+				<priority>1</priority>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>coachTime</name>
+				<display>协访时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_coachtime_pl</picklist>
+				<priority>2</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountId</name>
+				<display>医院</display>
+				<isRequired>true</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>account</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>account.id\,account.name</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountName_val</name>
+				<display>医疗机构</display>
+				<isRequired>false</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>2</priority>
+				<isSearchable>true</isSearchable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>department</name>
+				<display>科室</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>2</priority>
+				<picklist>contact_department_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_status_pl</picklist>
+				<priority>2</priority>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_status</name>
+				<display>状态</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>responsible_person</name>
+				<display>负责人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_endtime</name>
+				<display>活动结束时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>planing</name>
+				<display>访前计划</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<picklist>score1_pl</picklist>
+				<tooltip>1</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>openling</name>
+				<display>开场</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>score1_pl</picklist>
+				<tooltip>2</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>enquery_listening</name>
+				<display>探寻聆听</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>score1_pl</picklist>
+				<tooltip>3</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>deliverable</name>
+				<display>利益销售</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>score1_pl</picklist>
+				<tooltip>4</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>objection_handing</name>
+				<display>异常处理</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>score2_pl</picklist>
+				<tooltip>5</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>summary</name>
+				<display>缔结</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>score2_pl</picklist>
+				<tooltip>6</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>total_score</name>
+				<display>总分</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>calculated</field-type>
+				<priority>5</priority>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>product</name>
+		<display>产品</display>
+		<filterField></filterField>
+		<sql> select product.*\,crmuser_pl2.val  from product left join crmuser_pl2 on product.parentid = crmuser_pl2.id</sql>
+		<sql-ent>select * from product where id = ?</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<isRequired>true</isRequired>
+				<display>产品名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>description</name>
+				<display>产品规格</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+					<name>parentid</name>
+					<display>产品线</display>
+					<isRequired>true</isRequired>
+					<data-type>text</data-type>
+					<picklist>crmuser_pl2</picklist>
+					<default-value-type>val</default-value-type>
+					<default-value>0</default-value>
+					<isPrimaryKey>false</isPrimaryKey>
+					<isDetailLink>false</isDetailLink>
+					<isVisible>true</isVisible>
+					<isEditable>true</isEditable>
+					<priority>1</priority>
+					<fieldGroup>关键信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>willCoaching</name>
+		<display>辅导</display>
+		<filterField>feature_product</filterField>
+		<sql>
+			select distinct * from (select * from (select activity.crmuserId as
+			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			where activitycrmuser.crmuserid = ?) as aactivity where event_type =
+			2 order by whenadded DESC) as aActivity
+		</sql>
+		<sql-manager>
+			select distinct * from (select * from (select activity.crmuserId as
+			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			left join crmuser on activitycrmuser.crmuserid = crmuser.id
+			left join userinfo on activitycrmuser.position_id = userinfo.id
+			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type
+			= 2 order by whenadded DESC) as aActivity
+		</sql-manager>
+
+		<sql-admin>
+
+			select distinct * from (select activity.crmuserId as crmuserName\,
+			activity.coacheeId as coacheeName\, activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.activity_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id where
+			activity.event_type = 2 order by whenadded DESC) as aActivity
+		</sql-admin>
+		<sql-ent>select * from (select activity.crmuserId as crmuserName\,
+			activity.coacheeId as coacheeName\,
+			activity.*\,activity.activity_type as
+			act_type\,activity.status as
+			act_status\, activity.contactId as
+			contactName\, contact.accountId as
+			accountName\, contact.name as cn
+			from activity left join activitycrmuser on
+			activitycrmuser.activityId=activity.id LEFT JOIN contact on
+			contact.id = activity.contactId where activity.id=?)
+			as aCoaching
+		</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>title</name>
+				<display>活动名称</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
+				<priority>1</priority>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
+				<priority>1</priority>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>crmuserId</name>
+				<display>辅导人Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<field-type>auto</field-type>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>crmuserName</name>
+				<display>辅导人</display>
+				<isRequired>true</isRequired>
+				<alias>crmuserId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<relationTable>crmuser</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>coacheeId</name>
+				<display>被辅导人Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>coacheeName</name>
+				<display>被辅导人</display>
+				<isRequired>true</isRequired>
+				<alias>coacheeId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>userInfo</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>participants</name>
+				<display>参与人/相关人员</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountId</name>
+				<display>医院</display>
+				<isRequired>true</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<relationTable>account</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>account.id\,account.name</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountName_val</name>
+				<display>医疗机构</display>
+				<isRequired>false</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isSearchable>true</isSearchable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>department</name>
+				<display>科室</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>1</priority>
+				<picklist>contact_department_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>feature_product</name>
+				<display>主推产品</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_feature_product_pl</picklist>
+				<priority>1</priority>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>coachTime</name>
+				<display>协访时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_coachtime_pl</picklist>
+				<priority>1</priority>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_status_pl</picklist>
+				<priority>1</priority>
+				<isRequired>true</isRequired>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_status</name>
+				<display>状态</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+				<isRequired>true</isRequired>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>responsible_person</name>
+				<display>负责人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_endtime</name>
+				<display>活动结束时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>planing</name>
+				<display>访前计划</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>5</priority>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<picklist>score1_pl</picklist>
+				<tooltip>1</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>openling</name>
+				<display>开始</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>activity_score3_pl</picklist>
+				<tooltip>7</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>enquery_listening</name>
+				<display>内容</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>activity_score5_pl</picklist>
+				<tooltip>8</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>objection_handing</name>
+				<display>异常处理</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>score2_pl</picklist>
+				<tooltip>5</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>deliverable</name>
+				<display>表现</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>activity_score4_pl</picklist>
+				<tooltip>9</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>summary</name>
+				<display>总结</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>5</priority>
+				<picklist>score1_pl</picklist>
+				<tooltip>10</tooltip>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+			<field>
+				<name>total_score</name>
+				<display>总分</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>calculated</field-type>
+				<priority>5</priority>
+				<fieldGroup>评分信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	
+	<entity>
+		<name>externalMeeting</name>
+		<display>日历</display>
+		<sql>select * from (select *\,activity_type as act_type\,status as
+			act_status from externalMeeting where crmuserId=?) as aMeeting
+		</sql>
+		<sql-admin>select * from (select *\,activity_type as act_type\,status
+			as act_status from externalMeeting where crmuserId=?) as aMeeting
+		</sql-admin>
+		<sql-ent>select * from (select *\,activity_type as act_type\,status as
+			act_status from externalMeeting where externalMeeting.id=?) as
+			aMeeting
+		</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>title</name>
+				<display>标题</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>contactIds</name>
+				<display>联系人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>activity_type</name>
+				<display>类型</display>
+				<data-type>text</data-type>
+				<picklist>activity_types</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_type</name>
+				<display>拜访类型</display>
+				<data-type>Integer</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>activity_status</picklist>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>act_status</name>
+				<display>状态</display>
+				<data-type>Integer</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>coachId</name>
+				<display>教练</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+
+
+
+
+
+	<!-- Below are for the reporting -->
+	<entity>
+		<name>contactVisitingFrequency</name>
+		<display>目标医生拜访频率</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>num_of_activity</name>
+				<display>活动数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>num_of_contact</name>
+				<display>拥有医生数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>num_of_target_of_visiting_frequency</name>
+				<display>拜访频率目标</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>num_of_visiting_frequency</name>
+				<display>拜访频率</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_achieving</name>
+				<display>达标率</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+
+	<entity>
+		<name>contactVisitingCoverRate</name>
+		<display>目标医生拜访覆盖</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>num_of_visited_contact</name>
+				<display>被拜访的医生数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>num_of_contact</name>
+				<display>拥有医生数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>metric_of_visiting_cover</name>
+				<display>拜访覆盖率标准</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_visiting_cover</name>
+				<display>拜访覆盖率</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_achieving</name>
+				<display>达标率</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+
+	<entity>
+		<name>workingday</name>
+		<display>区域内工作天数</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>metric_of_working_day</name>
+				<display>区域内工作天数标准</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>num_of_working_day</name>
+				<display>实际工作天数</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_achieving</name>
+				<display>达标率</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>callreport</name>
+		<display>报表</display>
+		<sql>select * from crmdb.call_export</sql>
+		<sql-admin>select * from crmdb.call_export</sql-admin>
+		<sql-ent>select * from crmdb.call_export</sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>活动Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Activity_title</name>
+				<display>活动标题</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>whether_coach</name>
+				<display>是否协防</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Activity_feature_product</name>
+				<display>主推产品</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Activity_types</name>
+				<display>活动类型</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Activity_addTime</name>
+				<display>活动添加时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Activity_modifyTime</name>
+				<display>活动修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			
+			
+			
+			<field>
+				<name>Activity_start</name>
+				<display>活动开始时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Activity_end</name>
+				<display>活动结束时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Position_name</name>
+				<display>岗位名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Region_level_1</name>
+				<display>一级区域</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field><field>
+				<name>Region_level_2</name>
+				<display>二级区域</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>position_code</name>
+				<display>岗位代码</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>position_role</name>
+				<display>岗位</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>Contact_name</name>
+				<display>医生姓名</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field><field>
+				<name>Contact_grade</name>
+				<display>医生分级</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Contact_department</name>
+				<display>医生科室</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field><field>
+				<name>Contact_sex</name>
+				<display>医生性别</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Contact_email</name>
+				<display>医生邮箱</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field><field>
+				<name>Contact_duty</name>
+				<display>医生职称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Contact_job_title</name>
+				<display>医生职位</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field><field>
+				<name>Account_name</name>
+				<display>医院名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Account_BDMCode</name>
+				<display>医院BDM编码</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field><field>
+				<name>Account_garde</name>
+				<display>医院分级</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>Account_type</name>
+				<display>医院类型</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field><field>
+				<name>Account_administrative_level</name>
+				<display>行政级别</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>local_or_army</name>
+				<display>地方/军队医院</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>comprehensive_or_specialized</name>
+				<display>综合/专科医院</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>isKey</name>
+				<display>重点医院</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field><field>
+				<name>Account_status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>visitingPerDayReport</name>
+		<display>日均拜访量</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>metric_of_visiting_per_day</name>
+				<display>日均拜访量标准</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+			</field>
+			<field>
+				<name>num_of_visiting_per_day</name>
+				<display>实际日均拜访量</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>rate_of_achieving</name>
+				<display>达标率</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>upLoad</name>
+		<display>上传</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<filed>
+				<name>upLoadAccount</name>
+				<display>上传医生</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+			<filed>
+				<name>upLoadContact</name>
+				<display>上传医生</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>				
+			</filed>
+			<filed>
+				<name>upLoadCoaching</name>
+				<display>上传岗位</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+			<filed>
+				<name>upLoadCoaching</name>
+				<display>上传用户</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+			<filed>
+				<name>upLoadAcvitity</name>
+				<display>上传辅导</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+			<filed>
+				<name>upLoadCoaching</name>
+				<display>上传拜访</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+		</fields>
+	</entity>
+	<entity>
+		<name>downLoad</name>
+		<display>下载</display>
+		<sql></sql>
+		<sql-admin></sql-admin>
+		<sql-ent></sql-ent>
+		<filterField></filterField>
+		<fields>
+			<filed>
+				<name>downLoadAccount</name>
+				<display>下载医院</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+			<filed>
+				<name>downLoadContact</name>
+				<display>下载医生</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>				
+			</filed>
+			<filed>
+				<name>downLoadCoaching</name>
+				<display>下载岗位</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+			<filed>
+				<name>downLoadCoaching</name>
+				<display>下载用户</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+			<filed>
+				<name>downLoadAcvitity</name>
+				<display>下载辅导</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+			<filed>
+				<name>downLoadCoaching</name>
+				<display>下载拜访</display>
+				<data-type>radio</data-type>
+				<priority>1</priority>
+			</filed>
+		</fields>
+	</entity>
+		<entity>
+		<name>alert</name>
+		<display>预警</display>
+		<filterField>priority</filterField>
+		<sql>
+			select * from alert
+		</sql>
+		<sql-manager>
+			SELECT * from (select * from alert where
+			 alert.id = ? ORDER BY whenadded DESC) as aAlert
+		</sql-manager>
+
+		<sql-admin>
+			SELECT * from  alert
+		</sql-admin>
+		<sql-ent>
+			SELECT * from (select alert.* from alert where alert.id = ?
+			ORDER BY whenadded DESC) as aAlert
+		</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>number</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+
+			<field>
+				<name>name</name>
+				<display>标题</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>publishDate</name>
+				<display>公布日期</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>expired</name>
+				<display>截止日期</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>priority</name>
+				<display>优先级</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>alert_priority_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>towhom</name>
+				<display>公布对象</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>alert_publicObject_pl</picklist>
+				<priority>0</priority>
+				<isRequired>false</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>description</name>
+				<display>预警说明</display>
+				<isRequired>true</isRequired>
+				<data-type>bjgtextarea</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modifier</name>
+				<display>修改人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>auto</field-type>
+				<priority>4</priority>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>todolist</name>
+		<display>待进行活动</display>
+		<sql>SELECT * FROM crmdb.activity_alert</sql>
+		<sql-admin>SELECT * FROM crmdb.activity_alert</sql-admin>
+		<sql-ent>SELECT * FROM crmdb.activity_alert</sql-ent>
+		<filterField></filterField>
+		<fields>
+             <field>
+				<name>id</name>
+				<display>活动Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>title</name>
+				<display>活动标题</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+                <name>time</name>
+				<display>时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+			</field>
+			
+		</fields>
+	</entity>
+	<entity>
+		<name>user_position_account</name>
+		<display>报表</display>
+		<sql>select * from crmdb.user_position_account</sql>
+		<sql-admin>select * from crmdb.user_position_account</sql-admin>
+		<sql-ent>select * from crmdb.user_position_account</sql-ent>
+		<filterField></filterField>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>UserId</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			
+			<field>
+				<name>loginName</name>
+				<display>登录名</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>email</name>
+				<display>邮箱</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
+			</field>
+			<field>
+				<name>sex</name>
+				<display>性别</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>addTime</name>
+				<display>添加时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>positionName</name>
+				<display>岗位名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>positionCode</name>
+				<display>MR</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>reportTo</name>
+				<display>DSM</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+            <field>
+				<name>reporttto</name>
+				<display>RSM</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>role</name>
+				<display>角色</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+            <field>
+				<name>city</name>
+				<display>城市</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+            <field>
+				<name>regoin2</name>
+				<display>二级区域</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+            <field>
+				<name>regoin1</name>
+				<display>一级区域</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+                         
+			<field>
+				<name>accountName</name>
+				<display>医院名</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+            <field>
+				<name>BDMCode</name>
+				<display>BDM编码</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>accountLevel</name>
+				<display>医院级别</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+			<field>
+				<name>status</name>
+				<display>状态</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+            <field>
+				<name>userName</name>
+				<display>代表姓名</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+			</field>
+		</fields>
+	</entity>
+</entities>
