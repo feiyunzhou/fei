@@ -4163,11 +4163,12 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<display>预警</display>
 		<filterField>priority</filterField>
 		<sql>
-			select * from alert
+			SELECT * from (select alert.* from alert where towhom = 3
+			ORDER BY whenadded DESC) as aAlert
 		</sql>
 		<sql-manager>
 			SELECT * from (select * from alert where
-			 alert.id = ? ORDER BY whenadded DESC) as aAlert
+			 towhom = 2 ORDER BY whenadded DESC) as aAlert
 		</sql-manager>
 
 		<sql-admin>

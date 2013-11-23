@@ -1,35 +1,19 @@
 package com.rex.crm.common;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Map;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 
-import com.rex.crm.AccountPage;
-import com.rex.crm.ActivityPage;
-import com.rex.crm.ContactPage;
-import com.rex.crm.CreateEventPage;
-import com.rex.crm.beans.CRMUser;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.Configuration;
-import com.rex.crm.util.SMTPAuthenticator;
-import com.rex.crm.util.SendEmail;
-import com.sun.mail.smtp.SMTPTransport;
 
 public class CRUDPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
@@ -88,14 +72,28 @@ public class CRUDPanel extends Panel {
             
             if (userPerms.contains(Permissions.EDIT)) {
             	Fragment editfrag = new Fragment("editCon","editFragment",this);
-            	editfrag.addOrReplace(new Link("edit_data_btn") {
+            	Link link = new Link("edit_data_btn") {
             		
                     @Override
                     public void onClick() {
                         listener.update();
                         //setResponsePage(new EditDataPage(entity.getName(),entityId));
                     }
-                });
+                };
+            	editfrag.addOrReplace(link);
+            	//根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
+				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willCoaching")){
+					Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
+	                Date newDate = new Date();
+	                Calendar cal = Calendar.getInstance();
+	                cal.setTime(newDate);
+	                cal.set(Calendar.DATE,cal.get(Calendar.DATE)-7);
+	                newDate = cal.getTime();
+	                Date startTime = new Date(activity.getStarttime());
+	                if(startTime.compareTo(newDate)<0){
+	                	editfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+	                }
+                }
             	addOrReplace(editfrag);
             }else{
                 addOrReplace(new Fragment("editCon","emptyFragment",this));
@@ -121,15 +119,25 @@ public class CRUDPanel extends Panel {
                 }
             	if (userPerms.contains(Permissions.DONE)) {
                 Fragment addfrag = new Fragment("doneCon","doneFragment",this);
-                addfrag.add(new Link("done_data_btn") {
+                Link link = new Link("done_data_btn") {
 
                     @Override
                     public void onClick() {
                      
                       listener.doneBtn();
                     }
-                });
-                 add(addfrag);
+                };
+                addfrag.add(link);
+                //根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
+				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willCoaching")){
+					Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
+	                Date newDate = new Date();
+	                Date startTime = new Date(activity.getStarttime());
+	                if(startTime.compareTo(newDate)>=0){
+	                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+	                }
+                }
+                add(addfrag);
              }else{
                  add(new Fragment("doneCon","emptyFragment",this));
              }
