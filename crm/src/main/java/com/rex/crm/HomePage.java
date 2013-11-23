@@ -244,7 +244,20 @@ public class HomePage extends TemplatePage {
     TextField search_input = new TextField("search_input", new PropertyModel(this, "search_target"));
     form.add(search_input);
     
-    String sql = "select * from alert limit 3";
+    String sql = "";
+    switch (roleId)
+    {
+        case 1:
+            sql = entity.getSqlAdmin();
+            break;
+        case 2:
+            sql = entity.getSqlManager();
+            break;
+        case 3:
+            sql = entity.getSql();
+            break;
+    }
+    System.out.println("alertSql:"+sql);
     List tdata = DAOImpl.queryEntityRelationList(sql);
         
     add(new PageableTablePanel("datalist", entity, tdata, null));
