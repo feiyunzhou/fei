@@ -17,7 +17,7 @@
 			account_comprehensive_or_specialized_pl.id
 			where account.id != -1 and(
 			account.id in (select accountid from accountcrmuser 
-			left join user_position on user_position.userId = accountcrmuser.crmuserid
+			left join user_position on user_position.positionId = accountcrmuser.crmuserid
 			where accountcrmuser.crmuserid = ? and user_position.status=1)
 			or account.id in (select contact.accountid from contactcrmuser
 			left join contact on contactcrmuser.contactid = contact.id
@@ -675,6 +675,7 @@ where crmuser.reportto=? and
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -702,7 +703,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<relationTable>account</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>account.id\,account.name</default-value>
@@ -732,10 +733,10 @@ where crmuser.reportto=? and
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isSearchable>true</isSearchable>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
-				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -761,7 +762,7 @@ where crmuser.reportto=? and
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>2</default-value>
-				<priority>1</priority>
+				<priority>2</priority>
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -772,12 +773,12 @@ where crmuser.reportto=? and
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
 				<default-value-type>val</default-value-type>
 				<default-value>2</default-value>
 				<priority>1</priority>
-				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -960,7 +961,7 @@ where crmuser.reportto=? and
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>contact_generalization_target_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -970,7 +971,7 @@ where crmuser.reportto=? and
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
 				<priority>1</priority>
@@ -1643,6 +1644,18 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>userInfoName</name>
 				<display>用户名称</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
+				<name>permission</name>
+				<display>用户权限</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>

@@ -27,6 +27,23 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+	    <dependency>
+			<groupId>org.eclipse.birt.runtime</groupId>
+			<artifactId>org.eclipse.birt.runtime</artifactId>
+			<version>4.3.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>org.apache.poi</artifactId>
+					<groupId>org.eclipse.birt.runtime</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
+		</dependency>
+	    
 		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -232,6 +249,48 @@
 					<downloadSources>true</downloadSources>
 				</configuration>
 			</plugin>
+			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.0</version>
+					<configuration>
+						<createSourcesJar>true</createSourcesJar>
+						<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+						<artifactSet>
+							<includes>
+								<include>org.eclipse.birt.runtime:org.eclipse.birt.runtime</include>
+							</includes>
+						</artifactSet>
+						<filters>
+							<filter>
+								<artifact>org.eclipse.birt.runtime:org.eclipse.birt.runtime</artifact>
+								<excludes>
+									<exclude>META-INF/*.SF</exclude>
+									<exclude>META-INF/*.DSA</exclude>
+									<exclude>META-INF/*.RSA</exclude>
+									<exclude>org/apache/**</exclude>
+									<exclude>org/dom4j/**</exclude>
+									<exclude>org/eclipse/birt/report/engine/emitter/excel/**</exclude>
+									<exclude>org/openxmlformats/**</exclude>
+									<exclude>org/w3c/**</exclude>
+									<exclude>schemaorg_apache_xmlbeans/**</exclude>
+									<exclude>schemasMicrosoftCom*/**</exclude>
+									<exclude>uk/co/spudsoft/**</exclude>
+								</excludes>
+							</filter>
+						</filters>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			
+			
 		</plugins>
 	</build>
 

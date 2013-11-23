@@ -57,7 +57,7 @@ public class TeamManPanel extends Panel {
         if(en.equalsIgnoreCase("account")){
           if(type == 0){
             //for the 岗位列表
-            teamSql = "select * from (select  crmuser . *, accountcrmuser.id as rid,userinfo.name as userInfoName from crmuser  left join accountcrmuser  ON crmuser.id = accountcrmuser.crmuserId left join user_position on user_position.positionId = accountcrmuser.crmuserId inner join userinfo on userinfo.id = user_position.userId where accountcrmuser.accountId = ?) as atable";
+            teamSql = "select * from (select  crmuser . *, accountcrmuser.id as rid,userinfo.name as userInfoName , permission.val as permission from crmuser  left join accountcrmuser  ON crmuser.id = accountcrmuser.crmuserId left join user_position on user_position.positionId = accountcrmuser.crmuserId inner join userinfo on userinfo.id = user_position.userId left join permission on crmuser.role = permission.id where accountcrmuser.accountId = ?) as atable";
         }
 //          else if (type == 1){
 //          //for the 用户列表

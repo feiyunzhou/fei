@@ -62,7 +62,7 @@ public class ValuePackReportPage extends TemplatePage{
             HTMLRenderOption options = new HTMLRenderOption();    
             
             //File tmpfile = File.createTempFile("rpt_", ".html", new File( Configuration.getReportOutputFolder()));
-            File tmpfile = File.createTempFile("rpt"+System.currentTimeMillis()+"_"+(int)1000*Math.random(), ".html", new File( CRMUtility.getReportOutputFolder()));
+            final File tmpfile = File.createTempFile("rpt"+System.currentTimeMillis()+"_"+(int)1000*Math.random(), ".html", new File( CRMUtility.getReportOutputFolder()));
             logger.debug("tmp file:"+tmpfile.getAbsolutePath());
             
             FileOutputStream tempfileos = new FileOutputStream(tmpfile);
