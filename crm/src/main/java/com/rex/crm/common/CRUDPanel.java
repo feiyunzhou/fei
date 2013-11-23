@@ -19,7 +19,7 @@ public class CRUDPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
 
     public enum Permissions {
-        ADD, DEL, EDIT,NONE,RESETPWD,DONE,DOWNLOAD,UPLOAD;
+        ADD, DEL, EDIT,NONE,RESETPWD,DONE,DOWNLOAD,UPLOAD,noExecute;
 
     }
 
@@ -33,10 +33,10 @@ public class CRUDPanel extends Panel {
             add(new Fragment("addCon","emptyFragment",this));
             add(new Fragment("delCon","emptyFragment",this));
             add(new Fragment("editCon","emptyFragment",this));
-        	  add(new Fragment("resetPwdCon","emptyFragment",this));
-        	  add(new Fragment("doneCon","emptyFragment",this));
-        	  add(new Fragment("downloadCon","emptyFragment",this));
-        	 //add(new Fragment("uploadCon","emptyFragment",this));
+        	add(new Fragment("resetPwdCon","emptyFragment",this));
+        	add(new Fragment("doneCon","emptyFragment",this));
+        	add(new Fragment("downloadCon","emptyFragment",this));
+        	add(new Fragment("noExecuteCon","emptyFragment",this));
         } else {
             
             if (userPerms.contains(Permissions.ADD)) {
@@ -118,29 +118,29 @@ public class CRUDPanel extends Panel {
                     add(new Fragment("resetPwdCon","emptyFragment",this));
                 }
             	if (userPerms.contains(Permissions.DONE)) {
-                Fragment addfrag = new Fragment("doneCon","doneFragment",this);
-                Link link = new Link("done_data_btn") {
-
-                    @Override
-                    public void onClick() {
-                     
-                      listener.doneBtn();
-                    }
-                };
-                addfrag.add(link);
-                //根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
-				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willCoaching")){
-					Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
-	                Date newDate = new Date();
-	                Date startTime = new Date(activity.getStarttime());
-	                if(startTime.compareTo(newDate)>=0){
-	                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+	                Fragment addfrag = new Fragment("doneCon","doneFragment",this);
+	                Link link = new Link("done_data_btn") {
+	
+	                    @Override
+	                    public void onClick() {
+	                     
+	                      listener.doneBtn();
+	                    }
+	                };
+	                addfrag.add(link);
+	                //根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
+					if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willCoaching")){
+						Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
+		                Date newDate = new Date();
+		                Date startTime = new Date(activity.getStarttime());
+		                if(startTime.compareTo(newDate)>=0){
+		                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+		                }
 	                }
-                }
-                add(addfrag);
-             }else{
-                 add(new Fragment("doneCon","emptyFragment",this));
-             }
+	                add(addfrag);
+            	}else{
+            		add(new Fragment("doneCon","emptyFragment",this));
+            	}
             	
             	if (userPerms.contains(Permissions.DOWNLOAD)) {
             	  //downLoad_account_btn
@@ -165,6 +165,28 @@ public class CRUDPanel extends Panel {
              }else{
                  add(new Fragment("downloadCon","emptyFragment",this));
              }
+        	if (userPerms.contains(Permissions.noExecute)) {
+                Fragment addfrag = new Fragment("noExecuteCon","noExecuteFragment",this);
+                Link link = new Link("noExecute_data_btn") {
+
+                    @Override
+                    public void onClick() {
+                    	listener.noExecute(entityName, Integer.parseInt(entityId));
+                    }
+                };
+                addfrag.add(link);
+                //根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
+				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willCoaching")){
+					Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
+	                if(activity.getStatus()!=1){
+	                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+	                }
+                }
+                add(addfrag);
+        	}else{
+        		add(new Fragment("noExecuteCon","emptyFragment",this));
+        	}	
+            	
         }
     }
 

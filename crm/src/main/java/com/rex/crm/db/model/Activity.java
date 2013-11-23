@@ -13,6 +13,7 @@ public class Activity implements java.io.Serializable {
 	private long starttime;
 	private String title;
     private int event_type;
+    private int status;
 	public Activity() {
 	}
 
@@ -74,6 +75,14 @@ public class Activity implements java.io.Serializable {
 
 	public void setEvent_type(int event_type) {
 		this.event_type = event_type;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 }

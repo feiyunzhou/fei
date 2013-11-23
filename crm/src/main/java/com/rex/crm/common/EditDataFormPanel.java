@@ -341,6 +341,7 @@ public class EditDataFormPanel extends Panel {
 				List<String> names = Lists.newArrayList();
 				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 				int total_score = 0;
+				Long daypart = (Long) fieldNameToModel.get("activity_daypart").getObject();
 				for (String k : fieldNameToModel.keySet()) {
 					names.add(k);
 					Field field = schema.getFieldByName(k);
@@ -359,13 +360,46 @@ public class EditDataFormPanel extends Panel {
                                 // if the filed has formatter, we guess the
                                 // field saved in data base is in long
                                 Date date = new Date();
-                                try {
+                                String dataTime = String.valueOf(obj).split("T")[0];
+                                if(k.equals("starttime")){
+                                	if(daypart==1){
+                                		try {
+        									date = dateformat.parse(dataTime.concat("T08:00"));
+        								} catch (ParseException e) {
+        									logger.error("failed to parse datetime:"+ (String)obj,e);
+        								}  
+                                	}else{
+                                		try {
+        									date = dateformat.parse(dataTime.concat("T13:00"));
+        								} catch (ParseException e) {
+        									logger.error("failed to parse datetime:"+ (String)obj,e);
+        								}  
+                                	}
+                                }
+                                
+                                if(k.equals("endtime")){
+                                	if(daypart==1){
+                                		try {
+        									date = dateformat.parse(dataTime.concat("T13:00"));
+        								} catch (ParseException e) {
+        									logger.error("failed to parse datetime:"+ (String)obj,e);
+        								}  
+                                	}else{
+                                		try {
+        									date = dateformat.parse(dataTime.concat("T18:00"));
+        								} catch (ParseException e) {
+        									logger.error("failed to parse datetime:"+ (String)obj,e);
+        								}  
+                                	}
+                                }
+                                
+                               /* try {
                                     date = dateformat.parse((String)obj);
                                 } catch (ParseException e) {
                                     logger.error("failed to parse datetime:" + (String)obj, e);
                                 }
                                 //values.add(;
-                                value = String.valueOf(date.getTime());
+*/                                value = String.valueOf(date.getTime());
 
                             } else {
                                 value = "'" + (String)obj + "'";

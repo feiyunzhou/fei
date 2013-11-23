@@ -1184,6 +1184,8 @@ public class DAOImpl
            entityName= "activity";
            fieldssql = fieldssql + ",event_type";
            valuesql = valuesql + "," +2;
+           fieldssql = fieldssql + ",status";
+           valuesql = valuesql + "," +1;
          }else if(entityName.equals("activity")){
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
         	 fieldssql = fieldssql + ",crmuserId";
@@ -1191,10 +1193,14 @@ public class DAOImpl
         	 
         	 fieldssql = fieldssql + ",event_type";
              valuesql = valuesql + "," +1;
+             fieldssql = fieldssql + ",status";
+             valuesql = valuesql + "," +1;
          }else if(entityName.equals("willCoaching")){
         	 entityName= "activity";
              fieldssql = fieldssql + ",event_type";
              valuesql = valuesql + "," +3;
+             fieldssql = fieldssql + ",status";
+             valuesql = valuesql + "," +1;
          }
          logger.debug("fieldssql sql is:"+fieldssql);
          logger.debug("valuesql sql is:"+valuesql);
@@ -2279,4 +2285,23 @@ public class DAOImpl
     	}
     	return false;
     } 
+    //修改活动状态为未执行
+    public static boolean updateActivityStatusById(int entityId){
+    	String sql = "UPDATE activity SET status=3 where id=?";
+        Connection conn = null;
+        int inserts = 0;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            inserts += run.update(conn, sql,entityId);
+        } catch (Exception e) {
+            logger.error("failed to activity", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        if(inserts>0){
+    		return true;
+    	}
+    	return false;
+    }
 }

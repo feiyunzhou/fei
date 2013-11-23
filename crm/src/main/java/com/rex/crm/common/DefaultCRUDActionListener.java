@@ -29,4 +29,8 @@ public abstract class DefaultCRUDActionListener implements ICRUDActionListener, 
     public void downLoadBtn() throws Exception{
       
     }
+    @Override
+    public void noExecute(String entityName,int entityId) {
+    	
+    }
 }

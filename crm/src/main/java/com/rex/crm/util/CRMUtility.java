@@ -205,13 +205,13 @@ public class CRMUtility {
 	        	 }
 	        }else if(entityName.equalsIgnoreCase("activity")){
 	        	if (roleId == 3) {
-		            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
+		            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE,CRUDPanel.Permissions.noExecute);
 	        	}else if(roleId == 1){
 	        	  permission = EnumSet.of(CRUDPanel.Permissions.DEL);
 	        	}
 	        }else if(entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willCoaching")){
 	          if (roleId == 2){
-	            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE);
+	            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE,CRUDPanel.Permissions.noExecute);
 	          }else if(roleId == 1){
 	            permission = EnumSet.of(CRUDPanel.Permissions.DEL);
 	          }

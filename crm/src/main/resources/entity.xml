@@ -66,7 +66,7 @@
 		<sql-ent>SELECT * from (select account.* from account where
 			account.id=? ORDER BY CONVERT( name USING gbk )      ) as aAccount
 		</sql-ent>
-		<filterField>grade</filterField>
+		<filterField>administrativ_level</filterField>
 		<fields>
 			<!-- 医院的基本信息 -->
 			<field>
@@ -117,19 +117,6 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_administrativ_level_pl</picklist>
-				<priority>1</priority><isShow>true</isShow>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			<field>
-				<name>grade</name>
-				<display>医院分级</display>
-				<isRequired>false</isRequired>
-				<data-type>number</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<picklist>account_grade_pl</picklist>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2143,6 +2130,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value>end_datetime</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			<field>
+				<name>activity_daypart</name>
+				<display>活动开始时段</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>activity_daypart_pl</picklist>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 
 			<field>
 				<name>activity_type</name>
@@ -2188,8 +2188,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			
-			
 			
 			
 			<field>
@@ -2301,7 +2299,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<picklist>activity_status_pl</picklist>
 				<priority>2</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
@@ -2396,6 +2394,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
+			
+	
 		</fields>
 	</entity>
 	<entity>
@@ -2611,6 +2611,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
+				<name>activity_daypart</name>
+				<display>活动开始时段</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>activity_daypart_pl</picklist>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
 				<name>crmuserId</name>
 				<display>辅导人Id</display>
 				<data-type>text</data-type>
@@ -2763,7 +2776,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<picklist>activity_status_pl</picklist>
 				<priority>2</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
@@ -2856,6 +2869,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
+			
+			
+			
 			<field>
 				<name>planing</name>
 				<display>访前计划</display>
@@ -3151,6 +3167,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>activity_daypart</name>
+				<display>活动开始时段</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<picklist>activity_daypart_pl</picklist>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>crmuserId</name>
 				<display>辅导人Id</display>
@@ -3311,7 +3342,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<picklist>activity_status_pl</picklist>
 				<priority>1</priority>
 				<isShow>true</isShow>
@@ -3326,7 +3357,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<priority>3</priority>
 				<isShow>true</isShow>
 				<isRequired>true</isRequired>
@@ -3410,6 +3441,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
+			
 			
 			<field>
 				<name>planing</name>

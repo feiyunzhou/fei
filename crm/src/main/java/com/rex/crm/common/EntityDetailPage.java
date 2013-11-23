@@ -213,7 +213,6 @@ public class EntityDetailPage extends TemplatePage {
               final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                Date time = new Date();
               String d = dateformat.format(time);
-              System.out.println("entityName:"+entityName);
               DAOImpl.doneRecord(id, entityName, d);
              setResponsePage(new EntityDetailPage(entityName,id));
             }
@@ -242,7 +241,13 @@ public class EntityDetailPage extends TemplatePage {
               // TODO Auto-generated method stub
               
             }
-            
+            @Override
+            public void noExecute(String entityName,int entityId){
+            	//修改活动状态为未执行
+            	if(DAOImpl.updateActivityStatusById(entityId)){
+            		setResponsePage(new EntityDetailPage(entityName,String.valueOf(entityId)));
+            	};
+            }
          };
          
 

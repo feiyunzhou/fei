@@ -354,6 +354,7 @@ public class NewDataFormPanel extends Panel {
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 //找出title属性，判断实体名称，先声明
                 StringBuffer title = new StringBuffer();
+                Long daypart = (Long) models.get("activity_daypart").getObject();
                 for (String key : models.keySet()) {
                     fieldNames.add(key);
                     logger.debug("currentFieldkey:"+key);
@@ -367,15 +368,40 @@ public class NewDataFormPanel extends Panel {
                       if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
                        //if the filed has formatter, we guess the field saved in data base is in long 
                         Date date = new Date();
-                        try
-                        {
-                          date = dateformat.parse((String) models.get(key).getObject());
+                        
+                        String dataTime = String.valueOf(models.get(key).getObject()).split("T")[0];
+                        if(key.equals("starttime")){
+                        	if(daypart==1){
+                        		try {
+									date = dateformat.parse(dataTime.concat("T08:00"));
+								} catch (ParseException e) {
+									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
+								}  
+                        	}else{
+                        		try {
+									date = dateformat.parse(dataTime.concat("T13:00"));
+								} catch (ParseException e) {
+									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
+								}  
+                        	}
                         }
-                        catch (ParseException e)
-                        {
-                          logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
+                        
+                        if(key.equals("endtime")){
+                        	if(daypart==1){
+                        		try {
+									date = dateformat.parse(dataTime.concat("T13:00"));
+								} catch (ParseException e) {
+									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
+								}  
+                        	}else{
+                        		try {
+									date = dateformat.parse(dataTime.concat("T18:00"));
+								} catch (ParseException e) {
+									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
+								}  
+                        	}
                         }
-                          values.add(String.valueOf(date.getTime()));
+                         values.add(String.valueOf(date.getTime()));
                       
                       }else {
     	                	  values.add("'" + (String) models.get(key).getObject()+ "'");

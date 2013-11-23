@@ -8,5 +8,6 @@ public interface ICRUDActionListener {
     public void resetPassword(int userId);
     public void doneBtn() ;
     public void downLoadBtn() throws Exception;
+    public void noExecute(String entityName,int entityId);
 }
 
