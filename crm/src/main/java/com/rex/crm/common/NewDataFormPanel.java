@@ -350,11 +350,13 @@ public class NewDataFormPanel extends Panel {
                 List<String> fieldNames = Lists.newArrayList();
                 List<String> values = Lists.newArrayList();
                 int total_score = 0;
-                String password = "";
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 //找出title属性，判断实体名称，先声明
+                Long daypart =  0l;
                 StringBuffer title = new StringBuffer();
-                Long daypart = (Long) models.get("activity_daypart").getObject();
+                if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("wicclCoaching")){
+                	 daypart = (Long) models.get("activity_daypart").getObject();
+                }
                 for (String key : models.keySet()) {
                     fieldNames.add(key);
                     logger.debug("currentFieldkey:"+key);
@@ -407,10 +409,6 @@ public class NewDataFormPanel extends Panel {
     	                	  values.add("'" + (String) models.get(key).getObject()+ "'");
                       }
                      
-                      if(field.getName().equals("loginName")){
-                    	  
-                  		password = (String) models.get("loginName").getObject();
-              		  }
                     }else if(models.get(key).getObject() instanceof Choice){
                         values.add(String.valueOf(((Choice) models.get(key).getObject()).getId()));
                     }else {
@@ -461,10 +459,8 @@ public class NewDataFormPanel extends Panel {
                   }
             		//if entity is crmuser  add loginName
                     if ("userInfo".equals(entity.getName())) {
-                    	values.add("'"+DigestUtils.md5Hex(password)+"'");
-                    	fieldNames.add("password");
                         long crmuserkey = -1;
-                        crmuserkey= DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
+                        crmuserkey = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
                         /*if (crmuserkey >0 ) {
                            UserInfo userinfo = DAOImpl.getUserById((int)crmuserkey);
 //                        	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);

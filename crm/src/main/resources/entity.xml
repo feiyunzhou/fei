@@ -2790,7 +2790,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<priority>3</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
@@ -3341,7 +3341,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<picklist>activity_status_pl</picklist>
 				<priority>1</priority>

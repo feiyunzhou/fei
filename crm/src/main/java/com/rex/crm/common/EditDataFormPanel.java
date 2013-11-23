@@ -341,7 +341,10 @@ public class EditDataFormPanel extends Panel {
 				List<String> names = Lists.newArrayList();
 				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 				int total_score = 0;
-				Long daypart = (Long) fieldNameToModel.get("activity_daypart").getObject();
+				Long daypart = 0l;
+				if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equals("wicclCoaching")){
+               	 daypart = (Long) fieldNameToModel.get("activity_daypart").getObject();
+               }
 				for (String k : fieldNameToModel.keySet()) {
 					names.add(k);
 					Field field = schema.getFieldByName(k);

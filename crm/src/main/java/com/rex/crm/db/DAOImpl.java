@@ -1139,8 +1139,8 @@ public class DAOImpl
     public static long createNewCrmUser(String entityName,List<String> fieldNames,List<String> values,String userId){
     	String fieldssql = Joiner.on(",").join(fieldNames);
         String valuesql = Joiner.on(",").join(values);
-        fieldssql = fieldssql + ",isActivited,num_of_signIn,ts";
-   	 	valuesql =  valuesql + ",1,0,"+System.currentTimeMillis();
+        fieldssql = fieldssql + ",num_of_signIn,password";
+   	 	valuesql =  valuesql + ",0,'"+DigestUtils.md5Hex("12345")+"'";
    	 	logger.debug("fieldssql sql is:"+fieldssql);
    	 	logger.debug("valuesql sql is:"+valuesql);
    	 	String sql = "INSERT INTO "+entityName+" ("+fieldssql+") VALUES ("+valuesql+")";
