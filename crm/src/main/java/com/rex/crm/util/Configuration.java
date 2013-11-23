@@ -264,6 +264,7 @@ public class Configuration {
                     field.setBaseInfo(Boolean.parseBoolean(sub2.getString("isBaseInfo")));
                     field.setSearchable(Boolean.parseBoolean(sub2.getString("isSearchable")));
                     field.setParam(Boolean.parseBoolean(sub2.getString("isParam")));
+                    field.setShow(Boolean.parseBoolean(sub2.getString("isShow")));
                     field.setExistsDefaultValue(Boolean.parseBoolean(sub2.getString("isExistsDefaultValue")));
                     
                     

@@ -91,7 +91,7 @@
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isParam>true</isParam>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -104,7 +104,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -117,7 +117,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_administrativ_level_pl</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -130,7 +130,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_grade_pl</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -143,7 +143,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_type_pl</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -156,7 +156,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -169,7 +169,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_local_or_army_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -182,7 +182,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_comprehensive_or_specialized_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -195,7 +195,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -208,7 +208,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_point_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -221,7 +221,7 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -234,7 +234,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_status_pl</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<!-- 医院基本信息 -->
@@ -247,7 +247,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
@@ -261,7 +261,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -274,7 +274,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -287,7 +287,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -300,7 +300,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -313,7 +313,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -326,7 +326,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -339,7 +339,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -352,7 +352,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -365,7 +365,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -378,7 +378,7 @@
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -390,7 +390,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -402,7 +402,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -414,7 +414,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -426,7 +426,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -438,7 +438,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -450,7 +450,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -463,7 +463,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_market_classification_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -478,7 +478,7 @@
 				<isEditable>true</isEditable>
 				<fieldGroup>基本信息</fieldGroup>
 				<isParam>true</isParam>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<childNode>city</childNode>
 			</field>
 			<field>
@@ -490,7 +490,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<picklist>city</picklist>
 				<isParam>true</isParam>
 				<fieldGroup>基本信息</fieldGroup>
@@ -505,7 +505,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -517,7 +517,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<!-- 附加信息 -->
@@ -531,7 +531,9 @@
 				<isVisible>true</isVisible>
 				<field-type>auto</field-type>
 				<isEditable>false</isEditable>
+				<isVisible>true</isVisible>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -545,6 +547,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -557,7 +560,7 @@
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -570,7 +573,7 @@
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -583,7 +586,7 @@
 				<field-type>auto</field-type>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 		</fields>
@@ -615,6 +618,7 @@ where crmuser.reportto=? and
 	left join contact_generalization_target_pl on aContact.product_target = 
 		contact_generalization_target_pl.id 
 	left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
+	left join account on accountcrmuser.accountId = account.id
 	left join user_position on user_position.positionId = accountcrmuser.crmuserId and user_position.status = 1 ) as cCountcat
 
 		</sql-manager>
@@ -676,7 +680,7 @@ where crmuser.reportto=? and
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<!-- Please do not change the order of this field(accountId)!! -->
@@ -689,7 +693,7 @@ where crmuser.reportto=? and
 			<!-- <isDetailLink>false</isDetailLink> -->
 			<!-- <isVisible>true</isVisible> -->
 			<!-- <isEditable>false</isEditable> -->
-			<!-- <priority>1</priority> -->
+			<!-- <priority>1</priority><isShow>true</isShow> -->
 			<!-- <fieldGroup>关键信息</fieldGroup> -->
 			<!-- </field> -->
 
@@ -703,7 +707,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<relationTable>account</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>account.id\,account.name</default-value>
@@ -720,7 +724,7 @@ where crmuser.reportto=? and
 			<!-- <isDetailLink>false</isDetailLink> -->
 			<!-- <isVisible>true</isVisible> -->
 			<!-- <isEditable>true</isEditable> -->
-			<!-- <priority>1</priority> -->
+			<!-- <priority>1</priority><isShow>true</isShow> -->
 			<!-- <relationTable>account</relationTable> -->
 			<!-- <fieldGroup>关键信息</fieldGroup> -->
 			<!-- </field> -->
@@ -733,10 +737,10 @@ where crmuser.reportto=? and
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isSearchable>true</isSearchable>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<isSearchable>true</isSearchable>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -748,7 +752,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -762,7 +766,7 @@ where crmuser.reportto=? and
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>2</default-value>
-				<priority>2</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -773,12 +777,12 @@ where crmuser.reportto=? and
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<isSearchable>true</isSearchable>
 				<default-value-type>val</default-value-type>
 				<default-value>2</default-value>
-				<priority>1</priority>
+				<isSearchable>true</isSearchable>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -790,7 +794,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<picklist>sex_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -803,7 +807,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -815,7 +819,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -827,7 +831,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -839,7 +843,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -851,7 +855,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<picklist>contact_grade_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -864,7 +868,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<picklist>contact_status_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -877,7 +881,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<picklist>contact_market_classification_pl</picklist>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -890,7 +894,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<picklist>province</picklist>
 				<childNode>city</childNode>
 				<fieldGroup>基本信息</fieldGroup>
@@ -906,7 +910,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<picklist>city</picklist>
 				<parentNode>province</parentNode>
 				<fieldGroup>基本信息</fieldGroup>
@@ -922,7 +926,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -934,7 +938,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<picklist>contact_duty_pl</picklist>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -947,7 +951,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<picklist>contact_job_title_pl</picklist>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -961,7 +965,7 @@ where crmuser.reportto=? and
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>contact_generalization_target_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -974,7 +978,7 @@ where crmuser.reportto=? and
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
@@ -987,7 +991,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			
@@ -1001,7 +1005,7 @@ where crmuser.reportto=? and
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1014,7 +1018,7 @@ where crmuser.reportto=? and
 				<pattern>number</pattern>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<!-- 附加信息 -->
@@ -1029,6 +1033,7 @@ where crmuser.reportto=? and
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -1042,6 +1047,7 @@ where crmuser.reportto=? and
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -1054,7 +1060,7 @@ where crmuser.reportto=? and
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -1067,7 +1073,7 @@ where crmuser.reportto=? and
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -1080,7 +1086,7 @@ where crmuser.reportto=? and
 				<field-type>auto</field-type>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 		</fields>
@@ -1088,7 +1094,7 @@ where crmuser.reportto=? and
 
 	<entity>
 		<name>coach</name>
-		<display>用户</display>
+		<display></display>
 		<sql>select * from crmuser where ? is NOT NULL limit 10</sql>
 		<sql-ent>select * from crmuser where ? is NOT NULL limit 10</sql-ent>
 		<filterField>pl2</filterField>
@@ -1113,7 +1119,7 @@ where crmuser.reportto=? and
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1125,7 +1131,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
@@ -1137,7 +1143,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>地址信息</fieldGroup>
 			</field>
 			<field>
@@ -1149,7 +1155,7 @@ where crmuser.reportto=? and
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
@@ -1192,7 +1198,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <!-- 			left join crmdb.role on crmuser.role -->
 <!-- 			= role.id -->
 <!-- 			where crmuser.id != -1 ) as aCrmuser -->
-			select * from (select userInfo.*\, user_position.positionId as positionId from userInfo left join user_position on userInfo.id = user_position.userId
+			select * from (select userInfo.*\, crmuser.role as crmuserRole\,
+			user_position.positionId as positionId from userInfo 
+			left join user_position on userInfo.id = user_position.userId
+			left join crmuser on crmuser.id = user_position.positionId
 			 where userInfo.id != -1 ORDER BY CONVERT( userInfo.name USING gbk ) )as aUserInfo
 		</sql-admin>
 		<sql-manager>
@@ -1244,7 +1253,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
@@ -1258,7 +1267,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -1270,7 +1279,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<picklist>sex_pl</picklist>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -1285,7 +1294,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
 				<isSearchable>true</isSearchable>
@@ -1299,7 +1308,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>基本信息</fieldGroup>
 				<isBaseInfo>false</isBaseInfo>
@@ -1313,7 +1322,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>基本信息</fieldGroup>
 				<isBaseInfo>false</isBaseInfo>
@@ -1327,13 +1336,27 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
+				<name>crmuserRole</name>
+				<display>角色</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>role</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isShow>false</isShow>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
 				<name>status</name>
-				<display>用户状态</display>
+				<display>状态</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<picklist>contact_status_pl</picklist>
@@ -1341,7 +1364,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1354,7 +1377,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<picklist>crmuser_activited</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1366,7 +1389,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<relationTable>crmuser</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -1379,7 +1402,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <!-- 				<isDetailLink>false</isDetailLink> -->
 <!-- 				<isVisible>true</isVisible> -->
 <!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>1</priority> -->
+<!-- 				<priority>1</priority><isShow>true</isShow> -->
 <!-- 				<relationTable>crmuser</relationTable> -->
 <!-- 				<fieldGroup>关键信息</fieldGroup> -->
 <!-- 			</field> -->
@@ -1393,7 +1416,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1406,7 +1429,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
@@ -1420,7 +1443,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 				<childNode>city</childNode>
 			</field>
@@ -1434,7 +1457,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 				<parentNode>province</parentNode>
 			</field>
@@ -1450,6 +1473,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -1462,7 +1486,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -1475,7 +1499,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -1487,7 +1512,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<isBaseInfo>true</isBaseInfo>
-				<priority>1</priority>
+				<isShow>true</isShow>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
@@ -1499,30 +1525,35 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<sql>
 			select * from
 				( 
-					select crmuser.*\,userInfo.name as userInfoName from crmuser 
+					select crmuser.*\,userInfo.name as userInfoName \,permission.val as permission from crmuser 
 					left join (select * from user_position where status = 1) as userposition
 					 on crmuser.id = userposition.positionId
 					left join userInfo on userInfo.id = user_position.userId
+					left join permission on crmuser.role = permission.id
 					where (id = ?) and (user_position.status = 1) ORDER BY CONVERT( crmuser.code USING gbk )
    				 ) as aCrmuser
 		</sql>
 		<sql-admin>
 			select * from 
 			(select crmuser.*\,"crmmanager.name" as reportto_val\,userInfo.name as userInfoName
+			\,permission.val as permission
 				from crmuser
 				left join (select * from crmuser) crmmanager on
 				crmuser.reportto = crmmanager.id
 				left join (select * from user_position where status = 1) as userposition on userposition.positionId = crmuser.id
 				left join userInfo on userposition.userId = userInfo.id
+				left join permission on crmuser.role = permission.id
 				where crmuser.id != -1 ORDER BY CONVERT( crmuser.code USING gbk )
 			) as aCrmuser
 		</sql-admin>
 		<sql-manager>
 			select * from (select crmuser.*\,userInfo.name as userInfoName
+			\,permission.val as permission
 			 from crmuser
 			left join (select * from user_position where status = 1) as userposition
 			 on userposition.positionId = crmuser.id
 			left join userInfo on userInfo.id = user_position.userId
+			left join permission on crmuser.role = permission.id
 			 where id = ? or reportto = ? ORDER BY CONVERT( crmuser.code USING gbk )) as aCrmuser
 		</sql-manager>
 		<sql-manager-coaching>select * from (select crmuser.*\,
@@ -1557,6 +1588,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
 			</field>
@@ -1569,6 +1601,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
+				<isShow>true</isShow>
 				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -1580,6 +1613,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<relationTable>crmuser</relationTable>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
@@ -1593,6 +1627,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
@@ -1608,6 +1643,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>crmuser_pl1</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
@@ -1621,6 +1657,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>role</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
@@ -1638,7 +1675,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -1649,6 +1686,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isShow>false</isShow>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
@@ -1661,6 +1699,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
+				<isShow>false</isShow>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
@@ -1673,6 +1712,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>crmuser_pl2</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -1690,6 +1730,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>2</priority>
+				<isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 <!-- 				<parentNode>pl2</parentNode> -->
 			</field>
@@ -1701,6 +1742,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>region_level1_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -1714,6 +1756,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>region_level2_pl</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
@@ -1728,6 +1771,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<picklist>city</picklist>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
@@ -1743,7 +1787,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <!-- 				<isDetailLink>false</isDetailLink> -->
 <!-- 				<isVisible>true</isVisible> -->
 <!-- 				<isEditable>true</isEditable> -->
-<!-- 				<priority>2</priority> -->
+<!-- 				<priority>2</priority><isShow>true</isShow> -->
 <!-- 				<fieldGroup>基本信息</fieldGroup> -->
 <!-- 			</field> -->
 			<!-- 附加信息 -->
@@ -1754,6 +1798,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
@@ -1767,6 +1812,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
@@ -1780,6 +1826,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
@@ -1791,7 +1838,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 
 <entity>
 	<name>user_position</name>
-	<display>用户岗位关系</display>
+	<display>岗位关系</display>
 	<sql>select * from user_position</sql>
 	<fields>
 		<field>
@@ -1807,13 +1854,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		</field>
 		<field>
 				<name>userId</name>
-				<display>用户Id</display>
+				<display>Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -1824,7 +1871,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -1836,7 +1883,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<picklist>contact_status_pl</picklist>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键本信息</fieldGroup>
 			</field>
 			<field>
@@ -1847,7 +1894,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键本信息</fieldGroup>
 			</field>
 	</fields>
@@ -1875,7 +1922,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1886,7 +1933,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
@@ -2028,7 +2075,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<!-- <field> <name>event_type</name> <display>活动类型</display> <isRequired>false</isRequired> 
 				<data-type>text</data-type> <picklist>activity_event_type_pl</picklist> <isPrimaryKey>false</isPrimaryKey> 
 				<isDetailLink>false</isDetailLink> <isVisible>true</isVisible> <isEditable>true</isEditable> 
-				<priority>2</priority> <fieldGroup>关键信息</fieldGroup> </field> -->
+				<priority>2</priority><isShow>true</isShow> <fieldGroup>关键信息</fieldGroup> </field> -->
 
 			<field>
 				<name>event_type_val</name>
@@ -2040,7 +2087,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
+				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 
@@ -2053,7 +2101,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 
@@ -2067,7 +2115,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<default-value-type>var</default-value-type>
 				<default-value>start_datetime</default-value>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2082,7 +2130,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<default-value-type>var</default-value-type>
 				<default-value>end_datetime</default-value>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2097,7 +2145,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<childNode>visiting_purpose</childNode>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2111,7 +2159,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -2125,7 +2173,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_visiting_purpose_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<parentNode>activity_type</parentNode>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
@@ -2144,7 +2192,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2158,7 +2206,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2172,7 +2220,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<relationTable>contact</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2180,7 +2228,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 
 			<!-- <field> <name>coacheeId</name> <display>被辅导人</display> <data-type>number</data-type> 
 				<isPrimaryKey>false</isPrimaryKey> <isDetailLink>false</isDetailLink> <isVisible>true</isVisible> 
-				<isEditable>true</isEditable> <priority>1</priority> <isBaseInfo>true</isBaseInfo> 
+				<isEditable>true</isEditable> <priority>1</priority><isShow>true</isShow> <isBaseInfo>true</isBaseInfo> 
 				<relationTable>crmuser</relationTable> <fieldGroup>关键信息</fieldGroup> </field> -->
 
 			<field>
@@ -2192,7 +2240,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<relationTable>account</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2206,7 +2254,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2219,7 +2267,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
@@ -2232,7 +2280,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_feature_product_pl</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
@@ -2247,7 +2295,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_status_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2262,7 +2310,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
-				<priority>3</priority>
+				<priority>3</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>附加信息</fieldGroup>
@@ -2276,6 +2324,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
@@ -2288,6 +2337,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
@@ -2299,7 +2349,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
@@ -2311,7 +2361,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
@@ -2323,7 +2373,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<field-type>auto</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2335,7 +2385,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 		</fields>
@@ -2367,7 +2417,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2378,7 +2428,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2390,7 +2440,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>data_exchange_operation</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 <!-- 				<field-type>auto</field-type> -->
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2403,7 +2453,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>data_exchange_status</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2415,7 +2465,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 		</fields>
@@ -2519,7 +2569,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2533,7 +2583,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>var</default-value-type>
 				<default-value>start_datetime</default-value>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2548,7 +2598,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>var</default-value-type>
 				<default-value>end_datetime</default-value>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2560,7 +2610,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<field-type>auto</field-type>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2575,7 +2625,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<relationTable>userInfo</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2588,7 +2638,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2602,7 +2652,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2615,7 +2665,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2629,7 +2679,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_feature_product_pl</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
@@ -2644,7 +2694,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_coachtime_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
@@ -2661,7 +2711,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<relationTable>account</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>account.id\,account.name</default-value>
@@ -2678,7 +2728,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2694,7 +2744,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2707,7 +2757,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_status_pl</picklist>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2720,7 +2770,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
-				<priority>3</priority>
+				<priority>3</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>附加信息</fieldGroup>
@@ -2735,6 +2785,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2747,6 +2798,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2758,7 +2810,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2770,7 +2822,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2782,7 +2834,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2793,7 +2845,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -2804,7 +2856,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>5</priority>
+				<priority>5</priority><isShow>true</isShow>
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<picklist>score1_pl</picklist>
@@ -2821,7 +2873,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
-				<priority>5</priority>
+				<priority>5</priority><isShow>true</isShow>
 				<picklist>score1_pl</picklist>
 				<tooltip>2</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2836,7 +2888,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
-				<priority>5</priority>
+				<priority>5</priority><isShow>true</isShow>
 				<picklist>score1_pl</picklist>
 				<tooltip>3</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2851,7 +2903,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
-				<priority>5</priority>
+				<priority>5</priority><isShow>true</isShow>
 				<picklist>score1_pl</picklist>
 				<tooltip>4</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2866,7 +2918,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
-				<priority>5</priority>
+				<priority>5</priority><isShow>true</isShow>
 				<picklist>score2_pl</picklist>
 				<tooltip>5</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2881,7 +2933,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
-				<priority>5</priority>
+				<priority>5</priority><isShow>true</isShow>
 				<picklist>score2_pl</picklist>
 				<tooltip>6</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -2895,7 +2947,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>calculated</field-type>
-				<priority>5</priority>
+				<priority>5</priority><isShow>true</isShow>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 		</fields>
@@ -2927,7 +2979,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2938,7 +2990,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2953,7 +3005,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 					<isDetailLink>false</isDetailLink>
 					<isVisible>true</isVisible>
 					<isEditable>true</isEditable>
-					<priority>1</priority>
+					<priority>1</priority><isShow>true</isShow>
 					<fieldGroup>关键信息</fieldGroup>
 			</field>
 		</fields>
@@ -3056,6 +3108,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -3070,6 +3123,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>var</default-value-type>
 				<default-value>start_datetime</default-value>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -3085,6 +3139,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>var</default-value-type>
 				<default-value>end_datetime</default-value>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -3097,6 +3152,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<field-type>auto</field-type>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3112,6 +3168,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3125,6 +3182,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -3139,6 +3197,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<relationTable>userInfo</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3152,6 +3211,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -3167,6 +3227,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<relationTable>account</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>account.id\,account.name</default-value>
@@ -3184,6 +3245,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -3200,6 +3262,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -3213,6 +3276,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<picklist>activity_feature_product_pl</picklist>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
@@ -3227,6 +3291,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<picklist>activity_coachtime_pl</picklist>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
@@ -3241,6 +3306,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<picklist>activity_status_pl</picklist>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3254,6 +3320,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>3</priority>
+				<isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>附加信息</fieldGroup>
@@ -3268,6 +3335,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -3280,6 +3348,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -3292,6 +3361,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -3304,6 +3374,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -3316,6 +3387,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -3327,6 +3399,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			
@@ -3339,6 +3412,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<priority>5</priority>
+				<isShow>true</isShow>
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<picklist>score1_pl</picklist>
@@ -3357,6 +3431,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>5</priority>
+				<isShow>true</isShow>
 				<picklist>activity_score3_pl</picklist>
 				<tooltip>7</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -3372,6 +3447,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>5</priority>
+				<isShow>true</isShow>
 				<picklist>activity_score5_pl</picklist>
 				<tooltip>8</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -3387,6 +3463,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>5</priority>
+				<isShow>true</isShow>
 				<picklist>score2_pl</picklist>
 				<tooltip>5</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -3402,6 +3479,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>5</priority>
+				<isShow>true</isShow>
 				<picklist>activity_score4_pl</picklist>
 				<tooltip>9</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -3417,6 +3495,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value-type>val</default-value-type>
 				<default-value>0</default-value>
 				<priority>5</priority>
+				<isShow>true</isShow>
 				<picklist>score1_pl</picklist>
 				<tooltip>10</tooltip>
 				<fieldGroup>评分信息</fieldGroup>
@@ -3431,6 +3510,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>calculated</field-type>
 				<priority>5</priority>
+				<isShow>true</isShow>
 				<fieldGroup>评分信息</fieldGroup>
 			</field>
 		</fields>
@@ -3469,7 +3549,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3481,7 +3561,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3493,7 +3573,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3504,7 +3584,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3516,7 +3596,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3527,7 +3607,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3539,7 +3619,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_status</picklist>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3550,7 +3630,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -3561,7 +3641,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 		</fields>
@@ -3598,7 +3678,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>num_of_target_of_visiting_frequency</name>
@@ -3608,7 +3688,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>num_of_visiting_frequency</name>
@@ -3618,7 +3698,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>rate_of_achieving</name>
@@ -3628,7 +3708,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 		</fields>
 	</entity>
@@ -3659,7 +3739,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>metric_of_visiting_cover</name>
@@ -3669,7 +3749,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>rate_of_visiting_cover</name>
@@ -3679,7 +3759,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>rate_of_achieving</name>
@@ -3689,7 +3769,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 		</fields>
 	</entity>
@@ -3720,7 +3800,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>rate_of_achieving</name>
@@ -3730,7 +3810,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 		</fields>
 	</entity>
@@ -3750,7 +3830,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Activity_title</name>
@@ -3760,7 +3840,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>whether_coach</name>
@@ -3770,7 +3850,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Activity_feature_product</name>
@@ -3780,7 +3860,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Activity_types</name>
@@ -3790,7 +3870,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Activity_addTime</name>
@@ -3800,7 +3880,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Activity_modifyTime</name>
@@ -3810,7 +3890,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			
 			
@@ -3823,7 +3903,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Activity_end</name>
@@ -3833,7 +3913,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Position_name</name>
@@ -3843,7 +3923,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Region_level_1</name>
@@ -3853,7 +3933,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field><field>
 				<name>Region_level_2</name>
 				<display>二级区域</display>
@@ -3862,7 +3942,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>position_code</name>
@@ -3872,7 +3952,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>position_role</name>
@@ -3882,7 +3962,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Contact_name</name>
@@ -3892,7 +3972,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field><field>
 				<name>Contact_grade</name>
 				<display>医生分级</display>
@@ -3901,7 +3981,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Contact_department</name>
@@ -3911,7 +3991,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field><field>
 				<name>Contact_sex</name>
 				<display>医生性别</display>
@@ -3920,7 +4000,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Contact_email</name>
@@ -3930,7 +4010,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 			</field><field>
 				<name>Contact_duty</name>
 				<display>医生职称</display>
@@ -3939,7 +4019,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Contact_job_title</name>
@@ -3949,7 +4029,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field><field>
 				<name>Account_name</name>
 				<display>医院名称</display>
@@ -3958,7 +4038,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Account_BDMCode</name>
@@ -3968,7 +4048,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field><field>
 				<name>Account_garde</name>
 				<display>医院分级</display>
@@ -3977,7 +4057,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>Account_type</name>
@@ -3987,7 +4067,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field><field>
 				<name>Account_administrative_level</name>
 				<display>行政级别</display>
@@ -3996,7 +4076,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>local_or_army</name>
@@ -4006,7 +4086,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>comprehensive_or_specialized</name>
@@ -4016,7 +4096,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>isKey</name>
@@ -4026,7 +4106,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 			</field><field>
 				<name>Account_status</name>
 				<display>状态</display>
@@ -4035,7 +4115,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 		</fields>
 	</entity>
@@ -4065,7 +4145,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>rate_of_achieving</name>
@@ -4075,7 +4155,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 		</fields>
 	</entity>
@@ -4091,37 +4171,37 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<name>upLoadAccount</name>
 				<display>上传医生</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 			<filed>
 				<name>upLoadContact</name>
 				<display>上传医生</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>				
+				<priority>1</priority><isShow>true</isShow>				
 			</filed>
 			<filed>
 				<name>upLoadCoaching</name>
 				<display>上传岗位</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 			<filed>
 				<name>upLoadCoaching</name>
-				<display>上传用户</display>
+				<display>上传</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 			<filed>
 				<name>upLoadAcvitity</name>
 				<display>上传辅导</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 			<filed>
 				<name>upLoadCoaching</name>
 				<display>上传拜访</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 		</fields>
 	</entity>
@@ -4137,37 +4217,37 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<name>downLoadAccount</name>
 				<display>下载医院</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 			<filed>
 				<name>downLoadContact</name>
 				<display>下载医生</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>				
+				<priority>1</priority><isShow>true</isShow>				
 			</filed>
 			<filed>
 				<name>downLoadCoaching</name>
 				<display>下载岗位</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 			<filed>
 				<name>downLoadCoaching</name>
-				<display>下载用户</display>
+				<display>下载</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 			<filed>
 				<name>downLoadAcvitity</name>
 				<display>下载辅导</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 			<filed>
 				<name>downLoadCoaching</name>
 				<display>下载拜访</display>
 				<data-type>radio</data-type>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</filed>
 		</fields>
 	</entity>
@@ -4213,7 +4293,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
@@ -4228,7 +4308,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>var</default-value-type>
 				<default-value>start_datetime</default-value>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -4242,7 +4322,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<default-value-type>var</default-value-type>
 				<default-value>end_datetime</default-value>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
@@ -4254,7 +4334,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 				<picklist>alert_priority_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -4280,7 +4360,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -4293,6 +4373,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -4305,6 +4386,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
 				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -4316,7 +4398,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
@@ -4328,7 +4410,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
-				<priority>4</priority>
+				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 		</fields>
@@ -4349,7 +4431,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>title</name>
@@ -4359,7 +4441,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
                 <name>time</name>
@@ -4369,7 +4451,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			
 		</fields>
@@ -4390,7 +4472,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			
 			<field>
@@ -4401,7 +4483,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>email</name>
@@ -4411,7 +4493,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>2</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>sex</name>
@@ -4421,7 +4503,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>addTime</name>
@@ -4431,7 +4513,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>positionName</name>
@@ -4441,7 +4523,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>positionCode</name>
@@ -4451,7 +4533,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>reportTo</name>
@@ -4461,7 +4543,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
             <field>
 				<name>reporttto</name>
@@ -4471,7 +4553,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>role</name>
@@ -4481,7 +4563,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
             <field>
 				<name>city</name>
@@ -4491,7 +4573,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
             <field>
 				<name>regoin2</name>
@@ -4501,7 +4583,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
             <field>
 				<name>regoin1</name>
@@ -4511,7 +4593,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
                          
 			<field>
@@ -4522,7 +4604,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
             <field>
 				<name>BDMCode</name>
@@ -4532,7 +4614,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>accountLevel</name>
@@ -4542,7 +4624,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>status</name>
@@ -4553,6 +4635,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 			</field>
             <field>
 				<name>userName</name>
@@ -4563,6 +4646,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 			</field>
 		</fields>
 	</entity>

@@ -32,6 +32,8 @@ public class Field implements Serializable
   @Expose
   private boolean isSearchable;
   @Expose
+  private boolean isShow;
+  @Expose
   private String formatter;
   @Expose
   private int priority;
@@ -116,6 +118,14 @@ public class Field implements Serializable
   public void setName(String name)
   {
     this.name = name;
+  }
+  
+  public boolean isShow() {
+	return isShow;
+  }
+
+  public void setShow(boolean isShow) {
+	this.isShow = isShow;
   }
 
   @Override
