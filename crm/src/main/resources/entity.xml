@@ -1238,7 +1238,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <!-- 			= role.id -->
 <!-- 			where crmuser.id != -1 ) as aCrmuser -->
 			select * from (select userInfo.*\, crmuser.role as crmuserRole\,
-			user_position.positionId as positionId from userInfo 
+			crmuser.name as positionId from userInfo 
 			left join user_position on userInfo.id = user_position.userId
 			left join crmuser on crmuser.id = user_position.positionId
 			 where userInfo.id != -1 ORDER BY CONVERT( userInfo.name USING gbk ) )as aUserInfo
@@ -1257,7 +1257,12 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <!-- 			left join crmdb.role on crmuser.role -->
 <!-- 			= role.id -->
 <!-- 			where crmuser.reportto = ? or crmuser.id = ? ) as aCrmuser -->
-				select * from ( select * from userInfo where id = ? and reportto = ?) as aUserInfo 
+				select * from ( select userInfo.*\, crmuser.role as crmuserRole\,
+			crmuser.name as positionId from userInfo 
+			left join user_position on userInfo.id = user_position.userId
+			left join crmuser on crmuser.id = user_position.positionId
+			 where userInfo.id != -1 and  crmuser.id = ? and crmuser.reportto = ?
+			   ORDER BY CONVERT( userInfo.name USING gbk )) as aUserInfo 
 
 		</sql-manager>
 <!-- 		<sql-manager-coaching>select * from (select crmuser.*\, -->
@@ -1419,7 +1424,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+				<isShow>false</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 
 			</field>
@@ -1446,8 +1452,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
-				<isShow>true</isShow>
-				<relationTable>crmuser</relationTable>
+				<isShow>false</isShow>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -1932,7 +1937,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		</field>
 		<field>
 				<name>userId</name>
-				<display>Id</display>
+				<display>用户Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>

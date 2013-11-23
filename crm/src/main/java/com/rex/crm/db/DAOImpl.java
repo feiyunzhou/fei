@@ -1744,7 +1744,7 @@ public class DAOImpl
           conn = DBHelper.getConnection();
           QueryRunner run = new QueryRunner();
           ResultSetHandler<UserPosition> h = new BeanHandler<UserPosition>(UserPosition.class);
-          user = run.query(conn, "SELECT * FROM user_position where userId=? and status = 1 ", h,  uid);
+          user = run.query(conn, "SELECT *,createtime FROM user_position  where userId=? group by createtime desc limit 1 ", h,  uid);
 
       } catch (SQLException e) {
           logger.error("failed to get all accounts", e);
