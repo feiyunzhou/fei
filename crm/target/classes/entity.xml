@@ -1525,40 +1525,44 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<sql>
 			select * from
 				( 
-					select crmuser.*\,userInfo.name as userInfoName \,permission.val as permission from crmuser 
+					select crmuser.*\,userInfo.name as userInfoName \,permission.val as permission
+					\,role.val as role_val from crmuser 
 					left join (select * from user_position where status = 1) as userposition
 					 on crmuser.id = userposition.positionId
 					left join userInfo on userInfo.id = user_position.userId
 					left join permission on crmuser.role = permission.id
+					left join crmdb.role on crmuser.role = role.id
 					where (id = ?) and (user_position.status = 1) ORDER BY CONVERT( crmuser.code USING gbk )
    				 ) as aCrmuser
 		</sql>
 		<sql-admin>
 			select * from 
-			(select crmuser.*\,"crmmanager.name" as reportto_val\,userInfo.name as userInfoName
-			\,permission.val as permission
+			(select crmuser.*\,crmmanager.name as reportto_val\,userInfo.name as userInfoName
+			\,permission.val as permission\,role.val as role_val
 				from crmuser
 				left join (select * from crmuser) crmmanager on
 				crmuser.reportto = crmmanager.id
 				left join (select * from user_position where status = 1) as userposition on userposition.positionId = crmuser.id
 				left join userInfo on userposition.userId = userInfo.id
 				left join permission on crmuser.role = permission.id
+				left join crmdb.role on crmuser.role = role.id
 				where crmuser.id != -1 ORDER BY CONVERT( crmuser.code USING gbk )
 			) as aCrmuser
 		</sql-admin>
 		<sql-manager>
 			select * from (select crmuser.*\,userInfo.name as userInfoName
-			\,permission.val as permission
+			\,permission.val as permission\,role.val as role_val
 			 from crmuser
 			left join (select * from user_position where status = 1) as userposition
 			 on userposition.positionId = crmuser.id
 			left join userInfo on userInfo.id = user_position.userId
 			left join permission on crmuser.role = permission.id
+			left join crmdb.role on crmuser.role = role.id
 			 where id = ? or reportto = ? ORDER BY CONVERT( crmuser.code USING gbk )) as aCrmuser
 		</sql-manager>
 		<sql-manager-coaching>select * from (select crmuser.*\,
-		"crmmanager.name" as reportto_val\,
-		role.val role_val
+		crmmanager.name as reportto_val\,
+		role.val as role_val
 		from crmuser
 		left join (select * from crmuser) crmmanager on crmuser.reportto = 
 			crmmanager.id
@@ -1589,6 +1593,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
+				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
 			</field>
@@ -1602,6 +1607,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>true</isEditable>
 				<isShow>true</isShow>
+				<isSearchable>true</isSearchable>
 				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -1687,6 +1693,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isShow>false</isShow>
+				<isSearchable>true</isSearchable>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
@@ -1715,6 +1722,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
 <!-- 				<childNode>product</childNode> -->

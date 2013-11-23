@@ -34,7 +34,15 @@ public class CRMUser {
     private int pl1;
     private int level;
     private String code;
-    
+    private String userInfoName;
+	public String getUserInfoName() {
+		return userInfoName;
+	}
+
+	public void setUserInfoName(String userInfoName) {
+		this.userInfoName = userInfoName;
+	}
+
 	public String getName() {
 		return name;
 	}
