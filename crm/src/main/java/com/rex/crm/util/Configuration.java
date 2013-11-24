@@ -20,6 +20,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.google.gson.annotations.Expose;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.Reaction;
@@ -176,6 +177,7 @@ public class Configuration {
                 entity.setSqlManagerCoaching(sub.getString("sql-manager-coaching"));
                 entity.setSqlAdminCoaching(sub.getString("sql-admin-coaching"));
                 entity.setSqlCoaching(sub.getString("sql-coaching"));
+                entity.setExternalField(sub.getString("externalField"));
                 String filterField = sub.getString("filterField");
                 if(filterField !=null){
                     entity.setFilterField(filterField);
@@ -256,6 +258,16 @@ public class Configuration {
                     if(tooltip!=null){
                     	field.setTooltip(Integer.parseInt(tooltip));
                     }
+                    String import_field_name = sub2.getString("import_field_name");
+                    if(import_field_name !=null){
+                        field.setImport_field_name(import_field_name);
+                    }
+                    
+                    String import_external_foreignkey_field_name = sub2.getString("import_external_foreignkey_field_name");
+                    if(import_external_foreignkey_field_name!=null){
+                        field.setImport_external_foreignkey_field_name(import_external_foreignkey_field_name);
+                    }
+       
                     field.setPrimaryKey(Boolean.parseBoolean(sub2.getString("isPrimaryKey")));
                     field.setDetailLink(Boolean.parseBoolean(sub2.getString("isDetailLink"))); 
                     field.setVisible(Boolean.parseBoolean(sub2.getString("isVisible")));

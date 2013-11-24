@@ -37,6 +37,8 @@ public class Entity implements Serializable
   private String sqlCalendar;
   @Expose
   private String sqlAdminCalendar;
+  @Expose
+  private String externalField;
 
   public String getName()
   {
@@ -145,6 +147,54 @@ public class Entity implements Serializable
       for (Field f : fields)
       {
         if (f.getFieldType() != null && f.getFieldType().equalsIgnoreCase("auto"))
+        {
+          res.add(f);
+        }
+      }
+    }
+    return res;
+  }
+  
+  public List<Field> getImportFields()
+  {
+    List<Field> res = Lists.newArrayList();
+    if (fields != null)
+    {
+      for (Field f : fields)
+      {
+        if (f.getImport_field_name() != null)
+        {
+          res.add(f);
+        }
+      }
+    }
+    return res;
+  }
+  
+  public List<Field> getForeignKeyFields()
+  {
+    List<Field> res = Lists.newArrayList();
+    if (fields != null)
+    {
+      for (Field f : fields)
+      {
+        if (f.getRelationTable()!= null)
+        {
+          res.add(f);
+        }
+      }
+    }
+    return res;
+  }
+  
+  public List<Field> getImportForeignKeyFields()
+  {
+    List<Field> res = Lists.newArrayList();
+    if (fields != null)
+    {
+      for (Field f : fields)
+      {
+        if (f.getRelationTable()!= null && f.getImport_field_name()!=null)
         {
           res.add(f);
         }
@@ -291,4 +341,12 @@ public class Entity implements Serializable
   {
     this.sqlManagerCoaching = sqlManagerCoaching;
   }
+
+public String getExternalField() {
+    return externalField;
+}
+
+public void setExternalField(String externalField) {
+    this.externalField = externalField;
+}
 }

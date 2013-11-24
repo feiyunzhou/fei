@@ -4,6 +4,7 @@
 	<entity>
 		<name>account</name>
 		<display>医院</display>
+		<externalField>bdm_code</externalField>
 		<sql>
 			select * from (select account.*\,
 			account_point_pl.val as key_type_val\,
@@ -94,6 +95,7 @@
 				<priority>1</priority><isShow>true</isShow>
 				<isParam>true</isParam>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>标准医院名</import_field_name>
 			</field>
 			<field>
 				<name>bdm_code</name>
@@ -106,6 +108,7 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>BDM编码</import_field_name>
 			</field>
 			<field>
 				<name>administrativ_level</name>
@@ -117,8 +120,24 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_administrativ_level_pl</picklist>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>行政级别</import_field_name>
+			</field>
+			<field>
+				<name>grade</name>
+				<display>医院分级</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>account_grade_pl</picklist>
+				<priority>1</priority>
+				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>医院分级</import_field_name>
 			</field>
 			<field>
 				<name>hospital_type</name>
@@ -132,6 +151,7 @@
 				<picklist>account_type_pl</picklist>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>医院类型</import_field_name>
 			</field>
 			<field>
 				<name>hospital_type_val</name>
@@ -158,6 +178,7 @@
 				<picklist>account_local_or_army_pl</picklist>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>地方军队医院</import_field_name>
 			</field>
 			<field>
 				<name>comprehensive_or_specialized</name>
@@ -171,6 +192,7 @@
 				<picklist>account_comprehensive_or_specialized_pl</picklist>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>综合专科医院</import_field_name>
 			</field>
 			<field>
 				<name>comprehensive_or_specialized_val</name>
@@ -197,6 +219,7 @@
 				<picklist>account_point_pl</picklist>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>重点医院</import_field_name>
 			</field>
 			<field>
 				<name>key_type_val</name>
@@ -223,6 +246,7 @@
 				<picklist>account_status_pl</picklist>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>状态</import_field_name>
 			</field>
 			<!-- 医院基本信息 -->
 			<field>
@@ -452,6 +476,7 @@
 				<picklist>account_market_classification_pl</picklist>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
+				<import_field_name>市场分类</import_field_name>
 			</field>
 			<field>
 				<name>province</name>
@@ -467,6 +492,7 @@
 				<isParam>true</isParam>
 				<priority>2</priority><isShow>true</isShow>
 				<childNode>city</childNode>
+				<import_field_name>省份</import_field_name>
 			</field>
 			<field>
 				<name>city</name>
@@ -482,6 +508,7 @@
 				<isParam>true</isParam>
 				<fieldGroup>基本信息</fieldGroup>
 				<parentNode>province</parentNode>
+				<import_field_name>城市</import_field_name>
 			</field>
 			<field>
 				<name>districts</name>
@@ -494,6 +521,7 @@
 				<isEditable>true</isEditable>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
+				<import_field_name>区县</import_field_name>
 			</field>
 			<field>
 				<name>address</name>
@@ -582,6 +610,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
+        <externalField>externalId</externalField>
 		<sql>
 			select * from (select contact.*\,
 			contact_generalization_target_pl.val as product_target_val\,
@@ -657,6 +686,17 @@ where crmuser.reportto=? and
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+            <field>
+                <name>externalId</name>
+                <display>医生外部编码</display>
+                <data-type>number</data-type>
+                <isPrimaryKey>true</isPrimaryKey>
+                <isDetailLink>false</isDetailLink>
+                <isVisible>false</isVisible>
+                <isEditable>false</isEditable>
+                <priority>0</priority>
+                <fieldGroup>关键信息</fieldGroup>
+            </field>
 			<field>
 				<name>name</name>
 				<display>姓名</display>
@@ -669,6 +709,7 @@ where crmuser.reportto=? and
 				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>姓名</import_field_name>
 			</field>
 			<!-- Please do not change the order of this field(accountId)!! -->
 			<!-- <field> -->
@@ -686,7 +727,7 @@ where crmuser.reportto=? and
 
 			<field>
 				<name>accountId</name>
-				<display>医院</display>
+				<display>医院ID</display>
 				<isRequired>true</isRequired>
 				<alias>accountId</alias>
 				<data-type>text</data-type>
@@ -699,6 +740,8 @@ where crmuser.reportto=? and
 				<default-value-type>var</default-value-type>
 				<default-value>account.id\,account.name</default-value>
 				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>BDM编码</import_field_name>
+                <import_external_foreignkey_field_name>bdm_code</import_external_foreignkey_field_name>
 			</field>
 
 			<!-- <field> -->
@@ -756,6 +799,7 @@ where crmuser.reportto=? and
 				<priority>1</priority><isShow>true</isShow>
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>科室</import_field_name>
 			</field>
 			<field>
 				<name>department_val</name>
@@ -784,6 +828,7 @@ where crmuser.reportto=? and
 				<priority>1</priority><isShow>true</isShow>
 				<picklist>sex_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>性别</import_field_name>
 			</field>
 			<field>
 				<name>office_tel</name>
@@ -811,7 +856,7 @@ where crmuser.reportto=? and
 			</field>
 			<field>
 				<name>cellphone</name>
-				<display>手机号码</display>
+				<display>手机</display>
 				<isRequired>false</isRequired>
 				<data-type>tel</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -820,6 +865,7 @@ where crmuser.reportto=? and
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>手机</import_field_name>
 			</field>
 			<field>
 				<name>email</name>
@@ -845,6 +891,7 @@ where crmuser.reportto=? and
 				<priority>1</priority><isShow>true</isShow>
 				<picklist>contact_grade_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>医生分级</import_field_name>
 			</field>
 			<field>
 				<name>status</name>
@@ -928,6 +975,7 @@ where crmuser.reportto=? and
 				<priority>1</priority><isShow>true</isShow>
 				<picklist>contact_duty_pl</picklist>
 				<fieldGroup>基本信息</fieldGroup>
+                <import_field_name>职务</import_field_name>
 			</field>
 			<field>
 				<name>job_title</name>
@@ -941,6 +989,7 @@ where crmuser.reportto=? and
 				<priority>2</priority><isShow>true</isShow>
 				<picklist>contact_job_title_pl</picklist>
 				<fieldGroup>基本信息</fieldGroup>
+                <import_field_name>职称</import_field_name>
 			</field>
 			<field>
 				<name>product_target</name>
@@ -984,7 +1033,7 @@ where crmuser.reportto=? and
 			
 			<field>
 				<name>num_of_monthlySurgery</name>
-				<display>手术量/月</display>
+				<display>月均手术量</display>
 				<isRequired>false</isRequired>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -994,10 +1043,11 @@ where crmuser.reportto=? and
 				<isEditable>true</isEditable>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
+                <import_field_name>月均手术量</import_field_name>
 			</field>
 			<field>
 				<name>num_of_monthlyAnalgesia</name>
-				<display>镇痛泵台数/月</display>
+				<display>镇痛泵台数</display>
 				<isRequired>false</isRequired>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -1007,6 +1057,7 @@ where crmuser.reportto=? and
 				<isEditable>true</isEditable>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
+                <import_field_name>镇痛泵台数</import_field_name>
 			</field>
 			<!-- 附加信息 -->
 			<field>
@@ -1151,6 +1202,7 @@ where crmuser.reportto=? and
 		<name>userInfo</name>
 		<display>用户</display>
 		<filterField>pl1</filterField>
+		<externalField>employeeNumber</externalField>
 		<sql>
 			<!-- select * from (select userInfo.*\, -->
 			<!-- "crmmanager.name" as reportto_val\, -->
@@ -1244,6 +1296,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
+                <import_field_name>姓名</import_field_name>
 			</field>
 			<field>
 				<name>jobTitle</name>
@@ -1257,6 +1310,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+            <field>
+                <name>password</name>
+                <display>password</display>
+                <isRequired>false</isRequired>
+                <data-type>password</data-type>
+                <isPrimaryKey>false</isPrimaryKey>
+                <isDetailLink>false</isDetailLink>
+                <isVisible>false</isVisible>
+                <isEditable>false</isEditable>
+                <priority>4</priority>
+                <fieldGroup>关键信息</fieldGroup>
+                <import_field_name>Password</import_field_name>
+            </field>
 			<field>
 				<name>sex</name>
 				<display>性别</display>
@@ -1285,6 +1351,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
 				<isSearchable>true</isSearchable>
+				 <import_field_name>email</import_field_name>
 			</field>
 			<field>
 				<name>cellPhone</name>
@@ -1326,6 +1393,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>登录名</import_field_name>
 			</field>
 			<field>
 				<name>crmuserRole</name>
@@ -1353,6 +1421,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
+
 			</field>
 			<field>
 				<name>isActivited</name>
@@ -1376,8 +1445,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+				<isShow>true</isShow>
 				<relationTable>crmuser</relationTable>
+				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 <!-- 			<field> -->
@@ -1405,6 +1476,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
+                <import_field_name>employeeNumber</import_field_name>
 			</field>
 			<field>
 				<name>pl1</name>
@@ -1418,6 +1490,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
+                <import_field_name>用户状态</import_field_name>
 			</field>
 
 			<field>
@@ -1571,7 +1644,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			<field>
 				<name>name</name>
-				<display>岗位编码</display>
+				<display>岗位名称</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -1583,6 +1656,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
+				<import_field_name>岗位名称</import_field_name>
 			</field>
 			<field>
 				<name>code</name>
@@ -1597,6 +1671,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isSearchable>true</isSearchable>
 				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>岗位编码</import_field_name>
 			</field>
 			<field>
 				<name>reportto</name>
@@ -1612,6 +1687,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority>
 				<isBaseInfo>false</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>上级岗位</import_field_name>
+				<import_external_foreignkey_field_name>code</import_external_foreignkey_field_name>
 			</field>
 			<field>
 				<name>reportto_val</name>
@@ -1641,6 +1718,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
+				<import_field_name>状态</import_field_name>
 			</field>
 			<field>
 				<name>role</name>
@@ -1657,6 +1735,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<default-value>3</default-value>
 				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>角色</import_field_name>
 			</field>
 			<field>
 				<name>role_val</name>
@@ -1712,6 +1791,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isSearchable>true</isSearchable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
+				<import_field_name>产品线</import_field_name>
 <!-- 				<childNode>product</childNode> -->
 			</field>
 			<field>
@@ -1742,6 +1822,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
+				<import_field_name>一级区域</import_field_name>
 			</field>
 			<field>
 				<name>pl5</name>
@@ -1756,6 +1837,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
+				<import_field_name>二级区域</import_field_name>
 			</field>
 
 			<!-- 基本信息 -->
@@ -1772,6 +1854,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
+				<import_field_name>城市</import_field_name>
 			</field>
 <!-- 			<field> -->
 <!-- 				<name>department</name> -->

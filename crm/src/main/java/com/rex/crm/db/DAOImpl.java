@@ -931,6 +931,22 @@ public class DAOImpl
 
     }
     
+    public static List<Choice> queryExternalIds(String tablename,String externalIdFieldName) {
+        String sql = "select * from "+ tablename;
+        List<Choice> choices = Lists.newArrayList();
+        List list = DAOImpl.queryEntityRelationList(sql);
+         
+         for(Map map:(List<Map>)list){
+             Choice c = new Choice();
+             c.setId(((Number)map.get("id")).longValue());
+             c.setVal((String)map.get(externalIdFieldName));
+             choices.add(c);
+         }
+         
+        return choices;
+
+    }
+    
 
     public static List<Pair<String, Map<String, Object>>> queryFilters(String sourceTableSQL, String filterField, String filterbyTable, String... param) {
         //sourceTableSQL = sourceTableSQL.replaceAll("?", user_id);
@@ -1177,6 +1193,108 @@ public class DAOImpl
         }
         return -1L;
     }
+    
+    public static int updateRecord4Import(String table,List<String> fieldNames,List<String> values, String byfieldname, String fieldvalue){
+        String sql = "";
+        int i=0;
+        for(String name:fieldNames){
+            if(i==0){
+                sql = name +" = "+ values.get(i)  ;
+            }else{
+               sql = sql + "," + name +" = "+ values.get(i)  ;  
+            }
+            i++;
+        }
+         sql = "UPDATE  "+table+ " SET "+sql+" where "+byfieldname+" = ?" ;
+       
+       logger.debug("UPDATE sql is:"+sql);
+       Connection conn = null;
+       int inserts = 0;
+       try {
+           conn = DBHelper.getConnection();
+           QueryRunner run = new QueryRunner();
+          
+           inserts += run.update(conn, sql,fieldvalue);
+
+           System.out.println("inserted:" + inserts);
+       } catch (Exception e) {
+           logger.error("failed to add new calendar event", e);
+       } finally {
+           DBHelper.closeConnection(conn);
+       }
+       
+       return inserts;
+    }
+    
+    public static Map queryRecordByField(String table, String fieldName, String fieldValue){
+        
+        String query = "select * from "+ table + " where "+fieldName + " = ?";
+
+        Connection conn = null;
+        Map map = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            map  =  run.query(conn, query, new MapHandler(),fieldValue);
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return map;
+
+    }
+    
+    public static long importRecord(String table, List<String> fieldNames, List<String> values){        
+        String fieldssql = Joiner.on(",").join(fieldNames);
+        String valuesql = Joiner.on(",").join(values);
+        
+        logger.debug("fieldssql sql is:"+fieldssql);
+        logger.debug("valuesql sql is:"+valuesql);
+        String sql = "INSERT INTO "+table+" ("+fieldssql+") VALUES ("+valuesql+")";
+       
+       logger.debug("insert sql is:"+sql);
+
+       Connection conn = null;
+       //PreparedStatement statement = null;
+       ResultSet generatedKeys = null;
+       PreparedStatement statement = null;
+       long key = -1;
+       try {
+           conn = DBHelper.getConnection();
+           
+           statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+           
+           int affectedRows = statement.executeUpdate();
+           if (affectedRows == 0) {
+               logger.error("Failed to insert data");
+               return -1;
+           }
+           
+           generatedKeys = statement.getGeneratedKeys();
+           if (generatedKeys.next()) {
+               //user.setId(generatedKeys.getLong(1));
+                key = generatedKeys.getLong(1);
+           } else {
+               logger.error("failed to insert data");
+               return -1;
+           }
+           
+       } catch (Exception e) {
+           logger.error("failed to add new calendar event", e);
+       } finally {
+           if (generatedKeys != null) try { generatedKeys.close(); } catch (SQLException logOrIgnore) {}
+           if (statement != null) try { statement.close(); } catch (SQLException logOrIgnore) {}
+           if (conn != null) try { conn.close(); } catch (SQLException logOrIgnore) {}
+       }
+       
+       return key;
+
+   }
+    
+    
     public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
          String fieldssql = Joiner.on(",").join(fieldNames);
          String valuesql = Joiner.on(",").join(values);

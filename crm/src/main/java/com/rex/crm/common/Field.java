@@ -59,6 +59,11 @@ public class Field implements Serializable
   private int tooltip;
   @Expose
   private boolean isExistsDefaultValue;
+  
+  @Expose
+  private String import_field_name;
+  @Expose 
+  private String import_external_foreignkey_field_name;
 
   public boolean isRequired()
   {
@@ -266,7 +271,15 @@ public class Field implements Serializable
     this.default_value_type = default_value_type;
   }
 
-  public boolean isParam()
+  public String getImport_external_foreignkey_field_name() {
+    return import_external_foreignkey_field_name;
+}
+
+public void setImport_external_foreignkey_field_name(String import_external_foreignkey_field_name) {
+    this.import_external_foreignkey_field_name = import_external_foreignkey_field_name;
+}
+
+public boolean isParam()
   {
     return isParam;
   }
@@ -325,4 +338,12 @@ public class Field implements Serializable
   {
     this.isExistsDefaultValue = isExistsDefaultValue;
   }
+
+public String getImport_field_name() {
+    return import_field_name;
+}
+
+public void setImport_field_name(String import_field_name) {
+    this.import_field_name = import_field_name;
+}
 }
