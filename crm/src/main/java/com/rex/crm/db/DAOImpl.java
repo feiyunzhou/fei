@@ -1299,6 +1299,68 @@ public class DAOImpl
    }
     
     
+    public static long insertImportMetaInfo(String entityName,String import_file_name){        
+
+        String sql = "INSERT INTO importMetaInfo (entity_name,importfilename,whenadded,status) VALUES ('"+entityName+"','"+import_file_name+"',now(),0)";
+       
+       logger.debug("insert sql is:"+sql);
+
+       Connection conn = null;
+       //PreparedStatement statement = null;
+       ResultSet generatedKeys = null;
+       PreparedStatement statement = null;
+       long key = -1;
+       try {
+           conn = DBHelper.getConnection();
+           
+           statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+           
+           int affectedRows = statement.executeUpdate();
+           if (affectedRows == 0) {
+               logger.error("Failed to insert data");
+               return -1;
+           }
+           
+           generatedKeys = statement.getGeneratedKeys();
+           if (generatedKeys.next()) {
+               //user.setId(generatedKeys.getLong(1));
+                key = generatedKeys.getLong(1);
+           } else {
+               logger.error("failed to insert data");
+               return -1;
+           }
+           
+       } catch (Exception e) {
+           logger.error("failed to insertImportMetaInfo", e);
+       } finally {
+           if (generatedKeys != null) try { generatedKeys.close(); } catch (SQLException logOrIgnore) {}
+           if (statement != null) try { statement.close(); } catch (SQLException logOrIgnore) {}
+           if (conn != null) try { conn.close(); } catch (SQLException logOrIgnore) {}
+       }
+       
+       return key;
+
+   }
+    
+    public static boolean updateImportMetaInfoById( String logfilename,int num_of_total_record, int num_of_imported,int num_of_failed,int result,long id){
+        String sql = "UPDATE importMetaInfo SET logfilename=?,num_of_total_record=?,num_of_imported=?,num_of_failed=?,result=? where id=?";
+        Connection conn = null;
+        int inserts = 0;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            inserts += run.update(conn, sql,logfilename,num_of_total_record,num_of_imported,num_of_failed,result,id);
+        } catch (Exception e) {
+            logger.error("failed to activity", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        if(inserts>0){
+            return true;
+        }
+        return false;
+    }
+    
     public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
          String fieldssql = Joiner.on(",").join(fieldNames);
          String valuesql = Joiner.on(",").join(values);

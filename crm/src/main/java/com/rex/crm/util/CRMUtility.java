@@ -11,10 +11,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
+import org.apache.velocity.app.VelocityEngine;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -42,6 +48,22 @@ public class CRMUtility {
        private static String configPath = null;
        private static Properties commonProps = null;
        public static final String STAT_LOG_IN_OUT = "logInOut";
+       public static ThreadPoolExecutor executorPool;
+       
+       
+       public static ThreadPoolExecutor getThreadPoolExecutor() {
+
+           if (executorPool == null) {
+               synchronized (Configuration.class) {
+                   ThreadFactory threadFactory = Executors.defaultThreadFactory();
+                   
+                   //creating the ThreadPoolExecutor 
+                   executorPool = new ThreadPoolExecutor(100, 100, 10, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100), threadFactory);
+               }
+           }
+           return executorPool;
+
+       }
     
 	   public static ImmutableListMultimap<Integer, Account> categorizeAccountsByCityIds(List<Account> accounts){
 	    	Function<Account, Integer> idFunction = new Function<Account, Integer>() {

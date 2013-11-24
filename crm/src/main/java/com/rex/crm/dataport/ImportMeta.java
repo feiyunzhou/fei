@@ -29,170 +29,13 @@ import org.apache.wicket.util.io.IClusterable;
  */
 public final class ImportMeta implements IClusterable
 {
-	private String department = "";
-	private String email;
-
-	private String firstName;
-	private String lastName;
-
-	private Set<String> roles = new HashSet<String>();
-
-	private String rolesSetName;
-
-	private String userName;
-	
-	private String entityName;
-
-	/**
-	 * Gets departement.
-	 * 
-	 * @return departement
-	 */
-	public String getDepartment()
-	{
-		return department;
-	}
-
-	/**
-	 * Gets email.
-	 * 
-	 * @return email
-	 */
-	public String getEmail()
-	{
-		return email;
-	}
-
-	/**
-	 * Gets firstName.
-	 * 
-	 * @return firstName
-	 */
-	public String getFirstName()
-	{
-		return firstName;
-	}
-
-	/**
-	 * Gets lastName.
-	 * 
-	 * @return lastName
-	 */
-	public String getLastName()
-	{
-		return lastName;
-	}
-
-	/**
-	 * Gets roles.
-	 * 
-	 * @return roles
-	 */
-	public Set<String> getRoles()
-	{
-		return roles;
-	}
-
-	/**
-	 * Gets rolesSetName.
-	 * 
-	 * @return rolesSetName
-	 */
-	public String getRolesSetName()
-	{
-		return rolesSetName;
-	}
-
-	/**
-	 * Gets userName.
-	 * 
-	 * @return userName
-	 */
-	public String getUserName()
-	{
-		return userName;
-	}
-
-	/**
-	 * Sets departement.
-	 * 
-	 * @param departement
-	 *            departement
-	 */
-	public void setDepartment(String departement)
-	{
-		if (departement == null)
-		{
-			departement = "";
-		}
-		department = departement;
-	}
-
-	/**
-	 * Sets email.
-	 * 
-	 * @param email
-	 *            email
-	 */
-	public void setEmail(String email)
-	{
-		this.email = email;
-	}
-
-	/**
-	 * Sets firstName.
-	 * 
-	 * @param firstName
-	 *            firstName
-	 */
-	public void setFirstName(String firstName)
-	{
-		this.firstName = firstName;
-	}
-
-	/**
-	 * Sets lastName.
-	 * 
-	 * @param lastName
-	 *            lastName
-	 */
-	public void setLastName(String lastName)
-	{
-		this.lastName = lastName;
-	}
-
-	/**
-	 * Sets roles.
-	 * 
-	 * @param roles
-	 *            roles
-	 */
-	public void setRoles(Set<String> roles)
-	{
-		this.roles = roles;
-	}
-
-	/**
-	 * Sets rolesSetName.
-	 * 
-	 * @param rolesSetName
-	 *            rolesSetName
-	 */
-	public void setRolesSetName(String rolesSetName)
-	{
-		this.rolesSetName = rolesSetName;
-	}
-
-	/**
-	 * Sets userName.
-	 * 
-	 * @param userName
-	 *            userName
-	 */
-	public void setUserName(String userName)
-	{
-		this.userName = userName;
-	}
+    private String entityName;
+    private String importfilename;
+    private String logfilename;
+    private int num_of_total_record;
+    private int num_of_imported;
+    private int num_of_failed;
+    private int result;
 
     public String getEntityName() {
         return entityName;
@@ -201,4 +44,55 @@ public final class ImportMeta implements IClusterable
     public void setEntityName(String entityName) {
         this.entityName = entityName;
     }
+
+    public String getImportfilename() {
+        return importfilename;
+    }
+
+    public void setImportfilename(String importfilename) {
+        this.importfilename = importfilename;
+    }
+
+    public String getLogfilename() {
+        return logfilename;
+    }
+
+    public void setLogfilename(String logfilename) {
+        this.logfilename = logfilename;
+    }
+
+    public int getNum_of_total_record() {
+        return num_of_total_record;
+    }
+
+    public void setNum_of_total_record(int num_of_total_record) {
+        this.num_of_total_record = num_of_total_record;
+    }
+
+    public int getNum_of_imported() {
+        return num_of_imported;
+    }
+
+    public void setNum_of_imported(int num_of_imported) {
+        this.num_of_imported = num_of_imported;
+    }
+
+    public int getNum_of_failed() {
+        return num_of_failed;
+    }
+
+    public void setNum_of_failed(int num_of_failed) {
+        this.num_of_failed = num_of_failed;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+   
+   
+   
 }

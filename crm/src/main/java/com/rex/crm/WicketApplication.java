@@ -1,5 +1,11 @@
 package com.rex.crm;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.RuntimeConfigurationType;
@@ -18,6 +24,7 @@ import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.EditDataPage;
 import com.rex.crm.common.EntityDetailPage;
+import com.rex.crm.util.CRMUtility;
 
 /**
  * Application object for your web application. If you want to run this application without deploying, run the Start class.
@@ -27,7 +34,7 @@ import com.rex.crm.common.EntityDetailPage;
 public class WicketApplication extends WebApplication
 {    	
     
-    
+   
     
 	@Override
     public RuntimeConfigurationType getConfigurationType() {
@@ -106,7 +113,18 @@ public class WicketApplication extends WebApplication
 	             }
 	         });
 	         
+	         
+	       
+	         
 	}
-	
 
+    @Override
+    protected void onDestroy() {
+        CRMUtility.getThreadPoolExecutor().shutdown();
+        super.onDestroy();
+    }
+	
+     
+	
+	
 }
