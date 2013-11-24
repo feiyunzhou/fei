@@ -4947,6 +4947,17 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 			</field>
 			<field>
+				<name>num_of_updated</name>
+				<display>成功更新数</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+			</field>
+			<field>
 				<name>num_of_failed</name>
 				<display>失败导入数</display>
 				<data-type>text</data-type>

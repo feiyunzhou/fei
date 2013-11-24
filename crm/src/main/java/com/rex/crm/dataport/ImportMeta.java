@@ -35,6 +35,7 @@ public final class ImportMeta implements IClusterable
     private int num_of_total_record;
     private int num_of_imported;
     private int num_of_failed;
+    private int num_of_updated;
     private int result;
 
     public String getEntityName() {
@@ -91,6 +92,14 @@ public final class ImportMeta implements IClusterable
 
     public void setResult(int result) {
         this.result = result;
+    }
+
+    public int getNum_of_updated() {
+        return num_of_updated;
+    }
+
+    public void setNum_of_updated(int num_of_updated) {
+        this.num_of_updated = num_of_updated;
     }
    
    

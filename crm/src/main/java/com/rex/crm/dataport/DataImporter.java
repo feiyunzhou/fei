@@ -44,6 +44,7 @@ public class DataImporter {
         int num_of_total_record = 0;
         int num_of_imported = 0;
         int num_of_failed = 0;
+        int num_of_updated = 0;
         int result = 0;
         File logfile = File.createTempFile("crm_error", "file.log");
         importMeta.setLogfilename(logfile.getAbsolutePath());
@@ -132,6 +133,7 @@ public class DataImporter {
                         }
                        
                    }else if(f.getRelationTable()!=null){
+                           
                            String relationTable = f.getRelationTable();     
                            Map<String, String> externalId2idMap = relationTableCache.get(relationTable);
                            String id = externalId2idMap.get(value);
@@ -139,15 +141,13 @@ public class DataImporter {
                            if(id == null){
                                logger.debug("failed to get id:"+id);
                                error_writter.write(relationTable+"中没有此外部ID:"+value +" === " +reader.getRawRecord()+"\n");
-                               result = 1;
-                               flag = false;
-                               break;
+                               //result = 1;
+                               
+                               //flag = false;
+                              // break;
                            }else{
                                fieldNames.add(f.getName());
                                fieldValues.add(id);
-                               if(id.equalsIgnoreCase("2733")){
-                                   logger.debug("XXXX");
-                               }
                                logger.debug("added:"+f.getName() + "=" +id);
                            }
                           
