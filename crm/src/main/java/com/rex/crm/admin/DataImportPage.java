@@ -86,7 +86,7 @@ public class DataImportPage extends AdminTemplatePage
                       entityName = "contact";
                        break;
                   case 2:
-                      entityName = "userInfo";
+                      entityName = "userinfo";
                       break;
                   case 3:
                       entityName = "crmuser";

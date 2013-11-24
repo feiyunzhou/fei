@@ -19,7 +19,7 @@ CREATE TABLE importMetaInfo
 
 
 
-
+DROP TABLE IF EXISTS `importstatus`;
 CREATE TABLE `crmdb`.`importstatus` (
   `id` INT NOT NULL,
   `val` VARCHAR(45),
