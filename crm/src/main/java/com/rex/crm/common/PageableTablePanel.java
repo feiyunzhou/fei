@@ -17,6 +17,7 @@ import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.DownloadLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -25,6 +26,7 @@ import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -130,12 +132,21 @@ public class PageableTablePanel extends Panel {
                             }
                             columnitem.add(new Label("celldata", value));
                         }else {
+                           
                             
-                            String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
-                            if(value.equals("null")||value.isEmpty()){
-                              value = "无";
+                             String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
+                            final String filepath = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
+                            
+                            if(f.getDataType().equalsIgnoreCase("downloadlink")){
+                                columnitem.add(new DownloadLinkFragment("celldata", "downloadlinkFragment", this.getParent().getParent(), value));
+                                //columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
+                                
+                            }else{
+                              if(value.equals("null")||value.isEmpty()){
+                                 value = "无";
+                               }
+                               columnitem.add(new Label("celldata", value));
                             }
-                            columnitem.add(new Label("celldata", value));
                         }
                     }
                     columnRepeater.add(columnitem);
@@ -191,6 +202,30 @@ public class PageableTablePanel extends Panel {
         super(id, model);
     }
 
+    
+    private class DownloadLinkFragment extends Fragment {
+        public DownloadLinkFragment( String id, String markupId, MarkupContainer markupProvider,final String filename) {
+            super(id, markupId, markupProvider);
+            final File tempFile = new File(filename);
+            DownloadLink downloadlink = new DownloadLink("downloadlink",
+                    new AbstractReadOnlyModel<File>(){
+
+                        @Override
+                        public File getObject() {
+                            
+
+                            return tempFile;
+                        }
+               
+            },tempFile.getName());
+            downloadlink.add(new Label("fn",tempFile.getName()));
+            
+            add(downloadlink);
+            
+        }
+        
+    }
+    
     private class DetailLinkFragment extends Fragment {
         /**
          * Construct.

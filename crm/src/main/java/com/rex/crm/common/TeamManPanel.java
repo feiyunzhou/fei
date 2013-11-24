@@ -75,9 +75,13 @@ public class TeamManPanel extends Panel {
         }else if(en.equalsIgnoreCase("userInfo")){
           if(type == 0){
             //for the 岗位列表
-            teamSql = "select * from (select user_position.status,crmuser.name as positionId,userInfo.name as userId from user_position left join crmuser on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId where userId = ?) as atable";
-//            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a left join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
-        }
+           // teamSql = "select * from (select user_position.status,crmuser.name as positionId,userInfo.name as userId from user_position left join crmuser on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId where userId = ?) as atable";
+          
+           // teamSql = "select * from (select user_position.status,crmuser.name as positionId,userInfo.name as userId " +
+           // 		"from user_position left join crmuser on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId where userId = ?) as atable";
+        
+              teamSql  = "select * from user_position where userId = ? order by whenadded DESC limit 1";
+          }
 //        else if (type == 1){
 //          //for the 用户列表
 //          teamSql = "select  * from userinfo inner join  (select  a.id as aid, b.id as rid from crmuser as a inner join contactcrmuser as b ON a.id = b.crmuserId where b.contactId = ?) as c on userinfo.positionId = c.aid";

@@ -1301,9 +1301,9 @@ public class DAOImpl
     
     public static long insertImportMetaInfo(String entityName,String import_file_name){        
 
-        String sql = "INSERT INTO importMetaInfo (entity_name,importfilename,whenadded,status) VALUES ('"+entityName+"','"+import_file_name+"',now(),0)";
+        String sql = "INSERT INTO importMetaInfo (name,entity_name,importfilename,whenadded,result) VALUES ('fakename','"+entityName+"','"+import_file_name+"',now(),NULL)";
        
-       logger.debug("insert sql is:"+sql);
+       logger.debug("insert sql XXXXX is:"+sql);
 
        Connection conn = null;
        //PreparedStatement statement = null;
@@ -1343,13 +1343,14 @@ public class DAOImpl
    }
     
     public static boolean updateImportMetaInfoById( String logfilename,int num_of_total_record, int num_of_imported,int num_of_failed,int result,long id){
-        String sql = "UPDATE importMetaInfo SET logfilename=?,num_of_total_record=?,num_of_imported=?,num_of_failed=?,result=? where id=?";
+        String sql = "UPDATE importMetaInfo SET logfilename=?,num_of_total_record=?,num_of_imported=?,num_of_failed=?,result=?,status=? where id=?";
+        logger.debug("sql:"+sql);
         Connection conn = null;
         int inserts = 0;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            inserts += run.update(conn, sql,logfilename,num_of_total_record,num_of_imported,num_of_failed,result,id);
+            inserts += run.update(conn, sql,logfilename,num_of_total_record,num_of_imported,num_of_failed,result,1,id);
         } catch (Exception e) {
             logger.error("failed to activity", e);
         } finally {

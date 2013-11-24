@@ -87,7 +87,6 @@ public final class SignIn extends WebPage
         		//判断用户是否激活密码是否存在()
             	UserInfo user = DAOImpl.getUserByLoginName(getUsername());
             	if(null!=user){
-            		if(user.getPl1()==1){
               	        	// Sign the user in
               	            if (session.signIn(getUsername(),getPassword()))
                             {
@@ -120,10 +119,7 @@ public final class SignIn extends WebPage
               	                // Register the error message with the feedback panel
               	                error(errmsg);
               	            }
-            		}else{
-            			String errmsg = getString("loginError", null, "此用户已失效!");
-                        error(errmsg);
-            		}
+            		
             	}else{
             		String errmsg = getString("loginError", null, "用户名不存在!");
    	                error(errmsg);

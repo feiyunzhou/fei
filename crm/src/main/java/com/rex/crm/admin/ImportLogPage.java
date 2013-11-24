@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.file.File;
 
@@ -173,6 +174,11 @@ public class ImportLogPage extends AdminTemplatePage
 
     }
     add(new PageableTablePanel("datalist", entity, tdata, null));
+    
+    add(new BookmarkablePageLink("refresh_btn",ImportLogPage.class));
+    add(new BookmarkablePageLink("import_btn",DataImportPage.class));
+    
+    
 
   }
 }

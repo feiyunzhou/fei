@@ -1199,7 +1199,7 @@ where crmuser.reportto=? and
 		</fields>
 	</entity>
 	<entity>
-		<name>userInfo</name>
+		<name>userinfo</name>
 		<display>用户</display>
 		<filterField>pl1</filterField>
 		<externalField>employeeNumber</externalField>
@@ -1495,7 +1495,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
-                <import_field_name>用户状态</import_field_name>
 			</field>
 
 			<field>
@@ -1922,6 +1921,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <entity>
 	<name>user_position</name>
 	<display>岗位关系</display>
+	<externalField>externalId</externalField>
 	<sql>
 	select user_position.id\,crmuser.name as positionId\,userInfo.name as userId from user_position 
 	left join crmuser on user_position.positionId = crmuser.id 
@@ -1947,8 +1947,12 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+				<relationTable>userinfo</relationTable>
+				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>EmployeeNumber</import_field_name>
+				<import_external_foreignkey_field_name>employeeNumber</import_external_foreignkey_field_name>
 			</field>
 			<field>
 				<name>positionId</name>
@@ -1958,8 +1962,12 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<relationTable>crmuser</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>PositionExternalId</import_field_name>
+				<import_external_foreignkey_field_name>code</import_external_foreignkey_field_name>
 			</field>
 			<field>
 				<name>status</name>
@@ -4738,7 +4746,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<entity>
 		<name>importLog</name>
 		<display>导入日志</display>
-		<sql>select * from importLog</sql>
+		<sql>select * from importMetaInfo order by whenadded DESC</sql>
+		<sql-admin>select * from importMetaInfo order by whenadded DESC </sql-admin>
+		<sql-ent>select * from importMetaInfo order by whenadded DESC</sql-ent>
 		<fields>
 			<field>
 				<name>id</name>
@@ -4766,7 +4776,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>importfilename</name>
 				<display>导入文件名</display>
-				<data-type>text</data-type>
+				<data-type>downloadlink</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -4777,8 +4787,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			<field>
 				<name>logfilename</name>
-				<display>失败导入日志</display>
-				<data-type>text</data-type>
+				<display>日志文件</display>
+				<data-type>downloadlink</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>

@@ -89,13 +89,16 @@ public class DataImporter {
                relationTableCache.put(relationTable, map);   
            }   
        }
-       
+       int line = 0;
+       boolean flag = true;
        while(reader.readRecord()){
-           num_of_total_record++;
+           line++;
+           num_of_total_record++;   
            ArrayList<String> fieldNames = Lists.newArrayList();
            ArrayList<String> fieldValues = Lists.newArrayList();
-           
+           flag = true;
            for(Field f:importfields){
+              
                //if(relationfields.contains(f)) continue;
                
                if(reader.get(f.getImport_field_name()) != null){
@@ -121,8 +124,10 @@ public class DataImporter {
                             fieldValues.add(value2idMap.get(value));
                         }else{
                             logger.debug("failed to get matched value");
-                            error_writter.write("未查到值："+value +"  "+  reader.getRawRecord()+"\n");
+                            error_writter.write(f.getImport_field_name()+ " 未查到值："+value +"  "+  reader.getRawRecord()+"\n");
+                            num_of_failed++;
                             result = 1;
+                            flag = false;
                             break;
                         }
                        
@@ -130,14 +135,22 @@ public class DataImporter {
                            String relationTable = f.getRelationTable();     
                            Map<String, String> externalId2idMap = relationTableCache.get(relationTable);
                            String id = externalId2idMap.get(value);
+                           logger.debug("line:"+line);
                            if(id == null){
                                logger.debug("failed to get id:"+id);
-                               error_writter.write("系统中没有此外部ID " +reader.getRawRecord()+"\n");
+                               error_writter.write(relationTable+"中没有此外部ID:"+value +" === " +reader.getRawRecord()+"\n");
                                result = 1;
+                               flag = false;
                                break;
+                           }else{
+                               fieldNames.add(f.getName());
+                               fieldValues.add(id);
+                               if(id.equalsIgnoreCase("2733")){
+                                   logger.debug("XXXX");
+                               }
+                               logger.debug("added:"+f.getName() + "=" +id);
                            }
-                           fieldNames.add(f.getName());
-                           fieldValues.add(id);
+                          
                            
                    }else{
                        if(f.getDataType().equalsIgnoreCase("password")){
@@ -154,7 +167,7 @@ public class DataImporter {
            }
            
             // fieldNames.add("externalId");
-            if (fieldNames.size() > 0) {
+            if (fieldNames.size() > 0 && flag) {
                 
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 fieldNames.add("modify_datetime");
@@ -164,10 +177,14 @@ public class DataImporter {
                 fieldNames.add("modifier");
                 fieldValues.add("'数据导入模块'");
 
+                if(entityName.equalsIgnoreCase("user_position")){
+                    fieldNames.add("isPrimary");
+                    fieldValues.add("1");
+                }
                 
                 long id = DAOImpl.importRecord(entityName, fieldNames, fieldValues);
                 // failed insert record, we guess we need update record
-                boolean flag = false;
+                //boolean flag = false;
                 if (id < 0) {
 
                     // we query the record if it exist, if it exist, we think it
@@ -180,7 +197,7 @@ public class DataImporter {
                         if(updates > 0){
                             //success_update_writter.write(reader.getRawRecord()+"\n");
                             inserts_list.add(reader.getValues());
-                            num_of_imported++;
+                            //num_of_imported++;
                         }else{
                             error_writter.write("更新错误："+reader.getRawRecord()+ "\n");
                             num_of_failed++;
@@ -292,10 +309,24 @@ public class DataImporter {
      
     }
     
+    public static void importDataOnSync(final String entityName, final String filename) throws IOException{
+        
+        //Get the ThreadFactory implementation to use
+           
+                 
+                   DataImporter importer = new DataImporter();
+                   DataImporter.WorkerThread worker = importer.new WorkerThread(entityName,filename);
+                   worker.processCommand();
+                   //CRMUtility.getThreadPoolExecutor().execute(thread);
+        
+       }
+    
     public static void main(String args[]) throws JAXBException, IOException, Exception {
         DataImporter importer = new DataImporter();
         //importer.importPositionData("crmuser","/Users/feiyunzhou/git/tiger/tigerp/crm/src/main/doc/crmuser_import.csv");
-        importer._importData("userInfo","/Users/feiyunzhou/git/tiger/tigerp/crm/src/main/doc/userinfo_import.csv");
+       importer.importDataOnBackground("user_position","/Users/feiyunzhou/git/tiger/tigerp/crm/src/main/doc/user_position_import.csv");
+        //importer.importDataOnBackground("userinfo","/Users/feiyunzhou/git/tiger/tigerp/crm/src/main/doc/userinfo_import.csv");
+    
     }
     
     private class WorkerThread implements Runnable {
@@ -313,7 +344,7 @@ public class DataImporter {
             
         }
 
-        private void processCommand() {
+        public void processCommand() {
             try {
 
                 long id = DAOImpl.insertImportMetaInfo(entityName, filename);

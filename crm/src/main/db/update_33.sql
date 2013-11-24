@@ -19,6 +19,7 @@ CREATE TABLE importMetaInfo
 
 
 
+
 CREATE TABLE `crmdb`.`importstatus` (
   `id` INT NOT NULL,
   `val` VARCHAR(45),
@@ -34,5 +35,16 @@ CREATE TABLE `crmdb`.`importresult` (
 ) ENGINE InnoDB;
 INSERT INTO importresult (id,val) VALUES(0,'成功');
 INSERT INTO importresult (id,val) VALUES(1,'失败');
+
+
+ALTER table user_position add externalId varchar(128);
+ALTER table user_position add whenadded DATETIME;
+ALTER table user_position add modifier VARCHAR(255);
+ALTER table user_position add modify_datetime DATETIME;
+
+
+ALTER TABLE user_position drop KEY user_position_unique;  
+
+
 
 
