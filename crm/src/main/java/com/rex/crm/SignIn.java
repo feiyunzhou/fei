@@ -88,11 +88,6 @@ public final class SignIn extends WebPage
             	UserInfo user = DAOImpl.getUserByLoginName(getUsername());
             	if(null!=user){
             		if(user.getPl1()==1){
-            			if(user.IsActivited()==0){
-                          	 // Get the error message from the properties file associated with the Component
-                              String errmsg = getString("loginError", null, "此用户未激活!");
-                              error(errmsg);
-                          }else{
               	        	// Sign the user in
               	            if (session.signIn(getUsername(),getPassword()))
                             {
@@ -125,7 +120,6 @@ public final class SignIn extends WebPage
               	                // Register the error message with the feedback panel
               	                error(errmsg);
               	            }
-                          }
             		}else{
             			String errmsg = getString("loginError", null, "此用户已失效!");
                         error(errmsg);

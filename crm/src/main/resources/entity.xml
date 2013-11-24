@@ -2804,54 +2804,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-			
-			<field>
-				<name>accountId</name>
-				<display>医院</display>
-				<isRequired>true</isRequired>
-				<alias>accountId</alias>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
-				<relationTable>account</relationTable>
-				<default-value-type>var</default-value-type>
-				<default-value>account.id\,account.name</default-value>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			
-			<field>
-				<name>accountName_val</name>
-				<display>医疗机构</display>
-				<isRequired>false</isRequired>
-				<alias>accountId</alias>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>false</isEditable>
-				<priority>2</priority><isShow>true</isShow>
-				<isSearchable>true</isSearchable>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			
-			<field>
-				<name>department</name>
-				<display>科室</display>
-				<isRequired>true</isRequired>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<default-value-type>val</default-value-type>
-				<default-value>0</default-value>
-				<priority>2</priority><isShow>true</isShow>
-				<picklist>contact_department_pl</picklist>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
+	
 			<field>
 				<name>status</name>
 				<display>状态</display>

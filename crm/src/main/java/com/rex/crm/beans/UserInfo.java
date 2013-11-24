@@ -29,8 +29,6 @@ public class UserInfo {
 	private int role;
 	private int reportto;
 	private int sex;
-    private int isActivited;
-    private long ts;
     private int pl1;
     private int level;
     private String position_code;
@@ -142,14 +140,6 @@ public class UserInfo {
 		this.photo = photo;
 	}
 
-	public int IsActivited() {
-		return isActivited;
-	}
-
-	public void setIsActivited(int isActivited) {
-		this.isActivited = isActivited;
-	}
-
 	@Override
 	public String toString() {
 		Gson gson = new GsonBuilder().create();
@@ -247,13 +237,6 @@ public class UserInfo {
 			this.sex = sex;
 		}
 
-		public long getTs() {
-			return ts;
-		}
-
-		public void setTs(long ts) {
-			this.ts = ts;
-		}
 
 		public int getPl1() {
 			return pl1;

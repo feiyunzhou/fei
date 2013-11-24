@@ -1738,7 +1738,6 @@ public class DAOImpl
     }
     
     public static UserPosition getActivityPositionInfoByUserId(int uid) {
-      System.out.println("登录"+uid);
       Connection conn = null;
       UserPosition user = new UserPosition();
       try {
@@ -2145,14 +2144,14 @@ public class DAOImpl
     //reset password
     public static int  resetUserPassword(int entityId){
     	System.out.println("reset password");
-    	String  sql=" UPDATE userinfo SET password='',isActivited= 0 where id =?";
+    	String  sql=" UPDATE userinfo SET password= ?, num_of_signIn = 0 where id =?";
         Connection conn = null;
         int insert = 0;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
-            insert = run.update(conn, sql,entityId);
+            insert = run.update(conn, sql,DigestUtils.md5Hex("12345"),entityId);
     		logger.debug("reset password success!");
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);

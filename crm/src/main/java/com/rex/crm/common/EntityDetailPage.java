@@ -219,10 +219,10 @@ public class EntityDetailPage extends TemplatePage {
             @Override
             public void resetPassword(int userId){
             	if(DAOImpl.resetUserPassword(userId)>0){
-            		//获取对象
+            /*		//获取对象
                 	UserInfo crmuser = DAOImpl.getUserInfoById(userId);
                 	//发送邮件,判断成功与否
-                	if(SendEmail.sendMail(String.valueOf(crmuser.getTs())+"_"+crmuser.getId(),crmuser.getEmail())){
+                	if(SendEmail.sendMail(String.valueOf(crmuser.getTs())+"_"+crmuser.getId(),crmuser.getEmail())){*/
                 		div.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		groupitem.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
@@ -231,8 +231,8 @@ public class EntityDetailPage extends TemplatePage {
                 	/*if(sendMail(crmuser.getLoginName(),crmuser.getEmail())){
                 		//promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		setResponsePage(new UserPage());
-                	};*/
-            	};
+                	};
+            	};*/
             }
 
             @Override
