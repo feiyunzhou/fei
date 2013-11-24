@@ -17,11 +17,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.file.File;
 
 import com.google.common.collect.Lists;
-<<<<<<< HEAD
 import com.google.common.io.Files;
-=======
 import com.rex.crm.admin.AdminTemplatePage;
->>>>>>> modify bug
 import com.rex.crm.beans.Choice;
 import com.rex.crm.dataport.DataImporter;
 import com.rex.crm.dataport.ImportDataWizard;
