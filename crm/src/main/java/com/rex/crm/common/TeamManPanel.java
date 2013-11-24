@@ -75,7 +75,7 @@ public class TeamManPanel extends Panel {
         }else if(en.equalsIgnoreCase("userInfo")){
           if(type == 0){
             //for the 岗位列表
-            teamSql = "select * from (select * from user_position where userId = ?) as atable";
+            teamSql = "select * from (select user_position.status,crmuser.name as positionId,userInfo.name as userId from user_position left join crmuser on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId where userId = ?) as atable";
 //            teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a left join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
         }
 //        else if (type == 1){
@@ -96,7 +96,7 @@ public class TeamManPanel extends Panel {
 //            }
             else if (type == 3){
               //for the 下属岗位
-              teamSql = "select * from (select * from  crmuser where reportto = ?  ) as atable";
+              teamSql = "select * from (select crmuser.*,userInfo.name as userInfoName ,permission.val as permission from  crmuser left join user_position on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId  left join permission on crmuser.role = permission.id where reportto = ?  ) as atable";
             }
         }
         List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
@@ -155,9 +155,11 @@ public class TeamManPanel extends Panel {
                    teamtable = "accountcrmuser";
                }else if(type == 1){
                    teamtable = "contactcrmuser";
-               }else {//if(type == 2)
-                 teamtable = "user_position";
+               }else {
+                 teamtable = "crmuser";
                }
+           }else if(currentEntityName.equalsIgnoreCase("userInfo")){
+        	   teamtable = "user_position";
            }
             
            for(String rid:selectedRowIds){

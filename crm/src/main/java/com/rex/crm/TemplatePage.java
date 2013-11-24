@@ -53,6 +53,7 @@ import com.google.gson.Gson;
 import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.admin.DataImportPage;
 import com.rex.crm.admin.DownloadPage;
+import com.rex.crm.admin.ImportLogPage;
 import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.ProductPage;
 import com.rex.crm.admin.ReportPage;
@@ -268,7 +269,8 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         BookmarkablePageLink integrationPage = new BookmarkablePageLink("integrationPage",AreaPage.class );
         admin_menu.add(integrationPage);
         
-        
+        BookmarkablePageLink importLogPage = new BookmarkablePageLink("importLog",ImportLogPage.class );
+        admin_menu.add(importLogPage);
 
         admin_menu.setVisible(false);
         if(roleId == 1) admin_menu.setVisible(true);

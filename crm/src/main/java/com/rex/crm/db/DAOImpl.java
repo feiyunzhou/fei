@@ -442,23 +442,27 @@ public class DAOImpl
                 sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("account")){
                 sql = "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)";
+            }else if(entityName.equalsIgnoreCase("userInfo")){
+                sql = "INSERT INTO user_position (positionId,userId,createtime,isPrimary) VALUES (?,?,?,?)";
             }else if(entityName.equalsIgnoreCase("crmuser")){
                 if(type == 0){
                     sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
                 }else if(type == 1){
                     sql = "INSERT INTO contactcrmuser (crmuserId,contactId) VALUES (?,?)";
                 }else{
-                    sql = "INSERT INTO user_position (userId,positionId,status,createtime) VALUES (?,?,?,?)";
+                    sql = "update  crmuser set reportto = ?  where id = "+userId+" ";
                 }
             }
-            int status = 1;
+            int isPrimary = 1;
             Connection conn = null;
             try {
                 conn = DBHelper.getConnection();
                 QueryRunner run = new QueryRunner();
                 int inserts = 0;
-                if(type == 2){
-                  inserts = run.update(conn, sql, userId,cId,status,date_value);
+                if(entityName.equalsIgnoreCase("userInfo")){
+                  inserts = run.update(conn, sql, userId,cId,date_value,isPrimary);
+                }else if(type == 3){
+                	inserts = run.update(conn, sql, cId);
                 }else {
                   inserts = run.update(conn, sql, cId,userId);
                 }
@@ -1871,9 +1875,30 @@ public class DAOImpl
         } finally {
             DBHelper.closeConnection(conn);
         }
-
         return lMap;
     }
+    
+    public static List searchUserPosition(String uid,String search_target) {
+    	if(search_target == null|| search_target.equalsIgnoreCase("*")){
+	          search_target = "";
+    	}
+        String sql = "select * from (  select * from crmuser where id not in (select positionid from user_position where userId = "+uid+") and (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR code like '%"+search_target+"%' OR reportto like '%"+search_target+"%')) as a";
+        logger.debug(sql );
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return lMap;
+    }
+    
     
     public static List searchPositionCRMUser(String search_target) {
       if(search_target == null|| search_target.equalsIgnoreCase("*")){
@@ -2012,6 +2037,9 @@ public class DAOImpl
   }
     public static void removeEntityFromTeam(String teamtable, String id) {
         String sql = "delete from "+teamtable+" where id="+id;
+        if(teamtable.equalsIgnoreCase("crmuser")){
+        	sql = "update  "+teamtable+" set reportto = 0 where id="+id;
+        }
         logger.debug("sserserserser"+ sql);
         Connection conn = null;
         try {
