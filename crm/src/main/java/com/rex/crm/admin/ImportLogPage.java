@@ -38,8 +38,7 @@ public class ImportLogPage extends AdminTemplatePage
 
   public void initPage(final Map<String, Boolean> filter, List tdata)
   {
-    Map<String, Entity> entities = Configuration.getEntityTable();
-    final Entity entity = entities.get("importLog");
+    final Entity entity = Configuration.getEntityByName("importlog");
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
     final String positionId = ((SignIn2Session) getSession()).getPositionId();
     setPageTitle(entity.getDisplay());
