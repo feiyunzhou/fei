@@ -1605,6 +1605,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<name>crmuser</name>
 		<display>岗位</display>
 		<filterField>pl1</filterField>
+		<externalField>code</externalField>
 		<sql>
 			select * from
 				( 
