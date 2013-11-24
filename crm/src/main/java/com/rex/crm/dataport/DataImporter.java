@@ -38,7 +38,7 @@ public class DataImporter {
     private static final Logger logger = Logger.getLogger(DataImporter.class);
 
     public static ImportMeta _importData(String entityName,String filename) throws IOException{
-        if(entityName.equalsIgnoreCase("user_position")){
+        if(entityName.equalsIgnoreCase("user_position") || entityName.equalsIgnoreCase("accountcrmuser")){
             DAOImpl.deleteAllRecords(entityName);
         }
        // String   tmpDir = CRMUtility.createTempDirectory().getAbsolutePath();
@@ -142,12 +142,15 @@ public class DataImporter {
                            String id = externalId2idMap.get(value);
                            logger.debug("line:"+line);
                            if(id == null){
-                               logger.debug("failed to get id:"+id);
+                               logger.debug(relationTable+"中没有此外部ID:"+value);
                                error_writter.write(relationTable+"中没有此外部ID:"+value +" === " +reader.getRawRecord()+"\n");
-                               //result = 1;
                                
-                               //flag = false;
-                              // break;
+                               if(entityName.equalsIgnoreCase("accountcrmuser")){
+                                   result = 1;
+                                   flag = false;
+                                    break;
+                               }
+                               
                            }else{
                                fieldNames.add(f.getName());
                                fieldValues.add(id);

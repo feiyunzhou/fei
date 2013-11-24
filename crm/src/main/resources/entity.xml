@@ -2012,18 +2012,26 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键本信息</fieldGroup>
 			</field>
+			<field>
+				<name>externalId</name>
+				<display>外部ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>关键本信息</fieldGroup>
+			</field>
 	</fields>
 </entity>
 
 
 <entity>
 	<name>accountcrmuser</name>
-	<display>岗位关系</display>
+	<display>医院用户关系</display>
 	<externalField>externalId</externalField>
 	<sql>
-	select user_position.id\,crmuser.name as positionId\,userInfo.name as userId from user_position 
-	left join crmuser on user_position.positionId = crmuser.id 
-	left join userInfo on userInfo.id = user_position.userId
 	</sql>
 	<fields>
 		<field>
@@ -2038,22 +2046,22 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>基本信息</fieldGroup>
 		</field>
 		<field>
-				<name>userId</name>
-				<display>用户Id</display>
+				<name>accountId</name>
+				<display>医院Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
-				<relationTable>userinfo</relationTable>
+				<relationTable>account</relationTable>
 				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
-				<import_field_name>EmployeeNumber</import_field_name>
-				<import_external_foreignkey_field_name>employeeNumber</import_external_foreignkey_field_name>
+				<import_field_name>BDM编码</import_field_name>
+				<import_external_foreignkey_field_name>bdm_code</import_external_foreignkey_field_name>
 			</field>
 			<field>
-				<name>positionId</name>
+				<name>crmuserId</name>
 				<display>岗位Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -2064,29 +2072,17 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<relationTable>crmuser</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
-				<import_field_name>PositionExternalId</import_field_name>
+				<import_field_name>岗位编码</import_field_name>
 				<import_external_foreignkey_field_name>code</import_external_foreignkey_field_name>
 			</field>
 			<field>
-				<name>status</name>
-				<display>状态</display>
+				<name>externalId</name>
+				<display>外部ID</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<picklist>contact_status_pl</picklist>
-				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
-				<fieldGroup>关键本信息</fieldGroup>
-			</field>
-			<field>
-				<name>isPrimary</name>
-				<display>是否主岗</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键本信息</fieldGroup>
 			</field>
