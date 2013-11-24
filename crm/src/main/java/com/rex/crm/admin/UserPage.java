@@ -41,7 +41,7 @@ public class UserPage extends AdminTemplatePage
   public void initPage(final Map<String, Boolean> filter, List tdata)
   {
     Map<String, Entity> entities = Configuration.getEntityTable();
-    final Entity entity = entities.get("userInfo");
+    final Entity entity = entities.get("userinfo");
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
     final String userId = ((SignIn2Session) getSession()).getUserId();
     setPageTitle(entity.getDisplay());

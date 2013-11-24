@@ -55,7 +55,7 @@ public class Configuration {
        Entity entity = null;
        Map<String,Entity> ents = getEntityTable();
        if(ents!=null && ents.size()!=0){
-           entity = ents.get(name);
+           entity = ents.get(name.toLowerCase());
        }
        return entity;
    } 
@@ -65,7 +65,7 @@ public class Configuration {
                 List<Entity> list = getEntities();
                 entities = Maps.newHashMap();
                 for(Entity en:list){
-                 entities.put(en.getName(), en);
+                 entities.put(en.getName().toLowerCase(), en);
                 }
             }
          }   
