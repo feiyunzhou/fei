@@ -184,7 +184,7 @@ public class EntityDetailContainerPanel   extends Panel {
             		//获取对象
                 	UserInfo crmuser = DAOImpl.getUserInfoById(userId);
                 	//发送邮件,判断成功与否
-                	if(SendEmail.sendMail(String.valueOf(crmuser.getTs())+"_"+crmuser.getId(),crmuser.getEmail())){
+                	if(SendEmail.sendMail(String.valueOf(crmuser.getId()),crmuser.getEmail())){
                 		div.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		groupitem.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));

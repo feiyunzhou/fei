@@ -4752,7 +4752,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 			</field>
 			<field>
-				<name>fileName</name>
+				<name>entity_name</name>
+				<display>导入模块名</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+			</field>
+			<field>
+				<name>importfilename</name>
 				<display>导入文件名</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -4764,7 +4776,18 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 			</field>
 			<field>
-				<name>modify_datetime</name>
+				<name>logfilename</name>
+				<display>失败导入日志</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+			</field>
+			<field>
+				<name>whenadded</name>
 				<display>上传时间</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
@@ -4778,8 +4801,22 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
-				<name>failLog</name>
-				<display>失败导入日志</display>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>2</priority>
+				<isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			<field>
+				<name>num_of_total_record</name>
+				<display>处理行数</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -4789,8 +4826,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 			</field>
 			<field>
-				<name>successNumber</name>
+				<name>num_of_imported</name>
 				<display>成功导入数</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+			</field>
+			<field>
+				<name>num_of_failed</name>
+				<display>失败导入数</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -4808,6 +4856,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isSearchable>true</isSearchable>
 				<isEditable>true</isEditable>
+				<picklist>importStatus</picklist>
 				<priority>1</priority>
 				<isShow>true</isShow>
 			</field>
@@ -4820,11 +4869,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isSearchable>true</isSearchable>
 				<isEditable>true</isEditable>
+				<picklist>importResult</picklist>
 				<priority>1</priority>
 				<isShow>true</isShow>
-			</field>
-			
-			<field>
+		  </field>
+		  <field>
 				<name>modifier</name>
 				<display>创建人</display>
 				<isRequired>false</isRequired>
@@ -4834,9 +4883,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>4</priority><isShow>true</isShow>
+				<priority>4</priority>
+				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
-			</field>
+		 </field>
 		</fields>
 	</entity>
 </entities>
