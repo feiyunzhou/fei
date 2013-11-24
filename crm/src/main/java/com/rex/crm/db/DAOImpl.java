@@ -490,7 +490,7 @@ public class DAOImpl
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CalendarEvent>> h = new BeanListHandler<CalendarEvent>(CalendarEvent.class);
 
-            events = run.query(conn, "SELECT * FROM activity where crmuserId=?", h, userId);
+            events = run.query(conn, "SELECT * FROM activitycrmuser where crmuserId=?", h, userId);
             logger.debug("events:"+events.size());
             for (CalendarEvent e : events) {
                 e.setStart(sd.format(new Date(e.getStarttime())));
@@ -1469,7 +1469,7 @@ public class DAOImpl
     }
     
     public static void insertActivityCrmuserTable(String coaheeId,String positionId){
-      String sql  = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+coaheeId+","+positionId+")";
+      String sql  = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+positionId+","+coaheeId+")";
         
       if(sql == null) {
           logger.error("entityName error");
@@ -2173,6 +2173,25 @@ public class DAOImpl
         return users;
     }
     
+    public static List<Province> getRegionWithPosition() {
+        
+        List<Province> users = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<Province>> h = new BeanListHandler<Province>(Province.class);
+
+            users = run.query(conn, "SELECT * FROM crmuser where (reportto=0 OR reportto=-1 OR (reportto is NULL)) AND id != -1", h);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all crm users", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return users;
+    }
     
     // update crmuser baseInfo
     public static boolean updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex,String loginName) {

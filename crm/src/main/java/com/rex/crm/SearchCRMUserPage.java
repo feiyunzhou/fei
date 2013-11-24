@@ -78,7 +78,8 @@ public class SearchCRMUserPage extends WebPage {
 
     public void initPage(final String entityname, List<Map> list, final String entityId, final String uid, final int type) {
         Form form = new Form("form") {
-            @Override
+            @SuppressWarnings("unchecked")
+			@Override
             protected void onSubmit() {
                 logger.debug("the form was submitted!");
                 List<Map> maplist = null;

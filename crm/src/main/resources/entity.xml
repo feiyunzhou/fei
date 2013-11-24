@@ -28,17 +28,19 @@
 			))ORDER BY CONVERT( name USING gbk ))  as aAccount
 		</sql>
 		<sql-admin>
+		
 			select * from (select account.*\,
 			account_point_pl.val as key_type_val\,
 			account_type_pl.val as hospital_type_val\,
-			account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
-			from account
+			account_administrativ_level_pl.val as administrativ_level_val
+			from account  
 			left join account_point_pl on account.key_type = account_point_pl.id
 			left join account_type_pl on account.hospital_type = account_type_pl.id
-			left join account_comprehensive_or_specialized_pl on
-			account.comprehensive_or_specialized =
-			account_comprehensive_or_specialized_pl.id
+			left join account_administrativ_level_pl on
+			account.administrativ_level =
+			account_administrativ_level_pl.id
 			where account.id != -1 ORDER BY CONVERT( name USING gbk )) as aAccount
+			
 		</sql-admin>
 		<sql-manager>
 			select * from (select account.*\,account_point_pl.val as key_type_val\,
@@ -106,7 +108,9 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 				<import_field_name>BDM编码</import_field_name>
 			</field>
@@ -120,10 +124,24 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_administrativ_level_pl</picklist>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 				<import_field_name>行政级别</import_field_name>
+			</field>
+			<field>
+				<name>administrativ_level_val</name>
+				<display>医院行政级别 </display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>2</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>grade</name>
@@ -135,7 +153,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_grade_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
 				<import_field_name>医院分级</import_field_name>
 			</field>
@@ -203,8 +221,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<isSearchable>true</isSearchable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -244,7 +261,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_status_pl</picklist>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 				<import_field_name>状态</import_field_name>
 			</field>
@@ -449,7 +466,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -490,7 +507,8 @@
 				<isEditable>true</isEditable>
 				<fieldGroup>基本信息</fieldGroup>
 				<isParam>true</isParam>
-				<priority>2</priority><isShow>true</isShow>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority><isShow>true</isShow>
 				<childNode>city</childNode>
 				<import_field_name>省份</import_field_name>
 			</field>
@@ -503,8 +521,9 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>1</priority><isShow>true</isShow>
 				<picklist>city</picklist>
+				<isSearchable>true</isSearchable>
 				<isParam>true</isParam>
 				<fieldGroup>基本信息</fieldGroup>
 				<parentNode>province</parentNode>
@@ -4977,6 +4996,145 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 		 </field>
+		</fields>
+	</entity>
+	<entity>
+		<name>regionManage</name>
+		<display>区域管理</display>
+		<sql-admin>select * from crmuser</sql-admin>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>Id</display>
+				<isPrimaryKey>true</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>area</name>
+				<display>中国区</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>region</name>
+				<display>大区</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>province</name>
+				<display>省份</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>BDMcode</name>
+				<display>BDM编码</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>accountName</name>
+				<display>医院名称</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>regionManager</name>
+				<display>地区经理</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>managerPosition</name>
+				<display>经理岗位</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>delegateName</name>
+				<display>代表名称</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>delegatePosition</name>
+				<display>代表岗位</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>productLine</name>
+				<display>产品线</display>
+				<isPrimaryKey>false</isPrimaryKey>
+				<data-type>text</data-type>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 		</fields>
 	</entity>
 </entities>

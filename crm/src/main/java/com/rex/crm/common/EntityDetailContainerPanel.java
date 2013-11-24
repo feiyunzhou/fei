@@ -97,15 +97,15 @@ public class EntityDetailContainerPanel   extends Panel {
          }
          
          
-         for(Relation r:relations){
+//         for(Relation r:relations){
            AbstractItem item = new AbstractItem(relationRepeater.newChildId());
            relationRepeater.add(item);
-           logger.debug(r.getSql());
+           logger.debug(relations.get(0).getSql());
            logger.debug("parms:"+id);
-           List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
-           item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),params));
+           List list = DAOImpl.queryEntityRelationList(relations.get(0).getSql(), id);
+           item.add(new RelationDataPanel("relationPanel",relations.get(0),entityName,list,String.valueOf(lid),params));
            
-         }
+//         }
          if(entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new EmptyPanel("teamPanel2"));

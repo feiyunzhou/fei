@@ -55,7 +55,9 @@ import com.rex.crm.admin.DataImportPage;
 import com.rex.crm.admin.DownloadPage;
 import com.rex.crm.admin.ImportLogPage;
 import com.rex.crm.admin.PositionPage;
+import com.rex.crm.admin.PositionTreePage;
 import com.rex.crm.admin.ProductPage;
+import com.rex.crm.admin.ProductTreePage;
 import com.rex.crm.admin.ReportPage;
 import com.rex.crm.admin.UploadPage;
 import com.rex.crm.admin.UserPage;
@@ -181,6 +183,12 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         BookmarkablePageLink adminTreePage = new BookmarkablePageLink("adminTreePage",AdminTreePage.class );
         admin_menu.add(adminTreePage);
      
+        BookmarkablePageLink positionTreePage = new BookmarkablePageLink("positionTreePage",PositionTreePage.class );
+        admin_menu.add(positionTreePage);
+        
+        BookmarkablePageLink productTreePage = new BookmarkablePageLink("productTreePage",ProductTreePage.class );
+        admin_menu.add(productTreePage);
+        
         BookmarkablePageLink positionPage = new BookmarkablePageLink("positionPage",PositionPage.class );
         admin_menu.add(positionPage);
         

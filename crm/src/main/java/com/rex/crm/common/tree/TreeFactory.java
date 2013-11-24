@@ -24,16 +24,6 @@ public class TreeFactory {
              node.setChildren(children);
              int i = 0;
              for(CRMUser user:crmusers){
-                 List<UserInfo> userInfo= DAOImpl.getUserByPositionId(user.getId());
-                 String username = "无";
-                 for(UserInfo userinfo :userInfo){
-                    username = userinfo.getName();
-                   if(userinfo.getName().equalsIgnoreCase(null)){
-                     username =  "无";
-                   }else{
-                     username = userinfo.getName();
-                   }
-                 }
                  Node nd = new Node();
                  children[i++] = nd;
                  nd.setKey(String.valueOf(user.getId()));
@@ -56,7 +46,7 @@ public class TreeFactory {
     
     public static Node createPositionTree(){
         Node root = new Node();
-        root.setTitle("Root");
+        root.setTitle("ROOT");
         root.setFolder(true);
         root.setKey("-1");
         List<CRMUser> crmusers =  DAOImpl.getCRMUserWithoutSuperior();
@@ -79,4 +69,30 @@ public class TreeFactory {
         }
         return root;   
     }
+    public static Node createAccountPositionTree(){
+        Node root = new Node();
+        root.setTitle("中国区");
+        root.setFolder(true);
+        root.setKey("-1");
+        List<CRMUser> crmusers =  DAOImpl.getCRMUserWithoutSuperior();
+        
+        if(crmusers !=null && crmusers.size()>0){
+            Node[] children = new Node[crmusers.size()];
+            root.setChildren(children);
+            root.setFolder(true);
+            int i = 0;
+            for(CRMUser user:crmusers){
+                Node nd = new Node();
+                children[i++] = nd;
+                nd.setKey(String.valueOf(user.getId()));
+                nd.setTitle(user.getCode());
+                nd.setType("crmuser");           
+                appendChildren(nd);
+            }
+        }else{
+            root.setFolder(false);           
+        }
+        return root;   
+    }
+    
 }

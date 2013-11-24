@@ -90,7 +90,7 @@ public class EntityDetailPanel extends Panel {
             List<Field> visibleFields = Lists.newArrayList();
 
             for (Field f : groupfields) {
-                if (!f.isVisible()||f.getDisplay().equalsIgnoreCase("岗位名称")||!f.isShow()) {
+                if (!f.isVisible()||!f.isShow()) {
                     continue;
                 }
 
