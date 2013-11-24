@@ -1642,14 +1642,6 @@ public class DAOImpl
           
             inserts += run.update(conn, sql);
             
-//            if(inserts ==1 ){
-//                if(entityName.equalsIgnoreCase("activity")){
-//                    //run.update(conn, "DELETE from activitycrmuser where activityId = ?",entityId);
-//                    logger.debug("successfully remove the entity");
-//                }
-//            }
-
-            
         } catch (Exception e) {
             logger.error("failed to delete  calendar event", e);
         } finally {
@@ -1658,6 +1650,28 @@ public class DAOImpl
 
         return inserts;
     }
+    
+    
+    public static int deleteAllRecords(String entityName) {
+        String sql = "DELETE from " + entityName + " where id != 1" ;
+        Connection conn = null;
+        int inserts = 0;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+          
+            inserts += run.update(conn, sql);
+            
+        } catch (Exception e) {
+            logger.error("failed to delete  deleteAllRecords", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return inserts;
+    }
+    
+    
     public static void deleteaAcountCrmuserRecord(String entityId) {
         String sql = "";
         sql = "DELETE from " + "accountcrmuser" + " where accountId = " + entityId;

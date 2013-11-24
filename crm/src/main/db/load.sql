@@ -418,14 +418,15 @@ INSERT INTO `crmuser_pl1` (val) VALUES ('有效');
 drop table if exists crmuser_pl2;
 CREATE TABLE crmuser_pl2 
 (
-  id MEDIUMINT NOT NULL  AUTO_INCREMENT,
+  id MEDIUMINT NOT NULL,
   val VARCHAR(255),
   PRIMARY KEY USING BTREE (id)
 ) ENGINE InnoDB;
 -- 产品线;
-INSERT INTO crmuser_pl2 (val) VALUES('麻药');
-INSERT INTO crmuser_pl2 (val) VALUES('慢痛');
-INSERT INTO crmuser_pl2 (val) VALUES('全部');
+INSERT INTO crmuser_pl2 (id,val) VALUES(1,'麻药');
+INSERT INTO crmuser_pl2 (id,val) VALUES(2,'慢痛');
+INSERT INTO crmuser_pl2 (id,val) VALUES(3,'奥诺美');
+INSERT INTO crmuser_pl2 (id,val) VALUES(4,'全部');
 
 
 -- 角色;
