@@ -110,7 +110,7 @@ public class TeamManPanel extends Panel {
             entity = Configuration.getEntityByName("crmuser");
             add(new Label("title","岗位"));
             }else if(type == 1){
-              entity = Configuration.getEntityByName("userInfo");
+              entity = Configuration.getEntityByName("userinfo");
               add(new Label("title","用户"));
             } 
           }else if(en.equalsIgnoreCase("userInfo")){
@@ -162,7 +162,7 @@ public class TeamManPanel extends Panel {
                }else {
                  teamtable = "crmuser";
                }
-           }else if(currentEntityName.equalsIgnoreCase("userInfo")){
+           }else if(currentEntityName.equalsIgnoreCase("userinfo")){
         	   teamtable = "user_position";
            }
             

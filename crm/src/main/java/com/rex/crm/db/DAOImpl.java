@@ -444,7 +444,7 @@ public class DAOImpl
             }else if(entityName.equalsIgnoreCase("account")){
                 sql = "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("userInfo")){
-                sql = "INSERT INTO user_position (positionId,userId,createtime,isPrimary) VALUES (?,?,?,?)";
+                sql = "INSERT INTO user_position (positionId,userId,whenadded,isPrimary) VALUES (?,?,?,?)";
             }else if(entityName.equalsIgnoreCase("crmuser")){
                 if(type == 0){
                     sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
@@ -460,7 +460,7 @@ public class DAOImpl
                 conn = DBHelper.getConnection();
                 QueryRunner run = new QueryRunner();
                 int inserts = 0;
-                if(entityName.equalsIgnoreCase("userInfo")){
+                if(entityName.equalsIgnoreCase("userinfo")){
                   inserts = run.update(conn, sql, userId,cId,date_value,isPrimary);
                 }else if(type == 3){
                 	inserts = run.update(conn, sql, cId);
@@ -1446,8 +1446,8 @@ public class DAOImpl
         }else if (entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willCoaching")){
           sql = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+entityId+","+positionId+")";
           insertActivityCrmuserTable(coacheeId,positionId);
-        }else if (entityName.equalsIgnoreCase("userInfo")){
-          sql = "INSERT INTO user_position ( userId,positionId,status,isPrimary,createtime) VALUES ("+userId+","+positionId+",1,1,'"+date_value+"')";
+        }else if (entityName.equalsIgnoreCase("userinfo")){
+          sql = "INSERT INTO user_position ( userId,positionId,status,isPrimary,whenadded) VALUES ("+userId+","+positionId+",1,1,'"+date_value+"')";
         }
         if(sql == null) {
             logger.error("entityName error");

@@ -1627,12 +1627,12 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>name</name>
 				<display>岗位名称</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>false</isEditable>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 				<priority>2</priority>
 				<isShow>true</isShow>
 				<isSearchable>true</isSearchable>
@@ -1694,7 +1694,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isShow>true</isShow>
+				<isShow>false</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
@@ -1794,16 +1794,17 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>level</name>
 				<display>级别</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isShow>true</isShow>
+				<picklist>crmuser_level_pl</picklist>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<isSearchable>true</isSearchable>
 				<priority>1</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
  				<import_field_name>级别</import_field_name>
 			</field>
 			<field>
