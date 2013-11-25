@@ -146,7 +146,7 @@ public class EntityDetailPage extends TemplatePage {
              add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
              add(new TeamManPanel("teamPanel4",entityName,String.valueOf(lid),3));
          }else if(entityName.equalsIgnoreCase("userInfo")){
-           add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
+           add(new EmptyPanel("teamPanel"));
            add(new EmptyPanel("teamPanel2"));
            add(new TeamManPanel("teamPanel3",entityName,String.valueOf(lid),2));
            add(new EmptyPanel("teamPanel4"));

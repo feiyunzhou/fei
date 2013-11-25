@@ -80,32 +80,27 @@ public class TeamManPanel extends Panel {
            // teamSql = "select * from (select user_position.status,crmuser.name as positionId,userInfo.name as userId " +
            // 		"from user_position left join crmuser on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId where userId = ?) as atable";
         
-              teamSql  = "select * from user_position where userId = ? order by whenadded DESC limit 1";
+              teamSql  = "select * from (select a.*,b.id as rid from account as a left join accountcrmuser as b on a.id=b.accountId left join user_position on user_position.positionId = b.crmuserId left join userinfo on userinfo.id = user_position.id where b.crmuserId=?) as atable";
           }
-//        else if (type == 1){
-//          //for the 用户列表
-//          teamSql = "select  * from userinfo inner join  (select  a.id as aid, b.id as rid from crmuser as a inner join contactcrmuser as b ON a.id = b.crmuserId where b.contactId = ?) as c on userinfo.positionId = c.aid";
-//        } 
+        else if (type == 2){
+//          //for the 用户岗位
+          teamSql = "select  * from   (select user_position.* from  userinfo  left join  user_position on user_position.userId = userinfo.id left join  crmuser on crmuser.id = user_position.positionId where userinfo.id = ? ) as atable";
+        } 
     }else if(en.equalsIgnoreCase("crmuser")){
             if(type == 0){
                 //for the 医院列表
-               teamSql = "select * from (select a.*,b.id as rid from account as a left join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?) as atable";
+               teamSql = "select * from (select a.*,b.id as rid from account as a left join accountcrmuser as b on a.id=b.accountId  where b.crmuserId=? ) as atable";
             }else if(type == 1){
                 //for the 医生列表
                 teamSql = "select * from (select contact . * from contact left join accountcrmuser on accountcrmuser.accountId=contact.accountId where accountcrmuser.crmuserId = ?) as atable";
             }
             else if (type == 2){
               //for the 用户列表
-              teamSql = "select * from (select userinfo.*,user_position.status as status "
-              		+ " crmuser.name as positionId "
-              		+ " from  user_position "
-              		+ " left join userInfo on userInfo.id = user_position.userId"
-              		+ " left join crmuser on crmuser.id = user_position.positionId"
-              		+ " where user_position.positionId = ? order by user_position.whenadded DESC limit 1 ) as atable";
+              teamSql = "select * from (select userinfo.*,user_position.status as status , crmuser.name as positionId,role.val as crmuserRole  from  user_position left join userInfo on userInfo.id = user_position.userId left join crmuser on crmuser.id = user_position.positionId  left join role on role.id = crmuser.role where user_position.positionId = ? order by user_position.whenadded DESC limit 1 ) as atable";
               		//+ "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
             }
             else if (type == 3){
-              //for the 下属岗位
+              //for the 下属岗位	
               teamSql = "select * from (select crmuser.*,userInfo.name as userInfoName ,role.name as permission from  crmuser left join user_position on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId  left join role on crmuser.role = role.name where reportto = ?  ) as atable";
             }
         }
@@ -120,10 +115,10 @@ public class TeamManPanel extends Panel {
               add(new Label("title","用户"));
             } 
           }
-//        else if(en.equalsIgnoreCase("userInfo")){
-//          entity = Configuration.getEntityByName("user_position");
-//          add(new Label("title"," 用户岗位关系"));
-//        }
+        else if(en.equalsIgnoreCase("userInfo")){
+        	 entity = Configuration.getEntityByName("user_position");
+             add(new Label("title"," 用户岗位关系"));
+        }
         else{
             if(type == 0){
         	  entity = Configuration.getEntityByName("account");
