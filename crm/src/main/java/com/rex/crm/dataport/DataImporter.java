@@ -160,12 +160,21 @@ public class DataImporter {
                           
                            
                    }else{
+                       fieldNames.add(f.getName());
+                       
                        if(f.getDataType().equalsIgnoreCase("password")){
                            value = DigestUtils.md5Hex("12345");
+                           fieldValues.add("'"+value+"'");
+                       }else if(f.getDataType().equalsIgnoreCase("number")){
+                           fieldValues.add(value);
+                       }else{
+                           fieldValues.add("'"+value+"'");
                        }
                        
-                       fieldNames.add(f.getName());
-                       fieldValues.add("'"+value+"'");
+                       
+                       
+                      
+                      
                        
                        
                        
