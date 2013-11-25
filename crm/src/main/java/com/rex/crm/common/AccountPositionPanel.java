@@ -66,9 +66,9 @@ public class AccountPositionPanel extends Panel {
                 //for the 医院列表
 
               if(level == 11){
-            	  teamSql="select id as rid, user_position_query.* from user_position_query where user_position_query.position_id = ?";
+            	  teamSql="select * from user_position_query where user_position_query.position_id = ?";
               } else if(level == 21){
-            	  teamSql="select id as rid, user_position_query.* from user_position_query where user_position_query.manager_position_id =?";
+            	  teamSql="select * from user_position_query where user_position_query.manager_position_id =?";
               }else{
             	  teamSql="select * from user_position_query where manager_position_id in (select id from crmuser where reportto = ?)";
               }
