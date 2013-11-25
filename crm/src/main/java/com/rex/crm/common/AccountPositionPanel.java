@@ -268,7 +268,7 @@ public class AccountPositionPanel extends Panel {
     {
     	int level = queryPositionLevel(positionId);
     	
-    	if(level == 1)
+    	if(level == 11)
     	{
     		DAOImpl.deleteAccountTeamWithPositionId(positionId);
     	}
