@@ -55,7 +55,6 @@
 		            
 		           // location.href = "/"+context_name+'/mount/eventViewer?eventid='+calEvent.id;
 		            var entityName = null;
-		            console.log(calEvent);
 		            if(calEvent.event_type_val=='拜访'){
 		            	entityName = "activity"
 		            }else if (calEvent.event_type_val=='拜访辅导'){
@@ -63,7 +62,7 @@
 		            }else{
 		            	entityName = "willcoaching"
 		            }
-		            location.href = event_view_page_url+'id='+calEvent.id+'&entityName='+entityName;
+		            //location.href = event_view_page_url+'id='+calEvent.id+'&entityName='+entityName;
 
 		          },
 		          dayClick : function(date, allDay, jsEvent, view) {

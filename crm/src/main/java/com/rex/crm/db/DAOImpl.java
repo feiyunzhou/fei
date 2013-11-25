@@ -1601,7 +1601,9 @@ public class DAOImpl
             conn = DBHelper.getConnection(); 
             QueryRunner run = new QueryRunner();
             Map<String, Object> map = run.query(conn, "SELECT level FROM crmuser where id=?", new MapHandler(), positionId);
-            level = (int) map.get("level");
+            if(map != null && map.get("level") !=null){
+              level = (int) map.get("level");
+            }
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {
