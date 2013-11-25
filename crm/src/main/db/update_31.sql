@@ -11,8 +11,8 @@ CREATE TABLE `crmdb`.`activity_daypart_pl` (
 INSERT INTO `crmdb`.`activity_daypart_pl` (`id`, `val`) VALUES ('1', '上午');
 INSERT INTO `crmdb`.`activity_daypart_pl` (`id`, `val`) VALUES ('2', '下午');
 
-ALTER TABLE `crmdb`.`activitycrmuser` 
-DROP FOREIGN KEY `crm_activity_cons2`;
+-- ALTER TABLE `crmdb`.`activitycrmuser` 
+-- DROP FOREIGN KEY `crm_activity_cons2`;
 
 DELETE FROM `crmdb`.`account_administrativ_level_pl` WHERE `id`='2';
 DELETE FROM `crmdb`.`account_administrativ_level_pl` WHERE `id`='3';

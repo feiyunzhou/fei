@@ -17,10 +17,44 @@
      <p />
      <input type="file" class="form-control" wicket:id="fileUpload" />
      <p />
-     <input type="submit" class="btn btn-primary" value="提交" />
-     <a type="btn btn-primary" wicket:id="view_log_btn">查看日志</a>
+     <input type="submit" class="btn btn-primary" value="提交" />&nbsp;&nbsp;
+     <a class="btn btn-primary" wicket:id="view_log_btn">查看日志</a>
     </form>
 
+   </div>
+  </div>
+  <div class="col-md-9">
+  <div class="bs-callout bs-callout-info">
+     
+      <h4>模板</h4>
+      <ul class="list-inline">
+       <li><a wicket:id="account_template">医院模板</a></li>
+       <li><a wicket:id="contact_template">医生模板</a></li>
+       <li><a wicket:id="user_template">用户模板</a></li>  
+       <li><a wicket:id="crmuser_template">岗位模板</a></li>
+       <li><a wicket:id="crmuser_report_template">岗位汇报关系模板</a></li>
+       <li><a wicket:id="accountcrmuser_template">岗位和医院关系模板</a></li>
+       <li><a wicket:id="user_position_template">用户和岗位关系模板</a></li>
+      </ul>
+      <p/>
+       <h4>注意事项</h4>
+       <h5>导入顺序</h5>
+       <p>数据导入功能主要用于系统数据的初始化，以及大批量数据的更改与调整；在数据初始化时候，数据初始化的顺序一次为</p>
+       <ol>
+          <li>岗位信息、医院信息、用户信息</li>
+          <li>医生信息、岗位汇报关系、岗位与用户的对应关系、医院与岗位对应关系</li>
+       </ol>
+       <h5>导入逻辑</h5>
+    <ol>
+     <li>医院信息导入：以BDM编码为标识，通过BDM编码进行新增与更新操作</li>
+     <li>岗位信息导入：以岗位编码为标识，通过岗位编码进行新增与更新操作</li>
+     <li>用户信息导入：以用户员工号为标识，通过员工号进行新增与更新操作</li>
+     <li>医生信息导入：以医生CRM编码为标识，通过CRM编码进行新增与更新操作，在导入医生的时候，如果指定了医院的BDM编码，那么医生与医院的对应关系也 将被导入；如果在医生导入的CSV文件中，没有BDM编码，那么这条医生记录将不会被导入到系统中</li>
+
+     <li>岗位汇报关系导入：以岗位编码为标识，通过岗位编码进行更新岗位的汇报关 系，前提必要条件是所有的岗位信息必须存在</li>
+     <li>岗位与用户的对应关系导入：按照岗位编码为标识，通过岗位编码进行新增与 更新操作，目前不保留岗位与用户对应信息的历史；未来系统将支持岗位与用户对 应关 系历史</li>
+     <li>医院与岗位对应关系导入：以岗位编码与BDM编码联合为标识，进行新增操作， 目前只支持全量的导入，既在导入过程中，系统将删除所有的岗位与医院对应关 系；在后续的开发过程当中，我们会开发一个架构调整模块来专门支持在各个岗位 节点的新增，更新，删除操作</li>
+    </ol>
    </div>
   </div>
 

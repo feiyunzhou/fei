@@ -90,7 +90,7 @@ em {
 input[type="radio"] {
     margin-top: 0;
 }
-input[type="checkbox"] {
+/*input[type="checkbox"] {
     display:none;
 }
 input[type="checkbox"] + label {
@@ -113,7 +113,7 @@ input[type="checkbox"] + label span:after {
 input[type="checkbox"]:checked + label span:after {
     color: #2980B9;
     content: "\f046";
-}
+}*/
 .label.legend {
     background-color: #FFF;
     color: #646464;

@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.DownloadLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -135,8 +136,26 @@ public class DataImportPage extends AdminTemplatePage
       form.add(view_log_btn);
       view_log_btn.setVisible(false);
       
-      
-      
+     File account_template = new File(DataImportPage.class.getResource("/templates/account.csv").getPath());
+     add(new DownloadLink("account_template", account_template));
+     
+     File contact_template = new File(DataImportPage.class.getResource("/templates/contact.csv").getPath());
+     add(new DownloadLink("contact_template", contact_template));
+     
+     File user_template = new File(DataImportPage.class.getResource("/templates/userinfo.csv").getPath());
+     add(new DownloadLink("user_template", user_template));
+     
+     File crmuser_template = new File(DataImportPage.class.getResource("/templates/crmuser.csv").getPath());
+     add(new DownloadLink("crmuser_template", crmuser_template));
+     
+     File crmuser_report_template = new File(DataImportPage.class.getResource("/templates/crmuser_reportto.csv").getPath());
+     add(new DownloadLink("crmuser_report_template", crmuser_report_template));
+     
+     File accountcrmuser_template = new File(DataImportPage.class.getResource("/templates/accountcrmuser.csv").getPath());
+     add(new DownloadLink("accountcrmuser_template", accountcrmuser_template));
+     
+     File user_position_template= new File(DataImportPage.class.getResource("/templates/user_position.csv").getPath());
+     add(new DownloadLink("user_position_template", user_position_template));
       
   }
   

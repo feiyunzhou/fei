@@ -173,7 +173,7 @@ CREATE TABLE activitycrmuser
     UNIQUE KEY(activityId,crmuserId), 
     PRIMARY KEY USING BTREE (id),
     CONSTRAINT `crm_activity_cons` FOREIGN KEY (`crmuserId`) REFERENCES `crmuser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,
-     CONSTRAINT `crm_activity_cons2` FOREIGN KEY (`activityId`) REFERENCES `activity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
+    CONSTRAINT `crm_activity_cons2` FOREIGN KEY (`activityId`) REFERENCES `activity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
 ) ENGINE InnoDB;
 
 
