@@ -204,6 +204,7 @@ public class DataImporter {
                             //success_update_writter.write(reader.getRawRecord()+"\n");
                             inserts_list.add(reader.getValues());
                             //num_of_imported++;
+                            num_of_updated++;
                         }else{
                             error_writter.write("更新错误："+reader.getRawRecord()+ "\n");
                             num_of_failed++;
@@ -218,74 +219,6 @@ public class DataImporter {
             }
        }
        
-       
-       //handle foreignkey field
-//        if (relationfields.size() > 0) {
-//            
-//            //Map<String,Map<String,String>> relationTableCache = Maps.newHashMap();
-//            
-//            for(Field field:relationfields){
-//                String relationTable = field.getRelationTable();
-//                String forignkeyFieldName = field.getImport_external_foreignkey_field_name();
-//                List<Choice> pairs = DAOImpl.queryExternalIds(relationTable, forignkeyFieldName);
-//                Map<String,String> map = Maps.newHashMap();
-//                for(Choice choice:pairs){
-//                    map.put(choice.getVal(), String.valueOf(choice.getId())) ;  
-//                }
-//                relationTableCache.put(relationTable, map);
-//                
-//            }
-//            
-//            
-//           // CsvReader reader2 = new CsvReader(filename, ',', Charset.forName("UTF-8"));
-//           /// reader2.readHeaders();
-//            Map<String,Field> relationFieldMap = Maps.newHashMap();
-//            for(Field field:relationfields){
-//                relationFieldMap.put(field.getImport_field_name(), field);
-//                
-//            }
-//            
-//            Map<String,Integer> headerName2Index = Maps.newHashMap();
-//            int i = 0;
-//            for(String h:headers){
-//                if(relationFieldMap.containsKey(h)){
-//                    headerName2Index.put(relationFieldMap.get(h).getName(), i); 
-//                }
-//                
-//                i++;
-//            }
-//            
-//            for (String[] values:inserts_list) {
-//                
-//                for (Field field:relationfields) {
-//                   // if(!relationfields.contains(headers[i])) continue;
-//                    
-//                    ArrayList<String> relationfieldNames = Lists.newArrayList();
-//                    ArrayList<String> relationfieldValues = Lists.newArrayList();
-//                    
-//                    if(values[headerName2Index.get(field.getName())] != null){
-//                        String value = values[headerName2Index.get(field.getName())];
-//                        String relationTable = field.getRelationTable();
-//                        
-//                        Map<String, String> externalId2idMap = relationTableCache.get(relationTable);
-//                        String id = externalId2idMap.get(value);
-//                        if(id == null){
-//                            logger.debug("failed to get id:"+id);
-//                            update_error_writter.write("系统中没有此外部ID " +Joiner.on(",").join(values)+"\n");
-//                            break;
-//                        }
-//                        relationfieldNames.add(field.getName());
-//                        relationfieldValues.add(id);
-//                        
-//                        Field externalField = entity.getFieldByName(entity.getExternalField());
-//                        String externalId = reader.get(externalField.getName());
-//                        DAOImpl.updateRecord4Import(entityName, relationfieldNames, relationfieldValues, externalField.getName(), externalId);
-//                    }
-//                    
-//                }
-//
-//            }
-//        }
         
        }finally{
            //insert_error_writter.close();
@@ -299,6 +232,7 @@ public class DataImporter {
        importMeta.setNum_of_failed(num_of_failed);
        importMeta.setNum_of_imported(num_of_imported);
        importMeta.setNum_of_total_record(num_of_total_record);
+       importMeta.setNum_of_updated(num_of_updated);
        importMeta.setResult(result);
        return importMeta;
         
@@ -357,7 +291,7 @@ public class DataImporter {
                 if(id>0){
                    ImportMeta metaInfo = DataImporter._importData(entityName, filename);
                    DAOImpl.updateImportMetaInfoById(metaInfo.getLogfilename(), metaInfo.getNum_of_total_record(), 
-                           metaInfo.getNum_of_imported(), metaInfo.getNum_of_failed(), metaInfo.getResult(), id);
+                           metaInfo.getNum_of_imported(), metaInfo.getNum_of_failed(),metaInfo.getNum_of_updated(), metaInfo.getResult(), id);
                 }
                 
 

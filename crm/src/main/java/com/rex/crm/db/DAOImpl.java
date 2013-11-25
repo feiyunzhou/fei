@@ -1342,15 +1342,15 @@ public class DAOImpl
 
    }
     
-    public static boolean updateImportMetaInfoById( String logfilename,int num_of_total_record, int num_of_imported,int num_of_failed,int result,long id){
-        String sql = "UPDATE importMetaInfo SET logfilename=?,num_of_total_record=?,num_of_imported=?,num_of_failed=?,result=?,status=? where id=?";
+    public static boolean updateImportMetaInfoById( String logfilename,int num_of_total_record, int num_of_imported,int num_of_failed,int num_of_updated,int result,long id){
+        String sql = "UPDATE importMetaInfo SET logfilename=?,num_of_total_record=?,num_of_imported=?,num_of_failed=?,result=?,status=?,num_of_updated=? where id=?";
         logger.debug("sql:"+sql);
         Connection conn = null;
         int inserts = 0;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            inserts += run.update(conn, sql,logfilename,num_of_total_record,num_of_imported,num_of_failed,result,1,id);
+            inserts += run.update(conn, sql,logfilename,num_of_total_record,num_of_imported,num_of_failed,result,1,num_of_updated,id);
         } catch (Exception e) {
             logger.error("failed to activity", e);
         } finally {

@@ -28,6 +28,7 @@ CREATE TABLE `crmdb`.`importstatus` (
 INSERT INTO importstatus (id,val) VALUES(0,'运行');
 INSERT INTO importstatus (id,val) VALUES(1,'已完成');
 
+DROP TABLE IF EXISTS `importresult`;
 CREATE TABLE `crmdb`.`importresult` (
   `id` INT NOT NULL,
   `val` VARCHAR(45) NOT NULL,
