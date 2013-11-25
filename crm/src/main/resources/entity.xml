@@ -1031,7 +1031,7 @@ where crmuser.reportto=? and
 			<field>
 				<name>num_of_monthlySurgery</name>
 				<display>月均手术量</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -1045,7 +1045,7 @@ where crmuser.reportto=? and
 			<field>
 				<name>num_of_monthlyAnalgesia</name>
 				<display>镇痛泵台数</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>

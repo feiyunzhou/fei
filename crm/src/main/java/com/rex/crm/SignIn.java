@@ -26,6 +26,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 
+import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.beans.UserPosition;
 import com.rex.crm.db.DAOImpl;
@@ -88,13 +89,32 @@ public final class SignIn extends WebPage
             	UserInfo user = DAOImpl.getUserByLoginName(getUsername());
             	if(null!=user){
               	        	// Sign the user in
+            	  
               	            if (session.signIn(getUsername(),getPassword()))
                             {
+              	                
+                              
+                              UserPosition userPosition = DAOImpl.getActivityPositionInfoByUserId(Integer.parseInt(session.getUserId()));
+                              if(userPosition == null){
+                                  String errmsg = getString("loginError", null, "无有效岗位!");
+                                  // Register the error message with the feedback panel
+                                  error(errmsg);
+                                  return;
+                              }
+                              CRMUser crmuser = DAOImpl.getCRMUserInfoById(userPosition.getPositionId());
+                              session.setPositionId(String.valueOf(userPosition.getPositionId()));
+                              session.setLevel(crmuser.getLevel());
+                              session.setRoleId(crmuser.getRole());
+              	                
+              	                //statistic log
                                 LogInOut loginout = new LogInOut();
                                 loginout.setLoginName(session.getUser());
                                 loginout.setLogints(System.currentTimeMillis());
                                 loginout.setSessionId(session.getId());
                                 CRMUtility.printStat(CRMUtility.STAT_LOG_IN_OUT,loginout,LogInOut.class);
+                                
+                               
+                             
                                 if(user.getNum_of_signIn()==0){
                                 	 setResponsePage(new SettingKeyUserInfoPage(user));
                                 }else{
