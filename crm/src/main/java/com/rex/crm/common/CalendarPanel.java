@@ -35,9 +35,6 @@ public class CalendarPanel extends Panel {
     public CalendarPanel(String id) {
         super(id);       
     }
-    
-    
-
     @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);

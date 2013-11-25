@@ -1,7 +1,20 @@
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
     <script>
         $(document).ready(function() {
-            
+        	$("#daypart").change(function(){
+        		var daypart = $("#daypart").val();
+        		var startTime = $("#starttime").val();
+    			var endTime = $("#endtime").val();
+        		if(daypart==1){
+        			var startDate = startTime.split('T')[0].concat("T08:00");
+        			var endDate = endTime.split('T')[0].concat("T11:30");
+        		}else{
+        			var startDate = startTime.split('T')[0].concat("T13:00");
+        			var endDate = endTime.split('T')[0].concat("T18:00");
+        		}
+        		$("#starttime").attr("value",startDate);
+    			$("#endtime").attr("value",endDate);
+        	});
             
         });
         

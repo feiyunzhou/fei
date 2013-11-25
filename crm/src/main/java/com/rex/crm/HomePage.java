@@ -60,17 +60,19 @@ public class HomePage extends TemplatePage {
         
         final String posId = ((SignIn2Session)getSession()).getPositionId();
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
-        add(new Label("num_of_account_cell",DAOImpl.getNumOfAccountOfUser(posId)));
-        add(new Label("num_of_contact_cell",DAOImpl.getNumOfContactOfUser(posId)));
-        add(new Label("num_of_activity_cell",DAOImpl.getNumOfActivityOfUser(posId)));
         
-        BookmarkablePageLink contact_link = new BookmarkablePageLink("contact_link", ContactPage.class);
-        add(contact_link);
-        BookmarkablePageLink account_link = new BookmarkablePageLink("account_link", AccountPage.class);
-        add(account_link);
-        BookmarkablePageLink activity_link = new BookmarkablePageLink("activity_link", CalendarPage.class);
-        add(activity_link);
-        
+        // 业务概览注释
+//        add(new Label("num_of_account_cell",DAOImpl.getNumOfAccountOfUser(posId)));
+//        add(new Label("num_of_contact_cell",DAOImpl.getNumOfContactOfUser(posId)));
+//        add(new Label("num_of_activity_cell",DAOImpl.getNumOfActivityOfUser(posId)));
+//        
+//        BookmarkablePageLink contact_link = new BookmarkablePageLink("contact_link", ContactPage.class);
+//        add(contact_link);
+//        BookmarkablePageLink account_link = new BookmarkablePageLink("account_link", AccountPage.class);
+//        add(account_link);
+//        BookmarkablePageLink activity_link = new BookmarkablePageLink("activity_link", CalendarPage.class);
+//        add(activity_link);
+//        
         
         
         //quick creation bar
@@ -78,7 +80,7 @@ public class HomePage extends TemplatePage {
         param.add("entityName", "contact");
         BookmarkablePageLink contact_create_link = new BookmarkablePageLink("contact_create_link", CreateDataPage.class,param );
         add(contact_create_link);
-      
+         
        
        /* param = new PageParameters();
         param.add("entityName", "activity");
@@ -102,7 +104,7 @@ public class HomePage extends TemplatePage {
         WebMarkupContainer coaching_create_li = new WebMarkupContainer("coaching_create_li");
         param = new PageParameters();
         param.add("entityName", "coaching");
-        BookmarkablePageLink coaching_create_link = new BookmarkablePageLink("coaching_create_link", CreateDataPage.class,param);
+        BookmarkablePageLink coaching_create_link = new BookmarkablePageLink("coaching_create_link", ActivitySelectPage.class,param);
         coaching_create_li.setVisible(false);
         coaching_create_li.add(coaching_create_link);
         add(coaching_create_li);
@@ -257,18 +259,21 @@ public class HomePage extends TemplatePage {
             sql = entity.getSql();
             break;
     }
-    System.out.println("alertSql:"+sql);
-    List tdata = DAOImpl.queryEntityRelationList(sql);
-        
+    List tdata = DAOImpl.queryEntityRelationList(sql);   
     add(new PageableTablePanel("datalist", entity, tdata, null));
-        
-    final Entity entityAct = entities.get("todolist"); 
     
-    String sql2="SELECT * FROM crmdb.activity_alert ";
-    
-    List tdataAct = DAOImpl.queryEntityRelationList(sql2);
-    add(new PageableTablePanel("datalistAct", entityAct, tdataAct, null));
-        
+     if(((SignIn2Session)getSession()).getRoleId()!=1){   
+         final Entity entityAct = entities.get("todolist"); 
+         String userName = ((SignIn2Session) getSession()).getUser();
+         String sql2="SELECT * FROM crmdb.activity_alert where name='"+userName+"' limit 15";
+         List tdataAct = DAOImpl.queryEntityRelationList(sql2);
+         add(new PageableTablePanel("datalistAct", entityAct, tdataAct, null));
+     }
+     else{
+          WebMarkupContainer container_label = new WebMarkupContainer("datalistAct");
+          container_label.setVisible(false);
+          add( container_label);
+     }
         IModel<Integer> textModel1 = new Model<>(0);
         try
         {
@@ -276,7 +281,7 @@ public class HomePage extends TemplatePage {
         }
         catch (Exception e)
         {
-            System.out.println("无数据");
+            System.out.println("医生拜访达成率无数据");
         }
         finally
         {
@@ -306,7 +311,7 @@ public class HomePage extends TemplatePage {
         }
         catch (Exception e)
         {
-            System.out.println("无数据");
+            System.out.println("拜访覆盖率达成率无数据");
         }
         finally
         {
@@ -321,7 +326,7 @@ public class HomePage extends TemplatePage {
         }
         catch (Exception e)
         {
-            System.out.println("无数据");
+            System.out.println("工作天数达标率无数据");
         }
         finally
         {
@@ -336,7 +341,7 @@ public class HomePage extends TemplatePage {
         }
         catch (Exception e)
         {
-            System.out.println("无数据");
+            System.out.println("拜访量达标率无数据");
         }
         finally
         {

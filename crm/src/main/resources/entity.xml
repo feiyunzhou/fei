@@ -2335,7 +2335,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>
+				<isShow>true</isShow>
 				<picklist>activity_daypart_pl</picklist>
+				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2688,12 +2690,16 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
+			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.activity_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
+			left join crmuser on crmuser.id = activity.coacheeId
+			left join user_position on user_position.positionId=crmuser.id
+		    left join userinfo on userinfo.id=user_position.userId
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			where activitycrmuser.crmuserid = ?) as aactivity where (event_type =
 			2) or (event_type = 3) order by whenadded DESC) as aActivity
@@ -2707,6 +2713,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
+			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.activity_type =
@@ -2715,6 +2722,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			left join crmuser on activitycrmuser.crmuserid = crmuser.id
+			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join user_position on user_position.positionId=bcrmuser.id
+		    left join userinfo on userinfo.id=user_position.userId
 			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
 			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql-manager>
@@ -2722,7 +2732,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		  select * from (select * from crmuser  where crmuser.reportto = ?) as crmUSER
 		 </sql-manager-coaching>
 		<sql-admin>
-
 			select distinct * from (select activity.crmuserId as crmuserName\,
 			activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
@@ -2807,19 +2816,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
-				<name>activity_daypart</name>
-				<display>活动开始时段</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<picklist>activity_daypart_pl</picklist>
-				<isRequired>true</isRequired>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			<field>
 				<name>crmuserId</name>
 				<display>辅导人Id</display>
 				<data-type>text</data-type>
@@ -2843,7 +2839,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority><isShow>true</isShow>
-				<relationTable>userInfo</relationTable>
+				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2874,6 +2870,41 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>coacheeUserinfoId</name>
+				<display>用户名称</display>
+				<isRequired>true</isRequired>
+				<alias>coacheeId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<relationTable>userinfo</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>coacheeUserinfoName</name>
+				<display>被辅导人名称</display>
+				<isRequired>true</isRequired>
+				<alias>coacheeUserinfoId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<relationTable>userinfo</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>participants</name>
 				<display>参与人/相关人员</display>
@@ -3184,7 +3215,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		</fields>
 	</entity>
 	<entity>
-		<name>willCoaching</name>
+		<name>willcoaching</name>
 		<display>辅导</display>
 		<filterField>feature_product</filterField>
 		<sql>
@@ -3318,20 +3349,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			
 			<field>
-				<name>activity_daypart</name>
-				<display>活动开始时段</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
-				<picklist>activity_daypart_pl</picklist>
-				<isRequired>true</isRequired>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			
-			<field>
 				<name>crmuserId</name>
 				<display>辅导人Id</display>
 				<data-type>text</data-type>
@@ -3386,10 +3403,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
-				<relationTable>userInfo</relationTable>
+				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
-			</field>
+			</field>			
 			<field>
 				<name>participants</name>
 				<display>参与人/相关人员</display>

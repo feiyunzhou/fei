@@ -82,7 +82,7 @@ public class CRUDPanel extends Panel {
                 };
             	editfrag.addOrReplace(link);
             	//根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
-				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willCoaching")){
+				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willcoaching")){
 					Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
 	                Date newDate = new Date();
 	                Calendar cal = Calendar.getInstance();
@@ -91,6 +91,8 @@ public class CRUDPanel extends Panel {
 	                newDate = cal.getTime();
 	                Date startTime = new Date(activity.getStarttime());
 	                if(startTime.compareTo(newDate)<0){
+	                	editfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+	                }else if(activity.getStatus()==3||activity.getStatus()==2){
 	                	editfrag.add(new AttributeAppender("style",new Model("display:none")," "));
 	                }
                 }
@@ -129,11 +131,13 @@ public class CRUDPanel extends Panel {
 	                };
 	                addfrag.add(link);
 	                //根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
-					if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willCoaching")){
+					if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willcoaching")){
 						Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
 		                Date newDate = new Date();
 		                Date startTime = new Date(activity.getStarttime());
 		                if(startTime.compareTo(newDate)>=0){
+		                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+		                }else if(activity.getStatus()==3){
 		                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
 		                }
 	                }
@@ -176,7 +180,7 @@ public class CRUDPanel extends Panel {
                 };
                 addfrag.add(link);
                 //根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
-				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willCoaching")){
+				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willcoaching")){
 					Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
 	                if(activity.getStatus()!=1){
 	                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));

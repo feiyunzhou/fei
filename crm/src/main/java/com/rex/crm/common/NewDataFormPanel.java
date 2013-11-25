@@ -135,7 +135,6 @@ public class NewDataFormPanel extends Panel {
                     }
                    final Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
                     if (currentField.getPicklist() != null) {
-
                         if (j % 2 == 0) {
                           TextFragment textField = new TextFragment("celldatafield", "textFragment", this, currentField.getDisplay() + ":");
                           textField.add(new AttributeAppender("style", new Model("font-weight:bold;"), ";"));
@@ -354,7 +353,7 @@ public class NewDataFormPanel extends Panel {
                 //找出title属性，判断实体名称，先声明
                 Long daypart =  0l;
                 StringBuffer title = new StringBuffer();
-                if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("wicclCoaching")){
+                if(entity.getName().equals("activity")){
                 	 daypart = (Long) models.get("activity_daypart").getObject();
                 }
                 for (String key : models.keySet()) {
@@ -370,39 +369,34 @@ public class NewDataFormPanel extends Panel {
                       if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
                        //if the filed has formatter, we guess the field saved in data base is in long 
                         Date date = new Date();
-                        
-                        String dataTime = String.valueOf(models.get(key).getObject()).split("T")[0];
-                        if(key.equals("starttime")){
-                        	if(daypart==1){
-                        		try {
-									date = dateformat.parse(dataTime.concat("T08:00"));
-								} catch (ParseException e) {
-									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
-								}  
-                        	}else{
-                        		try {
-									date = dateformat.parse(dataTime.concat("T13:00"));
-								} catch (ParseException e) {
-									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
-								}  
-                        	}
+                        String dateTime = String.valueOf(models.get(key).getObject());
+                        if(entity.getName().equals("activity")){
+    	                        if(key.equals("starttime")){
+    	                        	if(daypart==1){
+    	                        		dateTime = dateTime.split("T")[0].concat("T08:00");
+    	                        		System.out.println("开始时间："+dateTime);
+    	                        	}else{
+    	                        		dateTime = dateTime.split("T")[0].concat("T13:00");
+    									System.out.println("开始时间："+dateTime);
+    	                        	}
+    	                        }
+    	                        
+    	                        if(key.equals("endtime")){
+    	                        	if(daypart==1){
+    	                        		dateTime = dateTime.split("T")[0].concat("T11:30");
+    	                        		System.out.println("开始时间："+dateTime);
+    	                        	}else{
+    	                        		dateTime = dateTime.split("T")[0].concat("T18:00");
+    									System.out.println("开始时间："+dateTime);
+    	                        	}
+    	                        }
                         }
-                        
-                        if(key.equals("endtime")){
-                        	if(daypart==1){
-                        		try {
-									date = dateformat.parse(dataTime.concat("T11:30"));
-								} catch (ParseException e) {
-									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
-								}  
-                        	}else{
-                        		try {
-									date = dateformat.parse(dataTime.concat("T18:00"));
-								} catch (ParseException e) {
-									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
-								}  
-                        	}
-                        }
+                        try {
+							date = dateformat.parse(dateTime);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
                          values.add(String.valueOf(date.getTime()));
                       
                       }else {
@@ -420,7 +414,7 @@ public class NewDataFormPanel extends Panel {
 	                    			 title.append(callName);
 	                    			 System.out.println("callName"+title.toString());
 	                    		 }
-	                    		 if(entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+	                    		 if(entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
 	                    			 title.append("辅导:");
 	                    			 String coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get("coacheeId").getObject().toString());
 	                    			 title.append(coacheeName);
@@ -453,12 +447,12 @@ public class NewDataFormPanel extends Panel {
                     fieldNames.add(f.getName());
                     
                   }
-                  if(entity.getName().equals("willCoaching")||entity.getName().equals("coaching")){
+                  if(entity.getName().equals("willcoaching")||entity.getName().equals("coaching")){
                 	  values.add(""+total_score+"");
               		  fieldNames.add("total_score");
                   }
             		//if entity is crmuser  add loginName
-                    if ("userInfo".equals(entity.getName())) {
+                    if ("userinfo".equals(entity.getName())) {
                         long crmuserkey = -1;
                         crmuserkey = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
                         /*if (crmuserkey >0 ) {
@@ -474,7 +468,7 @@ public class NewDataFormPanel extends Panel {
                     } else {
                         long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
                         if (generatedId > 0) {
-                           if(entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+                           if(entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
                              DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,models.get("coacheeId").getObject().toString(),
                                  String.valueOf(generatedId));
                            }else{
@@ -542,8 +536,12 @@ public class NewDataFormPanel extends Panel {
             }else{
             	dropDownChoice.setNullValid(true);
             }
-            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
             	dropDownChoice.add(new AttributeAppender("class",new Model("required-pickList")," "));
+            }
+            if(currentField.getName().equals("activity_daypart")){
+            	dropDownChoice.add(new AttributeModifier("id","daypart"));
+            	dropDownChoice.setNullValid(true);
             }
             add(dropDownChoice);
         }
@@ -570,7 +568,7 @@ public class NewDataFormPanel extends Panel {
                     }
                  });
              }
-            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
             	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
             }
         } 

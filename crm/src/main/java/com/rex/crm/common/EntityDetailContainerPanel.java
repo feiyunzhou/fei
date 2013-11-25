@@ -74,7 +74,7 @@ public class EntityDetailContainerPanel   extends Panel {
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
         System.out.println("entityName:"+entity.getName());
-        if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+        if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
         	System.out.println("name:"+map.get("title"));
         	add(new Label("name",String.valueOf(map.get("title"))));
         }else{

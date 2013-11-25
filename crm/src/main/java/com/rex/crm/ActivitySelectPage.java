@@ -46,7 +46,7 @@ public class ActivitySelectPage extends TemplatePage{
         	form.add(new Link("willCoachBtn") {
                  @Override
                  public void onClick() {
-                	 setResponsePage(new CreateDataPage("willCoaching", map));
+                	 setResponsePage(new CreateDataPage("willcoaching", map));
                  }
              });
             add(form);

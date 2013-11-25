@@ -77,7 +77,7 @@ public class EditDataFormPanel extends Panel {
 	 */ 
 	public EditDataFormPanel(String id, final Entity schema,  final Map data,final String entityId ) {
 		super(id);
-        if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equals("willCoaching")){
+        if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equals("willcoaching")){
       	   add(new Label("name",String.valueOf(data.get("title"))));
          }else{
       	   add(new Label("name",String.valueOf(data.get("name"))));
@@ -342,7 +342,7 @@ public class EditDataFormPanel extends Panel {
 				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 				int total_score = 0;
 				Long daypart = 0l;
-				if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equals("wicclCoaching")){
+				if(schema.getName().equals("activity")){
                	 daypart = (Long) fieldNameToModel.get("activity_daypart").getObject();
                }
 				for (String k : fieldNameToModel.keySet()) {
@@ -363,46 +363,31 @@ public class EditDataFormPanel extends Panel {
                                 // if the filed has formatter, we guess the
                                 // field saved in data base is in long
                                 Date date = new Date();
-                                String dataTime = String.valueOf(obj).split("T")[0];
-                                if(k.equals("starttime")){
-                                	if(daypart==1){
-                                		try {
-        									date = dateformat.parse(dataTime.concat("T08:00"));
-        								} catch (ParseException e) {
-        									logger.error("failed to parse datetime:"+ (String)obj,e);
-        								}  
-                                	}else{
-                                		try {
-        									date = dateformat.parse(dataTime.concat("T13:00"));
-        								} catch (ParseException e) {
-        									logger.error("failed to parse datetime:"+ (String)obj,e);
-        								}  
-                                	}
+                                String dateTime = String.valueOf(fieldNameToModel.get(k).getObject());
+                                if(schema.getName().equals("activity")){
+            	                        if(k.equals("starttime")){
+            	                        	if(daypart==1){
+            	                        		dateTime = dateTime.split("T")[0].concat("T08:00");
+            	                        	}else{
+            	                        		dateTime = dateTime.split("T")[0].concat("T13:00");
+            	                        	}
+            	                        }
+            	                        
+            	                        if(k.equals("endtime")){
+            	                        	if(daypart==1){
+            	                        		dateTime = dateTime.split("T")[0].concat("T11:30");
+            	                        	}else{
+            	                        		dateTime = dateTime.split("T")[0].concat("T18:00");
+            	                        	}
+            	                        }
                                 }
-                                
-                                if(k.equals("endtime")){
-                                	if(daypart==1){
-                                		try {
-        									date = dateformat.parse(dataTime.concat("T13:00"));
-        								} catch (ParseException e) {
-        									logger.error("failed to parse datetime:"+ (String)obj,e);
-        								}  
-                                	}else{
-                                		try {
-        									date = dateformat.parse(dataTime.concat("T18:00"));
-        								} catch (ParseException e) {
-        									logger.error("failed to parse datetime:"+ (String)obj,e);
-        								}  
-                                	}
-                                }
-                                
-                               /* try {
-                                    date = dateformat.parse((String)obj);
-                                } catch (ParseException e) {
-                                    logger.error("failed to parse datetime:" + (String)obj, e);
-                                }
-                                //values.add(;
-*/                                value = String.valueOf(date.getTime());
+                                try {
+        							date = dateformat.parse(dateTime);
+        						} catch (ParseException e) {
+        							// TODO Auto-generated catch block
+        							e.printStackTrace();
+        						}
+                               value = String.valueOf(date.getTime());
 
                             } else {
                                 value = "'" + (String)obj + "'";
@@ -436,7 +421,7 @@ public class EditDataFormPanel extends Panel {
                  }
 				
                 String table_name  = schema.getName();
-                if(table_name.equalsIgnoreCase("coaching")||table_name.equalsIgnoreCase("willCoaching")){
+                if(table_name.equalsIgnoreCase("coaching")||table_name.equalsIgnoreCase("willcoaching")){
                     table_name = "activity";
                     names.add("total_score");
                     values.add(""+total_score+"");
@@ -574,7 +559,7 @@ public class EditDataFormPanel extends Panel {
                     
                  });
              }
-            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willCoaching")){
+            if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
             	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
             }
             if(currentField.getPriority()==5){

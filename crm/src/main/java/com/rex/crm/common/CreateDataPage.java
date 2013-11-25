@@ -41,14 +41,12 @@ public class CreateDataPage extends TemplatePage {
     }
     
     private void initPage(String entityName,Map<String,Object> params){
-    	
         //this.getRequest().
         this.setPageTitle("创建");
        //this.getPageParameters().get
         Map<String, Entity> entities = Configuration.getEntityTable();
         //if (entityName == null) entityName="contact";
         final Entity entity = entities.get(entityName);
-        System.out.println("entityName:"+entity);
         if(null!=entity){
         	add(new NewDataFormPanel("formPanel",entity,params));
 	         add(new AbstractAjaxBehavior(){
