@@ -126,7 +126,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         }else if(status ==2){
         	return "#2ECC71";
         }else {
-            return "#E74C3C";
+            return "#ED9C28";
         }
     },
     getEventColor = function(type) {

@@ -86,7 +86,7 @@ public class SearchCRMUserPage extends WebPage {
 
                 if (entityname.equals("account") || entityname.equals("contact")) {
                     maplist = DAOImpl.searchCRMUser(search_target);
-                }else if(entityname.equals("userInfo")){
+                }else if(entityname.equals("userinfo")){
                 	maplist = DAOImpl.searchUserPosition(uid,search_target);
                 }else {
                     if (type == 0) {

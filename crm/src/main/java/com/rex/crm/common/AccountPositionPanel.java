@@ -29,13 +29,16 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.behavior.Behavior;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.SearchCRMUserPage;
 import com.rex.crm.SignIn2Session;
+import com.rex.crm.admin.PositionTreePage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
@@ -52,7 +55,7 @@ public class AccountPositionPanel extends Panel {
     List<String> selectedRowIds = Lists.newArrayList();
       
     
-    public AccountPositionPanel(String id,final String en,final String entityId,int level) {
+    public AccountPositionPanel(String id,final String en,final String entityId,final int level) {
         super(id);
         etId = entityId;
         currentEntityName = en;
@@ -61,12 +64,13 @@ public class AccountPositionPanel extends Panel {
         //team sql
         String teamSql = "";
                 //for the 医院列表
+
               if(level == 11){
             	  teamSql="select id as rid, user_position_query.* from user_position_query where user_position_query.position_id = ?";
               } else if(level == 21){
             	  teamSql="select id as rid, user_position_query.* from user_position_query where user_position_query.manager_position_id =?";
               }else{
-            	  teamSql="select id as rid, user_position_query.* from user_position_query where manager_position_id in (select id from crmuser where reportto = ?)";
+            	  teamSql="select * from user_position_query where manager_position_id in (select id from crmuser where reportto = ?)";
               }
         
 
@@ -90,19 +94,19 @@ public class AccountPositionPanel extends Panel {
            add(new SubmitLink("remove_team_member_click",form){
            @Override      
            public void onSubmit(){
-             String teamtable = "";
-               teamtable = "accountcrmuser";
-            
-           for(String rid:selectedRowIds){
+
              try{
-                   DAOImpl.removeEntityFromTeam(teamtable,rid);
+            	
+            	 delete(Integer.parseInt(entityId));
                 
              }catch(Exception e){
                  
-             }
-         }
-           setResponsePage(new EntityDetailPage(currentEntityName,etId));
-      
+         }   
+             PageParameters param = new PageParameters();
+             param.add("positionId", entityId);
+             param.add("level",String.valueOf(level));
+			 setResponsePage(PositionTreePage.class,param );
+            
              }
            });
        }
@@ -123,25 +127,10 @@ public class AccountPositionPanel extends Panel {
             });
 
         }
-        CheckGroup group = new CheckGroup("group",new PropertyModel(this,"selectedRowIds"));
-        form.add(group); 
-        if(roleId == 1){
-            CheckGroupSelector chks = new CheckGroupSelector("checkboxs");
-            group.add(chks);
-            WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
-            group.add(container_label);
-            container_label.add(new AttributeAppender("for", new Model(chks.getMarkupId()), " ")); 
-        }else{
-            WebMarkupContainer container = new WebMarkupContainer("checkboxs");
-            container.setVisible(false);
-            WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
-            container_label.setVisible(false);
-            group.add(container);
-            group.add(container_label);
-        }
+
         //set column name
         RepeatingView columnNameRepeater = new RepeatingView("columnNameRepeater");
-        group.add(columnNameRepeater);
+        form.add(columnNameRepeater);
         int count=0;
         for(Field f:entity.getFields()){
             if (!f.isVisible()|| f.getPriority() >1)
@@ -155,7 +144,7 @@ public class AccountPositionPanel extends Panel {
             item.add(new Label("columnName", f.getDisplay())); 
         }
         RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-        group.add(dataRowRepeater);
+        form.add(dataRowRepeater);
         for (int i = 0; i < mapList.size(); i++)
         {
             Map map = (Map)mapList.get(i);
@@ -176,6 +165,7 @@ public class AccountPositionPanel extends Panel {
                         p.setExtraId(realId);
                         p.setEntityName(entityName);
                         return p;
+                       
                     }
                 });
                 if (f.isDetailLink()) {
@@ -208,20 +198,7 @@ public class AccountPositionPanel extends Panel {
                     }
                 }
                 columnRepeater.add(columnitem);
-              }
-            
-            WebMarkupContainer container_label = new WebMarkupContainer("checkbox_label");
-            item.add(container_label);
-            if(roleId == 1){
-                Check chk = new Check("checkbox", new Model(String.valueOf(rowId)));
-                container_label.add(new AttributeAppender("for", new Model(chk.getMarkupId()), " "));        
-                item.add(chk);
-            }else{
-                WebMarkupContainer container = new WebMarkupContainer("checkbox");
-                container.setVisible(false);
-                item.add(container);
-            }
-         
+              } 
             
         }
         add(new NewDataFormPanel("formPanel",entity,null));
@@ -243,10 +220,8 @@ public class AccountPositionPanel extends Panel {
                 public void onClick()
                 {
                     Param p = (Param)getParent().getParent().getDefaultModelObject();
-                    logger.debug(p+ " id:"+p.getId() + " name:"+p.getEntityName());
                     setResponsePage(new EntityDetailPage(p.getEntityName(),p.getExtraId()));
                     
-                    //setResponsePage(new AccountDetailPage(id));
                 }
             }.add(new Label("caption", new Model<String>(caption))));
         }
@@ -265,23 +240,45 @@ public class AccountPositionPanel extends Panel {
     
     private int queryPositionLevel(int positionId)
     {
-    	return 0;
+    	int level = 100;
+    	
+    	Map position = DAOImpl.queryEntityById("select * from crmuser where id = ?", String.valueOf(positionId));
+    	if(position.size() > 0)
+    	{
+    		level = (int) position.get("level");
+    	}
+    	
+    	return level;
     }
     
-    private void deleteAccountTeam(int positionId)
+    private ArrayList<Integer> queryPositionByParent(int positionId)
     {
+    	List list = DAOImpl.searchCRMUserByManager(String.valueOf(positionId), "");
+    	ArrayList<Integer> ids = new ArrayList<>();
+    	for(Object o : list)
+    	{
+    		Map map = (Map) o;
+    		ids.add(Integer.valueOf((Integer)map.get("id")));
+    	}
     	
+    	return ids;
     }
     
     private void delete(int positionId)
     {
-    	
-    	ArrayList<Integer> ids = new ArrayList<>();
     	int level = queryPositionLevel(positionId);
     	
     	if(level == 1)
     	{
-    		
+    		DAOImpl.deleteAccountTeamWithPositionId(positionId);
+    	}
+    	else if(level > 1)
+    	{
+    		ArrayList<Integer> ids = queryPositionByParent(positionId);
+    		for(int id : ids)
+    		{
+    			delete(id);
+    		}
     	}
     }
 }

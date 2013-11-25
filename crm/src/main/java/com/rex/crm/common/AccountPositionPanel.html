@@ -4,6 +4,7 @@
             $("#add_relation_link").click(function(e){
                 // location.href = './mount/searchCRMUser?eventid='+calEvent.id;
             });
+            
         });
 
     </script>
@@ -19,34 +20,24 @@
                                 <a id="add_relation_link" wicket:id="add_users_link" target="_blank" class="btn btn-sm  btn-mini btn-info">添加</a>
                             </div>
                             <div class="btn-group-team">
-                                <a  wicket:id="remove_team_member_click" class="btn btn-sm btn-danger btn-mini">删除</a>
+                                <a  wicket:id="remove_team_member_click"  class="btn btn-sm btn-danger btn-mini">删除</a>
                             </div>
                         </div>
                     </div>
                     <form wicket:id="form">
-                        <span wicket:id="group">
                             <table id="dt" style="width: 100%" class="table table-responsive table-hover table-condensed">
                                 <thead>
                                     <tr class="active" >
                                         <th class="table-hide " wicket:id="columnNameRepeater">
                                             <span wicket:id="columnName"></span></th>
-                                        <th class="table-check">
-                                            <input type="checkbox"  wicket:id="checkboxs"/>
-                                            <label wicket:id="checkboxs_label" class="chk-header"><span></span></label>
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr wicket:id="dataRowRepeater">
                                         <td class="table-hide " wicket:id="columnRepeater"><span wicket:id="celldata"></span></td>
-                                        <td>
-                                            <input  type="checkbox" wicket:id="checkbox"/>
-                                            <label wicket:id="checkbox_label"><span></span></label>
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </span>
                     </form>
                     <wicket:fragment wicket:id="detailFragment">
                         <a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a>
@@ -67,10 +58,7 @@
 
             <!--  form end -->
         </div>
-        <!-- 		<div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-                <button class="btn btn-primary">确定</button>
-        </div> -->
+
     </div>
 
 </wicket:panel>

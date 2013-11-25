@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.converters.IntegerArrayConverter;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -56,9 +57,6 @@ public class PositionTreePage extends AdminTemplatePage
 	  
       StringValue positionId = getRequest().getRequestParameters().getParameterValue("positionId");
       
-      System.out.println("Position id is " + positionId);
-      
-      
       int level = 0;
       if(!positionId.isNull()&&!positionId.isEmpty()){
     	  level = DAOImpl.getLevelByPositionId(positionId.toInt());
@@ -73,7 +71,10 @@ public class PositionTreePage extends AdminTemplatePage
 
   }
 
-  
+  public PositionTreePage(String id,String level){
+	  int lev = Integer.parseInt(level);
+	  initPage(id,lev);
+  }
   
   private void initPage(final String positionId,int level){
       Gson gson = new Gson();

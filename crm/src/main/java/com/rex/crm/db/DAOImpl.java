@@ -1688,6 +1688,24 @@ public class DAOImpl
         return inserts;
     }
     
+    public static int deleteAccountTeamWithPositionId(int positionId) {
+        String sql = "DELETE from accountcrmuser where crmuserid = " + positionId;
+        Connection conn = null;
+        int inserts = 0;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+          
+            inserts += run.update(conn, sql);
+            
+        } catch (Exception e) {
+            logger.error("failed to delete  deleteAllRecords", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return inserts;
+    }
     
     public static void deleteaAcountCrmuserRecord(String entityId) {
         String sql = "";
@@ -1949,7 +1967,29 @@ public class DAOImpl
         return lMap;
     }
 
-    
+    public static List searchCRMUserByManager(String managerId,String search_target) {
+        if(search_target == null|| search_target.equalsIgnoreCase("*")){
+            search_target = "";
+        }
+        String sql = "select * from crmuser";
+           sql = "select * from (select * from crmuser where crmuser.id > 0 AND reportto="+managerId+") as a";
+        logger.debug(sql );
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return lMap;
+    }
+
     
     public static List searchCRMUser(String search_target) {
     	if(search_target == null|| search_target.equalsIgnoreCase("*")){
