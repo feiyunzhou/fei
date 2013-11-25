@@ -9,13 +9,16 @@
 			select * from (select account.*\,
 			account_point_pl.val as key_type_val\,
 			account_type_pl.val as hospital_type_val\,
-			account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val
+			account_comprehensive_or_specialized_pl.val as comprehensive_or_specialized_val\,
+			account_administrativ_level_pl.val\,
+			account_administrativ_level_pl.val as administrativ_level_val
 			from account
 			left join account_point_pl on account.key_type = account_point_pl.id
 			left join account_type_pl on account.hospital_type = account_type_pl.id
 			left join account_comprehensive_or_specialized_pl on
 			account.comprehensive_or_specialized =
 			account_comprehensive_or_specialized_pl.id
+			left join account_administrativ_level_pl  on account.administrativ_level = account_administrativ_level_pl.id 	
 			where account.id != -1 and(
 			account.id in (select accountid from accountcrmuser 
 			left join user_position on user_position.positionId = accountcrmuser.crmuserid
@@ -645,7 +648,7 @@
 			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
 			left join user_position on user_position.positionId = accountcrmuser.crmuserId
 			left join contact_department_pl on contact.department = contact_department_pl.id
-			where contact.id != -1 and accountcrmuser.crmuserid = ?) as aContact
+			where contact.id != -1 and accountcrmuser.crmuserid = ? )  as aContact
 		</sql>
 		<sql-manager>
 select distinct * from (select  aContact.*\,contact_generalization_target_pl.val as product_target_val\,
@@ -658,7 +661,7 @@ where crmuser.reportto=? and
 		contact_generalization_target_pl.id 
 	left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
 	left join account on accountcrmuser.accountId = account.id
-	left join user_position on user_position.positionId = accountcrmuser.crmuserId) as cCountcat
+	left join user_position on user_position.positionId = accountcrmuser.crmuserId  ) as cCountcat
 
 		</sql-manager>
 
@@ -680,7 +683,7 @@ where crmuser.reportto=? and
 			left join contact_generalization_target_pl on contact.product_target =
 			contact_generalization_target_pl.id 
 			left join contact_department_pl on contact.department = contact_department_pl.id
-			where contact.id != -1 ) as aContact
+			where contact.id != -1  )  as aContact
 		</sql-admin>
 
 		<sql-ent>select * from (select contact.*\,account.id as accountName
