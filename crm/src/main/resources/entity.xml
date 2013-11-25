@@ -46,9 +46,13 @@
 			select * from (select account.*\,account_point_pl.val as key_type_val\,
 			account_type_pl.val as hospital_type_val\,
 			account_comprehensive_or_specialized_pl.val as
-			comprehensive_or_specialized_val
-			FROM
-			account\,account_point_pl\,account_type_pl\,account_comprehensive_or_specialized_pl
+			comprehensive_or_specialized_val\,
+			account_administrativ_level_pl.val
+			FROM account
+			left join account_point_pl on account.key_type = account_point_pl.id
+			left join account_type_pl on account.hospital_type = account_type_pl.id
+			left join account_administrativ_level_pl  on account.administrativ_level = account_administrativ_level_pl.id 
+			left join account_comprehensive_or_specialized_pl on account_comprehensive_or_specialized_pl.id = account.comprehensive_or_specialized	
 			where (account.id in (select accountid from crmdb.accountcrmuser
 			where
 			crmuserid = ?) OR
@@ -60,10 +64,7 @@
 			account.id in (select accountid from crmdb.contact where id in (select
 			contactid
 			from crmdb.contactcrmuser where crmuserid in (select id from
-			crmdb.crmuser where reportto = ?)))) AND
-			account_point_pl.id=key_type AND account.id != -1 AND
-			account_type_pl.id=hospital_type AND
-			account_comprehensive_or_specialized_pl.id = comprehensive_or_specialized ORDER BY CONVERT( name USING gbk )) as aAccount
+			crmdb.crmuser where reportto = ?))))  ORDER BY CONVERT( name USING gbk )) as aAccount
 		</sql-manager>
 
 		<sql-ent>SELECT * from (select account.* from account where
