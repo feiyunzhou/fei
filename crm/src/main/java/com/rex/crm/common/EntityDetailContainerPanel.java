@@ -85,7 +85,7 @@ public class EntityDetailContainerPanel   extends Panel {
         
 
         //set relations data
-         List<Relation> relations = Configuration.getRelationsByName(entityName);
+       /*  List<Relation> relations = Configuration.getRelationsByName(entityName);
          
          RepeatingView relationRepeater = new RepeatingView("relationRepeater");
          add(relationRepeater);
@@ -94,7 +94,7 @@ public class EntityDetailContainerPanel   extends Panel {
          Map<String,Object> params = Maps.newHashMap();
          for(Field f:paramFields){
              params.put(entityName+"."+f.getName(), map.get(f.getName()));
-         }
+         }*/
          
          
 //         for(Relation r:relations){

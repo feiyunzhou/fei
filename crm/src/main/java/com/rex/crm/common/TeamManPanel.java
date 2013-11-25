@@ -96,7 +96,13 @@ public class TeamManPanel extends Panel {
             }
             else if (type == 2){
               //for the 用户列表
-              teamSql = "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
+              teamSql = "select * from (select userinfo.*,user_position.status as status "
+              		+ " crmuser.name as positionId "
+              		+ " from  user_position "
+              		+ " left join userInfo on userInfo.id = user_position.userId"
+              		+ " left join crmuser on crmuser.id = user_position.positionId"
+              		+ " where user_position.positionId = ? order by user_position.whenadded DESC limit 1 ) as atable";
+              		//+ "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
             }
             else if (type == 3){
               //for the 下属岗位
@@ -113,10 +119,12 @@ public class TeamManPanel extends Panel {
               entity = Configuration.getEntityByName("userinfo");
               add(new Label("title","用户"));
             } 
-          }else if(en.equalsIgnoreCase("userInfo")){
-          entity = Configuration.getEntityByName("user_position");
-          add(new Label("title"," 用户岗位关系"));
-        }else{
+          }
+//        else if(en.equalsIgnoreCase("userInfo")){
+//          entity = Configuration.getEntityByName("user_position");
+//          add(new Label("title"," 用户岗位关系"));
+//        }
+        else{
             if(type == 0){
         	  entity = Configuration.getEntityByName("account");
         	  add(new Label("title","医院"));
