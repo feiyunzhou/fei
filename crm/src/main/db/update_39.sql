@@ -1,8 +1,11 @@
+drop view if exists parent_user_info;
+drop view if exists parent_user_position;
+drop view if exists parent_position;
 create view parent_user_info as select * from userinfo;
 create view parent_user_position as select * from user_position;
 create view parent_position as select * from crmuser;
 
-drop view user_position_query;
+drop view if exists  user_position_query;
 
 create view user_position_query as 
 select user_position.userid user_id, 
