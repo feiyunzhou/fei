@@ -146,6 +146,7 @@ public class DataImporter {
                                error_writter.write(relationTable+"中没有此外部ID:"+value +" === " +reader.getRawRecord()+"\n");
                                
                                if(entityName.equalsIgnoreCase("accountcrmuser")){
+                                   num_of_failed++;
                                    result = 1;
                                    flag = false;
                                     break;
