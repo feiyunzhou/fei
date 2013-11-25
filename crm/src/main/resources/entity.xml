@@ -2136,7 +2136,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.grade as contactgrade\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
@@ -2155,7 +2155,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.grade as contactgrade\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
@@ -2177,7 +2177,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.grade as contactgrade\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id where
@@ -2194,7 +2194,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.grade as contactgrade\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
@@ -2213,7 +2213,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.grade as contactgrade\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
@@ -2234,7 +2234,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.grade as contactgrade\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id order by whenadded
@@ -2704,7 +2704,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
@@ -2727,7 +2727,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
@@ -2754,7 +2754,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
@@ -3247,7 +3247,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
@@ -3270,7 +3270,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
@@ -3296,7 +3296,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
-			left join activity_event_type_pl on activity.activity_type =
+			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId

@@ -55,9 +55,10 @@
 		            
 		           // location.href = "/"+context_name+'/mount/eventViewer?eventid='+calEvent.id;
 		            var entityName = null;
-		            if(calEvent.act_type==1){
+		            console.log(calEvent);
+		            if(calEvent.event_type_val=='拜访'){
 		            	entityName = "activity"
-		            }else if (calEvent.act_type==2){
+		            }else if (calEvent.event_type_val=='拜访辅导'){
 		            	entityName = "coaching";
 		            }else{
 		            	entityName = "willcoaching"
