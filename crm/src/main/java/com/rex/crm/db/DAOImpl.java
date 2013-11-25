@@ -1434,7 +1434,7 @@ public class DAOImpl
     }
     
 
-    public static void insert2UserRelationTable(String entityName,String userId,String positionId,String coacheeId,String entityId){
+    public static void insert2UserRelationTable(String entityName,String userId,String positionId,String coacheePositionId,String entityId){
         String sql = null;
         long ts= System.currentTimeMillis();
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -1447,7 +1447,7 @@ public class DAOImpl
             sql = "INSERT INTO activitycrmuser ( activityId, crmuserId) VALUES ("+entityId+","+positionId+")";
         }else if (entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willCoaching")){
           sql = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+entityId+","+positionId+")";
-          insertActivityCrmuserTable(coacheeId,positionId);
+          insertActivityCrmuserTable(entityId,coacheePositionId);
         }else if (entityName.equalsIgnoreCase("userinfo")){
           sql = "INSERT INTO user_position ( userId,positionId,status,isPrimary,whenadded) VALUES ("+userId+","+positionId+",1,1,'"+date_value+"')";
         }
@@ -1471,8 +1471,8 @@ public class DAOImpl
         }
     }
     
-    public static void insertActivityCrmuserTable(String coaheeId,String positionId){
-      String sql  = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+positionId+","+coaheeId+")";
+    public static void insertActivityCrmuserTable(String activityId,String crmuserId){
+      String sql  = "INSERT INTO activitycrmuser ( activityId,crmuserId) VALUES ("+activityId+","+crmuserId+")";
         
       if(sql == null) {
           logger.error("entityName error");

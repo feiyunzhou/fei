@@ -46,15 +46,8 @@
 		              //element.children().first().append("<i class=\"icon-tasks pull-right\"></i>");
 		          },
 		          eventClick: function(calEvent, jsEvent, view) {
-		            console.log(calEvent);
-		           /*  if(calEvent.act_type == 1){
-		                location.href = "activityDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
-		            }else if(calEvent.act_type == 2 || calEvent.act_type == 3){
-		                location.href = "meetingDetailPage.html#seg?activityId="+calEvent.id+"&parentpage="+url.attr("relative");
-		            } */
-		            
-		           // location.href = "/"+context_name+'/mount/eventViewer?eventid='+calEvent.id;
 		            var entityName = null;
+		            console.log(calEvent);
 		            if(calEvent.event_type_val=='拜访'){
 		            	entityName = "activity"
 		            }else if (calEvent.event_type_val=='拜访辅导'){
@@ -62,7 +55,7 @@
 		            }else{
 		            	entityName = "willcoaching"
 		            }
-		            //location.href = event_view_page_url+'id='+calEvent.id+'&entityName='+entityName;
+		            location.href = event_view_page_url+'id='+calEvent.id+'&entityName='+entityName;
 
 		          },
 		          dayClick : function(date, allDay, jsEvent, view) {
