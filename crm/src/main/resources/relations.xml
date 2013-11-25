@@ -64,8 +64,8 @@
 		<from>activity</from>
 		<name>crmuser2activity</name>
 		<display>参与此次拜访的销售代表</display>
-		<sql>select crmuser.*\,userinfo.name as userInfoName \,role.name as permission from crmuser
-		inner join activity  activity.crmuserId=crmuser.Id
+		<sql>select crmuser.*\,userinfo.name as userInfoName \,role.val as permission from crmuser
+		inner join activity on activity.crmuserId=crmuser.Id
 		left join user_position on crmuser.id = user_position.positionId
 		left join role on crmuser.role = role.id
 		left join userinfo on userinfo.id = user_position.userId
