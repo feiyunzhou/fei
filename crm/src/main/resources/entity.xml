@@ -19,7 +19,7 @@
 			where account.id != -1 and(
 			account.id in (select accountid from accountcrmuser 
 			left join user_position on user_position.positionId = accountcrmuser.crmuserid
-			where accountcrmuser.crmuserid = ? and user_position.status=1)
+			where accountcrmuser.crmuserid = ?)
 			or account.id in (select contact.accountid from contactcrmuser
 			left join contact on contactcrmuser.contactid = contact.id
 			left join accountcrmuser on accountcrmuser.accountid = contact.accountId
@@ -55,7 +55,7 @@
 			account.id in (select accountid from crmdb.accountcrmuser where crmuserid in
 			(select crmuser.id from crmuser
 			left join user_position on crmuser.id = user_position.positionId
-			where user_position.status = 1 and crmuser.reportto = ?
+			where crmuser.reportto = ?
 			)) OR
 			account.id in (select accountid from crmdb.contact where id in (select
 			contactid
@@ -150,8 +150,8 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 				<picklist>account_grade_pl</picklist>
 				<priority>2</priority>
 				<fieldGroup>关键信息</fieldGroup>
@@ -641,7 +641,7 @@
 			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
 			left join user_position on user_position.positionId = accountcrmuser.crmuserId
 			left join contact_department_pl on contact.department = contact_department_pl.id
-			where contact.id != -1 and accountcrmuser.crmuserid = ? and user_position.status = 1) as aContact
+			where contact.id != -1 and accountcrmuser.crmuserid = ?) as aContact
 		</sql>
 		<sql-manager>
 select distinct * from (select  aContact.*\,contact_generalization_target_pl.val as product_target_val\,
@@ -654,7 +654,7 @@ where crmuser.reportto=? and
 		contact_generalization_target_pl.id 
 	left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
 	left join account on accountcrmuser.accountId = account.id
-	left join user_position on user_position.positionId = accountcrmuser.crmuserId and user_position.status = 1 ) as cCountcat
+	left join user_position on user_position.positionId = accountcrmuser.crmuserId) as cCountcat
 
 		</sql-manager>
 
@@ -1455,7 +1455,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isRequired>false</isRequired>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<picklist>crmuser_activited</picklist>
 				<priority>1</priority><isShow>true</isShow>
@@ -1616,7 +1616,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 					left join userInfo on userInfo.id = user_position.userId
 					left join permission on crmuser.role = permission.id
 					left join crmdb.role on crmuser.role = role.id
-					where (id = ?) and (user_position.status = 1) ORDER BY CONVERT( crmuser.code USING gbk )
+					where (id = ?) ORDER BY CONVERT( crmuser.code USING gbk )
    				 ) as aCrmuser
 		</sql>
 		<sql-admin>
@@ -1673,9 +1673,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>2</priority>
 				<isShow>true</isShow>
 				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
@@ -1689,11 +1689,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<isShow>true</isShow>
 				<isSearchable>true</isSearchable>
-				<priority>2</priority>
+				<priority>1</priority>
 				<fieldGroup>关键信息</fieldGroup>
 				<import_field_name>岗位编码</import_field_name>
 			</field>

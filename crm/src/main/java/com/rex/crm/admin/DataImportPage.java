@@ -59,6 +59,7 @@ public class DataImportPage extends AdminTemplatePage
           
           protected void onSubmit()
           {
+              if(selected_entity ==null) return;
             logger.debug("selected_entity:"+ selected_entity.getId());
             
             //DataImportDelegate da = new DataImportDelegate();

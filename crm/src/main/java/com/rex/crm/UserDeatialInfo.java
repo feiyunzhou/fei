@@ -51,8 +51,7 @@ public class UserDeatialInfo extends UserInfoSettingPage {
     private void initPage() {
         logger.debug("sessionID:" + ((SignIn2Session) getSession()).getUserId());
         int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
-        Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get("userInfo");
+        Entity entity = Configuration.getEntityByName("userinfo");
         String primaryKeyName = entity.getPrimaryKeyName();
         //get crmUser 
         UserInfo user = DAOImpl.getUserInfoById(userId); 
