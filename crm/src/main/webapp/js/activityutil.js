@@ -111,7 +111,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                       event.title = act.status;
                       event.start =  parseInt(act.starttime)/1000;
                       event.end = parseInt(act.endtime)/1000;
-                      event.color = getEventByStatusAndType(act.act_status,act.event_type);
+                      event.color = getEventByStatusAndType(act.act_status);
                       event.allDay = false;
                       events.push(event);
                 }
@@ -120,20 +120,13 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
         
         return events;
     },
-    getEventByStatusAndType = function(status,type){
+    getEventByStatusAndType = function(status){
         if(status ==1){
-            if(type==1 || type == "拜访"){
-                return "#2B60DE";
-            }else if(type == 2 || type == "辅导"){
-                return "#E18B6B";
-            }else if(type == 3){
-                return "#ff8c00";
-            }else{
-                return "#6698FF";
-            }
-            
-        }else{
-            return "#659EC7";
+                return "#3498BD";
+        }else if(status ==2){
+        	return "#2ECC71";
+        }else {
+            return "#E74C3C";
         }
     },
     getEventColor = function(type) {
@@ -146,8 +139,6 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
             return "#ff8c00";
         }
          return "#a4bdfc";
-        
-    
     },
     
     getEventTitle = function(type) {

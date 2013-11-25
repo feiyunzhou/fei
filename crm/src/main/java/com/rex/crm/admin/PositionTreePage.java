@@ -53,11 +53,20 @@ public class PositionTreePage extends AdminTemplatePage
    */
   public PositionTreePage()
   {
+	  
       StringValue positionId = getRequest().getRequestParameters().getParameterValue("positionId");
+      
+      System.out.println("Position id is " + positionId);
+      
+      
+      int level = 0;
+      if(!positionId.isNull()&&!positionId.isEmpty()){
+    	  level = DAOImpl.getLevelByPositionId(positionId.toInt());
+     } 
      if(positionId.isEmpty() || positionId.isNull()){
-         initPage(null);
+         initPage(null,0);
      }else{
-         initPage(positionId.toString());
+         initPage(positionId.toString(),level);
      }
      
      urlFor(PositionTreePage.class, null);
@@ -66,13 +75,13 @@ public class PositionTreePage extends AdminTemplatePage
 
   
   
-  private void initPage(final String positionId){
+  private void initPage(final String positionId,int level){
       Gson gson = new Gson();
       String result = gson.toJson(TreeFactory.createAccountPositionTree(),Node.class);
       add(new TreePanel("treePanel",result));
       
       if(positionId !=null){
-      AccountPositionPanel panel = new AccountPositionPanel("datalist","crmuser",positionId);
+      AccountPositionPanel panel = new AccountPositionPanel("datalist","crmuser",positionId,level);
       add(panel);
       }else{
           add(new EmptyPanel("datalist"));

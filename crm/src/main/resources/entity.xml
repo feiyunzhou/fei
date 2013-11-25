@@ -730,20 +730,6 @@ where crmuser.reportto=? and
 				<fieldGroup>关键信息</fieldGroup>
                 <import_field_name>姓名</import_field_name>
 			</field>
-			<!-- Please do not change the order of this field(accountId)!! -->
-			<!-- <field> -->
-			<!-- <name>accountId</name> -->
-			<!-- <display>医院ID</display> -->
-			<!-- <data-type>number</data-type> -->
-			<!-- <isRequired>false</isRequired> -->
-			<!-- <isPrimaryKey>false</isPrimaryKey> -->
-			<!-- <isDetailLink>false</isDetailLink> -->
-			<!-- <isVisible>true</isVisible> -->
-			<!-- <isEditable>false</isEditable> -->
-			<!-- <priority>1</priority><isShow>true</isShow> -->
-			<!-- <fieldGroup>关键信息</fieldGroup> -->
-			<!-- </field> -->
-
 			<field>
 				<name>accountId</name>
 				<display>医院ID</display>
@@ -762,22 +748,6 @@ where crmuser.reportto=? and
                 <import_field_name>BDM编码</import_field_name>
                 <import_external_foreignkey_field_name>bdm_code</import_external_foreignkey_field_name>
 			</field>
-
-			<!-- <field> -->
-			<!-- <name>accountName</name> -->
-			<!-- <display>医疗机构</display> -->
-			<!-- <isRequired>false</isRequired> -->
-			<!-- <alias>accountId</alias> -->
-			<!-- <data-type>text</data-type> -->
-			<!-- <isPrimaryKey>false</isPrimaryKey> -->
-			<!-- <isDetailLink>false</isDetailLink> -->
-			<!-- <isVisible>true</isVisible> -->
-			<!-- <isEditable>true</isEditable> -->
-			<!-- <priority>1</priority><isShow>true</isShow> -->
-			<!-- <relationTable>account</relationTable> -->
-			<!-- <fieldGroup>关键信息</fieldGroup> -->
-			<!-- </field> -->
-
 			<field>
 				<name>accountName_val</name>
 				<display>医疗机构</display>
@@ -1371,7 +1341,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
 				<isSearchable>true</isSearchable>
@@ -1386,7 +1356,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>基本信息</fieldGroup>
 				<isBaseInfo>false</isBaseInfo>
@@ -1458,7 +1428,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<picklist>crmuser_activited</picklist>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
@@ -1526,13 +1496,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 				<childNode>city</childNode>
 			</field>
 			<field>
 				<name>city</name>
-				<display>二级区域</display>
+				<display>城市</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<picklist>city</picklist>
@@ -1540,7 +1510,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 				<parentNode>province</parentNode>
 			</field>
@@ -1609,12 +1579,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<sql>
 			select * from
 				( 
-					select crmuser.*\,userInfo.name as userInfoName \,permission.val as permission
+					select crmuser.*\,userInfo.name as userInfoName \,role.name as permission
 					\,role.val as role_val from crmuser 
-					left join (select * from user_position where status = 1) as userposition
+					left join (select * from user_position  order by whenadded limit 1) as userposition
 					 on crmuser.id = userposition.positionId
 					left join userInfo on userInfo.id = user_position.userId
-					left join permission on crmuser.role = permission.id
 					left join crmdb.role on crmuser.role = role.id
 					where (id = ?) ORDER BY CONVERT( crmuser.code USING gbk )
    				 ) as aCrmuser
@@ -1622,25 +1591,24 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<sql-admin>
 			select * from 
 			(select crmuser.*\,crmmanager.name as reportto_val\,userInfo.name as userInfoName
-			\,permission.val as permission\,role.val as role_val
+			\,role.name as permission\,role.val as role_val
 				from crmuser
 				left join (select * from crmuser) crmmanager on
 				crmuser.reportto = crmmanager.id
-				left join (select * from user_position where status = 1) as userposition on userposition.positionId = crmuser.id
+				left join (select * from user_position order by whenadded ) as
+				 userposition on userposition.positionId = crmuser.id
 				left join userInfo on userposition.userId = userInfo.id
-				left join permission on crmuser.role = permission.id
 				left join crmdb.role on crmuser.role = role.id
 				where crmuser.id != -1 ORDER BY CONVERT( crmuser.code USING gbk )
 			) as aCrmuser
 		</sql-admin>
 		<sql-manager>
 			select * from (select crmuser.*\,userInfo.name as userInfoName
-			\,permission.val as permission\,role.val as role_val
+			\,role.name as permission\,role.val as role_val
 			 from crmuser
-			left join (select * from user_position where status = 1) as userposition
+			left join (select * from user_position order by whenadded) as userposition
 			 on userposition.positionId = crmuser.id
 			left join userInfo on userInfo.id = user_position.userId
-			left join permission on crmuser.role = permission.id
 			left join crmdb.role on crmuser.role = role.id
 			 where id = ? or reportto = ? ORDER BY CONVERT( crmuser.code USING gbk )) as aCrmuser
 		</sql-manager>
@@ -1813,10 +1781,26 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>2</priority>
+				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 				<import_field_name>产品线</import_field_name>
 <!-- 				<childNode>product</childNode> -->
+			</field>
+			<field>
+				<name>level</name>
+				<display>级别</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+<!-- 				<picklist>crmuser_pl2</picklist> -->
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<fieldGroup>基本信息</fieldGroup>
+<!-- 				<import_field_name>产品线</import_field_name> -->
 			</field>
 			<field>
 				<name>product</name>
@@ -1844,7 +1828,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 				<import_field_name>一级区域</import_field_name>
 			</field>
@@ -1859,7 +1843,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 				<import_field_name>二级区域</import_field_name>
 			</field>
@@ -1876,7 +1860,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>city</picklist>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority>
+				<priority>1</priority>
 				<fieldGroup>基本信息</fieldGroup>
 				<import_field_name>城市</import_field_name>
 			</field>

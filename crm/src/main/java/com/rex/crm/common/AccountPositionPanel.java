@@ -50,65 +50,9 @@ public class AccountPositionPanel extends Panel {
     private String etId;
     private String currentEntityName;
     List<String> selectedRowIds = Lists.newArrayList();
-   
+      
     
-    private static void appendChildren(Node node){
-        
-        if(node != null){
-          String nodeId = node.getKey();
-         // String[] splits = nodeId.split("_");
-          
-           List<CRMUser> crmusers = DAOImpl.getInferiorsByManagerId(nodeId);
-           List<Account> accounts = new ArrayList<Account>();
-           if(crmusers !=null && crmusers.size()>0){
-               Node[] children = new Node[crmusers.size()];
-               node.setFolder(true);
-               node.setChildren(children);
-               int i = 0;
-               for(CRMUser user:crmusers){
-                   Node nd = new Node();
-                   children[i++] = nd;
-                   nd.setKey(String.valueOf(user.getId()));
-                   String title = user.getName();
-                   nd.setTitle(title);
-                   nd.setType("crmuser");
-                   //System.out.println(user.getCode()+":"+user.getId());
-                   appendChildren(nd);
-               }
-           }else{
-               node.setFolder(false);
-           }
-          
-        }
-     }
-    public static Node createAccountPositionTree(){
-        Node root = new Node();
-        root.setTitle("中国区");
-        root.setFolder(true);
-        root.setKey("-1");
-        List<CRMUser> crmusers =  DAOImpl.getCRMUserWithoutSuperior();
-        
-        if(crmusers !=null && crmusers.size()>0){
-            Node[] children = new Node[crmusers.size()];
-            root.setChildren(children);
-            root.setFolder(true);
-            int i = 0;
-            for(CRMUser user:crmusers){
-                Node nd = new Node();
-                children[i++] = nd;
-                nd.setKey(String.valueOf(user.getId()));
-                nd.setTitle(user.getCode());
-                nd.setType("crmuser");           
-                appendChildren(nd);
-            }
-        }else{
-            root.setFolder(false);           
-        }
-        return root;   
-    }
-    
-    
-    public AccountPositionPanel(String id,final String en,final String entityId) {
+    public AccountPositionPanel(String id,final String en,final String entityId,int level) {
         super(id);
         etId = entityId;
         currentEntityName = en;
@@ -117,16 +61,16 @@ public class AccountPositionPanel extends Panel {
         //team sql
         String teamSql = "";
                 //for the 医院列表
-               teamSql = "select * from (select region_level1_pl.val as area,region_level2_pl.val as region,province.val as province,account.bdm_code as BDMcode,account.name as accountName,managerUser.name as regionManager"
-+",crmuser.reportto as managerPosition,delegateUser.name as delegateName , crmuser.id as delegatePosition,crmuser_pl2.val as productLine"
-+" from crmuser left join user_position on crmuser.id = user_position.positionId left join userInfo as managerUser on managerUser.id = user_position.userId"
-+" left join userInfo as delegateUser on delegateUser.id = user_position.userId left join region_level1_pl on crmuser.pl4 = region_level1_pl.id "
-+" left join region_level2_pl on region_level2_pl.id = crmuser.pl5"
-+ " left join accountcrmuser on accountcrmuser.crmuserId = crmuser.id"
-+ " left join account on account.id = accountcrmuser.accountId" 
-+ " left join province on account.province = province.id"
-+" left join crmuser_pl2 on crmuser_pl2.id = crmuser.pl2 where crmuser.id = ? or crmuser.reportto = ?) as atable";
-        List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId,entityId);
+              if(level == 1){
+            	  teamSql="select id as rid, user_position_query.* from user_position_query where user_position_query.position_id = ?";
+              } else if(level == 2){
+            	  teamSql="select id as rid, user_position_query.* from user_position_query where user_position_query.manager_position_id =?";
+              }else{
+            	  teamSql="select id as rid, user_position_query.* from user_position_query where manager_position_id in (select id from crmuser where reportto = ?)";
+              }
+        
+
+        List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
         Entity entity=null ;
         	  entity = Configuration.getEntityByName("regionManage");
         	  add(new Label("title","区域管理 "));
@@ -317,5 +261,27 @@ public class AccountPositionPanel extends Panel {
         add(new Check("checkbox",Imodel));
       }
       
+    }
+    
+    private int queryPositionLevel(int positionId)
+    {
+    	return 0;
+    }
+    
+    private void deleteAccountTeam(int positionId)
+    {
+    	
+    }
+    
+    private void delete(int positionId)
+    {
+    	
+    	ArrayList<Integer> ids = new ArrayList<>();
+    	int level = queryPositionLevel(positionId);
+    	
+    	if(level == 1)
+    	{
+    		
+    	}
     }
 }

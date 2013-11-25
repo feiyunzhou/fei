@@ -675,8 +675,12 @@ public class NewDataFormPanel extends Panel {
               text.add(new AttributeModifier("value", new Model((String)model.getObject())));
               
             } 
+            if(currentField.getDataType().equalsIgnoreCase("number")){
+            	text.add(new AttributeModifier("value", new Model("0")));
+            }
             add(text);
             text.add(new AttributeModifier("type", new Model(currentField.getDataType())));
+            
             text.add(new AttributeModifier("id", new Model(currentField.getName())));
            
         }

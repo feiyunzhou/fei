@@ -64,7 +64,12 @@
 		<from>activity</from>
 		<name>crmuser2activity</name>
 		<display>参与此次拜访的销售代表</display>
-		<sql>select crmuser.* from crmuser\,activity where activity.crmuserId=crmuser.Id AND activity.Id=?</sql>
+		<sql>select crmuser.*\,userinfo.name as userInfoName \,role.name as permission from crmuser
+		inner join activity  activity.crmuserId=crmuser.Id
+		left join user_position on crmuser.id = user_position.positionId
+		left join role on crmuser.role = role.id
+		left join userinfo on userinfo.id = user_position.userId
+		 where activity.Id=?</sql>
 		<to>crmuser</to>
 	</relation>
 	

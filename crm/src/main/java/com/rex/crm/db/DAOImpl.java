@@ -24,6 +24,7 @@ import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
+import org.apache.wicket.util.string.StringValue;
 
 import com.google.common.base.Joiner;
 import com.google.common.cache.Cache;
@@ -1591,6 +1592,22 @@ public class DAOImpl
            DBHelper.closeConnection(conn);
        }
    }
+    public static int getLevelByPositionId(int positionId) {
+        Connection conn = null;
+        int level = 0;
+        try {
+            conn = DBHelper.getConnection(); 
+            QueryRunner run = new QueryRunner();
+            Map<String, Object> map = run.query(conn, "SELECT level FROM crmuser where id=?", new MapHandler(), positionId);
+            level = (int) map.get("level");
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return level;
+    }
 //    public static void updatePositionByPositionId( String positionId) {
 //      String sql = "";
 //         sql = "UPDATE  userInfo SET positionId = -1 where positionId = " + positionId;
@@ -1825,7 +1842,7 @@ public class DAOImpl
           conn = DBHelper.getConnection();
           QueryRunner run = new QueryRunner();
           ResultSetHandler<UserPosition> h = new BeanHandler<UserPosition>(UserPosition.class);
-          user = run.query(conn, "SELECT *,createtime FROM user_position  where userId=? group by createtime desc limit 1 ", h,  uid);
+          user = run.query(conn, "SELECT *,whenadded FROM user_position  where userId=? group by whenadded desc limit 1 ", h,  uid);
 
       } catch (SQLException e) {
           logger.error("failed to get all accounts", e);

@@ -41,6 +41,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 	private String userId;
 	private int roleId;
 	private String positionId;
+	private int level;
 
 	/**
 	 * Constructor
@@ -77,6 +78,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		        UserPosition userPosition = DAOImpl.getActivityPositionInfoByUserId(userinfo.getId());
 		        CRMUser crmuser = DAOImpl.getCRMUserInfoById(userPosition.getPositionId());
 		        positionId = String.valueOf(userPosition.getPositionId());
+		        level = crmuser.getLevel();
 		        roleId = crmuser.getRole();
 		    }
 		}
@@ -128,4 +130,10 @@ public final class SignIn2Session extends AuthenticatedWebSession
     public void setPositionId(String positionId) {
         this.positionId = positionId;
     }
+    public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 }
