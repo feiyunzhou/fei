@@ -391,7 +391,7 @@ public class NewDataFormPanel extends Panel {
                         if(key.equals("endtime")){
                         	if(daypart==1){
                         		try {
-									date = dateformat.parse(dataTime.concat("T13:00"));
+									date = dateformat.parse(dataTime.concat("T11:30"));
 								} catch (ParseException e) {
 									logger.error("failed to parse datetime:"+(String) models.get(key).getObject(),e);
 								}  

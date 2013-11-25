@@ -44,7 +44,3 @@ ALTER table user_position add modify_datetime DATETIME;
 
 
 ALTER TABLE user_position drop KEY user_position_unique;  
-
-
-
-

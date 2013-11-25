@@ -49,17 +49,11 @@
             if(startTime>endTime){
             	alert("开始时间不能大于结束时间！");
             	checkTime = false;
-            	return false;
             }else if(startTime<lastWeek){
             	alert("开始时间不能为七天以前！");
             	checkTime = false;
-            	return false;
             }
-            if(!checkflag){
-            	alert("红色标记字段为必填字段！");
-                return false;
-            }
-            if(isValidated){
+            if(isValidated&&checkflag&&checkTime){
             	if($("#crmuser_name").length > 0 && jQuery.isEmptyObject($("#crmuser_name").val())){
               	  	alert("请查询添入岗位编码！");
                     return false;
@@ -77,8 +71,12 @@
                 }
                 
             }else{
-                alert("红色标记字段为必填字段");
-                return false;
+            	if(checkTime==false){
+            		return false;
+            	}else{
+            		alert("红色标记字段为必填字段");
+                    return false;
+            	}
             }
   
         }

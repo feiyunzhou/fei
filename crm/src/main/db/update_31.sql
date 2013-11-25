@@ -24,7 +24,7 @@ DELETE FROM `crmdb`.`account_administrativ_level_pl` WHERE `id`='10';
 DELETE FROM `crmdb`.`account_administrativ_level_pl` WHERE `id`='11';
 DELETE FROM `crmdb`.`account_administrativ_level_pl` WHERE `id`='12';
 
-UPDATE `crmdb`.`account_administrativ_level_pl` SET `val`='未评级' WHERE `id;
+UPDATE `crmdb`.`account_administrativ_level_pl` SET `val`='未评级' WHERE `id`= '13';
 
 drop table `crmdb`.`account_grade_pl`;
 
