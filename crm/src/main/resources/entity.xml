@@ -439,7 +439,7 @@
 				<name>date_of_establish</name>
 				<display>成立时间</display>
 				<isRequired>false</isRequired>
-				<data-type>Date</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
