@@ -175,7 +175,7 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                         sex = Integer.parseInt(value);
                     } else if (k.equals("loginName")) {
                         loginName = value;
-                    } else {
+                    } else if(k.equals("email")){
                         email = value;
                     }
                 }
