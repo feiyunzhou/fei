@@ -87,6 +87,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
 				<isParam>true</isParam> <!-- 关联表的创建的参数 -->
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
@@ -1233,11 +1234,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 <!-- 			left join crmdb.role on crmuser.role -->
 <!-- 			= role.id -->
 <!-- 			where crmuser.id != -1 ) as aCrmuser -->
-			select * from (select userInfo.*\, crmuser.role as crmuserRole\,
-			crmuser.name as positionId from userInfo 
+			select * from (select userinfo.*\, crmuser.role as crmuserRole\,
+			crmuser.name as positionId\,role.val as role_val\,province.val as province_val
+			
+			 from userinfo 
 			left join user_position on userInfo.id = user_position.userId
 			left join crmuser on crmuser.id = user_position.positionId
-			 where userInfo.id != -1 ORDER BY CONVERT( userInfo.name USING gbk ) )as aUserInfo
+			left join role on role.id = crmuser.role
+			left join province on userinfo.province = province.id
+			 where userinfo.id != -1 ORDER BY CONVERT( userinfo.name USING gbk ) )as aUserInfo
 		</sql-admin>
 		<sql-manager>
 			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
@@ -1281,6 +1286,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -1411,6 +1417,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
+				<name>role_val</name>
+				<display>角色</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>role</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isShow>false</isShow>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>2</priority>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			<field>
 				<name>isActivited</name>
 				<display>激活状态</display>
 				<data-type>text</data-type>
@@ -1432,6 +1453,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<isShow>false</isShow>
 				<priority>1</priority>
@@ -1474,11 +1496,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 				<import_field_name>用户状态</import_field_name>
 			</field>
-
 			<field>
 				<name>province</name>
 				<display>省份</display>
@@ -1494,6 +1516,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<childNode>city</childNode>
 			</field>
 			<field>
+				<name>province_val</name>
+				<display>省份</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<picklist>province</picklist>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>2</priority><isShow>true</isShow>
+				<fieldGroup>基本信息</fieldGroup>
+				<childNode>city</childNode>
+			</field>
+			<field>
 				<name>city</name>
 				<display>城市</display>
 				<isRequired>false</isRequired>
@@ -1503,6 +1540,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 				<parentNode>province</parentNode>
@@ -1622,8 +1660,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -1701,7 +1740,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<isBaseInfo>false</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -4737,7 +4776,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<fields>
 			<field>
 				<name>id</name>
-				<display>UserId</display>
+				<display>Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>

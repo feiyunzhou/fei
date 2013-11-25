@@ -10,21 +10,21 @@
 		<relationKey>accountId</relationKey>
 	</relation>
 
-    <relation>
-		<from>crmuser</from>
-		<name>crmuseruserInfo</name>
-		<display>用户</display>
-		<sql>
-		select * from (select userinfo.*\,user_position.status as status
-		\,crmuser.name as positionId
-		 from  user_position 
-		 left join userInfo on userInfo.id = user_position.userId
-         left join crmuser on crmuser.id = user_position.positionId
- 			where user_position.positionId = ? order by user_position.whenadded DESC limit 1 
-		 ) as atable
-		</sql>
-		<to>userInfo</to>
-	</relation>
+<!--     <relation> -->
+<!-- 		<from>crmuser</from> -->
+<!-- 		<name>crmuseruserInfo</name> -->
+<!-- 		<display>用户</display> -->
+<!-- 		<sql> -->
+<!-- 		select * from (select userinfo.*\,user_position.status as status -->
+<!-- 		\,crmuser.name as positionId -->
+<!-- 		 from  user_position  -->
+<!-- 		 left join userInfo on userInfo.id = user_position.userId -->
+<!--          left join crmuser on crmuser.id = user_position.positionId -->
+<!--  			where user_position.positionId = ? order by user_position.whenadded DESC limit 1  -->
+<!-- 		 ) as atable -->
+<!-- 		</sql> -->
+<!-- 		<to>userInfo</to> -->
+<!-- 	</relation> -->
 
     <relation>
 		<from>crmuser</from>

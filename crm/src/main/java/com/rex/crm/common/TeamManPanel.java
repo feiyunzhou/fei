@@ -94,10 +94,10 @@ public class TeamManPanel extends Panel {
                 //for the 医生列表
                 teamSql = "select * from (select contact . * from contact left join accountcrmuser on accountcrmuser.accountId=contact.accountId where accountcrmuser.crmuserId = ?) as atable";
             }
-//            else if (type == 2){
-//              //for the 用户列表
-//              teamSql = "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
-//            }
+            else if (type == 2){
+              //for the 用户列表
+              teamSql = "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
+            }
             else if (type == 3){
               //for the 下属岗位
               teamSql = "select * from (select crmuser.*,userInfo.name as userInfoName ,role.name as permission from  crmuser left join user_position on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId  left join role on crmuser.role = role.name where reportto = ?  ) as atable";
@@ -124,10 +124,10 @@ public class TeamManPanel extends Panel {
                 entity = Configuration.getEntityByName("contact");
                 add(new Label("title","医生"));
             }
-//            else if (type == 2){
-//              entity = Configuration.getEntityByName("userInfo");
-//              add(new Label("title","用户"));
-//            }
+            else if (type == 2){
+              entity = Configuration.getEntityByName("userInfo");
+              add(new Label("title","用户"));
+            }
             else if (type == 3){
               entity = Configuration.getEntityByName("crmuser");
               add(new Label("title","下属岗位"));
@@ -159,6 +159,8 @@ public class TeamManPanel extends Panel {
                    teamtable = "accountcrmuser";
                }else if(type == 1){
                    teamtable = "contactcrmuser";
+               }else if(type == 2){
+                   teamtable = "user_position";
                }else {
                  teamtable = "crmuser";
                }

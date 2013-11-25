@@ -450,6 +450,8 @@ public class DAOImpl
                     sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
                 }else if(type == 1){
                     sql = "INSERT INTO contactcrmuser (crmuserId,contactId) VALUES (?,?)";
+                }else if(type == 2){
+                    sql = "INSERT INTO user_position (userId,positionId) VALUES (?,?)";
                 }else{
                     sql = "update  crmuser set reportto = ?  where id = "+userId+" ";
                 }
@@ -2061,7 +2063,7 @@ public class DAOImpl
       if(search_target == null|| search_target.equalsIgnoreCase("*")){
             search_target = "";
       }
-        String sql = "select * from (select * from userInfo where (userInfo.id !=-1) AND (name like '%"+search_target+"%' OR sex like '%"+search_target+"%' OR positionId like '%"+search_target+"%')) as a";
+        String sql = "select * from (select * from userinfo where (userinfo.id !=-1) AND (name like '%"+search_target+"%' OR sex like '%"+search_target+"%' )) as a";
         logger.debug(sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
