@@ -96,7 +96,7 @@ public class ReportPage extends AdminTemplatePage
         }
         
 //        List datalist = DAOImpl.queryEntityRelationList(sql, "dummy");
-        setResponsePage(new UserPage(filter, datalist));
+       // setResponsePage(new UserPage(filter, datalist));
 
       }
 

@@ -249,7 +249,7 @@ public class PageableTablePanel extends Panel {
                     if(entity.getName().equals("coaching")){
                     	Activity coaching = DAOImpl.getActivityById(Integer.parseInt(p.getId()));
                     	if(coaching.getEvent_type()==3){
-                    		entityName = "willCoaching"; 
+                    		entityName = "willcoaching"; 
                     	}
                     }
                     setResponsePage(new EntityDetailPage(entityName, p.getId()));

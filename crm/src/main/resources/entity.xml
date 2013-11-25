@@ -143,6 +143,7 @@
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
 			<field>
 				<name>grade</name>
 				<display>医院分级</display>
@@ -2724,11 +2725,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
+			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.activity_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
+			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join user_position on user_position.positionId=bcrmuser.id
+		    left join userinfo on userinfo.id=user_position.userId
 			left join account on contact.accountId = account.Id where
 			activity.event_type = 2 order by whenadded DESC) as aActivity
 		</sql-admin>
@@ -2738,9 +2743,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			act_type\,activity.status as
 			act_status\, activity.contactId as
 			contactName\, contact.accountId as
-			accountName\, contact.name as cn
+			accountName\, userinfo.id as coacheeUserinfoName\,contact.name as cn
 			from activity left join activitycrmuser on
-			activitycrmuser.activityId=activity.id LEFT JOIN contact on
+			activitycrmuser.activityId=activity.id 
+			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join user_position on user_position.positionId=bcrmuser.id
+		    left join userinfo on userinfo.id=user_position.userId
+			LEFT JOIN contact on
 			contact.id = activity.contactId where activity.id=?)
 			as aCoaching
 		</sql-ent>
@@ -2857,9 +2866,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			
 			<field>
 				<name>coacheeUserinfoId</name>
-				<display>用户名称</display>
-				<isRequired>true</isRequired>
-				<alias>coacheeId</alias>
+				<display>被辅导人用户ID</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -2874,7 +2881,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			
 			<field>
 				<name>coacheeUserinfoName</name>
-				<display>被辅导人名称</display>
+				<display>被辅导人用户姓名</display>
 				<isRequired>true</isRequired>
 				<alias>coacheeUserinfoId</alias>
 				<data-type>text</data-type>
@@ -3211,15 +3218,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
+			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.activity_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
+			left join crmuser on crmuser.id = activity.coacheeId
+			left join user_position on user_position.positionId=crmuser.id
+		    left join userinfo on userinfo.id=user_position.userId
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
-			where activitycrmuser.crmuserid = ?) as aactivity where event_type =
-			2 order by whenadded DESC) as aActivity
+			where activitycrmuser.crmuserid = ?) as aactivity where (event_type =
+			2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
 			select distinct * from (select * from (select activity.crmuserId as
@@ -3230,6 +3241,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
+			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.activity_type =
@@ -3238,9 +3250,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			left join crmuser on activitycrmuser.crmuserid = crmuser.id
-			left join userinfo on activitycrmuser.position_id = userinfo.id
-			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type
-			= 2 order by whenadded DESC) as aActivity
+			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join user_position on user_position.positionId=bcrmuser.id
+		    left join userinfo on userinfo.id=user_position.userId
+			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
+			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql-manager>
 
 		<sql-admin>
@@ -3253,11 +3267,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
+			userinfo.id as coacheeUserinfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.activity_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
+			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join user_position on user_position.positionId=bcrmuser.id
+		    left join userinfo on userinfo.id=user_position.userId
 			left join account on contact.accountId = account.Id where
 			activity.event_type = 2 order by whenadded DESC) as aActivity
 		</sql-admin>
@@ -3267,9 +3285,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			act_type\,activity.status as
 			act_status\, activity.contactId as
 			contactName\, contact.accountId as
-			accountName\, contact.name as cn
+			accountName\,userinfo.id as coacheeUserinfoName\, contact.name as cn
 			from activity left join activitycrmuser on
-			activitycrmuser.activityId=activity.id LEFT JOIN contact on
+			activitycrmuser.activityId=activity.id 
+			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join user_position on user_position.positionId=bcrmuser.id
+		    left join userinfo on userinfo.id=user_position.userId
+			LEFT JOIN contact on
 			contact.id = activity.contactId where activity.id=?)
 			as aCoaching
 		</sql-ent>
@@ -3390,7 +3412,40 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
-			</field>			
+			</field>	
+			
+			<field>
+				<name>coacheeUserinfoId</name>
+				<display>被辅导人用户ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>false</isShow>
+				<relationTable>userinfo</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>coacheeUserinfoName</name>
+				<display>被辅导人用户姓名</display>
+				<isRequired>true</isRequired>
+				<alias>coacheeUserinfoId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<relationTable>userinfo</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+					
 			<field>
 				<name>participants</name>
 				<display>参与人/相关人员</display>
@@ -4673,7 +4728,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>1</priority><isShow>true</isShow>
 			</field>
 			<field>
 				<name>email</name>

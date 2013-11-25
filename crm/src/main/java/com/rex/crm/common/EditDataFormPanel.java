@@ -372,7 +372,6 @@ public class EditDataFormPanel extends Panel {
             	                        		dateTime = dateTime.split("T")[0].concat("T13:00");
             	                        	}
             	                        }
-            	                        
             	                        if(k.equals("endtime")){
             	                        	if(daypart==1){
             	                        		dateTime = dateTime.split("T")[0].concat("T11:30");
@@ -428,7 +427,7 @@ public class EditDataFormPanel extends Panel {
         		    
                 }
                         
-				if(!table_name.equalsIgnoreCase("userInfo")){
+				if(!table_name.equalsIgnoreCase("userinfo")){
 				  DAOImpl.updateRecord(entityId,table_name,names,values);
 				}else{
 				  if(String.valueOf(data.get("positionId")).equals(String.valueOf(fieldNameToModel.get("positionId")))){

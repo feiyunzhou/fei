@@ -1381,7 +1381,7 @@ public class DAOImpl
              valuesql = valuesql + "," +1;
              fieldssql = fieldssql + ",status";
              valuesql = valuesql + "," +1;
-         }else if(entityName.equals("willCoaching")){
+         }else if(entityName.equals("willcoaching")){
         	 entityName= "activity";
              fieldssql = fieldssql + ",event_type";
              valuesql = valuesql + "," +3;
