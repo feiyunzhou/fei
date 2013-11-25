@@ -525,6 +525,10 @@ public class EditDataFormPanel extends Panel {
                 //text.add(new AttributeModifier("required", new Model("required")));
             	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
             }
+            if(currentField.getName().equals("activity_daypart")){
+            	dropDown.add(new AttributeModifier("id","daypart"));
+            	dropDown.setNullValid(true);
+            }
             add(dropDown);
             
         }

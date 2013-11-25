@@ -278,7 +278,7 @@ public class NewDataFormPanel extends Panel {
                                 fn = currentField.getName();
                             }
                             models.put(fn, choiceModel);
-                            columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(), entity.getName(),defaultValue, choiceModel));
+                            columnitem.add(new RelationTableSearchFragment("celldatafield", "relationTableSearchFragment", this, currentField.getRelationTable(),entity.getName(),defaultValue, choiceModel));
                         }
                     } else {
                         if (j % 2 == 0) {
