@@ -1636,6 +1636,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
 				<isBaseInfo>true</isBaseInfo>
+				<import_field_name>岗位名称</import_field_name>
 			</field>
 			<field>
 				<name>code</name>
