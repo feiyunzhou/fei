@@ -11,3 +11,5 @@ alter table importMetaInfo add num_of_updated int;
 ALTER table accountcrmuser add whenadded DATETIME;
 ALTER table accountcrmuser add modifier VARCHAR(255);
 ALTER table accountcrmuser add modify_datetime DATETIME;
+
+insert into user_position (userId,positionId,isPrimary) values(1,1,1);
