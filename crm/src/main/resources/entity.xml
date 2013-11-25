@@ -1688,6 +1688,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
+				<name>uname</name>
+				<display>用户名</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isShow>true</isShow>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isBaseInfo>false</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
 				<name>pl1</name>
 				<display>状态</display>
 				<isRequired>false</isRequired>

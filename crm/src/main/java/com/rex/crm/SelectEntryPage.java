@@ -177,8 +177,11 @@ public class SelectEntryPage extends WebPage {
                       dummy.put("name", "无");
                       maplist.add(dummy);
                     }else if(roleId == 2){
-                      logger.debug("dfaaaaaaaaaaaaa" + entity +entity.getSqlManagerCoaching());
-                      sql = entity.getSqlManagerCoaching();
+                     
+                     // sql = entity.getSqlManagerCoaching();
+                      sql = "select * from (select crmuser.id as id, crmuser.name as name, crmuser.code ,userinfo.name as uname from crmuser,userinfo,user_position where crmuser.id=user_position.positionId"
+                      		+ " and user_position.userId=userInfo.id and crmuser.reportto=?) as aquery";
+                      logger.debug("sql XXXXX:" + sql);
                       maplist  = DAOImpl.queryEntityRelationList(sql,posId);
                     }else if(roleId == 3){
                       maplist  = DAOImpl.queryEntityRelationList(sql,posId);
