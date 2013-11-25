@@ -107,6 +107,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                   var  act = convertActivityArray2Object(data.cols,value[0]);
                   var event = {};
                       event.act_type = act.act_type;
+                      event.event_type_val= act.event_type_val;
                       event.id = act.id;
                       event.title = act.status;
                       event.start =  parseInt(act.starttime)/1000;
