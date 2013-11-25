@@ -75,11 +75,7 @@ public final class SignIn2Session extends AuthenticatedWebSession
 		    if(userinfo!=null && userinfo.getId() != 0){
 		        user = userinfo.getName();
 		        userId = String.valueOf(userinfo.getId());
-		        UserPosition userPosition = DAOImpl.getActivityPositionInfoByUserId(userinfo.getId());
-		        CRMUser crmuser = DAOImpl.getCRMUserInfoById(userPosition.getPositionId());
-		        positionId = String.valueOf(userPosition.getPositionId());
-		        level = crmuser.getLevel();
-		        roleId = crmuser.getRole();
+		        
 		    }
 		}
 		return user != null;
