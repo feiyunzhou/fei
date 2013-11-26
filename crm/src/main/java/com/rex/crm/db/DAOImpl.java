@@ -955,30 +955,33 @@ public class DAOImpl
     }
     
 
+    
+    
     public static List<Pair<String, Map<String, Object>>> queryFilters(String sourceTableSQL, String filterField, String filterbyTable, String... param) {
         //sourceTableSQL = sourceTableSQL.replaceAll("?", user_id);
         List<Choice> choices = queryPickList(filterbyTable);
         List<Pair<String, Map<String, Object>>> res = Lists.newArrayList();
-        Connection conn = null;
-        String query  = null;
+       // Connection conn = null;
+       // String query  = null;
         try {
-            conn = DBHelper.getConnection();
+           // conn = DBHelper.getConnection();
             for (Choice ch : choices) {
              
-                query = "select count(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
-                logger.debug("query is:" + query);
-                QueryRunner run = new QueryRunner();
-                Map<String, Object> map = run.query(conn, query, new MapHandler(), param);
+                //query = "select count(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
+               // logger.debug("query is:" + query);
+              //  QueryRunner run = new QueryRunner();
+               /*Map<String, Object> map = run.query(conn, query, new MapHandler(), param);
                 if (map.get("sum") == null) {
                 	map.put("sum", 0L);
-                }
+                }*/
+                Map<String, Object> map = Maps.newHashMap();
                 map.put("val", ch.getVal());
                 res.add(Pair.of(String.valueOf(ch.getId()), map));
             }
         } catch (Exception e) {
             logger.error("failed to queryFilters", e);
         } finally {
-            DBHelper.closeConnection(conn);
+           // DBHelper.closeConnection(conn);
         }
         return res;
     }
@@ -2606,4 +2609,5 @@ public class DAOImpl
     	}
     	return false;
     }
+    
 }

@@ -10,6 +10,7 @@ import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
 import com.rex.crm.admin.AdminTemplatePage;
+import com.rex.crm.beans.Choice;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
@@ -139,21 +140,10 @@ public class AlertPage  extends AdminTemplatePage{
         }
 		add(new PageableTablePanel("datalist",entity,tdata,null));
 		
-		
-		 //for the side bar
-        List<Pair<String, Map<String, Object>>> types = null;
-        switch(roleId){
-          case UserRole.USER_ROLE_ADMINISTRATOR:
-          types =  DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist());
-          break;
-        case UserRole.USER_ROLE_MANAGER:
-            types =  DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(),posId,posId);
-            break;
-        case UserRole.USER_ROLE_SALES:
-            types = DAOImpl.queryFilters(sql, entity.getFilterField(), entity.getFieldByName(entity.getFilterField()).getPicklist(), posId);
-        }
+	
        
-        add(new FilterPanel("filterPanel",types ,filter,AlertPage.class));
+        List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
+        add(new FilterPanel("filterPanel",choices ,filter,AlertPage.class));
 	}
 }
 

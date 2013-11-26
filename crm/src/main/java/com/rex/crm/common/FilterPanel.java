@@ -23,6 +23,8 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.beans.Choice;
+
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
@@ -31,7 +33,7 @@ public class FilterPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
 
 
-    public FilterPanel(String id,List<Pair<String, Map<String, Object>>> types ,Map<String,Boolean> filter,final Class responsePage) {
+    public FilterPanel(String id,List<Choice> choices ,Map<String,Boolean> filter,final Class responsePage) {
         super(id);
         
         Form form = new Form("side_bar_form");
@@ -42,24 +44,24 @@ public class FilterPanel extends Panel {
         //final List<Pair<String, Map<String, Object>>> types = DAOImpl.getNumberOfTypeOfAccount(userId);
         List<String> ids = Lists.newArrayList();
         long total = 0;
-        final Map<String,Map<String, Object>> numberMap =  Maps.newHashMap();
-        for(Pair<String, Map<String, Object>> t:types){
-            ids.add(t.getKey());
-            numberMap.put(t.getKey(), t.getValue());
-            total=total+((Number)t.getValue().get("sum")).longValue();
+        final Map<String,String> choiceMap =  Maps.newHashMap();
+        for(Choice choice:choices){
+            ids.add(String.valueOf(choice.getId()));
+            choiceMap.put(String.valueOf(choice.getId()),choice.getVal());
         }
-        
+       
         
         final Map<String,IModel> models = Maps.newHashMap();
         //prepare models for the checkbox
         
         if (filter == null) {
-            for(Pair<String, Map<String, Object>> t:types){
-                models.put(t.getKey(), Model.of(Boolean.TRUE));   
+            for(Choice choice:choices){
+                models.put(String.valueOf(choice.getId()), Model.of(Boolean.TRUE));   
             }
         } else {
             for (String k : filter.keySet()) {
                 models.put(k, Model.of(filter.get(k)));
+                
             }
         }
         
@@ -74,8 +76,8 @@ public class FilterPanel extends Panel {
             @Override
             protected void populateItem(ListItem<String> item) {
                 final String key = item.getModelObject();
-                String value = String.valueOf(numberMap.get(key).get("val"));
-                String num = String.valueOf(numberMap.get(key).get("sum"));
+                String value = String.valueOf(choiceMap.get(key));
+               // String num = String.valueOf(numberMap.get(key).get("sum"));
                 CheckBox chk=new CheckBox("type", models.get(key)){
                     @Override
                     protected void onSelectionChanged(Boolean newSelection) {
@@ -117,22 +119,26 @@ public class FilterPanel extends Panel {
                         return true;
                     }
                 };
-                WebMarkupContainer container_label = new WebMarkupContainer("checkbox_label");
-                item.add(container_label);
-                chk.setMarkupId("check"+key);
+               // WebMarkupContainer container_label = new WebMarkupContainer("checkbox_label");
+               // item.add(container_label);
+               // chk.setMarkupId("check"+key);
                 
-                container_label.add(new AttributeAppender("for", new Model(chk.getMarkupId()), " "));
+               // container_label.add(new AttributeAppender("for", new Model(chk.getMarkupId()), " "));
                 item.add(chk);
                 item.add(new Label("name", new Model(value)));
-                item.add(new Label("num", new Model(num)));
+                item.add(new Label("num", new Model(0)).setVisible(false));
             }
            
 
         };
         
         group.add(listview);
-        group.add(new Label("total",String.valueOf(total)));
+       // group.add(new Label("total",String.valueOf(total)));
 
     }
+    
+    
+    
+
 
 }
