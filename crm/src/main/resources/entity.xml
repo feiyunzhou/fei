@@ -652,17 +652,21 @@
 			where contact.id != -1 and accountcrmuser.crmuserid = ? )  as aContact
 		</sql>
 		<sql-manager>
-select distinct * from (select  aContact.*\,contact_generalization_target_pl.val as product_target_val\,
-"account.name" as accountName_val from (select distinct contact.id as cid\,contact.*
-from contact\, accountcrmuser\,crmuser 
-where crmuser.reportto=? and
-	  contact.accountId = accountcrmuser.accountId and
-	  crmuser.id = accountcrmuser.crmuserId ) as aContact
-	left join contact_generalization_target_pl on aContact.product_target = 
-		contact_generalization_target_pl.id 
-	left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
-	left join account on accountcrmuser.accountId = account.id
-	left join user_position on user_position.positionId = accountcrmuser.crmuserId  ) as cCountcat
+            Select distinct *
+            FROM (select  aContact.*\,
+                          contact_generalization_target_pl.val as product_target_val\,
+                          account.name as accountName_val\,
+                          contact_department_pl.val as department_val
+                  from (select distinct contact.id as cid\,contact.*
+                        from contact\, accountcrmuser\,crmuser
+                        where crmuser.reportto=? and
+                              contact.accountId = accountcrmuser.accountId and
+                              crmuser.id = accountcrmuser.crmuserId ) as aContact
+                 left join contact_generalization_target_pl on aContact.product_target = contact_generalization_target_pl.id
+                 left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
+                 left join account on accountcrmuser.accountId = account.id
+                 left join user_position on user_position.positionId = accountcrmuser.crmuserId
+                 left join contact_department_pl on contact_department_pl.id = aContact.department) as cContact
 
 		</sql-manager>
 
