@@ -179,7 +179,7 @@ public class SelectEntryPage extends WebPage {
                     }else if(roleId == 2){
                      
                      // sql = entity.getSqlManagerCoaching();
-                      sql = "select * from (select crmuser.id as id, crmuser.name as name, crmuser.code ,userinfo.name as uname from crmuser,userinfo,user_position where crmuser.id=user_position.positionId"
+                      sql = "select * from (select crmuser.id as id, crmuser.name as name, crmuser.code ,userinfo.name as userInfoName from crmuser,userinfo,user_position where crmuser.id=user_position.positionId"
                       		+ " and user_position.userId=userInfo.id and crmuser.reportto=?) as aquery";
                       logger.debug("sql XXXXX:" + sql);
                       maplist  = DAOImpl.queryEntityRelationList(sql,posId);
@@ -252,7 +252,7 @@ public class SelectEntryPage extends WebPage {
                         column_repeater.add(column_item); 
                      
                         String celldata =String.valueOf(obj);
-                        column_item.add(new Label("celldata",celldata));
+                        column_item.add(new Label("celldata","<strong>"+f.getDisplay()+": </strong>"+celldata).setEscapeModelStrings(false));
                     }
                 } 
                 
