@@ -85,7 +85,7 @@
 				<data-type>number</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
 				<isParam>true</isParam> <!-- 关联表的创建的参数 -->
