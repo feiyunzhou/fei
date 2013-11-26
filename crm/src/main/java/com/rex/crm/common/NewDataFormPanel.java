@@ -154,7 +154,7 @@ public class NewDataFormPanel extends Panel {
                         } else {
                         	long default_key = 1L;
                         	if(currentField.isExistsDefaultValue()){
-                        		default_key = 0L;
+                        	//	default_key = 0L;
                         	}
                             if (currentField.getDefault_value_type()!=null && currentField.getDefault_value_type().equalsIgnoreCase("var")){
                                 if (params != null) {
@@ -550,6 +550,7 @@ public class NewDataFormPanel extends Panel {
                 IModel choices,IModel default_model,final Entity entity,final Field currentField){
             super(id, markupId, markupProvider);
             DropDownChoice dropDown = createDropDownListFromPickList("dropDownInput",choices,default_model);
+            dropDown.setNullValid(true);
             add(dropDown);
             
             if(currentField.getChildNode()!=null){

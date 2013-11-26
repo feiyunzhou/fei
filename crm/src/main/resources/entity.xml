@@ -2395,6 +2395,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
+				<default-value-type>val</default-value-type>
+				<default-value>-1</default-value>
 				<childNode>visiting_purpose</childNode>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2634,7 +2636,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>true</isShow>
 				<field-type>auto</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
