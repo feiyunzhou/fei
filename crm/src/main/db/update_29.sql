@@ -1,5 +1,5 @@
 use crmdb;
-drop view crmdb.user_position_account;
+drop view if exists crmdb.user_position_account;
 create view user_position_account as
 select ac.id as id,u.name as userName,u.loginName as loginName,u.email as email,sp.val as sex,u.whenadded as addTime,
 c.name as positionName,c.code as positionCode,(select name from crmuser crm where crm.id=c.reportto) as reportTo,(select name from crmuser c1 where c1.id =(select c2.reportto from crmuser c2 where id=c.reportto)) as reporttto,r.val as role,rlp4.val as regoin1,rlp5.val as regoin2,ct.val as city,

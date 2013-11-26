@@ -1,24 +1,22 @@
 use crmdb;
-UPDATE `crmdb`.`crmuser_pl2` SET `id`='3', `val`='奥诺美' WHERE `id`='3';
-INSERT INTO `crmdb`.`crmuser_pl2` (`id`, `val`) VALUES ('4', '全部');
-UPDATE `crmdb`.`activity_visiting_purpose_pl` SET `activity_type`='1', `parentId`='1' WHERE `id`='3';
 
-ALTER TABLE `crmdb`.`activity` 
-ADD COLUMN `accountId` MEDIUMINT(9) NULL AFTER `coachTime`,
-ADD COLUMN `department` MEDIUMINT(9) NULL AFTER `accountId`,
-ADD COLUMN `whether_coach` VARCHAR(255) NULL AFTER `department`;
 
+drop table if exists activity_score3_pl;
 CREATE TABLE `crmdb`.`activity_score3_pl` (
   `id` INT NOT NULL,
   `val` VARCHAR(255) NULL,
   PRIMARY KEY (`id`)
   )ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+ 
+ drop table if exists activity_score4_pl;
 CREATE TABLE `crmdb`.`activity_score4_pl` (
   `id` INT NOT NULL,
   `val` VARCHAR(25) NULL,
   PRIMARY KEY (`id`)
   )ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+  
+drop table if exists activity_score5_pl;
 CREATE TABLE `crmdb`.`activity_score5_pl` (
 `id` INT NOT NULL,
 `val` VARCHAR(255) NULL,
@@ -115,3 +113,13 @@ INSERT INTO `crmdb`.`activity_score5_pl` (`id`, `val`) VALUES ('47', '47');
 INSERT INTO `crmdb`.`activity_score5_pl` (`id`, `val`) VALUES ('48', '48');
 INSERT INTO `crmdb`.`activity_score5_pl` (`id`, `val`) VALUES ('49', '49');
 INSERT INTO `crmdb`.`activity_score5_pl` (`id`, `val`) VALUES ('50', '50');
+
+
+UPDATE `crmdb`.`crmuser_pl2` SET `id`='3', `val`='奥诺美' WHERE `id`='3';
+ INSERT INTO `crmdb`.`crmuser_pl2` (`id`, `val`) VALUES ('4', '全部');
+UPDATE `crmdb`.`activity_visiting_purpose_pl` SET `activity_type`='1', `parentId`='1' WHERE `id`='3';
+
+ALTER TABLE `crmdb`.`activity` 
+ADD COLUMN `accountId` MEDIUMINT(9) NULL AFTER `coachTime`,
+ADD COLUMN `department` MEDIUMINT(9) NULL AFTER `accountId`,
+ADD COLUMN `whether_coach` VARCHAR(255) NULL AFTER `department`;

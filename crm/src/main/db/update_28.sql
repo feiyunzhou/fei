@@ -36,6 +36,7 @@ INSERT INTO `crmdb`.`alert_publicobject_pl` (`id`, `val`) VALUES ('1', '管理�
 INSERT INTO `crmdb`.`alert_publicobject_pl` (`id`, `val`) VALUES ('2', '主管');
 INSERT INTO `crmdb`.`alert_publicobject_pl` (`id`, `val`) VALUES ('3', '代表');
 
+drop view if exists  crmdb.activity_alert;
 create view crmdb.activity_alert as
 SELECT id,
 case when to_days(curdate())-to_days(DATE_FORMAT(from_unixtime(act.starttime/1000),'%Y-%m-%d'))=0 THEN '今天'
