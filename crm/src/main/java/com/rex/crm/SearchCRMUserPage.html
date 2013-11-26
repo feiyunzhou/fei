@@ -49,6 +49,10 @@
             <form wicket:id="users_sbumission_form">
             <input type="submit" value="确定" class="btn btn-primary btn-left"  wicket:id="ajax-button"/>
                 <span wicket:id="group">
+                  <div class="list-item no-border">
+                            <input type="checkbox" wicket:id="checkboxs"/>
+                            <label class="chk-lable" wicket:id="checkboxs_label" ><span></span></label>
+                    </div>
                     <div id="dt" class="table table-striped table-condensed list-container">
                         <div wicket:id="dataRowRepeater" class="list-item">
                             <div class="details-list chk-right"><input type="checkbox" wicket:id="checkbox"/>
@@ -59,10 +63,7 @@
                             <div class="details-list"><span wicket:id="cellPhone"></span></div>
                             <div class="details-list"><span wicket:id="email"></span></div>	
                         </div>
-                        <div class="list-item no-border">
-                            <input type="checkbox" wicket:id="checkboxs"/>
-                            <label class="chk-lable" wicket:id="checkboxs_label" ><span></span></label>
-                        </div>
+                      
                     </div>
                 </span>
                 
