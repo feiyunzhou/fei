@@ -48,8 +48,10 @@ public class FilterPanel extends Panel {
         for(Choice choice:choices){
             ids.add(String.valueOf(choice.getId()));
             choiceMap.put(String.valueOf(choice.getId()),choice.getVal());
+           
         }
-       
+        ids.add("-1");
+        choiceMap.put("-1", "无");
         
         final Map<String,IModel> models = Maps.newHashMap();
         //prepare models for the checkbox
@@ -58,12 +60,14 @@ public class FilterPanel extends Panel {
             for(Choice choice:choices){
                 models.put(String.valueOf(choice.getId()), Model.of(Boolean.TRUE));   
             }
+            models.put("-1", Model.of(Boolean.TRUE));
         } else {
             for (String k : filter.keySet()) {
                 models.put(k, Model.of(filter.get(k)));
                 
             }
         }
+       
         
         
         ListView<String> listview = new ListView<String>("rowRepeater",ids) {

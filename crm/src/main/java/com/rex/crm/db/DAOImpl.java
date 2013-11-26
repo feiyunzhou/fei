@@ -597,14 +597,17 @@ public class DAOImpl
         List<String> joinedFilter = Lists.newArrayList();
         if (filters.size() > 0) {
             for (String f : filters) {
-                joinedFilter.add(filterField + " = " + f);
+                if(f.equalsIgnoreCase("-1")){
+                    joinedFilter.add(filterField + " is NULL ");
+                }else{
+                  joinedFilter.add(filterField + " = " + f);
+                }
+                
             }
             sql = sql + " where (" + Joiner.on(" OR ").join(joinedFilter) + ")";
         } else {
             sql = sql + " where " + filterField + " = -1";
         }
-        logger.debug("sql语句："+sql);
-        System.out.println("fuck you: " + sql);
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
