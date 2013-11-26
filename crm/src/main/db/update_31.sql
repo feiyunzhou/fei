@@ -3,6 +3,7 @@ UPDATE `crmdb`.`activity_status_pl` SET `val`='未执行' WHERE `id`='3';
 ALTER TABLE `crmdb`.`activity` 
 ADD COLUMN `activity_daypart` MEDIUMINT(9) NULL AFTER `whether_coach`;
 
+drop table if exists activity_daypart_pl;
 CREATE TABLE `crmdb`.`activity_daypart_pl` (
   `id` MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
   `val` VARCHAR(255) NULL,
