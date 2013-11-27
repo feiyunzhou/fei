@@ -45,18 +45,20 @@ public class UserDeatialInfo extends UserInfoSettingPage {
     public UserDeatialInfo() {
         logger.debug("init userManager");
         setPageTitle("个人信息");
-        initPage();
+        initPage("");
     }
-
-    private void initPage() {
+    public UserDeatialInfo(String result){
+    	logger.debug("init userManager");
+        setPageTitle("个人信息");
+        initPage(result);
+    }
+    private void initPage(String result) {
         logger.debug("sessionID:" + ((SignIn2Session) getSession()).getUserId());
         int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
         Entity entity = Configuration.getEntityByName("userinfo");
         String primaryKeyName = entity.getPrimaryKeyName();
         //get crmUser 
         UserInfo user = DAOImpl.getUserInfoById(userId); 
-
-        
         //add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
         final AbstractItem group = new AbstractItem(div.newChildId());
@@ -64,8 +66,10 @@ public class UserDeatialInfo extends UserInfoSettingPage {
         group.add(promptButton);
         final Label promptLabel = new Label("prompt","提示:操作已成功！");
         group.add(promptLabel);
-        div.add(new AttributeAppender("style",new Model("display:none"),";"));
-        group.add(new AttributeAppender("style",new Model("display:none"),";"));
+        if("".equals(result)){
+        	 div.add(new AttributeAppender("style",new Model("display:none"),";"));
+             group.add(new AttributeAppender("style",new Model("display:none"),";"));
+        }
         div.add(group);
         add(div);
         final List<String> fieldNames = Lists.newArrayList();
@@ -116,7 +120,7 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                     String fieldName = null;
                     if (currentField.getName().equals("name")) {
                         fieldName = user.getName();
-                    } else if (currentField.getName().equals("cellPhone")) {
+                    } else if (currentField.getName().equalsIgnoreCase("cellPhone")) {
                         fieldName = user.getCellPhone();
                     } else if (currentField.getName().equals("loginName")) {
                         fieldName = user.getLoginName();
@@ -161,6 +165,7 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                 String email = "";
                 String photo = "";
                 String loginName = "";
+                String office = "";
                 int sex = 0;
                 for (String k : fieldNameToModel.keySet()) {
                     logger.debug("k" + k);
@@ -177,16 +182,18 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                         loginName = value;
                     } else if(k.equals("email")){
                         email = value;
+                    }else if(k.equals("office_tel")){
+                    	office = value;
                     }
                 }
                 int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
-                if(DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName)){
+                if(DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName,office)){
                 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
                 	group.add(new AttributeAppender("style",new Model("display:block"),";"));
             		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
             		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		setResponsePage(new UserDeatialInfo("success"));
                 };
-        		//setResponsePage(HomePage.class);
             }
         };
         form.add(fieldGroupRepeater);

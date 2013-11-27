@@ -2275,14 +2275,14 @@ public class DAOImpl
     }
     
     // update crmuser baseInfo
-    public static boolean updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex,String loginName) {
-    	String sql = "UPDATE userinfo SET name=?,cellphone=?,email=?,photo=?,sex=?,loginName=? where id=?";
+    public static boolean updateStatusOfInternalMeeting(int userId,String userName,String cellphone,String email,String photo,int sex,String loginName,String office_tel) {
+    	String sql = "UPDATE userinfo SET name=?,cellphone=?,email=?,photo=?,sex=?,loginName=?,office_tel =? where id=?";
         Connection conn = null;
         int inserts = 0;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,loginName,userId);
+            inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,loginName,office_tel,userId);
             System.out.println("updateCrmUser:" + inserts);
         } catch (Exception e) {
             logger.error("failed to updateStatusOfInternalMeeting", e);
