@@ -1,6 +1,6 @@
 DELETE FROM `crmdb`.`activity_coachtime_pl` WHERE `id`='1';
 
-DROP TABLE `crmdb`.`activity_whethercoach_pl`
+DROP TABLE `crmdb`.`activity_whethercoach_pl`;
 
 UPDATE `crmdb`.`city` SET `val`='菏泽' WHERE `id`='151';
 UPDATE `crmdb`.`city` SET `val`='重庆' WHERE `id`='235';
