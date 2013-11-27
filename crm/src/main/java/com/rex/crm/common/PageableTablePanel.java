@@ -253,7 +253,6 @@ public class PageableTablePanel extends Panel {
                     	}
                     }
                     setResponsePage(new EntityDetailPage(entityName, p.getId()));
-                    // setResponsePage(new AccountDetailPage(id));
                 }
             }.add(new Label("caption", new Model<String>(caption))));
         }

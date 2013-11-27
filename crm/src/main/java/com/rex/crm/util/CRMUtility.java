@@ -231,7 +231,7 @@ public class CRMUtility {
 	        	}else if(roleId == 1){
 	        	  permission = EnumSet.of(CRUDPanel.Permissions.DEL);
 	        	}
-	        }else if(entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willCoaching")){
+	        }else if(entityName.equalsIgnoreCase("coaching")||entityName.equalsIgnoreCase("willcoaching")){
 	          if (roleId == 2){
 	            permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DONE,CRUDPanel.Permissions.noExecute);
 	          }else if(roleId == 1){

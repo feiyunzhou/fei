@@ -2740,6 +2740,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
+			auserinfo.crmuserId as coachUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
@@ -2763,6 +2764,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
+			auserinfo.id as coachUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
@@ -2772,8 +2774,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			left join crmuser on activitycrmuser.crmuserid = crmuser.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
 			left join user_position on user_position.positionId=bcrmuser.id
+			left join user_position as auser_position on auser_position.positionId=ccrmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
+		    left join userinfo as auserinfo on auserinfo.id=auser_position.userId
 			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
 			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql-manager>
@@ -2789,15 +2794,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
-			userinfo.id as coacheeUserinfoName\,
+			userinfo.id as coachUserinfoName\,
+			auserinfo.id as coacheeUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
 			left join user_position on user_position.positionId=bcrmuser.id
+			left join user_position as auser_position on auser_position.positionId=ccrmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
+		    left join userinfo as auserinfo on auserinfo.id=auser_position.userId
 			left join account on contact.accountId = account.Id where
 			activity.event_type = 2 order by whenadded DESC) as aActivity
 		</sql-admin>
@@ -2807,12 +2816,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			act_type\,activity.status as
 			act_status\, activity.contactId as
 			contactName\, contact.accountId as
-			accountName\, userinfo.id as coacheeUserinfoName\,contact.name as cn
+			accountName\, userinfo.id as coachUserinfoName\,auserinfo.id as coacheeUserInfoName\,contact.name as cn
 			from activity left join activitycrmuser on
 			activitycrmuser.activityId=activity.id 
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
 			left join user_position on user_position.positionId=bcrmuser.id
+			left join user_position as auser_position on auser_position.positionId=ccrmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
+		    left join userinfo as auserinfo on auserinfo.id=auser_position.userId
 			LEFT JOIN contact on
 			contact.id = activity.contactId where activity.id=?)
 			as aCoaching
@@ -2842,36 +2854,22 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
 			<field>
-				<name>starttime</name>
-				<display>开始时间</display>
-				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<name>event_type</name>
+				<display>活动类型</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<default-value-type>var</default-value-type>
-				<default-value>start_datetime</default-value>
-				<priority>1</priority><isShow>true</isShow>
-				<isRequired>true</isRequired>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<picklist>activity_event_type_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			<field>
-				<name>endtime</name>
-				<display>结束时间</display>
-				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<default-value-type>var</default-value-type>
-				<default-value>end_datetime</default-value>
-				<priority>1</priority><isShow>true</isShow>
-				<isRequired>true</isRequired>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
+			
 			<field>
 				<name>crmuserId</name>
 				<display>辅导人Id</display>
@@ -2900,6 +2898,37 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>coachUserInfoId</name>
+				<display>辅导人用户ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>coachUserInfoName</name>
+				<display>辅导人姓名</display>
+				<isRequired>true</isRequired>
+				<alias>coachUserInfoId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<relationTable>userinfo</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 			<field>
 				<name>coacheeId</name>
 				<display>被辅导人Id</display>
@@ -2922,7 +2951,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority><isShow>false</isShow>
 				<relationTable>crmuser</relationTable>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
@@ -2945,7 +2974,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			
 			<field>
 				<name>coacheeUserinfoName</name>
-				<display>被辅导人用户姓名</display>
+				<display>被辅导人姓名</display>
 				<isRequired>true</isRequired>
 				<alias>coacheeUserinfoId</alias>
 				<data-type>text</data-type>
@@ -2957,6 +2986,38 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<relationTable>userinfo</relationTable>
 				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
+				<priority>1</priority><isShow>true</isShow>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
+				<priority>1</priority><isShow>true</isShow>
+				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
@@ -2982,10 +3043,62 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_feature_product_pl</picklist>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority>
+				<isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountId</name>
+				<display>医院</display>
+				<isRequired>true</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>false</isShow>
+				<relationTable>account</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>account.id\,account.name</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>accountName_val</name>
+				<display>医疗机构</display>
+				<isRequired>false</isRequired>
+				<alias>accountId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>false</isShow>
+				<isSearchable>true</isSearchable>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>department</name>
+				<display>科室</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<default-value-type>val</default-value-type>
+				<default-value>0</default-value>
+				<priority>1</priority>
+				<isShow>false</isShow>
+				<picklist>contact_department_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
 			<field>
@@ -2997,9 +3110,22 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_coachtime_pl</picklist>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>location</name>
+				<display>计划地点</display>
+				<data-type>textarea</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority>
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -3013,7 +3139,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<picklist>activity_status_pl</picklist>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>1</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3090,8 +3216,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
-				<priority>1</priority><isShow>true</isShow>
-				<fieldGroup>关键信息</fieldGroup>
+				<priority>2</priority><isShow>true</isShow>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_endtime</name>
@@ -3206,8 +3332,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>calculated</field-type>
-				<priority>5</priority><isShow>true</isShow>
-				<fieldGroup>评分信息</fieldGroup>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 		</fields>
 	</entity>
@@ -3273,7 +3400,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<name>willcoaching</name>
 		<display>辅导</display>
 		<filterField>feature_product</filterField>
-		<sql>
+				<sql>
 			select distinct * from (select * from (select activity.crmuserId as
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
@@ -3283,6 +3410,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
+			auserinfo.crmuserId as coachUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
@@ -3306,6 +3434,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
+			auserinfo.id as coachUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
@@ -3315,14 +3444,18 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			left join crmuser on activitycrmuser.crmuserid = crmuser.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
 			left join user_position on user_position.positionId=bcrmuser.id
+			left join user_position as auser_position on auser_position.positionId=ccrmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
+		    left join userinfo as auserinfo on auserinfo.id=auser_position.userId
 			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
 			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql-manager>
-
+		<sql-manager-coaching>
+		  select * from (select * from crmuser  where crmuser.reportto = ?) as crmUSER
+		 </sql-manager-coaching>
 		<sql-admin>
-
 			select distinct * from (select activity.crmuserId as crmuserName\,
 			activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
@@ -3331,15 +3464,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
-			userinfo.id as coacheeUserinfoName\,
+			userinfo.id as coachUserinfoName\,
+			auserinfo.id as coacheeUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
 			left join contact on activity.contactId = contact.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
 			left join user_position on user_position.positionId=bcrmuser.id
+			left join user_position as auser_position on auser_position.positionId=ccrmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
+		    left join userinfo as auserinfo on auserinfo.id=auser_position.userId
 			left join account on contact.accountId = account.Id where
 			activity.event_type = 2 order by whenadded DESC) as aActivity
 		</sql-admin>
@@ -3349,12 +3486,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			act_type\,activity.status as
 			act_status\, activity.contactId as
 			contactName\, contact.accountId as
-			accountName\,userinfo.id as coacheeUserinfoName\, contact.name as cn
+			accountName\, userinfo.id as coachUserinfoName\,auserinfo.id as coacheeUserInfoName\,contact.name as cn
 			from activity left join activitycrmuser on
 			activitycrmuser.activityId=activity.id 
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
+			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
 			left join user_position on user_position.positionId=bcrmuser.id
+			left join user_position as auser_position on auser_position.positionId=ccrmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
+		    left join userinfo as auserinfo on auserinfo.id=auser_position.userId
 			LEFT JOIN contact on
 			contact.id = activity.contactId where activity.id=?)
 			as aCoaching
@@ -3385,38 +3525,23 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
 			<field>
-				<name>starttime</name>
-				<display>开始时间</display>
-				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<name>event_type</name>
+				<display>活动类型</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<default-value-type>var</default-value-type>
-				<default-value>start_datetime</default-value>
+				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
-				<isRequired>true</isRequired>
+				<picklist>activity_event_type_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			<field>
-				<name>endtime</name>
-				<display>结束时间</display>
-				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<default-value-type>var</default-value-type>
-				<default-value>end_datetime</default-value>
-				<priority>1</priority>
-				<isShow>true</isShow>
-				<isRequired>true</isRequired>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
+			
+			
 			
 			<field>
 				<name>crmuserId</name>
@@ -3448,6 +3573,38 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>coachUserInfoId</name>
+				<display>辅导人用户ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>coachUserInfoName</name>
+				<display>辅导人姓名</display>
+				<isRequired>true</isRequired>
+				<alias>coachUserInfoId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<relationTable>userinfo</relationTable>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>coacheeId</name>
 				<display>被辅导人Id</display>
@@ -3507,6 +3664,39 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isShow>true</isShow>
 				<relationTable>userinfo</relationTable>
 				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>start_datetime</default-value>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<isRequired>true</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>datetime-local</data-type>
+				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<default-value-type>var</default-value-type>
+				<default-value>end_datetime</default-value>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 					
@@ -3574,6 +3764,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
 			<field>
 				<name>feature_product</name>
 				<display>主推产品</display>
@@ -3583,22 +3774,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>activity_feature_product_pl</picklist>
-				<priority>1</priority>
-				<isShow>true</isShow>
-				<isExistsDefaultValue>true</isExistsDefaultValue>
-				<isRequired>true</isRequired>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
-			<field>
-				<name>coachTime</name>
-				<display>协访时间</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<picklist>activity_coachtime_pl</picklist>
-				<priority>1</priority>
+				<priority>2</priority>
 				<isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
@@ -3694,9 +3870,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>auto</field-type>
-				<priority>1</priority>
+				<priority>2</priority>
 				<isShow>true</isShow>
-				<fieldGroup>关键信息</fieldGroup>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 			<field>
 				<name>act_endtime</name>

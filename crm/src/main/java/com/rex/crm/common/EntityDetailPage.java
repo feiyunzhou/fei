@@ -102,7 +102,6 @@ public class EntityDetailPage extends TemplatePage {
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
         System.out.println("entityName:"+entity.getName());
         if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
-        	System.out.println("name:"+map.get("title"));
         	add(new Label("name",String.valueOf(map.get("title"))));
         }else if(entity.getName().equals("crmuser")){
           add(new Label("name",String.valueOf(map.get("code"))));
@@ -187,7 +186,7 @@ public class EntityDetailPage extends TemplatePage {
                     DAOImpl.deleteRecord(id, entityName);
                     
                     setResponsePage(new ActivityPage());
-                }else if(entityName.equals("coaching")) {
+                }else if(entityName.equals("coaching")||entityName.equals("willcoaching")) {
                   DAOImpl.deleteRecord(id, entityName);
                   setResponsePage(new CoachingPage());
               }else if(entityName.equalsIgnoreCase("userInfo")){
