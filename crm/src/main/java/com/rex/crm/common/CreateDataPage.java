@@ -32,15 +32,17 @@ public class CreateDataPage extends TemplatePage {
             map.put(nm, sv.toString());
         }
         logger.debug("param-map:"+ map);
-        
-        initPage(name,map);
+        initPage(name,map,null);
     }
    
     public CreateDataPage(String entityName,final Map<String,Object> params){
-        initPage(entityName,params);
+        initPage(entityName,params,null);
     }
     
-    private void initPage(String entityName,Map<String,Object> params){
+    public CreateDataPage(String entityName,final Map<String,Object> params,String createAddress){
+        initPage(entityName,params,createAddress);
+    }
+    private void initPage(String entityName,Map<String,Object> params,String createAddress){
         //this.getRequest().
         this.setPageTitle("创建");
        //this.getPageParameters().get
@@ -48,7 +50,7 @@ public class CreateDataPage extends TemplatePage {
         //if (entityName == null) entityName="contact";
         final Entity entity = entities.get(entityName);
         if(null!=entity){
-        	add(new NewDataFormPanel("formPanel",entity,params));
+        	add(new NewDataFormPanel("formPanel",entity,params,createAddress));
 	         add(new AbstractAjaxBehavior(){
 	
 	            @Override

@@ -85,14 +85,12 @@ public final class SignIn extends WebPage
         		 String errmsg = getString("loginError", null, "用户名和密码不能为空!");
                  error(errmsg);
         	}else{
-        		//判断用户是否激活密码是否存在()
             	UserInfo user = DAOImpl.getUserByLoginName(getUsername());
             	if(null!=user){
               	        	// Sign the user in
             	  
               	            if (session.signIn(getUsername(),getPassword()))
                             {
-              	                
                               
                               UserPosition userPosition = DAOImpl.getActivityPositionInfoByUserId(Integer.parseInt(session.getUserId()));
                               if(userPosition == null){

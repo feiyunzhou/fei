@@ -26,6 +26,7 @@ public class ActivitySelectPage extends TemplatePage{
 	public ActivitySelectPage(){
 		 //传参时间和实体名
         StringValue entityName = getRequest().getRequestParameters().getParameterValue("entityName");
+        final String createAddress = getRequest().getRequestParameters().getParameterValue("createAddress").toString();
         final String name = entityName.toString();
         Set<String> names = getRequest().getRequestParameters().getParameterNames();
         final Map<String,Object> map = Maps.newHashMap();
@@ -34,25 +35,25 @@ public class ActivitySelectPage extends TemplatePage{
             map.put(nm, sv.toString());
         }
         if(("activity").equals(name)){
-        	initPage(name,map);
+        	initPage(name,map,createAddress);
         }else{
         	Form form = new Form("buttonForm");
         	form.add(new Button("callCoachBtn") {
                 @Override
                 public void onSubmit() {
-                	setResponsePage(new CreateDataPage("coaching", map));
+                	setResponsePage(new CreateDataPage("coaching", map,createAddress));
                 }
             });
         	form.add(new Link("willCoachBtn") {
                  @Override
                  public void onClick() {
-                	 setResponsePage(new CreateDataPage("willcoaching", map));
+                	 setResponsePage(new CreateDataPage("willcoaching", map,createAddress));
                  }
              });
             add(form);
         }
 	}
-	public void initPage(final String name,final Map<String,Object> params){
-		setResponsePage(new CreateDataPage(name,params));
+	public void initPage(final String name,final Map<String,Object> params,String createAddress){
+		setResponsePage(new CreateDataPage(name,params,createAddress));
 	}
 }

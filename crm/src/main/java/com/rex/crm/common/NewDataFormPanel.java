@@ -50,6 +50,7 @@ import org.apache.wicket.util.file.File;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.CalendarPage;
 import com.rex.crm.PageFactory;
 import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
@@ -74,8 +75,14 @@ public class NewDataFormPanel extends Panel {
     private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
     private List<FileUploadField> fileFields = Lists.newArrayList();
     public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params) {
-        super(id);
-        
+    	super(id);
+    	initPage(id,entity,params,null);
+    }
+    public NewDataFormPanel(String id, final Entity entity,final Map<String,Object> params,String createAddress) {
+    	super(id);
+    	initPage(id,entity,params,createAddress);
+    }
+    public void initPage(String id, final Entity entity,final Map<String,Object> params,final String createAddress){
         final Map<String, IModel> models = Maps.newHashMap();
         final String userName = ((SignIn2Session) getSession()).getUser();
         final String posId = ((SignIn2Session) getSession()).getPositionId();
@@ -478,8 +485,11 @@ public class NewDataFormPanel extends Panel {
                            
                         }
                     }
+                    if(null==createAddress){
                     	setResponsePage(PageFactory.createPage(entity.getName()));
-                    
+                    }else{
+                    	setResponsePage(new CalendarPage());
+                    }
             }
         };
         form.add(fieldGroupRepeater);

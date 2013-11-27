@@ -2560,9 +2560,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>false</isEditable>
-				<priority>3</priority><isShow>true</isShow>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>3</priority>
+				<isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<fieldGroup>附加信息</fieldGroup>
