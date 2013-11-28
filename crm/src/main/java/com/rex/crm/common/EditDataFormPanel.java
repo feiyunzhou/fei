@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
@@ -75,7 +76,7 @@ public class EditDataFormPanel extends Panel {
 	 * @param entityId
 	 * @param relationIds
 	 */ 
-	public EditDataFormPanel(String id, final Entity schema,  final Map data,final String entityId ) {
+	public EditDataFormPanel(String id, final Entity schema,  final Map data,final String entityId ,final Class previousPageClass,final PageParameters prePageParams) {
 		super(id);
         if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equals("willcoaching")){
       	   add(new Label("name",String.valueOf(data.get("title"))));
@@ -438,8 +439,13 @@ public class EditDataFormPanel extends Panel {
 				    DAOImpl.updateRecord(entityId,table_name,names,values);
 				  }
 				  DAOImpl.updateRecord(entityId,table_name,names,values);
-        }
-				setResponsePage(new EntityDetailPage(schema.getName(),entityId));
+               }
+				if(!prePageParams.isEmpty()){
+				    
+				    setResponsePage(previousPageClass,prePageParams);
+				}else{
+				  setResponsePage(new EntityDetailPage(schema.getName(),entityId));
+				}
 			}
 		};
 		form.add(fieldGroupRepeater);

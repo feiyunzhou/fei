@@ -20,6 +20,7 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
@@ -71,8 +72,10 @@ public class AdminTreePage extends AdminTemplatePage
       add(new TreePanel("treePanel",result));
       
       if(positionId !=null){
-      EntityDetailContainerPanel panel = new EntityDetailContainerPanel("datalist","crmuser",positionId);
-      add(panel);
+        PageParameters pp = new PageParameters();
+        pp.add("positionId", positionId);
+        EntityDetailContainerPanel panel = new EntityDetailContainerPanel("datalist","crmuser",positionId,this.getClass(),pp);
+        add(panel);
       }else{
           add(new EmptyPanel("datalist"));
       }

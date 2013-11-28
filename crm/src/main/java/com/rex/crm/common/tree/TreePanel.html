@@ -22,6 +22,14 @@
 					
 					
 				},
+/* 				onPostInit: function(isReloading, isError) {
+		            var key = act_key;
+		           // console.log("key is :"+key)
+		            if( key>0 ) {
+		                this.getNodeByKey(key).activate();
+		            }
+		        }, */
+
 				onClick: function(node, event) {
 				    if(node.getEventTargetType(event) == "title"){
 				        location.href = pageUrl+"?positionId="+node.data.key;
@@ -45,9 +53,10 @@
 			var rootNode = $("#tree").dynatree("getRoot");
 			var childNode = rootNode.addChild(JSON.parse(regionData));
 			//tree.activateKey("17");
-			console.log(act_key);
-			if(act_key >0 ){
-			  $("#tree").dynatree("getTree").getNodeByKey(act_key).activate();
+			var treeId = $.url().param('positionId')
+			console.log(treeId);
+			if(treeId >0 || treeId == -1){
+			  $("#tree").dynatree("getTree").getNodeByKey(treeId).activate();
 			  $("#tree").dynatree("getTree").getNodeByKey(act_key).expand(true);
 			}
 			

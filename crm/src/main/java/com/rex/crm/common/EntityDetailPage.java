@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -20,6 +21,7 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
@@ -171,7 +173,7 @@ public class EntityDetailPage extends TemplatePage {
              
          });
          
-         
+         final Page this_page =this;
          ICRUDActionListener actionListener = new DefaultCRUDActionListener(){
 
             @Override
@@ -205,7 +207,10 @@ public class EntityDetailPage extends TemplatePage {
 
             @Override
             public void update() {
-                setResponsePage(new EditDataPage(entityName,id));
+                PageParameters pp = new PageParameters();
+                pp.add("id", id);
+                pp.add("entityName", entityName);
+                setResponsePage(new EditDataPage(entityName,id,this_page.getClass(),pp));
             }
             @Override
             public void doneBtn(){

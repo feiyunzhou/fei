@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -21,6 +22,7 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
@@ -47,11 +49,11 @@ public class EntityDetailContainerPanel   extends Panel {
         super(id);
 
     }
-    public EntityDetailContainerPanel(String panelId, final String entityName, final String id){
+    public EntityDetailContainerPanel(String panelId, final String entityName, final String id,final Class previousPageClass, final PageParameters prePageParams){
         this(panelId);
-    	initPage(entityName,id);
+    	initPage(entityName,id,previousPageClass,prePageParams);
     }
-    public void initPage(final String entityName, final String id){
+    public void initPage(final String entityName, final String id,final Class previousPageClass, final PageParameters prePageParams){
        
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -146,7 +148,7 @@ public class EntityDetailContainerPanel   extends Panel {
              
          });
          
-         
+        // final Page this_page = previousePage;
          ICRUDActionListener actionListener = new DefaultCRUDActionListener(){
 
             @Override
@@ -178,7 +180,7 @@ public class EntityDetailContainerPanel   extends Panel {
 
             @Override
             public void update() {
-                setResponsePage(new EditDataPage(entityName,id));
+                setResponsePage(new EditDataPage(entityName,id,previousPageClass,prePageParams));
             }
             @Override
             public void doneBtn(){

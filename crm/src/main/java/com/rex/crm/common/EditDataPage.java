@@ -5,9 +5,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+
 import com.rex.crm.TemplatePage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
@@ -18,7 +21,7 @@ public class EditDataPage extends TemplatePage {
 
     private static int NUM_OF_COLUMN  = 3;
     
-    public EditDataPage(final String entityName, String id){
+    public EditDataPage(final String entityName, String id,final Class previousPageClass, final PageParameters prePageParams){
         this.setPageTitle("编辑");
        
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -28,7 +31,7 @@ public class EditDataPage extends TemplatePage {
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
        
-        add(new EditDataFormPanel("detailed",entity,map,id));
+        add(new EditDataFormPanel("detailed",entity,map,id,previousPageClass,prePageParams));
         
         //set relations data
          add(new AbstractAjaxBehavior(){
