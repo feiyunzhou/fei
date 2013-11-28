@@ -2269,16 +2269,16 @@ public class DAOImpl
         
         return users;
     }
-    public static List<ProductLine> getProductLineWithoutSuperior() {
+    public static List<Product> getProductLineWithoutSuperior() {
         
-        List<ProductLine> users = Lists.newArrayList();
+        List<Product> users = Lists.newArrayList();
         Connection conn = null;
         try {
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
-            ResultSetHandler<List<ProductLine>> h = new BeanListHandler<ProductLine>(ProductLine.class);
+            ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
 
-            users = run.query(conn, "SELECT * FROM crmuser_pl2 ", h);
+            users = run.query(conn, "SELECT * FROM product where parentid = 0 ", h);
 
         } catch (SQLException e) {
             logger.error("failed to get all crm users", e);

@@ -82,6 +82,40 @@ public class EntityDetailContainerPanel   extends Panel {
         
         add(new EntityDetailPanel("detailed",entity,map,id,3,entityName));
         
+        
+        //set relations data
+        if(entityName.equalsIgnoreCase("productLine")||entityName.equalsIgnoreCase("product")||entityName.equalsIgnoreCase("productSpecification")){
+        	List<Relation> relations = Configuration.getRelationsByName(entityName);
+            
+//            RepeatingView relationRepeater = new RepeatingView("relationRepeater");
+//            add(relationRepeater);
+            
+            List<Field> paramFields = entity.getParamFields();
+            Map<String,Object> params = Maps.newHashMap();
+            for(Field f:paramFields){
+                params.put(entityName+"."+f.getName(), map.get(f.getName()));
+            }
+            if(map.get("level").equals(1)){
+            	List list = DAOImpl.queryEntityRelationList(relations.get(0).getSql(), id);
+            	add(new RelationDataPanel("relationPanel0",relations.get(0),entityName,list,String.valueOf(lid),params));
+            	List list1 = DAOImpl.queryEntityRelationList(relations.get(1).getSql(), id);
+            	add(new RelationDataPanel("relationPanel1",relations.get(1),entityName,list1,String.valueOf(lid),params));
+            	add(new EmptyPanel("relationPanel2"));
+            }else if(map.get("level").equals(2)){
+            	List list = DAOImpl.queryEntityRelationList(relations.get(2).getSql(), id);
+            	add(new EmptyPanel("relationPanel0"));
+            	add(new EmptyPanel("relationPanel1"));
+            	add(new RelationDataPanel("relationPanel2",relations.get(2),entityName,list,String.valueOf(lid),params));
+            }else{
+            	add(new EmptyPanel("relationPanel0"));
+            	add(new EmptyPanel("relationPanel1"));
+            	add(new EmptyPanel("relationPanel2"));
+            }
+        }else{
+        	add(new EmptyPanel("relationPanel0"));
+        	add(new EmptyPanel("relationPanel1"));
+        	add(new EmptyPanel("relationPanel2"));
+        }
 
          if(entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));

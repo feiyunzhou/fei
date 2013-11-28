@@ -72,5 +72,25 @@
 		 where activity.Id=?</sql>
 		<to>crmuser</to>
 	</relation>
-	
+        <relation>
+		<from>product</from>
+		<name>productBasic</name>
+		<display>产品列表</display>
+		<sql>select a.* from product as a where a.parentid=?</sql>
+		<to>product</to>
+	</relation>
+    <relation>
+		<from>product</from>
+		<name>productSpecificationOfProductLine</name>
+		<display>规格列表</display>
+		<sql>select p.* from product p left join product p1 on p1.id=p.parentid left join product p2 on p2.id=p1.parentid where p2.id=?</sql>
+		<to>productSpecification</to>
+	</relation>
+        <relation>
+		<from>product</from>
+		<name>productSpecificationOfProduct</name>
+		<display>规格列表</display>
+		<sql>select * from product where parentId=?</sql>
+		<to>productSpecification</to>
+	</relation>
 </relations>

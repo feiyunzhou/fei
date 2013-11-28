@@ -14,9 +14,11 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -33,6 +35,8 @@ import com.rex.crm.common.EntityDetailContainerPanel;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
+import com.rex.crm.common.Relation;
+import com.rex.crm.common.RelationDataPanel;
 import com.rex.crm.common.tree.Node;
 import com.rex.crm.common.tree.TreeFactory;
 import com.rex.crm.common.tree.TreePanel;
@@ -76,6 +80,7 @@ public class ProductTreePage extends AdminTemplatePage
       }else{
           add(new EmptyPanel("datalist"));
       }
+      
   }
   //监听请求 Ajax 
   // 级联 

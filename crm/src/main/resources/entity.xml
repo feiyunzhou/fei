@@ -3346,10 +3346,43 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		</fields>
 	</entity>
 	<entity>
-		<name>product</name>
+		<name>productLine</name>
 		<display>产品</display>
 		<filterField></filterField>
 		<sql> select product.*\,crmuser_pl2.val  from product left join crmuser_pl2 on product.parentid = crmuser_pl2.id</sql>
+		<sql-ent>select * from product where id = ?</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<isRequired>true</isRequired>
+				<display>产品线名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+		
+		</fields>
+	</entity>
+	<entity>
+		<name>product</name>
+		<display>产品名称</display>
+		<filterField></filterField>
+		<sql> select * from product parentid = ?</sql>
 		<sql-ent>select * from product where id = ?</sql-ent>
 		<fields>
 			<field>
@@ -3376,7 +3409,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
-				<name>description</name>
+				<name>specification</name>
 				<display>产品规格</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -3399,6 +3432,65 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 					<isVisible>true</isVisible>
 					<isEditable>true</isEditable>
 					<priority>1</priority><isShow>true</isShow>
+					<fieldGroup>关键信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+	<entity>
+		<name>productSpecification</name>
+		<display>产品规格</display>
+		<filterField></filterField>
+		<sql> select product.name  from product where parentid = ?</sql>
+		<sql-ent>select product.*name  from product where parentid = ?</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>name</name>
+				<isRequired>true</isRequired>
+				<display>产品规格</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>specification</name>
+				<display>产品规格</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>2</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+					<name>parentid</name>
+					<display>产品线</display>
+					<isRequired>true</isRequired>
+					<data-type>text</data-type>
+					<picklist>crmuser_pl2</picklist>
+					<default-value-type>val</default-value-type>
+					<default-value>0</default-value>
+					<isPrimaryKey>false</isPrimaryKey>
+					<isDetailLink>false</isDetailLink>
+					<isVisible>true</isVisible>
+					<isEditable>true</isEditable>
+					<priority>2</priority><isShow>true</isShow>
 					<fieldGroup>关键信息</fieldGroup>
 			</field>
 		</fields>
