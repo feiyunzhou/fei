@@ -2567,8 +2567,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 				<priority>3</priority>
 				<isShow>true</isShow>
 				<isRequired>true</isRequired>
@@ -3133,7 +3133,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>2</priority>
-				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 	
@@ -4840,19 +4839,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<display>预警</display>
 		<filterField>priority</filterField>
 		<sql>
-			SELECT * from (select alert.* from alert where towhom = 3
+			SELECT * from (select alert.* from alert where (towhom = 3 or towhom = 4) 
+			and expired > UNIX_TIMESTAMP(now())*1000 and UNIX_TIMESTAMP(now())*1000 >  publishDate 
 			ORDER BY whenadded DESC) as aAlert
 		</sql>
 		<sql-manager>
 			SELECT * from (select * from alert where
-			 towhom = 2 ORDER BY whenadded DESC) as aAlert
+			  (towhom = 2 or towhom = 4)  and expired > UNIX_TIMESTAMP(now())*1000 
+			  and  UNIX_TIMESTAMP(now())*1000 > publishDate 
+			  ORDER BY whenadded DESC) as aAlert
 		</sql-manager>
-
 		<sql-admin>
-			SELECT * from  alert
+			SELECT * from  alert  ORDER BY whenadded DESC
 		</sql-admin>
 		<sql-ent>
-			SELECT * from (select alert.* from alert where alert.id = ?
+			SELECT * from (select alert.* from alert where alert.id = ? 
 			ORDER BY whenadded DESC) as aAlert
 		</sql-ent>
 		<fields>

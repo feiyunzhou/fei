@@ -56,7 +56,9 @@
             var checkTime = true;
             var startTime = $("#starttime").val();
             var endTime = $("#endtime").val();
-            if(startTime>endTime){
+            var publishDate = $("#publishDate").val();
+            var expired = $("#expired").val();
+            if(startTime>endTime||publishDate>expired){
             	alert("开始时间不能大于结束时间！");
             	checkTime = false;
             }else if(startTime<lastWeek){
@@ -113,7 +115,8 @@
                 </div>
                 <div class="control-group">
                     <div class="controls">
-                        <input type="submit" onClick="return validateFields();" class="btn btn-primary" value="保存" />
+                        <input type="submit" onClick="return validateFields();" wicket:id="save"  class="btn btn-primary" value="保存" />
+                        <input type="submit" onClick="return validateFields();" wicket:id="saveAndNew" class="btn btn-primary" value="保存&新建" />
                     </div>
                 </div>
             </fieldset>

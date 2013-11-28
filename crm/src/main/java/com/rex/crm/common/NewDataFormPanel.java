@@ -1,12 +1,7 @@
 package com.rex.crm.common;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
@@ -14,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
@@ -22,30 +16,24 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.html.form.RadioChoice;
-import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.file.File;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -54,13 +42,10 @@ import com.rex.crm.CalendarPage;
 import com.rex.crm.PageFactory;
 import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
-import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
-import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
-import com.rex.crm.util.SendEmail;
 
 public class NewDataFormPanel extends Panel {
 
@@ -348,156 +333,175 @@ public class NewDataFormPanel extends Panel {
         }
 
 
-        Form form = new Form("form") {
+        Form form = new Form("form");
+        form.add(new Button("save"){
             @Override
-            protected void onSubmit() {
+            public void onSubmit() {
                 logger.debug("the form was submitted!");
                 logger.debug(models);
-                List<String> fieldNames = Lists.newArrayList();
-                List<String> values = Lists.newArrayList();
-                int total_score = 0;
-                SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                //找出title属性，判断实体名称，先声明
-                Long daypart =  0l;
-                StringBuffer title = new StringBuffer();
-                if(entity.getName().equals("activity")){
-                	 daypart = (Long) models.get("activity_daypart").getObject();
+                saveEntity(models,entity,userId,userName,posId);
+                if(null==createAddress){
+                	setResponsePage(PageFactory.createPage(entity.getName()));
+                }else{
+                	setResponsePage(new CalendarPage());
                 }
-                for (String key : models.keySet()) {
-                    fieldNames.add(key);
-                    logger.debug("currentFieldkey:"+key);
-                    Field field = entity.getFieldByName(key);
-                    logger.debug("currentField:"+field);
-                    if(field.getPriority()==5){
-                    	total_score+=Integer.parseInt(models.get(key).getObject().toString());
-                    }
-                    
-                    if (models.get(key).getObject() instanceof String) {
-                      if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
-                       //if the filed has formatter, we guess the field saved in data base is in long 
-                        Date date = new Date();
-                        String dateTime = String.valueOf(models.get(key).getObject());
-                        if(entity.getName().equals("activity")){
-    	                        if(key.equals("starttime")){
-    	                        	if(daypart==1){
-    	                        		dateTime = dateTime.split("T")[0].concat("T08:00");
-    	                        		System.out.println("开始时间："+dateTime);
-    	                        	}else{
-    	                        		dateTime = dateTime.split("T")[0].concat("T13:00");
-    									System.out.println("开始时间："+dateTime);
-    	                        	}
-    	                        }
-    	                        
-    	                        if(key.equals("endtime")){
-    	                        	if(daypart==1){
-    	                        		dateTime = dateTime.split("T")[0].concat("T11:30");
-    	                        		System.out.println("开始时间："+dateTime);
-    	                        	}else{
-    	                        		dateTime = dateTime.split("T")[0].concat("T18:00");
-    									System.out.println("开始时间："+dateTime);
-    	                        	}
-    	                        }
-                        }
-                        try {
-							date = dateformat.parse(dateTime);
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-                         values.add(String.valueOf(date.getTime()));
-                      
-                      }else {
-    	                	  values.add("'" + (String) models.get(key).getObject()+ "'");
-                      }
-                     
-                    }else if(models.get(key).getObject() instanceof Choice){
-                        values.add(String.valueOf(((Choice) models.get(key).getObject()).getId()));
-                    }else {
-                    	if(field.getName().equals("title")){
-	                    	 if(null==(String) models.get(key).getObject()){
-	                    		 if(entity.getName().equals("activity")){
-	                    			 title.append("拜访:");
-	                    			 String callName = DAOImpl.queryRelationDataById("contact",models.get("contactId").getObject().toString());
-	                    			 title.append(callName);
-	                    			 System.out.println("callName"+title.toString());
-	                    		 }
-	                    		 if(entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
-	                    			 title.append("辅导:");
-	                    			 String coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get("coacheeId").getObject().toString());
-	                    			 title.append(coacheeName);
-	                    			 System.out.println("coachingName:"+title.toString());
-	                    		 }
-	                    		 values.add("'" +title.toString()+ "'");
-	                    	  }else{
-		                		  values.add("'" + (String) models.get(key).getObject()+ "'");
-		                	  }
-                    	}else{
-                    		values.add(String.valueOf(models.get(key).getObject()));
-                    	}
-                    }
-                   
-                }
-                  //modify_datetime whenadded response_person 
-                  List<Field> autoFields = entity.getAutoFields();
-                  for(Field f:autoFields){
-                    if(f.getName().equalsIgnoreCase("modify_datetime") || f.getName().equalsIgnoreCase("whenadded")){
-                      values.add("'"+dateformat.format(new Date())+"'");
-                    }
-                    
-                    if(f.getName().equalsIgnoreCase("owner") || f.getName().equalsIgnoreCase("modifier")
-                        || f.getName().equalsIgnoreCase("responsible_person") ){
-                      values.add("'"+userName+"'");
-                    }
-                    if(f.getName().equalsIgnoreCase("crmuserID")){
-                    	values.add("'"+posId+"'");
-                    } 
-                    fieldNames.add(f.getName());
-                    
-                  }
-                  if(entity.getName().equals("willcoaching")||entity.getName().equals("coaching")){
-                	  values.add(""+total_score+"");
-              		  fieldNames.add("total_score");
-                  }
-            		//if entity is crmuser  add loginName
-                    if ("userinfo".equals(entity.getName())) {
-                        long crmuserkey = -1;
-                        crmuserkey = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
-                        /*if (crmuserkey >0 ) {
-                           UserInfo userinfo = DAOImpl.getUserById((int)crmuserkey);
-//                        	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
-                            //此时需发送邮件
-                            long crmUserCode = userinfo.getTs();
-                            String sendEmail = String.valueOf(models.get("email").getObject());
-                            //创建激活码 getUserByuserCode
-                            //传递邮箱地址，用户code.
-                            SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ userinfo.getId(), sendEmail);
-                        }*/
-                    } else {
-                        long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
-                        if (generatedId > 0) {
-                           if(entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
-                             DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,models.get("coacheeId").getObject().toString(),
-                                 String.valueOf(generatedId));
-                           }else{
-                             DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,"string",
-                                 String.valueOf(generatedId));
-                           }
-                           
-                        }
-                    }
-                    if(null==createAddress){
-                    	setResponsePage(PageFactory.createPage(entity.getName()));
-                    }else{
-                    	setResponsePage(new CalendarPage());
-                    }
             }
-        };
+        });
         form.add(fieldGroupRepeater);
+        Button btn = new Button("saveAndNew"){
+        	 @Override
+             public void onSubmit() {
+             	saveEntity(models,entity,userId,userName,posId);
+             	setResponsePage(new CreateDataPage(entity.getName(),null));
+             	/*if(null==createAddress){
+                 	
+                 }else{
+                 	setResponsePage(new CalendarPage());
+                 }*/
+             }
+        };
+        if(null!=createAddress){
+        	btn.add(new AttributeAppender("class",new Model("hiddenStyle")," "));
+        }
+        form.add(btn);
         add(form);
     }
-
-
-
+    public static void saveEntity(Map<String, IModel> models,Entity entity,String userId,String userName,String posId){
+      	logger.debug("the form was submitted!");
+        logger.debug(models);
+        List<String> fieldNames = Lists.newArrayList();
+        List<String> values = Lists.newArrayList();
+        int total_score = 0;
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        //找出title属性，判断实体名称，先声明
+        Long daypart =  0l;
+        StringBuffer title = new StringBuffer();
+        if(entity.getName().equals("activity")){
+        	 daypart = (Long) models.get("activity_daypart").getObject();
+        }
+        for (String key : models.keySet()) {
+            fieldNames.add(key);
+            logger.debug("currentFieldkey:"+key);
+            Field field = entity.getFieldByName(key);
+            logger.debug("currentField:"+field);
+            if(field.getPriority()==5){
+            	total_score+=Integer.parseInt(models.get(key).getObject().toString());
+            }
+            
+            if (models.get(key).getObject() instanceof String) {
+              if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
+               //if the filed has formatter, we guess the field saved in data base is in long 
+                Date date = new Date();
+                String dateTime = String.valueOf(models.get(key).getObject());
+                if(entity.getName().equals("activity")){
+                        if(key.equals("starttime")){
+                        	if(daypart==1){
+                        		dateTime = dateTime.split("T")[0].concat("T08:00");
+                        		System.out.println("开始时间："+dateTime);
+                        	}else{
+                        		dateTime = dateTime.split("T")[0].concat("T13:00");
+								System.out.println("开始时间："+dateTime);
+                        	}
+                        }
+                        
+                        if(key.equals("endtime")){
+                        	if(daypart==1){
+                        		dateTime = dateTime.split("T")[0].concat("T11:30");
+                        		System.out.println("开始时间："+dateTime);
+                        	}else{
+                        		dateTime = dateTime.split("T")[0].concat("T18:00");
+								System.out.println("开始时间："+dateTime);
+                        	}
+                        }
+                }
+                try {
+					date = dateformat.parse(dateTime);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                 values.add(String.valueOf(date.getTime()));
+              
+              }else {
+                	  values.add("'" + (String) models.get(key).getObject()+ "'");
+              }
+             
+            }else if(models.get(key).getObject() instanceof Choice){
+                values.add(String.valueOf(((Choice) models.get(key).getObject()).getId()));
+            }else {
+            	if(field.getName().equals("title")){
+                	 if(null==(String) models.get(key).getObject()){
+                		 if(entity.getName().equals("activity")){
+                			 title.append("拜访:");
+                			 String callName = DAOImpl.queryRelationDataById("contact",models.get("contactId").getObject().toString());
+                			 title.append(callName);
+                			 System.out.println("callName"+title.toString());
+                		 }
+                		 if(entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
+                			 title.append("辅导:");
+                			 String coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get("coacheeId").getObject().toString());
+                			 title.append(coacheeName);
+                			 System.out.println("coachingName:"+title.toString());
+                		 }
+                		 values.add("'" +title.toString()+ "'");
+                	  }else{
+                		  values.add("'" + (String) models.get(key).getObject()+ "'");
+                	  }
+            	}else{
+            		values.add(String.valueOf(models.get(key).getObject()));
+            	}
+            }
+           
+        }
+          //modify_datetime whenadded response_person 
+          List<Field> autoFields = entity.getAutoFields();
+          for(Field f:autoFields){
+            if(f.getName().equalsIgnoreCase("modify_datetime") || f.getName().equalsIgnoreCase("whenadded")){
+              values.add("'"+dateformat.format(new Date())+"'");
+            }
+            
+            if(f.getName().equalsIgnoreCase("owner") || f.getName().equalsIgnoreCase("modifier")
+                || f.getName().equalsIgnoreCase("responsible_person") ){
+              values.add("'"+userName+"'");
+            }
+            if(f.getName().equalsIgnoreCase("crmuserID")){
+            	values.add("'"+posId+"'");
+            } 
+            fieldNames.add(f.getName());
+            
+          }
+          if(entity.getName().equals("willcoaching")||entity.getName().equals("coaching")){
+        	  values.add(""+total_score+"");
+      		  fieldNames.add("total_score");
+          }
+    		//if entity is crmuser  add loginName
+            if ("userinfo".equals(entity.getName())) {
+                long crmuserkey = -1;
+                crmuserkey = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
+                /*if (crmuserkey >0 ) {
+                   UserInfo userinfo = DAOImpl.getUserById((int)crmuserkey);
+//                	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
+                    //此时需发送邮件
+                    long crmUserCode = userinfo.getTs();
+                    String sendEmail = String.valueOf(models.get("email").getObject());
+                    //创建激活码 getUserByuserCode
+                    //传递邮箱地址，用户code.
+                    SendEmail.sendMail(String.valueOf(crmUserCode) + "_"+ userinfo.getId(), sendEmail);
+                }*/
+            } else {
+                long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
+                if (generatedId > 0) {
+                   if(entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
+                     DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,models.get("coacheeId").getObject().toString(),
+                         String.valueOf(generatedId));
+                   }else{
+                     DAOImpl.insert2UserRelationTable(entity.getName(),userId,posId,"string",
+                         String.valueOf(generatedId));
+                   }
+                   
+                }
+            }
+    }
     public NewDataFormPanel(String id, IModel<?> model) {
         super(id, model);
     }

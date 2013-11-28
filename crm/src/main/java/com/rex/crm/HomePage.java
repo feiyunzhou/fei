@@ -182,7 +182,7 @@ public class HomePage extends TemplatePage {
 
   
 
-         Map<String, Entity> entities = Configuration.getEntityTable();
+       Map<String, Entity> entities = Configuration.getEntityTable();
        final Entity entity = entities.get("alert");
 
 
@@ -250,7 +250,7 @@ public class HomePage extends TemplatePage {
     switch (roleId)
     {
         case 1:
-            sql = entity.getSqlAdmin();
+            sql = "SELECT * from  alert where  expired > UNIX_TIMESTAMP(now())*1000  and publishDate < (UNIX_TIMESTAMP(now())*1000)  ORDER BY whenadded DESC";
             break;
         case 2:
             sql = entity.getSqlManager();
