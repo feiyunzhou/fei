@@ -46,7 +46,10 @@
 			var childNode = rootNode.addChild(JSON.parse(regionData));
 			//tree.activateKey("17");
 			console.log(act_key);
-			$("#tree").dynatree("getTree").getNodeByKey(act_key).activate();
+			if(act_key >0 ){
+			  $("#tree").dynatree("getTree").getNodeByKey(act_key).activate();
+			  $("#tree").dynatree("getTree").getNodeByKey(act_key).expand(true);
+			}
 			
 			
 		});
@@ -54,8 +57,8 @@
 	
 	<div id="tree">
 		<div class="btn-group  btn-block ">
-		<button type="button" class="btn btn-default" id="btnExpandAll">展开全部</button>
-		<button type="button" class="btn btn-default" id="btnCollapseAll">关闭全部</button>
+		<button type="button" class="btn btn-default btn-sm" id="btnExpandAll">展开</button>
+		<button type="button" class="btn btn-default btn-sm" id="btnCollapseAll">收起</button>
 		</div>
 	</div>
 </wicket:panel>
