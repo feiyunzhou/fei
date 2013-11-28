@@ -52,7 +52,7 @@ public class ProductTreePage extends AdminTemplatePage
    */
   public ProductTreePage()
   {
-      StringValue positionId = getRequest().getRequestParameters().getParameterValue("productTreePage");
+      StringValue positionId = getRequest().getRequestParameters().getParameterValue("positionId");
      if(positionId.isEmpty() || positionId.isNull()){
          initPage(null);
      }else{
@@ -67,18 +67,18 @@ public class ProductTreePage extends AdminTemplatePage
   
   private void initPage(final String positionId){
       Gson gson = new Gson();
-      String result = gson.toJson(TreeFactory.createPositionTree(),Node.class);
+      String result = gson.toJson(TreeFactory.createProductTree(),Node.class);
       add(new TreePanel("treePanel",result));
       
       if(positionId !=null){
-      EntityDetailContainerPanel panel = new EntityDetailContainerPanel("datalist","crmuser",positionId);
+      EntityDetailContainerPanel panel = new EntityDetailContainerPanel("datalist","product",positionId);
       add(panel);
       }else{
           add(new EmptyPanel("datalist"));
       }
   }
-  
-  
+  //监听请求 Ajax 
+  // 级联 
   @Override
   public void renderHead(IHeaderResponse response) {
       super.renderHead(response);

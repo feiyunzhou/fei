@@ -1,6 +1,7 @@
 package com.rex.crm.admin;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,69 +46,72 @@ import com.rex.crm.util.Configuration;
 /**
  * @author Feiyun Zhou
  */
-public class PositionTreePage extends AdminTemplatePage
-{
-  private String search_target = "";
+public class PositionTreePage extends AdminTemplatePage {
+	private String search_target = "";
 
-  /**
-   * Constructor
-   */
-  public PositionTreePage()
-  {
-	  
-      StringValue positionId = getRequest().getRequestParameters().getParameterValue("positionId");
-      
-      int level = 0;
-      if(!positionId.isNull()&&!positionId.isEmpty()){
-    	  level = DAOImpl.getLevelByPositionId(positionId.toInt());
-     } 
-     if(positionId.isEmpty() || positionId.isNull()){
-         initPage(null,0);
-     }else{
-         initPage(positionId.toString(),level);
-     }
-     
-     urlFor(PositionTreePage.class, null);
+	/**
+	 * Constructor
+	 */
+	public PositionTreePage() {
 
-  }
+		StringValue positionId = getRequest().getRequestParameters()
+				.getParameterValue("positionId");
 
-  public PositionTreePage(String id,String level){
-	  int lev = Integer.parseInt(level);
-	  initPage(id,lev);
-  }
-  
-  private void initPage(final String positionId,int level){
-      Gson gson = new Gson();
-      String result = gson.toJson(TreeFactory.createAccountPositionTree(),Node.class);
-      add(new TreePanel("treePanel",result));
-      
-      if(positionId !=null){
-      AccountPositionPanel panel = new AccountPositionPanel("datalist","crmuser",positionId,level);
-      add(panel);
-      }else{
-          add(new EmptyPanel("datalist"));
-      }
-  }
-  
-  
-  @Override
-  public void renderHead(IHeaderResponse response) {
-      super.renderHead(response);
-      StringValue act_key = getRequest().getRequestParameters().getParameterValue("positionId");
-      Map<String, Object> map = new HashMap<>();
-      
-      map.put("act_key", act_key.toString());
-      PackageTextTemplate ptt = new PackageTextTemplate( getClass(), "adminpage.js" );
-      //OnDomReadyHeaderItem onDomReadyHeaderItem = OnDomReadyHeaderItem.forScript( ptt.asString( map ) );
-      //response.render(onDomReadyHeaderItem);
-      System.out.println(ptt.asString(map));
-      response.render(JavaScriptHeaderItem.forScript(ptt.asString(map),null));
-      
-      try {
-          ptt.close();
-      } catch (IOException e) {
-          e.printStackTrace();
-      }
-  }
-  
+		int level = 0;
+		if (!positionId.isNull() && !positionId.isEmpty()) {
+			level = DAOImpl.getLevelByPositionId(positionId.toInt());
+		}
+		if (positionId.isEmpty() || positionId.isNull()) {
+			initPage(null, 0);
+		} else {
+			initPage(positionId.toString(), level);
+		}
+
+		urlFor(PositionTreePage.class, null);
+
+	}
+
+	public PositionTreePage(String id, String level) {
+		int lev = Integer.parseInt(level);
+		initPage(id, lev);
+	}
+
+	private void initPage(final String positionId, int level) {
+		Gson gson = new Gson();
+		String result = gson.toJson(TreeFactory.createAccountPositionTree(),
+				Node.class);
+		add(new TreePanel("treePanel", result));
+
+		if (positionId != null) {
+			AccountPositionPanel panel = new AccountPositionPanel("datalist",
+					"crmuser", positionId, level);
+			add(panel);
+		} else {
+			add(new EmptyPanel("datalist"));
+		}
+	}
+
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+		StringValue act_key = getRequest().getRequestParameters()
+				.getParameterValue("positionId");
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("act_key", act_key.toString());
+		PackageTextTemplate ptt = new PackageTextTemplate(getClass(),
+				"adminpage.js");
+		// OnDomReadyHeaderItem onDomReadyHeaderItem =
+		// OnDomReadyHeaderItem.forScript( ptt.asString( map ) );
+		// response.render(onDomReadyHeaderItem);
+		System.out.println(ptt.asString(map));
+		response.render(JavaScriptHeaderItem.forScript(ptt.asString(map), null));
+
+		try {
+			ptt.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

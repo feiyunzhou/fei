@@ -28,6 +28,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AttributeAppender;
 
@@ -35,6 +36,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.SearchCRMUserPage;
 import com.rex.crm.SignIn2Session;
+import com.rex.crm.admin.PositionTreePage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
@@ -84,7 +86,7 @@ public class TeamManPanel extends Panel {
           }
         else if (type == 2){
 //          //for the 用户岗位
-          teamSql = "select  * from   (select user_position.* from  userinfo  left join  user_position on user_position.userId = userinfo.id left join  crmuser on crmuser.id = user_position.positionId where userinfo.id = ? ) as atable";
+          teamSql = "select  * from   (select user_position.* ,user_position.id as rid from  userinfo  left join  user_position on user_position.userId = userinfo.id left join  crmuser on crmuser.id = user_position.positionId where userinfo.id = ? ) as atable";
         } 
     }else if(en.equalsIgnoreCase("crmuser")){
             if(type == 0){
@@ -96,12 +98,12 @@ public class TeamManPanel extends Panel {
             }
             else if (type == 2){
               //for the 用户列表
-              teamSql = "select * from (select userinfo.*,user_position.status as status , crmuser.name as positionId,role.val as crmuserRole  from  user_position left join userInfo on userInfo.id = user_position.userId left join crmuser on crmuser.id = user_position.positionId  left join role on role.id = crmuser.role where user_position.positionId = ? order by user_position.whenadded DESC limit 1 ) as atable";
+              teamSql = "select * from (select userinfo.*,user_position.id as rid ,user_position.status as status , crmuser.name as positionId,role.val as crmuserRole  from  user_position left join userInfo on userInfo.id = user_position.userId left join crmuser on crmuser.id = user_position.positionId  left join role on role.id = crmuser.role where user_position.positionId = ? order by user_position.whenadded DESC limit 1 ) as atable";
               		//+ "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
             }
             else if (type == 3){
               //for the 下属岗位	
-              teamSql = "select * from (select crmuser.*,userInfo.name as userInfoName ,role.name as permission from  crmuser left join user_position on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId  left join role on crmuser.role = role.name where reportto = ?  ) as atable";
+              teamSql = "select * from (select crmuser.*,crmuser.id as rid ,userInfo.name as userInfoName ,role.name as permission from  crmuser left join user_position on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId  left join role on crmuser.role = role.name where reportto = ?  ) as atable";
             }
         }
         List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
@@ -179,6 +181,9 @@ public class TeamManPanel extends Panel {
                  
              }
          }
+//           PageParameters param = new PageParameters();
+//           param.add("positionId", entityId);
+//			 setResponsePage(PositionTreePage.class,param );
            setResponsePage(new EntityDetailPage(currentEntityName,etId));
       
              }

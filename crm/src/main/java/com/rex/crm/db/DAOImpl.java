@@ -40,6 +40,8 @@ import com.rex.crm.beans.CalendarEvent;
 import com.rex.crm.beans.Choice;
 import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
+import com.rex.crm.beans.Product;
+import com.rex.crm.beans.ProductLine;
 import com.rex.crm.beans.Province;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.beans.UserPosition;
@@ -542,14 +544,6 @@ public class DAOImpl
         menulist.add("contact");
         menulist.add("activity");
         menulist.add("coaching");
-     if(roleId == 1){
-       //menulist.add("data_exchange_teample");
-       //menulist.add("callreport");
-       //menulist.add("DownLoadPage");
-       //menulist.add("admintree");
-     }
-         //menulist.add("crmuser");
-         //menulist.add("userInfo");
         return menulist;
     }
 
@@ -2217,8 +2211,6 @@ public class DAOImpl
         } finally {
             DBHelper.closeConnection(conn);
         }
-        
-        
         for(CRMUser user:users){
             CRMUser u = new CRMUser();
             u.setName(user.getName()+"--"+user.getUserInfoName());
@@ -2230,7 +2222,31 @@ public class DAOImpl
             u.setCode(user.getCode());
             inferiors.add(u);
         }
-        
+        return inferiors;
+    }
+    
+    public static List<Product> getProductByLineId(String lineId) {
+        List<Product> inferiors = Lists.newArrayList();
+        List<Product> products = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
+
+            products = run.query(conn, "SELECT * FROM product where parentid =?", h,lineId);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all crm users", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        for(Product product:products){
+        	Product u = new Product();
+            u.setName(product.getName());
+            u.setId(product.getId());
+            inferiors.add(u);
+        }
         return inferiors;
     }
     
@@ -2253,7 +2269,44 @@ public class DAOImpl
         
         return users;
     }
-    
+    public static List<ProductLine> getProductLineWithoutSuperior() {
+        
+        List<ProductLine> users = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<ProductLine>> h = new BeanListHandler<ProductLine>(ProductLine.class);
+
+            users = run.query(conn, "SELECT * FROM crmuser_pl2 ", h);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all crm users", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return users;
+    }
+public static List<Product> getProducWithoutProductLine(int productLines) {
+        
+        List<Product> products = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
+
+            products = run.query(conn, "SELECT * FROM product where parentid =? ", h,productLines);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all crm products", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+        return products;
+    }
     public static List<Province> getRegionWithPosition() {
         
         List<Province> users = Lists.newArrayList();

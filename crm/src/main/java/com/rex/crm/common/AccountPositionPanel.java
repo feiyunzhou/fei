@@ -64,17 +64,17 @@ public class AccountPositionPanel extends Panel {
         //team sql
         String teamSql = "";
                 //for the 医院列表
+//        
+//              if(level == 11){
+//            	  teamSql="select * from user_position_query where user_position_query.position_id = ?";
+//              } else if(level == 21){
+//            	  teamSql="select * from user_position_query where user_position_query.manager_position_id =?";
+//              }else{
+//            	  teamSql="select * from user_position_query where manager_position_id in (select id from crmuser where reportto = ?)";
+//              }
+        teamSql = "select * from user_position_query where " + getCondition(Integer.parseInt(entityId));
 
-              if(level == 11){
-            	  teamSql="select * from user_position_query where user_position_query.position_id = ?";
-              } else if(level == 21){
-            	  teamSql="select * from user_position_query where user_position_query.manager_position_id =?";
-              }else{
-            	  teamSql="select * from user_position_query where manager_position_id in (select id from crmuser where reportto = ?)";
-              }
-        
-
-        List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
+        List mapList = DAOImpl.queryEntityRelationList(teamSql);
         Entity entity=null ;
         	  entity = Configuration.getEntityByName("regionManage");
         	  add(new Label("title","区域管理 "));
@@ -98,7 +98,8 @@ public class AccountPositionPanel extends Panel {
              try{
             	
             	 delete(Integer.parseInt(entityId));
-                
+            	
+     
              }catch(Exception e){
                  
          }   
@@ -280,5 +281,59 @@ public class AccountPositionPanel extends Panel {
     			delete(id);
     		}
     	}
+    }
+    
+    private ArrayList<Integer> queryPosition(int positionId)
+    {
+	  	ArrayList<Integer> ids = new ArrayList<>();
+	  	
+	  	int level = queryPositionLevel(positionId);
+	  	
+	  	if(level == 11)
+	  	{
+	  		ids.add(positionId);
+	  	}
+	  	else if(level > 11)
+	  	{
+	  		for(int id : queryPositionByParent(positionId))
+	  		{
+	  			level = queryPositionLevel(positionId);
+	  			
+	  			if(level == 11)
+	  			{
+	  				ids.add(level);
+	  			}
+	  			else if(level > 11)
+	  			{
+	  				ids.addAll(queryPosition(id));
+	  			}
+	  		}
+	  	}
+	  	
+	  	return ids;
+    }
+    
+    private String getCondition(int positionId)
+    {
+  	  ArrayList<Integer> ids = queryPosition(positionId);
+  	  StringBuilder sb = new StringBuilder();
+  	  if(ids != null && ids.size() > 0)
+  	  {
+  		  sb = new StringBuilder();
+  		  sb.append("position_id in(");
+  		  sb.append(ids.get(0));
+  		  ids.remove(0);
+  		    		  
+  		  for(int id : ids)
+  		  {
+  			  sb.append(",");
+  			  sb.append(id);
+  		  }
+  		  
+  		  sb.append(")");
+  	  }
+
+
+  	  return sb.toString();
     }
 }

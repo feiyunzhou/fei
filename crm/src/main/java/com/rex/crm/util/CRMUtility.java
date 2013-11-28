@@ -215,7 +215,7 @@ public class CRMUtility {
 	    public static EnumSet<Permissions> getPermissionForEntity(int roleId, String entityName) {
 
 	        EnumSet<Permissions> permission = null;
-	        if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("data_exchange_teample")) {
+	        if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("crmuser")) {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
 	            }
@@ -256,27 +256,29 @@ public class CRMUtility {
         EnumSet<Permissions> permission = null;
         if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("product")) {
             if (roleId == 1) {
-                permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+                permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
             }
+            //||entityName.equalsIgnoreCase("data_exchange_teample")
         }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar")){
-        	permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        	permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
         }else if(entityName.equalsIgnoreCase("activity")){
         	if(roleId == 3){
         		permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+        	}else if(roleId == 1){
+        		permission = EnumSet.of(CRUDPanel.Permissions.DOWNLOAD);
         	}else{
         		permission = null;
         	}
         }else if(entityName.equalsIgnoreCase("coaching")){
-//          if(roleId==1){
-//        	  permission = EnumSet.of(CRUDPanel.Permissions.DOWNLOAD);
-//          }else
-          if(roleId ==2){
+          if(roleId==1){
+        	  permission = EnumSet.of(CRUDPanel.Permissions.DOWNLOAD);
+          }else if(roleId ==2){
         	  permission = EnumSet.of(CRUDPanel.Permissions.ADD);
           }
-        }else if(entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("userInfo")||entityName.equalsIgnoreCase("data_exchange_teample")){
+        }else if(entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("userInfo")){
             
             if (roleId == 1) {
-                permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+                permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
             }
         }else if(entityName.equalsIgnoreCase("alert")){
         	if(roleId == 1){

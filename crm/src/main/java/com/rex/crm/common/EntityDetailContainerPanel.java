@@ -73,7 +73,6 @@ public class EntityDetailContainerPanel   extends Panel {
         long lid = Long.parseLong(id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
-        System.out.println("entityName:"+entity.getName());
         if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
         	System.out.println("name:"+map.get("title"));
         	add(new Label("name",String.valueOf(map.get("title"))));
@@ -84,28 +83,6 @@ public class EntityDetailContainerPanel   extends Panel {
         add(new EntityDetailPanel("detailed",entity,map,id,3,entityName));
         
 
-        //set relations data
-       /*  List<Relation> relations = Configuration.getRelationsByName(entityName);
-         
-         RepeatingView relationRepeater = new RepeatingView("relationRepeater");
-         add(relationRepeater);
-         
-         List<Field> paramFields = entity.getParamFields();
-         Map<String,Object> params = Maps.newHashMap();
-         for(Field f:paramFields){
-             params.put(entityName+"."+f.getName(), map.get(f.getName()));
-         }*/
-         
-         
-//         for(Relation r:relations){
-//           AbstractItem item = new AbstractItem(relationRepeater.newChildId());
-//           relationRepeater.add(item);
-//           logger.debug(relations.get(0).getSql());
-//           logger.debug("parms:"+id);
-//           List list = DAOImpl.queryEntityRelationList(relations.get(0).getSql(), id);
-//           item.add(new RelationDataPanel("relationPanel",relations.get(0),entityName,list,String.valueOf(lid),params));
-//           
-//         }
          if(entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
              add(new EmptyPanel("teamPanel2"));
