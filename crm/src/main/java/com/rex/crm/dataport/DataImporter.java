@@ -49,7 +49,7 @@ public class DataImporter {
         int num_of_failed = 0;
         int num_of_updated = 0;
         int result = 0;
-        File logfile = File.createTempFile("crm_error", "file.log");
+        File logfile = File.createTempFile("crm_error_", "_file.log");
         importMeta.setLogfilename(logfile.getAbsolutePath());
         importMeta.setEntityName(entityName);
         importMeta.setImportfilename(filename);

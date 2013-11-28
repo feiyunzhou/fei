@@ -29,12 +29,21 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.IRequestCycle;
+import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
+import org.apache.wicket.request.resource.ContentDisposition;
+import org.apache.wicket.util.encoding.UrlEncoder;
+import org.apache.wicket.util.file.Files;
+import org.apache.wicket.util.resource.FileResourceStream;
+import org.apache.wicket.util.resource.IResourceStream;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivitySelectPage;
 import com.rex.crm.SignIn2Session;
+import com.rex.crm.dataport.DataExporter;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.CRMUtility;
@@ -173,16 +182,34 @@ public class PageableTablePanel extends Panel {
             	}
             }
             @Override
-            public void downLoadBtn() throws Exception { 
-//              DataExportDelegate dataExport = new  DataExportDelegate();
-////              String template = DAOImpl.selectTemplate(); 
-//             HttpServletResponse response = (HttpServletResponse)getRequestCycle().getResponse().getContainerResponse();
-//             dataExport.export("Account Export Full Template 1.0", response);
-//             
-//             DataExport exp = new DataExport(entity,mapList);
-//             exp.exportData();
-//             File.createTempFile(prefix, suffix)
-             //setResponsePage(new AccountPage());
+
+            public void downLoadBtn() throws Exception {     
+                String exported_filename = null;
+                try {
+                    exported_filename = DataExporter.export(entity.getName(), mapList);
+                } catch (Exception e) {
+                    logger.debug("failed to export file for " + entity.getName(), e);
+                }
+                if (exported_filename != null) {
+
+                    final File file = new File(exported_filename);
+                    String display_fileName = UrlEncoder.QUERY_INSTANCE.encode("导出。zip", Charsets.UTF_8);
+
+                    IResourceStream resourceStream = new FileResourceStream(new org.apache.wicket.util.file.File(file));
+                    getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(resourceStream) {
+                        @Override
+                        public void respond(IRequestCycle requestCycle) {
+                            super.respond(requestCycle);
+                            Files.remove(file);
+                        }
+                    }.setFileName(display_fileName).setContentDisposition(ContentDisposition.ATTACHMENT));
+
+                } else {
+                    logger.debug("Failed to export file for:" + entity.getName());
+
+                }
+            
+
             }    
         };
         

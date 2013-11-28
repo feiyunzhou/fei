@@ -6,7 +6,6 @@ package com.rexen.crm.integration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,6 +25,7 @@ import javax.xml.bind.Unmarshaller;
 import org.jumpmind.symmetric.csv.CsvWriter;
 
 /**
+ *
  * @author Ralf
  */
 public class DataExport
@@ -55,79 +55,67 @@ public class DataExport
 
   public byte[] export() throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException
   {
-    Object example = null;
+        Object example = null;
 
-    String class_name = "com.rexen.crm.beans." + config.getEntityName();
-    Class c = Class.forName(class_name);
-    example = c.newInstance();
+        String class_name = "com.rexen.crm.beans." + config.getEntityName();
+        Class c = Class.forName(class_name);
+        example = c.newInstance();
 
-    Object[] data = dao.find(example, config.getMax());
+        Object[] data = dao.find(example, config.getMax());
 
-    System.out.println("record count " + data.length);
+        System.out.println("record count " + data.length);
 
-    if (data != null && data.length > 0)
-    {
-      ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        if (data != null && data.length > 0) {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-      CsvWriter writer = null;
+            CsvWriter writer = null;
 
-      String encoded = config.getEncoded();
+            String encoded = config.getEncoded();
 
-      if (encoded != null && encoded.length() > 0)
-      {
-        try
-        {
-          writer = new CsvWriter(buffer, ',', Charset.forName(encoded));
+            if (encoded != null && encoded.length() > 0) {
+                try {
+                    writer = new CsvWriter(buffer, ',', Charset.forName(encoded));
+                } catch (Exception e) {
+                    // e.printStackTrace();
+                    writer = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
+                }
+            } else {
+                writer = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
+            }
+
+            ArrayList<String> heads = new ArrayList<>();
+
+            for (FieldConfiguration field : config.getFields()) {
+                heads.add(field.getColumnName());
+            }
+
+            writer.writeRecord(heads.toArray(new String[config.getFields().size()]));
+
+            for (Object o : data) {
+                writer.writeRecord(convert(o));
+            }
+
+            writer.flush();
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try (ZipOutputStream zip_output_stream = new ZipOutputStream(out)) {
+                zip_output_stream.setLevel(9);
+                ZipEntry zip_entry = new ZipEntry(config.getEntityName() + ".csv");
+
+                zip_output_stream.putNextEntry(zip_entry);
+
+                zip_output_stream.write(buffer.toByteArray());
+
+                zip_output_stream.flush();
+            }
+
+            // out.flush();
+            // out.close();
+
+            return out.toByteArray();
         }
-        catch (Exception e)
-        {
-          //e.printStackTrace();
-          writer = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
-        }
-      }
-      else
-      {
-        writer = new CsvWriter(buffer, ',', Charset.forName("UTF-8"));
-      }
 
-      ArrayList<String> heads = new ArrayList<>();
-
-      for (FieldConfiguration field : config.getFields())
-      {
-        heads.add(field.getColumnName());
-      }
-
-      writer.writeRecord(heads.toArray(new String[config.getFields().size()]));
-
-      for (Object o : data)
-      {
-        writer.writeRecord(convert(o));
-      }
-
-      writer.flush();
-
-      ByteArrayOutputStream out = new ByteArrayOutputStream();
-      //FileOutputStream out = new FileOutputStream(config.getEntityName() + ".zip");
-      
-      try (ZipOutputStream zip_output_stream = new ZipOutputStream(out))
-      {
-        zip_output_stream.setLevel(9);
-        ZipEntry zip_entry = new ZipEntry(config.getEntityName() + ".csv");
-
-        zip_output_stream.putNextEntry(zip_entry);
-
-        zip_output_stream.write(buffer.toByteArray());
-
-        zip_output_stream.flush();
-      }
-
-      //out.flush();
-      //out.close();
-
-      return out.toByteArray();
-    }
-
-    return null;
+        return null;
   }
 
   private String[] convert(Object o) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
@@ -224,7 +212,7 @@ public class DataExport
 
               Class c = Class.forName("com.rexen.crm.beans." + field.getLookupEntityName());
               Object example = c.newInstance();
-
+              
               String setter_name = "set" + field.getTargetFieldName();
               Method setter = queryMethod(c, setter_name);
 
@@ -238,9 +226,9 @@ public class DataExport
               if (example != null)
               {
                 String getter_name = "get" + field.getLookupFieldName();
-
+                
                 Method getter = queryMethod(c, getter_name);
-
+                
                 String lookup_value = (String) getter.invoke(example, new Object[]
                 {
                 });
@@ -286,7 +274,7 @@ public class DataExport
 
   public Method queryMethod(Class c, String methodName)
   {
-
+    
     System.out.println("query method: " + c.getName() + "." + methodName);
     HashMap<String, Method> methods = new HashMap<>();
 
@@ -297,25 +285,4 @@ public class DataExport
 
     return methods.get(methodName.toLowerCase());
   }
-  
-  private void log(String objectName, String methodName, String stackTrace, String message)
-  {
-    LogMessage logMessage;
-    logMessage = new LogMessage();
-    
-    logMessage.setObjectName(objectName);
-    logMessage.setMethodName(methodName);
-    logMessage.setStackTrace(stackTrace);
-    logMessage.setMessage(message);
-    logMessage.setCreated(new Date());
-    
-    dao.append(new Object[]{logMessage});
-    
-    System.out.println("raise error in " + objectName + "." + methodName +".");
-    System.out.println("message is " + message);
-    if(stackTrace != null)
-    {
-      System.out.println("stack track is " + stackTrace);    
-    }
-  } 
 }
