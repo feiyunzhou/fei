@@ -36,10 +36,10 @@ public class DataImportPage extends AdminTemplatePage
     static {
         choiceList.add(new Choice(0L, "导入医院"));
         choiceList.add(new Choice(1L, "导入医生"));
-        choiceList.add(new Choice(2L, "导入用户"));
-        choiceList.add(new Choice(3L, "导入岗位"));
-        choiceList.add(new Choice(4L, "导入岗位汇报关系"));
-        choiceList.add(new Choice(5L, "导入岗位医院关系"));
+        choiceList.add(new Choice(2L, "导入岗位"));
+        choiceList.add(new Choice(3L, "导入岗位汇报关系"));
+        choiceList.add(new Choice(4L, "导入用户"));
+        choiceList.add(new Choice(5L, "导入岗位和医院关系"));
         choiceList.add(new Choice(6L, "导入用户和岗位关系"));
     }
     private FileUploadField fileUploadField;
@@ -87,15 +87,15 @@ public class DataImportPage extends AdminTemplatePage
                          break;
                   case 1:
                       entityName = "contact";
-                       break;
+                       break;              
                   case 2:
-                      entityName = "userinfo";
+                      entityName = "crmuser";
                       break;
                   case 3:
                       entityName = "crmuser";
                       break;
                   case 4:
-                      entityName = "crmuser";
+                      entityName = "userinfo";
                       break;
                   case 5:
                       entityName = "accountcrmuser";
@@ -138,25 +138,25 @@ public class DataImportPage extends AdminTemplatePage
       view_log_btn.setVisible(false);
       
      File account_template = new File(DataImportPage.class.getResource("/templates/account.csv").getPath());
-     add(new DownloadLink("account_template", account_template));
+     add(new DownloadLink("account_template", account_template,"1医院模板.csv"));
      
      File contact_template = new File(DataImportPage.class.getResource("/templates/contact.csv").getPath());
-     add(new DownloadLink("contact_template", contact_template));
+     add(new DownloadLink("contact_template", contact_template,"2医生模板.csv"));
      
      File user_template = new File(DataImportPage.class.getResource("/templates/userinfo.csv").getPath());
-     add(new DownloadLink("user_template", user_template));
+     add(new DownloadLink("user_template", user_template,"5用户模板.csv"));
      
      File crmuser_template = new File(DataImportPage.class.getResource("/templates/crmuser.csv").getPath());
-     add(new DownloadLink("crmuser_template", crmuser_template));
+     add(new DownloadLink("crmuser_template", crmuser_template,"3岗位模板.csv"));
      
      File crmuser_report_template = new File(DataImportPage.class.getResource("/templates/crmuser_reportto.csv").getPath());
-     add(new DownloadLink("crmuser_report_template", crmuser_report_template));
+     add(new DownloadLink("crmuser_report_template", crmuser_report_template,"4岗位汇报关系模板.csv"));
      
      File accountcrmuser_template = new File(DataImportPage.class.getResource("/templates/accountcrmuser.csv").getPath());
-     add(new DownloadLink("accountcrmuser_template", accountcrmuser_template));
+     add(new DownloadLink("accountcrmuser_template", accountcrmuser_template,"6岗位和医院关系模板.csv "));
      
      File user_position_template= new File(DataImportPage.class.getResource("/templates/user_position.csv").getPath());
-     add(new DownloadLink("user_position_template", user_position_template));
+     add(new DownloadLink("user_position_template", user_position_template,"7用户和岗位关系模板.csv"));
       
   }
   
