@@ -560,7 +560,11 @@ public class NewDataFormPanel extends Panel {
                 IModel choices,IModel default_model,final Entity entity,final Field currentField){
             super(id, markupId, markupProvider);
             DropDownChoice dropDown = createDropDownListFromPickList("dropDownInput",choices,default_model);
-            dropDown.setNullValid(true);
+            if(currentField.getName().equals("activity_type")){
+            	dropDown.setNullValid(false);
+            }else{
+            	dropDown.setNullValid(true);
+            }
             add(dropDown);
             
             if(currentField.getChildNode()!=null){

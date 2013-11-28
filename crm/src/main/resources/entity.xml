@@ -269,7 +269,8 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_status_pl</picklist>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>2</priority>
+				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 				<import_field_name>状态</import_field_name>
 			</field>
@@ -715,6 +716,7 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+				<isParam>true</isParam>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -729,6 +731,7 @@
 				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<isParam>true</isParam>
                 <import_field_name>姓名</import_field_name>
 			</field>
             <field>
@@ -2385,7 +2388,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>1</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<default-value-type>val</default-value-type>
-				<default-value>-1</default-value>
+				<default-value>1</default-value>
 				<childNode>visiting_purpose</childNode>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2429,10 +2432,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
-				<isEditable>false</isEditable>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
+				<default-value-type>var</default-value-type>
+				<default-value>contact.id\,contact.name</default-value>
+				<relationTable>contact</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 
@@ -2447,6 +2453,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
+				<relationTable>contact</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -2457,8 +2464,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<relationTable>contact</relationTable>
 				<isBaseInfo>true</isBaseInfo>
