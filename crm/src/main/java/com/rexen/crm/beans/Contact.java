@@ -27,15 +27,14 @@ import javax.persistence.TemporalType;
 import com.rexen.crm.integration.DataObject;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "contact")
 @NamedQueries(
-{
-  @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c")
-})
+  {
+    @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c")
+  })
 public class Contact extends DataObject implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -43,14 +42,14 @@ public class Contact extends DataObject implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
   @Column(name = "department")
-  private int department;
+  private int    department;
   @Column(name = "sex")
-  private int sex;
+  private int    sex;
   @Column(name = "native_place")
   private String nativePlace;
   @Column(name = "office_tel")
@@ -64,39 +63,39 @@ public class Contact extends DataObject implements Serializable
   @Column(name = "status")
   private String status;
   @Column(name = "market_classification")
-  private int marketClassification;
+  private int    marketClassification;
   @Column(name = "grade")
-  private int grade;
+  private int    grade;
   @Column(name = "province")
-  private int province;
+  private int    province;
   @Column(name = "city")
-  private int city;
+  private int    city;
   @Column(name = "districts")
   private String districts;
   @Column(name = "duty")
-  private int duty;
+  private int    duty;
   @Column(name = "job_title")
-  private int jobTitle;
+  private int    jobTitle;
   @Column(name = "visiting_target")
-  private int visitingTarget;
+  private int    visitingTarget;
   @Column(name = "product_target")
   private String productTarget;
   @Column(name = "owner")
   private String owner;
   @Column(name = "whenadded")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date whenadded;
+  private Date   whenadded;
   @Column(name = "modifier")
   private String modifier;
   @Column(name = "modify_datetime")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date modifyDatetime;
+  private Date   modifyDatetime;
   @Column(name = "responsible_person")
   private String responsiblePerson;
   @Column(name = "contactCode")
   private String contactCode;
   @Column(name = "accountId")
-  private int accountId;
+  private int    accountId;
 
   public int getAccountId()
   {

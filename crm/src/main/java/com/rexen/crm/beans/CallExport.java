@@ -28,7 +28,6 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Ralf
  */
 @Entity
@@ -61,16 +60,16 @@ public class CallExport implements Serializable
   private String activitytypes;
   @Column(name = "Activity_addTime")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date activityaddTime;
+  private Date   activityaddTime;
   @Column(name = "Activity_modifyTime")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date activitymodifyTime;
+  private Date   activitymodifyTime;
   @Column(name = "Activity_start")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date activitystart;
+  private Date   activitystart;
   @Column(name = "Activity_end")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date activityend;
+  private Date   activityend;
   @Column(name = "Position_name")
   private String positionname;
   @Column(name = "Region_level_1")
@@ -407,5 +406,5 @@ public class CallExport implements Serializable
   {
     this.accountstatus = accountstatus;
   }
-  
+
 }

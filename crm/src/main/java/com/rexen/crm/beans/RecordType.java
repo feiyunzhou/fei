@@ -26,7 +26,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Ralf
  */
 @Entity
@@ -39,7 +38,7 @@ public class RecordType implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
@@ -62,7 +61,7 @@ public class RecordType implements Serializable
   {
     this.id = id;
   }
-  
+
   public String getName()
   {
     return name;

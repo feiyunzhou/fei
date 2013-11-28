@@ -6,10 +6,6 @@ package com.rexen.crm.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,15 +20,14 @@ import javax.persistence.TemporalType;
 import com.rexen.crm.integration.DataObject;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "account")
 @NamedQueries(
   {
-  @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
-})
+    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
+  })
 public class Account extends DataObject implements Serializable
 {
 
@@ -41,66 +35,64 @@ public class Account extends DataObject implements Serializable
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Column(name = "name")
   private String name;
   @Column(name = "bdm_code")
   private String bdmCode;
   @Column(name = "administrativ_level")
-  private int administrativLevel;
-  @Column(name = "grade")
-  private int grade;
+  private int    administrativLevel;
   @Column(name = "hospital_type")
-  private int hospitalType;
+  private int    hospitalType;
   @Column(name = "local_or_army")
-  private int localOrArmy;
+  private int    localOrArmy;
   @Column(name = "comprehensive_or_specialized")
-  private int comprehensiveOrSpecialized;
+  private int    comprehensiveOrSpecialized;
   @Column(name = "key_type")
-  private int keyType;
+  private int    keyType;
   @Column(name = "status")
-  private int status;
+  private int    status;
   @Column(name = "duty_officer")
   private String dutyOfficer;
   @Column(name = "num_of_doctors")
-  private int numOfDoctors;
+  private int    numOfDoctors;
   @Column(name = "num_of_assistant_doctors")
-  private int numOfAssistantDoctors;
+  private int    numOfAssistantDoctors;
   @Column(name = "num_of_staff")
-  private int numOfStaff;
+  private int    numOfStaff;
   @Column(name = "num_of_treat_per_year")
-  private int numOfTreatPerYear;
+  private int    numOfTreatPerYear;
   @Column(name = "num_of_outpatient")
-  private int numOfOutpatient;
+  private int    numOfOutpatient;
   @Column(name = "total_num_of_sickbed")
-  private int totalNumOfSickbed;
+  private int    totalNumOfSickbed;
   @Column(name = "num_of_anesthesia_doctor")
-  private int numOfAnesthesiaDoctor;
+  private int    numOfAnesthesiaDoctor;
   @Column(name = "num_of_pain_doctor")
-  private int numOfPainDoctor;
+  private int    numOfPainDoctor;
   @Column(name = "num_of_surgery_per_year")
-  private int numOfSurgeryPerYear;
+  private int    numOfSurgeryPerYear;
   @Column(name = "num_of_surgery_room")
-  private int numOfSurgeryRoom;
+  private int    numOfSurgeryRoom;
   @Column(name = "num_of_using_opiates_medicine")
-  private int numOfUsingOpiatesMedicine;
+  private int    numOfUsingOpiatesMedicine;
   @Column(name = "num_of_using_opiates_injection")
-  private int numOfUsingOpiatesInjection;
+  private int    numOfUsingOpiatesInjection;
   @Column(name = "date_of_establish")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date dateOfEstablish;
+  private Date   dateOfEstablish;
   @Column(name = "registered_capital")
-  private int registeredCapital;
+  private int    registeredCapital;
   @Column(name = "tel")
   private String tel;
   @Column(name = "fax")
   private String fax;
   @Column(name = "market_classification")
-  private int marketClassification;
+  private int    marketClassification;
   @Column(name = "province")
-  private int province;
+  private int    province;
   @Column(name = "city")
-  private int city;
+  private int    city;
   @Column(name = "districts")
   private String districts;
   @Column(name = "address")
@@ -109,12 +101,12 @@ public class Account extends DataObject implements Serializable
   private String owner;
   @Column(name = "whenadded")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date whenadded;
+  private Date   whenadded;
   @Column(name = "modifier")
   private String modifier;
   @Column(name = "modify_datetime")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date modifyDatetime;
+  private Date   modifyDatetime;
   @Column(name = "responsible_person")
   private String responsiblePerson;
 
@@ -171,16 +163,6 @@ public class Account extends DataObject implements Serializable
   public void setAdministrativLevel(int administrativLevel)
   {
     this.administrativLevel = administrativLevel;
-  }
-
-  public int getGrade()
-  {
-    return grade;
-  }
-
-  public void setGrade(int grade)
-  {
-    this.grade = grade;
   }
 
   public int getHospitalType()

@@ -5,6 +5,7 @@
 package com.rexen.crm.beans;
 
 import com.rexen.crm.integration.DataObject;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -20,16 +21,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
  * @author Ralf
  */
 
 @Entity
 @Table(name = "crmuser")
 @NamedQueries(
-{
-  @NamedQuery(name = "Crmuser.findAll", query = "SELECT c FROM Crmuser c")
-})
+  {
+    @NamedQuery(name = "Crmuser.findAll", query = "SELECT c FROM Crmuser c")
+  })
 public class Crmuser extends DataObject implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -37,40 +37,40 @@ public class Crmuser extends DataObject implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
   @Column(name = "code")
   private String code;
   @Column(name = "reportto")
-  private int reportto;
+  private int    reportto;
   @Column(name = "role")
-  private int role;
+  private int    role;
   @Column(name = "pl1")
-  private int pl1;
+  private int    pl1;
   @Column(name = "pl2")
-  private int pl2;
+  private int    pl2;
   @Column(name = "pl4")
-  private int pl4;
+  private int    pl4;
   @Column(name = "pl5")
-  private int pl5;
+  private int    pl5;
   @Column(name = "city")
-  private int city;
+  private int    city;
   @Column(name = "department")
   private String department;
   @Column(name = "whenadded")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date whenadded;
+  private Date   whenadded;
   @Column(name = "modifier")
   private String modifier;
   @Column(name = "modify_datetime")
   @Temporal(TemporalType.DATE)
-  private Date modifyDatetime;
+  private Date   modifyDatetime;
   @Column(name = "owner")
   private String owner;
   @Column(name = "level")
-  private int level;
+  private int    level;
 
   public Crmuser()
   {

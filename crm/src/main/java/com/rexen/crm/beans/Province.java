@@ -30,15 +30,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "province")
 @NamedQueries(
-{
-  @NamedQuery(name = "Province.findAll", query = "SELECT p FROM Province p")
-})
+  {
+    @NamedQuery(name = "Province.findAll", query = "SELECT p FROM Province p")
+  })
 public class Province implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -46,7 +45,7 @@ public class Province implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Column(name = "val")
   private String val;
   @Column(name = "externalId")

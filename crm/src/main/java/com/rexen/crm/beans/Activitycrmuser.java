@@ -18,15 +18,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "activitycrmuser")
 @NamedQueries(
   {
-  @NamedQuery(name = "Activitycrmuser.findAll", query = "SELECT a FROM Activitycrmuser a")
-})
+    @NamedQuery(name = "Activitycrmuser.findAll", query = "SELECT a FROM Activitycrmuser a")
+  })
 public class Activitycrmuser implements Serializable
 {
 

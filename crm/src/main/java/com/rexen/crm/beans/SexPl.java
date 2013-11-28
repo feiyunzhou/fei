@@ -27,15 +27,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "sex_pl")
 @NamedQueries(
-{
-  @NamedQuery(name = "SexPl.findAll", query = "SELECT s FROM SexPl s")
-})
+  {
+    @NamedQuery(name = "SexPl.findAll", query = "SELECT s FROM SexPl s")
+  })
 public class SexPl implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -43,7 +42,7 @@ public class SexPl implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Column(name = "val")
   private String val;
 
@@ -75,5 +74,5 @@ public class SexPl implements Serializable
   {
     this.val = val;
   }
-  
+
 }

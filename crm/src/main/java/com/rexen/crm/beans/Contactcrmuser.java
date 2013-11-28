@@ -18,15 +18,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "contactcrmuser")
 @NamedQueries(
-{
-  @NamedQuery(name = "Contactcrmuser.findAll", query = "SELECT c FROM Contactcrmuser c")
-})
+  {
+    @NamedQuery(name = "Contactcrmuser.findAll", query = "SELECT c FROM Contactcrmuser c")
+  })
 public class Contactcrmuser implements Serializable
 {
   private static final long serialVersionUID = 1L;

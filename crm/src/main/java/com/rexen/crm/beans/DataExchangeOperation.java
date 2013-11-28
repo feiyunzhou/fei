@@ -26,12 +26,11 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "data_exchange_operation")
-@XmlRootElement   
+@XmlRootElement
 public class DataExchangeOperation implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -39,7 +38,7 @@ public class DataExchangeOperation implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Basic(optional = false)
   @Column(name = "val")
   private String val;

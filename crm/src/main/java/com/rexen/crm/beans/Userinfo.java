@@ -4,7 +4,6 @@
  */
 package com.rexen.crm.beans;
 
-import com.rexen.crm.integration.DataObject;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -29,7 +28,7 @@ import javax.persistence.TemporalType;
 {
   @NamedQuery(name = "Userinfo.findAll", query = "SELECT u FROM Userinfo u")
 })
-public class Userinfo extends DataObject implements Serializable
+public class Userinfo implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
@@ -73,7 +72,7 @@ public class Userinfo extends DataObject implements Serializable
   @Column(name = "sessionKey")
   private String sessionKey;
   @Column(name = "lastLoginTime")
-  private int lastLoginTime;
+  private long lastLoginTime;
   @Column(name = "whenadded")
   @Temporal(TemporalType.TIMESTAMP)
   private Date whenadded;
@@ -90,14 +89,10 @@ public class Userinfo extends DataObject implements Serializable
   private int province;
   @Column(name = "city")
   private int city;
-  @Column(name = "isActivited")
-  private int isActivited;
-  @Column(name = "ts")
-  private long ts;
-  @Column(name = "positionId")
-  private int positionId;
   @Column(name = "office_tel")
   private String officeTel;
+  @Column(name = "num_of_signIn")
+  private int numofsignIn;
 
   public Userinfo()
   {
@@ -294,12 +289,12 @@ public class Userinfo extends DataObject implements Serializable
     this.sessionKey = sessionKey;
   }
 
-  public int getLastLoginTime()
+  public long getLastLoginTime()
   {
     return lastLoginTime;
   }
 
-  public void setLastLoginTime(int lastLoginTime)
+  public void setLastLoginTime(long lastLoginTime)
   {
     this.lastLoginTime = lastLoginTime;
   }
@@ -374,36 +369,6 @@ public class Userinfo extends DataObject implements Serializable
     this.city = city;
   }
 
-  public int getIsActivited()
-  {
-    return isActivited;
-  }
-
-  public void setIsActivited(int isActivited)
-  {
-    this.isActivited = isActivited;
-  }
-
-  public long getTs()
-  {
-    return ts;
-  }
-
-  public void setTs(long ts)
-  {
-    this.ts = ts;
-  }
-
-  public int getPositionId()
-  {
-    return positionId;
-  }
-
-  public void setPositionId(int positionId)
-  {
-    this.positionId = positionId;
-  }
-
   public String getOfficeTel()
   {
     return officeTel;
@@ -412,5 +377,15 @@ public class Userinfo extends DataObject implements Serializable
   public void setOfficeTel(String officeTel)
   {
     this.officeTel = officeTel;
+  }
+
+  public int getNumofsignIn()
+  {
+    return numofsignIn;
+  }
+
+  public void setNumofsignIn(int numofsignIn)
+  {
+    this.numofsignIn = numofsignIn;
   }
 }

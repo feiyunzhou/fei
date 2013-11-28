@@ -25,22 +25,21 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "score2_pl")
 @NamedQueries(
-{
-  @NamedQuery(name = "Score2Pl.findAll", query = "SELECT s FROM Score2Pl s")
-})
+  {
+    @NamedQuery(name = "Score2Pl.findAll", query = "SELECT s FROM Score2Pl s")
+  })
 public class Score2Pl implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Column(name = "val")
   private String val;
 
@@ -72,5 +71,5 @@ public class Score2Pl implements Serializable
   {
     this.val = val;
   }
-  
+
 }

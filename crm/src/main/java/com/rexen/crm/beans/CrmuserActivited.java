@@ -16,15 +16,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "crmuser_activited")
 @NamedQueries(
-{
-  @NamedQuery(name = "CrmuserActivited.findAll", query = "SELECT c FROM CrmuserActivited c")
-})
+  {
+    @NamedQuery(name = "CrmuserActivited.findAll", query = "SELECT c FROM CrmuserActivited c")
+  })
 public class CrmuserActivited implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -32,7 +31,7 @@ public class CrmuserActivited implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Column(name = "val")
   private String val;
 

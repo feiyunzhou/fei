@@ -27,15 +27,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
  * @author Ralf
  */
 @Entity
 @Table(name = "region_level2_pl")
 @NamedQueries(
-{
-  @NamedQuery(name = "RegionLevel2Pl.findAll", query = "SELECT r FROM RegionLevel2Pl r")
-})
+  {
+    @NamedQuery(name = "RegionLevel2Pl.findAll", query = "SELECT r FROM RegionLevel2Pl r")
+  })
 public class RegionLevel2Pl implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -43,7 +42,7 @@ public class RegionLevel2Pl implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Column(name = "val")
   private String val;
 
@@ -74,5 +73,5 @@ public class RegionLevel2Pl implements Serializable
   public void setVal(String val)
   {
     this.val = val;
-  }  
+  }
 }

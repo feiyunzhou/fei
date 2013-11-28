@@ -26,7 +26,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author Ralf
  */
 @Entity
@@ -39,7 +38,7 @@ public class DataExchangeStatus implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Basic(optional = false)
   @Column(name = "id")
-  private int id;
+  private int    id;
   @Basic(optional = false)
   @Column(name = "val")
   private String val;

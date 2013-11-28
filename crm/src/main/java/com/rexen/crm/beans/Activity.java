@@ -6,19 +6,14 @@ package com.rexen.crm.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -100,33 +95,17 @@ public class Activity implements Serializable
   private int summary;
   @Column(name = "whetherCoach")
   private int whetherCoach;
+  @Column(name = "coachTime")
+  private int coachTime;
+  @Column(name = "accountId")
+  private int accountId;
+  @Column(name = "department")
+  private int department;
+  @Column(name = "whether_coach")
+  private String whetherCoach1;
+  @Column(name = "activity_daypart")
+  private int activityDaypart;
 
-  @Column(name = "crmuserId")
-  private int crmuserId;
-
-  public int getCrmuserId()
-  {
-    return crmuserId;
-  }
-
-  public void setCrmuserId(int crmuserId)
-  {
-    this.crmuserId = crmuserId;
-  }
-
-  public int getContactId()
-  {
-    return contactId;
-  }
-
-  public void setContactId(int contactId)
-  {
-    this.contactId = contactId;
-  }
-  @Column(name = "contactId")
-  private int contactId;
-  
-  
   public Activity()
   {
   }
@@ -421,5 +400,55 @@ public class Activity implements Serializable
   public void setWhetherCoach(int whetherCoach)
   {
     this.whetherCoach = whetherCoach;
+  }
+
+  public int getCoachTime()
+  {
+    return coachTime;
+  }
+
+  public void setCoachTime(int coachTime)
+  {
+    this.coachTime = coachTime;
+  }
+
+  public int getAccountId()
+  {
+    return accountId;
+  }
+
+  public void setAccountId(int accountId)
+  {
+    this.accountId = accountId;
+  }
+
+  public int getDepartment()
+  {
+    return department;
+  }
+
+  public void setDepartment(int department)
+  {
+    this.department = department;
+  }
+
+  public String getWhetherCoach1()
+  {
+    return whetherCoach1;
+  }
+
+  public void setWhetherCoach1(String whetherCoach1)
+  {
+    this.whetherCoach1 = whetherCoach1;
+  }
+
+  public int getActivityDaypart()
+  {
+    return activityDaypart;
+  }
+
+  public void setActivityDaypart(int activityDaypart)
+  {
+    this.activityDaypart = activityDaypart;
   }
 }
