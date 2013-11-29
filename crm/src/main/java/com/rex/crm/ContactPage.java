@@ -10,6 +10,7 @@ import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
 import com.rex.crm.beans.Choice;
+import com.rex.crm.common.AdvancedPanel;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
@@ -104,7 +105,7 @@ public class ContactPage extends TemplatePage
         
         TextField search_input = new TextField("search_input", new PropertyModel(this,"search_target"));
         form.add(search_input);
-        
+        add(new AdvancedPanel("advancedSearch", entity));
         String sql = entity.getSql();
         switch(roleId){
          case UserRole.USER_ROLE_ADMINISTRATOR:
