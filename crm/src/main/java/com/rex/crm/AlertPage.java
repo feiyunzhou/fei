@@ -56,18 +56,18 @@ public class AlertPage  extends AdminTemplatePage{
                      sql = entity.getSql();
                     break;
                 }
-                   
-                search_target = (search_target==null || search_target.equalsIgnoreCase("*"))? "":search_target;
-               
-                //sql =  sql + " where title like '%"+search_target+"%'";
+                search_target = (search_target == null || search_target.equalsIgnoreCase("*")) ? "" : search_target;
+
                 List<Field> searchableFields = entity.getSearchableFields();
-                String joint = " like '%"+search_target+"%'";
+                String joint = " like '%" + search_target + "%'";
                 String likequery = "";
-                for(Field sf:searchableFields){
-                    likequery = likequery + " OR "+ sf.getName() + joint;
+                for (Field sf : searchableFields)
+                {
+                  likequery = likequery + " OR " + sf.getName() + joint;
                 } 
-                sql =  sql + " where title like '%"+search_target+"%' " + likequery;
-                List datalist = null; 
+                sql = sql + " where name like '%" + search_target + "%' " + likequery;
+                System.out.println(sql);
+                List datalist = null;
                 switch(roleId){
                   case UserRole.USER_ROLE_ADMINISTRATOR:
                   datalist = DAOImpl.queryEntityRelationList(sql);
@@ -78,7 +78,7 @@ public class AlertPage  extends AdminTemplatePage{
                 case UserRole.USER_ROLE_SALES:
                     datalist = DAOImpl.queryEntityRelationList(sql,posId);
                 }
-                setResponsePage(new ActivityPage(filter,datalist));
+                setResponsePage(new AlertPage(filter,datalist));
                 
             }
             

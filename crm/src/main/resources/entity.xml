@@ -4851,7 +4851,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			  ORDER BY whenadded DESC) as aAlert
 		</sql-manager>
 		<sql-admin>
-			SELECT * from  alert  ORDER BY whenadded DESC
+			SELECT * from (SELECT * from  alert  ORDER BY whenadded DESC) alert
 		</sql-admin>
 		<sql-ent>
 			SELECT * from (select alert.* from alert where alert.id = ? 
@@ -4934,6 +4934,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<picklist>alert_publicObject_pl</picklist>
 				<priority>0</priority>
+				<isShow>true</isShow>
 				<isRequired>false</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>

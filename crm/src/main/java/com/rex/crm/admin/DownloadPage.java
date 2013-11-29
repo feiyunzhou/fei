@@ -35,7 +35,7 @@ public class DownloadPage extends AdminTemplatePage{
           public void onClick() {
             DataExportDelegate dataExport = new  DataExportDelegate();
 //          String template = DAOImpl.selectTemplate();
-          String teample = "Account Full Import Template 1.0";
+          String teample = "Account  Export Full Template 1.0";
          HttpServletResponse response = (HttpServletResponse)getRequestCycle().getResponse().getContainerResponse();
          try
         {
