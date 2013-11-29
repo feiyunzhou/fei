@@ -1,0 +1,35 @@
+<wicket:panel>
+    <script>
+        $(document).ready(function() {
+            /* 			$('#dt').dataTable( {
+                     "sDom": "<'row'<'span8'l><'span8'f>r>t<'row'<'span8'i><'span8'p>>",
+                     "sPaginationType": "bootstrap",
+                     "oLanguage": {
+                     "sLengthMenu": "_MENU_ records per page"
+                     }
+                     } ); */
+        });
+    </script>
+    <div>
+    	<div>
+    		<strong>高级搜索</strong>
+    	</div>
+    	<div>
+    		<form wicket:id="searchform">
+    			<div>
+    				<table>
+    					<tr wicket:id="datarowrepeater">
+    						<td wicket:id="datacolumnrepeater"><span wicket:id="columnName"></span></td>
+    					</tr>
+    				</table>
+    			</div>
+    		</form>
+    	</div>
+<!--      <wicket:fragment wicket:id="detailFragment"> -->
+<!--      	<a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a> -->
+<!--      </wicket:fragment> -->
+<!--      <wicket:fragment wicket:id="detailFragment"> -->
+<!--      	<a href="#" wicket:id="detailclick"><wicket:container wicket:id="caption" /></a> -->
+<!--      </wicket:fragment> -->
+    </div>
+</wicket:panel>

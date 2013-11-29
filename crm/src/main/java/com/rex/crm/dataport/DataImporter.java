@@ -170,14 +170,6 @@ public class DataImporter {
                        }else{
                            fieldValues.add("'"+value+"'");
                        }
-                       
-                       
-                       
-                      
-                      
-                       
-                       
-                       
                    }
                }
            }

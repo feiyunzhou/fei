@@ -1,7 +1,5 @@
 DELETE FROM `crmdb`.`crmuser_pl2` WHERE `id`='4';
-ALTER TABLE `crmdb`.`product`
-CHANGE COLUMN `description` `specification` VARCHAR(512) NULL DEFAULT NULL ,
-CHANGE COLUMN `productLine` `level` INT(11) NULL DEFAULT NULL ;
+
 INSERT INTO `crmdb`.`alert_publicobject_pl` (`id`, `val`) VALUES ('4', '所有人');
 
 drop view if exists crmdb.call_export;

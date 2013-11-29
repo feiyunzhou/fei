@@ -743,6 +743,7 @@
                 <isVisible>false</isVisible>
                 <isEditable>false</isEditable>
                 <priority>0</priority>
+<!--                 <import_field_name>CRM医生编码</import_field_name> -->
                 <fieldGroup>关键信息</fieldGroup>
             </field>
 
@@ -821,7 +822,7 @@
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-					<field>
+			<field>
 				<name>duty</name>
 				<display>职务</display>
 				<isRequired>true</isRequired>
