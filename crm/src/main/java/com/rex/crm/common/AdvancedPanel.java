@@ -61,7 +61,7 @@ public class AdvancedPanel extends Panel {
 		List<String> fieldNames = entity.getDisplayNames();
 		for(String name :fieldNames ){
 			AbstractItem columeName = new AbstractItem(dataColumeRepeater.newChildId());
-			columeName.add(new Label(name));
+			columeName.add(new Label("columeName",name));
 			dataColumeRepeater.add(columeName);
 		}
 		 Form form = new Form("searchform"){

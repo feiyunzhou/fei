@@ -87,7 +87,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<isSearchable>true</isSearchable>
+				<isSearchable>false</isSearchable>
 				<isParam>true</isParam> <!-- 关联表的创建的参数 -->
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>

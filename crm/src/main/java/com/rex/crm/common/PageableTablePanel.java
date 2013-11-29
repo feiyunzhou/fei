@@ -193,7 +193,7 @@ public class PageableTablePanel extends Panel {
                 if (exported_filename != null) {
 
                     final File file = new File(exported_filename);
-                    String display_fileName = UrlEncoder.QUERY_INSTANCE.encode("导出.zip", Charsets.UTF_8);
+                    String display_fileName = UrlEncoder.QUERY_INSTANCE.encode("导出"+entity.getName()+".zip", Charsets.UTF_8);
 
                     IResourceStream resourceStream = new FileResourceStream(new org.apache.wicket.util.file.File(file));
                     getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(resourceStream) {

@@ -31,7 +31,7 @@ public class DataExporter {
            File tmpFile = File.createTempFile("crm_exported_file_", ".zip");
            FileOutputStream fos = new FileOutputStream(tmpFile);
            ZipOutputStream zos = new ZipOutputStream(fos);
-           ZipEntry ze= new ZipEntry("export.csv");
+           ZipEntry ze= new ZipEntry(entityName+"_export.csv");
            zos.putNextEntry(ze);      
            
            CsvWriter writer =  new CsvWriter(zos, ',', Charset.forName("UTF-8"));
