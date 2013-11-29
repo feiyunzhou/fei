@@ -56,7 +56,25 @@
 		<from>contact</from>
 		<name>visitingOfContact</name>
 		<display>拜访</display>
-		<sql>select * from (select *\,activity_type as act_type\,status as act_status from activity where contactId=?) as aActivity </sql>
+		<sql>
+		select * from (select * from (select activity.*\,
+			activity.activity_type as act_type\,
+			activity.status as act_status\,
+			activity.contactId as contactName\,
+			contact.accountId as accountName\,
+			activity_event_type_pl.val as event_type_val\,
+			account.name as accountName_val\,
+			contact.grade as contactgrade\,
+			contact.name as contactname_val
+			from activity
+			left join activity_event_type_pl on activity.event_type =
+			activity_event_type_pl.id
+			left join contact on activity.contactId = contact.id
+			left join account on contact.accountId = account.Id
+			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			where activity.contactId = ?) as aactivity where event_type =
+			1 order by whenadded DESC) as aActivity
+		</sql>
 		<to>activity</to>
 	</relation>
 	

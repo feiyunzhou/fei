@@ -353,11 +353,6 @@ public class NewDataFormPanel extends Panel {
              public void onSubmit() {
              	saveEntity(models,entity,userId,userName,posId);
              	setResponsePage(new CreateDataPage(entity.getName(),null));
-             	/*if(null==createAddress){
-                 	
-                 }else{
-                 	setResponsePage(new CalendarPage());
-                 }*/
              }
         };
         if(null!=createAddress){
@@ -372,6 +367,7 @@ public class NewDataFormPanel extends Panel {
         List<String> fieldNames = Lists.newArrayList();
         List<String> values = Lists.newArrayList();
         int total_score = 0;
+        StringBuffer endDate = new StringBuffer();
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         //找出title属性，判断实体名称，先声明
         Long daypart =  0l;
@@ -397,20 +393,10 @@ public class NewDataFormPanel extends Panel {
                         if(key.equals("starttime")){
                         	if(daypart==1){
                         		dateTime = dateTime.split("T")[0].concat("T08:00");
-                        		System.out.println("开始时间："+dateTime);
+                        		endDate.append(dateTime.split("T")[0].concat("T11:30"));
                         	}else{
                         		dateTime = dateTime.split("T")[0].concat("T13:00");
-								System.out.println("开始时间："+dateTime);
-                        	}
-                        }
-                        
-                        if(key.equals("endtime")){
-                        	if(daypart==1){
-                        		dateTime = dateTime.split("T")[0].concat("T11:30");
-                        		System.out.println("开始时间："+dateTime);
-                        	}else{
-                        		dateTime = dateTime.split("T")[0].concat("T18:00");
-								System.out.println("开始时间："+dateTime);
+                        		endDate.append(dateTime.split("T")[0].concat("T18:00"));
                         	}
                         }
                 }
@@ -435,13 +421,11 @@ public class NewDataFormPanel extends Panel {
                 			 title.append("拜访:");
                 			 String callName = DAOImpl.queryRelationDataById("contact",models.get("contactId").getObject().toString());
                 			 title.append(callName);
-                			 System.out.println("callName"+title.toString());
                 		 }
                 		 if(entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
                 			 title.append("辅导:");
                 			 String coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get("coacheeId").getObject().toString());
                 			 title.append(coacheeName);
-                			 System.out.println("coachingName:"+title.toString());
                 		 }
                 		 values.add("'" +title.toString()+ "'");
                 	  }else{
@@ -473,6 +457,14 @@ public class NewDataFormPanel extends Panel {
           if(entity.getName().equals("willcoaching")||entity.getName().equals("coaching")){
         	  values.add(""+total_score+"");
       		  fieldNames.add("total_score");
+          }else if(entity.getName().equals("activity")){
+        	  try {
+				values.add(""+(dateformat.parse(endDate.toString())).getTime()+"");
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	fieldNames.add("endtime");
           }
     		//if entity is crmuser  add loginName
             if ("userinfo".equals(entity.getName())) {

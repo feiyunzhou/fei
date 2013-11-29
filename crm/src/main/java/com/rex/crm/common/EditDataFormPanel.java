@@ -29,6 +29,7 @@ import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
@@ -86,8 +87,8 @@ public class EditDataFormPanel extends Panel {
 		//final Map<String, IModel> models = Maps.newHashMap();
 		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
 		final String posId = ((SignIn2Session) getSession()).getPositionId();
-	   final String userName = ((SignIn2Session) getSession()).getUser();
-	   final String userId = ((SignIn2Session) getSession()).getUserId();
+	    final String userName = ((SignIn2Session) getSession()).getUser();
+	    final String userId = ((SignIn2Session) getSession()).getUserId();
 		String primaryKeyName = schema.getPrimaryKeyName();
 		List<Field> fields = schema.getFields();// 得到所有fields
 		final List<String> fieldNames = Lists.newArrayList();
@@ -337,118 +338,33 @@ public class EditDataFormPanel extends Panel {
                 }
             }// end of set the detailed info
         }// end of groupNames loop
-		Form form = new Form("form") {
+		Form form = new Form("form");
+		form.add(new Button("save"){
+            @Override
+            public void onSubmit() {
+            	System.out.println("save");
+                saveEntity(fieldNameToModel,data,schema,userId,userName);
+                if(!prePageParams.isEmpty()){
+        		    setResponsePage(previousPageClass,prePageParams);
+        		}else{
+        		  setResponsePage(new EntityDetailPage(schema.getName(),entityId));
+        		}
+            }
+        });
+		Button button = new Button("saveAndNew"){
 			@Override
-			protected void onSubmit() {
-				logger.debug("the form was submitted!");
-				logger.debug(fieldNameToModel);
-				List<String> values = Lists.newArrayList();
-				List<String> names = Lists.newArrayList();
-				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-				int total_score = 0;
-				Long daypart = 0l;
-				if(schema.getName().equals("activity")){
-               	 daypart = (Long) fieldNameToModel.get("activity_daypart").getObject();
-               }
-				for (String k : fieldNameToModel.keySet()) {
-					names.add(k);
-					Field field = schema.getFieldByName(k);
-					IModel currentModel = fieldNameToModel.get(k);
-                    logger.debug("currentField:"+field.getName());
-                    if(field.getPriority()==5){
-                    	total_score+=Integer.parseInt(fieldNameToModel.get(k).getObject().toString());
-                    }
-                    //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
-					Object obj = currentModel.getObject() ;
-					String value = null;
-					if(obj!=null){
-                        if (obj instanceof String) {
-
-                            if (field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() != null && !field.getFormatter().isEmpty()) {
-                                // if the filed has formatter, we guess the
-                                // field saved in data base is in long
-                                Date date = new Date();
-                                String dateTime = String.valueOf(fieldNameToModel.get(k).getObject());
-                                if(schema.getName().equals("activity")){
-            	                        if(k.equals("starttime")){
-            	                        	if(daypart==1){
-            	                        		dateTime = dateTime.split("T")[0].concat("T08:00");
-            	                        	}else{
-            	                        		dateTime = dateTime.split("T")[0].concat("T13:00");
-            	                        	}
-            	                        }
-            	                        if(k.equals("endtime")){
-            	                        	if(daypart==1){
-            	                        		dateTime = dateTime.split("T")[0].concat("T11:30");
-            	                        	}else{
-            	                        		dateTime = dateTime.split("T")[0].concat("T18:00");
-            	                        	}
-            	                        }
-                                }
-                                try {
-        							date = dateformat.parse(dateTime);
-        						} catch (ParseException e) {
-        							// TODO Auto-generated catch block
-        							e.printStackTrace();
-        						}
-                               value = String.valueOf(date.getTime());
-
-                            } else {
-                                value = "'" + (String)obj + "'";
-                              
-                            }
-
-                        } else if (obj instanceof Choice) {
-                            value = String.valueOf(((Choice) obj).getId());
-                        } else {
-                            value = String.valueOf(obj) ;
-                        }   
-					}
-					    
-					
-					values.add(value); 
-					
-				}
-				
-				 List<Field> autoFields = schema.getAutoFields();
-                 for(Field f:autoFields){
-                    
-                   if(f.getName().equalsIgnoreCase("modify_datetime")){
-                       names.add(f.getName());
-                     values.add("'"+dateformat.format(new Date())+"'");
-                   }
-                   
-                   if(f.getName().equalsIgnoreCase("modifier")){
-                       names.add(f.getName());
-                     values.add("'"+userName+"'");
-                   }
-                 }
-				
-                String table_name  = schema.getName();
-                if(table_name.equalsIgnoreCase("coaching")||table_name.equalsIgnoreCase("willcoaching")){
-                    table_name = "activity";
-                    names.add("total_score");
-                    values.add(""+total_score+"");
-        		    
-                }
-                        
-				if(!table_name.equalsIgnoreCase("userinfo")){
-				  DAOImpl.updateRecord(entityId,table_name,names,values);
-				}else{
-				  if(String.valueOf(data.get("positionId")).equals(String.valueOf(fieldNameToModel.get("positionId")))){
-				    DAOImpl.updateRecord(entityId,table_name,names,values);
-				  }
-				  DAOImpl.updateRecord(entityId,table_name,names,values);
-               }
-				if(!prePageParams.isEmpty()){
-				    
-				    setResponsePage(previousPageClass,prePageParams);
-				}else{
-				  setResponsePage(new EntityDetailPage(schema.getName(),entityId));
-				}
+			public void onSubmit() {
+				System.out.println("saveAndNew!");
+                saveEntity(fieldNameToModel,data,schema,userId,userName);
+                if(!prePageParams.isEmpty()){
+        		    setResponsePage(previousPageClass,prePageParams);
+        		}else{
+        			setResponsePage(new CreateDataPage(schema.getName(),null));
+        		}
 			}
 		};
 		form.add(fieldGroupRepeater);
+		form.add(button);
 		add(form);
 		// set navigation bar active
 		add(new AbstractAjaxBehavior() {
@@ -463,11 +379,116 @@ public class EditDataFormPanel extends Panel {
 			}
 		});
 	}
-
 	public EditDataFormPanel(String id, IModel<?> model) {
 		super(id, model);
 	}
+    
+	public static void saveEntity(Map<String, IModel> fieldNameToModel, final Map data,Entity schema,String entityId,String userName ){
+		logger.debug("the form was submitted!");
+		logger.debug(fieldNameToModel);
+		List<String> values = Lists.newArrayList();
+		List<String> names = Lists.newArrayList();
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		int total_score = 0;
+		Long daypart = 0l;
+		StringBuffer endDate = new StringBuffer();
+		if(schema.getName().equals("activity")){
+       	 daypart = (Long) fieldNameToModel.get("activity_daypart").getObject();
+       }
+		for (String k : fieldNameToModel.keySet()) {
+			names.add(k);
+			Field field = schema.getFieldByName(k);
+			IModel currentModel = fieldNameToModel.get(k);
+            logger.debug("currentField:"+field.getName());
+            if(field.getPriority()==5){
+            	total_score+=Integer.parseInt(fieldNameToModel.get(k).getObject().toString());
+            }
+            //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
+			Object obj = currentModel.getObject() ;
+			String value = null;
+			if(obj!=null){
+                if (obj instanceof String) {
 
+                    if (field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() != null && !field.getFormatter().isEmpty()) {
+                        // if the filed has formatter, we guess the
+                        // field saved in data base is in long
+                        Date date = new Date();
+                        String dateTime = String.valueOf(fieldNameToModel.get(k).getObject());
+                        if(schema.getName().equals("activity")){
+    	                        if(k.equals("starttime")){
+    	                        	if(daypart==1){
+    	                        		dateTime = dateTime.split("T")[0].concat("T08:00");
+    	                        		endDate.append(dateTime.split("T")[0].concat("T11:30"));
+    	                        	}else{
+    	                        		dateTime = dateTime.split("T")[0].concat("T13:00");
+    	                        		endDate.append(dateTime.split("T")[0].concat("T18:00"));
+    	                        	}
+    	                        }
+                        }
+                        try {
+							date = dateformat.parse(dateTime);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                       value = String.valueOf(date.getTime());
+
+                    } else {
+                        value = "'" + (String)obj + "'";
+                      
+                    }
+
+                } else if (obj instanceof Choice) {
+                    value = String.valueOf(((Choice) obj).getId());
+                } else {
+                    value = String.valueOf(obj) ;
+                }   
+			}
+			    
+			
+			values.add(value); 
+			
+		}
+		
+		 List<Field> autoFields = schema.getAutoFields();
+         for(Field f:autoFields){
+            
+           if(f.getName().equalsIgnoreCase("modify_datetime")){
+               names.add(f.getName());
+             values.add("'"+dateformat.format(new Date())+"'");
+           }
+           
+           if(f.getName().equalsIgnoreCase("modifier")){
+               names.add(f.getName());
+             values.add("'"+userName+"'");
+           }
+         }
+		
+        String table_name  = schema.getName();
+        if(table_name.equalsIgnoreCase("coaching")||table_name.equalsIgnoreCase("willcoaching")){
+            table_name = "activity";
+            names.add("total_score");
+            values.add(""+total_score+"");
+        }else if(schema.getName().equals("activity")){
+      	  	try {
+				values.add(""+(dateformat.parse(endDate.toString())).getTime()+"");
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+      	  	names.add("endtime");
+        }
+        
+                
+		if(!table_name.equalsIgnoreCase("userinfo")){
+		  DAOImpl.updateRecord(entityId,table_name,names,values);
+		}else{
+		  if(String.valueOf(data.get("positionId")).equals(String.valueOf(fieldNameToModel.get("positionId")))){
+		    DAOImpl.updateRecord(entityId,table_name,names,values);
+		  }
+		  DAOImpl.updateRecord(entityId,table_name,names,values);
+       }
+	}
     private class TextFragment extends Fragment {
 
         public TextFragment(String id, String markupId, MarkupContainer markupProvider, String label) {

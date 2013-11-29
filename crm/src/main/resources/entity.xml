@@ -2355,7 +2355,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
+				<isEditable>false</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<default-value-type>var</default-value-type>
 				<default-value>end_datetime</default-value>
@@ -2555,10 +2555,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<picklist>activity_status_pl</picklist>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>1</priority>
+				<isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
-				<fieldGroup>关键信息</fieldGroup>
+				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
 
@@ -2737,7 +2738,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<entity>
 		<name>coaching</name>
 		<display>辅导</display>
-		<filterField>feature_product</filterField>
+		<filterField>status</filterField>
 		<sql>
 			select distinct * from (select * from (select activity.crmuserId as
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
@@ -2865,7 +2866,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			
 			<field>
 				<name>event_type</name>
-				<display>活动类型</display>
+				<display>辅导类型</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -3133,6 +3134,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<isShow>true</isShow>
 				<priority>2</priority>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
@@ -3498,7 +3500,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<entity>
 		<name>willcoaching</name>
 		<display>辅导</display>
-		<filterField>feature_product</filterField>
+		<filterField>status</filterField>
 				<sql>
 			select distinct * from (select * from (select activity.crmuserId as
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
@@ -3627,7 +3629,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			
 			<field>
 				<name>event_type</name>
-				<display>活动类型</display>
+				<display>拜访类型</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>

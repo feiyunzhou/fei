@@ -132,6 +132,7 @@ public class EntityDetailPage extends TemplatePage {
            relationRepeater.add(item);
            logger.debug(r.getSql());
            logger.debug("parms:"+id);
+           System.out.println("rrrr:"+r.getSql());
            List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
            item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),params));
            
