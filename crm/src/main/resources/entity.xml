@@ -2749,7 +2749,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
-			auserinfo.crmuserId as coachUserInfoName\,
+			auserinfo.id as coachUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
@@ -2759,6 +2759,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join crmuser on crmuser.id = activity.coacheeId
 			left join user_position on user_position.positionId=crmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
+		    left join crmuser as acrmuser on acrmuser.id=crmuser.reportto
+		    left join user_position as auser_position on auser_position.positionId=acrmuser.id
+		    left join userinfo as auserinfo on auser_position.userId=auserinfo.id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			where activitycrmuser.crmuserid = ?) as aactivity where (event_type =
 			2) or (event_type = 3) order by whenadded DESC) as aActivity
@@ -3511,7 +3514,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
-			auserinfo.crmuserId as coachUserInfoName\,
+			auserinfo.id as coachUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
@@ -3522,6 +3525,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			left join user_position on user_position.positionId=crmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
+			left join crmuser as acrmuser on acrmuser.id=crmuser.reportto
+		    left join user_position as auser_position on auser_position.positionId=acrmuser.id
+		    left join userinfo as auserinfo on auser_position.userId=auserinfo.id
 			where activitycrmuser.crmuserid = ?) as aactivity where (event_type =
 			2) or (event_type = 3) order by whenadded DESC) as aActivity
 		</sql>
