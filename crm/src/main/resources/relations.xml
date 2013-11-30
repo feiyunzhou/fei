@@ -78,7 +78,7 @@
 		<to>activity</to>
 	</relation>
 	
-    <relation>
+<!--     <relation>
 		<from>activity</from>
 		<name>crmuser2activity</name>
 		<display>参与此次拜访的销售代表</display>
@@ -89,8 +89,9 @@
 		left join userinfo on userinfo.id = user_position.userId
 		 where activity.Id=?</sql>
 		<to>crmuser</to>
-	</relation>
-        <relation>
+	</relation> -->
+	
+    <relation>
 		<from>product</from>
 		<name>productBasic</name>
 		<display>产品列表</display>

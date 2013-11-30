@@ -195,9 +195,6 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         BookmarkablePageLink reportPage = new BookmarkablePageLink("reportPage",ReportPage.class );
         admin_menu.add(reportPage);
         
-        BookmarkablePageLink uploadPage = new BookmarkablePageLink("uploadPage",UploadPage.class );
-        admin_menu.add(uploadPage);
-        
         BookmarkablePageLink downloadPage = new BookmarkablePageLink("downloadPage",DownloadPage.class );
         admin_menu.add(downloadPage);
         
