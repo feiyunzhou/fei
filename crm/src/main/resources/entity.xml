@@ -737,13 +737,13 @@
             <field>
                 <name>externalId</name>
                 <display>CRM医生编码</display>
-                <data-type>number</data-type>
+                <data-type>text</data-type>
                 <isPrimaryKey>true</isPrimaryKey>
                 <isDetailLink>false</isDetailLink>
                 <isVisible>false</isVisible>
                 <isEditable>false</isEditable>
-                <priority>0</priority>
-<!--                 <import_field_name>CRM医生编码</import_field_name> -->
+                <priority>1</priority>
+                <import_field_name>CRM医生编码</import_field_name>
                 <fieldGroup>关键信息</fieldGroup>
             </field>
 
