@@ -18,8 +18,10 @@ import org.apache.wicket.model.PropertyModel;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.rex.crm.beans.AdvancedSearchFilter;
 import com.rex.crm.beans.Choice;
 import com.rex.crm.common.AdvancedPanel;
+import com.rex.crm.common.AdvancedSearchPanel;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
@@ -40,16 +42,18 @@ public class AccountPage extends TemplatePage
    */
   public AccountPage()
   {
-    initPage(null, null);
-
+    initPage(null, null,null);
   }
 
+  public AccountPage(AdvancedSearchFilter[] filters){
+      initPage(null, null,filters);
+  }
   public AccountPage(Map<String, Boolean> map, List tdata)
   {
-    initPage(map, tdata);
+    initPage(map, tdata,null);
   }
 
-  private void initPage(final Map<String, Boolean> filter, List tdata)
+  private void initPage(final Map<String, Boolean> filter, List tdata,AdvancedSearchFilter[] filters)
   {
     Map<String, Entity> entities = Configuration.getEntityTable();
     final Entity entity = entities.get("account");
@@ -174,7 +178,20 @@ public class AccountPage extends TemplatePage
     List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
     
     add(new FilterPanel("filterPanel", choices, filter, AccountPage.class));
+    
+    //add(new AdvancedSearchPanel("advancedSearch","account"));
 
+  }
+  
+  private String createSQLwithAdvancedFilters(Entity entity, String baseSql, AdvancedSearchFilter[] adfilters){
+     String result ="";
+     String adfilterStr="";
+     for(AdvancedSearchFilter adf:adfilters){
+        
+         //adf.getField().getValue() 
+     }
+     return result;
+      
   }
 
 }

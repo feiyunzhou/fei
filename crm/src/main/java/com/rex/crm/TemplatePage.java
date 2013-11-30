@@ -244,7 +244,7 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
 			@Override
 			public void onRequest() {
 				RequestCycle requestCycle = RequestCycle.get();
-				readRequestData(requestCycle);
+				readRequestData(requestCycle);				
 			}
 
 			private void readRequestData(final RequestCycle requestCycle) {

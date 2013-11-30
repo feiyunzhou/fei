@@ -343,7 +343,7 @@ public class EditDataFormPanel extends Panel {
             @Override
             public void onSubmit() {
             	System.out.println("save");
-                saveEntity(fieldNameToModel,data,schema,userId,userName);
+                saveEntity(fieldNameToModel,data,schema,entityId,userName);
                 if(!prePageParams.isEmpty()){
         		    setResponsePage(previousPageClass,prePageParams);
         		}else{
@@ -355,12 +355,8 @@ public class EditDataFormPanel extends Panel {
 			@Override
 			public void onSubmit() {
 				System.out.println("saveAndNew!");
-                saveEntity(fieldNameToModel,data,schema,userId,userName);
-                if(!prePageParams.isEmpty()){
-        		    setResponsePage(previousPageClass,prePageParams);
-        		}else{
-        			setResponsePage(new CreateDataPage(schema.getName(),null));
-        		}
+                saveEntity(fieldNameToModel,data,schema,entityId,userName);
+                setResponsePage(new CreateDataPage(schema.getName(),null));
 			}
 		};
 		form.add(fieldGroupRepeater);

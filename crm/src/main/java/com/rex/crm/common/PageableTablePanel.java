@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.net.HttpRetryException;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
@@ -193,7 +194,20 @@ public class PageableTablePanel extends Panel {
                 if (exported_filename != null) {
 
                     final File file = new File(exported_filename);
-                    String display_fileName = UrlEncoder.QUERY_INSTANCE.encode("导出"+entity.getName()+".zip", Charsets.UTF_8);
+                    String filename="";
+                    if(entity.getName().equalsIgnoreCase("crmuser")){
+                        filename="岗位信息";
+                    }else if(entity.getName().equalsIgnoreCase("account")){
+                        filename="医院";
+                    }else if(entity.getName().equalsIgnoreCase("contact")){
+                        filename="医生";
+                    }else if(entity.getName().equalsIgnoreCase("userinfo")){
+                        filename="用户";
+                    }else if(entity.getName().equalsIgnoreCase("activity")){
+                        filename="活动";
+                    }
+                    
+                    String display_fileName = UrlEncoder.QUERY_INSTANCE.encode("导出_"+filename+".zip", Charset.forName("UTF-8"));
 
                     IResourceStream resourceStream = new FileResourceStream(new org.apache.wicket.util.file.File(file));
                     getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(resourceStream) {

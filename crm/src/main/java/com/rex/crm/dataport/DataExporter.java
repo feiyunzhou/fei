@@ -11,6 +11,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.jumpmind.symmetric.csv.CsvWriter;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
@@ -34,7 +35,7 @@ public class DataExporter {
            ZipEntry ze= new ZipEntry(entityName+"_export.csv");
            zos.putNextEntry(ze);      
            
-           CsvWriter writer =  new CsvWriter(zos, ',', Charset.forName("UTF-8"));
+           CsvWriter writer =  new CsvWriter(zos, ',',Charset.forName("GBK"));
            try{
            List<String> heads = Lists.newArrayList();
           

@@ -1,0 +1,64 @@
+<wicket:panel>
+ <link id="jquiCSS" rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.2/themes/blitzer/jquery-ui.css" type="text/css" media="all">
+<!-- <link rel="stylesheet" href="advancedSearch/css/demo.css" type="text/css" media="all">-->
+<link rel="stylesheet" href="advancedSearch/css/evol.advancedSearch.css" type="text/css" media="all">
+         <script src='jquery/js/jquery-1.9.1.js'></script>
+        <script src='jquery/js/jquery-ui-1.10.2.custom.js'></script>
+      
+  <script src="advancedSearch/js/evol.advancedSearch.js" type="text/javascript"></script>    
+  <script src="advancedSearch/js/model-demo1.js" type="text/javascript"></script> 
+	<script>
+		$(document).ready(function() {
+		    search_fields = JSON.parse(search_fields);
+		    $("#search").advancedSearch({
+	           /*  fields: [
+	                { type:"text", id:"lastname", label:"Lastname"},
+	                { type:"text", id:"firstname", label:"Firstname"},
+	                { type:"boolean", id:"active", label:"Is active"},
+	                { type:"number", id:"age", label:"Age"},
+	                { type:"date", id:"bday", label:"Birthday"}         
+	            ], */
+	            fields: search_fields,
+	            buttonLabels: false,
+	            submitReady: true
+	        });
+
+		    $("#ad_search_btn").click(function(event){
+		        console.log("search filter string");
+		        var search_values = $("#search").advancedSearch("val");
+		        console.log(JSON.stringify(search_values));
+		        
+		        $.ajax({
+		    		url : ad_search_ajax_url,
+		    		type : 'post',
+		    		cache : false,
+
+		    		data : JSON.stringify(search_values),
+		    		contentType : 'application/json; charset=utf-8',
+		    		dataType : 'json',
+		    		complete : function(xhr, status) {
+		    			console.log("completed: " + xhr.responseText);
+
+		    		},
+		    		success : function(json) {
+		    			console.log("Success data returned:");
+		    			
+
+		    		},
+		    		error : function(XMLHttpRequest, textStatus, errorThrown) {
+		    			console.log("error :" + XMLHttpRequest.responseText);
+		    			console.log(errorThrown);
+		    		}
+
+		    	});
+		        
+		    });
+		});
+	</script>
+	<div class="">
+	    <div style="" id="search"></div>
+        <a class="btn btn-primary" id="ad_search_btn">确定</a>
+	</div>
+ <p/>
+ <p/>
+</wicket:panel>

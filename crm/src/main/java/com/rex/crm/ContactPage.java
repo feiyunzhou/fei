@@ -105,7 +105,7 @@ public class ContactPage extends TemplatePage
         
         TextField search_input = new TextField("search_input", new PropertyModel(this,"search_target"));
         form.add(search_input);
-        add(new AdvancedPanel("advancedSearch", entity));
+       // add(new AdvancedPanel("advancedSearch", entity));
         String sql = entity.getSql();
         switch(roleId){
          case UserRole.USER_ROLE_ADMINISTRATOR:
