@@ -131,7 +131,6 @@
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>account_administrativ_level_pl</picklist>
-				<isSearchable>true</isSearchable>
 				<priority>1</priority>
 				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
@@ -139,13 +138,14 @@
 			</field>
 			<field>
 				<name>administrativ_level_val</name>
-				<display>医院行政级别 </display>
+				<display>医院行政级别</display>
 				<isRequired>false</isRequired>
 				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
 				<isSearchable>true</isSearchable>
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
@@ -516,7 +516,6 @@
 				<isEditable>true</isEditable>
 				<fieldGroup>基本信息</fieldGroup>
 				<isParam>true</isParam>
-				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<childNode>city</childNode>
 				<import_field_name>省份</import_field_name>
@@ -532,7 +531,6 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<picklist>city</picklist>
-				<isSearchable>true</isSearchable>
 				<isParam>true</isParam>
 				<fieldGroup>基本信息</fieldGroup>
 				<parentNode>province</parentNode>
@@ -642,7 +640,8 @@
 		<sql>
 			select * from (select contact.*\,
 			contact_generalization_target_pl.val as product_target_val\,
-			account.name as accountName_val\,contact_department_pl.val as department_val 
+			account.name as accountName_val\,contact_department_pl.val as department_val\,
+			contact_duty_pl.val as duty_val
 			from contact
 			left join contact_generalization_target_pl on contact.product_target =
 			contact_generalization_target_pl.id
@@ -650,6 +649,7 @@
 			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
 			left join user_position on user_position.positionId = accountcrmuser.crmuserId
 			left join contact_department_pl on contact.department = contact_department_pl.id
+			left join contact_duty_pl on contact.duty = contact_duty_pl.id
 			where contact.id != -1 and accountcrmuser.crmuserid = ? )  as aContact
 		</sql>
 		<sql-manager>
@@ -657,7 +657,8 @@
             FROM (select  aContact.*\,
                           contact_generalization_target_pl.val as product_target_val\,
                           account.name as accountName_val\,
-                          contact_department_pl.val as department_val
+                          contact_department_pl.val as department_val\,
+                          contact_duty_pl.val as duty_val
                   from (select distinct contact.id as cid\,contact.*
                         from contact\, accountcrmuser\,crmuser
                         where crmuser.reportto=? and
@@ -667,6 +668,7 @@
                  left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
                  left join account on accountcrmuser.accountId = account.id
                  left join user_position on user_position.positionId = accountcrmuser.crmuserId
+                 left join contact_duty_pl on aContact.duty = contact_duty_pl.id
                  left join contact_department_pl on contact_department_pl.id = aContact.department) as cContact
 
 		</sql-manager>
@@ -683,12 +685,14 @@
 			<!-- where account.id != -1 -->
 			select * from (select contact.*\,
 			contact_generalization_target_pl.val as product_target_val\,
-			account.name as accountName_val\,contact_department_pl.val as department_val 
+			account.name as accountName_val\,contact_department_pl.val as department_val\,
+			contact_duty_pl.val as duty_val
 			from contact
 			left join account on contact.accountid = account.id
 			left join contact_generalization_target_pl on contact.product_target =
 			contact_generalization_target_pl.id 
 			left join contact_department_pl on contact.department = contact_department_pl.id
+			left join contact_duty_pl on contact.duty = contact_duty_pl.id
 			where contact.id != -1  )  as aContact
 		</sql-admin>
 
@@ -833,6 +837,20 @@
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<picklist>contact_duty_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>职务</import_field_name>
+			</field>
+			<field>
+				<name>duty_val</name>
+				<display>职务</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
                 <import_field_name>职务</import_field_name>
 			</field>
