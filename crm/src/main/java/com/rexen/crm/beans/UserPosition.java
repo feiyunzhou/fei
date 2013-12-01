@@ -42,7 +42,7 @@ public class UserPosition extends DataObject implements Serializable
   private int status;
   @Column(name = "isPrimary")
   private int isPrimary;
-  @Column(name = "external_id")
+  @Column(name = "externalid")
   private String externalId;
 
   public UserPosition()
