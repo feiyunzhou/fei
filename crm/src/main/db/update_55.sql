@@ -6,7 +6,7 @@ CREATE TABLE activity_coachtime_pl
  id MEDIUMINT NOT NULL,
  val VARCHAR(255),
  PRIMARY KEY USING BTREE (id)
-) ENGINE InnoDB;
+) ENGINE InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `crmdb`.`activity_coachtime_pl` (`id`, `val`) VALUES ('1', '半天');
 INSERT INTO `crmdb`.`activity_coachtime_pl` (`id`, `val`) VALUES ('2', '全天');
 

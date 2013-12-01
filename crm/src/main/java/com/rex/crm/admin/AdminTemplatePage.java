@@ -40,7 +40,7 @@ public class AdminTemplatePage extends TemplatePage
    */
   public AdminTemplatePage()
   {
-
+     this.setPageTitle("系统管理");
   }
 
 }
