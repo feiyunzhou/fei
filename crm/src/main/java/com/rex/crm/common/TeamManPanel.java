@@ -1,6 +1,7 @@
 package com.rex.crm.common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.SearchCRMUserPage;
 import com.rex.crm.SignIn2Session;
+import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.admin.PositionTreePage;
 import com.rex.crm.beans.Account;
 import com.rex.crm.db.DAOImpl;
@@ -104,9 +106,17 @@ public class TeamManPanel extends Panel {
             else if (type == 3){
               //for the 下属岗位	
               teamSql = "select * from (select crmuser.*,crmuser.id as rid ,userInfo.name as userInfoName ,role.name as permission from  crmuser left join user_position on user_position.positionId = crmuser.id left join userInfo on userInfo.id = user_position.userId  left join role on crmuser.role = role.name where reportto = ?  ) as atable";
-            }
+            }else if (type == 4){
+                //for the 区域管理	 teamSql = "select regionManage。* from user_position_query where " + getCondition(Integer.parseInt(entityId));
+            	teamSql = "select user_position_query.* from user_position_query where " + getCondition(Integer.parseInt(entityId));
+              }
         }
-        List mapList = DAOImpl.queryEntityRelationList(teamSql, entityId);
+        List mapList = new ArrayList();
+       if(type ==4){
+    	    mapList = DAOImpl.queryEntityRelationList(teamSql);
+       } else {
+    	    mapList = DAOImpl.queryEntityRelationList(teamSql, entityId); 
+       }
         Entity entity=null ;
         if(en.equalsIgnoreCase("account")||en.equalsIgnoreCase("contact")){
           if(type == 0){
@@ -136,7 +146,10 @@ public class TeamManPanel extends Panel {
             else if (type == 3){
               entity = Configuration.getEntityByName("crmuser");
               add(new Label("title","下属岗位"));
-            }
+            }else if (type == 4){
+                entity = Configuration.getEntityByName("regionManage");
+                add(new Label("title","区域管理"));
+              }
         }
         
         List<Field> fields = entity.getFields();
@@ -166,6 +179,12 @@ public class TeamManPanel extends Panel {
                    teamtable = "contactcrmuser";
                }else if(type == 2){
                    teamtable = "user_position";
+               }else if(type ==4){
+            	   try{
+                    	 delete(Integer.parseInt(entityId));
+                     }catch(Exception e){
+                     }   
+                     
                }else {
                  teamtable = "crmuser";
                }
@@ -181,10 +200,14 @@ public class TeamManPanel extends Panel {
                  
              }
          }
-//           PageParameters param = new PageParameters();
-//           param.add("positionId", entityId);
-//			 setResponsePage(PositionTreePage.class,param );
-           setResponsePage(new EntityDetailPage(currentEntityName,etId));
+           if(type == 4){
+        	   PageParameters param = new PageParameters();
+               param.add("positionId", entityId);
+  			 setResponsePage(AdminTreePage.class,param );
+           }else{
+        	   setResponsePage(new EntityDetailPage(currentEntityName,etId));
+           }
+           
       
              }
            });
@@ -345,4 +368,100 @@ public class TeamManPanel extends Panel {
       }
       
     }
+    private ArrayList<Integer> queryPosition(int positionId)
+    {
+	  	ArrayList<Integer> ids = new ArrayList<>();
+	  	
+	  	int level = queryPositionLevel(positionId);
+	  	
+	  	if(level == 11)
+	  	{
+	  		ids.add(positionId);
+	  	}
+	  	else if(level > 11)
+	  	{
+	  		for(int id : queryPositionByParent(positionId))
+	  		{
+	  			level = queryPositionLevel(positionId);
+	  			
+	  			if(level == 11)
+	  			{
+	  				ids.add(level);
+	  			}
+	  			else if(level > 11)
+	  			{
+	  				ids.addAll(queryPosition(id));
+	  			}
+	  		}
+	  	}
+	  	
+	  	return ids;
+    }
+    
+    private String getCondition(int positionId)
+    {
+  	  ArrayList<Integer> ids = queryPosition(positionId);
+  	  StringBuilder sb = new StringBuilder();
+  	  if(ids != null && ids.size() > 0)
+  	  {
+  		  sb = new StringBuilder();
+  		  sb.append("position_id in(");
+  		  sb.append(ids.get(0));
+  		  ids.remove(0);
+  		    		  
+  		  for(int id : ids)
+  		  {
+  			  sb.append(",");
+  			  sb.append(id);
+  		  }
+  		  
+  		  sb.append(")");
+  	  }
+
+
+  	  return sb.toString();
+    }
+    private int queryPositionLevel(int positionId)
+    {
+    	int level = 100;
+    	
+    	Map position = DAOImpl.queryEntityById("select * from crmuser where id = ?", String.valueOf(positionId));
+    	if(position.size() > 0)
+    	{
+    		level = (int) position.get("level");
+    	}
+    	
+    	return level;
+    }
+    
+    private ArrayList<Integer> queryPositionByParent(int positionId)
+    {
+    	List list = DAOImpl.searchCRMUserByManager(String.valueOf(positionId), "");
+    	ArrayList<Integer> ids = new ArrayList<>();
+    	for(Object o : list)
+    	{
+    		Map map = (Map) o;
+    		ids.add(Integer.valueOf((Integer)map.get("id")));
+    	}
+    	
+    	return ids;
+    }
+    private void delete(int positionId)
+    {
+    	int level = queryPositionLevel(positionId);
+    	
+    	if(level == 11)
+    	{
+    		DAOImpl.deleteAccountTeamWithPositionId(positionId);
+    	}
+    	else if(level > 1)
+    	{
+    		ArrayList<Integer> ids = queryPositionByParent(positionId);
+    		for(int id : ids)
+    		{
+    			delete(id);
+    		}
+    	}
+    }
+   
 }

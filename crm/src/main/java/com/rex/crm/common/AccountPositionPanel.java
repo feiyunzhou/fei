@@ -54,7 +54,6 @@ public class AccountPositionPanel extends Panel {
     private String currentEntityName;
     List<String> selectedRowIds = Lists.newArrayList();
       
-    
     public AccountPositionPanel(String id,final String en,final String entityId,final int level) {
         super(id);
         etId = entityId;
@@ -63,15 +62,6 @@ public class AccountPositionPanel extends Panel {
         final String userId = ((SignIn2Session)getSession()).getUserId();
         //team sql
         String teamSql = "";
-                //for the 医院列表
-//        
-//              if(level == 11){
-//            	  teamSql="select * from user_position_query where user_position_query.position_id = ?";
-//              } else if(level == 21){
-//            	  teamSql="select * from user_position_query where user_position_query.manager_position_id =?";
-//              }else{
-//            	  teamSql="select * from user_position_query where manager_position_id in (select id from crmuser where reportto = ?)";
-//              }
         teamSql = "select * from user_position_query where " + getCondition(Integer.parseInt(entityId));
 
         List mapList = DAOImpl.queryEntityRelationList(teamSql);
@@ -96,10 +86,7 @@ public class AccountPositionPanel extends Panel {
            public void onSubmit(){
 
              try{
-            	
             	 delete(Integer.parseInt(entityId));
-            	
-     
              }catch(Exception e){
                  
          }   
