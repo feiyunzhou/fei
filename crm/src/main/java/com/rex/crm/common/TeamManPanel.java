@@ -183,8 +183,7 @@ public class TeamManPanel extends Panel {
             	   try{
                     	 delete(Integer.parseInt(entityId));
                      }catch(Exception e){
-                     }   
-                     
+                     }    
                }else {
                  teamtable = "crmuser";
                }
@@ -212,7 +211,6 @@ public class TeamManPanel extends Panel {
              }
            });
        }
-  
         //add button submission
         if(roleId != 1){
         	 WebMarkupContainer con = new WebMarkupContainer("add_users_link");
@@ -229,6 +227,26 @@ public class TeamManPanel extends Panel {
             });
 
         }
+        //add edit button
+        
+        if(roleId != 1||!currentEntityName.equalsIgnoreCase("userinfo")){
+       	 WebMarkupContainer con = new WebMarkupContainer("edit_team_member_click");
+            add(con);
+            con.setVisible(false);
+       }else{
+       	add(new Link<Void>("edit_team_member_click"){
+               @Override
+               public void onClick() {
+            	   PageParameters pp = new PageParameters();
+                   pp.add("id", entityId);
+                   pp.add("entityName", "userinfo");
+                   setResponsePage(new EditDataPage(entityName,entityId,EntityDetailPage.class,pp));
+               }
+           });
+       }
+        
+        
+        
         CheckGroup group = new CheckGroup("group",new PropertyModel(this,"selectedRowIds"));
         form.add(group); 
         if(roleId == 1){

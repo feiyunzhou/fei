@@ -200,9 +200,16 @@ public class SelectEntryPage extends WebPage {
                     dummy.put("id", -1);
                     dummy.put("name", "无");
                     maplist.add(dummy);
-                  }
-                  
-                }else if (relationTableName.equalsIgnoreCase("userinfo")) {
+                  }else if(tragetEntity.equalsIgnoreCase("user_position")){
+                      
+                      maplist = DAOImpl.searchPositionCRMUser(search_target);
+                      Map dummy = Maps.newHashMap();
+                      dummy.put("id", -1);
+                      dummy.put("name", "无");
+                      maplist.add(dummy);
+                      
+                   }
+               }else if (relationTableName.equalsIgnoreCase("userinfo")) {
                     String sql = assembleSearchingSQL(roleId, entity);
 //                    if(){
                       maplist  = DAOImpl.queryEntityRelationList(sql,userId);

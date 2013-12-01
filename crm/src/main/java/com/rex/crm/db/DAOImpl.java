@@ -469,7 +469,7 @@ public class DAOImpl
                 }else if(type == 3){
                 	inserts = run.update(conn, sql, cId);
                 }else {
-                  inserts = run.update(conn, sql, cId,userId);
+                  inserts = run.update(conn, sql, userId,cId);
                 }
 
                 logger.info(String.format("%s row inserted into insertRelationOfEntityIDCRMUserID!", inserts));
@@ -1513,8 +1513,10 @@ public class DAOImpl
          sql = sql.replaceAll("accountName","accountId").trim();
         if(entityName.equalsIgnoreCase("coaching")){
           sql = "UPDATE  activity SET "+sql+" where id = " + id;
+        }else if(entityName.equalsIgnoreCase("user_position")){
+        	sql = "UPDATE  "+entityName+ " SET "+sql+" where userId = " + id;
         }else{
-          sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;
+        	sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;
         }
         logger.debug("UPDATE sql is:"+sql);
         Connection conn = null;

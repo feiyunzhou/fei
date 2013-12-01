@@ -1994,6 +1994,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	left join crmuser on user_position.positionId = crmuser.id 
 	left join userInfo on userInfo.id = user_position.userId
 	</sql>
+	<sql-ent>select * from user_position where userId = ?</sql-ent>
 	<fields>
 		<field>
 			<name>id</name>
@@ -2004,7 +2005,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
-				<fieldGroup>基本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 		</field>
 		<field>
 				<name>userId</name>
@@ -2046,7 +2047,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>contact_status_pl</picklist>
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
-				<fieldGroup>关键本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>isPrimary</name>
@@ -2057,7 +2058,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
-				<fieldGroup>关键本信息</fieldGroup>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
 				<name>externalId</name>
@@ -2067,8 +2068,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority><isShow>true</isShow>
-				<fieldGroup>关键本信息</fieldGroup>
+				<priority>2</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
 			</field>
 	</fields>
 </entity>
