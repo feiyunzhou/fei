@@ -179,7 +179,7 @@ public class AccountPage extends TemplatePage
     
     add(new FilterPanel("filterPanel", choices, filter, AccountPage.class));
     
-    //add(new AdvancedSearchPanel("advancedSearch","account"));
+    add(new AdvancedSearchPanel("advancedSearch","account"));
 
   }
   
