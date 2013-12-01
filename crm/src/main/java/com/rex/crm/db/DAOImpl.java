@@ -1254,8 +1254,17 @@ public class DAOImpl
 
     }
     
-    public static long importRecord(String table, List<String> fieldNames, List<String> values){        
-        String fieldssql = Joiner.on(",").join(fieldNames);
+    public static long importRecord(String table, List<String> fNames, List<String> fvalues){   
+        List<String> names = Lists.newArrayList(fNames);
+        List<String> values = Lists.newArrayList(fvalues);
+           
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        names.add("whenadded");
+        values.add("'"+dateformat.format(new Date())+"'");
+        names.add("owner");
+        values.add("'数据导入模块'");
+            
+        String fieldssql = Joiner.on(",").join(names);
         String valuesql = Joiner.on(",").join(values);
         
         logger.debug("fieldssql sql is:"+fieldssql);
@@ -1303,10 +1312,7 @@ public class DAOImpl
     
     
     public static long insertImportMetaInfo(String entityName,String import_file_name){        
-
         String sql = "INSERT INTO importMetaInfo (name,entity_name,importfilename,whenadded,result) VALUES ('fakename','"+entityName+"','"+import_file_name+"',now(),NULL)";
-       
-       logger.debug("insert sql XXXXX is:"+sql);
 
        Connection conn = null;
        //PreparedStatement statement = null;

@@ -180,8 +180,6 @@ public class DataImporter {
                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 fieldNames.add("modify_datetime");
                 fieldValues.add("'"+dateformat.format(new Date())+"'");
-                fieldNames.add("whenadded");
-                fieldValues.add("'"+dateformat.format(new Date())+"'");
                 fieldNames.add("modifier");
                 fieldValues.add("'数据导入模块'");
 
