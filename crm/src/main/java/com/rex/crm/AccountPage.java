@@ -3,29 +3,23 @@ package com.rex.crm;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.CheckGroup;
+import org.apache.log4j.Logger;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.util.string.StringValue;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.rex.crm.beans.AdvancedSearchFilter;
 import com.rex.crm.beans.Choice;
-import com.rex.crm.common.AdvancedPanel;
-import com.rex.crm.common.AdvancedSearchPanel;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
+import com.rex.crm.common.advancedSearch.AdvancedSearchPage;
+import com.rex.crm.common.advancedSearch.AdvancedSearchPanel;
 import com.rex.crm.db.DAOImpl;
 import com.rexen.crm.beans.UserRole;
 import com.rex.crm.util.Configuration;
@@ -35,6 +29,7 @@ import com.rex.crm.util.Configuration;
  */
 public class AccountPage extends TemplatePage
 {
+    private static final Logger logger = Logger.getLogger(AccountPage.class);
   private String search_target = "";
 
   /**
@@ -42,18 +37,17 @@ public class AccountPage extends TemplatePage
    */
   public AccountPage()
   {
-    initPage(null, null,null);
+    //PageParameters pp = new PageParameters();
+    //IRequestParameters params = this.getRequestCycle().getRequest().getRequestParameters();
+    initPage(null, null);
   }
 
-  public AccountPage(AdvancedSearchFilter[] filters){
-      initPage(null, null,filters);
-  }
   public AccountPage(Map<String, Boolean> map, List tdata)
   {
-    initPage(map, tdata,null);
+    initPage(map, tdata);
   }
 
-  private void initPage(final Map<String, Boolean> filter, List tdata,AdvancedSearchFilter[] filters)
+  private void initPage(final Map<String, Boolean> filter, List tdata)
   {
     Map<String, Entity> entities = Configuration.getEntityTable();
     final Entity entity = entities.get("account");
@@ -117,6 +111,14 @@ public class AccountPage extends TemplatePage
     
     TextField search_input = new TextField("search_input", new PropertyModel(this, "search_target"));
     form.add(search_input);
+    form.add(new Link("ad_search_link"){
+                @Override
+                public void onClick() {
+                    setResponsePage(new AdvancedSearchPage(entity.getName(),null));
+                    
+                }
+        
+    } );
 //    add(new AdvancedPanel("advancedSearch",entity));
     String sql = entity.getSql();
     switch (roleId)
@@ -136,7 +138,13 @@ public class AccountPage extends TemplatePage
 
       if (filter == null)
       {
-
+//        if(params != null){
+//           StringValue ad_search_sql_value = params.getParameterValue("ad_search_sql");
+//          if( !ad_search_sql_value.isNull() && !ad_search_sql_value.isEmpty()){
+//              sql = sql +  " where " + ad_search_sql_value.toString();
+//              logger.debug("sql is: " + sql);
+//          }
+//        }
         switch (roleId)
         {
           case UserRole.USER_ROLE_ADMINISTRATOR:
@@ -173,25 +181,17 @@ public class AccountPage extends TemplatePage
 
       }
     }
+   // add(new AdvancedSearchPanel("advancedSearch","account"));
+    
     add(new PageableTablePanel("datalist", entity, tdata, null));
 
     List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
     
     add(new FilterPanel("filterPanel", choices, filter, AccountPage.class));
     
-    add(new AdvancedSearchPanel("advancedSearch","account"));
+   
+   
 
-  }
-  
-  private String createSQLwithAdvancedFilters(Entity entity, String baseSql, AdvancedSearchFilter[] adfilters){
-     String result ="";
-     String adfilterStr="";
-     for(AdvancedSearchFilter adf:adfilters){
-        
-         //adf.getField().getValue() 
-     }
-     return result;
-      
   }
 
 }

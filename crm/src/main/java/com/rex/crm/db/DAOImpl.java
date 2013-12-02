@@ -579,7 +579,7 @@ public class DAOImpl
             lMap = (List) run.query(conn, sql, new MapListHandler(), params);
 
         } catch (SQLException e) {
-            logger.error("failed to get user", e);
+            logger.error("failed to queryEntityRelationList", e);
         } finally {
             DBHelper.closeConnection(conn);
         }

@@ -79,6 +79,7 @@ public class WicketApplication extends WebApplication
 	 	     mountPage("/mount/ActivitySelectPage",ActivitySelectPage.class);
 	 	     mountPage("/mount/EntityDetailPage",EntityDetailPage.class);
 	 	     mountPage("/mount/AdminTreePage",AdminTreePage.class);
+	 	    mountPage("/mount/AccountPage",AccountPage.class);
 	 	    
 	         // Register the authorization strategy
 	         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy()

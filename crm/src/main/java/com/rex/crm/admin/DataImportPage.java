@@ -78,6 +78,7 @@ public class DataImportPage extends AdminTemplatePage
                   
                   String tmpFileName = tmpDir.getAbsolutePath() + File.separator+ fileupload.getClientFileName();
                   fileupload.writeTo(new File(tmpFileName));
+                  
                   logger.debug("selected_entity:"+selected_entity.getVal());
                   String entityName = "";
                   int entityId = (int)selected_entity.getId();

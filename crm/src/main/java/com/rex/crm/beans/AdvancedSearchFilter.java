@@ -1,6 +1,8 @@
 package com.rex.crm.beans;
 
-public class AdvancedSearchFilter {
+import java.io.Serializable;
+
+public class AdvancedSearchFilter  implements Serializable {
 
     private FilterMeta field;
     private FilterMeta value;
@@ -30,22 +32,6 @@ public class AdvancedSearchFilter {
 
 }
 
-class FilterMeta{
-    private String label;
-    private String value;
-    
-    public String getLabel() {
-        return label;
-    }
-    public void setLabel(String label) {
-        this.label = label;
-    }
-    public String getValue() {
-        return value;
-    }
-    public void setValue(String value) {
-        this.value = value;
-    }
+
     
     
-}

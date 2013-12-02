@@ -1,6 +1,8 @@
 package com.rex.crm.beans;
 
-public class AdvancedSearchField {
+import java.io.Serializable;
+
+public class AdvancedSearchField  implements Serializable  {
     
     private String type;
     private String id;
