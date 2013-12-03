@@ -42,7 +42,9 @@ import com.rex.crm.CalendarPage;
 import com.rex.crm.PageFactory;
 import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
+import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Choice;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
@@ -85,6 +87,17 @@ public class NewDataFormPanel extends Panel {
             }
 
         }
+      //add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem group = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        group.add(promptButton);
+        final Label promptLabel = new Label("prompt","提示:用户登录名已存在！");
+        group.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        group.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(group);
+        add(div);
         List<String> groupNames = Configuration.getSortedFieldGroupNames();
         RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
         add(fieldGroupRepeater);
@@ -337,13 +350,18 @@ public class NewDataFormPanel extends Panel {
         form.add(new Button("save"){
             @Override
             public void onSubmit() {
-                logger.debug("the form was submitted!");
                 logger.debug(models);
-                saveEntity(models,entity,userId,userName,posId);
-                if(null==createAddress){
-                	setResponsePage(PageFactory.createPage(entity.getName()));
+                if(!saveEntity(models,entity,userId,userName,posId)){
+                	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                	group.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
                 }else{
-                	setResponsePage(new CalendarPage());
+                	if(null==createAddress){
+                    	setResponsePage(PageFactory.createPage(entity.getName()));
+                    }else{
+                    	setResponsePage(new CalendarPage());
+                    }
                 }
             }
         });
@@ -351,8 +369,14 @@ public class NewDataFormPanel extends Panel {
         Button btn = new Button("saveAndNew"){
         	 @Override
              public void onSubmit() {
-             	saveEntity(models,entity,userId,userName,posId);
-             	setResponsePage(new CreateDataPage(entity.getName(),null));
+             	if(!saveEntity(models,entity,userId,userName,posId)){
+                	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                	group.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+            		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                }else{
+                	setResponsePage(new CreateDataPage(entity.getName(),null));
+                }
              }
         };
         if(null!=createAddress){
@@ -361,7 +385,7 @@ public class NewDataFormPanel extends Panel {
         form.add(btn);
         add(form);
     }
-    public static void saveEntity(Map<String, IModel> models,Entity entity,String userId,String userName,String posId){
+    public static boolean saveEntity(Map<String, IModel> models,Entity entity,String userId,String userName,String posId){
       	logger.debug("the form was submitted!");
         logger.debug(models);
         List<String> fieldNames = Lists.newArrayList();
@@ -374,6 +398,10 @@ public class NewDataFormPanel extends Panel {
         StringBuffer title = new StringBuffer();
         if(entity.getName().equals("activity")){
         	 daypart = (Long) models.get("activity_daypart").getObject();
+        }
+        String loginName = "";
+        if(entity.getName().equals("userinfo")){
+        	loginName = models.get("loginName").getObject().toString();
         }
         for (String key : models.keySet()) {
             fieldNames.add(key);
@@ -424,7 +452,10 @@ public class NewDataFormPanel extends Panel {
                 		 }
                 		 if(entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
                 			 title.append("辅导:");
-                			 String coacheeName = DAOImpl.queryRelationDataById("crmuser",models.get("coacheeId").getObject().toString());
+                			 //获取
+                			 CRMUser crmuser = DAOImpl.getCrmUserById(Integer.parseInt(models.get("coacheeId").getObject().toString()));
+                			 UserInfo userInfo = DAOImpl.getUserInfoByCrmuserId(crmuser.getId());
+                			 String coacheeName = userInfo.getName();
                 			 title.append(coacheeName);
                 		 }
                 		 values.add("'" +title.toString()+ "'");
@@ -469,7 +500,13 @@ public class NewDataFormPanel extends Panel {
     		//if entity is crmuser  add loginName
             if ("userinfo".equals(entity.getName())) {
                 long crmuserkey = -1;
-                crmuserkey = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
+                List<String> loginNames =DAOImpl.getAllLoginNames();
+                if(loginNames.contains(loginName)){
+                	return false;
+                }else{
+                	crmuserkey = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
+                	return true;
+                }
                 /*if (crmuserkey >0 ) {
                    UserInfo userinfo = DAOImpl.getUserById((int)crmuserkey);
 //                	CRMUser crmuser = DAOImpl.getCrmUserById((int)crmuserkey);
@@ -492,7 +529,8 @@ public class NewDataFormPanel extends Panel {
                    }
                    
                 }
-            }
+                return true;
+        }
     }
     public NewDataFormPanel(String id, IModel<?> model) {
         super(id, model);
@@ -676,7 +714,6 @@ public class NewDataFormPanel extends Panel {
                 text.add(new AttributeModifier("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));
             }
             if (currentField.isRequired()) {
-//              text.add(new AttributeModifier("required", new Model("required")));
               text.add(new AttributeAppender("class",new Model("required-field")," "));
             }
             if(currentField.getName().equals("title")){

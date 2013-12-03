@@ -2492,7 +2492,6 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
     }
     //根据医生ID获取医生对象
     public static Contact getContactById(int entityId){
-    	System.out.println("根据crmuserID获取用户");
         Connection conn = null;
         Contact contact = new Contact();
         try {
@@ -2626,7 +2625,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
          try {
              QueryRunner run = new QueryRunner();
              conn = DBHelper.getConnection();
-             users = run.query(conn, "select * from user_position where status =1 and userId=?", h, userId);
+             users = run.query(conn, "select * from user_position where userId=?", h,userId);
          } catch (Exception e) {
              logger.error("failed to get userPostion table data", e);
          } finally {
@@ -2673,5 +2672,40 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
     	}
     	return false;
     }
-    
+    //查询所有用户登录名
+    public static List<String> getAllLoginNames(){
+    	Connection conn = null;
+        List<String> loginNames = Lists.newArrayList();
+        List<UserInfo> users = Lists.newArrayList();
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<UserInfo>> h = new BeanListHandler<UserInfo>(UserInfo.class);
+            users = run.query(conn, "SELECT * FROM userInfo ",h);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        for(UserInfo userInfo:users){
+        	loginNames.add(userInfo.getName());
+        }
+        return loginNames;
+    }
+    public static UserInfo getUserInfoByCrmuserId(int id) {
+        Connection conn = null;
+        UserInfo user = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
+            user = run.query(conn, "select userinfo.* , user_position.whenadded from userinfo inner join user_position ON user_position.userId = userinfo.id where user_position.positionId = ?", h, id);
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return user;
+    }
 }

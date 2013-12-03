@@ -2048,6 +2048,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>状态</import_field_name>
 			</field>
 			<field>
 				<name>isPrimary</name>
