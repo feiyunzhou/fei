@@ -152,6 +152,6 @@ public class ActivityPage extends TemplatePage
 		
 
         List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
-        add(new FilterPanel("filterPanel",choices ,filter,ActivityPage.class));
+        add(new FilterPanel("filterPanel",choices ,filter,ActivityPage.class,entity));
 	}
 }

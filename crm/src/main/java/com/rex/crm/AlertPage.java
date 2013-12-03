@@ -143,7 +143,7 @@ public class AlertPage  extends AdminTemplatePage{
 	
        
         List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
-        add(new FilterPanel("filterPanel",choices ,filter,AlertPage.class));
+        add(new FilterPanel("filterPanel",choices ,filter,AlertPage.class,entity));
 	}
 }
 

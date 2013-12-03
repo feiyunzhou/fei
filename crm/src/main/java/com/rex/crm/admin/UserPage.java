@@ -180,7 +180,7 @@ public class UserPage extends AdminTemplatePage
 
     // for the side bar
     List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
-    add(new FilterPanel("filterPanel", choices, filter, UserPage.class));
+    add(new FilterPanel("filterPanel", choices, filter, UserPage.class,entity));
 
   }
 }

@@ -152,7 +152,7 @@ public class CoachingPage extends TemplatePage
 		
 		 List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
        
-        add(new FilterPanel("filterPanel",choices ,filter,CoachingPage.class));
+        add(new FilterPanel("filterPanel",choices ,filter,CoachingPage.class,entity));
 	
 	}
 }

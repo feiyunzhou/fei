@@ -161,7 +161,7 @@ public class ContactPage extends TemplatePage
         
         List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
         
-        add(new FilterPanel("filterPanel",choices ,filter,ContactPage.class));
+        add(new FilterPanel("filterPanel",choices ,filter,ContactPage.class,entity));
        
     }
 }

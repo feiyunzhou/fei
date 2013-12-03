@@ -33,6 +33,7 @@ import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.UserPage;
+import com.rex.crm.admin.UserPositionPage;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
@@ -106,7 +107,9 @@ public class EntityDetailPage extends TemplatePage {
         if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
         	add(new Label("name",String.valueOf(map.get("title"))));
         }else if(entity.getName().equals("crmuser")){
-          add(new Label("name",String.valueOf(map.get("code"))));
+            add(new Label("name",String.valueOf(map.get("code"))));
+        }else if(entity.getName().equals("user_position")){
+              add(new Label("name",String.valueOf(map.get("userId"))));
         }else{
         	add(new Label("name",String.valueOf(map.get("name"))));
         }
@@ -196,13 +199,16 @@ public class EntityDetailPage extends TemplatePage {
                        DAOImpl.updateCrmUserReport(id, "-1");
                     }
                     setResponsePage(new UserPage());
-                }else if(entityName.equals("crmuser")) {
+              }else if(entityName.equals("crmuser")) {
                     DAOImpl.deleteRecord(id, entityName);
                     setResponsePage(new PositionPage());
-                }else if(entityName.equals("alert")){
+              }else if(entityName.equals("alert")){
                 	DAOImpl.deleteRecord(id, entityName);
                 	setResponsePage(new AlertPage());
-                }
+              }else if(entityName.equals("user_position")){
+              	DAOImpl.deleteRecord(id, entityName);
+              	setResponsePage(new UserPositionPage());
+            }
             }
 
             @Override

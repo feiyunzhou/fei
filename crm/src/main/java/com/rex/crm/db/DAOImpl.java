@@ -1513,8 +1513,8 @@ public class DAOImpl
          sql = sql.replaceAll("accountName","accountId").trim();
         if(entityName.equalsIgnoreCase("coaching")){
           sql = "UPDATE  activity SET "+sql+" where id = " + id;
-        }else if(entityName.equalsIgnoreCase("user_position")){
-        	sql = "UPDATE  "+entityName+ " SET "+sql+" where userId = " + id;
+//        }else if(entityName.equalsIgnoreCase("user_position")){
+//        	sql = "UPDATE  "+entityName+ " SET "+sql+" where userId = " + id;
         }else{
         	sql = "UPDATE  "+entityName+ " SET "+sql+" where id = " + id;
         }

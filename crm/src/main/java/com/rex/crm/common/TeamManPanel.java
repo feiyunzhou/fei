@@ -227,23 +227,23 @@ public class TeamManPanel extends Panel {
             });
 
         }
-        //add edit button
-        
-        if(roleId != 1||!currentEntityName.equalsIgnoreCase("userinfo")){
-       	 WebMarkupContainer con = new WebMarkupContainer("edit_team_member_click");
-            add(con);
-            con.setVisible(false);
-       }else{
-       	add(new Link<Void>("edit_team_member_click"){
-               @Override
-               public void onClick() {
-            	   PageParameters pp = new PageParameters();
-                   pp.add("id", entityId);
-                   pp.add("entityName", "userinfo");
-                   setResponsePage(new EditDataPage(entityName,entityId,EntityDetailPage.class,pp));
-               }
-           });
-       }
+//        //add edit button
+//        
+//        if(roleId != 1||!currentEntityName.equalsIgnoreCase("userinfo")){
+//       	 WebMarkupContainer con = new WebMarkupContainer("edit_team_member_click");
+//            add(con);
+//            con.setVisible(false);
+//       }else{
+//       	add(new Link<Void>("edit_team_member_click"){
+//               @Override
+//               public void onClick() {
+//            	   PageParameters pp = new PageParameters();
+//                   pp.add("id", entityId);
+//                   pp.add("entityName", "userinfo");
+//                   setResponsePage(new EditDataPage(entityName,entityId,EntityDetailPage.class,pp));
+//               }
+//           });
+//       }
         
         
         

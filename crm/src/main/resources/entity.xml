@@ -1990,11 +1990,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<display>岗位关系</display>
 	<externalField>externalId</externalField>
 	<sql>
-	select user_position.id\,crmuser.name as positionId\,userInfo.name as userId from user_position 
-	left join crmuser on user_position.positionId = crmuser.id 
-	left join userInfo on userInfo.id = user_position.userId
+<!-- 	select user_position.id\,crmuser.name as positionId\,userInfo.name as userId from user_position  -->
+<!-- 	left join crmuser on user_position.positionId = crmuser.id  -->
+<!-- 	left join userInfo on userInfo.id = user_position.userId -->
+select * from user_position
 	</sql>
-	<sql-ent>select * from user_position where userId = ?</sql-ent>
+	<sql-ent>select user_position.*\,userinfo.name as name \,crmuser.code from user_position
+	left join userinfo on userinfo.id = user_position.userId 
+	left join crmuser on crmuser.id = user_position.positionId
+	 where user_position.id = ?</sql-ent>
 	<fields>
 		<field>
 			<name>id</name>
@@ -2012,7 +2016,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<display>用户Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
+				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority>

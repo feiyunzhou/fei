@@ -33,7 +33,7 @@ public class FilterPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
 
 
-    public FilterPanel(String id,List<Choice> choices ,Map<String,Boolean> filter,final Class responsePage) {
+    public FilterPanel(String id,List<Choice> choices ,Map<String,Boolean> filter,final Class responsePage,Entity entity) {
         super(id);
         
         Form form = new Form("side_bar_form");
@@ -50,9 +50,10 @@ public class FilterPanel extends Panel {
             choiceMap.put(String.valueOf(choice.getId()),choice.getVal());
            
         }
-        ids.add("-1");
-        choiceMap.put("-1", "无");
-        
+        if(entity.getName().equals("account")||entity.getName().equals("contact")){
+        	ids.add("-1");
+            choiceMap.put("-1", "无");
+        }
         final Map<String,IModel> models = Maps.newHashMap();
         //prepare models for the checkbox
         

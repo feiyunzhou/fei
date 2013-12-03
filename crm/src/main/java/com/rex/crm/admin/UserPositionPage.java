@@ -23,19 +23,19 @@ import com.rex.crm.SignIn2Session;
 /**
  * @author Feiyun Zhou
  */
-public class PositionPage extends AdminTemplatePage
+public class UserPositionPage extends AdminTemplatePage
 {
   private String search_target = "";
 
   /**
    * Constructor
    */
-  public PositionPage()
+  public UserPositionPage()
   {
     initPage(null, null);
   }
 
-  public PositionPage(final Map<String, Boolean> filter, List tdata)
+  public UserPositionPage(final Map<String, Boolean> filter, List tdata)
   {
     initPage(filter, tdata);
   }
@@ -43,7 +43,7 @@ public class PositionPage extends AdminTemplatePage
   public void initPage(final Map<String, Boolean> filter, List tdata)
   {
     Map<String, Entity> entities = Configuration.getEntityTable();
-    final Entity entity = entities.get("crmuser");
+    final Entity entity = entities.get("user_position");
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
     final String positionId = ((SignIn2Session) getSession()).getPositionId();
     setPageTitle(entity.getDisplay());
@@ -59,10 +59,10 @@ public class PositionPage extends AdminTemplatePage
         switch (roleId)
         {
           case UserRole.USER_ROLE_ADMINISTRATOR:
-          sql = entity.getSqlAdmin();
+          sql = entity.getSql();
           break;
           case UserRole.USER_ROLE_MANAGER:
-          sql = entity.getSqlManager();
+          sql = entity.getSql();
           break;
           case UserRole.USER_ROLE_SALES:
           sql = entity.getSql();
@@ -110,10 +110,10 @@ public class PositionPage extends AdminTemplatePage
     switch (roleId)
     {
       case UserRole.USER_ROLE_ADMINISTRATOR:
-      sql = entity.getSqlAdmin();
+      sql = entity.getSql();
       break;
       case UserRole.USER_ROLE_MANAGER:
-      sql = entity.getSqlManager();
+      sql = entity.getSql();
       break;
       case UserRole.USER_ROLE_SALES:
       sql = entity.getSql();
@@ -179,8 +179,8 @@ public class PositionPage extends AdminTemplatePage
     }
     add(new PageableTablePanel("datalist", entity, tdata, null));
 
-    List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
-    add(new FilterPanel("filterPanel", choices, filter, PositionPage.class,entity));
+//    List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
+//    add(new FilterPanel("filterPanel", choices, filter, PositionPage.class,entity));
 
   }
 }

@@ -187,7 +187,7 @@ public class AccountPage extends TemplatePage
 
     List<Choice> choices = DAOImpl.queryPickList(entity.getFieldByName(entity.getFilterField()).getPicklist());
     
-    add(new FilterPanel("filterPanel", choices, filter, AccountPage.class));
+    add(new FilterPanel("filterPanel", choices, filter, AccountPage.class,entity));
     
    
    
