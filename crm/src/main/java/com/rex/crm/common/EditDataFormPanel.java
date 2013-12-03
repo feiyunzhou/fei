@@ -55,6 +55,7 @@ import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.beans.Choice;
+import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
@@ -92,6 +93,17 @@ public class EditDataFormPanel extends Panel {
 		String primaryKeyName = schema.getPrimaryKeyName();
 		List<Field> fields = schema.getFields();// 得到所有fields
 		final List<String> fieldNames = Lists.newArrayList();
+		//add prompt 
+        final RepeatingView div = new RepeatingView("promptDiv");
+        final AbstractItem group = new AbstractItem(div.newChildId());
+        final Label promptButton = new Label("promptButton","X");
+        group.add(promptButton);
+        final Label promptLabel = new Label("prompt","提示:用户登录名已存在！");
+        group.add(promptLabel);
+        div.add(new AttributeAppender("style",new Model("display:none"),";"));
+        group.add(new AttributeAppender("style",new Model("display:none"),";"));
+        div.add(group);
+        add(div);
 		// List<String> fn = schema.getFieldNames();
 		for (Field f : fields) {
 			if (fieldGroupMap.get(f.getFieldGroup()) != null) {
@@ -343,12 +355,18 @@ public class EditDataFormPanel extends Panel {
             @Override
             public void onSubmit() {
             	System.out.println("save");
-                saveEntity(fieldNameToModel,data,schema,entityId,userName);
-                if(!prePageParams.isEmpty()){
-        		    setResponsePage(previousPageClass,prePageParams);
-        		}else{
-        		  setResponsePage(new EntityDetailPage(schema.getName(),entityId));
-        		}
+            	 if(!saveEntity(fieldNameToModel,data,schema,entityId,userName)){
+                 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+                 	group.add(new AttributeAppender("style",new Model("display:block"),";"));
+             		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+             		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                 }else{
+	                if(!prePageParams.isEmpty()){
+	        		    setResponsePage(previousPageClass,prePageParams);
+	        		}else{
+	        		  setResponsePage(new EntityDetailPage(schema.getName(),entityId));
+	        		}
+                 }
             }
         });
 		Button button = new Button("saveAndNew"){
@@ -379,7 +397,7 @@ public class EditDataFormPanel extends Panel {
 		super(id, model);
 	}
     
-	public static void saveEntity(Map<String, IModel> fieldNameToModel, final Map data,Entity schema,String entityId,String userName ){
+	public static boolean saveEntity(Map<String, IModel> fieldNameToModel, final Map data,Entity schema,String entityId,String userName ){
 		logger.debug("the form was submitted!");
 		logger.debug(fieldNameToModel);
 		List<String> values = Lists.newArrayList();
@@ -387,10 +405,14 @@ public class EditDataFormPanel extends Panel {
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		int total_score = 0;
 		Long daypart = 0l;
+		String loginName = "";
 		StringBuffer endDate = new StringBuffer();
 		if(schema.getName().equals("activity")){
-       	 daypart = (Long) fieldNameToModel.get("activity_daypart").getObject();
-       }
+       	 	daypart = (Long) fieldNameToModel.get("activity_daypart").getObject();
+        }
+		if(schema.getName().equals("userinfo")){
+       	 	loginName = fieldNameToModel.get("loginName").getObject().toString();
+        }
 		for (String k : fieldNameToModel.keySet()) {
 			names.add(k);
 			Field field = schema.getFieldByName(k);
@@ -474,15 +496,25 @@ public class EditDataFormPanel extends Panel {
 			}
       	  	names.add("endtime");
         }
-        
-                
 		if(!table_name.equalsIgnoreCase("userinfo")){
 		  DAOImpl.updateRecord(entityId,table_name,names,values);
+		  return true;
 		}else{
-		  if(String.valueOf(data.get("positionId")).equals(String.valueOf(fieldNameToModel.get("positionId")))){
-		    DAOImpl.updateRecord(entityId,table_name,names,values);
-		  }
-		  DAOImpl.updateRecord(entityId,table_name,names,values);
+			List<String> loginNames =DAOImpl.getAllLoginNames();
+			for(int i =0;i<loginNames.size();i++){
+				if(loginNames.get(i).equals(String.valueOf(data.get("loginName")))){
+					loginNames.remove(i);
+				}
+			}
+            if(loginNames.contains(loginName)){
+            	return false;
+            }else{
+            	if(String.valueOf(data.get("positionId")).equals(String.valueOf(fieldNameToModel.get("positionId")))){
+        		    DAOImpl.updateRecord(entityId,table_name,names,values);
+        		  }
+        		  DAOImpl.updateRecord(entityId,table_name,names,values);
+        		  return true;
+            }
        }
 	}
     private class TextFragment extends Fragment {

@@ -87,7 +87,7 @@ public class NewDataFormPanel extends Panel {
             }
 
         }
-      //add prompt 
+        //add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
         final AbstractItem group = new AbstractItem(div.newChildId());
         final Label promptButton = new Label("promptButton","X");
@@ -502,6 +502,7 @@ public class NewDataFormPanel extends Panel {
                 long crmuserkey = -1;
                 List<String> loginNames =DAOImpl.getAllLoginNames();
                 if(loginNames.contains(loginName)){
+                	System.out.println("true");
                 	return false;
                 }else{
                 	crmuserkey = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);

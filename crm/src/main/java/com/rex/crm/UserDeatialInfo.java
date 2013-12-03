@@ -66,12 +66,25 @@ public class UserDeatialInfo extends UserInfoSettingPage {
         group.add(promptButton);
         final Label promptLabel = new Label("prompt","提示:操作已成功！");
         group.add(promptLabel);
-        if("".equals(result)){
+        if("".equals(result)||"failure".equals(result)){
         	 div.add(new AttributeAppender("style",new Model("display:none"),";"));
              group.add(new AttributeAppender("style",new Model("display:none"),";"));
         }
         div.add(group);
         add(div);
+      //add prompt 
+        final RepeatingView errordiv = new RepeatingView("alertDiv");
+        final AbstractItem errorgroup = new AbstractItem(div.newChildId());
+        final Label errorpromptButton = new Label("alertButton","X");
+        errorgroup.add(errorpromptButton);
+        final Label errorpromptLabel = new Label("alert","提示:用户登录名已存在！");
+        errorgroup.add(errorpromptLabel);
+        if("".equals(result)||"success".equals(result)){
+        	errordiv.add(new AttributeAppender("style",new Model("display:none"),";"));
+            errorgroup.add(new AttributeAppender("style",new Model("display:none"),";"));
+        }
+        errordiv.add(errorgroup);
+        add(errordiv);
         final List<String> fieldNames = Lists.newArrayList();
         //得到基本信息信息
         RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
@@ -187,13 +200,22 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                     }
                 }
                 int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
-                if(DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName,office)){
-                	div.add(new AttributeAppender("style",new Model("display:block"),";"));
-                	group.add(new AttributeAppender("style",new Model("display:block"),";"));
-            		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
-            		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-            		setResponsePage(new UserDeatialInfo("success"));
-                };
+                List<String> loginNames =DAOImpl.getAllLoginNames();
+                if(loginNames.contains(loginName)){
+                	errordiv.add(new AttributeAppender("style",new Model("display:block"),";"));
+                	errorgroup.add(new AttributeAppender("style",new Model("display:block"),";"));
+                	errorpromptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                	errorpromptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+                	setResponsePage(new UserDeatialInfo("failure"));
+                }else{
+	                if(DAOImpl.updateStatusOfInternalMeeting(userId, userName, cellPhone, email, photo, sex, loginName,office)){
+	                	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+	                	group.add(new AttributeAppender("style",new Model("display:block"),";"));
+	            		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+	            		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+	            		setResponsePage(new UserDeatialInfo("success"));
+	                };
+                }
             }
         };
         form.add(fieldGroupRepeater);
