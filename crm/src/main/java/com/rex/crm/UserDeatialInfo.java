@@ -234,7 +234,7 @@ public class UserDeatialInfo extends UserInfoSettingPage {
             }
             if (currentField.isRequired()) {
               //text.add(new AttributeModifier("required", new Model("required")));
-            	text.add(new AttributeAppender("class","required-field"));
+            	text.add(new AttributeAppender("class",new Model("required-field")," "));
             }
             if (currentField.getDataType().equals("tel") || currentField.getDataType().equals("fax")) {
                 text.add(new AttributeModifier("pattern", new Model("^((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)")));

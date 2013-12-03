@@ -32,7 +32,7 @@ public class AlertPage  extends AdminTemplatePage{
 	{
 		Map<String, Entity> entities = Configuration.getEntityTable();
         final Entity entity = entities.get("alert");
-        setPageTitle(entity.getDisplay());
+        setPageTitle("系统管理-信息发布");
         //List mapList = DAOImpl.queryEntityList(entity.getSql(), 0, 1000);
         //TODO get userId from request's session
         final String posId = ((SignIn2Session)getSession()).getPositionId();

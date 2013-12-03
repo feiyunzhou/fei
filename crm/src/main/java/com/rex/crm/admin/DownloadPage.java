@@ -17,6 +17,7 @@ import com.rex.crm.util.Configuration;
 public class DownloadPage extends AdminTemplatePage{
     
     public DownloadPage(){
+    	setPageTitle("系统管理-下载数据"); 
        init();
     }
 

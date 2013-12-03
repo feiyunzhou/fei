@@ -30,12 +30,12 @@ public class ReportPage extends AdminTemplatePage
    */
   public ReportPage()
   {
-    initPage(null, null);
+	  initPage(null, null);
   }
 
   public ReportPage(final Map<String, Boolean> filter, List tdata)
   {
-    initPage(filter, tdata);
+	  initPage(filter, tdata);
   }
 
   public void initPage(final Map<String, Boolean> filter, List tdata)
@@ -46,7 +46,7 @@ public class ReportPage extends AdminTemplatePage
 
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
     final String userId = ((SignIn2Session) getSession()).getUserId();
-    setPageTitle(entity.getDisplay());
+    setPageTitle("系统管理-报表"); 
     
     
     Form form = new Form("form")

@@ -48,7 +48,8 @@ public class DataImportPage extends AdminTemplatePage
 
   public DataImportPage()
   {
-    init();
+	  setPageTitle("系统管理-数据导入");  
+	  init();
   }
 
   public void init()

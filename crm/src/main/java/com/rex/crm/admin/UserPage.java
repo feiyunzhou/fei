@@ -31,12 +31,14 @@ public class UserPage extends AdminTemplatePage
    */
   public UserPage()
   {
-    initPage(null, null);
+	  setPageTitle("系统管理-用户管理"); 
+      initPage(null, null);
   }
 
   public UserPage(final Map<String, Boolean> filter, List tdata)
   {
-    initPage(filter, tdata);
+	  setPageTitle("系统管理-用户管理"); 
+      initPage(filter, tdata);
   }
 
   public void initPage(final Map<String, Boolean> filter, List tdata)

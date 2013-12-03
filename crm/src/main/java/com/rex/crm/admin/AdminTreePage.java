@@ -30,7 +30,7 @@ public class AdminTreePage extends AdminTemplatePage
    */
   public AdminTreePage()
   {
-      setPageTitle("系统管理");
+      setPageTitle("系统管理-岗位树");
       StringValue positionId = getRequest().getRequestParameters().getParameterValue("positionId");
      if(positionId.isEmpty() || positionId.isNull()){
          initPage(null);

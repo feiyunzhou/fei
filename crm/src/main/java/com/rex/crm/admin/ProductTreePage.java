@@ -57,6 +57,7 @@ public class ProductTreePage extends AdminTemplatePage
    */
   public ProductTreePage()
   {
+	  setPageTitle("系统管理-产品树");
       StringValue positionId = getRequest().getRequestParameters().getParameterValue("positionId");
      if(positionId.isEmpty() || positionId.isNull()){
          initPage(null);

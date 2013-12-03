@@ -35,6 +35,7 @@ public class CRMUser {
     private int level;
     private String code;
     private String userInfoName;
+    private int pl5;
 	public String getUserInfoName() {
 		return userInfoName;
 	}
@@ -275,6 +276,14 @@ public class CRMUser {
         public void setCode(String code) {
             this.code = code;
         }
+
+		public int getPl5() {
+			return pl5;
+		}
+
+		public void setPl5(int pl5) {
+			this.pl5 = pl5;
+		}
 
 		
 	

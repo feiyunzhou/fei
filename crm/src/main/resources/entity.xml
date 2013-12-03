@@ -4874,12 +4874,14 @@ select * from user_position
 		<sql>
 			SELECT * from (select alert.* from alert where (towhom = 3 or towhom = 4) 
 			and expired > UNIX_TIMESTAMP(now())*1000 and UNIX_TIMESTAMP(now())*1000 >  publishDate 
+			and (alertRegion = ? or alertRegion = 7)
 			ORDER BY whenadded DESC) as aAlert
 		</sql>
 		<sql-manager>
 			SELECT * from (select * from alert where
 			  (towhom = 2 or towhom = 4)  and expired > UNIX_TIMESTAMP(now())*1000 
 			  and  UNIX_TIMESTAMP(now())*1000 > publishDate 
+			  and (alertRegion = ? or alertRegion = 7)
 			  ORDER BY whenadded DESC) as aAlert
 		</sql-manager>
 		<sql-admin>
@@ -4956,6 +4958,22 @@ select * from user_position
 				<picklist>alert_priority_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>alertRegion</name>
+				<display>公布大区</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<picklist>alert_region_pl</picklist>
+				<priority>0</priority>
+				<isShow>true</isShow>
+				<isRequired>false</isRequired>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>towhom</name>
 				<display>公布对象</display>
@@ -4970,6 +4988,7 @@ select * from user_position
 				<isRequired>false</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
 			<field>
 				<name>description</name>
 				<display>预警说明</display>

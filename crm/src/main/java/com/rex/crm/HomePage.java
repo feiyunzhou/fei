@@ -1,6 +1,7 @@
 package com.rex.crm;
 
 import com.google.common.collect.Lists;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.rex.crm.beans.CRMUser;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
@@ -24,7 +26,9 @@ import com.rex.crm.reporter.ReportingTablePanel;
 import com.rex.crm.reporter.VisitingReporter;
 import com.rex.crm.util.Configuration;
 import com.rexen.crm.beans.UserRole;
+
 import java.sql.Connection;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.wicket.markup.html.form.Form;
@@ -259,7 +263,14 @@ public class HomePage extends TemplatePage {
             sql = entity.getSql();
             break;
     }
-    List tdata = DAOImpl.queryEntityRelationList(sql);   
+    List tdata =  null;
+    //获取登录用户的positonID,从而获取crmuser获取大区
+    if(((SignIn2Session)getSession()).getRoleId()!=1){   
+    	CRMUser user = DAOImpl.getCrmUserById(((SignIn2Session)getSession()).getPositionId());
+    	tdata = DAOImpl.queryEntityRelationList(sql,String.valueOf(user.getPl5())); 
+    }else{
+    	tdata = DAOImpl.queryEntityRelationList(sql);
+    }
     add(new PageableTablePanel("datalist", entity, tdata, null));
     
      if(((SignIn2Session)getSession()).getRoleId()!=1){   

@@ -39,7 +39,7 @@ public class ImportLogPage extends AdminTemplatePage {
         final Entity entity = Configuration.getEntityByName("importlog");
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         final String positionId = ((SignIn2Session) getSession()).getPositionId();
-        setPageTitle(entity.getDisplay());
+        setPageTitle("系统管理-导入日志");
 
         String sql = entity.getSql();
         switch (roleId) {

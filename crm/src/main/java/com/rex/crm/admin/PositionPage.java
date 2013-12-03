@@ -46,7 +46,7 @@ public class PositionPage extends AdminTemplatePage
     final Entity entity = entities.get("crmuser");
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
     final String positionId = ((SignIn2Session) getSession()).getPositionId();
-    setPageTitle(entity.getDisplay());
+    setPageTitle("系统管理-岗位列表");
     
     
     Form form = new Form("form")

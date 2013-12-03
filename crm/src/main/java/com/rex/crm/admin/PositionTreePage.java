@@ -53,7 +53,7 @@ public class PositionTreePage extends AdminTemplatePage {
 	 * Constructor
 	 */
 	public PositionTreePage() {
-
+		setPageTitle("系统管理-区域管理");
 		StringValue positionId = getRequest().getRequestParameters()
 				.getParameterValue("positionId");
 
@@ -72,6 +72,7 @@ public class PositionTreePage extends AdminTemplatePage {
 	}
 
 	public PositionTreePage(String id, String level) {
+		setPageTitle("系统管理-区域管理");
 		int lev = Integer.parseInt(level);
 		initPage(id, lev);
 	}

@@ -37,6 +37,7 @@ import com.rex.crm.admin.UserPositionPage;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 import com.rex.crm.util.SendEmail;
@@ -213,18 +214,34 @@ public class EntityDetailPage extends TemplatePage {
 
             @Override
             public void update() {
-                PageParameters pp = new PageParameters();
-                pp.add("id", id);
-                pp.add("entityName", entityName);
-                setResponsePage(new EditDataPage(entityName,id,this_page.getClass(),pp));
+            	if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willcoaching")){
+            		//根据id获取对象如果是计划状态则进行操作
+                    Activity activity =DAOImpl.getActivityById(Integer.parseInt(id));
+                    if(activity.getStatus()==1){
+                    	PageParameters pp = new PageParameters();
+                        pp.add("id", id);
+                        pp.add("entityName", entityName);
+                        setResponsePage(new EditDataPage(entityName,id,this_page.getClass(),pp));
+                    }
+            	}else{
+            		PageParameters pp = new PageParameters();
+                    pp.add("id", id);
+                    pp.add("entityName", entityName);
+                    setResponsePage(new EditDataPage(entityName,id,this_page.getClass(),pp));
+            	}
+            	
             }
             @Override
             public void doneBtn(){
-              final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-               Date time = new Date();
-              String d = dateformat.format(time);
-              DAOImpl.doneRecord(id, entityName, d);
-             setResponsePage(new EntityDetailPage(entityName,id));
+              //根据id获取对象如果是计划状态则进行操作
+              Activity activity =DAOImpl.getActivityById(Integer.parseInt(id));
+              if(activity.getStatus()==1){
+            	  final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                  Date time = new Date();
+                  String d = dateformat.format(time);
+                  DAOImpl.doneRecord(id, entityName, d);
+                  setResponsePage(new EntityDetailPage(entityName,id));
+              }
             }
             @Override
             public void resetPassword(int userId){
@@ -254,9 +271,13 @@ public class EntityDetailPage extends TemplatePage {
             @Override
             public void noExecute(String entityName,int entityId){
             	//修改活动状态为未执行
-            	if(DAOImpl.updateActivityStatusById(entityId)){
-            		setResponsePage(new EntityDetailPage(entityName,String.valueOf(entityId)));
-            	};
+            	//根据id获取对象如果是计划状态则进行操作
+                Activity activity =DAOImpl.getActivityById(Integer.parseInt(id));
+                if(activity.getStatus()==1){
+	            	if(DAOImpl.updateActivityStatusById(entityId)){
+	            		setResponsePage(new EntityDetailPage(entityName,String.valueOf(entityId)));
+	            	};
+                }
             }
          };
          
