@@ -43,9 +43,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivitySelectPage;
+import com.rex.crm.ContactPage;
 import com.rex.crm.CreateEventPage;
 import com.rex.crm.EventViewerPage;
 import com.rex.crm.SignIn2Session;
+import com.rex.crm.admin.UserPage;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
 import com.rex.crm.ajax.FunctionInvoker;
@@ -73,9 +75,17 @@ public class AdvancedSearchPanel extends Panel {
         
        // this.entityName = entityName;
        final Entity entity = Configuration.getEntityByName(entityName);
+       final String target_url ;
+      if(entity.getName().equalsIgnoreCase("account")){
+    	    target_url = urlFor(AccountPage.class, null).toString();
+      }else if(entity.getName().equalsIgnoreCase("contact")){
+    	    target_url = urlFor(ContactPage.class, null).toString();
+      }else if(entity.getName().equalsIgnoreCase("userinfo")){
+    	    target_url = urlFor(UserPage.class, null).toString();
+      }else{
+    	    target_url = urlFor(AccountPage.class, null).toString();  
+      }
        
-      
-       final String target_url = urlFor(AccountPage.class, null).toString();
       
        Form form = new Form("form"){
 
