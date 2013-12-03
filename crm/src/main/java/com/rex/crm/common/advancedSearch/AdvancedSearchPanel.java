@@ -3,6 +3,7 @@ package com.rex.crm.common.advancedSearch;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,6 +36,7 @@ import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
@@ -67,6 +69,20 @@ public class AdvancedSearchPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
     private static final Logger logger = Logger.getLogger(AdvancedSearchPanel.class);
 
+    private static Map<String,String> operator2NameMap = Maps.newHashMap();
+    static{
+        operator2NameMap.put("eq", "=");
+        operator2NameMap.put("ne", "!=");
+        operator2NameMap.put("sw", "前缀为");
+        operator2NameMap.put("ct", "包含");
+        operator2NameMap.put("fw", "后缀为");
+        operator2NameMap.put("in", "属于");
+        operator2NameMap.put("null", "为空");
+        operator2NameMap.put("nn", "不为空");
+        operator2NameMap.put("gt", "大于");
+        operator2NameMap.put("lt", "小于");
+        operator2NameMap.put("bw", "介于之间");
+    }
    // private String entityName;
     
     
@@ -100,20 +116,34 @@ public class AdvancedSearchPanel extends Panel {
                    
                    //for the field
                    FilterMeta meta = new FilterMeta();
+                   Field field = entity.getFieldByName(parameters.getParameterValue("fld-"+(i+1)).toString());
                    meta.setValue(parameters.getParameterValue("fld-"+(i+1)).toString());
-                   meta.setLabel(parameters.getParameterValue("fld-"+(i+1)).toString());
+                   meta.setLabel(field.getDisplay());
                    filters[i].setField(meta);
                    
                    //for the operator
                     meta = new FilterMeta();
                     meta.setValue(parameters.getParameterValue("op-"+(i+1)).toString());
-                    meta.setLabel(parameters.getParameterValue("op-"+(i+1)).toString());
+                    meta.setLabel(operator2NameMap.get(parameters.getParameterValue("op-"+(i+1)).toString()));
                     filters[i].setOperator(meta);
                     
                     //for the value
-                    meta = new FilterMeta();
-                    meta.setValue(parameters.getParameterValue("val-"+(i+1)).toString());
-                    meta.setLabel(parameters.getParameterValue("val-"+(i+1)).toString());
+                    meta = new FilterMeta();             
+                    String label = parameters.getParameterValue("val-"+(i+1)).toString();
+                    String value = parameters.getParameterValue("val-"+(i+1)).toString();
+                    if(field.getPicklist()!=null){
+                        Iterable<String> splits = Splitter.on(",").split(value);
+                        List<String> labelList = Lists.newArrayList();
+                        Iterator<String> it = splits.iterator();
+                        while(it.hasNext()){
+                            String id = it.next();
+                            String val = DAOImpl.queryPickListByIdCached(field.getPicklist(), id);
+                            labelList.add(val);
+                        }
+                        label = Joiner.on(",").join(labelList);
+                    }
+                    meta.setValue(value);
+                    meta.setLabel(label);
                     filters[i].setValue(meta); 
                }
                
@@ -318,5 +348,7 @@ public class AdvancedSearchPanel extends Panel {
          filterString = Joiner.on(" AND ").join(combinedFilters);
         return filterString;
     }
+    
+    
 
 }

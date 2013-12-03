@@ -13,14 +13,14 @@
 (function( $, undefined){
 
 	var evoLang={
-		sEqual:'equals',
-		sNotEqual:'not equal',
-		sStart:'starts with',
-		sContain:'contains',
-		sFinish:'finishes with',
-		sInList:'any of',
-		sIsNull:'is empty',
-		sIsNotNull:'is not empty',
+		sEqual:'等于',
+		sNotEqual:'不等于',
+		sStart: '前缀是',
+		sContain:'包含',
+		sFinish:'后缀是',
+		sInList:'属于',
+		sIsNull:'为空',
+		sIsNotNull:'不为空',
 		sBefore:'before',
 		sAfter:'after',
 		sNumEqual:'&#61;',
@@ -371,9 +371,9 @@ $.widget( 'evol.advancedSearch', {
 						default:
 							h.push(EvoUI.inputOption(evoAPI.sEqual, evoLang.sEqual),
 								EvoUI.inputOption(evoAPI.sNotEqual, evoLang.sNotEqual),
-								EvoUI.inputOption(evoAPI.sStart, evoLang.sStart),
-								EvoUI.inputOption(evoAPI.sContain, evoLang.sContain),
-								EvoUI.inputOption(evoAPI.sFinish, evoLang.sFinish));
+								//EvoUI.inputOption(evoAPI.sStart, evoLang.sStart),
+								EvoUI.inputOption(evoAPI.sContain, evoLang.sContain)); //,
+								//EvoUI.inputOption(evoAPI.sFinish, evoLang.sFinish));
 					}
 					h.push(EvoUI.inputOption(evoAPI.sIsNull, evoLang.sIsNull),
 						EvoUI.inputOption(evoAPI.sIsNotNull, evoLang.sIsNotNull));
