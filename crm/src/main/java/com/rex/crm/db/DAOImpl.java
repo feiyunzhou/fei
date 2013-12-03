@@ -640,6 +640,7 @@ public class DAOImpl
         return lMap;
 
     }
+    
 
     public static Map queryEntityById(String sql, String id) {
         String query = sql.replace("?", id);

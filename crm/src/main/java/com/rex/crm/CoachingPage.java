@@ -37,6 +37,9 @@ public class CoachingPage extends TemplatePage
         init(filter,tdata);
     }
 
+    public CoachingPage(List tdata){
+        init(null,tdata);
+    }
 	public void init(final Map<String,Boolean> filter,List tdata)
 	{
 		Map<String, Entity> entities = Configuration.getEntityTable();

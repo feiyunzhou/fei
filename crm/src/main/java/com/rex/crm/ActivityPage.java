@@ -36,6 +36,10 @@ public class ActivityPage extends TemplatePage
     public ActivityPage(final Map<String,Boolean> filter,List tdata){
         init(filter,tdata);
     }
+    
+    public ActivityPage(List tdata){
+        init(null,tdata);
+    }
 
 	public void init(final Map<String,Boolean> filter,List tdata)
 	{

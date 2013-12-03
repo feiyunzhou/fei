@@ -1,7 +1,8 @@
 package com.rex.crm;
 
 import com.google.common.collect.Lists;
-
+import com.google.common.collect.Maps;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,9 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.IModel;
@@ -16,6 +20,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.Choice;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
@@ -37,7 +42,7 @@ import org.apache.wicket.model.PropertyModel;
 public class HomePage extends TemplatePage {
     private static final long serialVersionUID = 1L;
     private String search_target = "";//add
-    
+    private final Map<String, IModel> models = Maps.newHashMap();
     public static long getNumOfAccountOfUser(String userId) {
         long size = 0;
         Connection conn = null;
@@ -182,75 +187,92 @@ public class HomePage extends TemplatePage {
         // add(new Label("activity_name","活动名称"));
         // add(new Label("day_name","昨天"));
          
-         
-
-  
-
        Map<String, Entity> entities = Configuration.getEntityTable();
-       final Entity entity = entities.get("alert");
-
-
+     final Entity entity = entities.get("alert");
     final String positionId = ((SignIn2Session) getSession()).getPositionId();
-    
+    List<Entity> entitys = Configuration.getEntities();
         
-            Form form;
-        form = new Form("form")
+    Form form = new Form("form")
+    {
+        @Override
+        protected void onSubmit()
         {
+        	String tableName = String.valueOf(((Choice) models.get("entityName").getObject()).getName());
+            String sql   = "select * from " + tableName;
+            search_target = (search_target == null || search_target.equalsIgnoreCase("*")) ? "" : search_target;
             
-            @Override
-            protected void onSubmit()
+            List<Field> searchableFields = entity.getSearchableFields();
+            String joint = " like '%" + search_target + "%'";
+            String likequery = "";
+            for (Field sf : searchableFields)
             {
-                String sql = entity.getSql();
-                switch (roleId)
-                {
-                    case 1:
-                        sql = entity.getSqlAdmin();
-                        break;
-                    case 2:
-                        sql = entity.getSqlManager();
-                        break;
-                    case 3:
-                        sql = entity.getSql();
-                        break;
-                }
-                
-                search_target = (search_target == null || search_target.equalsIgnoreCase("*")) ? "" : search_target;
-                
-                List<Field> searchableFields = entity.getSearchableFields();
-                String joint = " like '%" + search_target + "%'";
-                String likequery = "";
-                for (Field sf : searchableFields)
-                {
-                    likequery = likequery + " OR " + sf.getName() + joint;
-                }
-                sql = sql + " where name like '%" + search_target + "%' " + likequery;
-                System.out.println(sql);
-                List datalist = null;
-                
-                switch (roleId)
-                {
-                    case UserRole.USER_ROLE_MANAGER:
-                        datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId, positionId);
-                        break;
-                    case UserRole.USER_ROLE_SALES:
-                        datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId);
-                        break;
-                    case UserRole.USER_ROLE_ADMINISTRATOR:
-                        datalist = DAOImpl.queryEntityRelationList(sql);
-                        System.err.print(sql);
-                }
-                
-                
-                
+                likequery = likequery + " OR " + sf.getName() + joint;
+            }
+            sql = sql + " where name like '%" + search_target + "%' " + likequery;
+            System.out.println(sql);
+            List datalist = null;
+            
+            switch (roleId)
+            {
+                case UserRole.USER_ROLE_MANAGER:
+                    datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId, positionId);
+                    break;
+                case UserRole.USER_ROLE_SALES:
+                    datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId);
+                    break;
+                case UserRole.USER_ROLE_ADMINISTRATOR:
+                    datalist = DAOImpl.queryEntityRelationList(sql);
+                    System.err.print(sql);
             }
             
-        };
-    add(form);
-
+            if(tableName.equals("account")){
+            	setResponsePage(new AccountPage(datalist));
+            }else if(tableName.equals("contact")){
+            	setResponsePage(new ContactPage(datalist));
+            }else if(tableName.equals("activity")){
+            	setResponsePage(new ActivityPage(datalist));
+            }else if(tableName.equals("coaching")){
+            	setResponsePage(new CoachingPage(datalist));
+            }else if(tableName.equals("willcoaching")){
+            	setResponsePage(new CoachingPage(datalist));
+            }
+            
+        }
+        
+    };
+//    ChoiceRenderer choiceRenderer = new ChoiceRenderer<Entity>("name","URL");
+    IModel<Choice> selected_model =  new Model(new Choice(0l,"account"));
+    List<Choice> entityList = new ArrayList<Choice>();
+    for(Entity entityName :entitys){
+    	Choice choice =new Choice();
+    	choice.setVal(entityName.getDisplay());
+    	choice.setName(entityName.getName());
+    	entityList.add(choice);
+    }
     TextField search_input = new TextField("search_input", new PropertyModel(this, "search_target"));
+    DropDownChoice search_select = new	DropDownChoice("search_select",selected_model,entityList, new IChoiceRenderer<Choice>() {
+        @Override
+        public Object getDisplayValue(Choice choice) {
+            // TODO Auto-generated method stub
+            return choice.getVal();
+        }
+        @Override
+        public String getIdValue(Choice choice, int index) {
+            // TODO Auto-generated method stub
+            return String.valueOf(choice.getName());
+        }
+        
+        
+    });
+    models.put("entityName", selected_model);
+    search_select.setNullValid(false);
+    add(form);
+    form.add(search_select);
     form.add(search_input);
     
+    
     String sql = "";
+    
     switch (roleId)
     {
         case 1:

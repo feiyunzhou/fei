@@ -6,10 +6,6 @@
             <script>
                 $(document).ready(function() {
                     $("#navitem-homepage").addClass("active");
-                
-                
-
-
                 });
             </script>
             <div class="row">
@@ -19,8 +15,10 @@
                          <div class="panel panel-success">
                           <div class="panel-heading"><strong>全局搜索</strong></div>
                             <form wicket:id="form" class="form-search">
-                             <input type="text" class="form-control" placeholder="搜索" wicket:id="search_input"  />
+                            <select class="form-control"  wicket:id="search_select"  ></select>
+                            <input type="text" class="form-control"  wicket:id="search_input"  /> 
                                     <button type="submit" class="btn btn-primary btn-block">查找</button>
+                                    
                             </form>
                          </div>
 <!--                        业务概览注释-->

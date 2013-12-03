@@ -45,6 +45,12 @@ public class ContactPage extends TemplatePage
         initPage(filter,tdata);
         
     }
+	public ContactPage(List tdata)
+    {
+
+        initPage(null,tdata);
+        
+    }
 	
     public ContactPage(Map<String,Boolean> map){
         initPage(map,null);

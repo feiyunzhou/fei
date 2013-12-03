@@ -46,6 +46,11 @@ public class AccountPage extends TemplatePage
   {
     initPage(map, tdata);
   }
+  
+  public AccountPage( List tdata)
+  {
+    initPage(null, tdata);
+  }
 
   private void initPage(final Map<String, Boolean> filter, List tdata)
   {
