@@ -4,6 +4,7 @@
 	<entity>
 		<name>account</name>
 		<display>医院</display>
+		<globalsearch>true</globalsearch>
 		<externalField>bdm_code</externalField>
 		<sql>
 			select * from (select account.*\,
@@ -636,6 +637,7 @@
 	<entity>
 		<name>contact</name>
 		<display>医生</display>
+        <globalsearch>true</globalsearch>
         <externalField>externalId</externalField>
 		<sql>
 			select * from (select contact.*\,
@@ -2185,6 +2187,7 @@ select * from user_position
 	<entity>
 		<name>activity</name>
 		<display>拜访</display>
+		<globalsearch>true</globalsearch>
 		<filterField>activity_type</filterField>
 		<sql>
 			select * from (select * from (select activity.*\,
@@ -2762,6 +2765,7 @@ select * from user_position
 	<entity>
 		<name>coaching</name>
 		<display>辅导</display>
+		<globalsearch>true</globalsearch>
 		<filterField>status</filterField>
 		<sql>
 			select distinct * from (select * from (select activity.crmuserId as

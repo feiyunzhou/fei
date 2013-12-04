@@ -39,8 +39,18 @@ public class Entity implements Serializable
   private String sqlAdminCalendar;
   @Expose
   private String externalField;
+  @Expose
+  private boolean globalsearch;
+  
+  public boolean isGlobalsearch() {
+	return globalsearch;
+}
 
-  public String getName()
+public void setGlobalsearch(boolean globalsearch) {
+	this.globalsearch = globalsearch;
+}
+
+public String getName()
   {
     return name;
   }

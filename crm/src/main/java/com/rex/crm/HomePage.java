@@ -2,7 +2,9 @@ package com.rex.crm;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -187,21 +189,66 @@ public class HomePage extends TemplatePage {
         // add(new Label("activity_name","活动名称"));
         // add(new Label("day_name","昨天"));
          
-       Map<String, Entity> entities = Configuration.getEntityTable();
+     Map<String, Entity> entities = Configuration.getEntityTable();
      final Entity entity = entities.get("alert");
     final String positionId = ((SignIn2Session) getSession()).getPositionId();
     List<Entity> entitys = Configuration.getEntities();
         
+    
+    IModel<Choice> selected_model =  new Model(new Choice(0l,"account"));
+    List<Choice> entityChoice = new ArrayList<Choice>();
+    final Map<String, Entity> entityList = new HashMap();
+    for(Entity entityName :entitys){
+    	if(entityName.isGlobalsearch()){
+    		Choice choice =new Choice();
+        	choice.setVal(entityName.getDisplay());
+        	choice.setName(entityName.getName());
+        	entityChoice.add(choice);
+            entityList.put(String.valueOf(entityName.getName()), entityName); 
+    	}
+    }
+    TextField search_input = new TextField("search_input", new PropertyModel(this, "search_target"));
+    DropDownChoice search_select = new	DropDownChoice("search_select",selected_model,entityChoice, new IChoiceRenderer<Choice>() {
+        @Override
+        public Object getDisplayValue(Choice choice) {
+            // TODO Auto-generated method stub
+            return choice.getVal();
+        }
+        @Override
+        public String getIdValue(Choice choice, int index) {
+            // TODO Auto-generated method stub
+            return String.valueOf(choice.getName());
+        }
+        
+        
+    });
+    models.put("entityName", selected_model);
+    search_select.setNullValid(false);
+   
     Form form = new Form("form")
     {
+    	
         @Override
         protected void onSubmit()
-        {
-        	String tableName = String.valueOf(((Choice) models.get("entityName").getObject()).getName());
-            String sql   = "select * from " + tableName;
+        {  
+        	String entityName = String.valueOf(((Choice) models.get("entityName").getObject()).getName());
+        	Entity  en =  entityList.get(entityName);
+            String sql   = en.getSql();
+            switch (roleId)
+            {
+                case UserRole.USER_ROLE_MANAGER:
+                	 sql   = en.getSqlManager();
+                    break;
+                case UserRole.USER_ROLE_SALES:
+                	 sql   = en.getSql();
+                    break;
+                case UserRole.USER_ROLE_ADMINISTRATOR:
+                	 sql   = en.getSqlAdmin();
+                    System.err.print(sql);
+            }
             search_target = (search_target == null || search_target.equalsIgnoreCase("*")) ? "" : search_target;
             
-            List<Field> searchableFields = entity.getSearchableFields();
+            List<Field> searchableFields = en.getSearchableFields();
             String joint = " like '%" + search_target + "%'";
             String likequery = "";
             for (Field sf : searchableFields)
@@ -225,15 +272,15 @@ public class HomePage extends TemplatePage {
                     System.err.print(sql);
             }
             
-            if(tableName.equals("account")){
+            if(entityName.equals("account")){
             	setResponsePage(new AccountPage(datalist));
-            }else if(tableName.equals("contact")){
+            }else if(entityName.equals("contact")){
             	setResponsePage(new ContactPage(datalist));
-            }else if(tableName.equals("activity")){
+            }else if(entityName.equals("activity")){
             	setResponsePage(new ActivityPage(datalist));
-            }else if(tableName.equals("coaching")){
+            }else if(entityName.equals("coaching")){
             	setResponsePage(new CoachingPage(datalist));
-            }else if(tableName.equals("willcoaching")){
+            }else if(entityName.equals("willcoaching")){
             	setResponsePage(new CoachingPage(datalist));
             }
             
@@ -241,31 +288,7 @@ public class HomePage extends TemplatePage {
         
     };
 //    ChoiceRenderer choiceRenderer = new ChoiceRenderer<Entity>("name","URL");
-    IModel<Choice> selected_model =  new Model(new Choice(0l,"account"));
-    List<Choice> entityList = new ArrayList<Choice>();
-    for(Entity entityName :entitys){
-    	Choice choice =new Choice();
-    	choice.setVal(entityName.getDisplay());
-    	choice.setName(entityName.getName());
-    	entityList.add(choice);
-    }
-    TextField search_input = new TextField("search_input", new PropertyModel(this, "search_target"));
-    DropDownChoice search_select = new	DropDownChoice("search_select",selected_model,entityList, new IChoiceRenderer<Choice>() {
-        @Override
-        public Object getDisplayValue(Choice choice) {
-            // TODO Auto-generated method stub
-            return choice.getVal();
-        }
-        @Override
-        public String getIdValue(Choice choice, int index) {
-            // TODO Auto-generated method stub
-            return String.valueOf(choice.getName());
-        }
-        
-        
-    });
-    models.put("entityName", selected_model);
-    search_select.setNullValid(false);
+    
     add(form);
     form.add(search_select);
     form.add(search_input);

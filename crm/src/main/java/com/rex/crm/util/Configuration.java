@@ -178,7 +178,9 @@ public class Configuration {
                 entity.setSqlAdminCoaching(sub.getString("sql-admin-coaching"));
                 entity.setSqlCoaching(sub.getString("sql-coaching"));
                 entity.setExternalField(sub.getString("externalField"));
+                entity.setGlobalsearch(Boolean.parseBoolean(sub.getString("globalsearch"))); 
                 String filterField = sub.getString("filterField");
+                
                 if(filterField !=null){
                     entity.setFilterField(filterField);
                 }
