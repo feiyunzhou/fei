@@ -583,6 +583,7 @@ public class DAOImpl
         } finally {
             DBHelper.closeConnection(conn);
         }
+        System.out.println("sql:"+sql);
         return lMap;
     }
 
@@ -1538,6 +1539,30 @@ public class DAOImpl
             DBHelper.closeConnection(conn);
         }
     }
+        public static void updateProductCategoryWhenEditProduct(String productid,String target) {
+         String sql="select * from productcategory where productId="+productid;
+         List<Map<String,Object>> lt=DAOImpl.queryEntityRelationList(sql);
+         List<String> fieldNames=Lists.newArrayList();
+         fieldNames.add("productlineId");
+         List<String> values=Lists.newArrayList();
+         values.add(target);
+         String id="";
+         for(int i=0;i<lt.size();i++){
+             id=lt.get(i).get("id").toString();
+            updateRecord(id,"productcategory",fieldNames,values);
+         }
+         
+    }
+         public static void updateProductlineWhenEditcategory(String id,String target) {
+         List<String> fieldNames=Lists.newArrayList();
+         fieldNames.add("productlineId");
+         List<String> values=Lists.newArrayList();
+         values.add(target);
+         System.out.println("updateProductlineWhenEditcategory");
+        System.out.println(fieldNames);
+           System.out.println(values);
+         updateRecord(id,"productcategory",fieldNames,values);
+    }
     
     public static void updateUserInfoPositionByUserId( String userId) {
       String sql = "";
@@ -1641,6 +1666,36 @@ public class DAOImpl
 //           DBHelper.closeConnection(conn);
 //       }
 //   }
+    
+     public static void deleteProductRecord(String id,String entityName) { 
+         if(entityName.trim().equals("product")){
+              List<Map<String,Object>> grandson=DAOImpl.queryEntityRelationList("Select id from productcategory where productId="+id);
+              for(int j=0;j<grandson.size();j++){
+                      deleteRecord(grandson.get(j).get("id").toString(),"productcategory");
+              }
+              
+            deleteRecord(id,entityName);
+          }
+        
+    }
+     public static void deleteProductLineRecord(String id,String entityName) { 
+         if(entityName.trim().equals("product")){
+              List<Map<String,Object>> grandson=DAOImpl.queryEntityRelationList("Select id from productcategory where productlineId="+id);
+              for(int j=0;j<grandson.size();j++){
+                      deleteRecord(grandson.get(j).get("id").toString(),"productcategory");
+              }
+          }
+         if(entityName.trim().equals("productline")){
+              List<Map<String,Object>> grandson=DAOImpl.queryEntityRelationList("Select id from product where productlineId="+id);
+              for(int k=0;k<grandson.size();k++){
+                      deleteRecord(grandson.get(k).get("id").toString(),"product");
+              }
+              deleteRecord(id,entityName);
+              deleteProductLineRecord(id,"product");
+          }
+        
+    }
+     
     public static void doneRecord(String id,String entityName, String time ) {
     	String sql = "";
       
@@ -2713,4 +2768,12 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
 
         return user;
     }
+     public static String getTargetById(String target,String id,String entityName){
+            String result;
+            String sql="select "+target+" from "+entityName+" where id="+id;
+            List<Map<String,Object>> lt=DAOImpl.queryEntityRelationList(sql);
+            result=String.valueOf(lt.get(0).get(target).toString());
+            return result;
+     }
+    
 }

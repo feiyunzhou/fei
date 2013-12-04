@@ -3402,12 +3402,13 @@ select * from user_position
 			</field>
 		</fields>
 	</entity>
-	<entity>
-		<name>productLine</name>
-		<display>产品</display>
+	   <entity>
+		<name>productline</name>
+		<display>产品线</display>
 		<filterField></filterField>
-		<sql> select product.*\,crmuser_pl2.val  from product left join crmuser_pl2 on product.parentid = crmuser_pl2.id</sql>
-		<sql-ent>select * from product where id = ?</sql-ent>
+		<sql>SELECT * FROM productline</sql>
+                <sql-admin>select * from productline</sql-admin>
+		<sql-ent>select * from productline where id = ?</sql-ent>
 		<fields>
 			<field>
 				<name>id</name>
@@ -3415,7 +3416,7 @@ select * from user_position
 				<data-type>text</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3426,20 +3427,87 @@ select * from user_position
 				<display>产品线名称</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
+				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-		
+                        <field>
+				<name>description</name>
+				<isRequired>true</isRequired>
+				<display>描述</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>基本信息</fieldGroup>
+			</field>
+                        <field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority>
+				<isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+                        <field>
+                                <name>modify_datetime</name>
+			 	<display>修改时间</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>4</priority><isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+                        <field>
+			        <name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isRequired>false</isRequired>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+                        <field>
+			       <name>modifier</name>
+				<display>修改人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>			
 		</fields>
 	</entity>
-	<entity>
+         <entity>
 		<name>product</name>
-		<display>产品名称</display>
+		<display>产品</display>
 		<filterField></filterField>
-		<sql> select * from product parentid = ?</sql>
+		<sql>SELECT * FROM product</sql>
+                <sql-admin>SELECT * FROM product</sql-admin>
 		<sql-ent>select * from product where id = ?</sql-ent>
 		<fields>
 			<field>
@@ -3448,12 +3516,12 @@ select * from user_position
 				<data-type>text</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			<field>
+                        <field>
 				<name>name</name>
 				<isRequired>true</isRequired>
 				<display>产品名称</display>
@@ -3465,40 +3533,83 @@ select * from user_position
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+                        
 			<field>
-				<name>specification</name>
-				<display>产品规格</display>
+				<name>productlineId</name>
+				<isRequired>true</isRequired>
+				<display>产品线名称</display>
+                                <alias>productlineId</alias>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
+                                <relationTable>productline</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>productline.id\,productline.name</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			<field>
-					<name>parentid</name>
-					<display>产品线</display>
-					<isRequired>true</isRequired>
-					<data-type>text</data-type>
-					<picklist>crmuser_pl2</picklist>
-					<default-value-type>val</default-value-type>
-					<default-value>0</default-value>
-					<isPrimaryKey>false</isPrimaryKey>
-					<isDetailLink>false</isDetailLink>
-					<isVisible>true</isVisible>
-					<isEditable>true</isEditable>
-					<priority>1</priority><isShow>true</isShow>
-					<fieldGroup>关键信息</fieldGroup>
+                        
+                         <field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
 			</field>
+                        <field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+                        <field>
+			        <name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isRequired>false</isRequired>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+                         <field>
+			       <name>modifier</name>
+				<display>修改人</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>	
+                         	
 		</fields>
 	</entity>
-	<entity>
-		<name>productSpecification</name>
-		<display>产品规格</display>
+        <entity>
+		<name>productcategory</name>
+		<display>产品类别</display>
 		<filterField></filterField>
-		<sql> select product.name  from product where parentid = ?</sql>
-		<sql-ent>select product.*name  from product where parentid = ?</sql-ent>
+		<sql>SELECT * FROM productcategory</sql>
+		<sql-ent>select * from productcategory where id = ?</sql-ent>
 		<fields>
 			<field>
 				<name>id</name>
@@ -3506,7 +3617,7 @@ select * from user_position
 				<data-type>text</data-type>
 				<isPrimaryKey>true</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>false</isVisible>
+				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3514,44 +3625,105 @@ select * from user_position
 			<field>
 				<name>name</name>
 				<isRequired>true</isRequired>
-				<display>产品规格</display>
+				<display>类别名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+                        <field>
+				<name>productId</name>
+				<isRequired>true</isRequired>
+				<display>产品名称</display>
+                                <alias>productId</alias>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+                                <relationTable>product</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>product.id\,product.name</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+                          
+			<field>
+				<name>productlineId</name>
+				<isRequired>true</isRequired>
+				<display>产品线名称</display>
+                                <alias>productlineId</alias>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+                                <relationTable>productline</relationTable>
+				<default-value-type>var</default-value-type>
+				<default-value>productline.id\,productline.name</default-value>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+                        
+                         <field>
+				<name>whenadded</name>
+				<display>创建时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+                        <field>
+				<name>modify_datetime</name>
+				<display>修改时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>
+			
+                       
+                        
+                        <field>
+			        <name>owner</name>
+				<display>创建人</display>
+				<data-type>text</data-type>
+				<isRequired>false</isRequired>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
-				<fieldGroup>关键信息</fieldGroup>
+				<fieldGroup>附加信息</fieldGroup>
 			</field>
-			<field>
-				<name>specification</name>
-				<display>产品规格</display>
+                         <field>
+			       <name>modifier</name>
+				<display>修改人</display>
+				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<field-type>auto</field-type>
 				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority><isShow>true</isShow>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
-			<field>
-					<name>parentid</name>
-					<display>产品线</display>
-					<isRequired>true</isRequired>
-					<data-type>text</data-type>
-					<picklist>crmuser_pl2</picklist>
-					<default-value-type>val</default-value-type>
-					<default-value>0</default-value>
-					<isPrimaryKey>false</isPrimaryKey>
-					<isDetailLink>false</isDetailLink>
-					<isVisible>true</isVisible>
-					<isEditable>true</isEditable>
-					<priority>2</priority><isShow>true</isShow>
-					<fieldGroup>关键信息</fieldGroup>
-			</field>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+				<fieldGroup>附加信息</fieldGroup>
+			</field>	
 		</fields>
 	</entity>
+	
 	<entity>
 		<name>willcoaching</name>
 		<display>辅导</display>

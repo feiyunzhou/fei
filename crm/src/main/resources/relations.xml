@@ -91,25 +91,26 @@
 		<to>crmuser</to>
 	</relation> -->
 	
-    <relation>
-		<from>product</from>
+        <relation>
+		<from>productline</from>
 		<name>productBasic</name>
 		<display>产品列表</display>
-		<sql>select a.* from product as a where a.parentid=?</sql>
+		<!--<sql>select p.id as id \,p.name as name\,p.whenadded as whenadded\,p.modify_datetime as modify_datetime\,pl.name as productlineId  from product p left join productline pl on p.productlineId=pl.id where p.productlineId=?</sql>-->
+                <sql>select * from product where productlineid=?</sql>
 		<to>product</to>
 	</relation>
-    <relation>
-		<from>product</from>
-		<name>productSpecificationOfProductLine</name>
+        <relation>
+		<from>productline</from>
+		<name>productSpecification</name>
 		<display>规格列表</display>
-		<sql>select p.* from product p left join product p1 on p1.id=p.parentid left join product p2 on p2.id=p1.parentid where p2.id=?</sql>
-		<to>productSpecification</to>
+		<sql>select * from productcategory where productlineid=?</sql>
+		<to>productcategory</to>
 	</relation>
         <relation>
 		<from>product</from>
-		<name>productSpecificationOfProduct</name>
+		<name>productSpecification</name>
 		<display>规格列表</display>
-		<sql>select * from product where parentId=?</sql>
-		<to>productSpecification</to>
+		<sql>select * from productcategory where productid=?</sql>
+		<to>productcategory</to>
 	</relation>
 </relations>

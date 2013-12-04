@@ -405,6 +405,7 @@ public class EditDataFormPanel extends Panel {
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		int total_score = 0;
 		Long daypart = 0l;
+                String productlineId="-1";
 		String loginName = "";
 		StringBuffer endDate = new StringBuffer();
 		if(schema.getName().equals("activity")){
@@ -460,13 +461,16 @@ public class EditDataFormPanel extends Panel {
                     value = String.valueOf(((Choice) obj).getId());
                 } else {
                     value = String.valueOf(obj) ;
-                }   
-			}
-			    
-			
-			values.add(value); 
-			
-		}
+                    }   
+	          }
+			values.add(value);
+                        if(field.getName().toString().equals("productlineId")&&schema.getName().equals("product")){
+                                    productlineId=value;
+                           }   
+                        if(field.getName().toString().equals("productId")&&schema.getName().equals("productcategory")){
+                                 productlineId=DAOImpl.getTargetById("productlineId",value,"product");
+                                  }   
+	}
 		
 		 List<Field> autoFields = schema.getAutoFields();
          for(Field f:autoFields){
@@ -497,6 +501,13 @@ public class EditDataFormPanel extends Panel {
       	  	names.add("endtime");
         }
 		if(!table_name.equalsIgnoreCase("userinfo")){
+                   if(table_name.equalsIgnoreCase("product")){
+                        DAOImpl.updateProductCategoryWhenEditProduct(entityId, productlineId);	  
+                     }
+                   if(table_name.equalsIgnoreCase("productcategory")){
+                       
+                        DAOImpl.updateProductlineWhenEditcategory(entityId, productlineId);	  
+                     }
 		  DAOImpl.updateRecord(entityId,table_name,names,values);
 		  return true;
 		}else{

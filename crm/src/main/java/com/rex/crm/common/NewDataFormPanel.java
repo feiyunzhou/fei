@@ -350,6 +350,7 @@ public class NewDataFormPanel extends Panel {
         form.add(new Button("save"){
             @Override
             public void onSubmit() {
+                
                 logger.debug(models);
                 if(!saveEntity(models,entity,userId,userName,posId)){
                 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
@@ -391,6 +392,7 @@ public class NewDataFormPanel extends Panel {
         List<String> fieldNames = Lists.newArrayList();
         List<String> values = Lists.newArrayList();
         int total_score = 0;
+        String productlineId="0";
         StringBuffer endDate = new StringBuffer();
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         //找出title属性，判断实体名称，先声明
@@ -411,7 +413,9 @@ public class NewDataFormPanel extends Panel {
             if(field.getPriority()==5){
             	total_score+=Integer.parseInt(models.get(key).getObject().toString());
             }
-            
+            if(key.equals("productId")&&entity.getName().toString().equals("productcategory")){
+                             productlineId=DAOImpl.getTargetById("productlineId",String.valueOf(models.get(key).getObject()) , "product");
+                       }
             if (models.get(key).getObject() instanceof String) {
               if(field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() !=null && !field.getFormatter().isEmpty()){
                //if the filed has formatter, we guess the field saved in data base is in long 
@@ -497,6 +501,10 @@ public class NewDataFormPanel extends Panel {
 			}
         	fieldNames.add("endtime");
           }
+          if(entity.getName().equals("productcategory")){
+                	  values.add(productlineId);
+              		  fieldNames.add("productlineId");
+                  }
     		//if entity is crmuser  add loginName
             if ("userinfo".equals(entity.getName())) {
                 long crmuserkey = -1;

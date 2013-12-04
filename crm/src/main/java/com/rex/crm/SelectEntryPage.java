@@ -220,6 +220,14 @@ public class SelectEntryPage extends WebPage {
                     dummy.put("name", "无");
                     maplist.add(dummy);
 
+                }else if (relationTableName.equalsIgnoreCase("productline")) {
+                    String sql = assembleSearchingSQL(roleId, entity);
+                    maplist  = DAOImpl.queryEntityRelationList(sql);
+
+                }else if (relationTableName.equalsIgnoreCase("product")) {
+                    String sql = assembleSearchingSQL(roleId, entity);
+                    maplist  = DAOImpl.queryEntityRelationList(sql);
+
                 }
                 //this.setResponsePage(cls, parameters)
                 

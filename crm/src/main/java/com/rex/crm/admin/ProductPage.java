@@ -42,7 +42,7 @@ public class ProductPage extends AdminTemplatePage
   public void initPage(final Map<String, Boolean> filter, List tdata)
   {
     Map<String, Entity> entities = Configuration.getEntityTable();
-    final Entity entity = entities.get("product");
+    final Entity entity = entities.get("productline");
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
     final String positionId = ((SignIn2Session) getSession()).getPositionId();
     setPageTitle(entity.getDisplay());

@@ -5,6 +5,7 @@ import org.apache.wicket.Page;
 import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.ProductPage;
 import com.rex.crm.admin.UserPage;
+import com.rex.crm.common.EntityDetailPage;
 
 public class PageFactory {
   
@@ -25,8 +26,9 @@ public class PageFactory {
           return new UserPage();
         }else if(name.equalsIgnoreCase("alert")){
         	return new AlertPage();
-        }else if(name.equalsIgnoreCase("product")){
+        }else if(name.equalsIgnoreCase("productline")||name.equalsIgnoreCase("product")||name.equalsIgnoreCase("productcategory")){
         	return new ProductPage();
+               // setResponsePage(new EntityDetailPage(schema.getName(),entityId));
         }
         else{
             return new HomePage();

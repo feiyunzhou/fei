@@ -32,6 +32,7 @@ import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.admin.PositionPage;
+import com.rex.crm.admin.ProductPage;
 import com.rex.crm.admin.UserPage;
 import com.rex.crm.admin.UserPositionPage;
 import com.rex.crm.beans.CRMUser;
@@ -190,7 +191,6 @@ public class EntityDetailPage extends TemplatePage {
                     setResponsePage(new ContactPage());
                 }else if(entityName.equals("activity")) {
                     DAOImpl.deleteRecord(id, entityName);
-                    
                     setResponsePage(new ActivityPage());
                 }else if(entityName.equals("coaching")||entityName.equals("willcoaching")) {
                   DAOImpl.deleteRecord(id, entityName);
@@ -209,7 +209,19 @@ public class EntityDetailPage extends TemplatePage {
               }else if(entityName.equals("user_position")){
               	DAOImpl.deleteRecord(id, entityName);
               	setResponsePage(new UserPositionPage());
-            }
+              }
+                else if(entityName.equals("productcategory")){
+                	DAOImpl.deleteRecord(id, entityName);
+                	setResponsePage(new ProductPage());
+                }
+                else if(entityName.equals("product")){
+                	DAOImpl.deleteProductRecord(id, entityName);
+                	setResponsePage(new ProductPage());
+                }
+                else if(entityName.equals("productline")){
+                	DAOImpl.deleteProductLineRecord(id, entityName);
+                	setResponsePage(new ProductPage());
+                }
             }
 
             @Override
