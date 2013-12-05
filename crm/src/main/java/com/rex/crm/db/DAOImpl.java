@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -52,6 +55,7 @@ import com.rex.crm.util.Configuration;
 
 public class DAOImpl 
 {
+    
     private static final Logger logger = Logger.getLogger(DAOImpl.class);
     public static ListMultimap<Integer, Integer> accountIdsByUserId;
     
@@ -70,7 +74,8 @@ public class DAOImpl
         Connection conn = null;
         try {
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
+            
             List<City> result = run.query(conn, "SELECT * FROM city", h);
             for (City c : result) {
                 mapBuilder.put(c.getId(), c);
@@ -91,7 +96,7 @@ public class DAOImpl
         try {
             ResultSetHandler<List<Province>> h = new BeanListHandler<Province>(Province.class);
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             List<Province> result = run.query(conn, "SELECT * FROM province", h);
             for (Province p : result) {
                 mapBuilder.put(p.getId(), p);
@@ -112,7 +117,7 @@ public class DAOImpl
         		"contactcrmuser,contact where  contactcrmuser.crmuserId=? AND contact.id=contactcrmuser.contactId";
         try {
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             Map<String, Object> map = run.query(conn, sql, new MapHandler(), userId);
             size = (long) map.get("num_of_contact");
         } catch (Exception e) {
@@ -131,7 +136,7 @@ public class DAOImpl
                 "accountcrmuser,account where  accountcrmuser.crmuserId=? AND account.id=accountcrmuser.accountId";
         try {
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             Map<String, Object> map = run.query(conn, sql, new MapHandler(), userId);
             size = (long) map.get("num_of_account");
         } catch (Exception e) {
@@ -149,7 +154,7 @@ public class DAOImpl
         String sql = "select count(activityId) as num_of_activity from activitycrmuser where crmuserId=?";
         try {
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             Map<String, Object> map = run.query(conn, sql, new MapHandler(), userId);
             size = (long) map.get("num_of_activity");
         } catch (Exception e) {
@@ -167,7 +172,7 @@ public class DAOImpl
         Connection conn = null;
         try {
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             Map<String, Object> map = run.query(conn, "select count(*) as ct from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?", new MapHandler(), userId);
             size = (long) map.get("ct");
         } catch (Exception e) {
@@ -186,7 +191,7 @@ public class DAOImpl
         Connection conn = null;
         try {
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             Map<String, Object> map = run.query(conn, "select count(*) as ct from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?", new MapHandler(), accountId);
             size = (long) map.get("ct");
         } catch (Exception e) {
@@ -210,7 +215,7 @@ public class DAOImpl
         try {
             QueryRunner run = new QueryRunner();
 
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             accounts = run.query(conn, "select * from account where id=?", params.toArray(new Object[0]), h);
 
         } catch (Exception e) {
@@ -226,7 +231,7 @@ public class DAOImpl
         Connection conn = null;
         Province prov = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<Province> h = new BeanHandler<Province>(Province.class);
 
@@ -247,7 +252,7 @@ public class DAOImpl
         Connection conn = null;
         try {
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             accounts = run.query(conn, "select a.* from account as a inner join accountcrmuser as b on a.id=b.accountId where b.crmuserId=?", h, userId);
         } catch (Exception e) {
             logger.error("failed to get city table data", e);
@@ -264,7 +269,7 @@ public class DAOImpl
         Connection conn = null;
         try {
             QueryRunner run = new QueryRunner();
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             users = run.query(conn, "select a.* from crmuser as a inner join accountcrmuser as b on a.id=b.crmuserId where b.accountId=?", h, accountId);
         } catch (Exception e) {
             logger.error("failed to get city table data", e);
@@ -279,7 +284,7 @@ public class DAOImpl
         List<Account> accounts = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Account>> h = new BeanListHandler<Account>(Account.class);
 
@@ -303,7 +308,7 @@ public class DAOImpl
         List<Contact> contacts = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Contact>> h = new BeanListHandler<Contact>(Contact.class);
 
@@ -329,7 +334,7 @@ public class DAOImpl
         Connection conn = null;
         List<Map<String, Object>> lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = run.query(conn, query, new MapListHandler(), user_id);
             if (lMap != null) {
@@ -352,7 +357,7 @@ public class DAOImpl
         Connection conn = null;
         Account account = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<Account> h = new BeanHandler<Account>(Account.class);
 
@@ -375,7 +380,7 @@ public class DAOImpl
         List<CRMUser> users = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
 
@@ -393,7 +398,7 @@ public class DAOImpl
         Connection conn = null;
         CRMUser user = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
 
@@ -417,7 +422,7 @@ public class DAOImpl
         if (account != null && account.getId() != 0 && user != null && user.getId() != 0) {
             Connection conn = null;
             try {
-                conn = DBHelper.getConnection();
+                conn = DBConnector.getConnection();
                 QueryRunner run = new QueryRunner();
                 int inserts = run.update(conn, "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)", account.getId(), user.getId());
 
@@ -462,7 +467,7 @@ public class DAOImpl
             int isPrimary = 1;
             Connection conn = null;
             try {
-                conn = DBHelper.getConnection();
+                conn = DBConnector.getConnection();
                 QueryRunner run = new QueryRunner();
                 int inserts = 0;
                 if(entityName.equalsIgnoreCase("userinfo")){
@@ -492,7 +497,7 @@ public class DAOImpl
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
 
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CalendarEvent>> h = new BeanListHandler<CalendarEvent>(CalendarEvent.class);
 
@@ -518,7 +523,7 @@ public class DAOImpl
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
 
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CalendarEvent>> h = new BeanListHandler<CalendarEvent>(CalendarEvent.class);
 
@@ -555,7 +560,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, query, new MapListHandler());
 
@@ -575,7 +580,7 @@ public class DAOImpl
         List lMap = Lists.newArrayList();
         try {
           
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler(), params);
 
@@ -607,7 +612,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler(), params);
 
@@ -627,7 +632,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, query, new MapListHandler());
             List<Map> maplist = (List<Map>) lMap;
@@ -650,7 +655,7 @@ public class DAOImpl
         Connection conn = null;
         Map map = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             map = (Map) run.query(conn, query, new MapHandler());
 
@@ -667,7 +672,7 @@ public class DAOImpl
       Connection conn = null;
       int id = 0;
       try {
-          conn = DBHelper.getConnection();
+          conn = DBConnector.getConnection();
           QueryRunner run = new QueryRunner();
           Statement st = conn.createStatement();
           ResultSet rs = st.executeQuery("select id from crmdb.account where name = '" + name + "'");
@@ -700,7 +705,7 @@ public class DAOImpl
         Connection conn = null;
         List<Map<String, Object>> list  = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
              list = run.query(conn, query, new MapListHandler(),userId,userId);
 
@@ -740,7 +745,7 @@ public class DAOImpl
         Connection conn = null;
         List<Map<String, Object>> list  = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             list = run.query(conn, query, new MapListHandler(),userId,userId);
 
@@ -768,7 +773,7 @@ public class DAOImpl
         Connection conn = null;
         Map map = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             map = (Map) run.query(conn, query, new MapHandler());
 
@@ -807,7 +812,7 @@ public class DAOImpl
         Connection conn = null;
         Map map = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             map = (Map) run.query(conn, query, new MapHandler(), id);
             if (map != null) {
@@ -851,7 +856,7 @@ public class DAOImpl
         Connection conn = null;
         Map map = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             map = (Map) run.query(conn, query, new MapHandler(), id);
             if (map != null) {
@@ -881,7 +886,7 @@ public class DAOImpl
         List<Choice> choices = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Choice>> h = new BeanListHandler<Choice>(Choice.class);
             choices = run.query(conn, "SELECT * FROM " + picklist, h);
@@ -906,7 +911,7 @@ public class DAOImpl
         List<Choice> choices = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Choice>> h = new BeanListHandler<Choice>(Choice.class);
             choices = run.query(conn, query, h,filterValue);
@@ -964,7 +969,7 @@ public class DAOImpl
        // Connection conn = null;
        // String query  = null;
         try {
-           // conn = DBHelper.getConnection();
+           // conn = DBConnector.getConnection();
             for (Choice ch : choices) {
              
                 //query = "select count(a.id) as sum from (" + sourceTableSQL + " where " + filterField + " = " + ch.getId() + ") as a";
@@ -998,7 +1003,7 @@ public class DAOImpl
         ResultSet generatedKeys = null;
         long key = -1;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             //QueryRunner run = new QueryRunner();
             //int inserts = 0;
             //inserts += run.update(conn, sql, crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
@@ -1051,7 +1056,7 @@ public class DAOImpl
         ResultSet generatedKeys = null;
         long key = -1;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             fillStatement(statement,crmuserId, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
                           status,owner,modifier,responsible_person,visiting_purpose,feature_product,event_type,participants
@@ -1104,7 +1109,7 @@ public class DAOImpl
                      "modifier=?,modify_datetime=?,visiting_purpose=?,feature_product=? where id=?";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql, contactId, Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L, title, type_id,
@@ -1123,7 +1128,7 @@ public class DAOImpl
                      "modifier=?,modify_datetime=?,coachId=?,location=?,total_score=?,planing=?,openling=?,enquery_listening=?,deliverable=?,objection_handing=?,summary=?,title=? where id=?";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql,crmuserId,Long.parseLong(end) * 1000L, Long.parseLong(start) * 1000L,
@@ -1141,7 +1146,7 @@ public class DAOImpl
         String sql = "INSERT INTO externalMeeting (crmuserId,contactIds,endtime,starttime,title,status,activity_type,coachId) VALUES (?,?,?,?,?,?,?,?)";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             CalendarEvent e = new CalendarEvent();
@@ -1179,7 +1184,7 @@ public class DAOImpl
 	    PreparedStatement statement = null;
 	    long key=-1;
         try {
-			conn = DBHelper.getConnection();
+			conn = DBConnector.getConnection();
 			statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	        int affectedRows = statement.executeUpdate();
 	     
@@ -1221,7 +1226,7 @@ public class DAOImpl
        Connection conn = null;
        int inserts = 0;
        try {
-           conn = DBHelper.getConnection();
+           conn = DBConnector.getConnection();
            QueryRunner run = new QueryRunner();
           
            inserts += run.update(conn, sql,fieldvalue);
@@ -1243,7 +1248,7 @@ public class DAOImpl
         Connection conn = null;
         Map map = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             map  =  run.query(conn, query, new MapHandler(),fieldValue);
 
@@ -1282,7 +1287,7 @@ public class DAOImpl
        PreparedStatement statement = null;
        long key = -1;
        try {
-           conn = DBHelper.getConnection();
+           conn = DBConnector.getConnection();
            
            statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
            
@@ -1323,7 +1328,7 @@ public class DAOImpl
        PreparedStatement statement = null;
        long key = -1;
        try {
-           conn = DBHelper.getConnection();
+           conn = DBConnector.getConnection();
            
            statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
            
@@ -1360,7 +1365,7 @@ public class DAOImpl
         Connection conn = null;
         int inserts = 0;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             inserts += run.update(conn, sql,logfilename,num_of_total_record,num_of_imported,num_of_failed,result,1,num_of_updated,id);
         } catch (Exception e) {
@@ -1415,7 +1420,7 @@ public class DAOImpl
         PreparedStatement statement = null;
         long key = -1;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             
             statement  = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
@@ -1471,7 +1476,7 @@ public class DAOImpl
         
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql);
@@ -1494,7 +1499,7 @@ public class DAOImpl
       
       Connection conn = null;
       try {
-          conn = DBHelper.getConnection();
+          conn = DBConnector.getConnection();
           QueryRunner run = new QueryRunner();
           int inserts = 0;
           inserts += run.update(conn, sql);
@@ -1528,7 +1533,7 @@ public class DAOImpl
         logger.debug("UPDATE sql is:"+sql);
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql);
@@ -1571,7 +1576,7 @@ public class DAOImpl
        logger.debug("UPDATE sql is:"+sql);
        Connection conn = null;
        try {
-           conn = DBHelper.getConnection();
+           conn = DBConnector.getConnection();
            QueryRunner run = new QueryRunner();
            int inserts = 0;
            inserts += run.update(conn, sql);
@@ -1590,7 +1595,7 @@ public class DAOImpl
        logger.debug("UPDATE sql is:"+sql);
        Connection conn = null;
        try {
-           conn = DBHelper.getConnection();
+           conn = DBConnector.getConnection();
            QueryRunner run = new QueryRunner();
            int inserts = 0;
            inserts += run.update(conn, sql);
@@ -1606,7 +1611,7 @@ public class DAOImpl
        logger.debug("UPDATE sql is:"+sql);
        Connection conn = null;
        try {
-           conn = DBHelper.getConnection();
+           conn = DBConnector.getConnection();
            QueryRunner run = new QueryRunner();
            int inserts = 0;
            inserts += run.update(conn, sql);
@@ -1623,7 +1628,7 @@ public class DAOImpl
        logger.debug("UPDATE sql is:"+sql);
        Connection conn = null;
        try {
-           conn = DBHelper.getConnection();
+           conn = DBConnector.getConnection();
            QueryRunner run = new QueryRunner();
            int inserts = 0;
            inserts += run.update(conn, sql);
@@ -1637,7 +1642,7 @@ public class DAOImpl
         Connection conn = null;
         int level = 0;
         try {
-            conn = DBHelper.getConnection(); 
+            conn = DBConnector.getConnection(); 
             QueryRunner run = new QueryRunner();
             Map<String, Object> map = run.query(conn, "SELECT level FROM crmuser where id=?", new MapHandler(), positionId);
             if(map != null && map.get("level") !=null){
@@ -1657,7 +1662,7 @@ public class DAOImpl
 //       logger.debug("UPDATE sql is:"+sql);
 //       Connection conn = null;
 //       try {
-//           conn = DBHelper.getConnection();
+//           conn = DBConnector.getConnection();
 //           QueryRunner run = new QueryRunner();
 //           int inserts = 0;
 //           inserts += run.update(conn, sql);
@@ -1704,7 +1709,7 @@ public class DAOImpl
     	logger.debug("UPDATE sql is:"+sql);
     	Connection conn = null;
     	try {
-    		conn = DBHelper.getConnection();
+    		conn = DBConnector.getConnection();
     		QueryRunner run = new QueryRunner();
     		int inserts = 0;
     		inserts += run.update(conn, sql);
@@ -1727,7 +1732,7 @@ public class DAOImpl
         Connection conn = null;
         int inserts = 0;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
           
             inserts += run.update(conn, sql);
@@ -1747,7 +1752,7 @@ public class DAOImpl
         Connection conn = null;
         int inserts = 0;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
           
             inserts += run.update(conn, sql);
@@ -1766,7 +1771,7 @@ public class DAOImpl
         Connection conn = null;
         int inserts = 0;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
           
             inserts += run.update(conn, sql);
@@ -1785,7 +1790,7 @@ public class DAOImpl
         sql = "DELETE from " + "accountcrmuser" + " where accountId = " + entityId;
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql);
@@ -1803,7 +1808,7 @@ public class DAOImpl
         sql = "DELETE from " + "contact" + " where accountId = " + entityId;
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql);
@@ -1820,7 +1825,7 @@ public class DAOImpl
         String sql = "UPDATE activity SET status=?, act_endtime=? where id=?";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql, status, act_endtime,eventId);
@@ -1837,7 +1842,7 @@ public class DAOImpl
         String sql = "UPDATE activity SET status=? where id=?";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql, status,eventId);
@@ -1854,7 +1859,7 @@ public class DAOImpl
         String sql = "UPDATE externalMeeting SET status=? where id=?";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql, status, eventId);
@@ -1872,7 +1877,7 @@ public class DAOImpl
         String sql = "UPDATE internalMeeting SET status=? where id=?";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql, status, eventId);
@@ -1891,7 +1896,8 @@ public class DAOImpl
         Connection conn = null;
         UserInfo user = new UserInfo();
         try {
-            conn = DBHelper.getConnection();
+            //conn = DBConnector.getConnection();
+            conn=DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             password = DigestUtils.md5Hex(password);
@@ -1901,7 +1907,12 @@ public class DAOImpl
         } catch (SQLException e) {
             logger.error("failed to get all accounts", e);
         } finally {
-            DBHelper.closeConnection(conn);
+            try {
+                DbUtils.close(conn);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
 
         return user;
@@ -1912,7 +1923,7 @@ public class DAOImpl
         Connection conn = null;
         CRMUser user = new CRMUser();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
             user = run.query(conn, "SELECT * FROM crmuser where id=? ", h,  uid);
@@ -1930,7 +1941,7 @@ public class DAOImpl
       Connection conn = null;
       UserPosition user = new UserPosition();
       try {
-          conn = DBHelper.getConnection();
+          conn = DBConnector.getConnection();
           QueryRunner run = new QueryRunner();
           ResultSetHandler<UserPosition> h = new BeanHandler<UserPosition>(UserPosition.class);
           user = run.query(conn, "SELECT *,whenadded FROM user_position  where userId=? group by whenadded desc limit 1 ", h,  uid);
@@ -1949,7 +1960,7 @@ public class DAOImpl
         Connection conn = null;
         CRMUser user = new CRMUser();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
             user = run.query(conn, "SELECT * FROM crmuser where id=? AND password=?", h, sessionId, sessionKey);
@@ -1973,7 +1984,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2000,7 +2011,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler(),userId);
 
@@ -2027,7 +2038,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2050,7 +2061,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2073,7 +2084,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2094,7 +2105,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2117,7 +2128,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2139,7 +2150,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2162,7 +2173,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2186,7 +2197,7 @@ public class DAOImpl
       Connection conn = null;
       List lMap = Lists.newArrayList();
       try {
-          conn = DBHelper.getConnection();
+          conn = DBConnector.getConnection();
           QueryRunner run = new QueryRunner();
           lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2208,7 +2219,7 @@ public class DAOImpl
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2230,7 +2241,7 @@ public class DAOImpl
       Connection conn = null;
       List lMap = Lists.newArrayList();
       try {
-          conn = DBHelper.getConnection();
+          conn = DBConnector.getConnection();
           QueryRunner run = new QueryRunner();
           lMap = (List) run.query(conn, sql, new MapListHandler());
 
@@ -2250,7 +2261,7 @@ public class DAOImpl
         logger.debug("sserserserser"+ sql);
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql);
@@ -2269,7 +2280,7 @@ public class DAOImpl
         List<CRMUser> users = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
 
@@ -2299,7 +2310,7 @@ public class DAOImpl
         List<Product> products = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
             products = run.query(conn, "SELECT * FROM product where productlineId =?", h,lineId);
@@ -2323,7 +2334,7 @@ public class DAOImpl
         List<Productcategory> products = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Productcategory>> h = new BeanListHandler<Productcategory>(Productcategory.class);
 
@@ -2348,7 +2359,7 @@ public class DAOImpl
         List<CRMUser> users = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
 
@@ -2367,7 +2378,7 @@ public class DAOImpl
         List<Product> users = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
 
@@ -2387,7 +2398,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         List<Product> products = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
 
@@ -2406,7 +2417,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         List<Province> users = Lists.newArrayList();
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Province>> h = new BeanListHandler<Province>(Province.class);
 
@@ -2427,7 +2438,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         int inserts = 0;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             inserts += run.update(conn, sql, userName, cellphone,email,photo,sex,loginName,office_tel,userId);
             System.out.println("updateCrmUser:" + inserts);
@@ -2448,7 +2459,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
     	String newPassword = DigestUtils.md5Hex(password);
     	int updates = 0;
     	try{
-    		conn = DBHelper.getConnection();
+    		conn = DBConnector.getConnection();
     		QueryRunner run = new QueryRunner();
     		updates += run.update(conn, sql, newPassword,userId);
     		logger.debug("update password success!");
@@ -2467,7 +2478,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         UserInfo user = new UserInfo();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             user = run.query(conn, "SELECT * FROM userinfo where ts=? and id=?", h, createTime,userID);
@@ -2486,7 +2497,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         int insert = 0;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             insert = run.update(conn, sql,DigestUtils.md5Hex("12345"),entityId);
@@ -2503,7 +2514,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
     	String  sql=" UPDATE userinfo SET isActivited=? where id =?";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             run.update(conn, sql,1,entityId);
@@ -2522,7 +2533,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         
         int updates = 0;
         try{
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             updates += run.update(conn, sql, to, from);
             logger.debug("updateCrmUserReport success!");
@@ -2543,7 +2554,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         UserInfo userInfo = new UserInfo();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             userInfo = run.query(conn, "SELECT * FROM userInfo where id=?", h, entityId);
@@ -2565,7 +2576,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         CRMUser crmuser = new CRMUser();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
             crmuser = run.query(conn, "SELECT * FROM crmuser where id=?", h, entityId);
@@ -2581,7 +2592,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         Contact contact = new Contact();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<Contact> h = new BeanHandler<Contact>(Contact.class);
             contact = run.query(conn, "SELECT * FROM contact where id=?", h, entityId);
@@ -2596,7 +2607,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         UserInfo user = new UserInfo();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             user = run.query(conn, "SELECT * FROM userInfo where loginName=?", h, loginName);
@@ -2613,7 +2624,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
       List<UserInfo> inferiors = Lists.newArrayList();
       List<UserInfo> users = Lists.newArrayList();
       try {
-          conn = DBHelper.getConnection();
+          conn = DBConnector.getConnection();
           QueryRunner run = new QueryRunner();
           ResultSetHandler<List<UserInfo>> h = new BeanListHandler<UserInfo>(UserInfo.class);
           users = run.query(conn, "SELECT * FROM userInfo left  join user_position on userInfo.id = user_position.userId where (user_position.status=1) and (user_position.positionId = ?)", h, userId);
@@ -2635,7 +2646,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         Activity activity = new Activity();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<Activity> h = new BeanHandler<Activity>(Activity.class);
             activity = run.query(conn, "SELECT * FROM activity where id=?", h, entityId);
@@ -2651,7 +2662,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         UserInfo user = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
 
@@ -2677,7 +2688,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
       
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             int inserts = 0;
             inserts += run.update(conn, sql,sessionId,loginName,new Date());
@@ -2694,7 +2705,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
     	String  sql=" UPDATE userinfo SET num_of_signIn=? where id =?";
         Connection conn = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             run.update(conn, sql,number,userId);
@@ -2710,7 +2721,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
          Connection conn = null;
          try {
              QueryRunner run = new QueryRunner();
-             conn = DBHelper.getConnection();
+             conn = DBConnector.getConnection();
              users = run.query(conn, "select * from user_position where userId=?", h,userId);
          } catch (Exception e) {
              logger.error("failed to get userPostion table data", e);
@@ -2726,7 +2737,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         int inserts = 0;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             inserts += run.update(conn, sql, phone,email,DigestUtils.md5Hex(password),userId);
         } catch (Exception e) {
@@ -2745,7 +2756,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         int inserts = 0;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             inserts += run.update(conn, sql,entityId);
         } catch (Exception e) {
@@ -2764,7 +2775,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         List<String> loginNames = Lists.newArrayList();
         List<UserInfo> users = Lists.newArrayList();
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<UserInfo>> h = new BeanListHandler<UserInfo>(UserInfo.class);
             users = run.query(conn, "SELECT * FROM userInfo ",h);
@@ -2782,7 +2793,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         Connection conn = null;
         UserInfo user = null;
         try {
-            conn = DBHelper.getConnection();
+            conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<UserInfo> h = new BeanHandler<UserInfo>(UserInfo.class);
             user = run.query(conn, "select userinfo.* , user_position.whenadded from userinfo inner join user_position ON user_position.userId = userinfo.id where user_position.positionId = ?", h, id);
