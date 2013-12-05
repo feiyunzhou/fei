@@ -209,19 +209,16 @@ public class EntityDetailPage extends TemplatePage {
               }else if(entityName.equals("user_position")){
               	DAOImpl.deleteRecord(id, entityName);
               	setResponsePage(new UserPositionPage());
-              }
-                else if(entityName.equals("productcategory")){
+              }else if(entityName.equals("productcategory")){
                 	DAOImpl.deleteRecord(id, entityName);
                 	setResponsePage(new ProductPage());
-                }
-                else if(entityName.equals("product")){
+              }else if(entityName.equals("product")){
                 	DAOImpl.deleteProductRecord(id, entityName);
                 	setResponsePage(new ProductPage());
-                }
-                else if(entityName.equals("productline")){
+              }else if(entityName.equals("productline")){
                 	DAOImpl.deleteProductLineRecord(id, entityName);
                 	setResponsePage(new ProductPage());
-                }
+              }
             }
 
             @Override
@@ -236,7 +233,7 @@ public class EntityDetailPage extends TemplatePage {
                         setResponsePage(new EditDataPage(entityName,id,this_page.getClass(),pp));
                     }
             	}else{
-            		PageParameters pp = new PageParameters();
+                    PageParameters pp = new PageParameters();
                     pp.add("id", id);
                     pp.add("entityName", entityName);
                     setResponsePage(new EditDataPage(entityName,id,this_page.getClass(),pp));
@@ -253,6 +250,7 @@ public class EntityDetailPage extends TemplatePage {
                   String d = dateformat.format(time);
                   DAOImpl.doneRecord(id, entityName, d);
                   setResponsePage(new EntityDetailPage(entityName,id));
+     
               }
             }
             @Override

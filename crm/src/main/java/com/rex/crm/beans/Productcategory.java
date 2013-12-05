@@ -9,7 +9,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Product {
+public class Productcategory {
 	private int id;
 	private String name;
 	

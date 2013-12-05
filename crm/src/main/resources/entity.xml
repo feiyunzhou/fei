@@ -1056,7 +1056,8 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<picklist>contact_generalization_target_pl</picklist>
+				<!--<picklist>contact_generalization_target_pl</picklist>-->
+                                <picklist>productline</picklist>
 				<priority>2</priority>
 				<isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
@@ -1071,7 +1072,8 @@
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>2</priority>
+                                <isShow>false</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
 
@@ -2587,7 +2589,7 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<picklist>activity_feature_product_pl</picklist>
+				<picklist>productline</picklist>
 				<priority>1</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
@@ -3106,7 +3108,7 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<picklist>activity_feature_product_pl</picklist>
+				<picklist>productline</picklist>
 				<priority>2</priority>
 				<isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
@@ -3432,6 +3434,18 @@ select * from user_position
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+			</field>
+                        <field>
+				<name>val</name>
+				<isRequired>true</isRequired>
+				<display>产品线别名</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>                        
 			</field>
                         <field>
 				<name>description</name>
@@ -4107,7 +4121,7 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<picklist>activity_feature_product_pl</picklist>
+				<picklist>productline</picklist>
 				<priority>2</priority>
 				<isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>

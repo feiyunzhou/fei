@@ -7,6 +7,7 @@ import com.google.common.base.Splitter;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.Product;
 import com.rex.crm.beans.ProductLine;
+import com.rex.crm.beans.Productcategory;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 
@@ -64,7 +65,36 @@ public class TreeFactory {
                    String title = product.getName();
                    nd.setTitle(title);
                    nd.setType("product");  
-                   appendProductChildren(nd);
+                  // System.out.println("newnd:"+nd);
+                  //  System.out.println("newn:"+nd.getKey());
+                   appendProductCategoryChildren(nd);
+                   //appendProductChildren(nd);
+               }
+           }else{
+               node.setFolder(false);
+           }
+          
+        }
+         
+     }
+        private static void appendProductCategoryChildren(Node node){
+        
+        if(node != null){
+          String nodeId = node.getKey();
+        //  System.out.println("appendProductCategoryChildren:"+nodeId);
+           List<Productcategory> products = DAOImpl.getCategoryByLineId(nodeId);
+           if(products !=null && products.size()>0){
+               Node[] children = new Node[products.size()];
+               node.setFolder(true);
+               node.setChildren(children);
+               int i = 0;
+               for(Productcategory product:products){
+                   Node nd = new Node();
+                   children[i++] = nd;
+                   nd.setKey(String.valueOf(product.getId()));
+                   String title = product.getName();
+                   nd.setTitle(title);
+                   nd.setType("productcategory");  
                }
            }else{
                node.setFolder(false);
@@ -99,6 +129,7 @@ public class TreeFactory {
         }
         return root;   
     }
+    
     public static Node createAccountPositionTree(){
         Node root = new Node();
         root.setTitle("中国区");
@@ -142,8 +173,10 @@ public class TreeFactory {
                 children[i++] = nd;
                 nd.setKey(String.valueOf(productLine.getId()));
                 nd.setTitle(productLine.getName());
-                nd.setType("product"); 
+                nd.setType("productline"); 
                 appendProductChildren(nd);
+             //   System.out.println("nd:"+nd);
+             //    System.out.println("node.getKey():"+nd.getKey());
             }
             
         }else{

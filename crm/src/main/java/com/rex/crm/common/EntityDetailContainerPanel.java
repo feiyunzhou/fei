@@ -32,6 +32,7 @@ import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.admin.PositionPage;
+import com.rex.crm.admin.ProductPage;
 import com.rex.crm.admin.UserPage;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
@@ -53,7 +54,7 @@ public class EntityDetailContainerPanel   extends Panel {
         this(panelId);
     	initPage(entityName,id,previousPageClass,prePageParams);
     }
-    public void initPage(final String entityName, final String id,final Class previousPageClass, final PageParameters prePageParams){
+    public void initPage(final String entityName, final String id ,final Class previousPageClass, final PageParameters prePageParams){
        
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -72,7 +73,10 @@ public class EntityDetailContainerPanel   extends Panel {
         final Label promptLabel = new Label("prompt","提示:操作已成功！");
         add(promptButton);
         add(promptLabel);*/
+        
         long lid = Long.parseLong(id);
+         System.out.println("*entityName:"+entityName);
+         System.out.println("*id:"+id);
        // Map map = DAOImpl.getEntityData(entity.getName(), entity.getFieldNames(), lid);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
         if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
@@ -85,39 +89,37 @@ public class EntityDetailContainerPanel   extends Panel {
         add(new EntityDetailPanel("detailed",entity,map,id,3,entityName));
         
         
-        //set relations data
+        
         if(entityName.equalsIgnoreCase("productLine")||entityName.equalsIgnoreCase("product")||entityName.equalsIgnoreCase("productSpecification")){
-        	List<Relation> relations = Configuration.getRelationsByName(entityName);
-            
-//            RepeatingView relationRepeater = new RepeatingView("relationRepeater");
-//            add(relationRepeater);
-            
-            List<Field> paramFields = entity.getParamFields();
-            Map<String,Object> params = Maps.newHashMap();
-            for(Field f:paramFields){
-                params.put(entityName+"."+f.getName(), map.get(f.getName()));
-            }
-            if(map.get("level").equals(1)){
-            	List list = DAOImpl.queryEntityRelationList(relations.get(0).getSql(), id);
-            	add(new RelationDataPanel("relationPanel0",relations.get(0),entityName,list,String.valueOf(lid),params));
-            	List list1 = DAOImpl.queryEntityRelationList(relations.get(1).getSql(), id);
-            	add(new RelationDataPanel("relationPanel1",relations.get(1),entityName,list1,String.valueOf(lid),params));
-            	add(new EmptyPanel("relationPanel2"));
-            }else if(map.get("level").equals(2)){
-            	List list = DAOImpl.queryEntityRelationList(relations.get(2).getSql(), id);
-            	add(new EmptyPanel("relationPanel0"));
-            	add(new EmptyPanel("relationPanel1"));
-            	add(new RelationDataPanel("relationPanel2",relations.get(2),entityName,list,String.valueOf(lid),params));
-            }else{
-            	add(new EmptyPanel("relationPanel0"));
-            	add(new EmptyPanel("relationPanel1"));
-            	add(new EmptyPanel("relationPanel2"));
-            }
+         List<Relation> relations = Configuration.getRelationsByName(entityName);
+         
+         RepeatingView relationRepeater = new RepeatingView("relationRepeater");
+         add(relationRepeater);
+         
+         List<Field> paramFields = entity.getParamFields();
+         Map<String,Object> params = Maps.newHashMap();
+         for(Field f:paramFields){
+             params.put(entityName+"."+f.getName(), map.get(f.getName()));
+         }
+         
+         
+         for(Relation r:relations){
+           AbstractItem item = new AbstractItem(relationRepeater.newChildId());
+           relationRepeater.add(item);
+           logger.debug(r.getSql());
+           logger.debug("parms:"+id);
+           List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
+           item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),params));
+          }
         }else{
-        	add(new EmptyPanel("relationPanel0"));
-        	add(new EmptyPanel("relationPanel1"));
-        	add(new EmptyPanel("relationPanel2"));
+            WebMarkupContainer con =new WebMarkupContainer("relationRepeater");
+            add(con);
+            con.add(new EmptyPanel("relationPanel"));
+            con.setVisible(false);
+            
         }
+        
+        
 
          if(entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
@@ -131,7 +133,7 @@ public class EntityDetailContainerPanel   extends Panel {
              add(new TeamManPanel("teamPanel5",entityName,String.valueOf(lid),4));
          }
          else{
-        	 add(new EmptyPanel("teamPanel"));
+             add(new EmptyPanel("teamPanel"));
              add(new EmptyPanel("teamPanel2"));
              add(new EmptyPanel("teamPanel4"));
              add(new EmptyPanel("teamPanel5"));
@@ -169,30 +171,40 @@ public class EntityDetailContainerPanel   extends Panel {
                 }else if(entityName.equals("coaching")) {
                   DAOImpl.deleteRecord(id, entityName);
                   setResponsePage(new CoachingPage());
-              }else if(entityName.equalsIgnoreCase("userInfo")){
+                }else if(entityName.equalsIgnoreCase("userInfo")){
                     if(DAOImpl.deleteRecord(id, entityName)>0){
                        DAOImpl.updateCrmUserReport(id, "-1");
                     }
                     setResponsePage(new UserPage());
                 }else if(entityName.equals("crmuser")) {
                     DAOImpl.deleteRecord(id, entityName);
-                    
                     setResponsePage(new PositionPage());
+                }else if(entityName.equals("productcategory")){
+                	DAOImpl.deleteRecord(id, entityName);
+                	setResponsePage(new ProductPage());
+                }else if(entityName.equals("product")){
+                 	DAOImpl.deleteProductRecord(id, entityName);
+                	setResponsePage(new ProductPage());
+                }else if(entityName.equals("productline")){
+                	DAOImpl.deleteProductLineRecord(id, entityName);
+                	setResponsePage(new ProductPage());
                 }
             }
 
             @Override
             public void update() {
+                if(entityName.equals("product")||entityName.equals("productline")||entityName.equals("procuctcategory")){
+                   prePageParams.add("entityName", entityName);
+                }
                 setResponsePage(new EditDataPage(entityName,id,previousPageClass,prePageParams));
+                System.out.println("EntityDetailContainerPanel:"+prePageParams);
             }
             @Override
             public void doneBtn(){
               final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-               Date time = new Date();
+              Date time = new Date();
               String d = dateformat.format(time);
-              System.out.println("entityName:"+entityName);
               DAOImpl.doneRecord(id, entityName, d);
-             // setResponsePage(new EntityDetailContainerPanel(entityName,id));
             }
             @Override
             public void resetPassword(int userId){

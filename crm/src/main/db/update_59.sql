@@ -1,5 +1,7 @@
 use crmdb;
 drop table if Exists product;
+drop table if Exists productline;
+drop table if Exists productcategory;
 CREATE TABLE `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
@@ -36,5 +38,7 @@ CREATE TABLE `productline` (
   `modify_datetime` datetime DEFAULT NULL,
   `owner` varchar(50) DEFAULT NULL,
   `modifier` varchar(50) DEFAULT NULL,
+  `val` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+

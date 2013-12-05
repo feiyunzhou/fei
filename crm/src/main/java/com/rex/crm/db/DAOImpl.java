@@ -42,6 +42,7 @@ import com.rex.crm.beans.City;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.beans.Product;
 import com.rex.crm.beans.ProductLine;
+import com.rex.crm.beans.Productcategory;
 import com.rex.crm.beans.Province;
 import com.rex.crm.beans.UserInfo;
 import com.rex.crm.beans.UserPosition;
@@ -2301,8 +2302,7 @@ public class DAOImpl
             conn = DBHelper.getConnection();
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
-
-            products = run.query(conn, "SELECT * FROM product where parentid =?", h,lineId);
+            products = run.query(conn, "SELECT * FROM product where productlineId =?", h,lineId);
 
         } catch (SQLException e) {
             logger.error("failed to get all crm users", e);
@@ -2311,6 +2311,31 @@ public class DAOImpl
         }
         for(Product product:products){
         	Product u = new Product();
+            u.setName(product.getName());
+            u.setId(product.getId());
+            inferiors.add(u);
+        }
+        return inferiors;
+    }
+    
+     public static List<Productcategory> getCategoryByLineId(String lineId) {
+        List<Productcategory> inferiors = Lists.newArrayList();
+        List<Productcategory> products = Lists.newArrayList();
+        Connection conn = null;
+        try {
+            conn = DBHelper.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<Productcategory>> h = new BeanListHandler<Productcategory>(Productcategory.class);
+
+            products = run.query(conn, "SELECT * FROM productcategory where productId =?", h,lineId);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all crm users", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        for(Productcategory product:products){
+            Productcategory u = new Productcategory();
             u.setName(product.getName());
             u.setId(product.getId());
             inferiors.add(u);
@@ -2346,7 +2371,8 @@ public class DAOImpl
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
 
-            users = run.query(conn, "SELECT * FROM product where parentid = 0 ", h);
+          //  users = run.query(conn, "SELECT * FROM product where parentid = 0 ", h);
+             users = run.query(conn, "SELECT * FROM productline", h);
 
         } catch (SQLException e) {
             logger.error("failed to get all crm users", e);
@@ -2365,7 +2391,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<Product>> h = new BeanListHandler<Product>(Product.class);
 
-            products = run.query(conn, "SELECT * FROM product where parentid =? ", h,productLines);
+            products = run.query(conn, "SELECT * FROM product where productlineId =? ", h,productLines);
 
         } catch (SQLException e) {
             logger.error("failed to get all crm products", e);
