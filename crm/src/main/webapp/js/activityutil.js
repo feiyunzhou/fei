@@ -110,6 +110,7 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                       event.event_type_val= act.event_type_val;
                       event.id = act.id;
                       event.title = act.status;
+                      event.coachType= act.coachType;
                       event.start =  parseInt(act.starttime)/1000;
                       event.end = parseInt(act.endtime)/1000;
                       event.color = getEventByStatusAndType(act.act_status);

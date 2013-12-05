@@ -50,10 +50,12 @@
 		            console.log(calEvent);
 		            if(calEvent.event_type_val=='拜访'){
 		            	entityName = "activity"
-		            }else if (calEvent.event_type_val=='拜访辅导'){
-		            	entityName = "coaching";
-		            }else{
-		            	entityName = "willcoaching"
+		            }else if (calEvent.event_type_val=='辅导'){
+		            	if(calEvent.coachType=='拜访辅导'){
+		            		entityName = "coaching";
+		            	}else if(calEvent.coachType=='科室会辅导'){
+		            		entityName = "willcoaching"
+		            	}
 		            }
 		            location.href = event_view_page_url+'id='+calEvent.id+'&entityName='+entityName;
 

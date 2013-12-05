@@ -14,6 +14,7 @@ public class Activity implements java.io.Serializable {
 	private String title;
     private int event_type;
     private int status;
+    private int activity_coachType;
 	public Activity() {
 	}
 
@@ -83,6 +84,14 @@ public class Activity implements java.io.Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public int getActivity_coachType() {
+		return activity_coachType;
+	}
+
+	public void setActivity_coachType(int activity_coachType) {
+		this.activity_coachType = activity_coachType;
 	}
 	
 }

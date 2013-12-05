@@ -2192,6 +2192,7 @@ select * from user_position
 		<sql>
 			select * from (select * from (select activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2211,6 +2212,7 @@ select * from user_position
 		<sql-manager>
 			select * from (select * from (select activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2233,6 +2235,7 @@ select * from user_position
 
 			select * from (select activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2250,6 +2253,7 @@ select * from user_position
 		<sql-calendar>
 			select * from (select * from (select activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2269,6 +2273,7 @@ select * from user_position
 		<sql-manager-calendar>
 			select * from (select * from (select activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2290,6 +2295,7 @@ select * from user_position
 
 			select * from (select activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2305,7 +2311,7 @@ select * from user_position
 			DESC) as aActivity
 		</sql-admin-calendar>
 		<sql-ent>select * from (select activity.*\,activity.activity_type as
-			act_type\,activity.status as act_status\, activity.contactId as
+			act_type\,activity.activity_coachType as coachType\,activity.status as act_status\, activity.contactId as
 			contactName\, contact.accountId as accountName\, contact.grade as contactgrade\,contact.name as cn
 			from activity left join activitycrmuser on
 			activitycrmuser.activityId=activity.id LEFT JOIN contact on
@@ -2344,7 +2350,22 @@ select * from user_position
 				<isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-
+			
+			<field>
+				<name>coachType</name>
+				<display>活动类型</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<picklist>activity_coachType_pl</picklist>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>title</name>
 				<display>活动名称</display>
@@ -2771,6 +2792,7 @@ select * from user_position
 			select distinct * from (select * from (select activity.crmuserId as
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2791,13 +2813,14 @@ select * from user_position
 		    left join user_position as auser_position on auser_position.positionId=acrmuser.id
 		    left join userinfo as auserinfo on auser_position.userId=auserinfo.id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
-			where activitycrmuser.crmuserid = ?) as aactivity where (event_type =
-			2) or (event_type = 3) order by whenadded DESC) as aActivity
+			where activitycrmuser.crmuserid = ?) as aactivity where event_type =
+			2 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
 			select distinct * from (select * from (select activity.crmuserId as
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2819,8 +2842,8 @@ select * from user_position
 			left join user_position as auser_position on auser_position.positionId=ccrmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
 		    left join userinfo as auserinfo on auserinfo.id=auser_position.userId
-			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
-			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
+			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type
+			= 2 order by whenadded DESC) as aActivity
 		</sql-manager>
 		<sql-manager-coaching>
 		  select * from (select * from crmuser  where crmuser.reportto = ?) as crmUSER
@@ -2829,6 +2852,7 @@ select * from user_position
 			select distinct * from (select activity.crmuserId as crmuserName\,
 			activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -2853,7 +2877,7 @@ select * from user_position
 		<sql-ent>select * from (select activity.crmuserId as crmuserName\,
 			activity.coacheeId as coacheeName\,
 			activity.*\,activity.activity_type as
-			act_type\,activity.status as
+			act_type\,activity.activity_coachType as coachType\,activity.status as
 			act_status\, activity.contactId as
 			contactName\, contact.accountId as
 			accountName\, userinfo.id as coachUserinfoName\,auserinfo.id as coacheeUserInfoName\,contact.name as cn
@@ -2896,7 +2920,7 @@ select * from user_position
 			</field>
 			
 			<field>
-				<name>event_type</name>
+				<name>coachType</name>
 				<display>辅导类型</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
@@ -2906,7 +2930,7 @@ select * from user_position
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
-				<picklist>activity_event_type_pl</picklist>
+				<picklist>activity_coachType_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
@@ -3536,6 +3560,7 @@ select * from user_position
 			select distinct * from (select * from (select activity.crmuserId as
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -3556,13 +3581,14 @@ select * from user_position
 			left join crmuser as acrmuser on acrmuser.id=crmuser.reportto
 		    left join user_position as auser_position on auser_position.positionId=acrmuser.id
 		    left join userinfo as auserinfo on auser_position.userId=auserinfo.id
-			where activitycrmuser.crmuserid = ?) as aactivity where (event_type =
-			2) or (event_type = 3) order by whenadded DESC) as aActivity
+			where activitycrmuser.crmuserid = ?) as aactivity where event_type =
+			2 order by whenadded DESC) as aActivity
 		</sql>
 		<sql-manager>
 			select distinct * from (select * from (select activity.crmuserId as
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -3584,8 +3610,8 @@ select * from user_position
 			left join user_position as auser_position on auser_position.positionId=ccrmuser.id
 		    left join userinfo on userinfo.id=user_position.userId
 		    left join userinfo as auserinfo on auserinfo.id=auser_position.userId
-			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where (event_type
-			= 2) or (event_type = 3) order by whenadded DESC) as aActivity
+			where crmuser.reportto = ? or crmuser.id = ?)as aactivity where event_type
+			= 2 order by whenadded DESC) as aActivity
 		</sql-manager>
 		<sql-manager-coaching>
 		  select * from (select * from crmuser  where crmuser.reportto = ?) as crmUSER
@@ -3594,6 +3620,7 @@ select * from user_position
 			select distinct * from (select activity.crmuserId as crmuserName\,
 			activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
+			activity.activity_coachType as coachType\,
 			activity.status as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
@@ -3618,7 +3645,7 @@ select * from user_position
 		<sql-ent>select * from (select activity.crmuserId as crmuserName\,
 			activity.coacheeId as coacheeName\,
 			activity.*\,activity.activity_type as
-			act_type\,activity.status as
+			act_type\,activity.activity_coachType as coachType\,activity.status as
 			act_status\, activity.contactId as
 			contactName\, contact.accountId as
 			accountName\, userinfo.id as coachUserinfoName\,auserinfo.id as coacheeUserInfoName\,contact.name as cn
@@ -3662,8 +3689,8 @@ select * from user_position
 			</field>
 			
 			<field>
-				<name>event_type</name>
-				<display>拜访类型</display>
+				<name>coachType</name>
+				<display>辅导类型</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -3672,7 +3699,7 @@ select * from user_position
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
-				<picklist>activity_event_type_pl</picklist>
+				<picklist>activity_coachType_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			

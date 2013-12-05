@@ -1381,6 +1381,8 @@ public class DAOImpl
            valuesql = valuesql + "," +2;
            fieldssql = fieldssql + ",status";
            valuesql = valuesql + "," +1;
+           fieldssql = fieldssql + ",activity_coachType";
+           valuesql = valuesql + "," +1;
          }else if(entityName.equals("activity")){
         	 fieldssql = fieldssql.replaceAll("accountId,","").trim();
         	 fieldssql = fieldssql + ",crmuserId";
@@ -1393,9 +1395,11 @@ public class DAOImpl
          }else if(entityName.equals("willcoaching")){
         	 entityName= "activity";
              fieldssql = fieldssql + ",event_type";
-             valuesql = valuesql + "," +3;
+             valuesql = valuesql + "," +2;
              fieldssql = fieldssql + ",status";
              valuesql = valuesql + "," +1;
+             fieldssql = fieldssql + ",activity_coachType";
+             valuesql = valuesql + "," +2;
          }
          logger.debug("fieldssql sql is:"+fieldssql);
          logger.debug("valuesql sql is:"+valuesql);
