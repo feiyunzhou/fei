@@ -28,12 +28,16 @@ public class PageFactory {
         	return new AlertPage();
         }else if(name.equalsIgnoreCase("productline")||name.equalsIgnoreCase("product")||name.equalsIgnoreCase("productcategory")){
         	return new ProductPage();
-               // setResponsePage(new EntityDetailPage(schema.getName(),entityId));
+        }else if(name.equalsIgnoreCase("province")||name.equalsIgnoreCase("city")){
+        	return new AreaPage();
         }
         else{
             return new HomePage();
         }
     }
+     public static Page createPageToDetail(String EntityName,String id){
+            return new EntityDetailPage(EntityName,id);
+     }
     /**
      * @param args
      */

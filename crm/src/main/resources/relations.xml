@@ -113,4 +113,11 @@
 		<sql>select * from productcategory where productid=?</sql>
 		<to>productcategory</to>
 	</relation>
+         <relation>
+		<from>province</from>
+		<name>provincecity</name>
+		<display>城市列表</display>
+		<sql>select * from city where parentId=?</sql>
+		<to>city</to>
+	</relation>
 </relations>

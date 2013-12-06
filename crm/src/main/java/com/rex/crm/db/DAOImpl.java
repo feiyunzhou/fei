@@ -575,7 +575,6 @@ public class DAOImpl
     }
 
     public static List queryEntityRelationList(String sql, String... params) {
-        logger.debug(sql);
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
@@ -589,7 +588,6 @@ public class DAOImpl
         } finally {
             DBHelper.closeConnection(conn);
         }
-        System.out.println("sql:"+sql);
         return lMap;
     }
 
@@ -806,8 +804,12 @@ public class DAOImpl
     
     
     public static String queryRelationDataById(final String tableName, final String id){
-        String query = "select id, name from " + tableName + " where id=? ";
-        // logger.debug(query);
+        String query="";
+        if(tableName.equals("province")){
+             query = "select id, val from " + tableName + " where id=? ";
+        }else{
+             query = "select id, name from " + tableName + " where id=? ";
+        }
         String result = "";
         Connection conn = null;
         Map map = null;
@@ -816,7 +818,12 @@ public class DAOImpl
             QueryRunner run = new QueryRunner();
             map = (Map) run.query(conn, query, new MapHandler(), id);
             if (map != null) {
-                Object value = map.get("name");
+                 Object value=null;
+                if(tableName.equals("province")){
+                     value = map.get("val");
+                }else{
+                     value = map.get("name");
+                }
                 if (value != null) {
                     result = (String) value;
                 }
@@ -827,7 +834,6 @@ public class DAOImpl
         } finally {
             DBHelper.closeConnection(conn);
         }
-
         return result;
     }
     
@@ -1379,7 +1385,7 @@ public class DAOImpl
         return false;
     }
     
-    public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){        
+    public static long createNewRecord(String entityName, List<String> fieldNames, List<String> values,String userId){   
          String fieldssql = Joiner.on(",").join(fieldNames);
          String valuesql = Joiner.on(",").join(values);
          if(entityName.equals("coaching")){
@@ -1450,7 +1456,6 @@ public class DAOImpl
         return key;
 
     }
-    
 
     public static void insert2UserRelationTable(String entityName,String userId,String positionId,String coacheePositionId,String entityId){
         String sql = null;
@@ -1682,6 +1687,15 @@ public class DAOImpl
               
             deleteRecord(id,entityName);
           }
+        
+    }
+     
+     public static void deleteRecordFather(String id,String entityName,String sonEntity,String sonEntityId) { 
+             List<Map<String,Object>> grandson=DAOImpl.queryEntityRelationList("Select id from "+sonEntity+" where "+sonEntityId+"="+id);
+             for(int j=0;j<grandson.size();j++){
+                      deleteRecord(grandson.get(j).get("id").toString(),sonEntity);
+              }  
+            deleteRecord(id,entityName); 
         
     }
      public static void deleteProductLineRecord(String id,String entityName) { 
@@ -2810,6 +2824,14 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
             String sql="select "+target+" from "+entityName+" where id="+id;
             List<Map<String,Object>> lt=DAOImpl.queryEntityRelationList(sql);
             result=String.valueOf(lt.get(0).get(target).toString());
+            return result;
+     }
+     
+     public static String getCreateRecordByEntity(String entityName){
+            String result;
+            String sql="select Max(id) as target from "+entityName+"";
+            List<Map<String,Object>> lt=DAOImpl.queryEntityRelationList(sql);
+            result=String.valueOf(lt.get(0).get("target").toString());
             return result;
      }
     

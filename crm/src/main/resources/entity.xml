@@ -3423,6 +3423,7 @@ select * from user_position
 				<isEditable>false</isEditable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
+                                <isParam>true</isParam>
 			</field>
 			<field>
 				<name>name</name>
@@ -3435,6 +3436,7 @@ select * from user_position
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+                                <isParam>true</isParam>
 			</field>
                         <field>
 				<name>val</name>
@@ -3535,6 +3537,7 @@ select * from user_position
 				<isEditable>false</isEditable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
+                                <isParam>true</isParam>
 			</field>
                         <field>
 				<name>name</name>
@@ -3547,6 +3550,7 @@ select * from user_position
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+                                <isParam>true</isParam>
 			</field>
                         
 			<field>
@@ -5808,6 +5812,115 @@ select * from user_position
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+		</fields>
+	</entity>
+        <entity>
+		<name>province</name>
+		<display>区域管理</display>
+		<filterField></filterField>
+		<sql>SELECT * FROM province</sql>
+                <sql-admin>select * from province</sql-admin>
+		<sql-ent>select * from province where id = ?</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+                                <isParam>true</isParam>
+			</field>
+			<field>
+				<name>val</name>
+				<isRequired>true</isRequired>
+				<display>省份名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+                                <isParam>true</isParam>
+			</field>
+                        <field>
+				<name>externalId</name>
+				<isRequired>true</isRequired>
+				<display>邮编</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>   			
+		</fields>
+	</entity>
+         <entity>
+		<name>city</name>
+		<display>区域管理</display>
+		<filterField></filterField>
+		<sql>SELECT * FROM city</sql>
+                <sql-admin>select * from city</sql-admin>
+		<sql-ent>select * from city where id = ?</sql-ent>
+		<fields>
+			<field>
+				<name>id</name>
+				<display>ID</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>0</priority>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
+				<name>val</name>
+				<isRequired>true</isRequired>
+				<display>城市名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field> 
+                        <field>
+				<name>externalId</name>
+				<isRequired>true</isRequired>
+				<display>邮编</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>    
+                        
+			<field>
+				<name>parentId</name>
+				<display>所属省份</display>
+				<isRequired>true</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<picklist>province</picklist>
+                                <default-value-type>var</default-value-type>
+				<!--<default-value>9</default-value>-->
+                                <default-value>province.id\,province.val</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 		</fields>

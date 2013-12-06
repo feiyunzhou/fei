@@ -27,6 +27,7 @@ import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
 import com.rex.crm.AlertPage;
+import com.rex.crm.AreaPage;
 import com.rex.crm.CoachingPage;
 import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
@@ -105,15 +106,16 @@ public class EntityDetailPage extends TemplatePage {
         add(div);
         long lid = Long.parseLong(id);
         Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(lid));
-        System.out.println("entityName:"+entity.getName());
         if(entity.getName().equals("activity")||entity.getName().equals("coaching")||entity.getName().equals("willcoaching")){
         	add(new Label("name",String.valueOf(map.get("title"))));
         }else if(entity.getName().equals("crmuser")){
             add(new Label("name",String.valueOf(map.get("code"))));
         }else if(entity.getName().equals("user_position")){
               add(new Label("name",String.valueOf(map.get("userId"))));
+        }else if(entity.getName().equals("province")||entity.getName().equals("city")){
+              add(new Label("name",String.valueOf(map.get("val"))));
         }else{
-        	add(new Label("name",String.valueOf(map.get("name"))));
+              add(new Label("name",String.valueOf(map.get("name"))));
         }
         
         add(new EntityDetailPanel("detailed",entity,map,id,3,entityName));
@@ -201,14 +203,14 @@ public class EntityDetailPage extends TemplatePage {
                     }
                     setResponsePage(new UserPage());
               }else if(entityName.equals("crmuser")) {
-                    DAOImpl.deleteRecord(id, entityName);
-                    setResponsePage(new PositionPage());
+                        DAOImpl.deleteRecord(id, entityName);
+                        setResponsePage(new PositionPage());
               }else if(entityName.equals("alert")){
                 	DAOImpl.deleteRecord(id, entityName);
                 	setResponsePage(new AlertPage());
               }else if(entityName.equals("user_position")){
-              	DAOImpl.deleteRecord(id, entityName);
-              	setResponsePage(new UserPositionPage());
+              	        DAOImpl.deleteRecord(id, entityName);
+              	        setResponsePage(new UserPositionPage());
               }else if(entityName.equals("productcategory")){
                 	DAOImpl.deleteRecord(id, entityName);
                 	setResponsePage(new ProductPage());
@@ -218,6 +220,12 @@ public class EntityDetailPage extends TemplatePage {
               }else if(entityName.equals("productline")){
                 	DAOImpl.deleteProductLineRecord(id, entityName);
                 	setResponsePage(new ProductPage());
+              }else if(entityName.equals("province")){
+                        DAOImpl.deleteRecordFather(id,entityName,"city","parentId");
+                	setResponsePage(new AreaPage());
+              }else if(entityName.equals("city")){
+                	DAOImpl.deleteRecord(id, entityName);
+                	setResponsePage(new AreaPage());
               }
             }
 
@@ -250,7 +258,6 @@ public class EntityDetailPage extends TemplatePage {
                   String d = dateformat.format(time);
                   DAOImpl.doneRecord(id, entityName, d);
                   setResponsePage(new EntityDetailPage(entityName,id));
-     
               }
             }
             @Override
@@ -290,10 +297,9 @@ public class EntityDetailPage extends TemplatePage {
                 }
             }
          };
-         
+
 
          add(new CRUDPanel("operationBar",entity.getName(),id, CRMUtility.getPermissionForEntity(roleId, entity.getName()),actionListener));
-         
     }
 
 }

@@ -82,6 +82,8 @@ public class EditDataFormPanel extends Panel {
 		super(id);
         if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equals("willcoaching")){
       	   add(new Label("name",String.valueOf(data.get("title"))));
+         }else if(schema.getName().equals("province")||schema.getName().equals("city")){
+              add(new Label("name",String.valueOf(data.get("val"))));
          }else{
       	   add(new Label("name",String.valueOf(data.get("name"))));
   	   }

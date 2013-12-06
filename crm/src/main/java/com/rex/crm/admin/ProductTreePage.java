@@ -12,12 +12,17 @@ import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
 import com.google.gson.Gson;
+import com.rex.crm.common.Entity;
 import com.rex.crm.common.EntityDetailContainerPanel;
 import com.rex.crm.common.EntityDetailPage;
+import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.tree.Node;
 import com.rex.crm.common.tree.ProductTreePanel;
 import com.rex.crm.common.tree.TreeFactory;
 import com.rex.crm.common.tree.TreePanel;
+import com.rex.crm.db.DAOImpl;
+import com.rex.crm.util.Configuration;
+import java.util.List;
 /**
  * @author Feiyun Zhou
  */
@@ -57,9 +62,16 @@ public class ProductTreePage extends AdminTemplatePage
       if(positionId !=null){
           PageParameters pp = new PageParameters();
           pp.add("positionId", positionId);
-          EntityDetailContainerPanel panel = new EntityDetailContainerPanel("datalist",entityName,positionId,this.getClass(),pp);
-         // EntityDetailPage panel=new EntityDetailPage(entityName,positionId);
-          add(panel);
+          if(positionId.equals("-1")){
+              Map<String, Entity> entities = Configuration.getEntityTable();
+              final Entity entity = entities.get("productline");
+              List tdata = DAOImpl.queryEntityRelationList(entity.getSql());
+              add(new PageableTablePanel("datalist", entity, tdata, null));
+              //setResponsePage(new ProductPage());
+          }else{
+              EntityDetailContainerPanel panel = new EntityDetailContainerPanel("datalist",entityName,positionId,this.getClass(),pp);
+              add(panel);
+          }
       }else{
           add(new EmptyPanel("datalist"));
       }

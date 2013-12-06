@@ -229,6 +229,12 @@ public class SelectEntryPage extends WebPage {
                     maplist  = DAOImpl.queryEntityRelationList(sql);
 
                 }
+                else if (relationTableName.equalsIgnoreCase("province")) {
+                    String sql = assembleSearchingSQL(roleId, entity);
+                    logger.debug("d；"+sql);
+                    maplist  = DAOImpl.queryEntityRelationList(sql);
+
+                }
                 //this.setResponsePage(cls, parameters)
                 
                 setResponsePage(new SelectEntryPage(maplist,relationTableName,tragetEntity,excludeId,target));
@@ -309,8 +315,11 @@ public class SelectEntryPage extends WebPage {
         for(Field sf:searchableFields){
             likequery = likequery + " OR "+ sf.getName() + joint;
         }
-        
-          sql =  sql + " where name like '%"+search_target+"%' " + likequery ;
+        if(entity.getName().toString().equals("province")){
+            sql =  sql + " where val like '%"+search_target+"%' " + likequery ;
+        }else{
+         sql =  sql + " where name like '%"+search_target+"%' " + likequery ;
+        }
         return sql;
     }
 }
