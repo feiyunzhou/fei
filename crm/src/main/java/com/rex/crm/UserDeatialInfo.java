@@ -200,7 +200,13 @@ public class UserDeatialInfo extends UserInfoSettingPage {
                     }
                 }
                 int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
+                UserInfo userinfo = DAOImpl.getUserInfoById(userId);
                 List<String> loginNames =DAOImpl.getAllLoginNames();
+    			for(int i =0;i<loginNames.size();i++){
+    				if(loginNames.get(i).equals(userinfo.getLoginName())){
+    					loginNames.remove(i);
+    				}
+    			}
                 if(loginNames.contains(loginName)){
                 	errordiv.add(new AttributeAppender("style",new Model("display:block"),";"));
                 	errorgroup.add(new AttributeAppender("style",new Model("display:block"),";"));
