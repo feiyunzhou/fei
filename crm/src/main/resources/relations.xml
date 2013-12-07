@@ -54,6 +54,37 @@
 	
 	<relation>
 		<from>contact</from>
+		<name>contataudit</name>
+		<display>医生修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "contact" and record_id = ?) as act </sql>
+		<to>data_audit</to>
+	</relation>
+	
+	<relation>
+		<from>account</from>
+		<name>accountaudit</name>
+		<display>医院修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "account" and record_id = ?) as act </sql>
+		<to>data_audit</to>
+	</relation>
+	
+	<relation>
+		<from>userinfo</from>
+		<name>userinfoaudit</name>
+		<display>用户修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "userinfo" and record_id = ?) as act </sql>
+		<to>data_audit</to>
+	</relation>
+	<relation>
+		<from>crmuser</from>
+		<name>crmuseraudit</name>
+		<display>岗位修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "crmuser" and record_id = ?) as act </sql>
+		<to>data_audit</to>
+	</relation>
+	
+	<relation>
+		<from>contact</from>
 		<name>visitingOfContact</name>
 		<display>拜访</display>
 		<sql>

@@ -50,12 +50,9 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.rex.crm.PageFactory;
 import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
-import com.rex.crm.TemplatePage;
 import com.rex.crm.beans.Choice;
-import com.rex.crm.beans.UserInfo;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
@@ -64,9 +61,7 @@ public class EditDataFormPanel extends Panel {
 	private static final Logger logger = Logger.getLogger(EditDataFormPanel.class);
 	private static final long serialVersionUID = -2613412283023068638L;
 	private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap(); 
-
 	private static int NUM_OF_COLUMN = 1;
-	
     private Map<String, IModel> parentModels = Maps.newHashMap();
     private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
 
@@ -88,7 +83,8 @@ public class EditDataFormPanel extends Panel {
       	   add(new Label("name",String.valueOf(data.get("name"))));
   	   }
 		//final Map<String, IModel> models = Maps.newHashMap();
-		final Map<String, IModel> fieldNameToModel = Maps.newHashMap();
+		final Map<String, IModel> fieldNameToModel = Maps.newLinkedHashMap();
+		final Map<String, IModel> modifyNameToModel = Maps.newLinkedHashMap();
 		final String posId = ((SignIn2Session) getSession()).getPositionId();
 	    final String userName = ((SignIn2Session) getSession()).getUser();
 	    final String userId = ((SignIn2Session) getSession()).getUserId();
@@ -161,6 +157,8 @@ public class EditDataFormPanel extends Panel {
                         continue;
                     }
                     final Field currentField = visibleFields.get(i * NUM_OF_COLUMN + j / 2);
+                    System.out.println("num   "+i * NUM_OF_COLUMN + j / 2);
+                    System.out.println("currentFieldcurrentField   "+currentField.getName());
                     if (currentField.getPicklist() != null) {
                         if (j % 2 == 0) {
                         	TextFragment textField = new TextFragment("editdata", "textFragment", this, currentField.getDisplay() + ":");
@@ -229,7 +227,7 @@ public class EditDataFormPanel extends Panel {
                                     childDropDownComponent.put(currentField.getName(), selector);
                                 }
 
-                             
+                                modifyNameToModel.put(currentField.getDisplay(), selected_model);
                                 fieldNameToModel.put(currentField.getName(), selected_model);
                                 columnitem.add(selector);
 
@@ -249,7 +247,7 @@ public class EditDataFormPanel extends Panel {
                                 }
                                 IModel choiceModel = new Model(Long.parseLong(value));
 
-                               
+                                modifyNameToModel.put(currentField.getDisplay(), choiceModel);
                                 fieldNameToModel.put(currentField.getName(), choiceModel);
                                 columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids, list, choiceModel,currentField,roleId));
                             }
@@ -284,7 +282,7 @@ public class EditDataFormPanel extends Panel {
                             if (et != null && et.get("name") != null) {
                                 value = (String) et.get("name");
                             }
-                         
+                            modifyNameToModel.put(currentField.getDisplay(), choiceModel);
                             fieldNameToModel.put(fn, choiceModel);
                             columnitem.add(new RelationTableSearchFragment("editdata", "relationTableSearchFragment", this, currentField.getRelationTable(), schema.getName(), value, choiceModel, entityId));
                         }
@@ -300,6 +298,7 @@ public class EditDataFormPanel extends Panel {
                 			String value = (String) data.get(currentField.getName());
                 			IModel<String> textModel = new Model<String>(value);
                 			RadioChoiceFragment RadioChoice = new RadioChoiceFragment("editdata", "radioChoiceFragment", this,textModel,value,currentField);
+                			modifyNameToModel.put(currentField.getDisplay(), textModel);
                 			fieldNameToModel.put(currentField.getName(),textModel);
                 			columnitem.add(RadioChoice);
                 		}
@@ -319,15 +318,14 @@ public class EditDataFormPanel extends Panel {
                             rawvalue = (rawvalue == null) ? "" : rawvalue;
                             String value = CRMUtility.formatValue(currentField.getFormatter(), String.valueOf(rawvalue));
                             value = (value == null) ? "" : value;
-
                             if (currentField.getDataType().equalsIgnoreCase("textarea")) {
                                 IModel<String> textModel = new Model<String>(value);
-                                
+                                modifyNameToModel.put(currentField.getDisplay(), textModel);
                                 fieldNameToModel.put(currentField.getName(), textModel);
                                 columnitem.add(new Textarea("editdata", "textAreaFragment", this, textModel,currentField));
                             }else if(currentField.getDataType().equals("bjgtextarea")){
                             	IModel<String> textModel = new Model<String>(value);
-                                
+                            	modifyNameToModel.put(currentField.getDisplay(), textModel);
                                 fieldNameToModel.put(currentField.getName(), textModel);
                                 columnitem.add(new BigtextareaFrag("editdata", "bjgtextAreaFragment", this, textModel,currentField));
                             } else if(currentField.getDataType().equals("datetime-local")){
@@ -337,12 +335,14 @@ public class EditDataFormPanel extends Panel {
                                  value = dateformat.format(new Date(Long.parseLong(str_timestamp)));
                                  IModel<String> textModel = new Model<String>(value);
                                 //textModel = new Model<String>(date_value);
+                                modifyNameToModel.put(currentField.getDisplay(), textModel);
                                 fieldNameToModel.put(currentField.getName(), textModel);
                                 TextInputFragment textInput = new TextInputFragment("editdata", "textInputFragment", this, textModel,value, currentField,schema,roleId);
                                 columnitem.add(textInput);
                                 
                             }else {
                                 IModel<String> textModel = new Model<String>("");
+                                modifyNameToModel.put(currentField.getDisplay(), textModel);
                                 fieldNameToModel.put(currentField.getName(), textModel);
                                 TextInputFragment  textInput = new TextInputFragment("editdata", "textInputFragment", this, textModel, value, currentField,schema,roleId);
                                 columnitem.add(textInput);
@@ -358,25 +358,35 @@ public class EditDataFormPanel extends Panel {
             @Override
             public void onSubmit() {
             	System.out.println("save");
-            	 if(!saveEntity(fieldNameToModel,data,schema,entityId,userName)){
-                 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
-                 	group.add(new AttributeAppender("style",new Model("display:block"),";"));
-             		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
-             		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-                 }else{
-	                if(!prePageParams.isEmpty()){
-	        		    setResponsePage(previousPageClass,prePageParams);
-	        		}else{
-	        		  setResponsePage(new EntityDetailPage(schema.getName(),entityId));
-	        		}
-                 }
+            	 try {
+					if(!saveEntity(fieldNameToModel,modifyNameToModel,data,schema,entityId,userName)){
+					 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+					 	group.add(new AttributeAppender("style",new Model("display:block"),";"));
+						promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+						promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+					 }else{
+					    if(!prePageParams.isEmpty()){
+						    setResponsePage(previousPageClass,prePageParams);
+						}else{
+						  setResponsePage(new EntityDetailPage(schema.getName(),entityId));
+						}
+					 }
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 		Button button = new Button("saveAndNew"){
 			@Override
 			public void onSubmit() {
 				System.out.println("saveAndNew!");
-                saveEntity(fieldNameToModel,data,schema,entityId,userName);
+                try {
+					saveEntity(fieldNameToModel,modifyNameToModel,data,schema,entityId,userName);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 setResponsePage(new CreateDataPage(schema.getName(),null));
 			}
 		};
@@ -400,11 +410,13 @@ public class EditDataFormPanel extends Panel {
 		super(id, model);
 	}
     
-	public static boolean saveEntity(Map<String, IModel> fieldNameToModel, final Map data,Entity schema,String entityId,String userName ){
+	@SuppressWarnings("null")
+	public  boolean saveEntity(Map<String, IModel> fieldNameToModel,Map<String, IModel> modifyNameToModel, final Map data,Entity schema,String entityId,String userName ) throws Exception{
 		logger.debug("the form was submitted!");
 		logger.debug(fieldNameToModel);
 		List<String> values = Lists.newArrayList();
 		List<String> names = Lists.newArrayList();
+		//List<String> modifyNames = Lists.newArrayList();
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		int total_score = 0;
 		Long daypart = 0l;
@@ -421,16 +433,17 @@ public class EditDataFormPanel extends Panel {
 			names.add(k);
 			Field field = schema.getFieldByName(k);
 			IModel currentModel = fieldNameToModel.get(k);
-            logger.debug("currentField:"+field.getName());
+//            logger.debug("currentModelcurrentModelcurrentModelcurrentModel:"+currentModel.getObject());
+//            logger.debug("currentField:"+field.getName());
             if(field.getPriority()==5){
             	total_score+=Integer.parseInt(fieldNameToModel.get(k).getObject().toString());
             }
             //判断filed是否能为空，若为空则给出提示，不执行保存事件，若不为空在执行保存事件
 			Object obj = currentModel.getObject() ;
 			String value = null;
+			String modifyValue = null;
 			if(obj!=null){
                 if (obj instanceof String) {
-
                     if (field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() != null && !field.getFormatter().isEmpty()) {
                         // if the filed has formatter, we guess the
                         // field saved in data base is in long
@@ -456,8 +469,7 @@ public class EditDataFormPanel extends Panel {
                        value = String.valueOf(date.getTime());
 
                     } else {
-                        value = "'" + (String)obj + "'";
-                      
+                    	value = "'" + (String)obj + "'";
                     }
 
                 } else if (obj instanceof Choice) {
@@ -474,12 +486,14 @@ public class EditDataFormPanel extends Panel {
                                  productlineId=DAOImpl.getTargetById("productlineId",value,"product");
                                   }   
 	}
+
 		
 		 List<Field> autoFields = schema.getAutoFields();
          for(Field f:autoFields){
             
            if(f.getName().equalsIgnoreCase("modify_datetime")){
                names.add(f.getName());
+               
              values.add("'"+dateformat.format(new Date())+"'");
            }
            
@@ -511,6 +525,8 @@ public class EditDataFormPanel extends Panel {
                        
                         DAOImpl.updateProductlineWhenEditcategory(entityId, productlineId);	  
                      }
+			recordValueChanges(data, schema, entityId, userName, values, names,
+					table_name);
 		  DAOImpl.updateRecord(entityId,table_name,names,values);
 		  return true;
 		}else{
@@ -523,13 +539,54 @@ public class EditDataFormPanel extends Panel {
             if(loginNames.contains(loginName)){
             	return false;
             }else{
-            	if(String.valueOf(data.get("positionId")).equals(String.valueOf(fieldNameToModel.get("positionId")))){
-        		    DAOImpl.updateRecord(entityId,table_name,names,values);
-        		  }
+            	recordValueChanges(data, schema, entityId, userName, values,
+						names, table_name);
+    			
         		  DAOImpl.updateRecord(entityId,table_name,names,values);
         		  return true;
             }
        }
+	}
+	private void recordValueChanges(final Map data, Entity schema,
+			String entityId, String userName, List<String> values,
+			List<String> names, String table_name) throws Exception {
+		String valuebefore;
+		for(int i=0;i<names.size();i++){
+			String field_name = names.get(i);
+			Field fld = schema.getFieldByName(field_name);
+		    if(!fld.getFieldType().equals("auto")){
+		    	String val = values.get(i);
+				
+				valuebefore = data.get(field_name)==null?null:String.valueOf(data.get(field_name));
+				
+				boolean isChanged = false;
+				if(fld.getPicklist()!=null){
+					if(val!=null){
+					    if(!val.equalsIgnoreCase(valuebefore)) isChanged=true;
+					}else{
+						if(valuebefore != null) isChanged = true;
+						
+					}
+		    		val = DAOImpl.queryPickListByIdCached(fld.getPicklist(), val);
+		    		valuebefore =  DAOImpl.queryPickListByIdCached(fld.getPicklist(), valuebefore);
+		    	}else{
+					    if(val!=null){
+					    	val = val.substring(1, val.length()-1);
+							logger.debug("val is:"+val);
+						  if (!val.equalsIgnoreCase( valuebefore)) {
+							isChanged = true;
+						  }
+					    }else{
+					    	if(valuebefore != null) isChanged = true;
+					    }
+					
+		    	}
+				
+				if(isChanged){
+					DAOImpl.insertAudit(table_name,fld.getDisplay(),valuebefore,val,entityId,userName);
+					}
+				}
+			}
 	}
     private class TextFragment extends Fragment {
 
@@ -631,9 +688,6 @@ public class EditDataFormPanel extends Panel {
                             }
                         
                     }
-                    
-                    
-                   
                     
                  });
              }

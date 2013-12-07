@@ -67,10 +67,11 @@
             	checkTime = false;
             }
             if(isValidated&&checkflag&&checkTime){
-            	if($("#crmuser_name").length > 0 && jQuery.isEmptyObject($("#crmuser_name").val())){
-              	  	alert("请查询添入岗位编码！");
-                    return false;
-                }else if($("#contact_name").length > 0 && jQuery.isEmptyObject($("#contact_name").val())){
+//             	if($("#crmuser_name").length > 0 && jQuery.isEmptyObject($("#crmuser_name").val())){
+//               	  	alert("请查询添入岗位编码！");
+//                     return false;
+//                 }else
+                if($("#contact_name").length > 0 && jQuery.isEmptyObject($("#contact_name").val())){
               	  	alert("请查询添入拜访医生！");
                     return false;
                 }else if($("#userInfo_name").length > 0 && jQuery.isEmptyObject($("#userInfo_name").val())){

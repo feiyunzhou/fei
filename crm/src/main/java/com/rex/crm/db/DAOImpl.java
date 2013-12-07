@@ -438,6 +438,25 @@ public class DAOImpl
 
     }
     
+    public static void insertAudit(String entityName, String columnName,String oldValue,String newValue,String entityId,String userName) throws Exception {
+            Connection conn = null;
+            long ts= System.currentTimeMillis();
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date_value = dateformat.format(ts);
+            try {
+                conn = DBHelper.getConnection();
+                QueryRunner run = new QueryRunner();
+                int inserts = run.update(conn, "INSERT INTO data_audit (entity_name,record_id,modify_time,modifier,column_name,old_value,new_value) VALUES (?,?,?,?,?,?,?)",entityName,entityId,date_value,userName,columnName,oldValue,newValue);
+
+                logger.info(String.format("%s row inserted into insertRelationOfAccountIDCRMUserID!", inserts));
+
+            } catch (SQLException e) {
+                logger.error("failed to insertRelationOfAccountIDCRMUserID", e);
+            } finally {
+                DBHelper.closeConnection(conn);
+        }
+
+    }
     
     public static void insertRelationOfEntityIDCRMUserID(String entityName, String cId, String userId ,int type) throws Exception {
         int contactId = Integer.parseInt(cId);

@@ -311,6 +311,7 @@ public boolean isParam()
 
   public String getFieldType()
   {
+	  
     return fieldType;
   }
 
