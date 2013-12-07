@@ -46,73 +46,96 @@ import com.rex.crm.util.Configuration;
 /**
  * @author Feiyun Zhou
  */
-public class PositionTreePage extends AdminTemplatePage {
-	private String search_target = "";
+public class PositionTreePage extends AdminTemplatePage
+{
 
-	/**
-	 * Constructor
-	 */
-	public PositionTreePage() {
-		setPageTitle("系统管理-区域管理");
-		StringValue positionId = getRequest().getRequestParameters()
-				.getParameterValue("positionId");
+    private String search_target = "";
 
-		int level = 0;
-		if (!positionId.isNull() && !positionId.isEmpty()) {
-			level = DAOImpl.getLevelByPositionId(positionId.toInt());
-		}
-		if (positionId.isEmpty() || positionId.isNull()) {
-			initPage(null, 0);
-		} else {
-			initPage(positionId.toString(), level);
-		}
+    /**
+     * Constructor
+     */
+    public PositionTreePage()
+    {
+        setPageTitle("系统管理-区域管理");
+        StringValue positionId = getRequest().getRequestParameters()
+          .getParameterValue("positionId");
 
-		urlFor(PositionTreePage.class, null);
+        int level = 0;
+        if (!positionId.isNull() && !positionId.isEmpty())
+        {
+            level = DAOImpl.getLevelByPositionId(positionId.toInt());
+        }
+        if (positionId.isEmpty() || positionId.isNull())
+        {
+            initPage(null, 0);
+        }
+        else
+        {
+            initPage(positionId.toString(), level);
+        }
 
-	}
+        urlFor(PositionTreePage.class, null);
 
-	public PositionTreePage(String id, String level) {
-		setPageTitle("系统管理-区域管理");
-		int lev = Integer.parseInt(level);
-		initPage(id, lev);
-	}
+    }
 
-	private void initPage(final String positionId, int level) {
-		Gson gson = new Gson();
-		String result = gson.toJson(TreeFactory.createAccountPositionTree(),
-				Node.class);
-		add(new TreePanel("treePanel", result));
+    public PositionTreePage(String id, String level)
+    {
+        setPageTitle("系统管理-区域管理");
+        int lev = Integer.parseInt(level);
+        initPage(id, lev);
+    }
 
-		if (positionId != null) {
-			AccountPositionPanel panel = new AccountPositionPanel("datalist",
-					"crmuser", positionId, level);
-			add(panel);
-		} else {
-			add(new EmptyPanel("datalist"));
-		}
-	}
+    private void initPage(final String positionId, int level)
+    {
+        Gson gson = new Gson();
+        String result = gson.toJson(TreeFactory.createAccountPositionTree(),
+          Node.class);
+        add(new TreePanel("treePanel", result));
 
-	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-		StringValue act_key = getRequest().getRequestParameters()
-				.getParameterValue("positionId");
-		Map<String, Object> map = new HashMap<>();
+        if (positionId != null)
+        {
+            if (positionId.equals("-1"))
+            {
+                setResponsePage(new PositionTreePage());
+            }
+            else
+            {
+                AccountPositionPanel panel = new AccountPositionPanel("datalist",
+                  "crmuser", positionId, level);
+                add(panel);
+            }
+        }
+        else
+        {
+            add(new EmptyPanel("datalist"));
+        }
+    }
 
-		map.put("act_key", act_key.toString());
-		PackageTextTemplate ptt = new PackageTextTemplate(getClass(),
-				"adminpage.js");
+    @Override
+    public void renderHead(IHeaderResponse response)
+    {
+        super.renderHead(response);
+        StringValue act_key = getRequest().getRequestParameters()
+          .getParameterValue("positionId");
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("act_key", act_key.toString());
+        PackageTextTemplate ptt = new PackageTextTemplate(getClass(),
+          "adminpage.js");
 		// OnDomReadyHeaderItem onDomReadyHeaderItem =
-		// OnDomReadyHeaderItem.forScript( ptt.asString( map ) );
-		// response.render(onDomReadyHeaderItem);
-		System.out.println(ptt.asString(map));
-		response.render(JavaScriptHeaderItem.forScript(ptt.asString(map), null));
+        // OnDomReadyHeaderItem.forScript( ptt.asString( map ) );
+        // response.render(onDomReadyHeaderItem);
+        System.out.println(ptt.asString(map));
+        response.render(JavaScriptHeaderItem.forScript(ptt.asString(map), null));
 
-		try {
-			ptt.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
+        try
+        {
+            ptt.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 }
