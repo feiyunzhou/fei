@@ -306,7 +306,7 @@ public class AdvancedSearchPanel extends Panel {
            String fieldName = ft.getField().getValue();
            Field field = entity.getFieldByName(fieldName);
            
-           if(field.getDataType().equalsIgnoreCase("number")){
+           if(field.getDataType().equalsIgnoreCase("number") || field.getPicklist()!=null){
                if(field.getPicklist()!=null){
                    
                    if(ft.getOperator().getValue().equalsIgnoreCase("in")|| ft.getOperator().getValue().equalsIgnoreCase("eq")){

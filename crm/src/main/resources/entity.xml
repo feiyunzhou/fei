@@ -755,7 +755,7 @@
 
 			<field>
 				<name>accountId</name>
-				<display>医院ID</display>
+				<display>医院名称</display>
 				<isRequired>true</isRequired>
 				<alias>accountId</alias>
 				<data-type>text</data-type>

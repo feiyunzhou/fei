@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.beans.AdvancedSearchFilter;
@@ -64,16 +65,12 @@ public class AdvancedSearchPage extends TemplatePage {
         List<Map> tdata = Lists.newArrayList();
         if (filters  != null) {
             sql = sql + " where " + searchPanel.buildFilterSQL(entity, filters);
-            switch (roleId) {
-            case UserRole.USER_ROLE_ADMINISTRATOR:
-                tdata = DAOImpl.queryEntityRelationList(sql);
-                break;
-            case UserRole.USER_ROLE_MANAGER:
-                tdata = DAOImpl.queryEntityRelationList(sql, positionId, positionId, positionId);
-                break;
-            case UserRole.USER_ROLE_SALES:
-                tdata = DAOImpl.queryEntityRelationList(sql, positionId, positionId);
+            int num_of_question_marks = CharMatcher.is('?').countIn(sql);        
+            String[] params = new String[num_of_question_marks];
+            for(int i=0;i<num_of_question_marks;i++){
+                params[i] = positionId;
             }
+            tdata = DAOImpl.queryEntityRelationList(sql,params);
         }
 
       
