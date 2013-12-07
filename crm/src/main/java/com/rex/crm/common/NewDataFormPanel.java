@@ -398,21 +398,22 @@ public class NewDataFormPanel extends Panel
                         {
                             //set default value
                             String defaultValue = "";
+
                             if (currentField.getDefault_value_type() != null && currentField.getDefault_value_type().equalsIgnoreCase("var"))
                             {
 
                                 if (params != null)
                                 {
+
                                     Object obj = params.get(currentField.getDefault_value());
-                                    String dataTime = String.valueOf(obj).split("T")[0].concat("T08:00");
-                                    if (obj != null)
-                                    {
-                                        defaultValue = String.valueOf(dataTime);
-                                    }
+                                    defaultValue = String.valueOf(obj);
+
                                 }
+                                
                             }
                             else if (currentField.getDefault_value_type() != null && currentField.getDefault_value_type().equalsIgnoreCase("val"))
                             {
+
                                 defaultValue = currentField.getDefault_value();
                             }
                             //set the default Model

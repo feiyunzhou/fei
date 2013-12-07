@@ -33,8 +33,17 @@ public class UpdateSignPassword extends UserInfoSettingPage {
         //获取到登录对象，将用户名传入页面，然后如何获取
         final int userId = Integer.parseInt(((SignIn2Session) getSession()).getUserId());
         UserInfo user = DAOImpl.getUserInfoById(userId);
-        final Label prompt = new Label("prompt", "旧密码错误,请重新输入！");
-        add(prompt);
+         //add prompt 
+        final RepeatingView errordiv = new RepeatingView("errorpromptDiv");
+        final AbstractItem errorgroup = new AbstractItem(errordiv.newChildId());
+        final Label errorpromptButton = new Label("errorpromptButton","X");
+        errorgroup.add(errorpromptButton);
+        final Label errorpromptLabel = new Label("errorprompt","提示:旧密码输入错误！");
+        errorgroup.add(errorpromptLabel);
+        errordiv.add(new AttributeAppender("style",new Model("display:none"),";"));
+        errorgroup.add(new AttributeAppender("style",new Model("display:none"),";"));
+        errordiv.add(errorgroup);
+        add(errordiv);
         //add prompt 
         final RepeatingView div = new RepeatingView("promptDiv");
         final AbstractItem group = new AbstractItem(div.newChildId());
@@ -65,13 +74,15 @@ public class UpdateSignPassword extends UserInfoSettingPage {
                     	group.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
                 		promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
-                    };
+                    }
                 } else {
                     logger.debug("false");
-                    promptLabel.add(new AttributeAppender("style", new Model("text-align:center;display:block;color:red;"), ";"));
+                    errordiv.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    errorgroup.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    errorpromptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+                    errorpromptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
                 }
             }
-        ;
         };
 		add(form);
         form.add(new Label("userName", user.getName()));

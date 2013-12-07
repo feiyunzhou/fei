@@ -92,6 +92,7 @@ public class EditDataFormPanel extends Panel {
 		final String posId = ((SignIn2Session) getSession()).getPositionId();
 	    final String userName = ((SignIn2Session) getSession()).getUser();
 	    final String userId = ((SignIn2Session) getSession()).getUserId();
+	    final int roleId = ((SignIn2Session) getSession()).getRoleId();
 		String primaryKeyName = schema.getPrimaryKeyName();
 		List<Field> fields = schema.getFields();// 得到所有fields
 		final List<String> fieldNames = Lists.newArrayList();
@@ -125,7 +126,6 @@ public class EditDataFormPanel extends Panel {
 			List<Field> groupfields = fieldGroupMap.get(gn);
 			
 			if (groupfields == null ||  gn.equalsIgnoreCase("附加信息")) continue;
-			
 			AbstractItem groupitem = new AbstractItem(fieldGroupRepeater.newChildId());
 			fieldGroupRepeater.add(groupitem);
 			RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
@@ -251,7 +251,7 @@ public class EditDataFormPanel extends Panel {
 
                                
                                 fieldNameToModel.put(currentField.getName(), choiceModel);
-                                columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids, list, choiceModel,currentField));
+                                columnitem.add(new DropDownChoiceFragment("editdata", "dropDownFragment", this, ids, list, choiceModel,currentField,roleId));
                             }
                         }
                     } else if (currentField.getRelationTable() != null) {
@@ -338,13 +338,14 @@ public class EditDataFormPanel extends Panel {
                                  IModel<String> textModel = new Model<String>(value);
                                 //textModel = new Model<String>(date_value);
                                 fieldNameToModel.put(currentField.getName(), textModel);
-                                TextInputFragment textInput = new TextInputFragment("editdata", "textInputFragment", this, textModel,value, currentField);
+                                TextInputFragment textInput = new TextInputFragment("editdata", "textInputFragment", this, textModel,value, currentField,schema,roleId);
                                 columnitem.add(textInput);
                                 
                             }else {
                                 IModel<String> textModel = new Model<String>("");
                                 fieldNameToModel.put(currentField.getName(), textModel);
-                                columnitem.add(new TextInputFragment("editdata", "textInputFragment", this, textModel, value, currentField));
+                                TextInputFragment  textInput = new TextInputFragment("editdata", "textInputFragment", this, textModel, value, currentField,schema,roleId);
+                                columnitem.add(textInput);
                             }
                         }
                     }
@@ -571,7 +572,7 @@ public class EditDataFormPanel extends Panel {
     }
 
     private class DropDownChoiceFragment extends Fragment {
-        public DropDownChoiceFragment(String id, String markupId, MarkupContainer markupProvider, final List<Long> ids, final Map<Long, String> list, IModel model,Field currentField) {
+        public DropDownChoiceFragment(String id, String markupId, MarkupContainer markupProvider, final List<Long> ids, final Map<Long, String> list, IModel model,Field currentField,final int roleId) {
             super(id, markupId, markupProvider);
             DropDownChoice dropDown = (new DropDownChoice<Long>("dropDownInput", model, ids, new IChoiceRenderer<Long>() {
                 @Override
@@ -593,6 +594,11 @@ public class EditDataFormPanel extends Panel {
             if (currentField.isRequired()) {
                 //text.add(new AttributeModifier("required", new Model("required")));
             	dropDown.add(new AttributeAppender("class",new Model("required-pickList")," "));
+            }
+            if(roleId!=1){
+            	if(currentField.getName().equals("department")||currentField.getName().equals("grade")){
+                	dropDown.add(new AttributeModifier("disabled","disabled"));
+                }
             }
             if(currentField.getName().equals("activity_daypart")){
             	dropDown.add(new AttributeModifier("id","daypart"));
@@ -700,7 +706,7 @@ public class EditDataFormPanel extends Panel {
     }
     
     private class TextInputFragment extends Fragment {
-        public TextInputFragment(String id, String markupId, MarkupContainer markupProvider, IModel model, String value, Field currentField) {
+        public TextInputFragment(String id, String markupId, MarkupContainer markupProvider, IModel model, String value, Field currentField,Entity entity,int roleId) {
             super(id, markupId, markupProvider);
             TextField<String> text = new TextField<String>("input", model);
             text.add(new AttributeModifier("value", new Model(value)));
@@ -717,6 +723,10 @@ public class EditDataFormPanel extends Panel {
             if(currentField.getDataType().equals("datetime-local")){
             	text.add(new AttributeModifier("id",currentField.getName()));
             }
+            if(entity.getName().equals("contact")&&currentField.getName().equals("name")&&roleId!=1){
+            	text.add(new AttributeModifier("readonly","readonly"));
+            }
+            
         }
     }
 

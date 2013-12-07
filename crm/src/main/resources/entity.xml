@@ -2445,18 +2445,6 @@ select * from user_position
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
-			<field>
-				<name>whether_coach</name>
-				<display>是否协访</display>
-				<data-type>radio</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>true</isEditable>
-				<priority>2</priority><isShow>true</isShow>
-				<isBaseInfo>true</isBaseInfo>
-				<fieldGroup>基本信息</fieldGroup>
-			</field>
 			
 			<field>
 				<name>visiting_purpose</name>
@@ -2491,6 +2479,7 @@ select * from user_position
 				<default-value-type>var</default-value-type>
 				<default-value>contact.id\,contact.name</default-value>
 				<relationTable>contact</relationTable>
+				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 
@@ -2505,6 +2494,7 @@ select * from user_position
 				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
+				<isRequired>true</isRequired>
 				<relationTable>contact</relationTable>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2520,9 +2510,25 @@ select * from user_position
 				<isEditable>false</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<relationTable>contact</relationTable>
+				<isRequired>true</isRequired>
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>whether_coach</name>
+				<display>是否协访</display>
+				<data-type>radio</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<isBaseInfo>true</isBaseInfo>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			
 			<field>
 				<name>contactgrade</name>
 				<display>医生等级</display>
@@ -2591,7 +2597,7 @@ select * from user_position
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<picklist>productline</picklist>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
 				<fieldGroup>基本信息</fieldGroup>
