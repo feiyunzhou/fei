@@ -51,8 +51,10 @@ public class ProductTreePage extends AdminTemplatePage
      urlFor(ProductTreePage.class, null);
 
   }
-
   
+  public ProductTreePage(final String id, final String entityName){
+    	initPage(id,entityName);
+    }
   
   private void initPage(final String positionId,final String entityName){
       Gson gson = new Gson();

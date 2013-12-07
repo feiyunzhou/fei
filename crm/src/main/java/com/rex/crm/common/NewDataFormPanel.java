@@ -64,6 +64,7 @@ public class NewDataFormPanel extends Panel
     private Map<String, IModel> parentModels = Maps.newHashMap();
     private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
     private List<FileUploadField> fileFields = Lists.newArrayList();
+    private static Map<String,Object> paramsForProduct;
 
     public NewDataFormPanel(String id, final Entity entity, final Map<String, Object> params)
     {
@@ -86,7 +87,6 @@ public class NewDataFormPanel extends Panel
         final String userId = ((SignIn2Session) getSession()).getUserId();
 //        final String userId = ((SignIn2Session) getSession()).getUserId();
         List<Field> fields = entity.getFields();
-
         for (Field f : fields)
         {
             if (addFieldGroupMap.get(f.getFieldGroup()) != null)
@@ -115,9 +115,10 @@ public class NewDataFormPanel extends Panel
         List<String> groupNames = Configuration.getSortedFieldGroupNames();
         RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
         add(fieldGroupRepeater);
+        paramsForProduct=params;
+        System.out.println("paramsForProduct:"+paramsForProduct);
         for (String gn : groupNames)
         {
-            System.out.println();
             List<Field> groupfields = addFieldGroupMap.get(gn);
             if (groupfields == null || gn.equalsIgnoreCase("附加信息"))
             {
@@ -476,9 +477,12 @@ public class NewDataFormPanel extends Panel
                 {
                     if (null == createAddress)
                     {
-                        if (entity.getName().toString().equals("province") || entity.getName().toString().equals("city"))
+                        String entityName=entity.getName().toString();
+                        if (entityName.equals("province") || entityName.equals("city"))
                         {
                             setResponsePage(PageFactory.createPageToDetail(entity.getName(), NewRecordId));
+                        }else if(entityName.equals("productline") || entityName.equals("product")||entityName.equals("productcategory")){
+                           setResponsePage(PageFactory.createPageTree(entity.getName(),NewRecordId)) ;
                         }
                         else
                         {
@@ -507,7 +511,7 @@ public class NewDataFormPanel extends Panel
                 }
                 else
                 {
-                    setResponsePage(new CreateDataPage(entity.getName(), null));
+                    setResponsePage(new CreateDataPage(entity.getName(), paramsForProduct));
                 }
             }
         };
@@ -707,11 +711,7 @@ public class NewDataFormPanel extends Panel
         else
         {
             long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
-            if (entity.getName().toString().equals("province") || entity.getName().toString().equals("city"))
-            {
-                NewRecordId = DAOImpl.getCreateRecordByEntity(entity.getName());
-            }
-
+                 NewRecordId = DAOImpl.getCreateRecordByEntity(entity.getName());
             if (generatedId > 0)
             {
                 if (entity.getName().equals("coaching") || entity.getName().equals("willcoaching"))

@@ -4,6 +4,7 @@ import org.apache.wicket.Page;
 
 import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.ProductPage;
+import com.rex.crm.admin.ProductTreePage;
 import com.rex.crm.admin.UserPage;
 import com.rex.crm.common.EntityDetailPage;
 
@@ -38,6 +39,11 @@ public class PageFactory {
      public static Page createPageToDetail(String EntityName,String id){
             return new EntityDetailPage(EntityName,id);
      }
+    public static Page createPageTree(String EntityName,String id){
+        
+            return new ProductTreePage(id,EntityName);
+     }
+     
     /**
      * @param args
      */
