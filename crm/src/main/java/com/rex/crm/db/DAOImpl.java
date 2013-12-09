@@ -2853,5 +2853,24 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
             result=String.valueOf(lt.get(0).get("target").toString());
             return result;
      }
-    
+     //查询所有用户登录名
+     public static List<String> getLoginNames(String entityId){
+     	Connection conn = null;
+         List<String> loginNames = Lists.newArrayList();
+         List<UserInfo> users = Lists.newArrayList();
+         try {
+             conn = DBConnector.getConnection();
+             QueryRunner run = new QueryRunner();
+             ResultSetHandler<List<UserInfo>> h = new BeanListHandler<UserInfo>(UserInfo.class);
+             users = run.query(conn, "SELECT * FROM userInfo where id!=?",h,entityId);
+         } catch (SQLException e) {
+             logger.error("failed to get all accounts", e);
+         } finally {
+             DBHelper.closeConnection(conn);
+         }
+         for(UserInfo userInfo:users){
+         	loginNames.add(userInfo.getName());
+         }
+         return loginNames;
+     }
 }

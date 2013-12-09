@@ -405,7 +405,6 @@ public class NewDataFormPanel extends Panel
 
                                 if (params != null)
                                 {
-
                                     Object obj = params.get(currentField.getDefault_value());
                                     defaultValue = String.valueOf(obj);
 

@@ -1,7 +1,9 @@
 package com.rex.crm;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,15 +18,12 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.common.CreateDataPage;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.db.DAOImpl;
-import com.rex.crm.userlog.LogInOut;
-import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
 
 public class SelectActivityContactPage extends WebPage {
@@ -81,7 +80,6 @@ public class SelectActivityContactPage extends WebPage {
                 Link link = new Link("createJump"){
                     @Override
                     public void onClick() {
-                    	System.out.println("fsfsfs");
                     	Map map = DAOImpl.queryEntityById(entity.getSql_ent(), String.valueOf(uid));
                     	Entity entity = entities.get("contact");
                     	List<Field> paramFields = entity.getParamFields();
@@ -89,6 +87,10 @@ public class SelectActivityContactPage extends WebPage {
                         for(Field f:paramFields){
                             params.put("contact"+"."+f.getName(), map.get(f.getName()));
                         }
+                        long ts = System.currentTimeMillis();
+                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        String date_value = dateformat.format(ts);
+                        params.put("start_datetime",date_value);
                     	setResponsePage(new CreateDataPage("activity",params));
                     }
                     
