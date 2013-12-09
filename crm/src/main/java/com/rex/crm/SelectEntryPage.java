@@ -167,7 +167,7 @@ public class SelectEntryPage extends WebPage {
                 } else if(relationTableName.equalsIgnoreCase("crmuser")){
                     //maplist = DAOImpl.searchCRMUser(search_target);
                   if (tragetEntity.equalsIgnoreCase("crmuser")){
-                    maplist = DAOImpl.searchManager(search_target,posId);
+                    maplist = DAOImpl.searchManager(search_target,excludeId);
                   }else if(tragetEntity.equalsIgnoreCase("coaching")||tragetEntity.equalsIgnoreCase("willcoaching")){
                     String sql = assembleSearchingSQL(roleId, entity);
                     if(roleId==1){

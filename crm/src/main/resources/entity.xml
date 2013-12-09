@@ -4074,9 +4074,6 @@ select * from user_position
 				<field-type>picklist</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-			
-			
-			
 			<field>
 				<name>crmuserId</name>
 				<display>辅导人Id</display>

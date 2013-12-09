@@ -31,6 +31,7 @@ import com.rex.crm.CoachingPage;
 import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
+import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.ProductPage;
 import com.rex.crm.admin.UserPage;
@@ -177,8 +178,14 @@ public class EntityDetailContainerPanel   extends Panel {
                     }
                     setResponsePage(new UserPage());
                 }else if(entityName.equals("crmuser")) {
+                    String reportto = String.valueOf(DAOImpl.getReporttoIdById(id));
                     DAOImpl.deleteRecord(id, entityName);
-                    setResponsePage(new PositionPage());
+                   if(reportto !=null ){
+                	   setResponsePage(new AdminTreePage(reportto));  
+                   } else{
+                	   setResponsePage(new AdminTreePage());
+                   }
+//                    setResponsePage(new PositionPage());
                 }else if(entityName.equals("productcategory")){
                 	DAOImpl.deleteRecord(id, entityName);
                 	setResponsePage(new ProductPage());

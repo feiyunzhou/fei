@@ -47,7 +47,14 @@ public class AdminTreePage extends AdminTemplatePage
 
     }
 
-    private void initPage(final String positionId)
+    public AdminTreePage(String reportto) {
+    	setPageTitle("系统管理-岗位树");
+    	initPage(reportto);
+    	urlFor(AdminTreePage.class, null);
+
+	}
+
+	private void initPage(final String positionId)
     {
         Gson gson = new Gson();
         String result = gson.toJson(TreeFactory.createPositionTree(), Node.class);

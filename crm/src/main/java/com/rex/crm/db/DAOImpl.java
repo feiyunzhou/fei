@@ -52,6 +52,7 @@ import com.rex.crm.beans.UserPosition;
 import com.rex.crm.common.Entity;
 import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.Configuration;
+import com.rexen.crm.beans.Crmuser;
 
 public class DAOImpl 
 {
@@ -467,9 +468,9 @@ public class DAOImpl
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String date_value = dateformat.format(ts);
             if(entityName.equalsIgnoreCase("contact")){
-                sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
+                sql = "INSERT INTO contactcrmuser (crmuserId,contactId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("account")){
-                sql = "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)";
+                sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
             }else if(entityName.equalsIgnoreCase("userInfo")){
                 sql = "INSERT INTO user_position (positionId,userId,whenadded,isPrimary) VALUES (?,?,?,?)";
             }else if(entityName.equalsIgnoreCase("crmuser")){
@@ -2201,7 +2202,7 @@ public class DAOImpl
         }
         if(excludeId == null) excludeId = "-1";
         
-        String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR reportto like '%"+search_target+"%' )) as a";
+        String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (role = 2 )AND (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR reportto like '%"+search_target+"%' )) as a";
         logger.debug("searchManager:"+ sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
@@ -2763,6 +2764,26 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
          }
 
          return users;
+    }
+    
+  //根据crmuserid获取crm对象
+    public static int  getReporttoIdById(String entityId){
+    	System.out.println("根据crmuserID获取用户" + entityId);
+        Connection conn = null;
+        int id = 0;
+        CRMUser crmuser = new CRMUser();
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+            crmuser = run.query(conn, "SELECT * FROM crmuser inner join crmuser as a on crmuser.reportto = a.id where crmuser.id=?", h, entityId);
+            id =crmuser.getReportto();
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return id;
     }
     //用户初次登录修改关键信息
     public static boolean updateKeyUserInfoMessage(String phone,String email,String password,int userId){

@@ -81,7 +81,6 @@ public class EntityDetailPage extends TemplatePage {
 	    	relationItem.add(new Label("relationPanel",""));
 	    	add(relationRepeater);
   	  	}else{
-  	  		System.out.println("entity:"+nameForEntity+":"+entityId);
   	  		initPage(nameForEntity.toString(),entityId.toString());
   	  	}
 
