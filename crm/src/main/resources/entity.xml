@@ -3889,11 +3889,8 @@ select * from user_position
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-			
-                       
-                        
-                        <field>
-			        <name>owner</name>
+			<field>
+			      <name>owner</name>
 				<display>创建人</display>
 				<data-type>text</data-type>
 				<isRequired>false</isRequired>
@@ -3926,6 +3923,7 @@ select * from user_position
 	<entity>
 		<name>willcoaching</name>
 		<display>辅导</display>
+		<globalsearch>true</globalsearch>
 		<filterField>status</filterField>
 				<sql>
 			select distinct * from (select * from (select activity.crmuserId as
