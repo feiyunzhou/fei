@@ -3583,7 +3583,7 @@ select * from user_position
 		<display>产品线</display>
 		<filterField></filterField>
 		<sql>SELECT * FROM productline</sql>
-                <sql-admin>select * from productline</sql-admin>
+        <sql-admin>select * from productline</sql-admin>
 		<sql-ent>select * from productline where id = ?</sql-ent>
 		<fields>
 			<field>
@@ -3743,7 +3743,6 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<field-type>String</field-type>
 				<priority>1</priority>
 				<isShow>true</isShow>
                 <relationTable>productline</relationTable>
