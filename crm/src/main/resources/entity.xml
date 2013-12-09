@@ -3597,7 +3597,7 @@ select * from user_position
 				<field-type>String</field-type>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
-                                <isParam>true</isParam>
+                <isParam>true</isParam>
 			</field>
 			<field>
 				<name>name</name>
@@ -3611,9 +3611,9 @@ select * from user_position
 				<field-type>String</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
-                                <isParam>true</isParam>
+                <isParam>true</isParam>
 			</field>
-                        <field>
+            <field>
 				<name>val</name>
 				<isRequired>true</isRequired>
 				<display>产品线别名</display>
@@ -3622,14 +3622,16 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<field-type>String</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>                        
 			</field>
-                        <field>
+            <field>
 				<name>description</name>
 				<isRequired>true</isRequired>
 				<display>描述</display>
 				<data-type>text</data-type>
+				<field-type>String</field-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -3637,7 +3639,7 @@ select * from user_position
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
-                        <field>
+            <field>
 				<name>whenadded</name>
 				<display>创建时间</display>
 				<isRequired>false</isRequired>
@@ -3651,8 +3653,8 @@ select * from user_position
 				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-                        <field>
-                                <name>modify_datetime</name>
+            <field>
+                <name>modify_datetime</name>
 			 	<display>修改时间</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
@@ -3664,8 +3666,8 @@ select * from user_position
 				<priority>4</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-                        <field>
-			        <name>owner</name>
+            <field>
+			    <name>owner</name>
 				<display>创建人</display>
 				<data-type>text</data-type>
 				<isRequired>false</isRequired>
@@ -3678,8 +3680,8 @@ select * from user_position
 				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-                        <field>
-			       <name>modifier</name>
+            <field>
+			    <name>modifier</name>
 				<display>修改人</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
@@ -3689,7 +3691,7 @@ select * from user_position
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
-                                <isShow>true</isShow>
+                <isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>			
 		</fields>
@@ -3713,9 +3715,9 @@ select * from user_position
 				<field-type>String</field-type>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
-                                <isParam>true</isParam>
+                <isParam>true</isParam>
 			</field>
-                        <field>
+            <field>
 				<name>name</name>
 				<isRequired>true</isRequired>
 				<display>产品名称</display>
@@ -3727,22 +3729,24 @@ select * from user_position
 				<field-type>String</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
-                                <isParam>true</isParam>
+                <isParam>true</isParam>
 			</field>
                         
 			<field>
 				<name>productlineId</name>
 				<isRequired>true</isRequired>
 				<display>产品线名称</display>
-                                <alias>productlineId</alias>
+                <alias>productlineId</alias>
 				<data-type>text</data-type>
+				<field-type>String</field-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<field-type>String</field-type>
-				<priority>1</priority><isShow>true</isShow>
-                                <relationTable>productline</relationTable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+                <relationTable>productline</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>productline.id\,productline.name</default-value>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3755,6 +3759,7 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<field-type>auto</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
@@ -3766,11 +3771,12 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<field-type>auto</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-                        <field>
-			        <name>owner</name>
+            <field>
+			    <name>owner</name>
 				<display>创建人</display>
 				<data-type>text</data-type>
 				<isRequired>false</isRequired>
@@ -3783,8 +3789,8 @@ select * from user_position
 				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-                         <field>
-			       <name>modifier</name>
+            <field>
+			    <name>modifier</name>
 				<display>修改人</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
@@ -3794,7 +3800,7 @@ select * from user_position
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
-                                <isShow>true</isShow>
+                <isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>	
                          	
@@ -3802,7 +3808,7 @@ select * from user_position
 	</entity>
         <entity>
 		<name>productcategory</name>
-		<display>产品类别</display>
+		<display>产品规格</display>
 		<filterField></filterField>
 		<sql>SELECT * FROM productcategory</sql>
 		<sql-ent>select * from productcategory where id = ?</sql-ent>
@@ -3822,7 +3828,7 @@ select * from user_position
 			<field>
 				<name>name</name>
 				<isRequired>true</isRequired>
-				<display>类别名称</display>
+				<display>规格名称</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
@@ -3832,18 +3838,18 @@ select * from user_position
 				<field-type>String</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-                        <field>
+            <field>
 				<name>productId</name>
 				<isRequired>true</isRequired>
 				<display>产品名称</display>
-                                <alias>productId</alias>
+                <alias>productId</alias>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
-                                <relationTable>product</relationTable>
+                <relationTable>product</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>product.id\,product.name</default-value>
 				<field-type>String</field-type>
@@ -3854,20 +3860,22 @@ select * from user_position
 				<name>productlineId</name>
 				<isRequired>true</isRequired>
 				<display>产品线名称</display>
-                                <alias>productlineId</alias>
+                <alias>productlineId</alias>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
-				<priority>1</priority><isShow>true</isShow>
-                 <relationTable>productline</relationTable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+				<isShow>true</isShow>
+                <relationTable>productline</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>productline.id\,productline.name</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
                         
-                         <field>
+             <field>
 				<name>whenadded</name>
 				<display>创建时间</display>
 				<data-type>text</data-type>
@@ -3875,10 +3883,11 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<field-type>auto</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-                        <field>
+            <field>
 				<name>modify_datetime</name>
 				<display>修改时间</display>
 				<data-type>text</data-type>
@@ -3886,11 +3895,12 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<field-type>auto</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			<field>
-			      <name>owner</name>
+			    <name>owner</name>
 				<display>创建人</display>
 				<data-type>text</data-type>
 				<isRequired>false</isRequired>
@@ -3903,8 +3913,8 @@ select * from user_position
 				<isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-                         <field>
-			       <name>modifier</name>
+            <field>
+			    <name>modifier</name>
 				<display>修改人</display>
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
@@ -3914,7 +3924,7 @@ select * from user_position
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
-                                <isShow>true</isShow>
+                <isShow>true</isShow>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>	
 		</fields>

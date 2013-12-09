@@ -75,6 +75,7 @@
 		<sql>select * from (select * from data_audit where entity_name = "userinfo" and record_id = ? order by modify_time desc) as act </sql>
 		<to>data_audit</to>
 	</relation>
+	
 	<relation>
 		<from>crmuser</from>
 		<name>crmuseraudit</name>
@@ -83,6 +84,29 @@
 		<to>data_audit</to>
 	</relation>
 	
+	<relation>
+		<from>productline</from>
+		<name>productlineaudit</name>
+		<display>产品线修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "productline" and record_id = ? order by modify_time desc) as act </sql>
+		<to>data_audit</to>
+	</relation>
+	
+	<relation>
+		<from>product</from>
+		<name>productaudit</name>
+		<display>产品修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "product" and record_id = ? order by modify_time desc) as act </sql>
+		<to>data_audit</to>
+	</relation>
+	
+	<relation>
+		<from>productcategory</from>
+		<name>productcategoryaudit</name>
+		<display>产品修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "productcategory" and record_id = ? order by modify_time desc) as act </sql>
+		<to>data_audit</to>
+	</relation>
 	<relation>
 		<from>contact</from>
 		<name>visitingOfContact</name>
