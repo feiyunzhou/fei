@@ -409,7 +409,6 @@ public class NewDataFormPanel extends Panel
                                     defaultValue = String.valueOf(obj);
 
                                 }
-                                
                             }
                             else if (currentField.getDefault_value_type() != null && currentField.getDefault_value_type().equalsIgnoreCase("val"))
                             {
@@ -434,8 +433,7 @@ public class NewDataFormPanel extends Panel
                             }
                             else if (currentField.getDataType().equals("datetime-local"))
                             {
-
-                                if (defaultValue.isEmpty())
+                                if (defaultValue.isEmpty()||"null".equals(defaultValue))
                                 {
                                     long ts = System.currentTimeMillis();
                                     SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -710,18 +708,20 @@ public class NewDataFormPanel extends Panel
         else
         {
             long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
-                 NewRecordId = DAOImpl.getCreateRecordByEntity(entity.getName());
+                
             if (generatedId > 0)
             {
                 if (entity.getName().equals("coaching") || entity.getName().equals("willcoaching"))
                 {
+                	NewRecordId = DAOImpl.getCreateRecordByEntity("activity");
                     DAOImpl.insert2UserRelationTable(entity.getName(), userId, posId, models.get("coacheeId").getObject().toString(),
                       String.valueOf(generatedId));
                 }
                 else
                 {
+                	NewRecordId = DAOImpl.getCreateRecordByEntity(entity.getName());
                     DAOImpl.insert2UserRelationTable(entity.getName(), userId, posId, "string",
-                      String.valueOf(generatedId));
+                    String.valueOf(generatedId));
                 }
 
             }

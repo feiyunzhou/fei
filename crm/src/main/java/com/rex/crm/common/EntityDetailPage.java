@@ -131,12 +131,6 @@ public class EntityDetailPage extends TemplatePage {
          for(Field f:paramFields){
              params.put(entityName+"."+f.getName(), map.get(f.getName()));
          }
-         if(entityName.equals("contact")){
-        	 long ts = System.currentTimeMillis();
-             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-             String date_value = dateformat.format(ts);
-             params.put("start_datetime",date_value);
-         }
          for(Relation r:relations){
            AbstractItem item = new AbstractItem(relationRepeater.newChildId());
            relationRepeater.add(item);

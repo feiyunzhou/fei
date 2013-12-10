@@ -87,10 +87,6 @@ public class SelectActivityContactPage extends WebPage {
                         for(Field f:paramFields){
                             params.put("contact"+"."+f.getName(), map.get(f.getName()));
                         }
-                        long ts = System.currentTimeMillis();
-                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                        String date_value = dateformat.format(ts);
-                        params.put("start_datetime",date_value);
                     	setResponsePage(new CreateDataPage("activity",params));
                     }
                     

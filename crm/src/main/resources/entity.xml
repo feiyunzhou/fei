@@ -3092,7 +3092,6 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
-				<field-type>String</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
 				<field-type>auto</field-type>
@@ -3220,9 +3219,9 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<field-type>String</field-type>
 				<default-value-type>var</default-value-type>
 				<default-value>start_datetime</default-value>
-				<field-type>String</field-type>
 				<priority>1</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3931,10 +3930,10 @@ select * from user_position
 	
 	<entity>
 		<name>willcoaching</name>
-		<display>辅导</display>
+		<display>科室会辅导</display>
 		<globalsearch>true</globalsearch>
 		<filterField>status</filterField>
-				<sql>
+		<sql>
 			select distinct * from (select * from (select activity.crmuserId as
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
@@ -4093,7 +4092,6 @@ select * from user_position
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
-				<field-type>String</field-type>
 				<isBaseInfo>true</isBaseInfo>
 				<field-type>auto</field-type>
 				<fieldGroup>关键信息</fieldGroup>
@@ -4224,11 +4222,11 @@ select * from user_position
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<field-type>String</field-type>
 				<default-value-type>var</default-value-type>
 				<default-value>start_datetime</default-value>
 				<priority>1</priority>
 				<isShow>true</isShow>
-				<field-type>String</field-type>
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
