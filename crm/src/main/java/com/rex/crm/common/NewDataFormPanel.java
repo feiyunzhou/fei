@@ -116,7 +116,7 @@ public class NewDataFormPanel extends Panel
         RepeatingView fieldGroupRepeater = new RepeatingView("fieldGroupRepeater");
         add(fieldGroupRepeater);
         paramsForProduct=params;
-        System.out.println("paramsForProduct:"+paramsForProduct);
+        //System.out.println("paramsForProduct:"+paramsForProduct);
         for (String gn : groupNames)
         {
             List<Field> groupfields = addFieldGroupMap.get(gn);

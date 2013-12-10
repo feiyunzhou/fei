@@ -676,12 +676,12 @@
         <externalField>externalId</externalField>
 		<sql>
 			select * from (select contact.*\,
-			contact_generalization_target_pl.val as product_target_val\,
+			productline.id as product_target_val\,
 			account.name as accountName_val\,contact_department_pl.val as department_val\,
 			contact_duty_pl.val as duty_val
 			from contact
-			left join contact_generalization_target_pl on contact.product_target =
-			contact_generalization_target_pl.id
+			left join productline on contact.product_target =
+			productline.id
 			left join account on contact.accountid = account.id
 			left join accountcrmuser on contact.accountId = accountcrmuser.accountid
 			left join user_position on user_position.positionId = accountcrmuser.crmuserId
@@ -692,7 +692,7 @@
 		<sql-manager>
             Select distinct *
             FROM (select  aContact.*\,
-                          contact_generalization_target_pl.val as product_target_val\,
+                          productline.val as product_target_val\,
                           account.name as accountName_val\,
                           contact_department_pl.val as department_val\,
                           contact_duty_pl.val as duty_val
@@ -701,7 +701,7 @@
                         where crmuser.reportto=? and
                               contact.accountId = accountcrmuser.accountId and
                               crmuser.id = accountcrmuser.crmuserId ) as aContact
-                 left join contact_generalization_target_pl on aContact.product_target = contact_generalization_target_pl.id
+                 left join productline on aContact.product_target = productline.id
                  left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
                  left join account on accountcrmuser.accountId = account.id
                  left join user_position on user_position.positionId = accountcrmuser.crmuserId
@@ -721,13 +721,13 @@
 			<!-- left join account on contact.accountid = account.id -->
 			<!-- where account.id != -1 -->
 			select * from (select contact.*\,
-			contact_generalization_target_pl.val as product_target_val\,
+			productline.val as product_target_val\,
 			account.name as accountName_val\,contact_department_pl.val as department_val\,
 			contact_duty_pl.val as duty_val
 			from contact
 			left join account on contact.accountid = account.id
-			left join contact_generalization_target_pl on contact.product_target =
-			contact_generalization_target_pl.id 
+			left join productline on contact.product_target =
+			productline.id 
 			left join contact_department_pl on contact.department = contact_department_pl.id
 			left join contact_duty_pl on contact.duty = contact_duty_pl.id
 			where contact.id != -1  )  as aContact
@@ -1115,7 +1115,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-                <picklist>productline</picklist>
+                                <picklist>productline</picklist>
 				<field-type>picklist</field-type>
 				<priority>2</priority>
 				<isShow>true</isShow>
@@ -1938,7 +1938,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isRequired>false</isRequired>
 				<data-type>text</data-type>
 				<field-type>picklist</field-type>
-				<picklist>crmuser_pl2</picklist>
+				<picklist>productline</picklist>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isShow>true</isShow>
@@ -3736,7 +3736,7 @@ select * from user_position
 				<name>productlineId</name>
 				<isRequired>true</isRequired>
 				<display>产品线名称</display>
-                <alias>productlineId</alias>
+                                <alias>productlineId</alias>
 				<data-type>text</data-type>
 				<field-type>String</field-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -3745,7 +3745,7 @@ select * from user_position
 				<isEditable>true</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
-                <relationTable>productline</relationTable>
+                                <relationTable>productline</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>productline.id\,productline.name</default-value>
 				<fieldGroup>关键信息</fieldGroup>
@@ -3841,14 +3841,14 @@ select * from user_position
 				<name>productId</name>
 				<isRequired>true</isRequired>
 				<display>产品名称</display>
-                <alias>productId</alias>
+                                <alias>productId</alias>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
-                <relationTable>product</relationTable>
+                                <relationTable>product</relationTable>
 				<default-value-type>var</default-value-type>
 				<default-value>product.id\,product.name</default-value>
 				<field-type>String</field-type>
