@@ -459,8 +459,6 @@ public class EditDataFormPanel extends Panel {
 			names.add(k);
 			Field field = schema.getFieldByName(k);
 			IModel currentModel = fieldNameToModel.get(k);
-//            logger.debug("currentModelcurrentModelcurrentModelcurrentModel:"+currentModel.getObject());
-//            logger.debug("currentField:"+field.getName());
             if(field.getPriority()==5){
             	total_score+=Integer.parseInt(fieldNameToModel.get(k).getObject().toString());
             }

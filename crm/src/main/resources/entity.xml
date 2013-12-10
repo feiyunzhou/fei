@@ -1115,7 +1115,7 @@
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-                 <picklist>productline</picklist>
+                <picklist>productline</picklist>
 				<field-type>picklist</field-type>
 				<priority>2</priority>
 				<isShow>true</isShow>

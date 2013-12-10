@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.markup.html.basic.Label;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
@@ -58,7 +59,7 @@ public class AdvancedSearchPage extends TemplatePage {
             break;
         }
 
-        
+        add(new Label("table_title",entityName));
         AdvancedSearchPanel searchPanel = new AdvancedSearchPanel("advancedSearch", entityName, filters);
         add(searchPanel);
         
