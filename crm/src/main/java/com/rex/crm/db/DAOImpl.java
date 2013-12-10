@@ -475,9 +475,9 @@ public class DAOImpl
                 sql = "INSERT INTO user_position (positionId,userId,whenadded,isPrimary) VALUES (?,?,?,?)";
             }else if(entityName.equalsIgnoreCase("crmuser")){
                 if(type == 0){
-                    sql = "INSERT INTO accountcrmuser (crmuserId,accountId) VALUES (?,?)";
+                    sql = "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)";
                 }else if(type == 1){
-                    sql = "INSERT INTO contactcrmuser (crmuserId,contactId) VALUES (?,?)";
+                    sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
                 }else if(type == 2){
                     sql = "INSERT INTO user_position (userId,positionId) VALUES (?,?)";
                 }else{
