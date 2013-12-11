@@ -3931,7 +3931,6 @@ select * from user_position
 	<entity>
 		<name>willcoaching</name>
 		<display>科室会辅导</display>
-		<globalsearch>true</globalsearch>
 		<filterField>status</filterField>
 		<sql>
 			select distinct * from (select * from (select activity.crmuserId as

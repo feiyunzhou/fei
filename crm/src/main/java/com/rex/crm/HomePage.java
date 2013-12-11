@@ -257,17 +257,33 @@ public class HomePage extends TemplatePage {
             {
                 likequery = likequery + " OR " + sf.getName() + joint;
             }
-            sql = sql + " where name like '%" + search_target + "%' " + likequery;
+            if(en.getName().equalsIgnoreCase("coaching")||en.getName().equalsIgnoreCase("activity")||en.getName().equalsIgnoreCase("willcoaching")){
+            	sql = sql + " where title like '%" + search_target + "%' " + likequery;
+            } else{
+            	sql = sql + " where name like '%" + search_target + "%' " + likequery;
+            }
             System.out.println(sql);
             List datalist = null;
             
             switch (roleId)
             {
                 case UserRole.USER_ROLE_MANAGER:
-                    datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId, positionId);
+                   
+                	if(en.getName().equalsIgnoreCase("account")){
+                		datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId,positionId);	
+                	}else if(en.getName().equalsIgnoreCase("contact")){
+                		datalist = DAOImpl.queryEntityRelationList(sql,positionId);
+                	}else if(en.getName().equalsIgnoreCase("coaching")||en.getName().equalsIgnoreCase("activity")||en.getName().equalsIgnoreCase("willcoaching")){
+                		datalist = DAOImpl.queryEntityRelationList(sql,positionId,positionId);
+                	}
                     break;
                 case UserRole.USER_ROLE_SALES:
-                    datalist = DAOImpl.queryEntityRelationList(sql, positionId, positionId);
+                	if(en.getName().equalsIgnoreCase("account")){
+                		datalist = DAOImpl.queryEntityRelationList(sql, positionId,positionId);	
+                	}else if(en.getName().equalsIgnoreCase("coaching")||en.getName().equalsIgnoreCase("activity")
+                			||en.getName().equalsIgnoreCase("willcoaching")||en.getName().equalsIgnoreCase("contact")){
+                		datalist = DAOImpl.queryEntityRelationList(sql,positionId);
+                	}
                     break;
                 case UserRole.USER_ROLE_ADMINISTRATOR:
                     datalist = DAOImpl.queryEntityRelationList(sql);
