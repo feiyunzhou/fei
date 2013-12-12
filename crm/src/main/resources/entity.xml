@@ -2702,7 +2702,18 @@ select * from user_position
 				<isBaseInfo>true</isBaseInfo>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-		
+			<field>
+				<name>responsible_person</name>
+				<display>负责人</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority><isShow>true</isShow>
+				<field-type>auto</field-type>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 			<field>
 				<name>act_type</name>
 				<display>拜访类型</display>
@@ -2815,18 +2826,7 @@ select * from user_position
 				<field-type>auto</field-type>
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
-			<field>
-				<name>responsible_person</name>
-				<display>负责人</display>
-				<data-type>text</data-type>
-				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
-				<isEditable>false</isEditable>
-				<priority>2</priority><isShow>true</isShow>
-				<field-type>auto</field-type>
-				<fieldGroup>关键信息</fieldGroup>
-			</field>
+			
 			<field>
 				<name>act_endtime</name>
 				<display>活动结束时间</display>
