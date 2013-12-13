@@ -44,11 +44,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.rex.crm.AccountPage;
+import com.rex.crm.ActivityPage;
 import com.rex.crm.ActivitySelectPage;
+import com.rex.crm.CoachingPage;
 import com.rex.crm.ContactPage;
 import com.rex.crm.CreateEventPage;
 import com.rex.crm.EventViewerPage;
 import com.rex.crm.SignIn2Session;
+import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.UserPage;
 import com.rex.crm.ajax.DataProvider;
 import com.rex.crm.ajax.FunctionClass;
@@ -97,8 +100,14 @@ public class AdvancedSearchPanel extends Panel {
       }else if(entity.getName().equalsIgnoreCase("contact")){
     	    target_url = urlFor(ContactPage.class, null).toString();
       }else if(entity.getName().equalsIgnoreCase("userinfo")){
-    	    target_url = urlFor(UserPage.class, null).toString();
-      }else{
+  	    target_url = urlFor(UserPage.class, null).toString();
+   	  }else if(entity.getName().equalsIgnoreCase("crmuser")){
+	    target_url = urlFor(PositionPage.class, null).toString();
+   	  }else if(entity.getName().equalsIgnoreCase("activity")){
+	    target_url = urlFor(ActivityPage.class, null).toString();
+   	  }else if(entity.getName().equalsIgnoreCase("coaching")||entity.getName().equalsIgnoreCase("willcoaching")){
+	    target_url = urlFor(CoachingPage.class, null).toString();
+   	  }else{
     	    target_url = urlFor(AccountPage.class, null).toString();  
       }
        

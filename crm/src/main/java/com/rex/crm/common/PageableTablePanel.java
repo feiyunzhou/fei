@@ -223,7 +223,18 @@ public class PageableTablePanel extends Panel {
                 }
             
 
-            }    
+            }
+			@Override
+			public void merge() {
+				// TODO Auto-generated method stub
+				setResponsePage(new MergePage()); 
+				
+			}
+			@Override
+			public void ineffective() {
+				// TODO Auto-generated method stub
+				
+			}    
         };
         
         add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName()),actionListener));

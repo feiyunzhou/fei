@@ -40,6 +40,9 @@ import com.rex.crm.SignIn2Session;
 import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.admin.PositionTreePage;
 import com.rex.crm.beans.Account;
+import com.rex.crm.beans.AccountCRMUserRelation;
+import com.rex.crm.beans.CRMUser;
+import com.rex.crm.beans.UserPosition;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
@@ -56,6 +59,7 @@ public class TeamManPanel extends Panel {
         currentEntityName = en;
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         final String userId = ((SignIn2Session)getSession()).getUserId();
+        final String user = ((SignIn2Session)getSession()).getUser();
         //team sql
         String teamSql = "";
         if(en.equalsIgnoreCase("account")){
@@ -193,6 +197,21 @@ public class TeamManPanel extends Panel {
             
            for(String rid:selectedRowIds){
              try{
+            	 int positionId = 0;
+            	 int otherId = 0;
+            	 String fromtable = null;
+            	  if(teamtable.equalsIgnoreCase("accountcrmuser")){
+            		  AccountCRMUserRelation acr =  DAOImpl.getAccountsByAccountCrmuserId(Integer.parseInt(rid));
+            		  positionId =  acr.getCrmuserId();
+            		  otherId = acr.getAccountId();
+            		  fromtable = teamtable;
+            	  }else if(teamtable.equalsIgnoreCase("user_position")){
+            		  UserPosition up =  DAOImpl.getUserPositionById(Integer.parseInt(rid));
+            		  positionId =  up.getPositionId();
+            		  otherId = up.getUserId();
+            		  fromtable = "userinfo";
+            	  }
+            	   DAOImpl.insertRealtionHestory(fromtable,user,positionId,otherId);
                    DAOImpl.removeEntityFromTeam(teamtable,rid);
                 
              }catch(Exception e){

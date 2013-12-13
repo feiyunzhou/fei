@@ -217,9 +217,15 @@ public class CRMUtility {
 	        EnumSet<Permissions> permission = null;
 	        if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("user_position")) {
 	            if (roleId == 1) {
-	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
+	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.INEFFECTIVE);
 	            }
-	        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar")|| entityName.equalsIgnoreCase("product")){
+	        }else if(entityName.equalsIgnoreCase("contact") ){
+	        	 if(roleId==1){
+	        		 permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.MERGE);
+	        	 }else{
+	        		 permission = EnumSet.of(CRUDPanel.Permissions.EDIT);
+	        	 }
+	        }else if( entityName.equalsIgnoreCase("calendar")|| entityName.equalsIgnoreCase("product")){
 	        	 if(roleId==1){
 	        		 permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DEL);
 	        	 }else{
@@ -239,7 +245,7 @@ public class CRMUtility {
 	          }
 	        }else if(entityName.equalsIgnoreCase("userInfo")){
 	            if (roleId == 1) {
-	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.RESETPWD);
+	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.RESETPWD,CRUDPanel.Permissions.INEFFECTIVE);
 	            }
 	        }else if(entityName.equalsIgnoreCase("alert")){
 	        	if(roleId == 1){
@@ -266,8 +272,8 @@ public class CRMUtility {
             if (roleId == 1) {
                 permission = EnumSet.of(CRUDPanel.Permissions.ADD);
             }
-        }else if(entityName.equalsIgnoreCase("contact") || entityName.equalsIgnoreCase("calendar")){
-        	permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
+        }else if(entityName.equalsIgnoreCase("contact")||entityName.equalsIgnoreCase("calendar")){
+        	permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD );
         }else if(entityName.equalsIgnoreCase("activity")){
         	if(roleId == 3){
         		permission = EnumSet.of(CRUDPanel.Permissions.ADD);

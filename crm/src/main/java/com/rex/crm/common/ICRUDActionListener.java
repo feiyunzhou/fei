@@ -9,5 +9,7 @@ public interface ICRUDActionListener {
     public void doneBtn() ;
     public void downLoadBtn() throws Exception;
     public void noExecute(String entityName,int entityId);
+    public void merge();
+	public void ineffective();
 }
 

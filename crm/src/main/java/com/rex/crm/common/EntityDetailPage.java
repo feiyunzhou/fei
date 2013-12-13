@@ -36,8 +36,10 @@ import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.ProductPage;
 import com.rex.crm.admin.UserPage;
 import com.rex.crm.admin.UserPositionPage;
+import com.rex.crm.beans.AccountCRMUserRelation;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserInfo;
+import com.rex.crm.beans.UserPosition;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.CRMUtility;
@@ -47,7 +49,7 @@ import com.rex.crm.util.SendEmail;
 public class EntityDetailPage extends TemplatePage {
     private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
     private static final long serialVersionUID = -2613412283023068638L;
-
+    private final String user = ((SignIn2Session)getSession()).getUser();
     private static int NUM_OF_COLUMN  = 3;
     public EntityDetailPage(){
     	String entityId = this.getRequest().getRequestParameters().getParameterValue("id").toString();
@@ -183,7 +185,7 @@ public class EntityDetailPage extends TemplatePage {
             @Override
             public void delete() {
                 if(entityName.equals("account")){
-                    DAOImpl.deleteRecord(id, entityName);
+                	DAOImpl.deleteRecord(id, entityName);
                     setResponsePage(new AccountPage());
                 }else if(entityName.equals("contact")){
                     DAOImpl.deleteRecord(id, entityName);
@@ -293,6 +295,47 @@ public class EntityDetailPage extends TemplatePage {
 	            	};
                 }
             }
+
+			@Override
+			public void merge() {
+				// TODO Auto-generated method stub
+				setResponsePage(new MergePage(entityName,id));
+			}
+
+			@Override
+			public void ineffective() {
+				// TODO Auto-generated method stub
+				DAOImpl.updateUserInfoPositionByUserId(id);
+				List<UserPosition> users = new ArrayList<UserPosition>();
+				
+				if(entityName.equalsIgnoreCase("userinfo")){
+					DAOImpl.updateUserInfoPositionByUserId(id);
+					for(UserPosition userinfo : users){
+						DAOImpl.removeEntityFromTeam("user_position",String.valueOf(userinfo.getId()));
+						DAOImpl.insertRealtionHestory("user_position",user,userinfo.getPositionId(),userinfo.getUserId());
+					}
+				}else if(entityName.equalsIgnoreCase("crmuser")){
+					DAOImpl.updateUserInfoPositionByUserId(id);
+					users = DAOImpl.getUsersByPositionId(id);
+					List<AccountCRMUserRelation> acrs =  DAOImpl.getAccountsByPositionId(Integer.parseInt(id));
+					for(AccountCRMUserRelation acr : acrs){
+						DAOImpl.removeEntityFromTeam("accountcrmuser",String.valueOf(acr.getId()));
+						DAOImpl.insertRealtionHestory("accountcrmuser",user,acr.getCrmuserId(),acr.getAccountId());
+					}
+					for(UserPosition userinfo : users){
+						DAOImpl.removeEntityFromTeam("user_position",String.valueOf(userinfo.getId()));
+						DAOImpl.insertRealtionHestory("user_position",user,userinfo.getPositionId(),userinfo.getUserId());
+					}
+				}else if(entityName.equalsIgnoreCase("account")){
+					List<AccountCRMUserRelation> acrs =  DAOImpl.getAccountsByAccountId((Integer.parseInt(id)));
+					for(AccountCRMUserRelation acr : acrs){
+						DAOImpl.removeEntityFromTeam("accountcrmuser",String.valueOf(acr.getId()));
+						DAOImpl.insertRealtionHestory("accountcrmuser",user,acr.getCrmuserId(),acr.getAccountId());
+					}
+				}
+				setResponsePage(new EntityDetailPage(entityName,id));
+			}
+
          };
 
 

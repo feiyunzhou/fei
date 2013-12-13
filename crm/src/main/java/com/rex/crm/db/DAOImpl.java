@@ -38,6 +38,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.rex.crm.beans.Account;
+import com.rex.crm.beans.AccountCRMUserRelation;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.CalendarEvent;
 import com.rex.crm.beans.Choice;
@@ -264,6 +265,58 @@ public class DAOImpl
         return accounts;
     }
 
+    public static List<AccountCRMUserRelation> getAccountsByPositionId(int id) {
+        List<AccountCRMUserRelation> accounts = Lists.newArrayList();
+        ResultSetHandler<List<AccountCRMUserRelation>> h = new BeanListHandler<AccountCRMUserRelation>(AccountCRMUserRelation.class);
+        Connection conn = null;
+        try {
+            QueryRunner run = new QueryRunner();
+            conn = DBConnector.getConnection();
+            accounts = run.query(conn, "select * from accountcrmuser  where crmuserId=?", h, id);
+        } catch (Exception e) {
+            logger.error("failed to get city table data", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return accounts;
+    }
+    
+    public static AccountCRMUserRelation getAccountsByAccountCrmuserId(int id) {
+    	 AccountCRMUserRelation accounts = null;
+        ResultSetHandler<AccountCRMUserRelation> h = new BeanHandler<AccountCRMUserRelation>(AccountCRMUserRelation.class);
+        Connection conn = null;
+        try {
+            QueryRunner run = new QueryRunner();
+            conn = DBConnector.getConnection();
+            accounts = run.query(conn, "select * from accountcrmuser  where id=?", h, id);
+        } catch (Exception e) {
+            logger.error("failed to get city table data", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return accounts;
+    }
+    
+    public static List<AccountCRMUserRelation> getAccountsByAccountId(int id) {
+   	 List<AccountCRMUserRelation> accounts = Lists.newArrayList();
+       ResultSetHandler<List<AccountCRMUserRelation>> h = new BeanListHandler<AccountCRMUserRelation>(AccountCRMUserRelation.class);
+       Connection conn = null;
+       try {
+           QueryRunner run = new QueryRunner();
+           conn = DBConnector.getConnection();
+           accounts = run.query(conn, "select * from accountcrmuser  where accountid=?", h, id);
+       } catch (Exception e) {
+           logger.error("failed to get city table data", e);
+       } finally {
+           DBHelper.closeConnection(conn);
+       }
+
+       return accounts;
+   }
+
+    
     public static List<CRMUser> getUsersByAccountId(int accountId) {
         List<CRMUser> users = Lists.newArrayList();
         ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
@@ -372,6 +425,25 @@ public class DAOImpl
 
         return account;
     }
+    
+    public static Entity getEntityById(String tableName,String id) {
+        Connection conn = null;
+        Entity entity = null;
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<Entity> h = new BeanHandler<Entity>(Entity.class);
+
+            entity = run.query(conn, "SELECT * FROM "+tableName + "where id=?", h, id);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all entity", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return entity;
+    }
 
     public static CRMUser[] getAllCRMUsersArray() {
         return getAllCRMUsers().toArray(new CRMUser[0]);
@@ -414,7 +486,24 @@ public class DAOImpl
         return user;
     }
 
-    
+    public static CRMUser getCrmUserByAccountId(int id) {
+        Connection conn = null;
+        CRMUser user = null;
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<CRMUser> h = new BeanHandler<CRMUser>(CRMUser.class);
+
+            user = run.query(conn, "SELECT crmuser.* FROM crmuser inner join accountcrmuser on crmuser.id = accountcrmuser.crmuserid where accountcrmuser.accountid=?", h, id);
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return user;
+    }
     
     public static void insertRelationOfAccountIDCRMUserID(int accountId, int userId) throws Exception {
         // Account account = accountIndexTable.get(accountId);
@@ -1597,7 +1686,7 @@ public class DAOImpl
     
     public static void updateUserInfoPositionByUserId( String userId) {
       String sql = "";
-         sql = "UPDATE  user_position SET status = 2 where userId = " + userId;
+         sql = "UPDATE  crmuser SET pl1 = 2 where id = " + userId;
        logger.debug("UPDATE sql is:"+sql);
        Connection conn = null;
        try {
@@ -1989,6 +2078,23 @@ public class DAOImpl
       return user;
   }
 
+    public static UserPosition getUserPositionById(int uid) {
+        Connection conn = null;
+        UserPosition user = new UserPosition();
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<UserPosition> h = new BeanHandler<UserPosition>(UserPosition.class);
+            user = run.query(conn, "SELECT * from  user_position  where id=?  ", h,  uid);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return user;
+    }
     public static boolean isSessionValid(String sessionId, String sessionKey) {      
         boolean res = false;
         Connection conn = null;
@@ -2291,6 +2397,33 @@ public class DAOImpl
         String sql = "delete from "+teamtable+" where id="+id;
         if(teamtable.equalsIgnoreCase("crmuser")){
         	sql = "update  "+teamtable+" set reportto = 0 where id="+id;
+        }
+        logger.debug("sserserserser"+ sql);
+        Connection conn = null;
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            int inserts = 0;
+            inserts += run.update(conn, sql);
+
+            System.out.println("removed:" + inserts);
+        } catch (Exception e) {
+            logger.error("removeContactFromTeam", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        
+    }
+    
+    public static void insertRealtionHestory(String teamtable,String user,int positionId,int otherId) {
+    	String sql = null;
+    	long ts= System.currentTimeMillis();
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date_value = dateformat.format(ts);
+        if(teamtable.equalsIgnoreCase("userinfo")||teamtable.equalsIgnoreCase("user_position")){
+        		sql = "insert into userposition_relation_histroy (position_id, user_id, modify_time, modifier) values("+positionId+","+otherId+",'"+date_value+"','"+user+"') ";
+        }else if(teamtable.equalsIgnoreCase("accountcrmuser")){
+            	sql = "insert into accountcrmuser_relation_history (position_id,account_id,modify_time,modifier) values("+positionId+","+otherId+",'"+date_value+"','"+user+"') ";
         }
         logger.debug("sserserserser"+ sql);
         Connection conn = null;
@@ -2766,6 +2899,22 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
          return users;
     }
     
+    public static List<UserPosition>  getUsersByPositionId(	String positionId){
+   	 List<UserPosition> users = Lists.newArrayList();
+        ResultSetHandler<List<UserPosition>> h = new BeanListHandler<UserPosition>(UserPosition.class);
+        Connection conn = null;
+        try {
+            QueryRunner run = new QueryRunner();
+            conn = DBConnector.getConnection();
+            users = run.query(conn, "select * from user_position where positionId=?", h,positionId);
+        } catch (Exception e) {
+            logger.error("failed to get userPostion table data", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return users;
+   }
   //根据crmuserid获取crm对象
     public static int  getReporttoIdById(String entityId){
     	System.out.println("根据crmuserID获取用户" + entityId);

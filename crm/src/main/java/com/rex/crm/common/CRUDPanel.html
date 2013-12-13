@@ -15,6 +15,8 @@
 			<div class="btn-group-right" wicket:id="doneCon" id="done"></div>
 			<div class="btn-group-right" wicket:id="downloadCon" id="download"></div>
 			<div class="btn-group-right" wicket:id="noExecuteCon" ></div>
+			<div class="btn-group-right" wicket:id="mergeCon" ></div>
+			<div class="btn-group-right" wicket:id="ineffectiveCon" ></div>
 			
 	</div>
 	<wicket:fragment wicket:id="addFragment">
@@ -41,6 +43,12 @@
 	</wicket:fragment>
 	<wicket:fragment wicket:id="noExecuteFragment">
 		<a href="#" class="btn btn-sm btn-mini btn-warning" wicket:id="noExecute_data_btn" ><i class="icon-remove-sign icon-large"></i>未执行</a>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="mergeFragment">
+		<a href="#" class="btn btn-sm btn-mini btn-warning" wicket:id="merge_data_btn" ><i class="icon-remove-sign icon-large"></i>合并</a>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="ineffectiveFragment">
+		<a href="#" class="btn btn-sm btn-mini btn-warning" wicket:id="ineffective_data_btn" ><i class="icon-remove-sign icon-large"></i>失效</a>
 	</wicket:fragment>
 	<wicket:fragment wicket:id="emptyFragment"></wicket:fragment>
 </wicket:panel>

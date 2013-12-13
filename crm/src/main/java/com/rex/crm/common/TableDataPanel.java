@@ -103,6 +103,19 @@ public class TableDataPanel extends Panel {
                 }   
             }
 
+			@Override
+			public void merge() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void ineffective() {
+				// TODO Auto-generated method stub
+				
+			}
+
+
         };
         
         add(new CRUDPanel("operationBar",entityName,null,EnumSet.of(CRUDPanel.Permissions.ADD),actionListener));
