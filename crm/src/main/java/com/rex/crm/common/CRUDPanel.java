@@ -171,7 +171,7 @@ public class CRUDPanel extends Panel {
              }else{
                  add(new Fragment("downloadCon","emptyFragment",this));
              }
-            	if (userPerms.contains(Permissions.noExecute)) {
+            if (userPerms.contains(Permissions.noExecute)) {
                     Fragment addfrag = new Fragment("noExecuteCon","noExecuteFragment",this);
                     Link link = new Link("noExecute_data_btn") {
 
@@ -181,14 +181,20 @@ public class CRUDPanel extends Panel {
                         }
                     };
                     addfrag.add(link);
+                    add(addfrag);
                     //根据entityId获取对象，获取开始时间，然后判断时间是否未来时则隐藏
     				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willcoaching")){
     					Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
     	                if(activity.getStatus()!=1){
-    	                	addfrag.add(new AttributeAppender("style",new Model("hiddenStyle")," "));
+    	                	addfrag.add(new AttributeAppender("class",new Model("hiddenStyle")," "));
     	                }
-                    }
-                };
+    				}
+    			}else{
+            		add(new Fragment("noExecuteCon","emptyFragment",this));
+            	}
+            
+                
+                
             	if (userPerms.contains(Permissions.MERGE)) {
                     Fragment addfrag = new Fragment("mergeCon","mergeFragment",this);
                     Link link = new Link("merge_data_btn") {
