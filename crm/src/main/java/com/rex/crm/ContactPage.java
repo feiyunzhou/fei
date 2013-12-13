@@ -11,7 +11,6 @@ import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
 import com.rex.crm.beans.Choice;
-import com.rex.crm.common.AdvancedPanel;
 import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
