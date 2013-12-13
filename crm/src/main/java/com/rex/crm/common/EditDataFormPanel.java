@@ -350,8 +350,7 @@ public class EditDataFormPanel extends Panel {
                             } else if(currentField.getDataType().equals("datetime-local")){
                                 
                                  SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                                 String str_timestamp = String.valueOf(rawvalue);
-                                 value = dateformat.format(new Date(Long.parseLong(str_timestamp)));
+                                 value = dateformat.format(rawvalue);
                                  IModel<String> textModel = new Model<String>(value);
                                 //textModel = new Model<String>(date_value);
                                 modifyNameToModel.put(currentField.getDisplay(), textModel);
@@ -468,7 +467,7 @@ public class EditDataFormPanel extends Panel {
 			String modifyValue = null;
 			if(obj!=null){
                 if (obj instanceof String) {
-                    if (field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() != null && !field.getFormatter().isEmpty()) {
+                    if (field.getDataType().equalsIgnoreCase("datetime-local")) {
                         // if the filed has formatter, we guess the
                         // field saved in data base is in long
                         Date date = new Date();
@@ -484,13 +483,7 @@ public class EditDataFormPanel extends Panel {
     	                        	}
     	                        }
                         }
-                        try {
-							date = dateformat.parse(dateTime);
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-                       value = String.valueOf(date.getTime());
+                       value = String.valueOf("'"+dateTime+"'");
 
                     } else {
                     	value = "'" + (String)obj + "'";
@@ -533,12 +526,7 @@ public class EditDataFormPanel extends Panel {
             names.add("total_score");
             values.add(""+total_score+"");
         }else if(schema.getName().equals("activity")){
-      	  	try {
-				values.add(""+(dateformat.parse(endDate.toString())).getTime()+"");
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			values.add("'"+endDate+"'");
       	  	names.add("endtime");
         }
 		if(!table_name.equalsIgnoreCase("userinfo")){
@@ -549,9 +537,12 @@ public class EditDataFormPanel extends Panel {
                        
                         DAOImpl.updateProductlineWhenEditcategory(entityId, productlineId);	  
                      }
-			recordValueChanges(data, schema, entityId, userName, values, names,
-					table_name);
-		  DAOImpl.updateRecord(entityId,table_name,names,values);
+                   if(!table_name.equalsIgnoreCase("activity")||table_name.equalsIgnoreCase("willcoaching")||table_name.equalsIgnoreCase("coaching")){
+                	   recordValueChanges(data, schema, entityId, userName, values, names,
+           					table_name);
+           		    
+                   }
+                   DAOImpl.updateRecord(entityId,table_name,names,values);
 		  return true;
 		}else{
 			List<String> loginNames =DAOImpl.getLoginNames(entityId);
@@ -560,7 +551,6 @@ public class EditDataFormPanel extends Panel {
             }else{
             	recordValueChanges(data, schema, entityId, userName, values,
 						names, table_name);
-    			
         		  DAOImpl.updateRecord(entityId,table_name,names,values);
         		  return true;
             }
@@ -590,8 +580,8 @@ public class EditDataFormPanel extends Panel {
 		    		valuebefore =  DAOImpl.queryPickListByIdCached(fld.getPicklist(), valuebefore);
 		    	}else{
 					    if(val!=null){
+					    	logger.debug("val is:"+val);
 					    	val = val.substring(1, val.length()-1);
-							logger.debug("val is:"+val);
 						  if (!val.equalsIgnoreCase( valuebefore)) {
 							isChanged = true;
 						  }

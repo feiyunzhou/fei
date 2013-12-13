@@ -89,11 +89,11 @@ public class CRUDPanel extends Panel {
 	                cal.setTime(newDate);
 	                cal.set(Calendar.DATE,cal.get(Calendar.DATE)-7);
 	                newDate = cal.getTime();
-	                Date startTime = new Date(activity.getStarttime());
+	                Date startTime =activity.getStarttime();
 	                if(startTime.compareTo(newDate)<0){
-	                	editfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+	                	editfrag.add(new AttributeAppender("class",new Model("hiddenStyle")," "));
 	                }else if(activity.getStatus()==3||activity.getStatus()==2){
-	                	editfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+	                	editfrag.add(new AttributeAppender("class",new Model("hiddenStyle")," "));
 	                }
                 }
             	addOrReplace(editfrag);
@@ -134,11 +134,11 @@ public class CRUDPanel extends Panel {
 					if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willcoaching")){
 						Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
 		                Date newDate = new Date();
-		                Date startTime = new Date(activity.getStarttime());
+		                Date startTime = activity.getStarttime();
 		                if(startTime.compareTo(newDate)>=0){
-		                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+		                	addfrag.add(new AttributeAppender("class",new Model("hiddenStyle")," "));
 		                }else if(activity.getStatus()==3){
-		                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+		                	addfrag.add(new AttributeAppender("class",new Model("hiddenStyle")," "));
 		                }
 	                }
 	                add(addfrag);
@@ -183,7 +183,7 @@ public class CRUDPanel extends Panel {
 				if(entityName.equals("activity")||entityName.equals("coaching")||entityName.equals("willcoaching")){
 					Activity activity = DAOImpl.getActivityById(Integer.parseInt(entityId));
 	                if(activity.getStatus()!=1){
-	                	addfrag.add(new AttributeAppender("style",new Model("display:none")," "));
+	                	addfrag.add(new AttributeAppender("class",new Model("hiddenStyle")," "));
 	                }
                 }
                 add(addfrag);

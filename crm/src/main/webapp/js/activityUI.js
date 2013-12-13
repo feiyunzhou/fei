@@ -48,9 +48,9 @@ function renderActivityTableOnPage(id) {
         var events = ACTIVITY_UTIL.getCalendarEventFromLocalStorage();
         if (events[id] != undefined) {
             var evt = events[id];
-            var date = new Date(evt.startt*1000);
+            var date = new Date(evt.startt);
             var starttime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
-            date = new Date(evt.endt*1000);
+            date = new Date(evt.endt);
             var endtime = $.fullCalendar.formatDate(date, "yyyy-MM-dd HH:mm");
             $('#detail_title').html("拜访");
             var trs = "<tbody>" + "<tr>" + "<td style=\"text-align:left;font-weight:bold\">开始时间:</td>" + "<td style=\"text-align:right\" >" + starttime + "</td></tr>" + "<tr>"

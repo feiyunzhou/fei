@@ -1,5 +1,7 @@
 package com.rex.crm.db.model;
 
+import java.util.Date;
+
 // Generated 2013-5-4 16:44:24 by Hibernate Tools 4.0.0
 
 /**
@@ -9,8 +11,8 @@ public class Activity implements java.io.Serializable {
 
 	private Integer id;
 	private int crmuserId;
-	private Long endtime;
-	private long starttime;
+	private Date endtime;
+	private Date starttime;
 	private String title;
     private int event_type;
     private int status;
@@ -18,12 +20,12 @@ public class Activity implements java.io.Serializable {
 	public Activity() {
 	}
 
-	public Activity(int crmuserId, long starttime) {
+	public Activity(int crmuserId, Date starttime) {
 		this.crmuserId = crmuserId;
 		this.starttime = starttime;
 	}
 
-	public Activity(int crmuserId, Long endtime, long starttime, String title) {
+	public Activity(int crmuserId, Date endtime, Date starttime, String title) {
 		this.crmuserId = crmuserId;
 		this.endtime = endtime;
 		this.starttime = starttime;
@@ -46,19 +48,20 @@ public class Activity implements java.io.Serializable {
 		this.crmuserId = crmuserId;
 	}
 
-	public Long getEndtime() {
-		return this.endtime;
+	
+	public Date getEndtime() {
+		return endtime;
 	}
 
-	public void setEndtime(Long endtime) {
+	public void setEndtime(Date endtime) {
 		this.endtime = endtime;
 	}
 
-	public long getStarttime() {
-		return this.starttime;
+	public Date getStarttime() {
+		return starttime;
 	}
 
-	public void setStarttime(long starttime) {
+	public void setStarttime(Date starttime) {
 		this.starttime = starttime;
 	}
 

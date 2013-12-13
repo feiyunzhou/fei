@@ -143,7 +143,6 @@ public class PageableTablePanel extends Panel {
                             columnitem.add(new Label("celldata", value));
                         }else {
                            
-                            
                              String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
                             final String filepath = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
                             

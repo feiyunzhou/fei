@@ -435,9 +435,9 @@ public class NewDataFormPanel extends Panel
                             {
                                 if (defaultValue.isEmpty()||"null".equals(defaultValue))
                                 {
-                                    long ts = System.currentTimeMillis();
+                                    Date date = new Date();
                                     SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                                    String date_value = dateformat.format(ts);
+                                    String date_value = dateformat.format(date);
                                     defaultModel = new Model<String>(date_value);
                                 }
                                 columnitem.add(new TextInputFragment("celldatafield", "textInputFragment", this, defaultModel, currentField));
@@ -558,7 +558,7 @@ public class NewDataFormPanel extends Panel
             }
             if (models.get(key).getObject() instanceof String)
             {
-                if (field.getDataType().equalsIgnoreCase("datetime-local") && field.getFormatter() != null && !field.getFormatter().isEmpty())
+                if (field.getDataType().equalsIgnoreCase("datetime-local") )
                 {
                     //if the filed has formatter, we guess the field saved in data base is in long 
                     Date date = new Date();
@@ -579,16 +579,7 @@ public class NewDataFormPanel extends Panel
                             }
                         }
                     }
-                    try
-                    {
-                        date = dateformat.parse(dateTime);
-                    }
-                    catch (ParseException e)
-                    {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    values.add(String.valueOf(date.getTime()));
+                    values.add("'"+String.valueOf(dateTime)+"'");
 
                 }
                 else
@@ -664,15 +655,7 @@ public class NewDataFormPanel extends Panel
         }
         else if (entity.getName().equals("activity"))
         {
-            try
-            {
-                values.add("" + (dateformat.parse(endDate.toString())).getTime() + "");
-            }
-            catch (ParseException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            values.add("'" +endDate + "'");
             fieldNames.add("endtime");
         }
         if (entity.getName().equals("productcategory"))

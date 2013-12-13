@@ -111,8 +111,8 @@ var ACTIVITY_UTIL = (function ($,w,undefined) {
                       event.id = act.id;
                       event.title = act.title;
                       event.coachType= act.coachType;
-                      event.start =  parseInt(act.starttime)/1000;
-                      event.end = parseInt(act.endtime)/1000;
+                      event.start = act.starttime;
+                      event.end = act.endtime;
                       event.color = getEventByStatusAndType(act.act_status);
                       event.allDay = false;
                       events.push(event);

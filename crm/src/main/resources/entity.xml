@@ -2481,6 +2481,7 @@ select * from user_position
 				<isEditable>false</isEditable>
 				<priority>1</priority>
 				<isShow>true</isShow>
+				<field-type>String</field-type>
 				<picklist>activity_coachType_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
@@ -2504,7 +2505,7 @@ select * from user_position
 				<display>开始时间</display>
 				<isRequired>true</isRequired>
 				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<!-- <formatter>com.rex.crm.common.TimestampFormatter</formatter> -->
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -2520,7 +2521,7 @@ select * from user_position
 				<display>结束时间</display>
 				<isRequired>true</isRequired>
 				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
+				<!-- <formatter>com.rex.crm.common.TimestampFormatter</formatter> -->
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -2649,6 +2650,7 @@ select * from user_position
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<isBaseInfo>true</isBaseInfo>
+				<field-type>String</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
@@ -3214,7 +3216,6 @@ select * from user_position
 				<name>starttime</name>
 				<display>开始时间</display>
 				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -3231,7 +3232,6 @@ select * from user_position
 				<name>endtime</name>
 				<display>结束时间</display>
 				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -4216,7 +4216,6 @@ select * from user_position
 				<name>starttime</name>
 				<display>开始时间</display>
 				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -4233,7 +4232,6 @@ select * from user_position
 				<name>endtime</name>
 				<display>结束时间</display>
 				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
