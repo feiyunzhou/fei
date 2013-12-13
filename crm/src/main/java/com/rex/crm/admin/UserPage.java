@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
@@ -14,6 +15,7 @@ import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
+import com.rex.crm.common.advancedSearch.AdvancedSearchPage;
 import com.rex.crm.db.DAOImpl;
 import com.rexen.crm.beans.UserRole;
 import com.rex.crm.util.Configuration;
@@ -103,7 +105,14 @@ public class UserPage extends AdminTemplatePage
 
     };
     add(form);
+    form.add(new Link("ad_search_link"){
+        @Override
+        public void onClick() {
+            setResponsePage(new AdvancedSearchPage(entity.getName(),null));
+            
+        }
 
+    });
     TextField search_input = new TextField("search_input", new PropertyModel(this, "search_target"));
     form.add(search_input);
 

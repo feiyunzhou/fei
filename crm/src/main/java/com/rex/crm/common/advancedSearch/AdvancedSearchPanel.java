@@ -190,8 +190,6 @@ public class AdvancedSearchPanel extends Panel {
                     AdvancedSearchFilter[] filters = gson.fromJson(jsonString, AdvancedSearchFilter[].class);
                     filterString = buildFilterSQL(entity, filters);
                     
-                    System.out.println(filterString);
-                    
                     br.close();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -254,6 +252,8 @@ public class AdvancedSearchPanel extends Panel {
                         advancedFields[i].setList(pickList);
                         advancedFields[i].setType("lov");
                         
+                    }else if(f.getDataType().equals("datetime-local")||f.getName().equals("whenadded")||f.getName().equals("modify_datetime")||f.getName().equals("act_endtime")){
+                    	advancedFields[i].setType("time");
                     }else{
                         advancedFields[i].setType(f.getDataType());
                     }
@@ -303,6 +303,7 @@ public class AdvancedSearchPanel extends Panel {
         String filterString;
         List<String> combinedFilters = Lists.newArrayList();
         for(AdvancedSearchFilter ft:filters){
+        	
            String fieldName = ft.getField().getValue();
            Field field = entity.getFieldByName(fieldName);
            
@@ -329,6 +330,22 @@ public class AdvancedSearchPanel extends Panel {
                        combinedFilters.add(ft.getField().getValue() +" is not null ");
                    }
                    
+               }
+           }else if(field.getDataType().equals("datetime-local")||field.getName().equals("whenadded")||field.getName().equals("modify_datetime")||field.getName().equals("act_endtime")){
+        	   if(ft.getOperator().getValue().equalsIgnoreCase("eq")){
+                   combinedFilters.add(ft.getField().getValue() +" = '"+ ft.getValue().getValue()+"'");
+               }else if(ft.getOperator().getValue().equalsIgnoreCase("gt")){
+                   combinedFilters.add(ft.getField().getValue() +" > '"+ ft.getValue().getValue()+"'");
+               }else if(ft.getOperator().getValue().equalsIgnoreCase("lt")){
+                   combinedFilters.add(ft.getField().getValue() +" < '"+ ft.getValue().getValue()+"'");
+               }else if(ft.getOperator().getValue().equalsIgnoreCase("ne")){
+                   combinedFilters.add(ft.getField().getValue() +" != '"+ ft.getValue().getValue()+"'");
+               }else if(ft.getOperator().getValue().equalsIgnoreCase("bw")){
+                   combinedFilters.add(ft.getField().getValue() +" between '"+ft.getValue().getValue()+"' and '"+ft.getValue().getValue()+"'");
+               }else if(ft.getOperator().getValue().equalsIgnoreCase("null")){
+                   combinedFilters.add(ft.getField().getValue() +" is null ");
+               }else if(ft.getOperator().getValue().equalsIgnoreCase("nn")){
+                   combinedFilters.add(ft.getField().getValue() +" is not null ");
                }
            }else{
                if(ft.getOperator().getValue().equalsIgnoreCase("eq")){

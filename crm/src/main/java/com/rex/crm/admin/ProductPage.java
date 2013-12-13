@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.PropertyModel;
 
 import com.google.common.collect.Lists;
@@ -14,6 +15,7 @@ import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.TableDataPanel;
+import com.rex.crm.common.advancedSearch.AdvancedSearchPage;
 import com.rex.crm.db.DAOImpl;
 import com.rexen.crm.beans.UserRole;
 import com.rex.crm.util.Configuration;
@@ -41,11 +43,11 @@ public class ProductPage extends AdminTemplatePage
 
   public void initPage(final Map<String, Boolean> filter, List tdata)
   {
+	setPageTitle("系统管理-产品管理");
     Map<String, Entity> entities = Configuration.getEntityTable();
     final Entity entity = entities.get("productline");
     final int roleId = ((SignIn2Session) getSession()).getRoleId();
     final String positionId = ((SignIn2Session) getSession()).getPositionId();
-    setPageTitle(entity.getDisplay());
     
     
     Form form = new Form("form")
@@ -79,7 +81,14 @@ public class ProductPage extends AdminTemplatePage
 
     };
     add(form);
+    form.add(new Link("ad_search_link"){
+        @Override
+        public void onClick() {
+            setResponsePage(new AdvancedSearchPage(entity.getName(),null));
+            
+        }
 
+    });
     TextField search_input = new TextField("search_input", new PropertyModel(this, "search_target"));
     form.add(search_input);
 

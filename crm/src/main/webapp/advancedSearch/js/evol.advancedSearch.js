@@ -401,6 +401,7 @@ $.widget( 'evol.advancedSearch', {
 				if(this._step<3){
 					var h=[];
 					opBetween=opVal==evoAPI.sBetween;
+					console.info();
 					switch (fType){
 						case evoTypes.lov:
 							h.push('<span id="value">');
@@ -418,8 +419,9 @@ $.widget( 'evol.advancedSearch', {
 							break;
 						case evoTypes.date:
 						case evoTypes.time:
+							//h.push('(<input type="datetime-local" id = "time"/>');
 						case evoTypes.number:	
-							var iType=(fType==evoTypes.date)?'text':fType;
+							var iType=(fType==evoTypes.time)?'datetime-local':fType;
 							h.push('<input id="value" type="',iType,'"/>');
 							if(opBetween){
 								h.push('<span class="as-Txt">',evoLang.opAnd,' </span>',

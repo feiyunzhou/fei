@@ -3464,8 +3464,6 @@ select * from user_position
 				<fieldGroup>附加信息</fieldGroup>
 			</field>
 			
-			
-			
 			<field>
 				<name>planing</name>
 				<display>访前计划</display>
