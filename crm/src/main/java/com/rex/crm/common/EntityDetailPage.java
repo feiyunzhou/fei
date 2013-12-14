@@ -50,6 +50,7 @@ public class EntityDetailPage extends TemplatePage {
     private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
     private static final long serialVersionUID = -2613412283023068638L;
     private final String user = ((SignIn2Session)getSession()).getUser();
+    private final int roleId = ((SignIn2Session)getSession()).getRoleId();
     private static int NUM_OF_COLUMN  = 3;
     public EntityDetailPage(){
     	String entityId = this.getRequest().getRequestParameters().getParameterValue("id").toString();
@@ -134,13 +135,15 @@ public class EntityDetailPage extends TemplatePage {
              params.put(entityName+"."+f.getName(), map.get(f.getName()));
          }
          for(Relation r:relations){
-           AbstractItem item = new AbstractItem(relationRepeater.newChildId());
-           relationRepeater.add(item);
-           logger.debug(r.getSql());
-           logger.debug("parms:"+id);
-           List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
-           item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),params));
-           
+            if((r.getName().equalsIgnoreCase("accountcrmuserrelationhistory")||r.getName().equalsIgnoreCase("userposition_relation_history"))&&roleId!=1){
+            	continue;
+            }
+            AbstractItem item = new AbstractItem(relationRepeater.newChildId());
+            relationRepeater.add(item);
+            logger.debug(r.getSql());
+            logger.debug("parms:"+id);
+            List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
+            item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),params));
          }
          if(entityName.equalsIgnoreCase("account")){
              add(new TeamManPanel("teamPanel",entityName,String.valueOf(lid),0));
