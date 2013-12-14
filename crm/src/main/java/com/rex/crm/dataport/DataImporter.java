@@ -38,7 +38,7 @@ public class DataImporter {
     private static final Logger logger = Logger.getLogger(DataImporter.class);
 
     public static ImportMeta _importData(String entityName,String filename) throws IOException{
-        if(entityName.equalsIgnoreCase("user_position") || entityName.equalsIgnoreCase("accountcrmuser")){
+        if(entityName.equalsIgnoreCase("user_position")){
             DAOImpl.deleteAllRecords(entityName);
         }
        // String   tmpDir = CRMUtility.createTempDirectory().getAbsolutePath();
