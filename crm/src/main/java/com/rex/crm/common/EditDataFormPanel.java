@@ -556,7 +556,7 @@ public class EditDataFormPanel extends Panel {
             }
        }
 	}
-	private void recordValueChanges(final Map data, Entity schema,
+public static void recordValueChanges(final Map data, Entity schema,
 			String entityId, String userName, List<String> values,
 			List<String> names, String table_name) throws Exception {
 		String valuebefore;

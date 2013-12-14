@@ -95,7 +95,7 @@ public class EntityDetailPage extends TemplatePage {
         this.setPageTitle("详细信息");
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
-        Entity entity = entities.get(entityName);
+        final Entity entity = entities.get(entityName);
         final RepeatingView div = new RepeatingView("promptDiv");
         final AbstractItem groupitem = new AbstractItem(div.newChildId());
         final Label promptButton = new Label("promptButton","X");
@@ -130,7 +130,7 @@ public class EntityDetailPage extends TemplatePage {
          add(relationRepeater);
          
          List<Field> paramFields = entity.getParamFields();
-         Map<String,Object> params = Maps.newHashMap();
+         final Map<String,Object> params = Maps.newHashMap();
          for(Field f:paramFields){
              params.put(entityName+"."+f.getName(), map.get(f.getName()));
          }
@@ -317,19 +317,35 @@ public class EntityDetailPage extends TemplatePage {
 						DAOImpl.removeEntityFromTeam("user_position",String.valueOf(userinfo.getId()));
 						DAOImpl.insertRealtionHestory("user_position",user,userinfo.getPositionId(),userinfo.getUserId());
 					}
-				}else if(entityName.equalsIgnoreCase("crmuser")){
-					DAOImpl.updateUserInfoPositionByUserId(id);
-					users = DAOImpl.getUsersByPositionId(id);
-					List<AccountCRMUserRelation> acrs =  DAOImpl.getAccountsByPositionId(Integer.parseInt(id));
-					for(AccountCRMUserRelation acr : acrs){
-						DAOImpl.removeEntityFromTeam("accountcrmuser",String.valueOf(acr.getId()));
-						DAOImpl.insertRealtionHestory("accountcrmuser",user,acr.getCrmuserId(),acr.getAccountId());
+				}else if(entityName.equalsIgnoreCase("crmuser"))
+					try {
+						{
+							DAOImpl.updateUserInfoPositionByUserId(id);
+							users = DAOImpl.getUsersByPositionId(id);
+							List<CRMUser> crmusers = DAOImpl.getPositionByReporttoId(id);
+							DAOImpl.updateCrmUserReport(id, "-1");
+							CRMUser reporttoCrmuser = DAOImpl.getCrmUserById(id);
+							for(CRMUser crmuser :crmusers){
+								DAOImpl.insertAudit("crmuser","上级岗位",reporttoCrmuser.getName(),"admin",String.valueOf(crmuser.getId()),user);
+							}
+							List<AccountCRMUserRelation> acrs =  DAOImpl.getAccountsByPositionId(Integer.parseInt(id));
+							for(AccountCRMUserRelation acr : acrs){
+								DAOImpl.removeEntityFromTeam("accountcrmuser",String.valueOf(acr.getId()));
+								DAOImpl.insertRealtionHestory("accountcrmuser",user,acr.getCrmuserId(),acr.getAccountId());
+							}
+							for(UserPosition userinfo : users){
+								DAOImpl.removeEntityFromTeam("user_position",String.valueOf(userinfo.getId()));
+								DAOImpl.insertRealtionHestory("user_position",user,userinfo.getPositionId(),userinfo.getUserId());
+							}
+						}
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					for(UserPosition userinfo : users){
-						DAOImpl.removeEntityFromTeam("user_position",String.valueOf(userinfo.getId()));
-						DAOImpl.insertRealtionHestory("user_position",user,userinfo.getPositionId(),userinfo.getUserId());
-					}
-				}else if(entityName.equalsIgnoreCase("account")){
+				else if(entityName.equalsIgnoreCase("account")){
 					List<AccountCRMUserRelation> acrs =  DAOImpl.getAccountsByAccountId((Integer.parseInt(id)));
 					for(AccountCRMUserRelation acr : acrs){
 						DAOImpl.removeEntityFromTeam("accountcrmuser",String.valueOf(acr.getId()));

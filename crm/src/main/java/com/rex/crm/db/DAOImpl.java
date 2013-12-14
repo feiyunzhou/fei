@@ -2934,6 +2934,22 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         }
         return id;
     }
+  //根据reportto获取crm对象
+    public static List<CRMUser>  getPositionByReporttoId(String entityId){
+        Connection conn = null;
+        List<CRMUser> crmuser = new ArrayList<CRMUser>();
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
+            crmuser = run.query(conn, "SELECT crmuser.* FROM crmuser inner join crmuser as a on crmuser.reportto = a.id where a.id=?", h, entityId);
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return crmuser;
+    }
     //用户初次登录修改关键信息
     public static boolean updateKeyUserInfoMessage(String phone,String email,String password,int userId){
     	String sql = "UPDATE userinfo SET cellphone=?,email=?,password=? where id=?";
