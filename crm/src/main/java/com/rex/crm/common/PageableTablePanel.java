@@ -120,7 +120,7 @@ public class PageableTablePanel extends Panel {
 
                     });
                     if (f.isDetailLink()) {
-                        String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
+                    	String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));	
                         if(value.equals("null")||value.isEmpty()){
                           value = "无";
                         }

@@ -2096,15 +2096,16 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<display>岗位关系</display>
 	<externalField>externalId</externalField>
 	<sql>
-<!-- 	select user_position.id\,crmuser.name as positionId\,userInfo.name as userId from user_position  -->
-<!-- 	left join crmuser on user_position.positionId = crmuser.id  -->
-<!-- 	left join userInfo on userInfo.id = user_position.userId -->
-select * from user_position
+  select * from ( select userinfo.name as username\,user_position.*   
+    from user_position 
+	left join userinfo on userinfo.id = user_position.userId 
+	left join crmuser on crmuser.id = user_position.positionId) as a
 	</sql>
-	<sql-ent>select user_position.*\,userinfo.name as name \,crmuser.code from user_position
+	<sql-ent>select * from(select userinfo.name as username \,user_position.*
+	 from user_position
 	left join userinfo on userinfo.id = user_position.userId 
 	left join crmuser on crmuser.id = user_position.positionId
-	 where user_position.id = ?</sql-ent>
+	 where user_position.id = ?) as a</sql-ent>
 	<fields>
 		<field>
 			<name>id</name>
@@ -2120,13 +2121,13 @@ select * from user_position
 		</field>
 		<field>
 				<name>userId</name>
-				<display>用户Id</display>
+				<display>用户名称</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority>
+				<priority>2</priority>
 				<field-type>String</field-type>
 				<relationTable>userinfo</relationTable>
 				<isShow>true</isShow>
@@ -2135,8 +2136,21 @@ select * from user_position
 				<import_external_foreignkey_field_name>employeeNumber</import_external_foreignkey_field_name>
 			</field>
 			<field>
+				<name>username</name>
+				<display>用户名称</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<priority>1</priority>
+				<field-type>String</field-type>
+				<isShow>false</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
 				<name>positionId</name>
-				<display>岗位Id</display>
+				<display>岗位名称</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -5416,7 +5430,6 @@ select * from user_position
 				<name>publishDate</name>
 				<display>公布日期</display>
 				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -5432,7 +5445,6 @@ select * from user_position
 				<display>截止日期</display>
 				<field-type>String</field-type>
 				<data-type>datetime-local</data-type>
-				<formatter>com.rex.crm.common.TimestampFormatter</formatter>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>

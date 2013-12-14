@@ -92,7 +92,7 @@ public class TeamManPanel extends Panel {
           }
         else if (type == 2){
 //          //for the 用户岗位
-          teamSql = "select  * from   (select user_position.* ,user_position.id as rid from  userinfo  left join  user_position on user_position.userId = userinfo.id left join  crmuser on crmuser.id = user_position.positionId where userinfo.id = ? ) as atable";
+          teamSql = "select  * from   (select user_position.* ,user_position.id as rid,userinfo.name as username from  userinfo  left join  user_position on user_position.userId = userinfo.id left join  crmuser on crmuser.id = user_position.positionId where userinfo.id = ? ) as atable";
         } 
     }else if(en.equalsIgnoreCase("crmuser")){
             if(type == 0){
@@ -104,7 +104,7 @@ public class TeamManPanel extends Panel {
             }
             else if (type == 2){
               //for the 用户列表
-              teamSql = "select * from (select userinfo.*,user_position.id as rid ,user_position.status as status , crmuser.name as positionId,role.val as crmuserRole  from  user_position left join userInfo on userInfo.id = user_position.userId left join crmuser on crmuser.id = user_position.positionId  left join role on role.id = crmuser.role where user_position.positionId = ? order by user_position.whenadded DESC limit 1 ) as atable";
+              teamSql = "select * from (select userinfo.*,user_position.id as rid ,userinfo.name as username ,user_position.status as status , crmuser.name as positionId,role.val as crmuserRole  from  user_position left join userInfo on userInfo.id = user_position.userId left join crmuser on crmuser.id = user_position.positionId  left join role on role.id = crmuser.role where user_position.positionId = ? order by user_position.whenadded DESC limit 1 ) as atable";
               		//+ "select * from (select userinfo.*,user_position.status as status from  user_position left join userInfo on userInfo.id = user_position.userId where user_position.positionId = ?  ) as atable";
             }
             else if (type == 3){
