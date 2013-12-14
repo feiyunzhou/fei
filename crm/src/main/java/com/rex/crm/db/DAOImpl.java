@@ -2530,7 +2530,7 @@ public class DAOImpl
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
 
-            users = run.query(conn, "SELECT * FROM crmuser where (reportto=0 OR reportto=-1 OR (reportto is NULL)) AND id != -1", h);
+            users = run.query(conn, "SELECT * FROM crmuser where (reportto=0 OR reportto=-1 OR (reportto is NULL)) AND id != -1 AND pl1 = 1", h);
 
         } catch (SQLException e) {
             logger.error("failed to get all crm users", e);
