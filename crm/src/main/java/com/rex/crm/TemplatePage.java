@@ -54,6 +54,7 @@ import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.admin.DataImportPage;
 import com.rex.crm.admin.DownloadPage;
 import com.rex.crm.admin.ImportLogPage;
+import com.rex.crm.admin.MergePage;
 import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.PositionTreePage;
 import com.rex.crm.admin.ProductPage;
@@ -233,7 +234,10 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         
         BookmarkablePageLink importLogPage = new BookmarkablePageLink("importLog",ImportLogPage.class );
         admin_menu.add(importLogPage);
-
+        
+        BookmarkablePageLink merge_data = new BookmarkablePageLink("merge_data",MergePage.class );
+        admin_menu.add(merge_data);
+      
         admin_menu.setVisible(false);
         if(roleId == 1) admin_menu.setVisible(true);
         

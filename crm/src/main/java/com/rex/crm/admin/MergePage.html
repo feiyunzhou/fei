@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<body>
+ <wicket:extend>
+  <script>
+                $(document).ready(function() {
+                   
+
+                });// end onDomReady function
+            </script>
+  <div class="row"></div>
+  <div class="row">
+   <div class="">
+    <form wicket:id="form">
+     <table class="table">
+      <tr wicket:id="row_repeater">
+       <td><span wicket:id="field_name"></span></td>
+       <td><span wicket:id="field_value_a"></span></td>
+       <td><span wicket:id="field_value_b"></span></td>
+       <td><span wicket:id="value_picker"></span></td>
+      </tr>
+     </table>
+     <hr />
+     <input type="submit" value="确定" class="btn btn-primary" />
+    </form>
+   </div>
+
+  </div>
+
+  <wicket:fragment wicket:id="dropDownFragment">
+   <select wicket:id="dropDownInput" class="form-control input-sm"></select>
+  </wicket:fragment>
+
+  <wicket:fragment wicket:id="relationTableSearchFragment">
+   <div class="input-group">
+    <input type="text" required="required" readonly wicket:id="selected_value_input" class="form-control input-sm" /> <span class="input-group-addon input-sm"> <a href="#" class=""
+     wicket:id="search_btn" id="search_click" title="查找">查找</a>
+    </span> <input type="hidden" class="form-control  input-sm" style="width: 0px; height: 0px;" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
+   </div>
+  </wicket:fragment>
+
+ </wicket:extend>
+</body>
+</html>
