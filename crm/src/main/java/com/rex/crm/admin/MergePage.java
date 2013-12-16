@@ -60,7 +60,13 @@ public class MergePage extends AdminTemplatePage {
         // PageParameters pp = new PageParameters();
         // IRequestParameters params =
         // this.getRequestCycle().getRequest().getRequestParameters();
-        initPage("contact", "4", "9");
+        initPage("contact", "6671", "6670");
+    }
+    public MergePage(String entityId_f,String entityId_s) {
+        // PageParameters pp = new PageParameters();
+        // IRequestParameters params =
+        // this.getRequestCycle().getRequest().getRequestParameters();
+        initPage("contact", entityId_f, entityId_s);
     }
 
     private void initPage(final String entityName, final String entityId_A, final String entityId_B) {
@@ -69,8 +75,10 @@ public class MergePage extends AdminTemplatePage {
         final Entity entity = Configuration.getEntityByName(entityName);
 
         final Map datalistA = DAOImpl.queryEntityById(entity.getSql_ent(), entityId_A);
-        final Map datalistB = DAOImpl.queryEntityById(entity.getSql_ent(), entityId_B);
-
+        Map datalistB = null;
+        if(entityId_B != null){
+    	    datalistB = DAOImpl.queryEntityById(entity.getSql_ent(), entityId_B);   
+        }
         Form form = new Form("form"){
 
             @Override
@@ -107,23 +115,32 @@ public class MergePage extends AdminTemplatePage {
         
         RepeatingView row_repeater = new RepeatingView("row_repeater");
         form.add(row_repeater);
-        
+        int i = 0;
         for (Field field : entity.getFields()) {
-            if(field.isPrimaryKey()) continue;
+            if(!field.isShow()||field.isPrimaryKey()) continue;
             AbstractItem item = new AbstractItem(row_repeater.newChildId());
             row_repeater.add(item);
             String field_name = field.getDisplay();
             item.add(new Label("field_name", field_name));
             String value_a = getFieldDisplayValueFromMap(datalistA, field);
-            String value_b = getFieldDisplayValueFromMap(datalistB, field);  
+            String value_b = null;
+            String raw_value_b =null;
+            if(datalistB!=null){
+                value_b = getFieldDisplayValueFromMap(datalistB, field);
+            	raw_value_b = getFieldRawValueFromMap(datalistB,field);
+            }
             String raw_value_a = getFieldRawValueFromMap(datalistA,field);
-            String raw_value_b = getFieldRawValueFromMap(datalistB,field);
+            
             
             //add field_value_a
             item.add(new Label("field_value_a",value_a));
             
             //add field_value_b
-            item.add(new Label("field_value_b",value_b));
+           if(value_b!=null||i>0){
+        	   item.add(new Label("field_value_b",value_b));
+           } else {
+        	   item.add(new RelationTableSearchFragment("field_value_b","relationTableSearchFragment", this, "contact", "contact", "contact", null, entityId_A));
+           }
             
             if ((!value_a.isEmpty() && !value_a.isEmpty())&&(!value_a.equalsIgnoreCase(value_b)) ) {
                 
@@ -151,7 +168,7 @@ public class MergePage extends AdminTemplatePage {
             } else {
                 item.add(new WebMarkupContainer("value_picker"));
             }
-         
+         i++;
         }
 
     }
@@ -196,7 +213,7 @@ public class MergePage extends AdminTemplatePage {
             PageParameters params = new PageParameters();
             params.set("en", entityName);
             params.set("excludeName", excludeEntityName);
-            params.set("target", (long) model.getObject());
+//            params.set("target", (long) model.getObject());
             params.set("eid", eid);
 
             PopupSettings popupSettings = new PopupSettings("查找");
@@ -231,11 +248,10 @@ public class MergePage extends AdminTemplatePage {
             value = (value == null) ? "" : value;
 
         } else {
-            Object rawvalue = data.get(field.getName());
-            rawvalue = (rawvalue == null) ? "" : rawvalue;
-            value = CRMUtility.formatValue(field.getFormatter(), String.valueOf(rawvalue));
-            value = (value == null) ? "" : value;
-
+        	   Object rawvalue = data.get(field.getName());
+               rawvalue = (rawvalue == null) ? "" : rawvalue;
+               value = CRMUtility.formatValue(field.getFormatter(), String.valueOf(rawvalue));
+               value = (value == null) ? "" : value;  
         }
 
         return value;

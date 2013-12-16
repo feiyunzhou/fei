@@ -2137,6 +2137,27 @@ public class DAOImpl
         return lMap;
     }
     
+    public static List searchMergeContact(String search_target) {
+        if(search_target == null|| search_target.equalsIgnoreCase("*")){
+            search_target = "";
+        }
+        String sql = "select * from (select contact.*,contact.name as cname,account.name as aname from contact left join account ON contact.accountId = account.id left join contactcrmuser ON contact.id = contactcrmuser.contactId where contact.name like '%"+search_target+"%' OR account.name like '%"+search_target+"%' limit 10)  as a";
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = (List) run.query(conn, sql, new MapListHandler());
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return lMap;
+    }
+    
     
     public static List searchAccount(String userId, String search_target,int roleId) {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){

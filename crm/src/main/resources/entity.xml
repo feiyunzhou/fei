@@ -822,7 +822,8 @@
 				<isEditable>false</isEditable>
 				<isSearchable>true</isSearchable>
 				<field-type>String</field-type>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>2</priority>
+				<isShow>false</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -868,7 +869,7 @@
 				<default-value-type>val</default-value-type>
 				<default-value>2</default-value>
 				<isSearchable>true</isSearchable>
-				<priority>2</priority><isShow>true</isShow>
+				<priority>2</priority><isShow>false</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -896,7 +897,8 @@
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>picklist</field-type>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+				<isShow>false</isShow>
 				<isSearchable>true</isSearchable>
 				<fieldGroup>关键信息</fieldGroup>
                 <import_field_name>职务</import_field_name>

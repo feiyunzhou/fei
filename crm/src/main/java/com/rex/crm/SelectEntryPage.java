@@ -163,6 +163,14 @@ public class SelectEntryPage extends WebPage {
                         dummy.put("name", "无");
                         maplist.add(dummy);
 
+                    } else if (tragetEntity.equalsIgnoreCase("contact")) {
+                        // maplist = DAOImpl.searchCRMUser(search_target);
+                        maplist = DAOImpl.searchMergeContact(search_target);
+                        Map dummy = Maps.newHashMap();
+                        dummy.put("id", -1);
+                        dummy.put("name", "无");
+                        maplist.add(dummy);
+
                     }
                 } else if(relationTableName.equalsIgnoreCase("crmuser")){
                     //maplist = DAOImpl.searchCRMUser(search_target);

@@ -302,7 +302,7 @@ public class EntityDetailPage extends TemplatePage {
 			@Override
 			public void merge() {
 				// TODO Auto-generated method stub
-				setResponsePage(new MergePage(entityName,id));
+				setResponsePage(new com.rex.crm.admin.MergePage(String.valueOf(id),null));
 			}
 
 			@Override
