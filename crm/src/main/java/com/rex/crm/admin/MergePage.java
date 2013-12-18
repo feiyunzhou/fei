@@ -33,7 +33,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.AdvancedSearchFilter;
 import com.rex.crm.beans.Choice;
+import com.rex.crm.common.EditDataFormPanel;
 import com.rex.crm.common.Entity;
+import com.rex.crm.common.EntityDetailPage;
 import com.rex.crm.common.Field;
 import com.rex.crm.common.FilterPanel;
 import com.rex.crm.common.PageableTablePanel;
@@ -60,25 +62,26 @@ public class MergePage extends AdminTemplatePage {
         // PageParameters pp = new PageParameters();
         // IRequestParameters params =
         // this.getRequestCycle().getRequest().getRequestParameters();
-        initPage("contact", "6671", "6670");
+    	 String entityId_a = getRequest().getRequestParameters().getParameterValue("entityIda").toString();
+    	 String entityId_b = getRequest().getRequestParameters().getParameterValue("entityIdb").toString();
+    	 String entityName = getRequest().getRequestParameters().getParameterValue("entityName").toString();
+        initPage(entityName, entityId_a, entityId_b);
     }
-    public MergePage(String entityId_f,String entityId_s) {
-        // PageParameters pp = new PageParameters();
-        // IRequestParameters params =
-        // this.getRequestCycle().getRequest().getRequestParameters();
-        initPage("contact", entityId_f, entityId_s);
+    public MergePage(String entityName,String entityId_f,String entityId_s) {
+        initPage(entityName, entityId_f, entityId_s);
     }
 
     private void initPage(final String entityName, final String entityId_A, final String entityId_B) {
 
         final int roleId = ((SignIn2Session) getSession()).getRoleId();
         final Entity entity = Configuration.getEntityByName(entityName);
-
+        final String user = ((SignIn2Session) getSession()).getUser();
         final Map datalistA = DAOImpl.queryEntityById(entity.getSql_ent(), entityId_A);
         Map datalistB = null;
         if(entityId_B != null){
     	    datalistB = DAOImpl.queryEntityById(entity.getSql_ent(), entityId_B);   
         }
+        final Map<String, IModel> datalistC = datalistB;
         Form form = new Form("form"){
 
             @Override
@@ -106,15 +109,26 @@ public class MergePage extends AdminTemplatePage {
                 }
                 logger.debug("names:"+names);
                 logger.debug("values:"+values);
-                DAOImpl.updateRecord(entityId_B, entity.getName(), names, values);
+                try {
+					EditDataFormPanel.recordValueChanges(datalistC, entity, entityId_B, user, values, names,
+							entityName);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                DAOImpl.updateRecord(entityId_B, entityName, names, values);
+                DAOImpl.updateRecordStatus(entityId_A, entityName);
+                DAOImpl.updateActivityCountactById(entityId_B,entityId_A);
+                setResponsePage(new EntityDetailPage(entityName, entityId_B));
             }
             
         };
         add(form);
         
-        
         RepeatingView row_repeater = new RepeatingView("row_repeater");
         form.add(row_repeater);
+        form.add(new Label("entityIda",entityId_A));
+        form.add(new Label("entityName",entityName));
         int i = 0;
         for (Field field : entity.getFields()) {
             if(!field.isShow()||field.isPrimaryKey()) continue;
@@ -139,7 +153,7 @@ public class MergePage extends AdminTemplatePage {
            if(value_b!=null||i>0){
         	   item.add(new Label("field_value_b",value_b));
            } else {
-        	   item.add(new RelationTableSearchFragment("field_value_b","relationTableSearchFragment", this, "contact", "contact", "contact", null, entityId_A));
+        	   item.add(new RelationTableSearchFragment("field_value_b","relationTableSearchFragment", this, entity.getName(), entity.getName(), entity.getName(), null, entityId_A));
            }
             
             if ((!value_a.isEmpty() && !value_a.isEmpty())&&(!value_a.equalsIgnoreCase(value_b)) ) {
@@ -219,7 +233,7 @@ public class MergePage extends AdminTemplatePage {
             PopupSettings popupSettings = new PopupSettings("查找");
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params).setPopupSettings(popupSettings));
             HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", model);
-            hidden.add(new AttributeAppender("id", entityName + "_id"));
+            hidden.add(new AttributeAppender("id",  "entity_id"));
             add(hidden);
             TextField<String> text = new TextField<String>("selected_value_input", new Model(value));
             text.add(new AttributeAppender("id", entityName + "_name"));

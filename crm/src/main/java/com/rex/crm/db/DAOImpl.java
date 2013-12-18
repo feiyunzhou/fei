@@ -1659,6 +1659,26 @@ public class DAOImpl
             DBHelper.closeConnection(conn);
         }
     }
+    public static void updateRecordStatus(String id,String entityName ) {
+   	 String sql = "";
+         sql = "UPDATE  "+entityName+" SET status = 2 where id = " + id;
+       logger.debug("UPDATE sql is:"+sql);
+       Connection conn = null;
+       try {
+           conn = DBConnector.getConnection();
+           QueryRunner run = new QueryRunner();
+           int inserts = 0;
+           inserts += run.update(conn, sql);
+
+           System.out.println("inserted:" + inserts);
+       } catch (Exception e) {
+           logger.error("failed to add new calendar event", e);
+       } finally {
+           DBHelper.closeConnection(conn);
+       }
+   }
+    
+    
         public static void updateProductCategoryWhenEditProduct(String productid,String target) {
          String sql="select * from productcategory where productId="+productid;
          List<Map<String,Object>> lt=DAOImpl.queryEntityRelationList(sql);
@@ -2141,7 +2161,7 @@ public class DAOImpl
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
             search_target = "";
         }
-        String sql = "select * from (select contact.*,contact.name as cname,account.name as aname from contact left join account ON contact.accountId = account.id left join contactcrmuser ON contact.id = contactcrmuser.contactId where contact.name like '%"+search_target+"%' OR account.name like '%"+search_target+"%' limit 10)  as a";
+        String sql = "select * from (select contact.*,contact.name as cname,account.name as aname from contact left join account ON contact.accountId = account.id left join contactcrmuser ON contact.id = contactcrmuser.contactId where contact.name like '%"+search_target+"%' OR account.name like '%"+search_target+"%' )  as a";
         Connection conn = null;
         List lMap = Lists.newArrayList();
         try {
@@ -2999,6 +3019,25 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
             conn = DBConnector.getConnection();
             QueryRunner run = new QueryRunner();
             inserts += run.update(conn, sql,entityId);
+        } catch (Exception e) {
+            logger.error("failed to activity", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        if(inserts>0){
+    		return true;
+    	}
+    	return false;
+    }
+  //修改活动拜访医生
+    public static boolean updateActivityCountactById(String entityId_B,String entityId_A){
+    	String sql = "UPDATE activity SET contactId="+entityId_B+" where id=?";
+        Connection conn = null;
+        int inserts = 0;
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            inserts += run.update(conn, sql,entityId_A);
         } catch (Exception e) {
             logger.error("failed to activity", e);
         } finally {

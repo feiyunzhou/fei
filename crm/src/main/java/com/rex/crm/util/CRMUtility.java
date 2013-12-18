@@ -217,7 +217,7 @@ public class CRMUtility {
 	        EnumSet<Permissions> permission = null;
 	        if (entityName.equalsIgnoreCase("account")) {
 	            if (roleId == 1) {
-	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT);
+	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.MERGE);
 	            }
 	        }else if (entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("user_position")) {
 	            if (roleId == 1) {

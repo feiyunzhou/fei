@@ -235,8 +235,8 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         BookmarkablePageLink importLogPage = new BookmarkablePageLink("importLog",ImportLogPage.class );
         admin_menu.add(importLogPage);
         
-        BookmarkablePageLink merge_data = new BookmarkablePageLink("merge_data",MergePage.class );
-        admin_menu.add(merge_data);
+//        BookmarkablePageLink merge_data = new BookmarkablePageLink("merge_data",MergePage.class );
+//        admin_menu.add(merge_data);
       
         admin_menu.setVisible(false);
         if(roleId == 1) admin_menu.setVisible(true);

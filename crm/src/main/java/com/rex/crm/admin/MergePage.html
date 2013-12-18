@@ -7,11 +7,20 @@
                    
 
                 });// end onDomReady function
+                function reloadpage(){
+                	var entityId_a = $("#entityIda").text();
+                	var entityId_b = $("#entity_id").val();
+                	var entityName = $("#entityName").text();
+                	window.location.href="/crm/wicket/bookmarkable/com.rex.crm.admin.MergePage?entityName="+entityName+"&entityIda="+entityId_a+"&entityIdb="+entityId_b;
+                }
+                
             </script>
   <div class="row"></div>
   <div class="row">
    <div class="">
     <form wicket:id="form">
+    <span wicket:id="entityIda" style="visibility:hidden" id="entityIda"></span>
+    <span wicket:id="entityName" style="visibility:hidden" id="entityName"></span>
      <table class="table">
       <tr wicket:id="row_repeater">
        <td><span wicket:id="field_name"></span></td>
