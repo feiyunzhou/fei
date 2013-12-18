@@ -19,8 +19,7 @@
                     console.log( "name is:"+ name + " :"+id+ " :"+ table_name);
                     window.opener.$("#select_user").val(name);
                     window.opener.$("#hidden_select_user").val(id);
-                    
-                    window.opener.$("#entity_id").val(id);
+                    window.opener.$("#"+table_name+"_id").val(id);
                     window.opener.$("#"+table_name+"_name").val(name);
                     hasClosed = true;
                     window.opener.reloadpage();

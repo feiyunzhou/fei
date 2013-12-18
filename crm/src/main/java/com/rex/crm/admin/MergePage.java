@@ -233,7 +233,7 @@ public class MergePage extends AdminTemplatePage {
             PopupSettings popupSettings = new PopupSettings("查找");
             add(new BookmarkablePageLink<Void>("search_btn", SelectEntryPage.class, params).setPopupSettings(popupSettings));
             HiddenField<?> hidden = new HiddenField<String>("selected_id_hidden", model);
-            hidden.add(new AttributeAppender("id",  "entity_id"));
+            hidden.add(new AttributeAppender("id", entityName + "_id"));
             add(hidden);
             TextField<String> text = new TextField<String>("selected_value_input", new Model(value));
             text.add(new AttributeAppender("id", entityName + "_name"));

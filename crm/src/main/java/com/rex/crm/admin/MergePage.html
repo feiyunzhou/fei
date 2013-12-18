@@ -9,8 +9,8 @@
                 });// end onDomReady function
                 function reloadpage(){
                 	var entityId_a = $("#entityIda").text();
-                	var entityId_b = $("#entity_id").val();
                 	var entityName = $("#entityName").text();
+                	var entityId_b = $("#"+entityName+"_id").val();
                 	window.location.href="/crm/wicket/bookmarkable/com.rex.crm.admin.MergePage?entityName="+entityName+"&entityIda="+entityId_a+"&entityIdb="+entityId_b;
                 }
                 
