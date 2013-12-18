@@ -85,7 +85,28 @@
 		<sql>select * from (select * from data_audit where entity_name = "contact" and record_id = ? order by modify_time desc) as act </sql>
 		<to>data_audit</to>
 	</relation>
+	<relation>
+		<from>activity</from>
+		<name>activityaudit</name>
+		<display>活动修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "activity" and record_id = ? order by modify_time desc) as act </sql>
+		<to>data_audit</to>
+	</relation>
 	
+	<relation>
+		<from>coaching</from>
+		<name>coachingaudit</name>
+		<display>活动修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "activity" and record_id = ? order by modify_time desc) as act </sql>
+		<to>data_audit</to>
+	</relation>
+	<relation>
+		<from>willcoaching</from>
+		<name>willcoachingaudit</name>
+		<display>活动修改记录</display>
+		<sql>select * from (select * from data_audit where entity_name = "activity" and record_id = ? order by modify_time desc) as act </sql>
+		<to>data_audit</to>
+	</relation>
 	<relation>
 		<from>account</from>
 		<name>accountaudit</name>

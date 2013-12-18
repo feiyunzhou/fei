@@ -562,7 +562,7 @@ public class EditDataFormPanel extends Panel {
         if(table_name.equalsIgnoreCase("coaching")||table_name.equalsIgnoreCase("willcoaching")){
             table_name = "activity";
             names.add("total_score");
-            values.add(""+total_score+"");
+            values.add("'"+total_score+"'");
         }else if(schema.getName().equals("activity")){
 			values.add("'"+endDate+"'");
       	  	names.add("endtime");
@@ -575,11 +575,11 @@ public class EditDataFormPanel extends Panel {
                        
                         DAOImpl.updateProductlineWhenEditcategory(entityId, productlineId);	  
                      }
-                   if(!table_name.equalsIgnoreCase("activity")||table_name.equalsIgnoreCase("willcoaching")||table_name.equalsIgnoreCase("coaching")){
+//                   if(!table_name.equalsIgnoreCase("activity")||table_name.equalsIgnoreCase("willcoaching")||table_name.equalsIgnoreCase("coaching")){
                 	   recordValueChanges(data, schema, entityId, userName, values, names,
            					table_name);
            		    
-                   }
+//                   }
                    DAOImpl.updateRecord(entityId,table_name,names,values);
 		  return true;
 		}else{
@@ -601,7 +601,7 @@ public static  void recordValueChanges(final Map data, Entity schema,
 		for(int i=0;i<names.size();i++){
 			String field_name = names.get(i);
 			Field fld = schema.getFieldByName(field_name);
-		    if(!fld.getFieldType().equals("auto")){
+		    if(!(fld.getFieldType().equals("auto")||fld.getDataType().equalsIgnoreCase("datetime-local"))){
 		    	String val = values.get(i);
 				
 				valuebefore = data.get(field_name)==null?null:String.valueOf(data.get(field_name));
@@ -617,7 +617,7 @@ public static  void recordValueChanges(final Map data, Entity schema,
 		    		val = DAOImpl.queryPickListByIdCached(fld.getPicklist(), val);
 		    		valuebefore =  DAOImpl.queryPickListByIdCached(fld.getPicklist(), valuebefore);
 		    	}else{
-					    if(val!=null){
+					    if((val!="''")||val!=null){
 					    	logger.debug("val is:"+val);
 					    	val = val.substring(1, val.length()-1);
 						  if (!val.equalsIgnoreCase( valuebefore)) {
