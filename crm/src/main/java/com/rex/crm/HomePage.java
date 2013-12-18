@@ -317,7 +317,7 @@ public class HomePage extends TemplatePage {
     switch (roleId)
     {
         case 1:
-            sql = "SELECT * from  alert where  expired > UNIX_TIMESTAMP(now())*1000  and publishDate < (UNIX_TIMESTAMP(now())*1000)  ORDER BY whenadded DESC";
+            sql = "SELECT * from  alert where  expired > now()  and publishDate < now()  ORDER BY whenadded DESC";
             break;
         case 2:
             sql = entity.getSqlManager();

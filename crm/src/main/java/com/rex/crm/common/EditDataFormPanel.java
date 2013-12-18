@@ -37,6 +37,8 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.PopupSettings;
 import org.apache.wicket.markup.html.list.AbstractItem;
@@ -47,9 +49,11 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.file.File;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.io.Files;
 import com.rex.crm.SelectEntryPage;
 import com.rex.crm.SignIn2Session;
 import com.rex.crm.beans.Choice;
@@ -64,7 +68,9 @@ public class EditDataFormPanel extends Panel {
 	private static int NUM_OF_COLUMN = 1;
     private Map<String, IModel> parentModels = Maps.newHashMap();
     private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
-
+    private List<FileUploadField> fileFields = Lists.newArrayList();
+    private static FileUploadField fileUploadField= new FileUploadField("fileUplode");
+    private static String alertFileName = "";
 	/**
 	 * 
 	 * @param id
@@ -347,6 +353,11 @@ public class EditDataFormPanel extends Panel {
                             	modifyNameToModel.put(currentField.getDisplay(), textModel);
                                 fieldNameToModel.put(currentField.getName(), textModel);
                                 columnitem.add(new BigtextareaFrag("editdata", "bjgtextAreaFragment", this, textModel,currentField));
+                            }else if(currentField.getDataType().equalsIgnoreCase("file")){
+                            	alertFileName = value;
+                            	IModel<String> textModel = new Model<String>(value);
+                            	fieldNameToModel.put(currentField.getName(), textModel);
+                                columnitem.add(new FileUploadFragment("editdata", "fileUplodeFragment", this, textModel));
                             } else if(currentField.getDataType().equals("datetime-local")){
                                 
                                  SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -382,7 +393,6 @@ public class EditDataFormPanel extends Panel {
 		form.add(new Button("save"){
             @Override
             public void onSubmit() {
-            	System.out.println("save");
             	 try {
 					if(!saveEntity(fieldNameToModel,modifyNameToModel,data,schema,entityId,userName)){
 					 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
@@ -439,6 +449,27 @@ public class EditDataFormPanel extends Panel {
 	public  boolean saveEntity(Map<String, IModel> fieldNameToModel,Map<String, IModel> modifyNameToModel, final Map data,Entity schema,String entityId,String userName ) throws Exception{
 		logger.debug("the form was submitted!");
 		logger.debug(fieldNameToModel);
+		String fileName = "";
+        if(schema.getName().equals("alert")){
+        	FileUpload fileupload = fileUploadField.getFileUpload();
+ 
+            java.io.File tmpDir = null;
+            tmpDir = Files.createTempDir();
+            if (fileupload != null)
+            {
+                  String tmpFileName = "D:\\"+ fileupload.getClientFileName();
+                  fileName = fileupload.getClientFileName();
+                  try {
+					fileupload.writeTo(new File(tmpFileName));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }else{
+            	fileName = alertFileName;
+            }
+        }
+
 		List<String> values = Lists.newArrayList();
 		List<String> names = Lists.newArrayList();
 		//List<String> modifyNames = Lists.newArrayList();
@@ -455,6 +486,7 @@ public class EditDataFormPanel extends Panel {
        	 	loginName = fieldNameToModel.get("loginName").getObject().toString();
         }
 		for (String k : fieldNameToModel.keySet()) {
+			
 			names.add(k);
 			Field field = schema.getFieldByName(k);
 			IModel currentModel = fieldNameToModel.get(k);
@@ -492,9 +524,15 @@ public class EditDataFormPanel extends Panel {
                 } else if (obj instanceof Choice) {
                     value = String.valueOf(((Choice) obj).getId());
                 } else {
-                    value = String.valueOf(obj) ;
-                    }   
-	          }
+                	if(field.getName().equals("attachment")){
+                    	value = "'"+fileName+"'";
+                    }else{
+                    	value = String.valueOf(obj) ;
+                    }
+                }
+            }else{            	
+                	value = "'"+fileName+"'";
+            }
 			values.add(value);
                         if(field.getName().toString().equals("productlineId")&&schema.getName().equals("product")){
                                     productlineId=value;
@@ -605,7 +643,19 @@ public static  void recordValueChanges(final Map data, Entity schema,
             // TODO Auto-generated constructor stub
         }
     }
+    private class FileUploadFragment extends Fragment
+    {
 
+        public FileUploadFragment(String id, String markupId, MarkupContainer markupProvider, IModel model)
+        {
+            super(id, markupId, markupProvider);
+            // TODO Auto-generated constructor stub 
+            fileUploadField = new FileUploadField("fileUplode", model);
+            fileUploadField.add(new AttributeModifier("value",model));
+            add(fileUploadField);
+            fileFields.add(fileUploadField);
+        }
+    }
     private class LayoutFragment extends Fragment {
 
         public LayoutFragment(String id, String markupId, MarkupContainer markupProvider, String label) {

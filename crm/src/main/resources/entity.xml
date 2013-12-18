@@ -3023,8 +3023,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
-			userinfo.id as coachUserinfoName\,
-			auserinfo.id as coacheeUserInfoName\,
+			userinfo.id as coacheeUserinfoName\,
+			auserinfo.id as coachUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
@@ -3045,7 +3045,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			act_type\,activity.activity_coachType as coachType\,activity.status as
 			act_status\, activity.contactId as
 			contactName\, contact.accountId as
-			accountName\, userinfo.id as coachUserinfoName\,auserinfo.id as coacheeUserInfoName\,contact.name as cn
+			accountName\, userinfo.id as coacheeUserinfoName\,auserinfo.id as coachUserInfoName\,contact.name as cn
 			from activity left join activitycrmuser on
 			activitycrmuser.activityId=activity.id 
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
@@ -4016,8 +4016,8 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
-			userinfo.id as coachUserinfoName\,
-			auserinfo.id as coacheeUserInfoName\,
+			userinfo.id as coacheeUserinfoName\,
+			auserinfo.id as coachUserInfoName\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
@@ -4038,7 +4038,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			act_type\,activity.activity_coachType as coachType\,activity.status as
 			act_status\, activity.contactId as
 			contactName\, contact.accountId as
-			accountName\, userinfo.id as coachUserinfoName\,auserinfo.id as coacheeUserInfoName\,contact.name as cn
+			accountName\, userinfo.id as coacheeUserinfoName\,auserinfo.id as coachUserInfoName\,contact.name as cn
 			from activity left join activitycrmuser on
 			activitycrmuser.activityId=activity.id 
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
@@ -5382,14 +5382,14 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<filterField>priority</filterField>
 		<sql>
 			SELECT * from (select alert.* from alert where (towhom = 3 or towhom = 4) 
-			and expired > UNIX_TIMESTAMP(now())*1000 and UNIX_TIMESTAMP(now())*1000 >  publishDate 
+			and expired > now() and now() >  publishDate 
 			and (alertRegion = ? or alertRegion = 7)
 			ORDER BY whenadded DESC) as aAlert
 		</sql>
 		<sql-manager>
 			SELECT * from (select * from alert where
-			  (towhom = 2 or towhom = 4)  and expired > UNIX_TIMESTAMP(now())*1000 
-			  and  UNIX_TIMESTAMP(now())*1000 > publishDate 
+			  (towhom = 2 or towhom = 4)  and expired > now()
+			  and  now() > publishDate 
 			  and (alertRegion = ? or alertRegion = 7)
 			  ORDER BY whenadded DESC) as aAlert
 		</sql-manager>
@@ -5516,6 +5516,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>基本信息</fieldGroup>
 			</field>
+			<!-- <field>
+				<name>attachment</name>
+				<display>附件</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>fasle</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority><isShow>false</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field> -->
 			<field>
 				<name>owner</name>
 				<display>创建人</display>
@@ -5568,6 +5581,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 		</fields>
 	</entity>
+	
 	<entity>
 		<name>todolist</name>
 		<display>待进行活动</display>

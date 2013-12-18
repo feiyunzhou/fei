@@ -1,6 +1,8 @@
 package com.rex.crm.common;
 
 import com.google.common.base.Joiner;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -25,6 +27,7 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
@@ -35,10 +38,12 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.file.File;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.io.Files;
 import com.rex.crm.CalendarPage;
 import com.rex.crm.PageFactory;
 import com.rex.crm.SelectEntryPage;
@@ -65,7 +70,7 @@ public class NewDataFormPanel extends Panel
     private Map<String, DropDownChoiceFragment> childDropDownComponent = Maps.newHashMap();
     private List<FileUploadField> fileFields = Lists.newArrayList();
     private static Map<String,Object> paramsForProduct;
-
+    private static FileUploadField fileUploadField= new FileUploadField("fileUplode");
     public NewDataFormPanel(String id, final Entity entity, final Map<String, Object> params)
     {
         super(id);
@@ -461,7 +466,6 @@ public class NewDataFormPanel extends Panel
             @Override
             public void onSubmit()
             {
-
                 logger.debug(models);
                 if (!saveEntity(models, entity, userId, userName, posId))
                 {
@@ -517,6 +521,7 @@ public class NewDataFormPanel extends Panel
             btn.add(new AttributeAppender("class", new Model("hiddenStyle"), " "));
         }
         form.add(btn);
+        form.setMultiPart(true);
         add(form);
     }
 
@@ -524,6 +529,25 @@ public class NewDataFormPanel extends Panel
     {
         logger.debug("the form was submitted!");
         logger.debug(models);
+        String fileName = "";
+        if(entity.getName().equals("alert")){
+        	FileUpload fileupload = fileUploadField.getFileUpload();
+            String outputfolder = CRMUtility.readFileAttribure("uploadpath");
+ 
+            java.io.File tmpDir = null;
+            tmpDir = Files.createTempDir();
+            if (fileupload != null)
+            {
+                  String tmpFileName = "D:\\" + fileupload.getClientFileName();
+                  fileName = fileupload.getClientFileName();
+                  try {
+					fileupload.writeTo(new File(tmpFileName));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        }
         List<String> fieldNames = Lists.newArrayList();
         List<String> values = Lists.newArrayList();
         int total_score = 0;
@@ -581,9 +605,7 @@ public class NewDataFormPanel extends Panel
                     }
                     values.add("'"+String.valueOf(dateTime)+"'");
 
-                }
-                else
-                {
+                }else{
                     values.add("'" + (String) models.get(key).getObject() + "'");
                 }
 
@@ -619,6 +641,8 @@ public class NewDataFormPanel extends Panel
                     {
                         values.add("'" + (String) models.get(key).getObject() + "'");
                     }
+                }else if(key.equals("attachment")){
+                	values.add("'"+fileName+"'");
                 }
                 else
                 {
@@ -915,9 +939,9 @@ public class NewDataFormPanel extends Panel
         {
             super(id, markupId, markupProvider);
             // TODO Auto-generated constructor stub 
-            FileUploadField fileupload = new FileUploadField("fileUplode", model);
-            add(fileupload);
-            fileFields.add(fileupload);
+            fileUploadField = new FileUploadField("fileUplode", model);
+            add(fileUploadField);
+            fileFields.add(fileUploadField);
         }
     }
 

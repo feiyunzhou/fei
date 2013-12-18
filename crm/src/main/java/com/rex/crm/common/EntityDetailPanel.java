@@ -16,16 +16,20 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.DownloadLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.file.File;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.io.Files;
 import com.rex.crm.TemplatePage;
+import com.rex.crm.admin.DataImportPage;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
@@ -163,6 +167,8 @@ public class EntityDetailPanel extends Panel {
                             	label.setEscapeModelStrings(false);
                             	label.add(new AttributeAppender("class",new Model("labelWidth")," "));
                             	columnitem.add(label);
+                            }else if(currentField.getDataType().equalsIgnoreCase("file")){
+                            	columnitem.add(new DownloadLinkFragment("celldata", "detailFragment", this,value, String.valueOf(data.get(currentField.getName()))));
                             }else{
                             	columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
                             }
@@ -184,7 +190,17 @@ public class EntityDetailPanel extends Panel {
             }
         });
     }
-
+    private class DownloadLinkFragment extends Fragment{
+    	public DownloadLinkFragment(String id, String markupId, MarkupContainer markupProvider,String name, final String eid){
+    		super(id, markupId, markupProvider);
+    		java.io.File tmpDir = null;
+            tmpDir = Files.createTempDir();
+            String tmpFileName = "D:\\"+eid;
+            System.out.println("downLoad src:"+tmpFileName);
+    		File contact_template = new File(tmpFileName);
+    	    add(new DownloadLink("detailclick",contact_template,eid).add(new Label("caption", new Model<String>(eid))));
+    	}
+    }
     private class DetailLinkFragment extends Fragment {
 
         public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider,String name, final String eid) {
