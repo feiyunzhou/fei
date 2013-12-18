@@ -3031,7 +3031,7 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
     }
   //修改活动拜访医生
     public static boolean updateActivityCountactById(String entityId_B,String entityId_A){
-    	String sql = "UPDATE activity SET contactId="+entityId_B+" where id=?";
+    	String sql = "UPDATE activity SET contactId="+entityId_B+" where contactId=?";
         Connection conn = null;
         int inserts = 0;
         try {
