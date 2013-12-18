@@ -269,11 +269,20 @@ public class TeamManPanel extends Panel {
         CheckGroup group = new CheckGroup("group",new PropertyModel(this,"selectedRowIds"));
         form.add(group); 
         if(roleId == 1){
-            CheckGroupSelector chks = new CheckGroupSelector("checkboxs");
-            group.add(chks);
-            WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
-            group.add(container_label);
-            container_label.add(new AttributeAppender("for", new Model(chks.getMarkupId()), " ")); 
+            if(type!=4){
+            	CheckGroupSelector chks = new CheckGroupSelector("checkboxs");
+                group.add(chks);
+                WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
+                group.add(container_label);
+                container_label.add(new AttributeAppender("for", new Model(chks.getMarkupId()), " ")); 
+            }else{
+                WebMarkupContainer container = new WebMarkupContainer("checkboxs");
+                container.setVisible(false);
+                WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
+                container_label.setVisible(false);
+                group.add(container);
+                group.add(container_label);
+            }
         }else{
             WebMarkupContainer container = new WebMarkupContainer("checkboxs");
             container.setVisible(false);
@@ -352,13 +361,24 @@ public class TeamManPanel extends Panel {
                 }
                 columnRepeater.add(columnitem);
               }
-            
             WebMarkupContainer container_label = new WebMarkupContainer("checkbox_label");
-            item.add(container_label);
+//            if(type!=4){
+                item.add(container_label);
+//            }else{
+//            	container_label.setVisible(false);
+//                item.add(container_label);
+//            }
+            
             if(roleId == 1){
-                Check chk = new Check("checkbox", new Model(String.valueOf(rowId)));
-                container_label.add(new AttributeAppender("for", new Model(chk.getMarkupId()), " "));        
-                item.add(chk);
+                if(type!=4){
+                	Check chk = new Check("checkbox", new Model(String.valueOf(rowId)));
+                    container_label.add(new AttributeAppender("for", new Model(chk.getMarkupId()), " "));        
+                    item.add(chk);
+                }else{
+                    WebMarkupContainer container = new WebMarkupContainer("checkbox");
+                    container.setVisible(false);
+                    item.add(container);
+                }
             }else{
                 WebMarkupContainer container = new WebMarkupContainer("checkbox");
                 container.setVisible(false);
