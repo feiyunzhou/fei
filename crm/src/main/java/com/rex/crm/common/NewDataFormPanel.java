@@ -466,7 +466,8 @@ public class NewDataFormPanel extends Panel
             public void onSubmit()
             {
                 logger.debug(models);
-                if (!saveEntity(models, entity, userId, userName, posId))
+                Long entityId = saveEntity(models, entity, userId, userName, posId);
+                if (entityId<0)
                 {
                     div.add(new AttributeAppender("style", new Model("display:block"), ";"));
                     group.add(new AttributeAppender("style", new Model("display:block"), ";"));
@@ -486,7 +487,7 @@ public class NewDataFormPanel extends Panel
                         }else if(entityName.equalsIgnoreCase("alertattachment")){
                         	setResponsePage(new EntityDetailPage("alert",String.valueOf(params.get("alert.id"))));
                         }else{
-                            setResponsePage(PageFactory.createPage(entity.getName()));
+                            setResponsePage(new EntityDetailPage(entityName,String.valueOf(entityId)));
                         }
                     }
                     else
@@ -502,7 +503,8 @@ public class NewDataFormPanel extends Panel
             @Override
             public void onSubmit()
             {
-                if (!saveEntity(models, entity, userId, userName, posId))
+            	Long entityId = saveEntity(models, entity, userId, userName, posId);
+                if (entityId<0)
                 {
                     div.add(new AttributeAppender("style", new Model("display:block"), ";"));
                     group.add(new AttributeAppender("style", new Model("display:block"), ";"));
@@ -524,7 +526,7 @@ public class NewDataFormPanel extends Panel
         add(form);
     }
 
-    public static boolean saveEntity(Map<String, IModel> models, Entity entity, String userId, String userName, String posId)
+    public static long saveEntity(Map<String, IModel> models, Entity entity, String userId, String userName, String posId)
     {
         logger.debug("the form was submitted!");
         logger.debug(models);
@@ -693,12 +695,12 @@ public class NewDataFormPanel extends Panel
             List<String> loginNames = DAOImpl.getAllLoginNames();
             if (loginNames.contains(loginName))
             {
-                return false;
+                return crmuserkey;
             }
             else
             {
                 crmuserkey = DAOImpl.createNewCrmUser(entity.getName(), fieldNames, values, posId);
-                return true;
+                return crmuserkey;
             }
             /*if (crmuserkey >0 ) {
              UserInfo userinfo = DAOImpl.getUserById((int)crmuserkey);
@@ -713,8 +715,8 @@ public class NewDataFormPanel extends Panel
         }
         else
         {
-            long generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
-                
+        	long generatedId =-1;
+            generatedId = DAOImpl.createNewRecord(entity.getName(), fieldNames, values, posId);
             if (generatedId > 0)
             {
                 if (entity.getName().equals("coaching") || entity.getName().equals("willcoaching"))
@@ -731,7 +733,7 @@ public class NewDataFormPanel extends Panel
                 }
 
             }
-            return true;
+            return generatedId;
         }
     }
 
