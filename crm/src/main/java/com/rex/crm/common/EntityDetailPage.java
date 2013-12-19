@@ -314,7 +314,7 @@ public class EntityDetailPage extends TemplatePage {
 				
 				if(entityName.equalsIgnoreCase("userinfo")){
 					users = DAOImpl.getPositionsByUserId(Integer.parseInt(id));
-					DAOImpl.updateUserInfoPositionByUserId(id);
+					DAOImpl.updateUserInfoPositionByUserId(entityName,id);
 					for(UserPosition userinfo : users){
 						DAOImpl.removeEntityFromTeam("user_position",String.valueOf(userinfo.getId()));
 						DAOImpl.insertRealtionHestory("user_position",user,userinfo.getPositionId(),Integer.parseInt(id));
@@ -322,7 +322,7 @@ public class EntityDetailPage extends TemplatePage {
 				}else if(entityName.equalsIgnoreCase("crmuser"))
 					try {
 						{
-							DAOImpl.updateUserInfoPositionByUserId(id);
+							DAOImpl.updateUserInfoPositionByUserId(entityName,id);
 							users = DAOImpl.getUsersByPositionId(id);
 							List<CRMUser> crmusers = DAOImpl.getPositionByReporttoId(id);
 							DAOImpl.updateCrmUserReport(id, "-1");

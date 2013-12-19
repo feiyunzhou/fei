@@ -1704,9 +1704,9 @@ public class DAOImpl
          updateRecord(id,"productcategory",fieldNames,values);
     }
     
-    public static void updateUserInfoPositionByUserId( String userId) {
+    public static void updateUserInfoPositionByUserId(String entityName, String userId) {
       String sql = "";
-         sql = "UPDATE  crmuser SET pl1 = 2 where id = " + userId;
+         sql = "UPDATE "+entityName+" SET pl1 = 2 where id = " + userId;
        logger.debug("UPDATE sql is:"+sql);
        Connection conn = null;
        try {

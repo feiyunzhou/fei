@@ -254,13 +254,13 @@ public class EntityDetailContainerPanel   extends Panel {
 				
 				if(entityName.equalsIgnoreCase("userinfo")){
 					UserPosition userInfo = DAOImpl.getUserPositionById(Integer.parseInt(id));
-					DAOImpl.updateUserInfoPositionByUserId(id);
+					DAOImpl.updateUserInfoPositionByUserId(entityName,id);
 					DAOImpl.removeEntityFromTeam("user_position",String.valueOf(id));
 					DAOImpl.insertRealtionHestory("user_position",user,userInfo.getPositionId(),Integer.parseInt(id));
 				}else if(entityName.equalsIgnoreCase("crmuser"))
 					try {
 						{
-							DAOImpl.updateUserInfoPositionByUserId(id);
+							DAOImpl.updateUserInfoPositionByUserId(entityName,id);
 							users = DAOImpl.getUsersByPositionId(id);
 							List<CRMUser> crmusers = DAOImpl.getPositionByReporttoId(id);
 							DAOImpl.updateCrmUserReport(id, "-1");
