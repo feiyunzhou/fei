@@ -2510,7 +2510,7 @@ public class DAOImpl
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
 
-            users = run.query(conn, "SELECT crmuser.*,userInfo.name as userInfoName FROM crmuser left join user_position on crmuser.id = user_position.positionId left join  userInfo  on user_position.userId = userInfo.id where crmuser.reportto=?", h,managerId);
+            users = run.query(conn, "SELECT crmuser.*,userInfo.name as userInfoName FROM crmuser left join user_position on crmuser.id = user_position.positionId left join  userInfo  on user_position.userId = userInfo.id where crmuser.reportto=? and crmuser.pl1=1", h,managerId);
 
         } catch (SQLException e) {
             logger.error("failed to get all crm users", e);
