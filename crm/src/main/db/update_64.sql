@@ -10,5 +10,6 @@ CREATE TABLE `crmdb`.`alertattachment` (
   `modify_datetime` DATETIME NULL,
   PRIMARY KEY (`id`)
   )ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
-ALTER TABLE `crmdb`.`data_audit`
-CHANGE COLUMN`modify_time` DATETIME NOT NULL,
+  
+ALTER TABLE `crmdb`.`data_audit` 
+CHANGE COLUMN `modify_time` `modify_time` DATETIME NOT NULL ;
