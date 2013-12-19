@@ -531,8 +531,12 @@ public class EditDataFormPanel extends Panel {
                     	value = String.valueOf(obj) ;
                     }
                 }
-            }else{            	
-                	value = "'"+fileName+"'";
+            }else{  
+            	if(field.getPicklist()!=null){
+            		value = "0";
+            	}else{
+            		value = "'"+fileName+"'";
+            	}
             }
 			values.add(value);
                         if(field.getName().toString().equals("productlineId")&&schema.getName().equals("product")){
@@ -576,22 +580,18 @@ public class EditDataFormPanel extends Panel {
                        
                         DAOImpl.updateProductlineWhenEditcategory(entityId, productlineId);	  
                      }
-//                   if(!table_name.equalsIgnoreCase("activity")||table_name.equalsIgnoreCase("willcoaching")||table_name.equalsIgnoreCase("coaching")){
-                	   recordValueChanges(data, schema, entityId, userName, values, names,
-           					table_name);
-           		    
-//                   }
                    DAOImpl.updateRecord(entityId,table_name,names,values);
+                   recordValueChanges(data, schema, entityId, userName, values, names,table_name);
+                  
 		  return true;
 		}else{
 			List<String> loginNames =DAOImpl.getLoginNames(entityId);
             if(loginNames.contains(loginName)){
             	return false;
             }else{
-            	recordValueChanges(data, schema, entityId, userName, values,
-						names, table_name);
-        		  DAOImpl.updateRecord(entityId,table_name,names,values);
-        		  return true;
+            	DAOImpl.updateRecord(entityId,table_name,names,values);
+            	recordValueChanges(data, schema, entityId, userName, values,names, table_name);
+        		return true;
             }
        }
 	}
@@ -618,14 +618,14 @@ public static  void recordValueChanges(final Map data, Entity schema,
 		    		val = DAOImpl.queryPickListByIdCached(fld.getPicklist(), val);
 		    		valuebefore =  DAOImpl.queryPickListByIdCached(fld.getPicklist(), valuebefore);
 		    	}else{
-					    if((val!="''")||val!=null){
+					    if(val!=null||val!="0"||val!="''"){
 					    	logger.debug("val is:"+val);
 					    	val = val.substring(1, val.length()-1);
 						  if (!val.equalsIgnoreCase( valuebefore)) {
 							isChanged = true;
 						  }
 					    }else{
-					    	if(valuebefore != null) isChanged = true;
+					    	if(valuebefore != null||valuebefore!="0") isChanged = true;
 					    }
 					
 		    	}

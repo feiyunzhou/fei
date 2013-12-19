@@ -2115,6 +2115,24 @@ public class DAOImpl
 
         return user;
     }
+    
+    public static UserPosition getUserPositionByUserId(int uid) {
+        Connection conn = null;
+        UserPosition user = new UserPosition();
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            ResultSetHandler<UserPosition> h = new BeanHandler<UserPosition>(UserPosition.class);
+            user = run.query(conn, "SELECT * from  user_position  where userId=?  ", h,  uid);
+
+        } catch (SQLException e) {
+            logger.error("failed to get all accounts", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+
+        return user;
+    }
     public static boolean isSessionValid(String sessionId, String sessionKey) {      
         boolean res = false;
         Connection conn = null;

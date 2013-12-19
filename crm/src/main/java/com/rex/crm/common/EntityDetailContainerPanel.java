@@ -250,15 +250,13 @@ public class EntityDetailContainerPanel   extends Panel {
 			@Override
 			public void ineffective() {
 				// TODO Auto-generated method stub
-				DAOImpl.updateUserInfoPositionByUserId(id);
 				List<UserPosition> users = new ArrayList<UserPosition>();
 				
 				if(entityName.equalsIgnoreCase("userinfo")){
+					UserPosition userInfo = DAOImpl.getUserPositionById(Integer.parseInt(id));
 					DAOImpl.updateUserInfoPositionByUserId(id);
-					for(UserPosition userinfo : users){
-						DAOImpl.removeEntityFromTeam("user_position",String.valueOf(userinfo.getId()));
-						DAOImpl.insertRealtionHestory("user_position",user,userinfo.getPositionId(),userinfo.getUserId());
-					}
+					DAOImpl.removeEntityFromTeam("user_position",String.valueOf(id));
+					DAOImpl.insertRealtionHestory("user_position",user,userInfo.getPositionId(),Integer.parseInt(id));
 				}else if(entityName.equalsIgnoreCase("crmuser"))
 					try {
 						{

@@ -1,8 +1,8 @@
 drop view if exists crmdb.activity_alert;
 create view crmdb.activity_alert as
-select 
+select
 id,
-case 
+case
 when to_days(curdate())-to_days(DATE_FORMAT(act.starttime,'%Y-%m-%d'))=0 THEN '今天'
 when to_days(curdate())-to_days(DATE_FORMAT(act.starttime,'%Y-%m-%d'))=1 THEN '昨天'
 when to_days(curdate())-to_days(DATE_FORMAT(act.starttime,'%Y-%m-%d'))=2 THEN '前天'

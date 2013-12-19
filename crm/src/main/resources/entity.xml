@@ -2098,13 +2098,13 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<sql>
   select * from ( select userinfo.name as username\,user_position.*   
     from user_position 
-	left join userinfo on userinfo.id = user_position.userId 
-	left join crmuser on crmuser.id = user_position.positionId) as a
+	inner join userinfo on userinfo.id = user_position.userId 
+	inner join crmuser on crmuser.id = user_position.positionId) as a
 	</sql>
 	<sql-ent>select * from(select userinfo.name as username \,user_position.*
 	 from user_position
-	left join userinfo on userinfo.id = user_position.userId 
-	left join crmuser on crmuser.id = user_position.positionId
+	inner join userinfo on userinfo.id = user_position.userId 
+	inner join crmuser on crmuser.id = user_position.positionId
 	 where user_position.id = ?) as a</sql-ent>
 	<fields>
 		<field>
