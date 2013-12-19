@@ -219,7 +219,7 @@ public class SelectEntryPage extends WebPage {
                }else if (relationTableName.equalsIgnoreCase("userinfo")) {
                     String sql = assembleSearchingSQL(roleId, entity);
 //                    if(){
-                      maplist  = DAOImpl.queryEntityRelationList(sql,userId);
+                      maplist  = DAOImpl.queryEntityRelationList(sql);
 //                    }
 //                     maplist  = DAOImpl.queryEntityRelationList(sql,userId);
                     Map dummy = Maps.newHashMap();

@@ -532,7 +532,7 @@ public class EditDataFormPanel extends Panel {
                     }
                 }
             }else{  
-            	if(field.getPicklist()!=null){
+            	if(field.getPicklist()!=null||field.getDataType().equalsIgnoreCase("number")){
             		value = "0";
             	}else{
             		value = "'"+fileName+"'";
@@ -610,22 +610,29 @@ public static  void recordValueChanges(final Map data, Entity schema,
 				boolean isChanged = false;
 				if(fld.getPicklist()!=null){
 					if(val!=null){
-					    if(!val.equalsIgnoreCase(valuebefore)) isChanged=true;
+					   if(!val.equals("0")){
+						   if(!val.equalsIgnoreCase(valuebefore)) isChanged=true;  
+					   } 
 					}else{
 						if(valuebefore != null) isChanged = true;
-						
 					}
 		    		val = DAOImpl.queryPickListByIdCached(fld.getPicklist(), val);
 		    		valuebefore =  DAOImpl.queryPickListByIdCached(fld.getPicklist(), valuebefore);
 		    	}else{
-					    if(val!=null||val!="0"||val!="''"){
+					    if(val!=null){
 					    	logger.debug("val is:"+val);
-					    	val = val.substring(1, val.length()-1);
-						  if (!val.equalsIgnoreCase( valuebefore)) {
-							isChanged = true;
-						  }
+					    	if(!val.equalsIgnoreCase("0")){
+					    		if(!val.equalsIgnoreCase("''")){
+					    			val = val.substring(1, val.length()-1);
+					    			if (!val.equalsIgnoreCase(valuebefore)) {
+										isChanged = true;
+									  }
+					    		}
+					    	}
 					    }else{
-					    	if(valuebefore != null||valuebefore!="0") isChanged = true;
+					    	if(valuebefore != null){
+					    		if(!valuebefore.equalsIgnoreCase("0"))isChanged = true;
+					    	} 
 					    }
 					
 		    	}

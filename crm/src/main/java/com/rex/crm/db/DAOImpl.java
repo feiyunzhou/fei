@@ -2299,7 +2299,7 @@ public class DAOImpl
     	if(search_target == null|| search_target.equalsIgnoreCase("*")){
 	          search_target = "";
     	}
-        String sql = "select * from (  select * from crmuser where id not in (select positionid from user_position where userId = "+uid+") and (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR code like '%"+search_target+"%' OR reportto like '%"+search_target+"%')) as a";
+        String sql = "select * from (  select * from crmuser where id not in (select positionid from user_position ) and (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR code like '%"+search_target+"%' OR reportto like '%"+search_target+"%')) as a";
         logger.debug(sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();

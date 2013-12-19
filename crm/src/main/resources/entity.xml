@@ -460,7 +460,7 @@
 				<name>num_of_using_opiates_injection</name>
 				<display>阿片类注射剂量(￥)</display>
 				<isRequired>false</isRequired>
-				<data-type>text</data-type>
+				<data-type>number</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
@@ -1303,42 +1303,11 @@
 		<filterField>pl1</filterField>
 		<externalField>employeeNumber</externalField>
 		<sql>
-			<!-- select * from (select userInfo.*\, -->
-			<!-- "crmmanager.name" as reportto_val\, -->
-			<!-- role.val role_val -->
-			<!-- from userInfo -->
-			<!-- left join (select * from userInfo) crmmanager on crmuser.reportto 
-				= crmmanager.id -->
-			<!-- left join crmdb.role on crmuser.role = role.id -->
-			<!-- where crmuser.id = ?) as aCrmuser -->
-<!-- 			select * from ( -->
-<!-- 			select *\, -->
-<!-- 			from userInfo -->
-<!-- 			left join crmuser on crmuser.id = userInfo.postionId -->
-<!-- 			left join crmuser on -->
-<!-- 			where id = ? -->
-<!-- 			) as Crmuser -->
-
 select * from (select * from userInfo where id = ? ) as aUserInfo
 		</sql>
 		<sql-admin>
-
-			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
-				as role_val -->
-			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
-				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
-<!-- 			select * from (select crmuser.*\, -->
-<!-- 			"crmmanager.name" as reportto_val\, -->
-<!-- 			role.val role_val -->
-<!-- 			from crmuser -->
-<!-- 			left join (select * from crmuser) crmmanager on -->
-<!-- 			crmuser.reportto = crmmanager.id -->
-<!-- 			left join crmdb.role on crmuser.role -->
-<!-- 			= role.id -->
-<!-- 			where crmuser.id != -1 ) as aCrmuser -->
 			select * from (select userinfo.*\, crmuser.role as crmuserRole\,
 			crmuser.name as positionId\,role.val as role_val\,province.val as province_val
-			
 			 from userinfo 
 			left join user_position on userInfo.id = user_position.userId
 			left join crmuser on crmuser.id = user_position.positionId
@@ -1347,19 +1316,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			 where userinfo.id != -1 ORDER BY CONVERT( userinfo.name USING gbk ) )as aUserInfo
 		</sql-admin>
 		<sql-manager>
-			<!-- select * from (select crmuser.*\,b.name as reportto_val\,role.val 
-				as role_val -->
-			<!-- from crmuser\,crmuser as b\,role where b.id=crmuser.reportto AND 
-				crmuser.id !=-1 AND role.id=crmuser.role AND (? is NOT NULL)) as acrmuser -->
-<!-- 			select * from (select crmuser.*\, -->
-<!-- 			"crmmanager.name" as reportto_val\, -->
-<!-- 			role.val role_val -->
-<!-- 			from crmuser -->
-<!-- 			left join (select * from crmuser) crmmanager on -->
-<!-- 			crmuser.reportto = crmmanager.id -->
-<!-- 			left join crmdb.role on crmuser.role -->
-<!-- 			= role.id -->
-<!-- 			where crmuser.reportto = ? or crmuser.id = ? ) as aCrmuser -->
 				select * from ( select userInfo.*\, crmuser.role as crmuserRole\,
 			crmuser.name as positionId from userInfo 
 			left join user_position on userInfo.id = user_position.userId
