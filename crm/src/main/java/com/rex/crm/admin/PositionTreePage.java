@@ -88,15 +88,16 @@ public class PositionTreePage extends AdminTemplatePage
     private void initPage(final String positionId, int level)
     {
         Gson gson = new Gson();
-        String result = gson.toJson(TreeFactory.createAccountPositionTree(),
-          Node.class);
+        String result = gson.toJson(TreeFactory.createAccountPositionTree(),Node.class);
         add(new TreePanel("treePanel", result));
+         Map<String, Entity> entities = Configuration.getEntityTable();
 
         if (positionId != null)
         {
             if (positionId.equals("-1"))
             {
-                setResponsePage(new PositionTreePage());
+                List tdata = DAOImpl.queryEntityRelationList("select * from user_position_query");
+               add(new PageableTablePanel("datalist", entities.get("user_position_query"), tdata, null));
             }
             else
             {

@@ -63,7 +63,6 @@ public class AccountPositionPanel extends Panel {
         //team sql
         String teamSql = "";
         teamSql = "select * from user_position_query where " + getCondition(Integer.parseInt(entityId));
-
         List mapList = DAOImpl.queryEntityRelationList(teamSql);
         Entity entity=null ;
         	  entity = Configuration.getEntityByName("regionManage");

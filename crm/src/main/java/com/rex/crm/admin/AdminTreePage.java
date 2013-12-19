@@ -13,11 +13,15 @@ import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
 import com.google.gson.Gson;
+import com.rex.crm.common.AccountPositionPanel;
+import com.rex.crm.common.Entity;
 import com.rex.crm.common.EntityDetailContainerPanel;
 import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.common.tree.Node;
 import com.rex.crm.common.tree.TreeFactory;
 import com.rex.crm.common.tree.TreePanel;
+import com.rex.crm.db.DAOImpl;
+import com.rex.crm.util.Configuration;
 
 /**
  * @author Feiyun Zhou
@@ -59,13 +63,20 @@ public class AdminTreePage extends AdminTemplatePage
         Gson gson = new Gson();
         String result = gson.toJson(TreeFactory.createPositionTree(), Node.class);
         add(new TreePanel("treePanel", result));
-
+         Map<String, Entity> entities = Configuration.getEntityTable();
         if (positionId != null)
         {
+            if (positionId.equals("-1"))
+            {
+               List tdata = DAOImpl.queryEntityRelationList("select * from user_position_query");
+               add(new PageableTablePanel("datalist", entities.get("user_position_query"), tdata, null));
+               
+            }else{
                 PageParameters pp = new PageParameters();
                 pp.add("positionId", positionId);
                 EntityDetailContainerPanel panel = new EntityDetailContainerPanel("datalist", "crmuser", positionId, this.getClass(), pp);
                 add(panel);
+            }
         }
         else
         {

@@ -309,7 +309,11 @@ public class CRMUtility {
 	        	if(roleId == 1){
 	        permission = EnumSet.of(CRUDPanel.Permissions.ADD);
 	        	}
-	 }
+	 }else if(entityName.equalsIgnoreCase("user_position_query")){
+        	if(roleId == 1){
+                permission = EnumSet.of(CRUDPanel.Permissions.DOWNLOAD);
+        	}
+        }
 //        else if(entityName.equalsIgnoreCase("upLoad")){
 //          
 //          if (roleId == 1) {
