@@ -85,7 +85,6 @@ public class NewDataFormPanel extends Panel
 
     public void initPage(final String id, final Entity entity, final Map<String, Object> params, final String createAddress)
     {
-
         final Map<String, IModel> models = Maps.newHashMap();
         final String userName = ((SignIn2Session) getSession()).getUser();
         final String posId = ((SignIn2Session) getSession()).getPositionId();
@@ -484,9 +483,9 @@ public class NewDataFormPanel extends Panel
                             setResponsePage(PageFactory.createPageToDetail(entity.getName(), NewRecordId));
                         }else if(entityName.equals("productline") || entityName.equals("product")||entityName.equals("productcategory")){
                            setResponsePage(PageFactory.createPageTree(entity.getName(),NewRecordId)) ;
-                        }
-                        else
-                        {
+                        }else if(entityName.equalsIgnoreCase("alertattachment")){
+                        	setResponsePage(new EntityDetailPage("alert",String.valueOf(params.get("alert.id"))));
+                        }else{
                             setResponsePage(PageFactory.createPage(entity.getName()));
                         }
                     }
@@ -530,15 +529,15 @@ public class NewDataFormPanel extends Panel
         logger.debug("the form was submitted!");
         logger.debug(models);
         String fileName = "";
-        if(entity.getName().equals("alert")){
+        if(entity.getName().equals("alertattachment")){
         	FileUpload fileupload = fileUploadField.getFileUpload();
-            String outputfolder = CRMUtility.readFileAttribure("uploadpath");
+            String outputfolder = CRMUtility.readFileAttribure("fileUpdatePath");
  
             java.io.File tmpDir = null;
             tmpDir = Files.createTempDir();
             if (fileupload != null)
             {
-                  String tmpFileName = "D:\\" + fileupload.getClientFileName();
+                  String tmpFileName = outputfolder + fileupload.getClientFileName();
                   fileName = fileupload.getClientFileName();
                   try {
 					fileupload.writeTo(new File(tmpFileName));
@@ -641,7 +640,7 @@ public class NewDataFormPanel extends Panel
                     {
                         values.add("'" + (String) models.get(key).getObject() + "'");
                     }
-                }else if(key.equals("attachment")){
+                }else if(key.equals("fileName")){
                 	values.add("'"+fileName+"'");
                 }
                 else

@@ -222,4 +222,13 @@
 		<sql>select * from city where parentId=?</sql>
 		<to>city</to>
 	</relation>
+	
+	<relation>
+		<from>alert</from>
+		<name>alert_attachment</name>
+		<display>附件</display>
+		<sql>select * from alertAttachment where alertId = ? </sql>
+		<to>alertattachment</to>
+	</relation>
+	
 </relations>

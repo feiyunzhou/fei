@@ -196,7 +196,6 @@ public class EntityDetailPanel extends Panel {
     		java.io.File tmpDir = null;
             tmpDir = Files.createTempDir();
             String tmpFileName = "D:\\"+eid;
-            System.out.println("downLoad src:"+tmpFileName);
     		File contact_template = new File(tmpFileName);
     	    add(new DownloadLink("detailclick",contact_template,eid).add(new Label("caption", new Model<String>(eid))));
     	}

@@ -289,7 +289,7 @@ public class PageableTablePanel extends Panel {
                 @Override
                 public void onClick() {
                     Param p = (Param) getParent().getParent().getDefaultModelObject();
-                    logger.debug(p + " id:" + p.getId() + " name:" + p.getEntityName());
+                    System.out.println(p + " id:" + p.getId() + " name:" + p.getEntityName());
                     String entityName = p.getEntityName();
                     if(entity.getName().equals("coaching")){
                     	Activity coaching = DAOImpl.getActivityById(Integer.parseInt(p.getId()));

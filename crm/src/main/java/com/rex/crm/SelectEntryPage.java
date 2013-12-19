@@ -71,7 +71,6 @@ public class SelectEntryPage extends WebPage {
                 if(relationTableName.equalsIgnoreCase("account")){
                     
                     String sql = assembleSearchingSQL(roleId, entity);
-                    System.out.println(sql);
             
                     switch (roleId) {
                     case 2:
@@ -242,6 +241,9 @@ public class SelectEntryPage extends WebPage {
                     logger.debug("d；"+sql);
                     maplist  = DAOImpl.queryEntityRelationList(sql);
 
+                }else if(relationTableName.equalsIgnoreCase("alert")){
+                	String sql = "select * from alert";
+                	maplist  = DAOImpl.queryEntityRelationList(sql);
                 }
                 //this.setResponsePage(cls, parameters)
                 

@@ -85,6 +85,8 @@ public class EditDataFormPanel extends Panel {
       	   add(new Label("name",String.valueOf(data.get("title"))));
          }else if(schema.getName().equals("province")||schema.getName().equals("city")){
               add(new Label("name",String.valueOf(data.get("val"))));
+         }else if(schema.getName().equals("alertattachment")){
+        	 add(new Label("name",String.valueOf(data.get("fileName"))));
          }else{
       	   add(new Label("name",String.valueOf(data.get("name"))));
   	   }
@@ -403,7 +405,7 @@ public class EditDataFormPanel extends Panel {
 					    if(!prePageParams.isEmpty()){
 						    setResponsePage(previousPageClass,prePageParams);
 						}else{
-						  setResponsePage(new EntityDetailPage(schema.getName(),entityId));
+							setResponsePage(new EntityDetailPage(schema.getName(),entityId));
 						}
 					 }
 				} catch (Exception e) {
@@ -415,7 +417,6 @@ public class EditDataFormPanel extends Panel {
 		Button button = new Button("saveAndNew"){
 			@Override
 			public void onSubmit() {
-				System.out.println("saveAndNew!");
                 try {
 					saveEntity(fieldNameToModel,modifyNameToModel,data,schema,entityId,userName);
 				} catch (Exception e) {
@@ -450,14 +451,14 @@ public class EditDataFormPanel extends Panel {
 		logger.debug("the form was submitted!");
 		logger.debug(fieldNameToModel);
 		String fileName = "";
-        if(schema.getName().equals("alert")){
+        if(schema.getName().equals("alertattachment")){
         	FileUpload fileupload = fileUploadField.getFileUpload();
- 
+        	String outputfolder = CRMUtility.readFileAttribure("fileUpdatePath");
             java.io.File tmpDir = null;
             tmpDir = Files.createTempDir();
             if (fileupload != null)
             {
-                  String tmpFileName = "D:\\"+ fileupload.getClientFileName();
+                  String tmpFileName = outputfolder+ fileupload.getClientFileName();
                   fileName = fileupload.getClientFileName();
                   try {
 					fileupload.writeTo(new File(tmpFileName));
@@ -524,7 +525,7 @@ public class EditDataFormPanel extends Panel {
                 } else if (obj instanceof Choice) {
                     value = String.valueOf(((Choice) obj).getId());
                 } else {
-                	if(field.getName().equals("attachment")){
+                	if(field.getDataType().equals("file")){
                     	value = "'"+fileName+"'";
                     }else{
                     	value = String.valueOf(obj) ;

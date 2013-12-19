@@ -116,6 +116,8 @@ public class EntityDetailPage extends TemplatePage {
               add(new Label("name",String.valueOf(map.get("userId"))));
         }else if(entity.getName().equals("province")||entity.getName().equals("city")){
               add(new Label("name",String.valueOf(map.get("val"))));
+        }else if(entity.getName().equalsIgnoreCase("alertattachment")){
+        	add(new Label("name",String.valueOf(map.get("fileName"))));
         }else{
               add(new Label("name",String.valueOf(map.get("name"))));
         }
@@ -207,7 +209,7 @@ public class EntityDetailPage extends TemplatePage {
               }else if(entityName.equals("crmuser")) {
                         DAOImpl.deleteRecord(id, entityName);
                         setResponsePage(new PositionPage());
-              }else if(entityName.equals("alert")){
+              }else if(entityName.equals("alert")||entityName.equals("alertattachment")){
                 	DAOImpl.deleteRecord(id, entityName);
                 	setResponsePage(new AlertPage());
               }else if(entityName.equals("user_position")){
