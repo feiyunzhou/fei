@@ -14,7 +14,7 @@
                 	window.location.href="/crm/wicket/bookmarkable/com.rex.crm.admin.MergePage?entityName="+entityName+"&entityIda="+entityId_a+"&entityIdb="+entityId_b;
                 }
                 
-            </script>
+   </script>
   <div class="row"></div>
   <div class="row">
    <div class="">
@@ -22,6 +22,14 @@
     <span wicket:id="entityIda" style="visibility:hidden" id="entityIda"></span>
     <span wicket:id="entityName" style="visibility:hidden" id="entityName"></span>
      <table class="table">
+      <thead>
+     <tr>
+       <td ><span><STRONG>字段名称</STRONG></span></td>
+       <td ><span><STRONG>被合并目标</STRONG></span></td>
+       <td ><span><STRONG>合并目标</STRONG></span></td>
+       <td ><span><STRONG>合并结果</STRONG></span></td>
+      </tr>
+      </thead>
       <tr wicket:id="row_repeater">
        <td><span wicket:id="field_name"></span></td>
        <td><span wicket:id="field_value_a"></span></td>
@@ -42,7 +50,8 @@
 
   <wicket:fragment wicket:id="relationTableSearchFragment">
    <div class="input-group">
-    <input type="text" required="required" readonly wicket:id="selected_value_input" class="form-control input-sm" /> <span class="input-group-addon input-sm"> <a href="#" class=""
+    <input type="text" required="required" readonly wicket:id="selected_value_input" class="form-control input-sm" />
+     <span class="input-group-addon input-sm " style="width:100px; "> <a href="#" class=""
      wicket:id="search_btn" id="search_click" title="查找">查找</a>
     </span> <input type="hidden" class="form-control  input-sm" style="width: 0px; height: 0px;" wicket:id="selected_id_hidden" />&nbsp;&nbsp;
    </div>
