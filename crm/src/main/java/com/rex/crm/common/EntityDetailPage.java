@@ -199,6 +199,7 @@ public class EntityDetailPage extends TemplatePage {
                     setResponsePage(new ContactPage());
                 }else if(entityName.equals("activity")) {
                 	if("calendar".equals(fromPage)){
+                		DAOImpl.deleteRecord(id, entityName);
                 		setResponsePage(new CalendarPage());
                 	}else{
                 		DAOImpl.deleteRecord(id, entityName);
@@ -206,6 +207,7 @@ public class EntityDetailPage extends TemplatePage {
                 	}
                 }else if(entityName.equals("coaching")||entityName.equals("willcoaching")) {
                 	if("calendar".equals(fromPage)){
+                		DAOImpl.deleteRecord(id, entityName);
                 		setResponsePage(new CalendarPage());
                 	}else{
                 		DAOImpl.deleteRecord(id, entityName);
