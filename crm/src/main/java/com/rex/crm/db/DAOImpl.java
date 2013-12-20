@@ -563,7 +563,7 @@ public class DAOImpl
             }else if(entityName.equalsIgnoreCase("userInfo")){
                 sql = "INSERT INTO user_position (positionId,userId,whenadded,isPrimary) VALUES (?,?,?,?)";
             }else if(entityName.equalsIgnoreCase("crmuser")){
-                if(type == 0){
+                if(type == 0||type==4){
                     sql = "INSERT INTO accountcrmuser (accountId,crmuserId) VALUES (?,?)";
                 }else if(type == 1){
                     sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
