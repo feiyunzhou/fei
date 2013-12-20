@@ -28,6 +28,7 @@ import com.rex.crm.AccountPage;
 import com.rex.crm.ActivityPage;
 import com.rex.crm.AlertPage;
 import com.rex.crm.AreaPage;
+import com.rex.crm.CalendarPage;
 import com.rex.crm.CoachingPage;
 import com.rex.crm.ContactPage;
 import com.rex.crm.SignIn2Session;
@@ -55,6 +56,7 @@ public class EntityDetailPage extends TemplatePage {
     public EntityDetailPage(){
     	String entityId = this.getRequest().getRequestParameters().getParameterValue("id").toString();
   	  	String nameForEntity = this.getRequest().getRequestParameters().getParameterValue("entityName").toString();
+  	  	String fromPage = this.getRequest().getRequestParameters().getParameterValue("formPage").toString();
   	  	if(null==entityId&&null==nameForEntity){
 	    	RepeatingView div = new RepeatingView("promptDiv");
 	        AbstractItem groupitem = new AbstractItem(div.newChildId());
@@ -84,14 +86,14 @@ public class EntityDetailPage extends TemplatePage {
 	    	relationItem.add(new Label("relationPanel",""));
 	    	add(relationRepeater);
   	  	}else{
-  	  		initPage(nameForEntity.toString(),entityId.toString());
+  	  		initPage(nameForEntity.toString(),entityId.toString(),fromPage);
   	  	}
 
     }
     public EntityDetailPage(final String entityName, final String id){
-    	initPage(entityName,id);
+    	initPage(entityName,id,null);
     }
-    public void initPage(final String entityName, final String id){
+    public void initPage(final String entityName, final String id,final String fromPage){
         this.setPageTitle("详细信息");
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
@@ -196,11 +198,19 @@ public class EntityDetailPage extends TemplatePage {
                     DAOImpl.deleteRecord(id, entityName);
                     setResponsePage(new ContactPage());
                 }else if(entityName.equals("activity")) {
-                    DAOImpl.deleteRecord(id, entityName);
-                    setResponsePage(new ActivityPage());
+                	if("calendar".equals(fromPage)){
+                		setResponsePage(new CalendarPage());
+                	}else{
+                		DAOImpl.deleteRecord(id, entityName);
+                        setResponsePage(new ActivityPage());
+                	}
                 }else if(entityName.equals("coaching")||entityName.equals("willcoaching")) {
-                  DAOImpl.deleteRecord(id, entityName);
-                  setResponsePage(new CoachingPage());
+                	if("calendar".equals(fromPage)){
+                		setResponsePage(new CalendarPage());
+                	}else{
+                		DAOImpl.deleteRecord(id, entityName);
+                        setResponsePage(new CoachingPage());
+                	}
               }else if(entityName.equalsIgnoreCase("userInfo")){
                     if(DAOImpl.deleteRecord(id, entityName)>0){
                        DAOImpl.updateCrmUserReport(id, "-1");

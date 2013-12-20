@@ -1866,7 +1866,7 @@ public class DAOImpl
     
     public static int deleteRecord(String entityId,String entityName) {
         String sql = "";
-        if(entityName.equals("coaching")){
+        if(entityName.equals("coaching")||entityName.equalsIgnoreCase("willcoaching")){
           sql = "DELETE from activity where id = " + entityId;
         }else{
           sql = "DELETE from " + entityName +" where id = " + entityId;
