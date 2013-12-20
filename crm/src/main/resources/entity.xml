@@ -2052,12 +2052,12 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<display>岗位关系</display>
 	<externalField>externalId</externalField>
 	<sql>
-  select * from ( select userinfo.name as username\,user_position.*   
+  select * from ( select userinfo.name as name\,user_position.*   
     from user_position 
 	inner join userinfo on userinfo.id = user_position.userId 
 	inner join crmuser on crmuser.id = user_position.positionId) as a
 	</sql>
-	<sql-ent>select * from(select userinfo.name as username \,user_position.*
+	<sql-ent>select * from(select userinfo.name as name \,user_position.*
 	 from user_position
 	inner join userinfo on userinfo.id = user_position.userId 
 	inner join crmuser on crmuser.id = user_position.positionId
@@ -2092,7 +2092,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<import_external_foreignkey_field_name>employeeNumber</import_external_foreignkey_field_name>
 			</field>
 			<field>
-				<name>username</name>
+				<name>name</name>
 				<display>用户名称</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>

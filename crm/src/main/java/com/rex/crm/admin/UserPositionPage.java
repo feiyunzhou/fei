@@ -98,7 +98,7 @@ public class UserPositionPage extends AdminTemplatePage
         }
         
 //        List datalist = DAOImpl.queryEntityRelationList(sql, "dummy");
-        setResponsePage(new PositionPage(filter, datalist));
+        setResponsePage(new UserPositionPage(filter, datalist));
 
       }
 
