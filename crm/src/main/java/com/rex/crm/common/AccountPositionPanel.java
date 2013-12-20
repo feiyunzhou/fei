@@ -133,32 +133,7 @@ public class AccountPositionPanel extends Panel {
         }
         
         
-        
-        
-//        RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-//        form.add(dataRowRepeater);
-        
-        
-        
-        
-        
-        
-        
-        
-      
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-         final Map<String, Map> tableData = Maps.newHashMap();
+        final Map<String, Map> tableData = Maps.newHashMap();
         List<String> ids = Lists.newArrayList();
         for (Map map : (List<Map>) mapList) {
             String key = String.valueOf(map.get("id"));
@@ -227,11 +202,6 @@ public class AccountPositionPanel extends Panel {
                 
             }
         };
-        
-        
-        
-        
-        
          form.add(listview);
         //PagingNavigator nav = new PagingNavigator("navigator", listview);
         AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
@@ -239,12 +209,6 @@ public class AccountPositionPanel extends Panel {
 
         form.add(nav);
         form.setVersioned(false);
-        
-        
-        
-        
-        
-        
         add(new NewDataFormPanel("formPanel",entity,null));
     }
 
