@@ -46,6 +46,7 @@ import com.rex.crm.common.tree.Node;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 
 public class AccountPositionPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
@@ -68,7 +69,7 @@ public class AccountPositionPanel extends Panel {
         	  entity = Configuration.getEntityByName("regionManage");
         	  add(new Label("title","区域管理 "));
         
-        List<Field> fields = entity.getFields();
+        final List<Field> fields = entity.getFields();
         final String entityName = entity.getName();
         Form form = new Form("form");
         add(form);
@@ -130,18 +131,55 @@ public class AccountPositionPanel extends Panel {
             columnNameRepeater.add(item);
             item.add(new Label("columnName", f.getDisplay())); 
         }
-        RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-        form.add(dataRowRepeater);
-        for (int i = 0; i < mapList.size(); i++)
-        {
-            Map map = (Map)mapList.get(i);
-            final String rowId =  String.valueOf(map.get("rid"));     
-            final String realId =  String.valueOf(map.get("id"));  
-            AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
-            dataRowRepeater.add(item);
-            RepeatingView columnRepeater = new RepeatingView("columnRepeater");
-            item.add(columnRepeater);
-            for (Field f : fields) {
+        
+        
+        
+        
+//        RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
+//        form.add(dataRowRepeater);
+        
+        
+        
+        
+        
+        
+        
+        
+      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+         final Map<String, Map> tableData = Maps.newHashMap();
+        List<String> ids = Lists.newArrayList();
+        for (Map map : (List<Map>) mapList) {
+            String key = String.valueOf(map.get("id"));
+            ids.add(key);
+            tableData.put(key, map);
+        }
+        
+        
+        final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 15) {
+            
+            @Override          
+            protected void populateItem(ListItem<String> item) {
+                String key = item.getDefaultModelObjectAsString();
+                RepeatingView columnRepeater = new RepeatingView("columnRepeater");
+                Map map = tableData.get(key);
+                item.add(columnRepeater);
+                
+                final String realId =  String.valueOf(map.get("id"));
+                final String rowId =  String.valueOf(map.get("rid")); 
+                
+                for (Field f : fields) {
                 if (!f.isVisible() || f.getPriority() >1)
                     continue;
                 AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model() {
@@ -186,8 +224,27 @@ public class AccountPositionPanel extends Panel {
                 }
                 columnRepeater.add(columnitem);
               } 
-            
-        }
+                
+            }
+        };
+        
+        
+        
+        
+        
+         form.add(listview);
+        //PagingNavigator nav = new PagingNavigator("navigator", listview);
+        AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
+        nav.setOutputMarkupId(true); 
+
+        form.add(nav);
+        form.setVersioned(false);
+        
+        
+        
+        
+        
+        
         add(new NewDataFormPanel("formPanel",entity,null));
     }
 

@@ -99,7 +99,8 @@ public class PageableTablePanel extends Panel {
         }
         // end of set column name
         final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 15) {
-            @Override
+            
+            @Override          
             protected void populateItem(ListItem<String> item) {
                 String key = item.getDefaultModelObjectAsString();
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
