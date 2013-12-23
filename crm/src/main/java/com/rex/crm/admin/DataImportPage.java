@@ -1,6 +1,7 @@
 package com.rex.crm.admin;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -17,6 +18,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.file.File;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.rex.crm.admin.AdminTemplatePage;
@@ -77,8 +79,14 @@ public class DataImportPage extends AdminTemplatePage
               {
                   
                   
-                  String tmpFileName = tmpDir.getAbsolutePath() + File.separator+ fileupload.getClientFileName();
-                  fileupload.writeTo(new File(tmpFileName));
+                  String gbk_tmpFileName = tmpDir.getAbsolutePath() + File.separator+ "gbk_"+fileupload.getClientFileName();
+                  String utf8_tmpFileName = tmpDir.getAbsolutePath() + File.separator+ "utf8_"+fileupload.getClientFileName();
+                  fileupload.writeTo(new File(gbk_tmpFileName));
+                  fileupload.closeStreams();
+                 
+                  String file_content = Files.toString(new File(gbk_tmpFileName), Charset.forName("gbk"));
+                  Files.write(file_content, new File(utf8_tmpFileName), Charsets.UTF_8);
+                  logger.debug("UTF8 format file:"+ utf8_tmpFileName);
                   
                   logger.debug("selected_entity:"+selected_entity.getVal());
                   String entityName = "";
@@ -114,7 +122,7 @@ public class DataImportPage extends AdminTemplatePage
                       }
                  
                   
-                  DataImporter.importDataOnBackground(entityName, tmpFileName);
+                  DataImporter.importDataOnBackground(entityName, utf8_tmpFileName);
                   //da.load(template, FileName.toString());
                   //this.setResponsePage(ImportLogPage.class);
                   view_log_btn.setVisible(true);
