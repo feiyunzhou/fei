@@ -92,7 +92,7 @@ public class TeamManPanel extends Panel {
           }
         else if (type == 2){
 //          //for the 用户岗位
-          teamSql = "select  * from   (select user_position.* ,user_position.id as rid,userinfo.name as username from  userinfo  inner join  user_position on user_position.userId = userinfo.id inner join  crmuser on crmuser.id = user_position.positionId where userinfo.id = ? ) as atable";
+          teamSql = "select  * from   (select user_position.* ,user_position.id as rid,userinfo.name as name from  userinfo  inner join  user_position on user_position.userId = userinfo.id inner join  crmuser on crmuser.id = user_position.positionId where userinfo.id = ? ) as atable";
         } 
     }else if(en.equalsIgnoreCase("crmuser")){
             if(type == 0){

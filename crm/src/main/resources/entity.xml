@@ -20,7 +20,7 @@
 			account.comprehensive_or_specialized =
 			account_comprehensive_or_specialized_pl.id
 			left join account_administrativ_level_pl  on account.administrativ_level = account_administrativ_level_pl.id 	
-			where account.id != -1 and(
+			where account.id != -1 and account.status = 1 and(
 			account.id in (select accountid from accountcrmuser 
 			left join user_position on user_position.positionId = accountcrmuser.crmuserid
 			where accountcrmuser.crmuserid = ?)
@@ -28,7 +28,7 @@
 			left join contact on contactcrmuser.contactid = contact.id
 			left join accountcrmuser on accountcrmuser.accountid = contact.accountId
 			left join user_position on user_position.positionId = accountcrmuser.crmuserid
-			where contactcrmuser.crmuserid = ?
+			where contactcrmuser.crmuserid = ? 
 			))ORDER BY CONVERT( name USING gbk ))  as aAccount
 		</sql>
 		<sql-admin>
@@ -43,7 +43,7 @@
 			left join account_administrativ_level_pl on
 			account.administrativ_level =
 			account_administrativ_level_pl.id
-			where account.id != -1 ORDER BY CONVERT( name USING gbk )) as aAccount
+			where account.id != -1 and account.status = 1 ORDER BY CONVERT( name USING gbk )) as aAccount
 			
 		</sql-admin>
 		
@@ -59,7 +59,7 @@
 			left join account_type_pl on account.hospital_type = account_type_pl.id
 			left join account_administrativ_level_pl  on account.administrativ_level = account_administrativ_level_pl.id 
 			left join account_comprehensive_or_specialized_pl on account_comprehensive_or_specialized_pl.id = account.comprehensive_or_specialized	
-			where (account.id in (select accountid from crmdb.accountcrmuser
+			where account.status =1 and (account.id in (select accountid from crmdb.accountcrmuser
 			where
 			crmuserid = ?) OR
 			account.id in (select accountid from crmdb.accountcrmuser where crmuserid in

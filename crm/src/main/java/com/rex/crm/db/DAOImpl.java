@@ -2322,7 +2322,7 @@ public class DAOImpl
             search_target = "";
       }
       
-        String sql = "SELECT * FROM (select * from (select  crmuser.*, user_position.positionId from  crmuser  left join user_position ON crmuser.id = user_position.positionId where user_position.positionId is null ) as crmuserposition where (crmuserposition.id !=-1 )AND (name like '%"+search_target+"%' OR code like '%"+search_target+"%' OR reportto like '%"+search_target+"%')) as a";
+        String sql = "SELECT * FROM (select * from (select  crmuser.*, user_position.positionId from  crmuser  left join user_position ON crmuser.id = user_position.positionId where user_position.positionId is null and crmuser.pl1=1) as crmuserposition where (crmuserposition.id !=-1 )AND (name like '%"+search_target+"%' OR code like '%"+search_target+"%' OR reportto like '%"+search_target+"%')) as a";
         logger.debug(sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
@@ -2367,7 +2367,7 @@ public class DAOImpl
         }
         if(excludeId == null) excludeId = "-1";
         
-        String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (role = 2 )AND (crmuser.id !=-1) AND (name like '%"+search_target+"%' OR reportto like '%"+search_target+"%' )) as a";
+        String sql = "select * from (select * from crmuser where (crmuser.id !="+excludeId+") AND (role = 2 )AND (crmuser.id !=-1)AND (crmuser.pl1 !=2) AND (name like '%"+search_target+"%' OR reportto like '%"+search_target+"%' )) as a";
         logger.debug("searchManager:"+ sql );
         Connection conn = null;
         List lMap = Lists.newArrayList();
