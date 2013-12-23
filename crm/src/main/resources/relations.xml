@@ -60,14 +60,14 @@
 		<from>crmuser</from>
 		<name>userposition_relation_history</name>
 		<display>岗位与用户关系历史信息</display>
-		<sql>select * from (select a.id \,a.modify_time \,a.modifier \,userinfo.name as user_id \,crmuser.name as position_id from userposition_relation_histroy as a left join userinfo on userinfo.id = a.user_id left join crmuser on crmuser.id = a.position_id  where crmuser.id = ? ) as act </sql>
+		<sql>select * from (select a.id \,a.modify_time \,a.modifier \,userinfo.name as user_id \,crmuser.name as position_id from userposition_relation_history as a left join userinfo on userinfo.id = a.user_id left join crmuser on crmuser.id = a.position_id  where crmuser.id = ? ) as act </sql>
 		<to>userposition_relation_history</to>
 	</relation>
 	<relation>
 		<from>userinfo</from>
 		<name>userposition_relation_history</name>
 		<display>岗位与用户关系历史信息</display>
-		<sql>select * from (select a.id \,a.modify_time \,a.modifier \,userinfo.name as user_id \,crmuser.name as position_id from userposition_relation_histroy as a left join userinfo on userinfo.id = a.user_id left join crmuser on crmuser.id = a.position_id  where userinfo.id = ? ) as act </sql>
+		<sql>select * from (select a.id \,a.modify_time \,a.modifier \,userinfo.name as user_id \,crmuser.name as position_id from userposition_relation_history as a left join userinfo on userinfo.id = a.user_id left join crmuser on crmuser.id = a.position_id  where userinfo.id = ? ) as act </sql>
 		<to>userposition_relation_history</to>
 	</relation>
 	<relation>

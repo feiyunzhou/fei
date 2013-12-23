@@ -2480,7 +2480,7 @@ public class DAOImpl
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date_value = dateformat.format(ts);
         if(teamtable.equalsIgnoreCase("userinfo")||teamtable.equalsIgnoreCase("user_position")){
-        		sql = "insert into userposition_relation_histroy (position_id, user_id, modify_time, modifier) values("+positionId+","+otherId+",'"+date_value+"','"+user+"') ";
+        		sql = "insert into userposition_relation_history (position_id, user_id, modify_time, modifier) values("+positionId+","+otherId+",'"+date_value+"','"+user+"') ";
         }else if(teamtable.equalsIgnoreCase("accountcrmuser")){
             	sql = "insert into accountcrmuser_relation_history (position_id,account_id,modify_time,modifier) values("+positionId+","+otherId+",'"+date_value+"','"+user+"') ";
         }
