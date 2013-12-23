@@ -149,7 +149,6 @@ public class PageableTablePanel extends Panel {
                             
                             if(f.getDataType().equalsIgnoreCase("downloadlink")){
                                 columnitem.add(new DownloadLinkFragment("celldata", "downloadlinkFragment", this.getParent().getParent(), value));
-                                //columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(), value,entity));
                                 
                             }else{
                               if(value.equals("null")||value.isEmpty()){

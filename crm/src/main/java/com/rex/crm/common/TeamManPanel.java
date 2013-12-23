@@ -46,6 +46,7 @@ import com.rex.crm.beans.UserPosition;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 
 public class TeamManPanel extends Panel {
     private static final long serialVersionUID = 2501105233172820074L;
@@ -53,6 +54,7 @@ public class TeamManPanel extends Panel {
     private String etId;
     private String currentEntityName;
     List<String> selectedRowIds = Lists.newArrayList();
+    public List<Field> fieldsd;
     public TeamManPanel(String id,final String en,final String entityId,final int type) {
         super(id);
         etId = entityId;
@@ -157,6 +159,7 @@ public class TeamManPanel extends Panel {
         }
         
         List<Field> fields = entity.getFields();
+        
         final String entityName = entity.getName();
         Form form = new Form("form");
         add(form);
@@ -306,18 +309,33 @@ public class TeamManPanel extends Panel {
             columnNameRepeater.add(item);
             item.add(new Label("columnName", f.getDisplay())); 
         }
-        RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-        group.add(dataRowRepeater);
-        for (int i = 0; i < mapList.size(); i++)
-        {
-            Map map = (Map)mapList.get(i);
-            final String rowId =  String.valueOf(map.get("rid"));     
-            final String realId =  String.valueOf(map.get("id"));  
-            AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
-            dataRowRepeater.add(item);
-            RepeatingView columnRepeater = new RepeatingView("columnRepeater");
-            item.add(columnRepeater);
-            for (Field f : fields) {
+        
+                
+
+        
+        
+        
+         final Map<String, Map> tableData = Maps.newHashMap();
+        List<String> ids = Lists.newArrayList();
+        for (Map map : (List<Map>) mapList) {
+            String key = String.valueOf(map.get("id"));
+            ids.add(key);
+            tableData.put(key, map);
+        }
+        fieldsd=fields;
+        final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 15) {
+            
+          
+            @Override          
+            protected void populateItem(ListItem<String> item) {
+                String key = item.getDefaultModelObjectAsString();
+                RepeatingView columnRepeater = new RepeatingView("columnRepeater");
+                Map map = tableData.get(key);
+                item.add(columnRepeater);
+                
+                final String realId =  String.valueOf(map.get("id"));
+                final String rowId =  String.valueOf(map.get("rid")); 
+            for (Field f : fieldsd) {
                 if (!f.isVisible() || f.getPriority() >1)
                     continue;
                 AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model() {
@@ -336,7 +354,7 @@ public class TeamManPanel extends Panel {
                       value = "无";
                     }
                     columnitem.add(new AttributeAppender("class", new Model("table-first-link"), " "));
-                    columnitem.add(new DetailLinkFragment("celldata","detailFragment",this,value));
+                    columnitem.add(new DetailLinkFragment("celldata","detailFragment",this.getParent().getParent().getParent(),value));
                 } else {
                     if (f.getPicklist() != null) {
                         // get option from picklist
@@ -387,6 +405,17 @@ public class TeamManPanel extends Panel {
          
             
         }
+        };
+         group.add(listview);
+        //PagingNavigator nav = new PagingNavigator("navigator", listview);
+        AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
+        nav.setOutputMarkupId(true); 
+
+        group.add(nav);
+        group.setVersioned(false);
+        
+        
+        
         add(new NewDataFormPanel("formPanel",entity,null));
     }
 
@@ -399,8 +428,10 @@ public class TeamManPanel extends Panel {
         public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider,String caption)
         {
             super(id, markupId, markupProvider);
+            
             add(new Link("detailclick")
             {
+                
                 
                 @Override
                 public void onClick()

@@ -101,7 +101,7 @@ public class AccountPositionPanel extends Panel {
   
         //add button submission
         if(roleId != 1){
-        	 WebMarkupContainer con = new WebMarkupContainer("add_users_link");
+             WebMarkupContainer con = new WebMarkupContainer("add_users_link");
              add(con);
              con.setVisible(false);
         }else{
@@ -150,10 +150,8 @@ public class AccountPositionPanel extends Panel {
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 Map map = tableData.get(key);
                 item.add(columnRepeater);
-                
                 final String realId =  String.valueOf(map.get("id"));
                 final String rowId =  String.valueOf(map.get("rid")); 
-                
                 for (Field f : fields) {
                 if (!f.isVisible() || f.getPriority() >1)
                     continue;
