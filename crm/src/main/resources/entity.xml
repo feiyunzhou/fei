@@ -112,7 +112,7 @@
 			<field>
 				<name>bdm_code</name>
 				<display>BDM医院编码</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
