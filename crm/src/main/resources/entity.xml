@@ -687,7 +687,7 @@
 			left join user_position on user_position.positionId = accountcrmuser.crmuserId
 			left join contact_department_pl on contact.department = contact_department_pl.id
 			left join contact_duty_pl on contact.duty = contact_duty_pl.id
-			where contact.id != -1 and accountcrmuser.crmuserid = ? )  as aContact
+			where contact.id != -1 and contact.id = 1 and accountcrmuser.crmuserid = ? )  as aContact
 		</sql>
 		<sql-manager>
             Select distinct *
@@ -700,13 +700,15 @@
                         from contact\, accountcrmuser\,crmuser
                         where crmuser.reportto=? and
                               contact.accountId = accountcrmuser.accountId and
-                              crmuser.id = accountcrmuser.crmuserId ) as aContact
+                              crmuser.id = accountcrmuser.crmuserId and
+                              crmuser.pl1=1) as aContact
                  left join productline on aContact.product_target = productline.id
                  left join accountcrmuser on aContact.accountId = accountcrmuser.accountId
                  left join account on accountcrmuser.accountId = account.id
                  left join user_position on user_position.positionId = accountcrmuser.crmuserId
                  left join contact_duty_pl on aContact.duty = contact_duty_pl.id
-                 left join contact_department_pl on contact_department_pl.id = aContact.department) as cContact
+                 left join contact_department_pl on contact_department_pl.id = aContact.department
+                 where aContact.status = 1) as cContact
 
 		</sql-manager>
 
@@ -730,7 +732,7 @@
 			productline.id 
 			left join contact_department_pl on contact.department = contact_department_pl.id
 			left join contact_duty_pl on contact.duty = contact_duty_pl.id
-			where contact.id != -1  )  as aContact
+			where contact.id != -1 and contact.status = 1 )  as aContact
 		</sql-admin>
 
 		<sql-ent>select * from (select contact.*\,account.id as accountName
