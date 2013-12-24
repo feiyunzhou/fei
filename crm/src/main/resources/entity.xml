@@ -687,7 +687,7 @@
 			left join user_position on user_position.positionId = accountcrmuser.crmuserId
 			left join contact_department_pl on contact.department = contact_department_pl.id
 			left join contact_duty_pl on contact.duty = contact_duty_pl.id
-			where contact.id != -1 and contact.id = 1 and accountcrmuser.crmuserid = ? )  as aContact
+			where contact.id != -1 and contact.status = 1 and accountcrmuser.crmuserid = ? )  as aContact
 		</sql>
 		<sql-manager>
             Select distinct *
