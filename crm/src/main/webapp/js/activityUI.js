@@ -4,7 +4,6 @@ $(document).ready(function() {
         $('#activity_container').toggle();
 
     });
-
 });
 
 function renderActivityTableOnPage(id) {

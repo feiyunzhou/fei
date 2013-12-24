@@ -40,7 +40,8 @@
 		bAddFilter:'Add filter',
 		bUpdateFilter:'Update filter',
 		bSubmit:'Submit',
-		bCancel:'Cancel'
+		bCancel:'Cancel',
+		all:'所有'
 	},
 	evoAPI={
 		sEqual:'eq',
@@ -53,7 +54,8 @@
 		sIsNotNull:'nn',
 		sGreater:'gt',
 		sSmaller:'lt',
-		sBetween:'bw'
+		sBetween:'bw',
+		sAll:''
 	},
 	evoTypes={
 		text:'text',
@@ -485,9 +487,9 @@ $.widget( 'evol.advancedSearch', {
 				ls.push(this.nextSibling.innerHTML);
 			});
 			if(vs.length===0){
-				op.label=evoLang.sIsNull;
-				op.value=evoAPI.sIsNull;
-				fv.label=fv.value='';
+				op.label=evoLang.sEqual;
+				op.value=evoAPI.sAll;
+				fv.label=fv.value='所有';
 			}else if(vs.length==1){
 				op.label=evoLang.sEqual;
 				op.value=evoAPI.sEqual;

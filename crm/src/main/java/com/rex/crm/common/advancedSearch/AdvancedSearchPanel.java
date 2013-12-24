@@ -85,6 +85,7 @@ public class AdvancedSearchPanel extends Panel {
         operator2NameMap.put("gt", "大于");
         operator2NameMap.put("lt", "小于");
         operator2NameMap.put("bw", "介于之间");
+        operator2NameMap.put("all", "所有");
     }
    // private String entityName;
     
@@ -121,6 +122,7 @@ public class AdvancedSearchPanel extends Panel {
                int num_of_elem = parameters.getParameterValue("elem").toInt();
                AdvancedSearchFilter[] filters =  new AdvancedSearchFilter[num_of_elem];
                for(int i=0;i<num_of_elem;i++){
+            	   
                    filters[i] = new AdvancedSearchFilter();
                    
                    //for the field
@@ -136,6 +138,14 @@ public class AdvancedSearchPanel extends Panel {
                     meta.setLabel(operator2NameMap.get(parameters.getParameterValue("op-"+(i+1)).toString()));
                     filters[i].setOperator(meta);
                     
+                    String fieldValue = parameters.getParameterValue("val-"+(i+1)).toString();
+             	   	if("所有".equals(fieldValue)){
+             	   		meta = new FilterMeta(); 
+             	   		meta.setValue("所有");
+             	   		meta.setLabel("所有");
+             	   		filters[i].setValue(meta); 
+                 	   continue;
+                    }
                     //for the value
                     meta = new FilterMeta();             
                     String label = parameters.getParameterValue("val-"+(i+1)).toString();
@@ -163,7 +173,6 @@ public class AdvancedSearchPanel extends Panel {
              //PageParameters params = new PageParameters();
             // params.add("ad_search_sql", filter_sql);
              setResponsePage(new AdvancedSearchPage(entityName,filters));
-               
            }
            
         }
@@ -311,66 +320,69 @@ public class AdvancedSearchPanel extends Panel {
     public String buildFilterSQL(final Entity entity, AdvancedSearchFilter[] filters) {
         String filterString;
         List<String> combinedFilters = Lists.newArrayList();
-        for(AdvancedSearchFilter ft:filters){
-        	
-           String fieldName = ft.getField().getValue();
-           Field field = entity.getFieldByName(fieldName);
-           
-           if(field.getDataType().equalsIgnoreCase("number") || field.getPicklist()!=null){
-               if(field.getPicklist()!=null){
-                   
-                   if(ft.getOperator().getValue().equalsIgnoreCase("in")|| ft.getOperator().getValue().equalsIgnoreCase("eq")){
-                       combinedFilters.add(ft.getField().getValue() +" in ("+ ft.getValue().getValue()+") ");
-                   }
-                  
-               }else{
-                 
-                   if(ft.getOperator().getValue().equalsIgnoreCase("eq")){
-                       combinedFilters.add(ft.getField().getValue() +" = "+ ft.getValue().getValue());
-                   }else if(ft.getOperator().getValue().equalsIgnoreCase("gt")){
-                       combinedFilters.add(ft.getField().getValue() +" > "+ ft.getValue().getValue());
-                   }else if(ft.getOperator().getValue().equalsIgnoreCase("lt")){
-                       combinedFilters.add(ft.getField().getValue() +" < "+ ft.getValue().getValue());
-                   }else if(ft.getOperator().getValue().equalsIgnoreCase("ne")){
-                       combinedFilters.add(ft.getField().getValue() +" != "+ ft.getValue().getValue());
-                   }else if(ft.getOperator().getValue().equalsIgnoreCase("null")){
-                       combinedFilters.add(ft.getField().getValue() +" is null ");
-                   }else if(ft.getOperator().getValue().equalsIgnoreCase("nn")){
-                       combinedFilters.add(ft.getField().getValue() +" is not null ");
-                   }
-                   
-               }
-           }else if(field.getDataType().equals("datetime-local")||field.getName().equals("whenadded")||field.getName().equals("modify_datetime")||field.getName().equals("act_endtime")){
-        	   if(ft.getOperator().getValue().equalsIgnoreCase("eq")){
-                   combinedFilters.add(ft.getField().getValue() +" = '"+ ft.getValue().getValue()+"'");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("gt")){
-                   combinedFilters.add(ft.getField().getValue() +" > '"+ ft.getValue().getValue()+"'");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("lt")){
-                   combinedFilters.add(ft.getField().getValue() +" < '"+ ft.getValue().getValue()+"'");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("ne")){
-                   combinedFilters.add(ft.getField().getValue() +" != '"+ ft.getValue().getValue()+"'");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("bw")){
-                   combinedFilters.add(ft.getField().getValue() +" between '"+ft.getValue().getValue()+"' and '"+ft.getValue().getValue()+"'");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("null")){
-                   combinedFilters.add(ft.getField().getValue() +" is null ");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("nn")){
-                   combinedFilters.add(ft.getField().getValue() +" is not null ");
-               }
-           }else{
-               if(ft.getOperator().getValue().equalsIgnoreCase("eq")){
-                   combinedFilters.add(ft.getField().getValue() +" = '"+ ft.getValue().getValue()+"'");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("ne")){
-                   combinedFilters.add(ft.getField().getValue() +" != '"+ ft.getValue().getValue()+"'");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("ct")){
-                   combinedFilters.add(ft.getField().getValue() +" like '%"+ ft.getValue().getValue()+"%'");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("null")){
-                   combinedFilters.add(ft.getField().getValue() +" is null ");
-               }else if(ft.getOperator().getValue().equalsIgnoreCase("nn")){
-                   combinedFilters.add(ft.getField().getValue() +" is not null ");
-               }
-           }
+        if(filters.length>0){
+	        for(int i =0;i<filters.length;i++){
+	        	if(filters[i].getValue().getValue()=="所有"){
+	        		continue;
+	        	}
+	           String fieldName = filters[i].getField().getValue();
+	           Field field = entity.getFieldByName(fieldName);
+	           
+	           if(field.getDataType().equalsIgnoreCase("number") || field.getPicklist()!=null){
+	               if(field.getPicklist()!=null){
+	                   
+	                   if(filters[i].getOperator().getValue().equalsIgnoreCase("in")|| filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
+	                       combinedFilters.add(filters[i].getField().getValue() +" in ("+ filters[i].getValue().getValue()+") ");
+	                   }
+	                  
+	               }else{
+	                 
+	                   if(filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
+	                       combinedFilters.add(filters[i].getField().getValue() +" = "+ filters[i].getValue().getValue());
+	                   }else if(filters[i].getOperator().getValue().equalsIgnoreCase("gt")){
+	                       combinedFilters.add(filters[i].getField().getValue() +" > "+ filters[i].getValue().getValue());
+	                   }else if(filters[i].getOperator().getValue().equalsIgnoreCase("lt")){
+	                       combinedFilters.add(filters[i].getField().getValue() +" < "+ filters[i].getValue().getValue());
+	                   }else if(filters[i].getOperator().getValue().equalsIgnoreCase("ne")){
+	                       combinedFilters.add(filters[i].getField().getValue() +" != "+ filters[i].getValue().getValue());
+	                   }else if(filters[i].getOperator().getValue().equalsIgnoreCase("null")){
+	                       combinedFilters.add(filters[i].getField().getValue() +" is null ");
+	                   }else if(filters[i].getOperator().getValue().equalsIgnoreCase("nn")){
+	                       combinedFilters.add(filters[i].getField().getValue() +" is not null ");
+	                   }
+	                   
+	               }
+	           }else if(field.getDataType().equals("datetime-local")||field.getName().equals("whenadded")||field.getName().equals("modify_datetime")||field.getName().equals("act_endtime")){
+	        	   if(filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" = '"+ filters[i].getValue().getValue()+"'");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("gt")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" > '"+ filters[i].getValue().getValue()+"'");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("lt")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" < '"+ filters[i].getValue().getValue()+"'");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("ne")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" != '"+ filters[i].getValue().getValue()+"'");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("bw")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" between '"+filters[i].getValue().getValue()+"' and '"+filters[i].getValue().getValue()+"'");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("null")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" is null ");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("nn")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" is not null ");
+	               }
+	           }else{
+	               if(filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" = '"+ filters[i].getValue().getValue()+"'");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("ne")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" != '"+ filters[i].getValue().getValue()+"'");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("ct")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" like '%"+ filters[i].getValue().getValue()+"%'");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("null")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" is null ");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("nn")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" is not null ");
+	               }
+	           }
+	        }
         }
-
          filterString = Joiner.on(" AND ").join(combinedFilters);
         return filterString;
     }

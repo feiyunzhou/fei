@@ -4915,7 +4915,7 @@ function enableTextSelection(element) {
                     "</span>";
                 }
                 html +=
-                "<span class='fc-event-title'>" + htmlEscape(event.title) + "</span>" +
+                "<span class='fc-event-title tooltip-test' title='"+event.title+"' data-content='开始时间:"+event.start+"<br/>结束时间:"+event.end+"'>" + htmlEscape(event.title) + "</span>" +
                 "</div>";
                 if (seg.isEnd && isEventResizable(event)) {
                     html +=
