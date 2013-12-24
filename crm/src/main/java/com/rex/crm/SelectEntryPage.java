@@ -28,6 +28,9 @@ import com.rex.crm.common.Field;
 import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PageableListView;
 
 /**
  * 
@@ -253,18 +256,42 @@ public class SelectEntryPage extends WebPage {
         };
         form.add(new TextField<String>("search_input", new PropertyModel<String>(this, "search_target")));
         add(form);
-       
-        RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-        add(dataRowRepeater);
-
-        if (list != null) {
-            List<Field> searchableFields = entity.getSearchableFields();
-            for (Map map : list) {
+        
+        
+  //      RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
+  //      add(dataRowRepeater);
+        
+          final  List<Field> searchableFields = entity.getSearchableFields();
+            
+          //初始化的时候查不出数据
+          if (list == null) {
+                list=DAOImpl.queryEntityRelationList("Select * from account where 1=0");
+            }
+          
+          final Map<String, Map> tableData = Maps.newHashMap();
+          List<String> ids = Lists.newArrayList();
+            for (Map map : (List<Map>) list) {
+               String key = String.valueOf(map.get("id"));
+               ids.add(key);
+               tableData.put(key, map);
+            }
+            
+         
+         
+        
+        final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 20) {
+            
+            @Override          
+            protected void populateItem(ListItem<String> item) {
+                String key = item.getDefaultModelObjectAsString();
+               
+                Map map = tableData.get(key);
+    
+                 //在做了分页以后 columnRepeater 没有用到
+                RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 int uid = ((Number) map.get("id")).intValue();
                 String name = (String) map.get("name");
-                AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
-                dataRowRepeater.add(item);
-
+           
                 item.add(new AttributeAppender("data-id",new Model(uid)));
                 item.add(new AttributeAppender("data-name",new Model(name)));
                 item.add(new AttributeAppender("data-ename",relationTableName));
@@ -296,11 +323,17 @@ public class SelectEntryPage extends WebPage {
                     String num_of_visiting = String.valueOf(obj);
                     column_item.add(new Label("celldata", num_of_visiting + "（拜访次数）"));
                 }
-                    
-               
-                
             }
-        }
+        };
+  
+         add(listview);
+        //PagingNavigator nav = new PagingNavigator("navigator", listview);
+        AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
+        nav.setOutputMarkupId(true); 
+
+        add(nav);
+        setVersioned(false);
+        
     }
 
     private String assembleSearchingSQL(final int roleId, final Entity entity) {
