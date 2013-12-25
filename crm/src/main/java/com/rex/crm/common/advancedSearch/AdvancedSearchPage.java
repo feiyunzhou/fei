@@ -74,9 +74,9 @@ public class AdvancedSearchPage extends TemplatePage {
             tdata = DAOImpl.queryEntityRelationList(sql,params);
         }
 
-      
-       
-
+        
+        
+        
         add(new PageableTablePanel("datalist", entity, tdata, null));
 
     }

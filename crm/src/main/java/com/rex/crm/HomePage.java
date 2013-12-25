@@ -91,7 +91,18 @@ public class HomePage extends TemplatePage {
         param.add("entityName", "contact");
         BookmarkablePageLink contact_create_link = new BookmarkablePageLink("contact_create_link", CreateDataPage.class,param );
         add(contact_create_link);
-         
+        
+        WebMarkupContainer userInfo_create_li = new WebMarkupContainer("userInfo_create_li");
+        param = new PageParameters();
+        param.set("entityName", "userinfo");
+        BookmarkablePageLink userInfo_create_link = new BookmarkablePageLink("userInfo_create_link", CreateDataPage.class,param);
+        userInfo_create_li.setVisible(false);
+        userInfo_create_li.add(userInfo_create_link);
+        add(userInfo_create_li);
+        
+        if(roleId == 1){
+        	userInfo_create_li.setVisible(true);
+        }
        
        /* param = new PageParameters();
         param.add("entityName", "activity");

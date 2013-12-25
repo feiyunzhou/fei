@@ -100,6 +100,12 @@ public final class SignIn extends WebPage
                                   return;
                               }
                               CRMUser crmuser = DAOImpl.getCRMUserInfoById(userPosition.getPositionId());
+                              if(crmuser.getPl1()==2){
+                                  String errmsg = getString("loginError", null, "岗位已失效!");
+                                  // Register the error message with the feedback panel
+                                  error(errmsg);
+                                  return;
+                              }
                               session.setPositionId(String.valueOf(userPosition.getPositionId()));
                               session.setLevel(crmuser.getLevel());
                               session.setRoleId(crmuser.getRole());

@@ -2563,7 +2563,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			<field>
 				<name>contactId</name>
 				<display>拜访医生</display>
-				<data-type>number</data-type>
+				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>

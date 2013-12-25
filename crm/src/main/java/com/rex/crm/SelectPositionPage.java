@@ -30,6 +30,9 @@ public class SelectPositionPage extends WebPage{
     	for(UserPosition position:list){
     		//根据岗位ID获取岗位名称
     		CRMUser user = DAOImpl.getCRMUserInfoById(position.getPositionId());
+    		if(user.getPl1()==2){
+                continue;
+            }
     		AbstractItem columnitem = new AbstractItem(columnRepeater.newChildId(), new Model());
     		ButtonFragment btnFragment = new ButtonFragment("celldatafield","buttonFragment",this,user.getName(),String.valueOf(position.getPositionId()),user.getRole());
     		columnitem.add(btnFragment);

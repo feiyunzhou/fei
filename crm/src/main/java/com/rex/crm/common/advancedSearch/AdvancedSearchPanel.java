@@ -350,7 +350,6 @@ public class AdvancedSearchPanel extends Panel {
 	                   }else if(filters[i].getOperator().getValue().equalsIgnoreCase("nn")){
 	                       combinedFilters.add(filters[i].getField().getValue() +" is not null ");
 	                   }
-	                   
 	               }
 	           }else if(field.getDataType().equals("datetime-local")||field.getName().equals("whenadded")||field.getName().equals("modify_datetime")||field.getName().equals("act_endtime")){
 	        	   if(filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
@@ -367,6 +366,18 @@ public class AdvancedSearchPanel extends Panel {
 	                   combinedFilters.add(filters[i].getField().getValue() +" is null ");
 	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("nn")){
 	                   combinedFilters.add(filters[i].getField().getValue() +" is not null ");
+	               }
+	           }else if(null!=field.getRelationTable()){
+	        	   if(filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" = (select "+field.getRelationTable()+".id from "+field.getRelationTable()+" where "+field.getRelationTable()+".name  = '"+ filters[i].getValue().getValue()+"')");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("ne")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" != (select "+field.getRelationTable()+".id from "+field.getRelationTable()+" where "+field.getRelationTable()+".name = '"+ filters[i].getValue().getValue()+"')");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("ct")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" in (select "+field.getRelationTable()+".id from "+field.getRelationTable()+" where "+field.getRelationTable()+".name  like '%"+ filters[i].getValue().getValue()+"%')");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("null")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" in (select "+field.getRelationTable()+".id from "+field.getRelationTable()+" where "+field.getRelationTable()+".name  is null ) ");
+	               }else if(filters[i].getOperator().getValue().equalsIgnoreCase("nn")){
+	                   combinedFilters.add(filters[i].getField().getValue() +" in (select "+field.getRelationTable()+".id from "+field.getRelationTable()+" where "+field.getRelationTable()+".name is not null )");
 	               }
 	           }else{
 	               if(filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
