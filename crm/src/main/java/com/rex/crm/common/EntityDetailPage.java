@@ -152,13 +152,13 @@ public class EntityDetailPage extends TemplatePage {
            
             if(entityName.equalsIgnoreCase("contact")){
             	 if(roleId == 1){
-                 	sql = r.getSql_admin();
+                 	sql = r.getSql();
                  	list = DAOImpl.queryEntityRelationList(sql, id);
                  }else if(roleId ==2){
                  	sql = r.getSql_manager();
                  	list = DAOImpl.queryEntityRelationList(sql, id,positionId);
                  }else{
-                 	sql = r.getSql();
+                 	sql = r.getSql_admin();
                  	list = DAOImpl.queryEntityRelationList(sql, id,positionId);
                  } 
             }else{

@@ -158,7 +158,7 @@
 		<from>contact</from>
 		<name>visitingOfContact</name>
 		<display>拜访</display>
-		<sql>
+		<sql-admin>
 		select * from (select * from (select activity.*\,
 			activity.activity_type as act_type\,
 			activity.status as act_status\,
@@ -176,8 +176,8 @@
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			where activity.contactId = ? and activity.crmuserId = ?) as aactivity where event_type =
 			1 order by whenadded DESC) as aActivity
-		</sql>
-		<sql-admin>
+		</sql-admin>
+		<sql>
 		select * from (select * from (select activity.*\,
 			activity.activity_type as act_type\,
 			activity.status as act_status\,
@@ -195,7 +195,7 @@
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
 			where activity.contactId = ?) as aactivity where event_type =
 			1 order by whenadded DESC) as aActivity
-		</sql-admin>
+		</sql>
 		<sql-manager>
 		select * from (select * from (select activity.*\,
 			activity.activity_type as act_type\,
