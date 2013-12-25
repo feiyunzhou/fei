@@ -11,10 +11,27 @@ public class Relation implements Serializable{
     private String from;
     private String to;
     private String sql;
-    
+    private String sql_admin;
+    private String sql_manager;
     private List<Reaction> reactions;
     
-    public String getName() {
+    public String getSql_admin() {
+		return sql_admin;
+	}
+
+	public void setSql_admin(String sql_admin) {
+		this.sql_admin = sql_admin;
+	}
+
+	public String getSql_manager() {
+		return sql_manager;
+	}
+
+	public void setSql_manager(String sql_manager) {
+		this.sql_manager = sql_manager;
+	}
+
+	public String getName() {
         return name;
     }
 

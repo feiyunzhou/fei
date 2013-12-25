@@ -52,6 +52,7 @@ public class EntityDetailPage extends TemplatePage {
     private static final long serialVersionUID = -2613412283023068638L;
     private final String user = ((SignIn2Session)getSession()).getUser();
     private final int roleId = ((SignIn2Session)getSession()).getRoleId();
+    private final String positionId = ((SignIn2Session)getSession()).getPositionId();
     private static int NUM_OF_COLUMN  = 3;
     public EntityDetailPage(){
     	String entityId = this.getRequest().getRequestParameters().getParameterValue("id").toString();
@@ -146,7 +147,23 @@ public class EntityDetailPage extends TemplatePage {
             relationRepeater.add(item);
             logger.debug(r.getSql());
             logger.debug("parms:"+id);
-            List list = DAOImpl.queryEntityRelationList(r.getSql(), id);
+            String sql = r.getSql();
+            List list = null;
+           
+            if(entityName.equalsIgnoreCase("contact")){
+            	 if(roleId == 1){
+                 	sql = r.getSql_admin();
+                 	list = DAOImpl.queryEntityRelationList(sql, id);
+                 }else if(roleId ==2){
+                 	sql = r.getSql_manager();
+                 	list = DAOImpl.queryEntityRelationList(sql, id,positionId);
+                 }else{
+                 	sql = r.getSql();
+                 	list = DAOImpl.queryEntityRelationList(sql, id,positionId);
+                 } 
+            }else{
+            	 list = DAOImpl.queryEntityRelationList(r.getSql(), id);
+            }
             item.add(new RelationDataPanel("relationPanel",r,entityName,list,String.valueOf(lid),params));
          }
          if(entityName.equalsIgnoreCase("account")){

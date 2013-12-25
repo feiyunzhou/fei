@@ -132,8 +132,8 @@ public class Configuration {
                 relation.setFrom(sub.getString("from"));
                 relation.setTo(sub.getString("to"));
                 relation.setSql(sub.getString("sql"));
-                
-                
+                relation.setSql_admin(sub.getString("sql-admin"));
+                relation.setSql_manager(sub.getString("sql-manager"));                
                 List<Reaction> reactions = Lists.newArrayList();
                 relation.setReactions(reactions);
                 List<HierarchicalConfiguration> hp2 = sub.configurationsAt("reactions.reaction");
