@@ -104,7 +104,7 @@ public class CRUDPanel extends Panel {
             }
             //判断如果entityName为crmuser,则添加重置密码按钮
             	if (userPerms.contains(Permissions.RESETPWD)) {
-            		if(entityName.equals("userInfo")){
+            		if(entityName.equals("userinfo")){
 	                	Fragment editfrag = new Fragment("resetPwdCon","resetPwdFragment",this);
 	                	editfrag.add(new Link("resetPwd_data_btn") {
 	                        @Override
