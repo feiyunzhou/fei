@@ -3493,7 +3493,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			</field>
 			<field>
 				<name>deliverable</name>
-				<display>利益销售</display>
+				<display>信息传递</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
