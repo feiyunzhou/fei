@@ -23,10 +23,15 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.rex.crm.beans.Contact;
 import com.rex.crm.common.EntityDetailPage;
+import com.rex.crm.common.Field;
 import com.rex.crm.common.NewDataFormPanel;
 import com.rex.crm.db.DAOImpl;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PageableListView;
 
 /**
  *
@@ -155,19 +160,46 @@ public class SearchCRMUserPage extends WebPage {
         }
         users_sbumission_form.add(group);
 
-        RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-        group.add(dataRowRepeater);
+        
+        
+        
+     //   RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
+     //   group.add(dataRowRepeater);
+        
+        
+        
+        
+         
+            
+          //初始化的时候查不出数据
+          if (list == null) {
+                list=DAOImpl.queryEntityRelationList("Select * from account where 1=0");
+            }
+          
+          final Map<String, Map> tableData = Maps.newHashMap();
+          List<String> ids = Lists.newArrayList();
+            for (Map map : (List<Map>) list) {
+               String key = String.valueOf(map.get("id"));
+               ids.add(key);
+               tableData.put(key, map);
+            }
 
-        if (list != null) {
-            for (Map map : list) {
+         final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 20) {
+            
+            @Override          
+            protected void populateItem(ListItem<String> item) {
+                String key = item.getDefaultModelObjectAsString();
+                Map map = tableData.get(key);
+
+            
 
                 int positionId = ((Number) map.get("id")).intValue();
                 String name = (String) map.get("name");
                 String cellPhone = (String) map.get("cellPhone");
                 String division = (String) map.get("division");
                 String email = (String) map.get("email");
-                AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
-                dataRowRepeater.add(item);
+               // AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
+               // dataRowRepeater.add(item);
                 Check chk = new Check("checkbox", new Model(String.valueOf(positionId)));
                 item.add(chk);
                 WebMarkupContainer container_label = new WebMarkupContainer("checkboxs_label");
@@ -178,9 +210,19 @@ public class SearchCRMUserPage extends WebPage {
                 item.add(new Label("division", division));
                 item.add(new Label("email", email));
 
-
-
             }
-        }
+         };
+        group.add(listview);
+        AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
+        nav.setOutputMarkupId(true);
+        
+        group.setOutputMarkupId(true);
+        group.setRenderBodyOnly(false);
+        
+        group.add(nav);
+        
+        group.setVersioned(false);
+        
+         
     }
 }
