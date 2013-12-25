@@ -43,7 +43,7 @@
 			left join account_administrativ_level_pl on
 			account.administrativ_level =
 			account_administrativ_level_pl.id
-			where account.id != -1 and account.status = 1 ORDER BY CONVERT( name USING gbk )) as aAccount
+			where account.id != -1 ORDER BY CONVERT( name USING gbk )) as aAccount
 			
 		</sql-admin>
 		
@@ -74,7 +74,7 @@
 		</sql-manager>
 
 		<sql-ent>SELECT * from (select account.* from account where
-			account.id=? ORDER BY CONVERT( name USING gbk )      ) as aAccount
+			account.id=? and account.status = 1 ORDER BY CONVERT( name USING gbk )      ) as aAccount
 		</sql-ent>
 		<filterField>administrativ_level</filterField>
 		<fields>
@@ -732,7 +732,7 @@
 			productline.id 
 			left join contact_department_pl on contact.department = contact_department_pl.id
 			left join contact_duty_pl on contact.duty = contact_duty_pl.id
-			where contact.id != -1 and contact.status = 1 )  as aContact
+			where contact.id != -1  )  as aContact
 		</sql-admin>
 
 		<sql-ent>select * from (select contact.*\,account.id as accountName

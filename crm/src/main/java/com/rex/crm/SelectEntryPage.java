@@ -83,6 +83,7 @@ public class SelectEntryPage extends WebPage {
                         maplist = DAOImpl.queryEntityRelationList(sql, posId, posId);
                         break;
                     case 1:
+                        sql  = "select * from ("+ sql + ") as bact where status=1 ";
                         maplist = DAOImpl.queryEntityRelationList(sql);
                     }
                     

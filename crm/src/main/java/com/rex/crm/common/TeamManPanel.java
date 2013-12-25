@@ -62,12 +62,20 @@ public class TeamManPanel extends Panel {
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         final String userId = ((SignIn2Session)getSession()).getUserId();
         final String user = ((SignIn2Session)getSession()).getUser();
+        final String positionId = ((SignIn2Session)getSession()).getPositionId();
         //team sql
         String teamSql = "";
         if(en.equalsIgnoreCase("account")){
           if(type == 0){
             //for the 岗位列表
-            teamSql = "select * from (select  crmuser . *, accountcrmuser.id as rid,userinfo.name as userInfoName , role.name as permission from crmuser  left join accountcrmuser  ON crmuser.id = accountcrmuser.crmuserId left join user_position on user_position.positionId = accountcrmuser.crmuserId inner join userinfo on userinfo.id = user_position.userId left join role on crmuser.role = role.id where accountcrmuser.accountId = ?) as atable";
+        	  if(roleId==1){
+        		  teamSql = "select * from (select  crmuser . *, accountcrmuser.id as rid,userinfo.name as userInfoName , role.name as permission from crmuser  left join accountcrmuser  ON crmuser.id = accountcrmuser.crmuserId left join user_position on user_position.positionId = accountcrmuser.crmuserId inner join userinfo on userinfo.id = user_position.userId left join role on crmuser.role = role.id where accountcrmuser.accountId = ?) as atable";
+              }else if(roleId==2){
+            	  teamSql = "select * from (select  crmuser . *, accountcrmuser.id as rid,userinfo.name as userInfoName , role.name as permission from crmuser  left join accountcrmuser  ON crmuser.id = accountcrmuser.crmuserId left join user_position on user_position.positionId = accountcrmuser.crmuserId inner join userinfo on userinfo.id = user_position.userId left join role on crmuser.role = role.id where accountcrmuser.accountId = ? and crmuser.reportto = "+positionId+") as atable";
+              }else{
+            	  teamSql = "select * from (select  crmuser . *, accountcrmuser.id as rid,userinfo.name as userInfoName , role.name as permission from crmuser  left join accountcrmuser  ON crmuser.id = accountcrmuser.crmuserId left join user_position on user_position.positionId = accountcrmuser.crmuserId inner join userinfo on userinfo.id = user_position.userId left join role on crmuser.role = role.id where accountcrmuser.accountId = ? and crmuser.id ="+positionId+") as atable";
+              }
+           
         }
 //          else if (type == 1){
 //          //for the 用户列表
@@ -76,7 +84,7 @@ public class TeamManPanel extends Panel {
         }else if(en.equalsIgnoreCase("contact")){
             if(type == 0){
                 //for the 岗位列表
-                teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a left join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
+                	teamSql = "select * from (select  a . *, b.id as rid,c.name as userInfoName from crmuser as a left join contactcrmuser  as b ON a.id = b.crmuserId inner join userinfo as c on c.positionId = b.crmuserId where b.contactId = ?) as atable";
             }
 //            else if (type == 1){
 //              //for the 用户列表
