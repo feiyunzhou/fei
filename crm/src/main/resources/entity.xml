@@ -1045,6 +1045,7 @@
 				<priority>2</priority><isShow>true</isShow>
 				<picklist>contact_status_pl</picklist>
 				<fieldGroup>基本信息</fieldGroup>
+				<import_field_name>状态</import_field_name>
 			</field>
 			<field>
 				<name>market_classification</name>
