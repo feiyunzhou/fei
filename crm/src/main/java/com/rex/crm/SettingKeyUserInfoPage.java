@@ -1,6 +1,7 @@
 package com.rex.crm;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -16,6 +17,7 @@ import org.apache.wicket.model.Model;
 
 import com.google.common.collect.Maps;
 import com.rex.crm.beans.UserInfo;
+import com.rex.crm.beans.UserPosition;
 import com.rex.crm.db.DAOImpl;
 
 public class SettingKeyUserInfoPage extends WebPage{
@@ -34,7 +36,12 @@ public class SettingKeyUserInfoPage extends WebPage{
                 String password = models.get("newPassword").getObject() == null ? null : String.valueOf(models.get("newPassword").getObject());
                 //修改用户关键信息，并增加登录次数
                 if(DAOImpl.updateKeyUserInfoMessage(phone, email, password,userId)){
-                	setResponsePage(getApplication().getHomePage());
+                	List<UserPosition> positions = DAOImpl.getPositionsByUserId(userId);
+                	if(positions.size()>1){
+                		setResponsePage(new SelectPositionPage(positions));
+                	}else {
+                		setResponsePage(getApplication().getHomePage());
+                	}
                 	DAOImpl.addSignInNumber(userId,numOfSign+1);
                 }
 			}

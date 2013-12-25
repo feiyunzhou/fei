@@ -2053,6 +2053,12 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	<name>user_position</name>
 	<display>岗位关系</display>
 	<externalField>externalId</externalField>
+	<sql-admin>
+  select * from ( select userinfo.name as name\,user_position.*   
+    from user_position 
+	inner join userinfo on userinfo.id = user_position.userId 
+	inner join crmuser on crmuser.id = user_position.positionId) as a
+	</sql-admin>
 	<sql>
   select * from ( select userinfo.name as name\,user_position.*   
     from user_position 
