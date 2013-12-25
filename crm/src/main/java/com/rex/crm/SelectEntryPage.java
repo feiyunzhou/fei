@@ -285,11 +285,7 @@ public class SelectEntryPage extends WebPage {
             @Override          
             protected void populateItem(ListItem<String> item) {
                 String key = item.getDefaultModelObjectAsString();
-               
                 Map map = tableData.get(key);
-    
-                 //在做了分页以后 columnRepeater 没有用到
-                RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 int uid = ((Number) map.get("id")).intValue();
                 String name = (String) map.get("name");
            

@@ -1,5 +1,6 @@
 package com.rex.crm;
 
+import com.google.common.collect.Lists;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,6 +26,9 @@ import com.rex.crm.common.Entity;
 import com.rex.crm.common.Field;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.util.Configuration;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PageableListView;
 
 public class SelectActivityContactPage extends WebPage {
 	private static final Logger logger = Logger.getLogger(SelectActivityContactPage.class);
@@ -60,17 +64,28 @@ public class SelectActivityContactPage extends WebPage {
 		};
 		form.add(new TextField<String>("search_input", new PropertyModel<String>(this, "search_target")));
         add(form);
-        RepeatingView dataRowRepeater = new RepeatingView("dataRowRepeater");
-        add(dataRowRepeater);
+        
 
-        if (list != null) {
-            List<Field> searchableFields = entity.getSearchableFields();
-            for (Map map : list) {
+        final List<Field> searchableFields = entity.getSearchableFields();
+        
+          final Map<String, Map> tableData = Maps.newHashMap();
+          List<String> ids = Lists.newArrayList();
+            for (Map map : (List<Map>) list) {
+               String key = String.valueOf(map.get("id"));
+               ids.add(key);
+               tableData.put(key, map);
+            }
+            
+        
+       final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 20) {
+            
+            @Override          
+            protected void populateItem(ListItem<String> item) {
+                String key = item.getDefaultModelObjectAsString();          
+                Map map = tableData.get(key);
                 final int uid = ((Number) map.get("id")).intValue();
                 String name = (String) map.get("name");
-                AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
-                dataRowRepeater.add(item);
-
+                
                 item.add(new AttributeAppender("data-id",new Model(uid)));
                 item.add(new AttributeAppender("data-name",new Model(name)));
                 item.add(new AttributeAppender("data-ename",relationTableName));
@@ -122,7 +137,15 @@ public class SelectActivityContactPage extends WebPage {
                
                 
             }
-        }
+        };
+        
+        add(listview);
+        AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
+        nav.setOutputMarkupId(true); 
+
+        add(nav);
+        setVersioned(false);
+
 	}
     
     public static List<Map> selectConatct(final String tragetEntity,int roleId,String posId,Entity entity,Map<String, Entity> entities ){
@@ -139,7 +162,6 @@ public class SelectActivityContactPage extends WebPage {
                   }
             case 3:{
                      maplist = DAOImpl.queryEntityRelationList(sql, posId);
-                     
                      Entity activityEnt = entities.get("activity");
                      String actSQL = activityEnt.getSql();
                      actSQL  = "select contactName,count(contactName) as ct from ("+ actSQL + ") as bact where status=2 group by contactName";
