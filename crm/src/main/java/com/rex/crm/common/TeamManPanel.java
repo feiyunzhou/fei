@@ -323,7 +323,7 @@ public class TeamManPanel extends Panel {
             tableData.put(key, map);
         }
         fieldsd=fields;
-        final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 15) {
+        final PageableListView<String> listview = new PageableListView<String>("dataRowRepeater", ids, 10) {
             
           
             @Override          
@@ -332,7 +332,6 @@ public class TeamManPanel extends Panel {
                 RepeatingView columnRepeater = new RepeatingView("columnRepeater");
                 Map map = tableData.get(key);
                 item.add(columnRepeater);
-                
                 final String realId =  String.valueOf(map.get("id"));
                 final String rowId =  String.valueOf(map.get("rid")); 
             for (Field f : fieldsd) {
@@ -354,6 +353,7 @@ public class TeamManPanel extends Panel {
                       value = "无";
                     }
                     columnitem.add(new AttributeAppender("class", new Model("table-first-link"), " "));
+                    // columnitem.add(new Label("celldata", value));
                     columnitem.add(new DetailLinkFragment("celldata","detailFragment",this.getParent().getParent().getParent(),value));
                 } else {
                     if (f.getPicklist() != null) {
@@ -405,13 +405,20 @@ public class TeamManPanel extends Panel {
          
             
         }
+            
         };
-         group.add(listview);
+        
+       
+        group.add(listview);
         //PagingNavigator nav = new PagingNavigator("navigator", listview);
         AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
-        nav.setOutputMarkupId(true); 
-
+        nav.setOutputMarkupId(true);
+        
+        group.setOutputMarkupId(true);
+        group.setRenderBodyOnly(false);
+        
         group.add(nav);
+        
         group.setVersioned(false);
         
         
