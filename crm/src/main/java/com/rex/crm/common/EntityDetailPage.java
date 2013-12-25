@@ -150,7 +150,7 @@ public class EntityDetailPage extends TemplatePage {
             String sql = r.getSql();
             List list = null;
            
-            if(entityName.equalsIgnoreCase("contact")){
+            if(entityName.equalsIgnoreCase("contact")&&r.getTo().equalsIgnoreCase("activity")){
             	 if(roleId == 1){
                  	sql = r.getSql();
                  	list = DAOImpl.queryEntityRelationList(sql, id);
