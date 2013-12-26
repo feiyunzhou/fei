@@ -74,7 +74,7 @@
 		</sql-manager>
 
 		<sql-ent>SELECT * from (select account.* from account where
-			account.id=? and account.status = 1 ORDER BY CONVERT( name USING gbk )      ) as aAccount
+			account.id=?  ORDER BY CONVERT( name USING gbk )      ) as aAccount
 		</sql-ent>
 		<filterField>administrativ_level</filterField>
 		<fields>
