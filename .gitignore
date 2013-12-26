@@ -8,3 +8,5 @@
 *.jar
 *.war
 *.ear
+/crm/src/main/webapp/Charts/exporting-server/java/highcharts-export/highcharts-export-convert/target/
+/crm/src/main/webapp/Charts/exporting-server/java/highcharts-export/highcharts-export-web/target/

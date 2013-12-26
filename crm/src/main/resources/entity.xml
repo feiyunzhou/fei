@@ -5667,21 +5667,23 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>String</field-type>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+                                <isShow>true</isShow>
 			</field>
 			<field>
 				<name>title</name>
 				<display>活动标题</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
-				<isDetailLink>false</isDetailLink>
+				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>String</field-type>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+                                <isShow>true</isShow>
 			</field>
 			<field>
-                <name>time</name>
+                                <name>time</name>
 				<display>时间</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
@@ -5689,7 +5691,211 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>String</field-type>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>contact</name>
+				<display>医生</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>purpose</name>
+				<display>目标</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                         <field>
+				<name>addtime</name>
+				<display>添加时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>product</name>
+				<display>主推产品</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+			
+		</fields>
+	</entity>
+        <entity>
+		<name>todolistcoach</name>
+		<display>待进行辅导</display>
+		<sql>SELECT * FROM crmdb.activity_alert</sql>
+		<sql-admin>SELECT * FROM crmdb.activity_alert</sql-admin>
+		<sql-ent>SELECT * FROM crmdb.activity_alert</sql-ent>
+		<filterField></filterField>
+		<fields>
+             <field>
+				<name>id</name>
+				<display>活动Id</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>true</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+			<field>
+				<name>title</name>
+				<display>活动标题</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+			<field>
+                                <name>time</name>
+				<display>时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>starttime</name>
+				<display>开始时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>endtime</name>
+				<display>结束时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>contact</name>
+				<display>医生</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>purpose</name>
+				<display>目标</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                         <field>
+				<name>addtime</name>
+				<display>添加时间</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                        <field>
+				<name>product</name>
+				<display>主推产品</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+			</field>
+                         <field>
+				<name>coachtype</name>
+				<display>辅导类型</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>false</isEditable>
+				<field-type>String</field-type>
+				<priority>1</priority>
+                                <isShow>true</isShow>
 			</field>
 			
 		</fields>

@@ -121,6 +121,7 @@ public class PageableTablePanel extends Panel {
 
                     });
                     if (f.isDetailLink()) {
+                        
                     	String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));	
                         if(value.equals("null")||value.isEmpty()){
                           value = "无";
@@ -296,7 +297,11 @@ public class PageableTablePanel extends Panel {
                     	if(coaching.getActivity_coachType()==2){
                     		entityName = "willcoaching"; 
                     	}
-                    }
+                    }else if(entityName.equals("todolist") ){
+                                entityName = "activity";  
+                    }else if(entityName.equals("todolistcoach") ){
+                                entityName = "coaching"; 
+                    } 
                     setResponsePage(new EntityDetailPage(entityName, p.getId()));
                 }
             }.add(new Label("caption", new Model<String>(caption))));

@@ -162,45 +162,7 @@ public class HomePage extends TemplatePage {
         }
         
         
-        /**
-         * 目标医生拜访频率统计
-         */
-        String cap = "目标医生拜访频率统计";
-        List<Map> visitingFreq = VisitingReporter.generateVisitingFrequencyReportingByUserId(posId);
-        Entity reportEntity = Configuration.getEntityByName("contactVisitingFrequency");
-        ReportingTablePanel visiting_report_panel = new ReportingTablePanel("visiting_frequency_report_panel", cap, reportEntity, visitingFreq);
-        add(visiting_report_panel);
-        /**
-        * 目标医生拜访覆盖率统计
-        */
-        cap = "目标医生拜访覆盖率统计";
-        List<Map> visitingCoverList = VisitingReporter.generateVisitingCoverReportingByUserId(posId);
-        Entity report_Entity = Configuration.getEntityByName("contactVisitingCoverRate");
-        ReportingTablePanel visiting_reportPanel = new ReportingTablePanel("visiting_cover_report_panel", cap, report_Entity, visitingCoverList);
-        add(visiting_reportPanel);
-
-        cap = "区域内工作天数";
-        List<Map> workingdays = VisitingReporter.generateWorkingDayReportingByUserId(posId);
-        Entity reportEntity2 = Configuration.getEntityByName("workingday");
-        ReportingTablePanel report_panel = new ReportingTablePanel("working_day_report_panel", cap, reportEntity2, workingdays);
-        report_panel.add(new AttributeAppender("style",new Model("display:block;"),";"));
-        add(report_panel);
-       
-
-        cap = "日均拜访量";
-        List<Map> visitingPerDay = VisitingReporter.generateVisitingPerDay(visitingFreq,workingdays);
-
-        if (visitingPerDay != null && visitingPerDay.size() > 0) {
-            Entity reportentity = Configuration.getEntityByName("visitingPerDayReport");
-            ReportingTablePanel reportPanel = new ReportingTablePanel("num_of_visiting_per_day_report_panel", cap, reportentity, visitingPerDay);
-            add(reportPanel);
-        } else {
-            add(new WebMarkupContainer("num_of_visiting_per_day_report_panel").setVisible(false));
-        }
-        
-        
-        // add(new Label("activity_name","活动名称"));
-        // add(new Label("day_name","昨天"));
+     
          
      Map<String, Entity> entities = Configuration.getEntityTable();
      final Entity entity = entities.get("alert");
@@ -346,93 +308,28 @@ public class HomePage extends TemplatePage {
     	tdata = DAOImpl.queryEntityRelationList(sql);
     }
     add(new PageableTablePanel("datalist", entity, tdata, null));
+      System.out.println("ds:"+((SignIn2Session)getSession()).getRoleId());
     
-     if(((SignIn2Session)getSession()).getRoleId()!=1){   
+     if(((SignIn2Session)getSession()).getRoleId()==3){   
          final Entity entityAct = entities.get("todolist"); 
          String userName = ((SignIn2Session) getSession()).getUser();
-         String sql2="SELECT * FROM crmdb.activity_alert where name='"+userName+"' limit 15";
+         String sql2="SELECT * FROM crmdb.activity_alert where name='"+userName+"'";
          List tdataAct = DAOImpl.queryEntityRelationList(sql2);
+         //Entity Fordetail = entities.get("activity"); 
+         add(new PageableTablePanel("datalistAct", entityAct, tdataAct, null));
+     }else if(((SignIn2Session)getSession()).getRoleId()==2){   
+         final Entity entityAct = entities.get("todolistcoach"); 
+         String userName = ((SignIn2Session) getSession()).getUser();
+         String sql2="SELECT * FROM crmdb.activity_alert where name='"+userName+"'";
+         List tdataAct = DAOImpl.queryEntityRelationList(sql2);
+         //Entity Fordetail = entities.get("activity"); 
          add(new PageableTablePanel("datalistAct", entityAct, tdataAct, null));
      }
      else{
           WebMarkupContainer container_label = new WebMarkupContainer("datalistAct");
           container_label.setVisible(false);
           add( container_label);
-     }
-        IModel<Integer> textModel1 = new Model<>(0);
-        try
-        {
-            textModel1 = new Model<>(Integer.parseInt(visitingFreq.get(0).get("Chart1").toString()));
-        }
-        catch (Exception e)
-        {
-            System.out.println("医生拜访达成率无数据");
-        }
-        finally
-        {
-            add(new TextField("data001").add(new AttributeModifier("value", textModel1)));
-        }
-        
-        
-//        IModel<Integer> textModel2a = new Model<>(0);
-//        try
-//        {
-//            textModel2a = new Model<>(Integer.parseInt(visitingCoverList.get(0).get("Chart2a").toString()));
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println("无数据");
-//        }
-//        finally
-//        {
-//            add(new TextField("data002a").add(new AttributeModifier("value", textModel2a)));
-//        }
-        
-        
-        IModel<Integer> textModel2b = new Model<>(0);
-        try
-        {
-            textModel2b = new Model<>(Integer.parseInt(visitingCoverList.get(0).get("Chart2b").toString()));
-        }
-        catch (Exception e)
-        {
-            System.out.println("拜访覆盖率达成率无数据");
-        }
-        finally
-        {
-            add(new TextField("data002b").add(new AttributeModifier("value", textModel2b)));
-        }
-
-        
-        IModel<Integer> textModel3 = new Model<>(0);
-        try
-        {
-             textModel3 = new Model<>(Integer.parseInt(workingdays.get(0).get("Chart3").toString()));
-        }
-        catch (Exception e)
-        {
-            System.out.println("工作天数达标率无数据");
-        }
-        finally
-        {
-            add(new TextField("data003").add(new AttributeModifier("value", textModel3)));
-        }
-        
-        
-        IModel<Integer> textModel4 = new Model<>(0);
-        try
-        {
-             textModel4 = new Model<>(Integer.parseInt(visitingPerDay.get(0).get("Chart4").toString()));
-        }
-        catch (Exception e)
-        {
-            System.out.println("拜访量达标率无数据");
-        }
-        finally
-        {
-            add(new TextField("data004").add(new AttributeModifier("value", textModel4)));
-        }
-        
+     } 
 
     }
 }
