@@ -80,7 +80,7 @@ public class ReportPage extends AdminTemplatePage
           likequery = likequery + " OR " + sf.getName() + joint;
         }
         
-        sql = sql + " where name like '%" + search_target + "%' " + likequery;
+        sql = sql + " where userName like '%" + search_target + "%' " + likequery;
         List datalist = null;
         switch (roleId)
         {
