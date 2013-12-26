@@ -118,7 +118,11 @@ public class MergePage extends AdminTemplatePage {
 				}
                 DAOImpl.updateRecord(entityId_B, entityName, names, values);
                 DAOImpl.updateRecordStatus(entityId_A, entityName);
-                DAOImpl.updateActivityCountactById(entityId_B,entityId_A);
+               if(entityName.equalsIgnoreCase("contact")){
+            	   DAOImpl.updateActivityCountactById(entityId_B,entityId_A);
+               } else{
+            	   DAOImpl.updateAccountCountactById(entityId_B,entityId_A);
+               }
                 setResponsePage(new EntityDetailPage(entityName, entityId_B));
             }
             

@@ -618,7 +618,22 @@ public static  void recordValueChanges(final Map data, Entity schema,
 					}
 		    		val = DAOImpl.queryPickListByIdCached(fld.getPicklist(), val);
 		    		valuebefore =  DAOImpl.queryPickListByIdCached(fld.getPicklist(), valuebefore);
-		    	}else{
+		    	}else if(fld.getRelationTable()!=null){
+		    		val = val.substring(1, val.length()-1);
+		    		Entity et = DAOImpl.getEntityById(fld.getRelationTable(), val);
+                    if (et != null && et.getName() != null) {
+                    	val =  et.getName() ;
+                    }
+                    Entity etbefore = DAOImpl.getEntityById(fld.getRelationTable(), valuebefore);
+                    if (etbefore != null && etbefore.getName() != null) {
+                    	valuebefore =  etbefore.getName();
+                    }
+					if(val!=null){
+							if(!val.equalsIgnoreCase(valuebefore)) isChanged=true;  
+						}else{
+							if(valuebefore != null) isChanged = true;
+						}
+			    }else{
 					    if(val!=null){
 					    	logger.debug("val is:"+val);
 					    	if(!val.equalsIgnoreCase("0")){

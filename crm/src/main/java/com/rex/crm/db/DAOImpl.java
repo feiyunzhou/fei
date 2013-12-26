@@ -434,7 +434,7 @@ public class DAOImpl
             QueryRunner run = new QueryRunner();
             ResultSetHandler<Entity> h = new BeanHandler<Entity>(Entity.class);
 
-            entity = run.query(conn, "SELECT * FROM "+tableName + "where id=?", h, id);
+            entity = run.query(conn, "SELECT * FROM "+tableName + " where id=?", h, id);
 
         } catch (SQLException e) {
             logger.error("failed to get all entity", e);
@@ -2778,6 +2778,28 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
         return false;
     }
     
+  //update user reportto from someone to someone
+    public static boolean updateCrmUserReportById(String from, String to){
+        String  sql=" UPDATE crmuser SET reportto=? where id =?";
+        Connection conn = null;
+        
+        int updates = 0;
+        try{
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            updates += run.update(conn, sql, to, from);
+            logger.debug("updateCrmUserReport success!");
+        } catch (Exception e){
+            logger.error("failed to updateCrmUserReport",e);
+        }finally{
+            DBHelper.closeConnection(conn);
+        }
+        if(updates>0){
+            return true;
+        }
+        return false;
+    }
+    
     
     public static UserInfo getUserById(int entityId){
       System.out.println("根据crmuserID获取用户" + entityId);
@@ -3054,6 +3076,26 @@ public static List<Product> getProducWithoutProductLine(int productLines) {
   //修改活动拜访医生
     public static boolean updateActivityCountactById(String entityId_B,String entityId_A){
     	String sql = "UPDATE activity SET contactId="+entityId_B+" where contactId=?";
+        Connection conn = null;
+        int inserts = 0;
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            inserts += run.update(conn, sql,entityId_A);
+        } catch (Exception e) {
+            logger.error("failed to activity", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        if(inserts>0){
+    		return true;
+    	}
+    	return false;
+    }
+    
+  //修改活动拜访医生
+    public static boolean updateAccountCountactById(String entityId_B,String entityId_A){
+    	String sql = "UPDATE contact SET accountId="+entityId_B+" where accountId=?";
         Connection conn = null;
         int inserts = 0;
         try {

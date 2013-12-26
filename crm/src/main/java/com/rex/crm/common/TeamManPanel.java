@@ -210,7 +210,7 @@ public class TeamManPanel extends Panel {
              try{
             	 int positionId = 0;
             	 int otherId = 0;
-            	 String fromtable = null;
+            	 String fromtable = teamtable;
             	  if(teamtable.equalsIgnoreCase("accountcrmuser")){
             		  AccountCRMUserRelation acr =  DAOImpl.getAccountsByAccountCrmuserId(Integer.parseInt(rid));
             		  positionId =  acr.getCrmuserId();
@@ -222,8 +222,14 @@ public class TeamManPanel extends Panel {
             		  otherId = up.getUserId();
             		  fromtable = "userinfo";
             	  }
-            	   DAOImpl.insertRealtionHestory(fromtable,user,positionId,otherId);
-                   DAOImpl.removeEntityFromTeam(teamtable,rid);
+                  if((type==3)&&fromtable.equalsIgnoreCase("crmuser")){
+                	  DAOImpl.updateCrmUserReportById(rid, "-1");
+                	  Entity entity = DAOImpl.getEntityById(fromtable, entityId);
+                	  DAOImpl.insertAudit(entityName, "上级岗位", entity.getName(), "admin", rid, user);
+                  }else{
+                	  DAOImpl.removeEntityFromTeam(teamtable,rid);
+                	  DAOImpl.insertRealtionHestory(fromtable,user,positionId,otherId);
+                  }
                 
              }catch(Exception e){
                  
