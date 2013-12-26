@@ -240,7 +240,9 @@ public class TeamManPanel extends Panel {
                param.add("positionId", entityId);
   			 setResponsePage(AdminTreePage.class,param );
            }else{
-        	   setResponsePage(new EntityDetailPage(currentEntityName,etId));
+        	   if(selectedRowIds.size()>0){
+        		   setResponsePage(new EntityDetailPage(currentEntityName,etId));
+        	   }
            }
            
       
