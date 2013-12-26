@@ -2295,10 +2295,16 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			contact.grade as contactgrade\,
+			activity_daypart_pl.val as activity_daypart_val\,
+			activity_activity_types_pl.val as activity_type_val\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_daypart_pl on activity.activity_daypart = 
+			activity_daypart_pl.id
+			left join activity_activity_types_pl on activity.activity_type = 
+			activity_activity_types_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
@@ -2315,10 +2321,16 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			contact.grade as contactgrade\,
+			activity_daypart_pl.val as activity_daypart_val\,
+			activity_activity_types_pl.val as activity_type_val\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_daypart_pl on activity.activity_daypart = 
+			activity_daypart_pl.id
+			left join activity_activity_types_pl on activity.activity_type = 
+			activity_activity_types_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
@@ -2338,10 +2350,16 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity_event_type_pl.val as event_type_val\,
 			account.name as accountName_val\,
 			contact.grade as contactgrade\,
+			activity_daypart_pl.val as activity_daypart_val\,
+			activity_activity_types_pl.val as activity_type_val\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_daypart_pl on activity.activity_daypart = 
+			activity_daypart_pl.id
+			left join activity_activity_types_pl on activity.activity_type = 
+			activity_activity_types_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id where
 			activity.event_type = 1 order by whenadded DESC) as aActivity
@@ -2354,12 +2372,18 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_daypart_pl.val as activity_daypart_val\,
+			activity_activity_types_pl.val as activity_type_val\,
 			account.name as accountName_val\,
 			contact.grade as contactgrade\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_daypart_pl on activity.activity_daypart = 
+			activity_daypart_pl.id
+			left join activity_activity_types_pl on activity.activity_type = 
+			activity_activity_types_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
@@ -2374,12 +2398,18 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_activity_types_pl.val as activity_type_val\,
 			account.name as accountName_val\,
 			contact.grade as contactgrade\,
+			activity_daypart_pl.val as activity_daypart_val\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_daypart_pl on activity.activity_daypart = 
+			activity_daypart_pl.id
+			left join activity_activity_types_pl on activity.activity_type = 
+			activity_activity_types_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
@@ -2396,21 +2426,29 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_activity_types_pl.val as activity_type_val\,
 			account.name as accountName_val\,
 			contact.grade as contactgrade\,
+			activity_daypart_pl.val as activity_daypart_val\,
 			contact.name as contactname_val
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_daypart_pl on activity.activity_daypart = 
+			activity_daypart_pl.id
+			left join activity_activity_types_pl on activity.activity_type = 
+			activity_activity_types_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id order by whenadded
 			DESC) as aActivity
 		</sql-admin-calendar>
 		<sql-ent>select * from (select activity.*\,activity.activity_type as
 			act_type\,activity.activity_coachType as coachType\,activity.status as act_status\, activity.contactId as
-			contactName\, contact.accountId as accountName\, contact.grade as contactgrade\,contact.name as cn
+			contactName\, contact.accountId as accountName\,activity_daypart_pl.val as activity_daypart_val\,activity_activity_types_pl.val as activity_type_val\, contact.grade as contactgrade\,contact.name as cn
 			from activity left join activitycrmuser on
-			activitycrmuser.activityId=activity.id LEFT JOIN contact on
+			activitycrmuser.activityId=activity.id left join activity_activity_types_pl on activity.activity_type = 
+			activity_activity_types_pl.id left join activity_daypart_pl on activity.activity_daypart = 
+			activity_daypart_pl.id LEFT JOIN contact on
 			contact.id = activity.contactId where activity.id=?)
 			as aActivity
 		</sql-ent>
@@ -2527,7 +2565,20 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isRequired>true</isRequired>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
-
+			<field>
+				<name>activity_daypart_val</name>
+				<display>活动开始时段</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<field-type>picklist</field-type>
+				<priority>2</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 			<field>
 				<name>activity_type</name>
 				<display>拜访类型</display>
@@ -2537,12 +2588,28 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<isRequired>true</isRequired>
 				<field-type>String</field-type>
 				<default-value-type>val</default-value-type>
 				<default-value>1</default-value>
 				<childNode>visiting_purpose</childNode>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
+			<field>
+				<name>activity_type_val</name>
+				<display>拜访类型</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<field-type>picklist</field-type>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
@@ -2625,6 +2692,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<data-type>radio</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isSearchable>true</isSearchable>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
@@ -2921,10 +2989,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
 			activity.activity_coachType as coachType\,
-			activity.status as act_status\,
+			activity_status_pl.val as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_coachType_pl.val as coachType_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
 			auserinfo.id as coachUserInfoName\,
@@ -2932,6 +3001,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_coachType_pl on activity.activity_coachType = 
+			activity_coachType_pl.id
+			left join activity_status_pl  on activity.status = 
+			activity_status_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join crmuser on crmuser.id = activity.coacheeId
@@ -2949,10 +3022,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
 			activity.activity_coachType as coachType\,
-			activity.status as act_status\,
+			activity_status_pl.val as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_coachType_pl.val as coachType_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
 			auserinfo.id as coachUserInfoName\,
@@ -2960,6 +3034,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_coachType_pl on activity.activity_coachType = 
+			activity_coachType_pl.id
+			left join activity_status_pl  on activity.status = 
+			activity_status_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
@@ -2981,10 +3059,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
 			activity.activity_coachType as coachType\,
-			activity.status as act_status\,
+			activity_status_pl.val as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_coachType_pl.val as coachType_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
 			auserinfo.id as coachUserInfoName\,
@@ -2992,6 +3071,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_coachType_pl on activity.activity_coachType = 
+			activity_coachType_pl.id
+			left join activity_status_pl  on activity.status = 
+			activity_status_pl.id
 			left join contact on activity.contactId = contact.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
 			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
@@ -3005,12 +3088,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<sql-ent>select * from (select activity.crmuserId as crmuserName\,
 			activity.coacheeId as coacheeName\,
 			activity.*\,activity.activity_type as
-			act_type\,activity.activity_coachType as coachType\,activity.status as
-			act_status\, activity.contactId as
+			act_type\,activity.activity_coachType as coachType\,activity_status_pl.val as act_status\, activity.contactId as
 			contactName\, contact.accountId as
-			accountName\, userinfo.id as coacheeUserinfoName\,auserinfo.id as coachUserInfoName\,contact.name as cn
+			accountName\,activity_coachType_pl.val as coachType_val\, userinfo.id as coacheeUserinfoName\,auserinfo.id as coachUserInfoName\,contact.name as cn
 			from activity left join activitycrmuser on
 			activitycrmuser.activityId=activity.id 
+			left join activity_coachType_pl on activity.activity_coachType = 
+			activity_coachType_pl.id
+			left join activity_status_pl  on activity.status = 
+			activity_status_pl.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
 			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
 			left join user_position on user_position.positionId=bcrmuser.id
@@ -3065,6 +3151,21 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			
+			<field>
+				<name>coachType_val</name>
+				<display>辅导类型</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<field-type>picklist</field-type>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
 			<field>
 				<name>crmuserId</name>
 				<display>辅导人Id</display>
@@ -3363,6 +3464,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<field-type>picklist</field-type>
+				<isSearchable>true</isSearchable>
 				<priority>3</priority><isShow>true</isShow>
 				<isExistsDefaultValue>true</isExistsDefaultValue>
 				<isRequired>true</isRequired>
@@ -3599,6 +3701,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<field-type>String</field-type>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>                        
 			</field>
@@ -3914,10 +4017,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
 			activity.activity_coachType as coachType\,
-			activity.status as act_status\,
+			activity_status_pl.val as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_coachType_pl.val as coachType_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
 			auserinfo.id as coachUserInfoName\,
@@ -3925,6 +4029,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_coachType_pl on activity.activity_coachType = 
+			activity_coachType_pl.id
+			left join activity_status_pl  on activity.status = 
+			activity_status_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join crmuser on crmuser.id = activity.coacheeId
@@ -3942,10 +4050,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			crmuserName\, activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
 			activity.activity_coachType as coachType\,
-			activity.status as act_status\,
+			activity_status_pl.val as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_coachType_pl.val as coachType_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
 			auserinfo.id as coachUserInfoName\,
@@ -3953,6 +4062,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_coachType_pl on activity.activity_coachType = 
+			activity_coachType_pl.id
+			left join activity_status_pl  on activity.status = 
+			activity_status_pl.id
 			left join contact on activity.contactId = contact.id
 			left join account on contact.accountId = account.Id
 			left join activitycrmuser on activity.id = activitycrmuser.activityId
@@ -3974,10 +4087,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			activity.coacheeId as coacheeName\, activity.*\,
 			activity.activity_type as act_type\,
 			activity.activity_coachType as coachType\,
-			activity.status as act_status\,
+			activity_status_pl.val as act_status\,
 			activity.contactId as contactName\,
 			contact.accountId as accountName\,
 			activity_event_type_pl.val as event_type_val\,
+			activity_coachType_pl.val as coachType_val\,
 			account.name as accountName_val\,
 			userinfo.id as coacheeUserinfoName\,
 			auserinfo.id as coachUserInfoName\,
@@ -3985,6 +4099,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			from activity
 			left join activity_event_type_pl on activity.event_type =
 			activity_event_type_pl.id
+			left join activity_coachType_pl on activity.activity_coachType = 
+			activity_coachType_pl.id
+			left join activity_status_pl  on activity.status = 
+			activity_status_pl.id
 			left join contact on activity.contactId = contact.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
 			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
@@ -3998,12 +4116,15 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 		<sql-ent>select * from (select activity.crmuserId as crmuserName\,
 			activity.coacheeId as coacheeName\,
 			activity.*\,activity.activity_type as
-			act_type\,activity.activity_coachType as coachType\,activity.status as
-			act_status\, activity.contactId as
+			act_type\,activity.activity_coachType as coachType\,activity_status_pl.val as act_status\, activity.contactId as
 			contactName\, contact.accountId as
-			accountName\, userinfo.id as coacheeUserinfoName\,auserinfo.id as coachUserInfoName\,contact.name as cn
+			accountName\, activity_coachType_pl.val as coachType_val\,userinfo.id as coacheeUserinfoName\,auserinfo.id as coachUserInfoName\,contact.name as cn
 			from activity left join activitycrmuser on
 			activitycrmuser.activityId=activity.id 
+			left join activity_coachType_pl on activity.activity_coachType = 
+			activity_coachType_pl.id
+			left join activity_status_pl  on activity.status = 
+			activity_status_pl.id
 			left join crmuser as bcrmuser on bcrmuser.id = activity.coacheeId
 			left join crmuser as ccrmuser on ccrmuser.id = activity.crmuserId
 			left join user_position on user_position.positionId=bcrmuser.id
@@ -4058,12 +4179,30 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<field-type>picklist</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
+			
+			<field>
+				<name>coachType_val</name>
+				<display>辅导类型</display>
+				<isRequired>false</isRequired>
+				<data-type>number</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>false</isEditable>
+				<isSearchable>true</isSearchable>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<field-type>picklist</field-type>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			
 			<field>
 				<name>crmuserId</name>
 				<display>辅导人Id</display>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
+				<isSearchable>true</isSearchable>
 				<isVisible>false</isVisible>
 				<isEditable>false</isEditable>
 				<priority>1</priority>
@@ -6593,6 +6732,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
+				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>   			

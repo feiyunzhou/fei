@@ -76,6 +76,7 @@ public class CoachingPage extends TemplatePage
                     likequery = likequery + " OR "+ sf.getName() + joint;
                 } 
                 sql =  sql + " where title like '%"+search_target+"%' " + likequery;
+                System.out.println("sql:"+sql);
                 List datalist = null; 
                 switch(roleId){
                   case UserRole.USER_ROLE_ADMINISTRATOR:
