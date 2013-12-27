@@ -568,7 +568,7 @@ public class DAOImpl
                 }else if(type == 1){
                     sql = "INSERT INTO contactcrmuser (contactId,crmuserId) VALUES (?,?)";
                 }else if(type == 2){
-                    sql = "INSERT INTO user_position (userId,positionId) VALUES (?,?)";
+                    sql = "INSERT INTO user_position (userId,positionId,whenadded,isPrimary) VALUES (?,?,?,?)";
                 }else{
                     sql = "update  crmuser set reportto = ?  where id = "+userId+" ";
                 }
@@ -579,7 +579,7 @@ public class DAOImpl
                 conn = DBConnector.getConnection();
                 QueryRunner run = new QueryRunner();
                 int inserts = 0;
-                if(entityName.equalsIgnoreCase("userinfo")){
+                if(entityName.equalsIgnoreCase("userinfo")||type==2){
                   inserts = run.update(conn, sql, userId,cId,date_value,isPrimary);
                 }else if(type == 3){
                 	inserts = run.update(conn, sql, cId);

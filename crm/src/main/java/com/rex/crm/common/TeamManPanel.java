@@ -223,9 +223,10 @@ public class TeamManPanel extends Panel {
             		  fromtable = "userinfo";
             	  }
                   if((type==3)&&fromtable.equalsIgnoreCase("crmuser")){
-                	  DAOImpl.updateCrmUserReportById(rid, "-1");
-                	  Entity entity = DAOImpl.getEntityById(fromtable, entityId);
-                	  DAOImpl.insertAudit(entityName, "上级岗位", entity.getName(), "admin", rid, user);
+                	  CRMUser userinfo = DAOImpl.getCrmUserById(entityId);
+                	  DAOImpl.updateCrmUserReportById(rid, String.valueOf(userinfo.getReportto()));
+                	  CRMUser reporttouser = DAOImpl.getCrmUserById(userinfo.getReportto());
+                	  DAOImpl.insertAudit(entityName, "上级岗位", userinfo.getName(),reporttouser.getName(), rid, user);
                   }else{
                 	  DAOImpl.removeEntityFromTeam(teamtable,rid);
                 	  DAOImpl.insertRealtionHestory(fromtable,user,positionId,otherId);

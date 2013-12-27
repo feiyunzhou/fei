@@ -2152,6 +2152,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
 				<field-type>String</field-type>
+				<picklist>account_pl3</picklist>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
