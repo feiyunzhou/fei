@@ -533,7 +533,7 @@ public class NewDataFormPanel extends Panel
         String fileName = "";
         if(entity.getName().equals("alertattachment")){
         	FileUpload fileupload = fileUploadField.getFileUpload();
-            String outputfolder = CRMUtility.readFileAttribure("fileUpdatePath");
+            String outputfolder = CRMUtility.readFileAttribure("uploadpath");
  
             java.io.File tmpDir = null;
             tmpDir = Files.createTempDir();

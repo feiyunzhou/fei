@@ -195,7 +195,7 @@ public class EntityDetailPanel extends Panel {
     		super(id, markupId, markupProvider);
     		java.io.File tmpDir = null;
             tmpDir = Files.createTempDir();
-            String tmpFileName = "D:\\"+eid;
+            String tmpFileName = CRMUtility.readFileAttribure("uploadpath")+eid;
     		File contact_template = new File(tmpFileName);
     	    add(new DownloadLink("detailclick",contact_template,eid).add(new Label("caption", new Model<String>(eid))));
     	}
