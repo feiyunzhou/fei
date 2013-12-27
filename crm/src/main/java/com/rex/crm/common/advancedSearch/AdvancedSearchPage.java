@@ -65,12 +65,16 @@ public class AdvancedSearchPage extends TemplatePage {
         
         List<Map> tdata = Lists.newArrayList();
         if (filters  != null) {
-            sql = sql + " where " + searchPanel.buildFilterSQL(entity, filters);
+        	String appendSql = searchPanel.buildFilterSQL(entity, filters);
+        	if(!"".equals(appendSql)){
+        		sql = sql + " where " + appendSql;
+        	}
             int num_of_question_marks = CharMatcher.is('?').countIn(sql);        
             String[] params = new String[num_of_question_marks];
             for(int i=0;i<num_of_question_marks;i++){
                 params[i] = positionId;
             }
+            System.out.println("sql:"+sql);
             tdata = DAOImpl.queryEntityRelationList(sql,params);
         }
 
