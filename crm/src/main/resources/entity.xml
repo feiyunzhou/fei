@@ -6058,8 +6058,18 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
                                 <field-type>String</field-type>
                                 <priority>1</priority><isShow>true</isShow>
                         </field>
-                        
-                        <field>
+						<field>
+                                <name>userName</name>
+                                <display>代表姓名</display>
+                                <data-type>text</data-type>
+                                <isPrimaryKey>false</isPrimaryKey>
+                                <isDetailLink>false</isDetailLink>
+                                <isVisible>true</isVisible>
+                                <isEditable>true</isEditable>
+                                <priority>1</priority>
+                                <field-type>String</field-type>
+                                <isShow>true</isShow>
+                        </field>                        <field>
                                 <name>loginName</name>
                                 <display>登录名</display>
                                 <data-type>text</data-type>
@@ -6068,7 +6078,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
                                 <isVisible>true</isVisible>
                                 <isEditable>true</isEditable>
                                 <field-type>String</field-type>
-                                <priority>1</priority><isShow>true</isShow>
+                                <priority>2</priority><isShow>true</isShow>
                         </field>
                         <field>
                                 <name>email</name>
@@ -6249,18 +6259,6 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
                         <field>
                                 <name>status</name>
                                 <display>状态</display>
-                                <data-type>text</data-type>
-                                <isPrimaryKey>false</isPrimaryKey>
-                                <isDetailLink>false</isDetailLink>
-                                <isVisible>true</isVisible>
-                                <isEditable>true</isEditable>
-                                <priority>1</priority>
-                                <field-type>String</field-type>
-                                <isShow>true</isShow>
-                        </field>
-                        <field>
-                                <name>userName</name>
-                                <display>代表姓名</display>
                                 <data-type>text</data-type>
                                 <isPrimaryKey>false</isPrimaryKey>
                                 <isDetailLink>false</isDetailLink>

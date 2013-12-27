@@ -2,6 +2,7 @@ package com.rex.crm.admin;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.wicket.markup.html.form.Form;
@@ -16,6 +17,7 @@ import com.rex.crm.common.PageableTablePanel;
 import com.rex.crm.db.DAOImpl;
 import com.rexen.crm.beans.UserRole;
 import com.rex.crm.util.Configuration;
+import com.rex.crm.AccountPage;
 import com.rex.crm.SignIn2Session;
 
 /**
@@ -97,6 +99,7 @@ public class ReportPage extends AdminTemplatePage
         
 //        List datalist = DAOImpl.queryEntityRelationList(sql, "dummy");
        // setResponsePage(new UserPage(filter, datalist));
+        setResponsePage(new ReportPage(filter, datalist));
 
       }
 
