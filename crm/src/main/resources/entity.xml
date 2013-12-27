@@ -6109,7 +6109,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
                                 <data-type>text</data-type>
                                 <isPrimaryKey>false</isPrimaryKey>
                                 <isDetailLink>false</isDetailLink>
-                                <isVisible>true</isVisible>
+                                <isVisible>false</isVisible>
                                 <isEditable>true</isEditable>
                                 <field-type>String</field-type>
                                 <priority>1</priority><isShow>true</isShow>
@@ -6131,7 +6131,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
                                 <data-type>text</data-type>
                                 <isPrimaryKey>false</isPrimaryKey>
                                 <isDetailLink>false</isDetailLink>
-                                <isVisible>true</isVisible>
+                                <isVisible>false</isVisible>
                                 <isEditable>true</isEditable>
                                 <field-type>String</field-type>
                                 <priority>1</priority><isShow>true</isShow>
@@ -6153,7 +6153,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
                                 <data-type>text</data-type>
                                 <isPrimaryKey>false</isPrimaryKey>
                                 <isDetailLink>false</isDetailLink>
-                                <isVisible>true</isVisible>
+                                <isVisible>false</isVisible>
                                 <isEditable>true</isEditable>
                                 <field-type>String</field-type>
                                 <priority>1</priority><isShow>true</isShow>
@@ -6230,7 +6230,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
                                 <data-type>text</data-type>
                                 <isPrimaryKey>false</isPrimaryKey>
                                 <isDetailLink>false</isDetailLink>
-                                <isVisible>true</isVisible>
+                                <isVisible>false</isVisible>
                                 <isEditable>true</isEditable>
                                 <field-type>String</field-type>
                                 <priority>1</priority><isShow>true</isShow>
@@ -6241,7 +6241,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
                                 <data-type>text</data-type>
                                 <isPrimaryKey>false</isPrimaryKey>
                                 <isDetailLink>false</isDetailLink>
-                                <isVisible>true</isVisible>
+                                <isVisible>false</isVisible>
                                 <isEditable>true</isEditable>
                                 <field-type>String</field-type>
                                 <priority>1</priority><isShow>true</isShow>
