@@ -2520,9 +2520,9 @@ public class DAOImpl
         for(CRMUser user:users){
             CRMUser u = new CRMUser();
             if(user.getUserInfoName()==null){
-            	u.setName(user.getName()+"--无");	
+            	u.setName(user.getCode()+"--无");	
             }else{
-            	u.setName(user.getName()+"--"+user.getUserInfoName());
+            	u.setName(user.getCode()+"--"+user.getUserInfoName());
             }
             u.setCellPhone(user.getCellPhone());
             u.setEmail(user.getEmail());

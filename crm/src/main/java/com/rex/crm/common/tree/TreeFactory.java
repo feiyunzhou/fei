@@ -120,7 +120,7 @@ public class TreeFactory {
                 Node nd = new Node();
                 children[i++] = nd;
                 nd.setKey(String.valueOf(user.getId()));
-                nd.setTitle(user.getCode());
+                nd.setTitle(user.getName());
                 nd.setType("crmuser");           
                 appendChildren(nd);
             }

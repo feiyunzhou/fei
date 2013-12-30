@@ -185,8 +185,8 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         BookmarkablePageLink adminTreePage = new BookmarkablePageLink("adminTreePage",AdminTreePage.class );
         admin_menu.add(adminTreePage);
      
-        BookmarkablePageLink positionTreePage = new BookmarkablePageLink("positionTreePage",PositionTreePage.class );
-        admin_menu.add(positionTreePage);
+//        BookmarkablePageLink positionTreePage = new BookmarkablePageLink("positionTreePage",PositionTreePage.class );
+//        admin_menu.add(positionTreePage);
         
         BookmarkablePageLink productTreePage = new BookmarkablePageLink("productTreePage",ProductTreePage.class );
         admin_menu.add(productTreePage);
@@ -194,11 +194,11 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         BookmarkablePageLink positionPage = new BookmarkablePageLink("positionPage",PositionPage.class );
         admin_menu.add(positionPage);
         
-        BookmarkablePageLink reportPage = new BookmarkablePageLink("reportPage",ReportPage.class );
-        admin_menu.add(reportPage);
+//        BookmarkablePageLink reportPage = new BookmarkablePageLink("reportPage",ReportPage.class );
+//        admin_menu.add(reportPage);
         
-        BookmarkablePageLink downloadPage = new BookmarkablePageLink("downloadPage",DownloadPage.class );
-        admin_menu.add(downloadPage);
+//        BookmarkablePageLink downloadPage = new BookmarkablePageLink("downloadPage",DownloadPage.class );
+//        admin_menu.add(downloadPage);
         
         BookmarkablePageLink userPage = new BookmarkablePageLink("userPage",UserPage.class );
         admin_menu.add(userPage);
@@ -206,8 +206,8 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         BookmarkablePageLink userPositionPage = new BookmarkablePageLink("userPositionPage",UserPositionPage.class );
         admin_menu.add(userPositionPage);
         
-        BookmarkablePageLink productPage = new BookmarkablePageLink("productPage",ProductPage.class );
-        admin_menu.add(productPage);
+//        BookmarkablePageLink productPage = new BookmarkablePageLink("productPage",ProductPage.class );
+//        admin_menu.add(productPage);
         
         BookmarkablePageLink dataImportPage = new BookmarkablePageLink("dataImportPage",DataImportPage.class );
         admin_menu.add(dataImportPage);
@@ -216,21 +216,21 @@ public abstract class TemplatePage extends AuthenticatedWebPage {
         
         BookmarkablePageLink areaPage = new BookmarkablePageLink("areaPage",AreaPage.class );
         admin_menu.add(areaPage);
-        
-        BookmarkablePageLink applicationPage = new BookmarkablePageLink("applicationPage",AreaPage.class );
-        admin_menu.add(applicationPage);
-        
-        BookmarkablePageLink flowPage = new BookmarkablePageLink("flowPage",AreaPage.class );
-        admin_menu.add(flowPage);
-        
-        BookmarkablePageLink jurisdictionPage = new BookmarkablePageLink("jurisdictionPage",AreaPage.class );
-        admin_menu.add(jurisdictionPage);
-        
-        BookmarkablePageLink contentPage = new BookmarkablePageLink("contentPage",AreaPage.class );
-        admin_menu.add(contentPage);
-        
-        BookmarkablePageLink integrationPage = new BookmarkablePageLink("integrationPage",AreaPage.class );
-        admin_menu.add(integrationPage);
+//        
+//        BookmarkablePageLink applicationPage = new BookmarkablePageLink("applicationPage",AreaPage.class );
+//        admin_menu.add(applicationPage);
+//        
+//        BookmarkablePageLink flowPage = new BookmarkablePageLink("flowPage",AreaPage.class );
+//        admin_menu.add(flowPage);
+//        
+//        BookmarkablePageLink jurisdictionPage = new BookmarkablePageLink("jurisdictionPage",AreaPage.class );
+//        admin_menu.add(jurisdictionPage);
+//        
+//        BookmarkablePageLink contentPage = new BookmarkablePageLink("contentPage",AreaPage.class );
+//        admin_menu.add(contentPage);
+//        
+//        BookmarkablePageLink integrationPage = new BookmarkablePageLink("integrationPage",AreaPage.class );
+//        admin_menu.add(integrationPage);
         
         BookmarkablePageLink importLogPage = new BookmarkablePageLink("importLog",ImportLogPage.class );
         admin_menu.add(importLogPage);

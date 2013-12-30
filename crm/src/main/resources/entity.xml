@@ -1302,7 +1302,7 @@
 	</entity>
 	<entity>
 		<name>userinfo</name>
-		<display>用户</display>
+		<display>用户管理</display>
 		<filterField>pl1</filterField>
 		<externalField>employeeNumber</externalField>
 		<sql>
@@ -1684,7 +1684,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	</entity>
 	<entity>
 		<name>crmuser</name>
-		<display>岗位</display>
+		<display>岗位管理</display>
 		<filterField>pl1</filterField>
 		<externalField>code</externalField>
 		<sql>
@@ -2052,7 +2052,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 
 <entity>
 	<name>user_position</name>
-	<display>岗位关系</display>
+	<display>用户岗位管理</display>
 	<externalField>externalId</externalField>
 	<sql-admin>
   select * from ( select userinfo.name as name\,user_position.*   
@@ -4999,7 +4999,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	</entity>
 	<entity>
 		<name>callreport</name>
-		<display>报表</display>
+		<display>活动报表</display>
 		<sql>select * from crmdb.call_export</sql>
 		<sql-admin>select * from crmdb.call_export</sql-admin>
 		<sql-ent>select * from crmdb.call_export</sql-ent>
@@ -5481,7 +5481,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	</entity>
 		<entity>
 		<name>alert</name>
-		<display>预警</display>
+		<display>信息发布</display>
 		<filterField>priority</filterField>
 		<sql>
 			SELECT * from (select alert.* from alert where (towhom = 3 or towhom = 4) 
@@ -6055,7 +6055,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	</entity>
 	<entity>
                 <name>user_position_account</name>
-                <display>报表</display>
+                <display>活动报表</display>
                 <sql>select * from crmdb.user_position_account</sql>
                 <sql-admin>select * from crmdb.user_position_account</sql-admin>
                 <sql-ent>select * from crmdb.user_position_account</sql-ent>
@@ -6464,7 +6464,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	</entity>
 	<entity>
 		<name>regionManage</name>
-		<display>区域管理</display>
+		<display>省市设置</display>
 		<sql-admin>select * from crmuser</sql-admin>
 		<fields>
 			<field>
@@ -6725,7 +6725,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 	</entity>
         <entity>
 		<name>province</name>
-		<display>区域管理</display>
+		<display>省市设置</display>
 		<filterField></filterField>
 		<sql>SELECT * FROM province</sql>
                 <sql-admin>select * from province</sql-admin>
