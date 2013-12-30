@@ -168,7 +168,7 @@ public class EntityDetailPanel extends Panel {
                             	label.add(new AttributeAppender("class",new Model("labelWidth")," "));
                             	columnitem.add(label);
                             }else if(currentField.getDataType().equalsIgnoreCase("file")){
-                            	columnitem.add(new DownloadLinkFragment("celldata", "detailFragment", this,value, String.valueOf(data.get(currentField.getName()))));
+                            	columnitem.add(new DownloadLinkFragment("celldata", "detailFragment", this,value,String.valueOf(data.get(currentField.getName())),String.valueOf(data.get("srcForFile"))));
                             }else{
                             	columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
                             }
@@ -191,11 +191,12 @@ public class EntityDetailPanel extends Panel {
         });
     }
     private class DownloadLinkFragment extends Fragment{
-    	public DownloadLinkFragment(String id, String markupId, MarkupContainer markupProvider,String name, final String eid){
+    	public DownloadLinkFragment(String id, String markupId, MarkupContainer markupProvider,String name, final String eid,String srcFile){
     		super(id, markupId, markupProvider);
     		java.io.File tmpDir = null;
             tmpDir = Files.createTempDir();
-            String tmpFileName = CRMUtility.readFileAttribure("uploadpath")+eid;
+            String tmpFileName = CRMUtility.readFileAttribure("uploadpath")+srcFile;
+            System.out.println("tmpFileName:"+tmpFileName);
     		File contact_template = new File(tmpFileName);
     	    add(new DownloadLink("detailclick",contact_template,eid).add(new Label("caption", new Model<String>(eid))));
     	}

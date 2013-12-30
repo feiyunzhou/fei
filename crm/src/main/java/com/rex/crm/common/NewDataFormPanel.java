@@ -531,6 +531,7 @@ public class NewDataFormPanel extends Panel
         logger.debug("the form was submitted!");
         logger.debug(models);
         String fileName = "";
+        String srcForFile = "";
         if(entity.getName().equals("alertattachment")){
         	FileUpload fileupload = fileUploadField.getFileUpload();
             String outputfolder = CRMUtility.readFileAttribure("uploadpath");
@@ -539,8 +540,10 @@ public class NewDataFormPanel extends Panel
             tmpDir = Files.createTempDir();
             if (fileupload != null)
             {
-                  String tmpFileName = outputfolder + fileupload.getClientFileName();
+                  
                   fileName = fileupload.getClientFileName();
+                  srcForFile = fileName.split("\\.")[0] +System.currentTimeMillis()+"."+fileName.split("\\.")[1];
+                  String tmpFileName = outputfolder +srcForFile;
                   try {
 					fileupload.writeTo(new File(tmpFileName));
 				} catch (IOException e) {
@@ -669,6 +672,9 @@ public class NewDataFormPanel extends Panel
             if (f.getName().equalsIgnoreCase("crmuserID"))
             {
                 values.add("'" + posId + "'");
+            }
+            if(f.getName().equals("srcForFile")){
+            	values.add("'"+srcForFile+"'");
             }
             fieldNames.add(f.getName());
 

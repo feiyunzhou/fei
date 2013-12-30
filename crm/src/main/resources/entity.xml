@@ -5721,6 +5721,19 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
+				<name>srcForFile</name>
+				<display>附件文件路径</display>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>true</isDetailLink>
+				<isVisible>false</isVisible>
+				<isEditable>true</isEditable>
+				<field-type>auto</field-type>
+				<priority>1</priority>
+				<isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+			</field>
+			<field>
 				<name>alertId</name>
 				<display>预警标题</display>
 				<alias>alertId</alias>
