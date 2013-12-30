@@ -146,11 +146,11 @@ public class EntityDetailPanel extends Panel {
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryCachedRelationDataById(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
-                            if ((currentField.getName().equals("accountName"))) {
+                      /*      if ((currentField.getName().equals("accountName"))) {
                                 columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this,value, String.valueOf(data.get(currentField.getName()))));
-                            } else {
+                            } else {*/
                                 columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
-                            }
+                           /* }*/
                         }
                     }else {
                         if (j % 2 == 0) {
