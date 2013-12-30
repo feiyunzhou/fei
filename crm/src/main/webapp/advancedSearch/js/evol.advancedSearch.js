@@ -21,18 +21,18 @@
 		sInList:'属于',
 		sIsNull:'为空',
 		sIsNotNull:'不为空',
-		sBefore:'before',
-		sAfter:'after',
+		sBefore:'之前',
+		sAfter:'之后',
 		sNumEqual:'&#61;',
 		sNumNotEqual:'!&#61;',
 		sGreater:'&#62;',
 		sSmaller:'&#60;',
-		sOn:'on',
-		sNotOn:'not on',
-		sAt:'at',
-		sNotAt:'not at',
-		sBetween:'between',
-		opAnd:'and',
+		sOn:'在',
+		sNotOn:'不在',
+		sAt:'等于',
+		sNotAt:'不等于',
+		sBetween:'介于',
+		opAnd:'和',
 		//opOr:'or', 
 		yes:'Yes',
 		no:'No',
@@ -361,8 +361,9 @@ $.widget( 'evol.advancedSearch', {
 									EvoUI.inputOption(evoAPI.sNotEqual, evoLang.sNotOn));
 							}
 							h.push(EvoUI.inputOption(evoAPI.sGreater, evoLang.sAfter),
-								EvoUI.inputOption(evoAPI.sSmaller, evoLang.sBefore),
-								EvoUI.inputOption(evoAPI.sBetween, evoLang.sBetween));
+								EvoUI.inputOption(evoAPI.sSmaller, evoLang.sBefore));
+//								EvoUI.inputOption(evoAPI.sBetween, evoLang.sBetween))
+//								;
 							break;
 						case evoTypes.number:
 							h.push(EvoUI.inputOption(evoAPI.sEqual, evoLang.sNumEqual),
