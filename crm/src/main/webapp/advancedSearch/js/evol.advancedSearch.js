@@ -298,7 +298,7 @@ $.widget( 'evol.advancedSearch', {
 		this._setEditorField(fid);
 		this._setEditorOperator(op);
 		if(op==evoAPI.sBetween){
-			this._setEditorValue(fv.value, fv.value2);
+			this._setEditorValue(fv.value, fv.avlue2);
 		}else{
 			this._setEditorValue(fv.value);
 		}
@@ -486,7 +486,7 @@ $.widget( 'evol.advancedSearch', {
 				vs.push(this.value);
 				ls.push(this.nextSibling.innerHTML);
 			});
-			if(vs.length===0){
+			if(vs.length==0){
 				op.label=evoLang.sEqual;
 				op.value=evoAPI.sAll;
 				fv.label=fv.value='所有';

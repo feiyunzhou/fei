@@ -274,7 +274,7 @@ public class CRMUtility {
         EnumSet<Permissions> permission = null;
         if (entityName.equalsIgnoreCase("account")||entityName.equalsIgnoreCase("product")||entityName.equalsIgnoreCase("productline")||entityName.equalsIgnoreCase("productcategory")) {
             if (roleId == 1) {
-                permission = EnumSet.of(CRUDPanel.Permissions.ADD);
+                permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD);
             }
         }else if(entityName.equalsIgnoreCase("contact")||entityName.equalsIgnoreCase("calendar")){
         	permission = EnumSet.of(CRUDPanel.Permissions.ADD,CRUDPanel.Permissions.DOWNLOAD );

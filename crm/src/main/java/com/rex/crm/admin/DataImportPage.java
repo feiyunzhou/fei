@@ -83,8 +83,7 @@ public class DataImportPage extends AdminTemplatePage
                   String utf8_tmpFileName = tmpDir.getAbsolutePath() + File.separator+ "utf8_"+fileupload.getClientFileName();
                   fileupload.writeTo(new File(gbk_tmpFileName));
                   fileupload.closeStreams();
-                 
-                  String file_content = Files.toString(new File(gbk_tmpFileName), Charset.forName("gbk"));
+                  String file_content = Files.toString(new File(gbk_tmpFileName), Charset.forName("gbk")); 
                   Files.write(file_content, new File(utf8_tmpFileName), Charsets.UTF_8);
                   logger.debug("UTF8 format file:"+ utf8_tmpFileName);
                   
