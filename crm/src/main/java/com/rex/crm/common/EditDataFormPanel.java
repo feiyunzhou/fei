@@ -259,13 +259,14 @@ public class EditDataFormPanel extends Panel {
                                 fieldNameToModel.put(currentField.getName(), choiceModel);
                                 if(roleId!=1){
                                 	String val = "";
-                                	if(currentField.getName().equals("department")&&schema.getName().equals("contact")){
-                                		val = DAOImpl.getTargetById("val",value,"contact_department_pl");
-                                		TextFragment textField = new TextFragment("editdata", "textFragment", this,val);
-                                		textField.add(new AttributeAppender("class",new Model("folatLeft")," "));
-                                		columnitem.add(textField);
-                                		
-                                    }else if(currentField.getName().equals("grade")&&schema.getName().equals("contact")){
+//                                	if(currentField.getName().equals("department")&&schema.getName().equals("contact")){
+//                                		val = DAOImpl.getTargetById("val",value,"contact_department_pl");
+//                                		TextFragment textField = new TextFragment("editdata", "textFragment", this,val);
+//                                		textField.add(new AttributeAppender("class",new Model("folatLeft")," "));
+//                                		columnitem.add(textField);
+//                                		
+//                                    }
+                                	if(currentField.getName().equals("grade")&&schema.getName().equals("contact")){
                                     	val = DAOImpl.getTargetById("val",value,"contact_grade_pl");
                                     	TextFragment textField = new TextFragment("editdata", "textFragment", this,val);
                                     	textField.add(new AttributeAppender("class",new Model("folatLeft")," "));

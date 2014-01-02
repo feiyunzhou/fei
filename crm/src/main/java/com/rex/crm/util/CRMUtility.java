@@ -219,7 +219,7 @@ public class CRMUtility {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.MERGE);
 	            }
-	        }else if (entityName.equalsIgnoreCase("crmuser")||entityName.equalsIgnoreCase("user_position")) {
+	        }else if (entityName.equalsIgnoreCase("crmuser")) {
 	            if (roleId == 1) {
 	                permission = EnumSet.of(CRUDPanel.Permissions.DEL,CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.INEFFECTIVE);
 	            }
@@ -229,7 +229,7 @@ public class CRMUtility {
 	        	 }else{
 	        		 permission = EnumSet.of(CRUDPanel.Permissions.EDIT);
 	        	 }
-	        }else if( entityName.equalsIgnoreCase("calendar")|| entityName.equalsIgnoreCase("product")){
+	        }else if( entityName.equalsIgnoreCase("calendar")|| entityName.equalsIgnoreCase("product")||entityName.equalsIgnoreCase("user_position")){
 	        	 if(roleId==1){
 	        		 permission = EnumSet.of(CRUDPanel.Permissions.EDIT,CRUDPanel.Permissions.DEL);
 	        	 }else{

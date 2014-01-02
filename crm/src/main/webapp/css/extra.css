@@ -255,82 +255,82 @@ a:hover, a:focus {
 .delete {
     text-align: right;
 }
-.first {
-    display: inline-block;
-    font-family: 'FontAwesome';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    -webkit-font-smoothing: antialiased;
-    visibility: hidden;
-    word-spacing:-999px;
-    letter-spacing: -999px; 
-}
-.prev {
-    display: inline-block;
-    font-family: 'FontAwesome';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    -webkit-font-smoothing: antialiased;
-    visibility: hidden;
-    word-spacing:-999px;
-    letter-spacing: -999px; 
-}
-.next {
-    display: inline-block;
-    font-family: 'FontAwesome';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    -webkit-font-smoothing: antialiased;
-    visibility: hidden;
-    word-spacing:-999px;
-    letter-spacing: -999px; 
-}
-.last {
-    display: inline-block;
-    font-family: 'FontAwesome';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    -webkit-font-smoothing: antialiased;
-    visibility: hidden;
-    word-spacing:-999px;
-    letter-spacing: -999px; 
-}
-.first:after {
-    content: "\f048";
-    visibility: visible;
-    word-spacing:normal;
-    letter-spacing:normal; 
-}
-.prev:after {
-    content: "\f104";
-    visibility: visible;
-    word-spacing:normal;
-    letter-spacing:normal; 
-}
-.next:after {
-    content: "\f105";
-    visibility: visible;
-    word-spacing:normal;
-    letter-spacing:normal; 
-}
-.last:after {
-    content: "\f051";
-    visibility: visible;
-    word-spacing:normal;
-    letter-spacing:normal; 
-}
+/* .first { */
+/*     display: inline-block; */
+/*     font-family: 'FontAwesome'; */
+/*     speak: none; */
+/*     font-style: normal; */
+/*     font-weight: normal; */
+/*     font-variant: normal; */
+/*     text-transform: none; */
+/*     -webkit-font-smoothing: antialiased; */
+/*     visibility: hidden; */
+/*     word-spacing:-999px; */
+/*     letter-spacing: -999px;  */
+/* } */
+/* .prev { */
+/*     display: inline-block; */
+/*     font-family: 'FontAwesome'; */
+/*     speak: none; */
+/*     font-style: normal; */
+/*     font-weight: normal; */
+/*     font-variant: normal; */
+/*     text-transform: none; */
+/*     -webkit-font-smoothing: antialiased; */
+/*     visibility: hidden; */
+/*     word-spacing:-999px; */
+/*     letter-spacing: -999px;  */
+/* } */
+/* .next { */
+/*     display: inline-block; */
+/*     font-family: 'FontAwesome'; */
+/*     speak: none; */
+/*     font-style: normal; */
+/*     font-weight: normal; */
+/*     font-variant: normal; */
+/*     text-transform: none; */
+/*     -webkit-font-smoothing: antialiased; */
+/*     visibility: hidden; */
+/*     word-spacing:-999px; */
+/*     letter-spacing: -999px;  */
+/* } */
+/* .last { */
+/*     display: inline-block; */
+/*     font-family: 'FontAwesome'; */
+/*     speak: none; */
+/*     font-style: normal; */
+/*     font-weight: normal; */
+/*     font-variant: normal; */
+/*     text-transform: none; */
+/*     -webkit-font-smoothing: antialiased; */
+/*     visibility: hidden; */
+/*     word-spacing:-999px; */
+/*     letter-spacing: -999px;  */
+/* } */
+/* .first:after { */
+/*     content: "\f048"; */
+/*     visibility: visible; */
+/*     word-spacing:normal; */
+/*     letter-spacing:normal;  */
+/* } */
+/* .prev:after { */
+/*     content: "\f104"; */
+/*     visibility: visible; */
+/*     word-spacing:normal; */
+/*     letter-spacing:normal;  */
+/* } */
+/* .next:after { */
+/*     content: "\f105"; */
+/*     visibility: visible; */
+/*     word-spacing:normal; */
+/*     letter-spacing:normal;  */
+/* } */
+/* .last:after { */
+/*     content: "\f051"; */
+/*     visibility: visible; */
+/*     word-spacing:normal; */
+/*     letter-spacing:normal;  */
+/* } */
 #user_info {
     margin-right: 5px;
 }

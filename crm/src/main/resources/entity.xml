@@ -843,7 +843,7 @@
 			<field>
 				<name>department</name>
 				<display>科室</display>
-				<isRequired>false</isRequired>
+				<isRequired>true</isRequired>
 				<data-type>text</data-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
@@ -856,6 +856,20 @@
 				<picklist>contact_department_pl</picklist>
 				<fieldGroup>关键信息</fieldGroup>
                 <import_field_name>科室</import_field_name>
+			</field>
+			<field>
+				<name>initializationdepartment</name>
+				<display>参考科室</display>
+				<isRequired>false</isRequired>
+				<data-type>text</data-type>
+				<isPrimaryKey>false</isPrimaryKey>
+				<isDetailLink>false</isDetailLink>
+				<isVisible>true</isVisible>
+				<isEditable>true</isEditable>
+				<field-type>String</field-type>
+				<priority>2</priority><isShow>true</isShow>
+				<fieldGroup>关键信息</fieldGroup>
+                <import_field_name>参考科室</import_field_name>
 			</field>
 			<field>
 				<name>department_val</name>
@@ -1312,11 +1326,11 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			select * from (select userinfo.*\, crmuser.role as crmuserRole\,
 			crmuser.name as positionId\,role.val as role_val\,province.val as province_val
 			 from userinfo 
-			left join user_position on userInfo.id = user_position.userId
+			left join user_position on user_position.userId = userinfo.id
 			left join crmuser on crmuser.id = user_position.positionId
 			left join role on role.id = crmuser.role
 			left join province on userinfo.province = province.id
-			 where userinfo.id != -1 ORDER BY CONVERT( userinfo.name USING gbk ) )as aUserInfo
+			 where userinfo.id != -1 and (user_position.isPrimary !=2 or user_position.isPrimary is null) ORDER BY CONVERT( userinfo.name USING gbk ) )as aUserInfo 
 		</sql-admin>
 		<sql-manager>
 				select * from ( select userInfo.*\, crmuser.role as crmuserRole\,
@@ -2136,10 +2150,10 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<field-type>picklist</field-type>
 				<isPrimaryKey>false</isPrimaryKey>
 				<isDetailLink>false</isDetailLink>
-				<isVisible>true</isVisible>
+				<isVisible>false</isVisible>
 				<picklist>contact_status_pl</picklist>
-				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<isEditable>false</isEditable>
+				<priority>2</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
 				<import_field_name>状态</import_field_name>
 			</field>
@@ -2155,6 +2169,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<picklist>account_pl3</picklist>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+				<import_field_name>是否主岗</import_field_name>
 			</field>
 			<field>
 				<name>externalId</name>
