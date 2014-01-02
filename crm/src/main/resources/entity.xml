@@ -6756,6 +6756,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>false</isEditable>
 				<priority>0</priority>
 				<fieldGroup>关键信息</fieldGroup>
+                                <field-type>String</field-type>
                                 <isParam>true</isParam>
 			</field>
 			<field>
@@ -6769,6 +6770,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<priority>1</priority><isShow>true</isShow>
 				<fieldGroup>关键信息</fieldGroup>
+                                <field-type>String</field-type>
                                 <isParam>true</isParam>
 			</field>
                         <field>
@@ -6782,6 +6784,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isEditable>true</isEditable>
 				<isSearchable>true</isSearchable>
 				<priority>1</priority><isShow>true</isShow>
+                                <field-type>String</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>   			
 		</fields>
