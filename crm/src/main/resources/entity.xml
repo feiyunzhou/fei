@@ -4328,7 +4328,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 			
 			<field>
 				<name>coacheeUserinfoName</name>
-				<display>被辅导人用户姓名</display>
+				<display>被辅导人姓名</display>
 				<isRequired>true</isRequired>
 				<alias>coacheeUserinfoId</alias>
 				<data-type>text</data-type>
