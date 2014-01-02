@@ -2156,6 +2156,37 @@ public class DAOImpl
         return res;
     }
 
+    //only support  to judge account and contact
+    public static boolean isAllow2ReadEntity(String entityName, String id, String positionId) {      
+        String  query = "";
+        
+        if(entityName.equalsIgnoreCase("account")){
+            query = "select * from accountcrmuser where (crmuserId in (select crmuser.id from crmuser where crmuser.reportto = ?) or crmuserId=?) and accountId=? group by accountId";
+        }else if(entityName.equalsIgnoreCase("contact")){
+            query= "select * from (" +
+                    "      select * from accountcrmuser where (crmuserId in (select crmuser.id from crmuser where crmuser.reportto = ?) or crmuserId=?) group by accountId) as a " +
+                    "      left join contact on a.accountId = contact.accountId where contact.id=?";
+        }
+        
+        logger.debug(String.format(query + "parms: %s   id:%s   positionId:%s", entityName,id,positionId));
+        Connection conn = null;
+        List lMap = Lists.newArrayList();
+        try {
+            conn = DBConnector.getConnection();
+            QueryRunner run = new QueryRunner();
+            lMap = run.query(conn, query, new MapListHandler(),positionId,positionId,id);
+            if(lMap.size()>0) return true;
+
+        } catch (SQLException e) {
+            logger.error("failed to get user", e);
+        } finally {
+            DBHelper.closeConnection(conn);
+        }
+        return false;
+        
+    }
+    
+    
     public static List searchContact(String userId, String search_target) {
         if(search_target == null|| search_target.equalsIgnoreCase("*")){
             search_target = "";

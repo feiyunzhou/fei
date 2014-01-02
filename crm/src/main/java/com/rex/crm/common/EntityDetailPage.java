@@ -49,11 +49,13 @@ import com.rex.crm.util.SendEmail;
 
 public class EntityDetailPage extends TemplatePage {
     private static final Logger logger = Logger.getLogger(EntityDetailPage.class);
+    
     private static final long serialVersionUID = -2613412283023068638L;
     private final String user = ((SignIn2Session)getSession()).getUser();
     private final int roleId = ((SignIn2Session)getSession()).getRoleId();
     private final String positionId = ((SignIn2Session)getSession()).getPositionId();
     private static int NUM_OF_COLUMN  = 3;
+    
     public EntityDetailPage(){
     	String entityId = this.getRequest().getRequestParameters().getParameterValue("id").toString();
   	  	String nameForEntity = this.getRequest().getRequestParameters().getParameterValue("entityName").toString();
@@ -95,6 +97,18 @@ public class EntityDetailPage extends TemplatePage {
     	initPage(entityName,id,null);
     }
     public void initPage(final String entityName, final String id,final String fromPage){
+        //check the permission
+       
+        if(entityName.equalsIgnoreCase("account") || entityName.equalsIgnoreCase("contact")){
+           boolean allowed =  DAOImpl.isAllow2ReadEntity(entityName, id, positionId);
+           if(!allowed){
+               logger.info("The entity is not allowed to read");
+              
+               redirectToInterceptPage(new NoPermissionPage());
+           }
+        }
+        
+        
         this.setPageTitle("详细信息");
         final int roleId = ((SignIn2Session)getSession()).getRoleId();
         Map<String, Entity> entities = Configuration.getEntityTable();
