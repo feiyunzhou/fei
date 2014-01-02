@@ -247,7 +247,7 @@ public class AdvancedSearchPanel extends Panel {
                 
                 List<Field> fields = Lists.newArrayList();
                 for(Field f:entity.getFields()){
-                    if(!f.isVisible()) continue;
+                    if(!f.isVisible()||f.getName().equals("crmuserName")||f.getName().equals("coacheeName")) continue;
                     fields.add(f);
                 }  
                         

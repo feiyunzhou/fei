@@ -66,7 +66,7 @@
 		lov:'lov'
 	};
 
-
+	var checkNum = 0;
 $.widget( 'evol.advancedSearch', {
 
 	version: '1.0.1',
@@ -79,7 +79,6 @@ $.widget( 'evol.advancedSearch', {
 		submitButton: false,
 		submitReady: false
 	},
-
 	_create: function(){
 		var bLabels=this.options.buttonLabels,
 			that=this,
@@ -188,11 +187,17 @@ $.widget( 'evol.advancedSearch', {
 				that._bAdd.button('disable');
 			}
 		}).on('click', '#checkAll', function(){
-			var $this=$(this),
+			checkNum +=1;
+			var $this=$(this);
+			if(checkNum%2!=0){
+				$this.attr("checked",true);
+			}else{
+				$this.removeAttr("checked");
+			}
 				vc=$this.attr('checked'),
 				allChecks=$this.siblings();
 			if(vc=='checked'){
-				allChecks.attr('checked',vc);
+				allChecks.attr('checked',true);
 			}else{
 				allChecks.removeAttr('checked');
 			}
@@ -408,9 +413,9 @@ $.widget( 'evol.advancedSearch', {
 					switch (fType){
 						case evoTypes.lov:
 							h.push('<span id="value">');
-							if(this._field.list.length>7){
-								h.push('(<input type="checkbox" id="checkAll" value="1"/><label for="checkAll">All</label>) ');
-							}
+							/*if(this._field.list.length>7){
+								h.push('(<input type="checkbox" id="checkAll" value="all"/><label for="checkAll">All</label>) ');
+							}*/
 							h.push(EvoUI.inputCheckboxLOV(this._field.list));
 							h.push('</span>');
 							break;
