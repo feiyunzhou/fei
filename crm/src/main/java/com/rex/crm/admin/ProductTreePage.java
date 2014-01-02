@@ -63,7 +63,7 @@ public class ProductTreePage extends AdminTemplatePage
       
       if(positionId !=null){
           PageParameters pp = new PageParameters();
-          pp.add("positionId", positionId);
+          pp.add("positionId", -1);
           if(positionId.equals("-1")){
               Map<String, Entity> entities = Configuration.getEntityTable();
               final Entity entity = entities.get("productline");

@@ -34,6 +34,7 @@ import com.rex.crm.TemplatePage;
 import com.rex.crm.admin.AdminTreePage;
 import com.rex.crm.admin.PositionPage;
 import com.rex.crm.admin.ProductPage;
+import com.rex.crm.admin.ProductTreePage;
 import com.rex.crm.admin.UserPage;
 import com.rex.crm.beans.AccountCRMUserRelation;
 import com.rex.crm.beans.CRMUser;
@@ -190,13 +191,13 @@ public class EntityDetailContainerPanel   extends Panel {
 //                    setResponsePage(new PositionPage());
                 }else if(entityName.equals("productcategory")){
                 	DAOImpl.deleteRecord(id, entityName);
-                	setResponsePage(new ProductPage());
+                	setResponsePage(new ProductTreePage());
                 }else if(entityName.equals("product")){
                  	DAOImpl.deleteProductRecord(id, entityName);
-                	setResponsePage(new ProductPage());
+                	setResponsePage(new ProductTreePage());
                 }else if(entityName.equals("productline")){
                 	DAOImpl.deleteProductLineRecord(id, entityName);
-                	setResponsePage(new ProductPage());
+                	setResponsePage(new ProductTreePage());
                 }
             }
 

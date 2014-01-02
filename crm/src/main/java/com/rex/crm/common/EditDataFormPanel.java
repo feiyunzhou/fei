@@ -403,8 +403,10 @@ public class EditDataFormPanel extends Panel {
 						promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 }else{
 					    if(!prePageParams.isEmpty()){
+                                                    System.out.println("prePageParams:"+prePageParams);
 						    setResponsePage(previousPageClass,prePageParams);
 						}else{
+                                                    System.out.println("prePageParamsisEmpty");
 							setResponsePage(new EntityDetailPage(schema.getName(),entityId));
 						}
 					 }

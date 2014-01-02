@@ -6788,6 +6788,7 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isVisible>true</isVisible>
 				<isEditable>false</isEditable>
 				<priority>0</priority>
+                                <field-type>String</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 			<field>
@@ -6799,7 +6800,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>true</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+                                <field-type>String</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field> 
                         <field>
@@ -6811,7 +6814,9 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+                                <isShow>true</isShow>
+                                <field-type>String</field-type>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>    
                         
@@ -6824,10 +6829,12 @@ select * from (select * from userInfo where id = ? ) as aUserInfo
 				<isDetailLink>false</isDetailLink>
 				<isVisible>true</isVisible>
 				<isEditable>true</isEditable>
-				<priority>1</priority><isShow>true</isShow>
+				<priority>1</priority>
+                                <isShow>true</isShow>
 				<picklist>province</picklist>
-                <default-value-type>var</default-value-type>
-                <default-value>province.id\,province.val</default-value>
+                                <default-value-type>var</default-value-type>
+                                <field-type>String</field-type>
+                                <default-value>province.id\,province.val</default-value>
 				<fieldGroup>关键信息</fieldGroup>
 			</field>
 		</fields>
