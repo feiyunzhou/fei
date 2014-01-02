@@ -107,6 +107,10 @@ public class EditDataFormPanel extends Panel {
         group.add(promptButton);
         final Label promptLabel = new Label("prompt","提示:用户登录名已存在！");
         group.add(promptLabel);
+        final Label promptLabelForAccount = new Label("promptForAccount", "提示:医院BDM编码已存在！");
+        group.add(promptLabelForAccount);
+        final Label promptForCrmuser = new Label("promptForCrmuser", "提示:岗位编码已存在！");
+        group.add(promptForCrmuser);
         div.add(new AttributeAppender("style",new Model("display:none"),";"));
         group.add(new AttributeAppender("style",new Model("display:none"),";"));
         div.add(group);
@@ -400,7 +404,19 @@ public class EditDataFormPanel extends Panel {
 					if(!saveEntity(fieldNameToModel,modifyNameToModel,data,schema,entityId,userName)){
 					 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 	group.add(new AttributeAppender("style",new Model("display:block"),";"));
-						promptLabel.add(new AttributeAppender("style",new Model("display:block"),";"));
+					 	if(schema.getName().equals("account")){
+		                  	  promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:block"), ";"));
+		                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                    }else if (schema.getName().equals("userinfo")){
+		                  	 promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
+		                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                       promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                    }else if(schema.getName().equals("crmuser")){
+		                  	 promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                  	promptForCrmuser.add(new AttributeAppender("style", new Model("display:block"), ";"));
+		                    }
 						promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 }else{
 					    if(!prePageParams.isEmpty()){
@@ -421,12 +437,30 @@ public class EditDataFormPanel extends Panel {
 			@Override
 			public void onSubmit() {
                 try {
-					saveEntity(fieldNameToModel,modifyNameToModel,data,schema,entityId,userName);
+                	if(!saveEntity(fieldNameToModel,modifyNameToModel,data,schema,entityId,userName)){
+					 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
+					 	group.add(new AttributeAppender("style",new Model("display:block"),";"));
+					 	if(schema.getName().equals("account")){
+		                  	  promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:block"), ";"));
+		                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                    }else if (schema.getName().equals("userinfo")){
+		                  	 promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
+		                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                       promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                    }else if(schema.getName().equals("crmuser")){
+		                  	 promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+		                  	promptForCrmuser.add(new AttributeAppender("style", new Model("display:block"), ";"));
+		                    }
+						promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
+					 }else{
+						 setResponsePage(new CreateDataPage(schema.getName(),null));
+					 }
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                setResponsePage(new CreateDataPage(schema.getName(),null));
 			}
 		};
 		form.add(fieldGroupRepeater);
@@ -583,10 +617,12 @@ public class EditDataFormPanel extends Panel {
                        
                         DAOImpl.updateProductlineWhenEditcategory(entityId, productlineId);	  
                      }
-                   DAOImpl.updateRecord(entityId,table_name,names,values);
-                   recordValueChanges(data, schema, entityId, userName, values, names,table_name);
-                  
-		  return true;
+                if(DAOImpl.updateRecord(entityId,table_name,names,values)){
+					recordValueChanges(data, schema, entityId, userName, values, names,table_name);
+					return true;
+				} else{
+					return false;
+				}
 		}else{
 			List<String> loginNames =DAOImpl.getLoginNames(entityId);
             if(loginNames.contains(loginName)){

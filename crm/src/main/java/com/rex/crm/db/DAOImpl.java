@@ -1625,7 +1625,7 @@ public class DAOImpl
           DBHelper.closeConnection(conn);
       }
   }
-    public static void updateRecord(String id,String entityName, List<String> fieldNames, List<String> values ) {
+    public static boolean updateRecord(String id,String entityName, List<String> fieldNames, List<String> values ) {
     	 String sql = "";
     	 int i=0;
          for(String name:fieldNames){
@@ -1653,8 +1653,10 @@ public class DAOImpl
             inserts += run.update(conn, sql);
 
             System.out.println("inserted:" + inserts);
+            return true;
         } catch (Exception e) {
             logger.error("failed to add new calendar event", e);
+            return false;
         } finally {
             DBHelper.closeConnection(conn);
         }

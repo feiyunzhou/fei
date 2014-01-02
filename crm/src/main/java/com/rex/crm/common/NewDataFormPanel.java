@@ -112,6 +112,10 @@ public class NewDataFormPanel extends Panel
         group.add(promptButton);
         final Label promptLabel = new Label("prompt", "提示:用户登录名已存在！");
         group.add(promptLabel);
+        final Label promptLabelForAccount = new Label("promptForAccount", "提示:医院BDM编码已存在！");
+        group.add(promptLabelForAccount);
+        final Label promptForCrmuser = new Label("promptForCrmuser", "提示:岗位编码已存在！");
+        group.add(promptForCrmuser);
         div.add(new AttributeAppender("style", new Model("display:none"), ";"));
         group.add(new AttributeAppender("style", new Model("display:none"), ";"));
         div.add(group);
@@ -471,7 +475,19 @@ public class NewDataFormPanel extends Panel
                 {
                     div.add(new AttributeAppender("style", new Model("display:block"), ";"));
                     group.add(new AttributeAppender("style", new Model("display:block"), ";"));
-                    promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
+                    if(entity.getName().equals("account")){
+                    	  promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                          promptLabelForAccount.add(new AttributeAppender("style", new Model("display:block"), ";"));
+                          promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                    }else if (entity.getName().equals("userinfo")){
+                    	 promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
+                         promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                         promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                    }else if(entity.getName().equals("crmuser")){
+                    	 promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                         promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                    	promptForCrmuser.add(new AttributeAppender("style", new Model("display:block"), ";"));
+                    }
                     promptButton.add(new AttributeAppender("style", new Model("display:block"), ";"));
                 }
                 else
@@ -508,7 +524,19 @@ public class NewDataFormPanel extends Panel
                 {
                     div.add(new AttributeAppender("style", new Model("display:block"), ";"));
                     group.add(new AttributeAppender("style", new Model("display:block"), ";"));
-                    promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
+                    if(entity.getName().equals("account")){
+                  	  promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:block"), ";"));
+                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                    }else if (entity.getName().equals("userinfo")){
+                  	 promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
+                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                       promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                    }else if(entity.getName().equals("crmuser")){
+                  	 promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+                  	promptForCrmuser.add(new AttributeAppender("style", new Model("display:block"), ";"));
+                    }
                     promptButton.add(new AttributeAppender("style", new Model("display:block"), ";"));
                 }
                 else
