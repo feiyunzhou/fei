@@ -101,11 +101,14 @@ public class EntityDetailPage extends TemplatePage {
        
         if(entityName.equalsIgnoreCase("account") || entityName.equalsIgnoreCase("contact")){
            boolean allowed =  DAOImpl.isAllow2ReadEntity(entityName, id, positionId);
-           if(!allowed){
-               logger.info("The entity is not allowed to read");
-              
-               redirectToInterceptPage(new NoPermissionPage());
+           if(roleId !=1){
+        	   if(!allowed){
+                   logger.info("The entity is not allowed to read");
+                  
+                   redirectToInterceptPage(new NoPermissionPage());
+               }  
            }
+           
         }
         
         
