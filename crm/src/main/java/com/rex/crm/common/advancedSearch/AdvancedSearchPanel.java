@@ -259,12 +259,23 @@ public class AdvancedSearchPanel extends Panel {
                     if (f.getPicklist() != null) {
                         
                         List<Choice> list = DAOImpl.queryPickList(f.getPicklist());
-                        AdvancedSearchField[] pickList = new AdvancedSearchField[list.size()];
+                        AdvancedSearchField[] pickList = null;
+                        if(f.getName().equals("department")){
+                        	pickList = new AdvancedSearchField[list.size()+1];
+                        }else{
+                        	pickList = new AdvancedSearchField[list.size()];
+                        }
                         int j = 0;
                         for(Choice choice:list){  
                             pickList[j] = new AdvancedSearchField();
                             pickList[j].setId(String.valueOf(choice.getId()));
                             pickList[j].setLabel(choice.getVal());
+                            j++;
+                        }
+                        if(f.getName().equals("department")){
+                        	pickList[j] = new AdvancedSearchField();
+                            pickList[j].setId("null");
+                            pickList[j].setLabel("为空");
                             j++;
                         }
                         advancedFields[i].setList(pickList);
@@ -332,11 +343,14 @@ public class AdvancedSearchPanel extends Panel {
 	               if(field.getPicklist()!=null){
 	                   
 	                   if(filters[i].getOperator().getValue().equalsIgnoreCase("in")|| filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
-	                       combinedFilters.add(filters[i].getField().getValue() +" in ("+ filters[i].getValue().getValue()+") ");
+	                	   if(filters[i].getValue().getValue().equals("null")){
+	                		   combinedFilters.add(filters[i].getField().getValue() +" is null");
+	                	   }else{
+	                		   combinedFilters.add(filters[i].getField().getValue() +" in ("+ filters[i].getValue().getValue()+") ");
+	                	   }
 	                   }
 	                  
 	               }else{
-	                 
 	                   if(filters[i].getOperator().getValue().equalsIgnoreCase("eq")){
 	                       combinedFilters.add(filters[i].getField().getValue() +" = "+ filters[i].getValue().getValue());
 	                   }else if(filters[i].getOperator().getValue().equalsIgnoreCase("gt")){
