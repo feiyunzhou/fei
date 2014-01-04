@@ -240,7 +240,7 @@ public class PageableTablePanel extends Panel {
         
         add(new CRUDPanel("operationBar",entity.getName(),null, CRMUtility.getPermissionOfEntityList(roleId,entity.getName()),actionListener));
         
-    	add(new NewDataFormPanel("formPanel",entity,null));
+    	//add(new NewDataFormPanel("formPanel",entity,null));
 
     }
 
