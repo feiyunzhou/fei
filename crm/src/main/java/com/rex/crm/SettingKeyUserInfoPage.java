@@ -46,6 +46,8 @@ public class SettingKeyUserInfoPage extends WebPage{
                 }
 			}
 		};
+		//根据id获取对象
+		//Userinfo 
 		Model<String> textModel = new Model<String>("");
 		TextField<String> phone = new TextField<String>("phone", textModel);
 		phone.add(new AttributeAppender("class","required-field"));

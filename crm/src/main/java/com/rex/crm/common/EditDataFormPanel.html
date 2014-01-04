@@ -5,6 +5,8 @@
         		var daypart = $("#daypart").val();
         		var startTime = $("#starttime").val()+"";
     			var endTime = $("#endtime").val()+"";
+    			startTime = moment(startTime).format("YYYY-MM-DDTHH:mm:ss");
+    			endTime = moment(endTime).format("YYYY-MM-DDTHH:mm:ss");
         		if(daypart==1){
         			var startDate = startTime.split('T')[0].concat("T08:00");
         			var endDate = endTime.split('T')[0].concat("T11:30");
@@ -59,10 +61,41 @@
             var checkTime = true;
             var startTime = $("#starttime").val();
             var endTime = $("#endtime").val();
-            if(startTime>endTime){
+            var publishDate = $("#publishDate").val();
+            var expired = $("#expired").val();
+            var validstartTime = moment(startTime, "YYYY-MM-DD HH:mm:ss",true).isValid();
+            var validendTime = moment(endTime, "YYYY-MM-DD HH:mm:ss",true).isValid();
+            var validstartTimeForT = moment(startTime).isValid();
+            var validendTimeForT = moment(endTime).isValid();
+            
+            if(null != startTime){
+            	if(validstartTime || validstartTimeForT){
+            		startTime = moment(startTime).format("YYYY-MM-DDTHH:mm:ss");
+            		$("#starttime").val(moment(startTime).format("YYYY-MM-DDTHH:mm:ss"));	
+                }else{
+                	
+                	alert("时间格式不对!请更改为正确格式！如:2014-01-01 08:08");
+                	checkTime = false;
+                }
+            }
+            if(null != endTime && checkTime){
+            	if(validendTime || validendTimeForT){
+            		endTime = moment(endTime).format("YYYY-MM-DDTHH:mm:ss");
+            		$("#endtime").val(moment(endTime).format("YYYY-MM-DDTHH:mm:ss"));
+                	
+                }else{
+                	alert("时间格式不对!请更改为正确格式！如:2014-01-01 08:08");
+                	checkTime = false;
+                }
+            }
+            var startTimeForendTime = (new Date(startTime)).getTime();
+            
+            var endDateForstartTime = (new Date(endTime)).getTime();
+            alert(startTimeForendTime + " :" +endDateForstartTime);
+            if(checkTime && ((startTimeForendTime>endDateForstartTime) || (publishDate>expired))){
             	alert("开始时间不能大于结束时间！");
             	checkTime = false;
-            }else if(startTime<lastWeek){
+            }else if(checkTime&&startTime<lastWeek){
             	alert("开始时间不能为七天以前！");
             	checkTime = false;
             }
@@ -106,6 +139,7 @@
 			<span wicket:id="prompt" ><strong></strong></span>
 			<span wicket:id="promptForAccount" ><strong></strong></span>
 			<span wicket:id="promptForCrmuser" ><strong></strong></span>
+			<span wicket:id="promptFordate" ><strong></strong></span>
 		</div>
             	<div class="title">
                      <span wicket:id="name"></span>

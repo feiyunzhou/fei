@@ -111,6 +111,8 @@ public class EditDataFormPanel extends Panel {
         group.add(promptLabelForAccount);
         final Label promptForCrmuser = new Label("promptForCrmuser", "提示:岗位编码已存在！");
         group.add(promptForCrmuser);
+        final Label promptFordate = new Label("promptFordate", "提示:时间格式不正确！");
+        group.add(promptFordate);
         div.add(new AttributeAppender("style",new Model("display:none"),";"));
         group.add(new AttributeAppender("style",new Model("display:none"),";"));
         div.add(group);
@@ -405,18 +407,26 @@ public class EditDataFormPanel extends Panel {
 					 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 	group.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 	if(schema.getName().equals("account")){
-		                  	  promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:block"), ";"));
-		                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                    }else if (schema.getName().equals("userinfo")){
-		                  	 promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
-		                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                       promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                    }else if(schema.getName().equals("crmuser")){
-		                  	 promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                  	promptForCrmuser.add(new AttributeAppender("style", new Model("display:block"), ";"));
-		                    }
+		                  	promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:block"), ";"));
+	                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptFordate.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    }else if (schema.getName().equals("userinfo")){
+	                    	promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
+	                    	promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    	promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    	promptFordate.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    }else if(schema.getName().equals("crmuser")){
+	                    	promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    	promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    	promptForCrmuser.add(new AttributeAppender("style", new Model("display:block"), ";"));
+	                    	promptFordate.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    }else if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equalsIgnoreCase("willcoaching")){
+	                    	promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptFordate.add(new AttributeAppender("style", new Model("display:block"), ";"));
+	                    }
 						promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 }else{
 					    if(!prePageParams.isEmpty()){
@@ -441,18 +451,26 @@ public class EditDataFormPanel extends Panel {
 					 	div.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 	group.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 	if(schema.getName().equals("account")){
-		                  	  promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:block"), ";"));
-		                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                    }else if (schema.getName().equals("userinfo")){
-		                  	 promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
-		                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                       promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                    }else if(schema.getName().equals("crmuser")){
-		                  	 promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                       promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
-		                  	promptForCrmuser.add(new AttributeAppender("style", new Model("display:block"), ";"));
-		                    }
+		                  	promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:block"), ";"));
+	                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptFordate.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    }else if (schema.getName().equals("userinfo")){
+	                    	promptLabel.add(new AttributeAppender("style", new Model("display:block"), ";"));
+	                    	promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    	promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    	promptFordate.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    }else if(schema.getName().equals("crmuser")){
+	                    	promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    	promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    	promptForCrmuser.add(new AttributeAppender("style", new Model("display:block"), ";"));
+	                    	promptFordate.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                    }else if(schema.getName().equals("activity")||schema.getName().equals("coaching")||schema.getName().equalsIgnoreCase("willcoaching")){
+	                    	promptLabel.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptLabelForAccount.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptForCrmuser.add(new AttributeAppender("style", new Model("display:none"), ";"));
+	                        promptFordate.add(new AttributeAppender("style", new Model("display:block"), ";"));
+	                    }
 						promptButton.add(new AttributeAppender("style",new Model("display:block"),";"));
 					 }else{
 						 setResponsePage(new CreateDataPage(schema.getName(),null));
