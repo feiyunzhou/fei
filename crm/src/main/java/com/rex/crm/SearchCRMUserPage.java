@@ -196,7 +196,6 @@ public class SearchCRMUserPage extends WebPage {
                 int positionId = ((Number) map.get("id")).intValue();
                 String name = (String) map.get("name");
                 String cellPhone = (String) map.get("cellPhone");
-                String division = (String) map.get("division");
                 String email = (String) map.get("email");
                // AbstractItem item = new AbstractItem(dataRowRepeater.newChildId());
                // dataRowRepeater.add(item);
@@ -207,7 +206,6 @@ public class SearchCRMUserPage extends WebPage {
                 container_label.add(new AttributeAppender("for", new Model(chk.getMarkupId()), " "));
                 item.add(new Label("name", name));
                 item.add(new Label("cellPhone", cellPhone));
-                item.add(new Label("division", division));
                 item.add(new Label("email", email));
 
             }
