@@ -2618,7 +2618,7 @@ public class DAOImpl
     }
     
     public static List<CRMUser> getCRMUserWithoutSuperior() {
-       
+    	List<CRMUser> inferiors = Lists.newArrayList();
         List<CRMUser> users = Lists.newArrayList();
         Connection conn = null;
         try {
@@ -2626,15 +2626,30 @@ public class DAOImpl
             QueryRunner run = new QueryRunner();
             ResultSetHandler<List<CRMUser>> h = new BeanListHandler<CRMUser>(CRMUser.class);
 
-            users = run.query(conn, "SELECT * FROM crmuser where (reportto=0 OR reportto=-1 OR (reportto is NULL)) AND id != -1 AND pl1 = 1", h);
+            users = run.query(conn, "SELECT crmuser.*,userInfo.name as userInfoName FROM crmuser left join user_position on crmuser.id = user_position.positionId left join  userInfo  on user_position.userId = userInfo.id  where (crmuser.reportto=0 OR crmuser.reportto=-1 OR (crmuser.reportto is NULL)) AND crmuser.id != -1 AND crmuser.pl1 = 1", h);
 
         } catch (SQLException e) {
             logger.error("failed to get all crm users", e);
         } finally {
             DBHelper.closeConnection(conn);
         }
+        for(CRMUser user:users){
+            CRMUser u = new CRMUser();
+            if(user.getUserInfoName()==null){
+            	u.setName(user.getCode()+"--无");	
+            }else{
+            	u.setName(user.getCode()+"--"+user.getUserInfoName());
+            }
+            u.setCellPhone(user.getCellPhone());
+            u.setEmail(user.getEmail());
+            u.setId(user.getId());
+            u.setRole(user.getRole());
+            u.setLoginName(user.getLoginName());
+            u.setCode(user.getCode());
+            inferiors.add(u);
+        }
         
-        return users;
+        return inferiors;
     }
     public static List<Product> getProductLineWithoutSuperior() {
         
