@@ -91,7 +91,6 @@
             var startTimeForendTime = (new Date(startTime)).getTime();
             
             var endDateForstartTime = (new Date(endTime)).getTime();
-            alert(startTimeForendTime + " :" +endDateForstartTime);
             if(checkTime && ((startTimeForendTime>endDateForstartTime) || (publishDate>expired))){
             	alert("开始时间不能大于结束时间！");
             	checkTime = false;
