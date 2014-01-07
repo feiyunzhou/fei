@@ -28,6 +28,7 @@ import org.apache.wicket.util.file.File;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
+import com.rex.crm.SignIn2Session;
 import com.rex.crm.TemplatePage;
 import com.rex.crm.admin.DataImportPage;
 import com.rex.crm.db.DAOImpl;
@@ -40,7 +41,7 @@ public class EntityDetailPanel extends Panel {
     private static final long serialVersionUID = -2613412283023068638L;
     private Map<String, List<Field>> fieldGroupMap = Maps.newHashMap();
     private int number_of_column = 1;
-
+    
     public EntityDetailPanel(String id, final Entity schema, final Map data, String entityId, int number_of_column, final String pageName) {
         super(id);
 //        this.number_of_column = number_of_column;
@@ -50,7 +51,7 @@ public class EntityDetailPanel extends Panel {
 
 
         // TODO Get the table definition from database or configuration
-
+        final int roleId = ((SignIn2Session)getSession()).getRoleId();
         String primaryKeyName = schema.getPrimaryKeyName();
         List<Field> fields = schema.getFields();//得到所有fields
         for (Field f : fields) {
@@ -146,9 +147,15 @@ public class EntityDetailPanel extends Panel {
                         } else {
                             String value = CRMUtility.formatValue(currentField.getFormatter(), DAOImpl.queryCachedRelationDataById(currentField.getRelationTable(), String.valueOf(data.get(currentField.getName()))));
                             value = (value == null) ? "" : value;
-//                            if ((currentField.getName().equals("accountName"))) {
+                            if (roleId==1) {
                             	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this,value,currentField.getRelationTable(),String.valueOf(data.get(currentField.getName()))));
-                            	
+                            }else{
+                            	if(!currentField.getRelationTable().equalsIgnoreCase("crmuser")){
+                            		columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this,value,currentField.getRelationTable(),String.valueOf(data.get(currentField.getName()))));
+                            	}else{
+                            		columnitem.add(new Label("celldata", value).setEscapeModelStrings(false));
+                            	}
+                            }
                              
                         }
                     }else {
