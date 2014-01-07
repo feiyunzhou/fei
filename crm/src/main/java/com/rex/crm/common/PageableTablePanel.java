@@ -143,11 +143,20 @@ public class PageableTablePanel extends Panel {
                             if(value.equals("null")||value.isEmpty()){
                               value = "无";
                             }
-                            if (roleId==1) {
-                            	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));
+                            if (roleId==1 ) {
+                            	if(!value.equals("无")){
+                            		columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));	
+                            	}else{
+                            		columnitem.add(new Label("celldata", value));
+                            	}
+                            	
                             }else{
                             	if(!f.getRelationTable().equalsIgnoreCase("crmuser")){
-                            		columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));
+                            		if(!value.equals("无")){
+                            			columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));	
+                            		}else{
+                            			columnitem.add(new Label("celldata", value));
+                            		}
                             	}else{
                             		columnitem.add(new Label("celldata", value));
                             	}
