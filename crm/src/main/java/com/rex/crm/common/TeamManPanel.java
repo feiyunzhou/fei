@@ -43,9 +43,12 @@ import com.rex.crm.beans.Account;
 import com.rex.crm.beans.AccountCRMUserRelation;
 import com.rex.crm.beans.CRMUser;
 import com.rex.crm.beans.UserPosition;
+//import com.rex.crm.common.EntityDetailPanel.DetailLinkFragment;
 import com.rex.crm.db.DAOImpl;
+import com.rex.crm.db.model.Activity;
 import com.rex.crm.util.CRMUtility;
 import com.rex.crm.util.Configuration;
+
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 
 public class TeamManPanel extends Panel {
@@ -372,6 +375,7 @@ public class TeamManPanel extends Panel {
                     columnitem.add(new AttributeAppender("class", new Model("table-first-link"), " "));
                     // columnitem.add(new Label("celldata", value));
                     columnitem.add(new DetailLinkFragment("celldata","detailFragment",this.getParent().getParent().getParent(),value));
+//                    columnitem.add(new   DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));
                 } else {
                     if (f.getPicklist() != null) {
                         // get option from picklist
@@ -381,11 +385,21 @@ public class TeamManPanel extends Panel {
                         }
                         columnitem.add(new Label("celldata", value));
                     } else if(f.getRelationTable() != null){
+                    	System.out.println("hrere");
                         String value = CRMUtility.formatValue(f.getFormatter(), DAOImpl.queryCachedRelationDataById(f.getRelationTable(), String.valueOf(map.get(f.getName()))));
                         if(value.equals("null")||value.equals("")||value.equals("dummy")){
                           value = "无";
                         }
-                        columnitem.add(new Label("celldata", value));
+                        if (roleId==1) {
+                        	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));
+                        }else{
+                        	if(!f.getRelationTable().equalsIgnoreCase("crmuser")){
+                        		columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));
+                        	}else{
+                        		columnitem.add(new Label("celldata", value)).setEscapeModelStrings(false);
+                        	}
+                        }
+                        
                     }else {
                         String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
                         if(value.equals("null")||value.equals("")||value.equals("dummy")){
@@ -424,8 +438,6 @@ public class TeamManPanel extends Panel {
         }
             
         };
-        
-       
         group.add(listview);
         //PagingNavigator nav = new PagingNavigator("navigator", listview);
         AjaxPagingNavigator nav =new AjaxPagingNavigator("navigator", listview);
@@ -447,28 +459,53 @@ public class TeamManPanel extends Panel {
         super(id, model);
     }
     
-    private class DetailLinkFragment extends Fragment
-    {
-        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider,String caption)
-        {
+//    private class DetailLinkFragment extends Fragment
+//    {
+//        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider,String caption)
+//        {
+//            super(id, markupId, markupProvider);
+//            
+//            add(new Link("detailclick")
+//            {
+//                @Override
+//                public void onClick()
+//                {
+//                    Param p = (Param)getParent().getParent().getDefaultModelObject();
+//                    logger.debug(p+ " id:"+p.getId() + " name:"+p.getEntityName());
+//                    setResponsePage(new EntityDetailPage(p.getEntityName(),p.getExtraId()));
+//                    
+//                    //setResponsePage(new AccountDetailPage(id));
+//                }
+//            }.add(new Label("caption", new Model<String>(caption))));
+//        }
+//    }
+    
+    private class DetailLinkFragment extends Fragment {
+
+        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider, String name,final String entityName ,final String eid) {
             super(id, markupId, markupProvider);
-            
-            add(new Link("detailclick")
-            {
-                
-                
+//            final String str = DAOImpl.queryEntityByName(caption);
+            add(new Link("detailclick") {
                 @Override
-                public void onClick()
-                {
-                    Param p = (Param)getParent().getParent().getDefaultModelObject();
-                    logger.debug(p+ " id:"+p.getId() + " name:"+p.getEntityName());
-                    setResponsePage(new EntityDetailPage(p.getEntityName(),p.getExtraId()));
-                    
-                    //setResponsePage(new AccountDetailPage(id));
+                public void onClick() {
+
+                    setResponsePage(new EntityDetailPage(entityName, eid));
+                }
+            }.add(new Label("caption", new Model<String>(name))));
+        }
+        public DetailLinkFragment( String id, String markupId, MarkupContainer markupProvider, String caption) {
+            super(id, markupId, markupProvider);
+            add(new Link("detailclick") {
+
+                @Override
+                public void onClick() {
+                	Param p = (Param)getParent().getParent().getDefaultModelObject();
+                   setResponsePage(new EntityDetailPage(p.getEntityName(),p.getExtraId())); 
                 }
             }.add(new Label("caption", new Model<String>(caption))));
         }
     }
+    
     
     private class checkboxFragment extends Fragment {
 

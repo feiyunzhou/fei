@@ -44,6 +44,7 @@ import com.google.common.collect.Maps;
 import com.rex.crm.AccountPage;
 import com.rex.crm.ActivitySelectPage;
 import com.rex.crm.SignIn2Session;
+//import com.rex.crm.common.EntityDetailPanel.DetailLinkFragment;
 import com.rex.crm.dataport.DataExporter;
 import com.rex.crm.db.DAOImpl;
 import com.rex.crm.db.model.Activity;
@@ -142,7 +143,16 @@ public class PageableTablePanel extends Panel {
                             if(value.equals("null")||value.isEmpty()){
                               value = "无";
                             }
-                            columnitem.add(new Label("celldata", value));
+                            if (roleId==1) {
+                            	columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));
+                            }else{
+                            	if(!f.getRelationTable().equalsIgnoreCase("crmuser")){
+                            		columnitem.add(new DetailLinkFragment("celldata", "detailFragment", this.getParent().getParent(),value,f.getRelationTable(),String.valueOf(map.get(f.getName()))));
+                            	}else{
+                            		columnitem.add(new Label("celldata", value));
+                            	}
+                            }
+                            
                         }else {
                            
                              String value = CRMUtility.formatValue(f.getFormatter(), String.valueOf(map.get(f.getName())));
@@ -273,41 +283,79 @@ public class PageableTablePanel extends Panel {
     }
     
     private class DetailLinkFragment extends Fragment {
-        /**
-         * Construct.
-         * 
-         * @param id
-         *            The component Id
-         * @param markupId
-         *            The id in the markup
-         * @param markupProvider
-         *            The markup provider
-         */
-        public DetailLinkFragment( String id, String markupId, MarkupContainer markupProvider, String caption, final Entity entity) {
-            super(id, markupId, markupProvider);
-            add(new Link("detailclick") {
 
+        public DetailLinkFragment(String id, String markupId, MarkupContainer markupProvider, String name,final String entityName ,final String eid) {
+            super(id, markupId, markupProvider);
+//            final String str = DAOImpl.queryEntityByName(caption);
+            add(new Link("detailclick") {
                 @Override
                 public void onClick() {
-                    Param p = (Param) getParent().getParent().getDefaultModelObject();
-                    System.out.println(p + " id:" + p.getId() + " name:" + p.getEntityName());
-                    String entityName = p.getEntityName();
-                    if(entity.getName().equals("coaching")){
-                    	Activity coaching = DAOImpl.getActivityById(Integer.parseInt(p.getId()));
-                    	if(coaching.getActivity_coachType()==2){
-                    		entityName = "willcoaching"; 
-                    	}
-                    }else if(entityName.equals("todolist") ){
-                                entityName = "activity";  
-                    }else if(entityName.equals("todolistcoach") ){
-                                entityName = "coaching"; 
-                    } 
-                    setResponsePage(new EntityDetailPage(entityName, p.getId()));
+                	 
+                    setResponsePage(new EntityDetailPage(entityName, eid));
                 }
-            }.add(new Label("caption", new Model<String>(caption))));
+            }.add(new Label("caption", new Model<String>(name))));
         }
-        
+        public DetailLinkFragment( String id, String markupId, MarkupContainer markupProvider, String caption, final Entity entity) {
+          super(id, markupId, markupProvider);
+          add(new Link("detailclick") {
+
+              @Override
+              public void onClick() {
+                  Param p = (Param) getParent().getParent().getDefaultModelObject();
+                  System.out.println(p + " id:" + p.getId() + " name:" + p.getEntityName());
+                  String entityName = p.getEntityName();
+                  if(entity.getName().equals("coaching")){
+                  	Activity coaching = DAOImpl.getActivityById(Integer.parseInt(p.getId()));
+                  	if(coaching.getActivity_coachType()==2){
+                  		entityName = "willcoaching"; 
+                  	}
+                  }else if(entityName.equals("todolist") ){
+                              entityName = "activity";  
+                  }else if(entityName.equals("todolistcoach") ){
+                              entityName = "coaching"; 
+                  } 
+                  setResponsePage(new EntityDetailPage(entityName, p.getId()));
+              }
+          }.add(new Label("caption", new Model<String>(caption))));
+      }
     }
+    
+//    private class DetailLinkFragment extends Fragment {
+//        /**
+//         * Construct.
+//         * 
+//         * @param id
+//         *            The component Id
+//         * @param markupId
+//         *            The id in the markup
+//         * @param markupProvider
+//         *            The markup provider
+//         */
+//        public DetailLinkFragment( String id, String markupId, MarkupContainer markupProvider, String caption, final Entity entity) {
+//            super(id, markupId, markupProvider);
+//            add(new Link("detailclick") {
+//
+//                @Override
+//                public void onClick() {
+//                    Param p = (Param) getParent().getParent().getDefaultModelObject();
+//                    System.out.println(p + " id:" + p.getId() + " name:" + p.getEntityName());
+//                    String entityName = p.getEntityName();
+//                    if(entity.getName().equals("coaching")){
+//                    	Activity coaching = DAOImpl.getActivityById(Integer.parseInt(p.getId()));
+//                    	if(coaching.getActivity_coachType()==2){
+//                    		entityName = "willcoaching"; 
+//                    	}
+//                    }else if(entityName.equals("todolist") ){
+//                                entityName = "activity";  
+//                    }else if(entityName.equals("todolistcoach") ){
+//                                entityName = "coaching"; 
+//                    } 
+//                    setResponsePage(new EntityDetailPage(entityName, p.getId()));
+//                }
+//            }.add(new Label("caption", new Model<String>(caption))));
+//        }
+//        
+//    }
     private  class  ButtonFragment extends Fragment{
 
 		public ButtonFragment(String id, String markupId,
