@@ -1,7 +1,7 @@
 fei
 ======
 
-Fy's public repo for the BAAS system.
+Fy's public repo for the BaaS system.
 
 
 Some notes:
